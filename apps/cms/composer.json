@@ -103,10 +103,12 @@
   },
   "scripts": {
     "lint": [
-      "pint --test config scripts tests web/app/mu-plugins/*.php web/index.php web/wp-config.php"
+      "pint --test config scripts tests web/app/mu-plugins/*.php web/index.php web/wp-config.php",
+      "phpcs"
     ],
     "lint:fix": [
-      "pint config scripts tests web/app/mu-plugins/*.php web/index.php web/wp-config.php"
+      "pint config scripts tests web/app/mu-plugins/*.php web/index.php web/wp-config.php",
+      "phpcbf"
     ],
     "test": "pest"
   }

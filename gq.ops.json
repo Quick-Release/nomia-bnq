@@ -35,7 +35,8 @@
       "s3-uploads",
       "simple-history",
       "cimo-image-optimizer",
-      "safe-svg"
+      "safe-svg",
+      "nomia-cpt"
     ],
     "locale": "pt_PT_ao90"
   },
