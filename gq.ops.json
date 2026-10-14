@@ -1,0 +1,72 @@
+{
+  "$schema": "./node_modules/@getquick/site/schema/gq.ops.schema.json",
+  "schemaVersion": 1,
+  "project": "nomia-bnq",
+  "variant": "content",
+  "sigillo": {
+    "apiUrl": "https://secrets.getquick.io",
+    "projectId": "01M4Y5YZ2BCBWX9GPBJKKB5CH1",
+    "environments": {
+      "local": "dev",
+      "operations": "ops",
+      "staging": "staging"
+    }
+  },
+  "domains": {
+    "admin": "nomia-cms.bnq.pt",
+    "frontend": "nomia.bnq.pt"
+  },
+  "ploi": {
+    "serverId": "102329",
+    "systemUser": "nomiabnq",
+    "projectRoot": "/",
+    "webDirectory": "/apps/cms/web",
+    "database": "nomia_bnq_staging",
+    "envTemplate": "apps/cms/.env.production.example",
+    "deployScript": "deploy/ploi/admin.sh"
+  },
+  "wordpress": {
+    "plugins": [
+      "gq-design",
+      "gq-support",
+      "wp-graphql",
+      "wpgraphql-blocks",
+      "s3-uploads",
+      "simple-history",
+      "cimo-image-optimizer",
+      "safe-svg"
+    ],
+    "locale": "pt_PT_ao90"
+  },
+  "releases": {
+    "bucket": "nomia-bnq-releases",
+    "prefix": "admin/"
+  },
+  "media": {
+    "bucket": "nomia-bnq-media",
+    "domain": "nomia-media.bnq.pt"
+  },
+  "backups": {
+    "bucket": "nomia-bnq-releases",
+    "prefix": "db/"
+  },
+  "local": {
+    "adminEmail": "dev@tipme.to"
+  },
+  "artifacts": {
+    "namespace": "nomia-bnq",
+    "repo": "nomia-bnq"
+  },
+  "ci": {
+    "worker": "nomia-bnq-ci",
+    "backupBucket": "nomia-bnq-ci-backups"
+  },
+  "cloudflare": {
+    "accountId": "8f38791a8c37b182239af2a385ab3c31",
+    "zoneId": "60c031fb6f81fae300c625224c39c758",
+    "zoneName": "bnq.pt"
+  },
+  "github": {
+    "repository": "Quick-Release/nomia-bnq"
+  }
+}

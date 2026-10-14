@@ -1,0 +1,80 @@
+{
+  // NomiaBnq CI on Cloudflare: pushes to the Artifacts repository (gq.ops.json
+  // artifacts) start the CI Workflow (cloudflare.ci.ts), whose steps run in
+  // sandbox containers built from ./Dockerfile. A site on GitHub has its pushes
+  // reach Artifacts through the GitHub webhook (workers.dev URL, HMAC-verified)
+  // and the Mirror Workflow (mirror.ts); an Artifacts-only site, with an empty
+  // GITHUB_REPOSITORY, pushes to Artifacts itself. Deployed with `pnpm ci:deploy`.
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "nomia-bnq-ci",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-06-16",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "artifacts": [
+    {
+      "binding": "ARTIFACTS",
+      "namespace": "nomia-bnq",
+    },
+  ],
+  "containers": [
+    {
+      "class_name": "CiSandbox",
+      "image": "./Dockerfile",
+      // 1 vCPU / 4 GiB / 8 GB: a third of standard-4's memory (billed per
+      // second). Measured in this image: pnpm install peaks at ~2.8 GiB, and
+      // node_modules + the pnpm store + the workspace need > 6 GB of disk.
+      // A ceiling, not a cost: instances are billed only while running. 2 was
+      // too low — a main push and its tag run concurrently, and containers from
+      // a failed step can linger, so new steps got "WebSocket upgrade failed: 503".
+      "max_instances": 6,
+      "instance_type": { "vcpu": 1, "memory_mib": 4096, "disk_mb": 8192 },
+    },
+  ],
+  "durable_objects": { "bindings": [{ "name": "SANDBOX", "class_name": "CiSandbox" }] },
+  "exports": { "CiSandbox": { "type": "durable-object", "storage": "sqlite" } },
+  "workflows": [
+    {
+      "name": "nomia-bnq-ci",
+      "binding": "CI_WORKFLOW",
+      "class_name": "CI",
+    },
+    {
+      "name": "nomia-bnq-mirror",
+      "binding": "MIRROR_WORKFLOW",
+      "class_name": "Mirror",
+    },
+  ],
+  "triggers": {
+    "events": [
+      {
+        "type": "cf.artifacts.repo.pushed",
+        "filter": {
+          "namespace": "nomia-bnq",
+          "repo_name": "nomia-bnq",
+        },
+        "targets": [
+          {
+            "type": "workflow",
+            "workflow_name": "nomia-bnq-ci",
+          },
+        ],
+      },
+    ],
+  },
+  "r2_buckets": [
+    {
+      "binding": "BACKUP_BUCKET",
+      "bucket_name": "nomia-bnq-ci-backups",
+    },
+  ],
+  "vars": {
+    "BACKUP_BUCKET_NAME": "nomia-bnq-ci-backups",
+    "CLOUDFLARE_ACCOUNT_ID": "8f38791a8c37b182239af2a385ab3c31",
+    "CLOUDFLARE_DEPLOY_ACCOUNT_ID": "8f38791a8c37b182239af2a385ab3c31",
+    "ARTIFACTS_NAMESPACE": "nomia-bnq",
+    "ARTIFACTS_REPO": "nomia-bnq",
+    "GITHUB_REPOSITORY": "Quick-Release/nomia-bnq",
+  },
+  "observability": { "enabled": true, "logs": { "enabled": true } },
+}
