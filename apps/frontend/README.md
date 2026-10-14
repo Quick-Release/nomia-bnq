@@ -1,4 +1,4 @@
-# NomiaBnq Frontend
+# Nomia Frontend
 
 Astro, server-rendered on Cloudflare Workers, reading published content from
 the CMS (`../cms`) through WPGraphQL. Its Worker is declared in
