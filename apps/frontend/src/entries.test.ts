@@ -214,7 +214,7 @@ async function storedEntries() {
 }
 
 function expectServedAbout(html: string, menuLabel = "About us") {
-  expect(html).toContain("<title>About — NomiaBnq</title>");
+  expect(html).toContain("<title>About — Nomia</title>");
   expect(html).toContain("We make things.");
   expect(html).toMatch(new RegExp(`<a href="/about/"[^>]*>${menuLabel}</a>`));
   expect(html).toContain('src="https://media.example/logo.svg"');

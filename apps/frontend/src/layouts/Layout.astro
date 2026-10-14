@@ -17,7 +17,7 @@ interface Props {
 }
 
 const {
-  title = "NomiaBnq",
+  title = "Nomia",
   description = "",
   language = defaultLanguage,
   alternates = [],
@@ -58,12 +58,12 @@ const xDefault = hreflang.find((alternate) => alternate.language.isDefault);
     <link rel="canonical" href={canonical} />
     {hreflang.map((alternate) => <link rel="alternate" hreflang={alternate.language.lang} href={alternate.href} />)}
     {xDefault && <link rel="alternate" hreflang="x-default" href={xDefault.href} />}
-    <title>{title === "NomiaBnq" ? title : `${title} — NomiaBnq`}</title>
+    <title>{title === "Nomia" ? title : `${title} — Nomia`}</title>
   </head>
   <body>
     <header class="site-header">
       <a href={language.home} class="site-header__home">
-        {siteLogo ? <img src={siteLogo.sourceUrl} alt={siteLogo.altText || "NomiaBnq"} /> : "NomiaBnq"}
+        {siteLogo ? <img src={siteLogo.sourceUrl} alt={siteLogo.altText || "Nomia"} /> : "Nomia"}
       </a>
       {menuItems.length > 0 && (
         <nav aria-label="Primary">

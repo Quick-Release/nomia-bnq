@@ -269,7 +269,7 @@ const cases: Array<
       expect(html).toContain('<link rel="icon" href="https://media.example/icon-2026.png">');
       // The title and tagline are the front page's; entries name themselves.
       if (page === "/") {
-        expect(html).toContain("<title>Acme &amp; Co — NomiaBnq</title>");
+        expect(html).toContain("<title>Acme &amp; Co — Nomia</title>");
         expect(html).toContain('<meta name="description" content="Better things">');
       }
     },
@@ -399,7 +399,7 @@ test("a partly failed identity refresh keeps the stored menu, logo and icon, and
     chrome: { outcome: "kept", failure: { reason: "http" } },
   });
   // The title reached the homepage; the chrome everyone shares wasn't erased.
-  expect(during[0]!.html).toContain("<title>Acme &amp; Co — NomiaBnq</title>");
+  expect(during[0]!.html).toContain("<title>Acme &amp; Co — Nomia</title>");
   for (const { html } of during) {
     expect(html).toContain('<link rel="icon" href="https://media.example/icon.png">');
     expect(html).toMatch(menuLink("About us"));

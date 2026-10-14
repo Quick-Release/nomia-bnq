@@ -2,7 +2,7 @@
   "name": "getquick/nomia-bnq-cms",
   "type": "project",
   "license": "MIT",
-  "description": "NomiaBnq's Bedrock WordPress content API powered by WPGraphQL",
+  "description": "Nomia's Bedrock WordPress content API powered by WPGraphQL",
   "homepage": "https://roots.io/bedrock/",
   "authors": [
     {

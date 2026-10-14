@@ -20,7 +20,7 @@ const content = home.kind === "found" ? home.content.home : null;
 const chrome = home.kind === "found" ? home.content.chrome : home.kind === "missing" ? home.chrome : null;
 const alternates = home.kind === "found" ? home.content.alternates : [];
 const { vars, colorRules } = blockPresetStyles(content?.spacingSizes ?? [], content?.colors ?? []);
-const siteTitle = content?.page.title || content?.settings.title || "NomiaBnq";
+const siteTitle = content?.page.title || content?.settings.title || "Nomia";
 const isVideoHeroPage = content?.page.hasVideoHero ?? false;
 ---
 

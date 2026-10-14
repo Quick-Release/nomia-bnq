@@ -1,7 +1,7 @@
-# NomiaBnq CMS
+# Nomia CMS
 
 A [Bedrock](https://roots.io/bedrock/) WordPress installation for managing
-NomiaBnq's content. The Frontend reads it through
+Nomia's content. The Frontend reads it through
 [WPGraphQL](https://www.wpgraphql.com/) at `/wp/graphql`; this host serves no
 public WordPress frontend (`web/app/mu-plugins/content-api.php`).
 
