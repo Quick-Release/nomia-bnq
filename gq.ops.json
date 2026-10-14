@@ -23,7 +23,8 @@
     "webDirectory": "/apps/cms/web",
     "database": "nomia_bnq_staging",
     "envTemplate": "apps/cms/.env.production.example",
-    "deployScript": "deploy/ploi/admin.sh"
+    "deployScript": "deploy/ploi/admin.sh",
+    "siteId": "419022"
   },
   "wordpress": {
     "plugins": [
