@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.2.0 - 2026-10-14
+
+Previous release: v0.1.0
+
+- 23cb962 fix(cms): register the PHPCS standards in the ruleset
+- 2675343 feat(cms): migrate the nomia-cpt plugin from bioeconomia.pt
+
 ## v0.1.0 - 2026-10-14
 
 Previous release: initial release
