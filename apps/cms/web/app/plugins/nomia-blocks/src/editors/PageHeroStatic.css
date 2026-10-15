@@ -1,7 +1,7 @@
 /* Page hero static — visual policy mirrors NomiaPageHeroStatic.astro */
 .page-hero-static-editor {
   box-sizing: border-box;
-  color: #f0f0f0;
+  color: var(--wp--preset--color--cinza-100);
   font-family:
     Inter,
     system-ui,
@@ -23,7 +23,7 @@
  * step by PageHeroStatic.jsx; the fallbacks are the XL step.
  */
 .page-hero-static-editor__viewport {
-  background: #00524d;
+  background: var(--wp--preset--color--teal-600);
   min-height: var(--page-hero-static-height, 100svh);
   overflow: hidden;
   position: relative;
@@ -31,7 +31,7 @@
 }
 
 .page-hero-static-editor__media {
-  background: #00524d;
+  background: var(--wp--preset--color--teal-600);
   inset: 0;
   pointer-events: none;
   position: absolute;
@@ -50,7 +50,7 @@
 .page-hero-static-editor__image-placeholder {
   align-items: center;
   background: transparent;
-  color: #fff;
+  color: var(--wp--preset--color--branco);
   display: flex;
   font-size: 14px;
   height: 100%;
@@ -101,7 +101,7 @@
 }
 
 .page-hero-static-editor__copy h1 {
-  color: #f0f0f0;
+  color: var(--wp--preset--color--cinza-100);
   font-size: 56px;
   font-weight: 500;
   letter-spacing: 0;
@@ -110,7 +110,7 @@
 }
 
 .page-hero-static-editor__copy p {
-  color: #f0f0f0;
+  color: var(--wp--preset--color--cinza-100);
   font-size: 24px;
   font-weight: 400;
   letter-spacing: 0;
@@ -120,7 +120,7 @@
 
 .page-hero-static-editor__cta {
   align-items: center;
-  background: #fff;
+  background: var(--wp--preset--color--branco);
   border-radius: 40px;
   color: #313131;
   display: inline-flex;

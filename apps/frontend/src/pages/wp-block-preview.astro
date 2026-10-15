@@ -11,6 +11,8 @@ import WpBlock from "../components/wp-blocks/WpBlock.astro";
 import type { WpParsedBlock } from "../lib/wp-blocks";
 import { parsePreviewRequest } from "../lib/wp-block-preview-format";
 import "../styles/global.css";
+import { pageDesign } from "../lib/delivery";
+import { presetRootStyle } from "../lib/wp-block-styles";
 
 const { blockName, previewToken, attributes } = parsePreviewRequest(Astro.url.searchParams);
 const requiredPreviewToken = import.meta.env.NOMIA_WP_BLOCK_PREVIEW_TOKEN?.trim() ?? "";
@@ -27,11 +29,15 @@ const block = blockName && attributes.ok
       innerContent: [],
     } as WpParsedBlock)
   : null;
+// GQ Design's palette, as on every page: the blocks' colors read it.
+const design = await pageDesign();
+const presets = design ? presetRootStyle(design.spacingSizes, design.colors) : "";
 ---
 
 <html lang="pt">
   <head>
     <FontLinks />
+    {presets && <style is:global set:html={presets} />}
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="robots" content="noindex,nofollow" />

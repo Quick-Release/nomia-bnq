@@ -7,9 +7,9 @@
  * preformatted, pullquote, verse, details, math — get their layout here. The
  * rules follow core's own defaults so the page reads like the editor.
  *
- * The preset section is generated from the nomia-black theme.json palette and
- * font sizes; `wp-core-blocks-css.test.mjs` fails when it drifts. WordPress
- * marks preset classes `!important`, and so does this copy.
+ * Colors come from GQ Design's palette (`--wp--preset--color--<slug>`); the
+ * `has-<slug>-color` preset classes are generated from it with each page
+ * (`blockPresetStyles`), not copied here.
  */
 
 @layer components {
@@ -23,13 +23,13 @@
   .nomia-bioeconomia-button {
     align-items: center;
     animation: nomia-bioeconomia-button-click 2s ease-in-out infinite;
-    background: #2ad2c9;
+    background: var(--wp--preset--color--ciano-400);
     border: 0;
     border-radius: 999px;
     box-shadow:
-      -1rem -1rem 0 #00524d,
-      -2rem -2rem 0 #808080;
-    color: #fff;
+      -1rem -1rem 0 var(--wp--preset--color--teal-600),
+      -2rem -2rem 0 var(--wp--preset--color--monocromatico-cinzento-500);
+    color: var(--wp--preset--color--branco);
     cursor: pointer;
     display: inline-flex;
     font:
@@ -49,7 +49,7 @@
   }
 
   .nomia-bioeconomia-button:focus-visible {
-    outline: 3px solid #0a2822;
+    outline: 3px solid var(--wp--preset--color--teal-700);
     outline-offset: 8px;
   }
 
@@ -57,20 +57,20 @@
     0%,
     78%,
     100% {
-      color: #fff;
+      color: var(--wp--preset--color--branco);
       transform: translate(0, 0);
       box-shadow:
-        -1rem -1rem 0 #00524d,
-        -2rem -2rem 0 #808080;
+        -1rem -1rem 0 var(--wp--preset--color--teal-600),
+        -2rem -2rem 0 var(--wp--preset--color--monocromatico-cinzento-500);
     }
 
     84%,
     92% {
-      color: #fcd380;
+      color: var(--wp--preset--color--laranja-300);
       transform: translate(-0.35rem, -0.35rem) scale(0.98);
       box-shadow:
-        -0.5rem -0.5rem 0 #00524d,
-        -1rem -1rem 0 #808080;
+        -0.5rem -0.5rem 0 var(--wp--preset--color--teal-600),
+        -1rem -1rem 0 var(--wp--preset--color--monocromatico-cinzento-500);
     }
   }
 
@@ -79,429 +79,6 @@
       animation: none;
     }
   }
-
-  /* Theme presets (generated from theme.json). */
-  .has-main-cinza-100-color {
-    color: #f0f0f0 !important;
-  }
-  .has-main-cinza-100-background-color {
-    background-color: #f0f0f0 !important;
-  }
-  .has-main-cinza-100-border-color {
-    border-color: #f0f0f0 !important;
-  }
-  .has-main-cinza-200-color {
-    color: #e1e1e1 !important;
-  }
-  .has-main-cinza-200-background-color {
-    background-color: #e1e1e1 !important;
-  }
-  .has-main-cinza-200-border-color {
-    border-color: #e1e1e1 !important;
-  }
-  .has-main-cinza-400-color {
-    color: #878787 !important;
-  }
-  .has-main-cinza-400-background-color {
-    background-color: #878787 !important;
-  }
-  .has-main-cinza-400-border-color {
-    border-color: #878787 !important;
-  }
-  .has-main-cinza-500-color {
-    color: #777777 !important;
-  }
-  .has-main-cinza-500-background-color {
-    background-color: #777777 !important;
-  }
-  .has-main-cinza-500-border-color {
-    border-color: #777777 !important;
-  }
-  .has-main-cinza-600-color {
-    color: #666666 !important;
-  }
-  .has-main-cinza-600-background-color {
-    background-color: #666666 !important;
-  }
-  .has-main-cinza-600-border-color {
-    border-color: #666666 !important;
-  }
-  .has-main-cinza-700-color {
-    color: #444444 !important;
-  }
-  .has-main-cinza-700-background-color {
-    background-color: #444444 !important;
-  }
-  .has-main-cinza-700-border-color {
-    border-color: #444444 !important;
-  }
-  .has-main-ciano-100-color {
-    color: #e5faf9 !important;
-  }
-  .has-main-ciano-100-background-color {
-    background-color: #e5faf9 !important;
-  }
-  .has-main-ciano-100-border-color {
-    border-color: #e5faf9 !important;
-  }
-  .has-main-ciano-200-color {
-    color: #caf4f2 !important;
-  }
-  .has-main-ciano-200-background-color {
-    background-color: #caf4f2 !important;
-  }
-  .has-main-ciano-200-border-color {
-    border-color: #caf4f2 !important;
-  }
-  .has-main-ciano-400-color {
-    color: #2ad2c9 !important;
-  }
-  .has-main-ciano-400-background-color {
-    background-color: #2ad2c9 !important;
-  }
-  .has-main-ciano-400-border-color {
-    border-color: #2ad2c9 !important;
-  }
-  .has-main-ciano-500-color {
-    color: #209e97 !important;
-  }
-  .has-main-ciano-500-background-color {
-    background-color: #209e97 !important;
-  }
-  .has-main-ciano-500-border-color {
-    border-color: #209e97 !important;
-  }
-  .has-main-ciano-600-color {
-    color: #156965 !important;
-  }
-  .has-main-ciano-600-background-color {
-    background-color: #156965 !important;
-  }
-  .has-main-ciano-600-border-color {
-    border-color: #156965 !important;
-  }
-  .has-main-ciano-700-color {
-    color: #104f4c !important;
-  }
-  .has-main-ciano-700-background-color {
-    background-color: #104f4c !important;
-  }
-  .has-main-ciano-700-border-color {
-    border-color: #104f4c !important;
-  }
-  .has-main-teal-100-color {
-    color: #e0f4f3 !important;
-  }
-  .has-main-teal-100-background-color {
-    background-color: #e0f4f3 !important;
-  }
-  .has-main-teal-100-border-color {
-    border-color: #e0f4f3 !important;
-  }
-  .has-main-teal-200-color {
-    color: #c0e9e6 !important;
-  }
-  .has-main-teal-200-background-color {
-    background-color: #c0e9e6 !important;
-  }
-  .has-main-teal-200-border-color {
-    border-color: #c0e9e6 !important;
-  }
-  .has-main-teal-400-color {
-    color: #00a499 !important;
-  }
-  .has-main-teal-400-background-color {
-    background-color: #00a499 !important;
-  }
-  .has-main-teal-400-border-color {
-    border-color: #00a499 !important;
-  }
-  .has-main-teal-500-color {
-    color: #007b73 !important;
-  }
-  .has-main-teal-500-background-color {
-    background-color: #007b73 !important;
-  }
-  .has-main-teal-500-border-color {
-    border-color: #007b73 !important;
-  }
-  .has-main-teal-600-color {
-    color: #00524d !important;
-  }
-  .has-main-teal-600-background-color {
-    background-color: #00524d !important;
-  }
-  .has-main-teal-600-border-color {
-    border-color: #00524d !important;
-  }
-  .has-main-teal-700-color {
-    color: #003333 !important;
-  }
-  .has-main-teal-700-background-color {
-    background-color: #003333 !important;
-  }
-  .has-main-teal-700-border-color {
-    border-color: #003333 !important;
-  }
-  .has-main-botanico-100-color {
-    color: #f4faec !important;
-  }
-  .has-main-botanico-100-background-color {
-    background-color: #f4faec !important;
-  }
-  .has-main-botanico-100-border-color {
-    border-color: #f4faec !important;
-  }
-  .has-main-botanico-200-color {
-    color: #e9f5d8 !important;
-  }
-  .has-main-botanico-200-background-color {
-    background-color: #e9f5d8 !important;
-  }
-  .has-main-botanico-200-border-color {
-    border-color: #e9f5d8 !important;
-  }
-  .has-main-botanico-400-color {
-    color: #a4d663 !important;
-  }
-  .has-main-botanico-400-background-color {
-    background-color: #a4d663 !important;
-  }
-  .has-main-botanico-400-border-color {
-    border-color: #a4d663 !important;
-  }
-  .has-main-botanico-500-color {
-    color: #90bc57 !important;
-  }
-  .has-main-botanico-500-background-color {
-    background-color: #90bc57 !important;
-  }
-  .has-main-botanico-500-border-color {
-    border-color: #90bc57 !important;
-  }
-  .has-main-botanico-600-color {
-    color: #7ba14b !important;
-  }
-  .has-main-botanico-600-background-color {
-    background-color: #7ba14b !important;
-  }
-  .has-main-botanico-600-border-color {
-    border-color: #7ba14b !important;
-  }
-  .has-main-botanico-700-color {
-    color: #67863f !important;
-  }
-  .has-main-botanico-700-background-color {
-    background-color: #67863f !important;
-  }
-  .has-main-botanico-700-border-color {
-    border-color: #67863f !important;
-  }
-  .has-main-laranja-100-color {
-    color: #fef4e0 !important;
-  }
-  .has-main-laranja-100-background-color {
-    background-color: #fef4e0 !important;
-  }
-  .has-main-laranja-100-border-color {
-    border-color: #fef4e0 !important;
-  }
-  .has-main-laranja-200-color {
-    color: #fde9c0 !important;
-  }
-  .has-main-laranja-200-background-color {
-    background-color: #fde9c0 !important;
-  }
-  .has-main-laranja-200-border-color {
-    border-color: #fde9c0 !important;
-  }
-  .has-main-laranja-400-color {
-    color: #f7a600 !important;
-  }
-  .has-main-laranja-400-background-color {
-    background-color: #f7a600 !important;
-  }
-  .has-main-laranja-400-border-color {
-    border-color: #f7a600 !important;
-  }
-  .has-main-laranja-500-color {
-    color: #d99200 !important;
-  }
-  .has-main-laranja-500-background-color {
-    background-color: #d99200 !important;
-  }
-  .has-main-laranja-500-border-color {
-    border-color: #d99200 !important;
-  }
-  .has-main-laranja-600-color {
-    color: #ba7d00 !important;
-  }
-  .has-main-laranja-600-background-color {
-    background-color: #ba7d00 !important;
-  }
-  .has-main-laranja-600-border-color {
-    border-color: #ba7d00 !important;
-  }
-  .has-main-laranja-700-color {
-    color: #7c5300 !important;
-  }
-  .has-main-laranja-700-background-color {
-    background-color: #7c5300 !important;
-  }
-  .has-main-laranja-700-border-color {
-    border-color: #7c5300 !important;
-  }
-  .has-monochorme-light-100-color {
-    color: #eeeeee !important;
-  }
-  .has-monochorme-light-100-background-color {
-    background-color: #eeeeee !important;
-  }
-  .has-monochorme-light-100-border-color {
-    border-color: #eeeeee !important;
-  }
-  .has-monochorme-light-200-color {
-    color: #eaeaea !important;
-  }
-  .has-monochorme-light-200-background-color {
-    background-color: #eaeaea !important;
-  }
-  .has-monochorme-light-200-border-color {
-    border-color: #eaeaea !important;
-  }
-  .has-monochorme-light-400-color {
-    color: #dddddd !important;
-  }
-  .has-monochorme-light-400-background-color {
-    background-color: #dddddd !important;
-  }
-  .has-monochorme-light-400-border-color {
-    border-color: #dddddd !important;
-  }
-  .has-monochorme-light-500-color {
-    color: #d5d5d5 !important;
-  }
-  .has-monochorme-light-500-background-color {
-    background-color: #d5d5d5 !important;
-  }
-  .has-monochorme-light-500-border-color {
-    border-color: #d5d5d5 !important;
-  }
-  .has-monochorme-light-600-color {
-    color: #cccccc !important;
-  }
-  .has-monochorme-light-600-background-color {
-    background-color: #cccccc !important;
-  }
-  .has-monochorme-light-600-border-color {
-    border-color: #cccccc !important;
-  }
-  .has-monochorme-grey-100-color {
-    color: #969696 !important;
-  }
-  .has-monochorme-grey-100-background-color {
-    background-color: #969696 !important;
-  }
-  .has-monochorme-grey-100-border-color {
-    border-color: #969696 !important;
-  }
-  .has-monochorme-grey-200-color {
-    color: #939393 !important;
-  }
-  .has-monochorme-grey-200-background-color {
-    background-color: #939393 !important;
-  }
-  .has-monochorme-grey-200-border-color {
-    border-color: #939393 !important;
-  }
-  .has-monochorme-grey-400-color {
-    color: #878787 !important;
-  }
-  .has-monochorme-grey-400-background-color {
-    background-color: #878787 !important;
-  }
-  .has-monochorme-grey-400-border-color {
-    border-color: #878787 !important;
-  }
-  .has-monochorme-grey-500-color {
-    color: #808080 !important;
-  }
-  .has-monochorme-grey-500-background-color {
-    background-color: #808080 !important;
-  }
-  .has-monochorme-grey-500-border-color {
-    border-color: #808080 !important;
-  }
-  .has-monochorme-grey-600-color {
-    color: #787878 !important;
-  }
-  .has-monochorme-grey-600-background-color {
-    background-color: #787878 !important;
-  }
-  .has-monochorme-grey-600-border-color {
-    border-color: #787878 !important;
-  }
-  .has-monochorme-dark-100-color {
-    color: #323232 !important;
-  }
-  .has-monochorme-dark-100-background-color {
-    background-color: #323232 !important;
-  }
-  .has-monochorme-dark-100-border-color {
-    border-color: #323232 !important;
-  }
-  .has-monochorme-dark-200-color {
-    color: #2d2d2d !important;
-  }
-  .has-monochorme-dark-200-background-color {
-    background-color: #2d2d2d !important;
-  }
-  .has-monochorme-dark-200-border-color {
-    border-color: #2d2d2d !important;
-  }
-  .has-monochorme-dark-400-color {
-    color: #282828 !important;
-  }
-  .has-monochorme-dark-400-background-color {
-    background-color: #282828 !important;
-  }
-  .has-monochorme-dark-400-border-color {
-    border-color: #282828 !important;
-  }
-  .has-monochorme-dark-500-color {
-    color: #232323 !important;
-  }
-  .has-monochorme-dark-500-background-color {
-    background-color: #232323 !important;
-  }
-  .has-monochorme-dark-500-border-color {
-    border-color: #232323 !important;
-  }
-  .has-monochorme-dark-600-color {
-    color: #1e1e1e !important;
-  }
-  .has-monochorme-dark-600-background-color {
-    background-color: #1e1e1e !important;
-  }
-  .has-monochorme-dark-600-border-color {
-    border-color: #1e1e1e !important;
-  }
-  .has-body-font-size {
-    font-size: 1rem !important;
-  }
-  .has-lead-font-size {
-    font-size: 1.125rem !important;
-  }
-  .has-heading-sm-font-size {
-    font-size: 1.5rem !important;
-  }
-  .has-heading-md-font-size {
-    font-size: 2rem !important;
-  }
-  .has-heading-lg-font-size {
-    font-size: 2.75rem !important;
-  }
-  /* End of theme presets. */
 
   .wp-element-caption {
     color: var(--main-cinza-600);
@@ -590,7 +167,7 @@
   }
 
   .wp-block-cover .wp-block-cover__background {
-    background-color: #000;
+    background-color: var(--wp--preset--color--preto);
     inset: 0;
     opacity: 0.5;
     position: absolute;
@@ -631,7 +208,7 @@
   }
 
   .wp-block-cover .wp-block-cover__inner-container {
-    color: #fff;
+    color: var(--wp--preset--color--branco);
     position: relative;
     width: 100%;
     z-index: 1;

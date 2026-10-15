@@ -51,6 +51,9 @@ interface Entry {
   nomiaPageBackgroundColor?: string | null;
 }
 
+// GQ Design's palette, as WordPress gives it (designTokens).
+const palette = { colors: [{ slug: "ciano-500", color: "#209e97" }], spacingSizes: [] };
+
 let published: Map<string, Entry>;
 let directory: string;
 let db: TestD1;
@@ -66,7 +69,7 @@ function entryAnswer({ uri }: Record<string, unknown>): Answer {
       isRestricted: false,
       featuredImage: null,
     },
-    designTokens: { colors: [], spacingSizes: [] },
+    designTokens: palette,
   });
 }
 
@@ -83,9 +86,10 @@ function wordpress() {
           wpBlocksJson: JSON.stringify([titleWithLabel]),
           nomiaPageBackgroundColor: null,
         },
-        designTokens: { colors: [], spacingSizes: [] },
+        designTokens: palette,
       }),
     entry: entryAnswer,
+    design: () => data({ designTokens: palette }),
     routes: () => routes("/", ...published.keys()),
   });
 }
@@ -198,6 +202,11 @@ test("a page with Nomia's blocks is served from the store by their components, t
   expect(page.html).toContain("A Economia Circular promove um modelo económico reorganizado,");
   expect(page.html).toContain("Texto corrido.");
   expect(page.html).not.toContain(renderedComment);
+  // GQ Design's palette, which Nomia's design tokens read, and its preset classes.
+  expect(page.html).toContain(":root{--wp--preset--color--ciano-500:#209e97}");
+  expect(page.html).toContain(
+    ".nomia-blocks .has-ciano-500-color{color:var(--wp--preset--color--ciano-500)}",
+  );
   // The page's own surface colour, with text that contrasts with it.
   expect(page.html).toMatch(
     /<body[^>]*class="text-neutral-bw-white"[^>]*style="background-color: #0b3d3a"/,

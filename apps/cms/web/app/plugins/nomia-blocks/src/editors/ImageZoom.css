@@ -1,5 +1,5 @@
 .image-zoom-editor {
-	background: #fff;
+	background: var(--wp--preset--color--branco);
 	border: 1px solid #dcdcde;
 	margin: 0;
 	padding: 16px;

@@ -1,5 +1,5 @@
 .two-columns-text-image-editor {
-  background: #fff;
+  background: var(--wp--preset--color--branco);
   box-sizing: border-box;
   color: #313131;
   font-family:

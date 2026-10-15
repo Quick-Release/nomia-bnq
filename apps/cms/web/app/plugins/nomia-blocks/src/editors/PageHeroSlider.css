@@ -91,7 +91,7 @@
 .page-hero-slider-editor__empty {
   align-items: center;
   background: #50575e;
-  color: #fff;
+  color: var(--wp--preset--color--branco);
   display: flex;
   font-size: 14px;
   gap: 16px;
@@ -161,7 +161,7 @@
 
 .page-hero-slider-editor__cta {
   align-items: center;
-  background: #fff;
+  background: var(--wp--preset--color--branco);
   border-radius: 40px;
   color: #313131;
   display: inline-flex;
@@ -193,7 +193,7 @@
 .page-hero-slider-editor__spotlight img,
 .page-hero-slider-editor__spotlight-placeholder {
   background: #50575e;
-  color: #fff;
+  color: var(--wp--preset--color--branco);
   display: block;
   flex: 0 0 216px;
   height: 216px;

@@ -2,7 +2,6 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { parse } from "@wordpress/block-serialization-default-parser";
-import { WP_THEME_COLORS, WP_THEME_FONT_SIZES } from "../src/lib/wp-theme-presets.ts";
 import { wpGroupLayoutClasses } from "../src/lib/wp-group-layout.ts";
 import { createAstroRenderHarness } from "./astro-render-harness.mjs";
 
@@ -73,26 +72,17 @@ test("a group's flex layout becomes classes on its own element", async () => {
   assert.equal(group.textContent.replace(/\s+/g, ""), "AB");
 });
 
-test("the core block stylesheet styles every theme colour and font-size preset", () => {
-  // Compared without whitespace, so the formatter's layout does not matter.
-  const css = readFileSync(
-    new URL("../src/styles/wp-core-blocks.css", import.meta.url),
-    "utf8",
-  ).replace(/\s+/g, "");
-  const rule = (text) => text.replace(/\s+/g, "");
-  for (const [slug, color] of Object.entries(WP_THEME_COLORS)) {
-    assert.ok(css.includes(rule(`.has-${slug}-color { color: ${color} !important; }`)), slug);
-    assert.ok(
-      css.includes(
-        rule(`.has-${slug}-background-color { background-color: ${color} !important; }`),
-      ),
-      slug,
-    );
-  }
-  for (const [slug, size] of Object.entries(WP_THEME_FONT_SIZES)) {
-    assert.ok(
-      css.includes(rule(`.has-${slug}-font-size { font-size: ${size} !important; }`)),
-      slug,
-    );
+test("the core block stylesheet takes its colours from GQ Design's palette", () => {
+  const css = readFileSync(new URL("../src/styles/wp-core-blocks.css", import.meta.url), "utf8");
+  const palette = JSON.parse(
+    readFileSync(new URL("../../cms/scripts/nomia-palette.json", import.meta.url), "utf8"),
+  );
+  const slugs = new Set(palette.colors.map(({ slug }) => slug));
+
+  // No copied palette: the preset classes come with each page's design presets.
+  assert.doesNotMatch(css, /#[0-9a-f]{3,8}\b/i);
+  assert.doesNotMatch(css, /\.has-[a-z0-9-]+-(?:background-)?color\b/);
+  for (const [, slug] of css.matchAll(/--wp--preset--color--([a-z0-9-]+)/g)) {
+    assert.ok(slugs.has(slug), `${slug} is not in the Nomia palette`);
   }
 });

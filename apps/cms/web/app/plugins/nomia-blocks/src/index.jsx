@@ -24,13 +24,12 @@ import { registerPlugin } from '@wordpress/plugins';
 import contracts from './contracts.json';
 import './editor.css';
 import { AttributeField } from './fields/AttributeField';
-import { NOMIA_SURFACE_COLORS, normalizeHexColor } from './lib/colors';
+import { normalizeHexColor, useSiteColors } from './lib/colors';
 import { buildPreviewUrl, PreviewIframe } from './lib/preview';
 import { CUSTOM_EDITORS } from './editors';
 import { BLOCK_DEPRECATIONS } from './deprecations';
 
 const PAGE_BACKGROUND_META_KEY = '_nomia_page_background_color';
-const PAGE_BACKGROUND_THEME_COLORS = NOMIA_SURFACE_COLORS;
 
 const INLINE_EDITOR_HIDDEN_ATTRIBUTES = new Set( [
 	'schemaVersion',
@@ -38,6 +37,7 @@ const INLINE_EDITOR_HIDDEN_ATTRIBUTES = new Set( [
 ] );
 
 function NomiaPageBackgroundPanel() {
+	const siteColors = useSiteColors();
 	const postType = useSelect(
 		( select ) => select( 'core/editor' )?.getCurrentPostType?.(),
 		[]
@@ -75,13 +75,13 @@ function NomiaPageBackgroundPanel() {
 			className="getquick-nomia-page-background-panel"
 		>
 			<div className="getquick-nomia-page-background-panel__theme-colors">
-				{ PAGE_BACKGROUND_THEME_COLORS.map( ( option ) => {
+				{ siteColors.map( ( option ) => {
 					const color = normalizeHexColor( option.color );
 					const isSelected = currentColor === color;
 
 					return (
 						<button
-							key={ option.color }
+							key={ option.slug }
 							type="button"
 							className="getquick-nomia-page-background-panel__swatch"
 							data-selected={ isSelected ? 'true' : undefined }
