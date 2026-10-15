@@ -1,6 +1,6 @@
 /* CTA results — mirrors apps/frontend/src/components/sections/landing/NomiaBarometroResultsSection.astro */
 .cta-results-editor {
-  background: #104f4c;
+  background: var(--wp--preset--color--ciano-700);
   box-sizing: border-box;
   color: #313131;
   font-family:
@@ -135,7 +135,7 @@
 
 .cta-results-editor__year {
   align-items: center;
-  background: #fff;
+  background: var(--wp--preset--color--branco);
   border-radius: 32px;
   color: #008998;
   display: inline-flex;
@@ -187,7 +187,7 @@
 
 .cta-results-editor__empty {
   align-items: flex-start;
-  background: #fff;
+  background: var(--wp--preset--color--branco);
   border: 1px solid #dcdcde;
   border-radius: 8px;
   color: #50575e;

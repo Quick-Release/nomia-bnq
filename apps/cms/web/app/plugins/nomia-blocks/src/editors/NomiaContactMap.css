@@ -4,13 +4,13 @@
  * centred by default, pinned to one side at a narrower width, or full width.
  */
 .getquick-contact-map-editor__alignment {
-  color: #1e1e1e;
+  color: var(--wp--preset--color--monocromatico-escuro-600);
   font-size: 13px;
   margin: 16px 0 8px;
 }
 
 .getquick-contact-map-editor__stage {
-  background: #f0f0f0;
+  background: var(--wp--preset--color--cinza-100);
   border-radius: 2px;
   display: flex;
   padding: 12px;

@@ -48,15 +48,15 @@ test("palette colours, preset font size and justification render as chosen", asy
   const document = await render(
     buttons(
       { layout: { type: "flex", justifyContent: "center" } },
-      { backgroundColor: "main-teal-400", textColor: "main-cinza-700", fontSize: "lead" },
-      '<a class="wp-block-button__link has-main-cinza-700-color has-main-teal-400-background-color has-text-color has-background has-lead-font-size has-custom-font-size wp-element-button" href="/x/">Saber mais</a>',
+      { backgroundColor: "teal-400", textColor: "cinza-700", fontSize: "lead" },
+      '<a class="wp-block-button__link has-cinza-700-color has-teal-400-background-color has-text-color has-background has-lead-font-size has-custom-font-size wp-element-button" href="/x/">Saber mais</a>',
     ),
   );
 
   assert.ok(document.querySelector(".wp-block-buttons").classList.contains("justify-center"));
   assert.equal(
     document.querySelector("a").getAttribute("style"),
-    "background-color: #00a499; color: #444444; font-size: 1.125rem",
+    "background-color: var(--wp--preset--color--teal-400); color: var(--wp--preset--color--cinza-700); font-size: var(--wp--preset--font-size--lead)",
   );
 });
 
@@ -85,8 +85,8 @@ test("an outline button in a vertical, right-aligned group", async () => {
   const document = await render(
     buttons(
       { layout: { type: "flex", orientation: "vertical", justifyContent: "right" } },
-      { textColor: "main-ciano-700", className: "is-style-outline" },
-      '<a class="wp-block-button__link has-main-ciano-700-color has-text-color wp-element-button" href="/x/">Saber mais</a>',
+      { textColor: "ciano-700", className: "is-style-outline" },
+      '<a class="wp-block-button__link has-ciano-700-color has-text-color wp-element-button" href="/x/">Saber mais</a>',
       "wp-block-button is-style-outline",
     ),
   );
@@ -97,7 +97,7 @@ test("an outline button in a vertical, right-aligned group", async () => {
   assert.ok(link.classList.contains("bg-transparent") && link.classList.contains("border-current"));
   // The palette text colour replaces the default rather than fighting it.
   assert.ok(!link.classList.contains("text-main-teal-500!"));
-  assert.equal(link.getAttribute("style"), "color: #104f4c");
+  assert.equal(link.getAttribute("style"), "color: var(--wp--preset--color--ciano-700)");
   assert.equal(document.querySelector("[data-button-variant]").dataset.buttonVariant, "outline");
 });
 
@@ -139,11 +139,11 @@ test("a new-tab link keeps its target and rel", async () => {
   assert.equal(link.getAttribute("rel"), "noreferrer noopener");
 });
 
-test("unsafe links, stray markup and colours outside the palette are dropped", async () => {
+test("unsafe links, stray markup and colours that aren't preset slugs are dropped", async () => {
   const document = await render(
     buttons(
       null,
-      { backgroundColor: "white", textColor: "not-a-slug" },
+      { backgroundColor: "url(x)", textColor: "Not a slug" },
       '<a class="wp-block-button__link wp-element-button" href="javascript:alert(1)" onclick="x()"><strong>Saber</strong> <img src=x onerror=y>mais</a>',
     ),
   );

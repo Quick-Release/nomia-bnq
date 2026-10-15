@@ -94,71 +94,107 @@
 
   --tracking-typography-0: var(--typography-letter-spacing-0);
 
-  /* Figma Main/* — canonical hex (also use via --color-* for utilities) */
-  --main-cinza-100: #f0f0f0; /* Main/Cinza/100 */
-  --main-cinza-200: #e1e1e1; /* Main/Cinza/200 */
-  --main-cinza-300: #c3c3c3; /* Main/Cinza/300 */
-  --main-cinza-400: #878787; /* Main/Cinza/400 * */
-  --main-cinza-500: #777777; /* Main/Cinza/500 */
-  --main-cinza-600: #666666; /* Main/Cinza/600 */
-  --main-cinza-700: #444444; /* Main/Cinza/700 */
+  /* Figma Main/*: GQ Design's palette (GETQUICK → Design → Branding → Colors, apps/cms/scripts/nomia-palette.json); also use via --color-* for utilities */
+  --main-cinza-100: var(--wp--preset--color--cinza-100); /* Main/Cinza/100 */
+  --main-cinza-200: var(--wp--preset--color--cinza-200); /* Main/Cinza/200 */
+  --main-cinza-300: var(--wp--preset--color--cinza-300); /* Main/Cinza/300 */
+  --main-cinza-400: var(--wp--preset--color--cinza-400); /* Main/Cinza/400 * */
+  --main-cinza-500: var(--wp--preset--color--cinza-500); /* Main/Cinza/500 */
+  --main-cinza-600: var(--wp--preset--color--cinza-600); /* Main/Cinza/600 */
+  --main-cinza-700: var(--wp--preset--color--cinza-700); /* Main/Cinza/700 */
 
-  --main-ciano-100: #e5faf9; /* Main/Ciano/100 */
-  --main-ciano-200: #caf4f2; /* Main/Ciano/200 */
-  --main-ciano-300: #95e9e4; /* Main/Ciano/300 */
-  --main-ciano-400: #2ad2c9; /* Main/Ciano/400 * */
-  --main-ciano-500: #209e97; /* Main/Ciano/500 */
-  --main-ciano-600: #156965; /* Main/Ciano/600 */
-  --main-ciano-700: #104f4c; /* Main/Ciano/700 */
+  --main-ciano-100: var(--wp--preset--color--ciano-100); /* Main/Ciano/100 */
+  --main-ciano-200: var(--wp--preset--color--ciano-200); /* Main/Ciano/200 */
+  --main-ciano-300: var(--wp--preset--color--ciano-300); /* Main/Ciano/300 */
+  --main-ciano-400: var(--wp--preset--color--ciano-400); /* Main/Ciano/400 * */
+  --main-ciano-500: var(--wp--preset--color--ciano-500); /* Main/Ciano/500 */
+  --main-ciano-600: var(--wp--preset--color--ciano-600); /* Main/Ciano/600 */
+  --main-ciano-700: var(--wp--preset--color--ciano-700); /* Main/Ciano/700 */
 
-  --main-teal-100: #e0f4f3; /* Main/Teal/100 */
-  --main-teal-200: #c0e9e6; /* Main/Teal/200 */
-  --main-teal-300: #80d2cc; /* Main/Teal/300 */
-  --main-teal-400: #00a499; /* Main/Teal/400 * */
-  --main-teal-500: #007b73; /* Main/Teal/500 */
-  --main-teal-600: #00524d; /* Main/Teal/600 */
-  --main-teal-700: #003333; /* Main/Teal/700 */
+  --main-teal-100: var(--wp--preset--color--teal-100); /* Main/Teal/100 */
+  --main-teal-200: var(--wp--preset--color--teal-200); /* Main/Teal/200 */
+  --main-teal-300: var(--wp--preset--color--teal-300); /* Main/Teal/300 */
+  --main-teal-400: var(--wp--preset--color--teal-400); /* Main/Teal/400 * */
+  --main-teal-500: var(--wp--preset--color--teal-500); /* Main/Teal/500 */
+  --main-teal-600: var(--wp--preset--color--teal-600); /* Main/Teal/600 */
+  --main-teal-700: var(--wp--preset--color--teal-700); /* Main/Teal/700 */
 
-  --main-botnico-100: #f4faec; /* Main/Botânico/100 */
-  --main-botnico-200: #e9f5d8; /* Main/Botânico/200 */
-  --main-botnico-300: #d2ebb1; /* Main/Botânico/300 */
-  --main-botnico-400: #a4d663; /* Main/Botânico/400 * */
-  --main-botnico-500: #90bc57; /* Main/Botânico/500 */
-  --main-botnico-600: #7ba14b; /* Main/Botânico/600 */
-  --main-botnico-700: #67863f; /* Main/Botânico/700 */
+  --main-botnico-100: var(--wp--preset--color--botanico-100); /* Main/Botânico/100 */
+  --main-botnico-200: var(--wp--preset--color--botanico-200); /* Main/Botânico/200 */
+  --main-botnico-300: var(--wp--preset--color--botanico-300); /* Main/Botânico/300 */
+  --main-botnico-400: var(--wp--preset--color--botanico-400); /* Main/Botânico/400 * */
+  --main-botnico-500: var(--wp--preset--color--botanico-500); /* Main/Botânico/500 */
+  --main-botnico-600: var(--wp--preset--color--botanico-600); /* Main/Botânico/600 */
+  --main-botnico-700: var(--wp--preset--color--botanico-700); /* Main/Botânico/700 */
 
-  --main-laranja-100: #fef4e0; /* Main/Laranja/100 */
-  --main-laranja-200: #fde9c0; /* Main/Laranja/200 */
-  --main-laranja-300: #fbd380; /* Main/Laranja/300 */
-  --main-laranja-400: #f7a600; /* Main/Laranja/400 * */
-  --main-laranja-500: #d99200; /* Main/Laranja/500 */
-  --main-laranja-600: #ba7d00; /* Main/Laranja/600 */
-  --main-laranja-700: #7c5300; /* Main/Laranja/700 */
+  --main-laranja-100: var(--wp--preset--color--laranja-100); /* Main/Laranja/100 */
+  --main-laranja-200: var(--wp--preset--color--laranja-200); /* Main/Laranja/200 */
+  --main-laranja-300: var(--wp--preset--color--laranja-300); /* Main/Laranja/300 */
+  --main-laranja-400: var(--wp--preset--color--laranja-400); /* Main/Laranja/400 * */
+  --main-laranja-500: var(--wp--preset--color--laranja-500); /* Main/Laranja/500 */
+  --main-laranja-600: var(--wp--preset--color--laranja-600); /* Main/Laranja/600 */
+  --main-laranja-700: var(--wp--preset--color--laranja-700); /* Main/Laranja/700 */
 
-  --neutral-bw-black: #000000; /* Neutral/bw/black */
-  --neutral-bw-white: #ffffff; /* Neutral/bw/white */
+  --neutral-bw-black: var(--wp--preset--color--preto); /* Neutral/bw/black */
+  --neutral-bw-white: var(--wp--preset--color--branco); /* Neutral/bw/white */
 
   /* Figma file spells collection "Monochorme"; tokens match those swatches */
-  --monochrome-light-100: #eeeeee; /* Monochorme/light/100 */
-  --monochrome-light-200: #eaeaea; /* Monochorme/light/200 */
-  --monochrome-light-300: #e6e6e6; /* Monochorme/light/300 */
-  --monochrome-light-400: #dddddd; /* Monochorme/light/400 */
-  --monochrome-light-500: #d5d5d5; /* Monochorme/light/500 */
-  --monochrome-light-600: #cccccc; /* Monochorme/light/600 */
+  --monochrome-light-100: var(
+    --wp--preset--color--monocromatico-claro-100
+  ); /* Monochorme/light/100 */
+  --monochrome-light-200: var(
+    --wp--preset--color--monocromatico-claro-200
+  ); /* Monochorme/light/200 */
+  --monochrome-light-300: var(
+    --wp--preset--color--monocromatico-claro-300
+  ); /* Monochorme/light/300 */
+  --monochrome-light-400: var(
+    --wp--preset--color--monocromatico-claro-400
+  ); /* Monochorme/light/400 */
+  --monochrome-light-500: var(
+    --wp--preset--color--monocromatico-claro-500
+  ); /* Monochorme/light/500 */
+  --monochrome-light-600: var(
+    --wp--preset--color--monocromatico-claro-600
+  ); /* Monochorme/light/600 */
 
-  --monochrome-grey-100: #969696; /* Monochorme/grey/100 */
-  --monochrome-grey-200: #939393; /* Monochorme/grey/200 */
-  --monochrome-grey-300: #8f8f8f; /* Monochorme/grey/300 */
-  --monochrome-grey-400: #878787; /* Monochorme/grey/400 */
-  --monochrome-grey-500: #808080; /* Monochorme/grey/500 */
-  --monochrome-grey-600: #787878; /* Monochorme/grey/600 */
+  --monochrome-grey-100: var(
+    --wp--preset--color--monocromatico-cinzento-100
+  ); /* Monochorme/grey/100 */
+  --monochrome-grey-200: var(
+    --wp--preset--color--monocromatico-cinzento-200
+  ); /* Monochorme/grey/200 */
+  --monochrome-grey-300: var(
+    --wp--preset--color--monocromatico-cinzento-300
+  ); /* Monochorme/grey/300 */
+  --monochrome-grey-400: var(
+    --wp--preset--color--monocromatico-cinzento-400
+  ); /* Monochorme/grey/400 */
+  --monochrome-grey-500: var(
+    --wp--preset--color--monocromatico-cinzento-500
+  ); /* Monochorme/grey/500 */
+  --monochrome-grey-600: var(
+    --wp--preset--color--monocromatico-cinzento-600
+  ); /* Monochorme/grey/600 */
 
-  --monochrome-dark-100: #323232; /* Monochorme/dark/100 */
-  --monochrome-dark-200: #2d2d2d; /* Monochorme/dark/200 */
-  --monochrome-dark-300: #2b2b2b; /* Monochorme/dark/300 */
-  --monochrome-dark-400: #282828; /* Monochorme/dark/400 */
-  --monochrome-dark-500: #232323; /* Monochorme/dark/500 */
-  --monochrome-dark-600: #1e1e1e; /* Monochorme/dark/600 */
+  --monochrome-dark-100: var(
+    --wp--preset--color--monocromatico-escuro-100
+  ); /* Monochorme/dark/100 */
+  --monochrome-dark-200: var(
+    --wp--preset--color--monocromatico-escuro-200
+  ); /* Monochorme/dark/200 */
+  --monochrome-dark-300: var(
+    --wp--preset--color--monocromatico-escuro-300
+  ); /* Monochorme/dark/300 */
+  --monochrome-dark-400: var(
+    --wp--preset--color--monocromatico-escuro-400
+  ); /* Monochorme/dark/400 */
+  --monochrome-dark-500: var(
+    --wp--preset--color--monocromatico-escuro-500
+  ); /* Monochorme/dark/500 */
+  --monochrome-dark-600: var(
+    --wp--preset--color--monocromatico-escuro-600
+  ); /* Monochorme/dark/600 */
 
   /* Tailwind v4 color utilities → bg-*, text-*, border-*, ring-*, etc. */
   --color-main-cinza-100: var(--main-cinza-100);
@@ -226,13 +262,13 @@
   --color-monochrome-dark-600: var(--monochrome-dark-600);
 
   /* Subset for shadcn/ui chart primitives (Recharts tooltips, borders) */
-  --color-background: var(--neutral-bw-white);
-  --color-foreground: var(--main-cinza-700);
+  --color-background: var(--wp--preset--color--background);
+  --color-foreground: var(--wp--preset--color--foreground);
   --color-muted: var(--main-cinza-200);
-  --color-muted-foreground: var(--main-cinza-500);
+  --color-muted-foreground: var(--wp--preset--color--muted);
   --color-border: var(--main-cinza-300);
   --color-card: var(--neutral-bw-white);
-  --color-card-foreground: var(--main-cinza-700);
+  --color-card-foreground: var(--wp--preset--color--foreground);
 
   /** Space to clear the fixed site header (see NomiaHeader.astro bar height). */
   --nomia-header-clearance: 5.5rem;

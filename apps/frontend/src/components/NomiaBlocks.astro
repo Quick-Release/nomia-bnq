@@ -1,19 +1,24 @@
 ---
 import WpBlockRenderer from "./wp-blocks/WpBlockRenderer.astro";
 import type { NomiaContent } from "../lib/nomia-content";
-import type { WordPressImage } from "../lib/wordpress";
+import type { DesignPresets, WordPressImage } from "../lib/wordpress";
+import { blockPresetStyles } from "../lib/wp-block-styles";
 
 // A page or post built with Nomia's blocks, rendered from its stored blocks by
 // the Nomia block components (migrated from bioeconomia.pt's Astro renderer).
 interface Props {
   nomia: NomiaContent;
+  /** GQ Design's presets it was served with, for its blocks' `has-<slug>-*` classes. */
+  design: DesignPresets;
   /** The page's featured image: a page hero without its own image shows it. */
   featuredImage?: WordPressImage | null;
 }
 
-const { nomia, featuredImage = null } = Astro.props;
+const { nomia, design, featuredImage = null } = Astro.props;
+const { colorRules } = blockPresetStyles(design.spacingSizes, design.colors, ".nomia-blocks");
 ---
 
+<style is:global set:html={colorRules} />
 <main class="nomia-blocks">
   <WpBlockRenderer blocks={nomia.blocks} bare wrapCoreBlocks pageFeaturedImage={featuredImage} />
 </main>

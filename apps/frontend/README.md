@@ -214,6 +214,13 @@ structured-blocks:sync` writes the generated files here
 - `src/styles/nomia-theme.css` holds Nomia's design tokens (Tailwind
   `@theme`) and core-block styles; `src/components/layout/FontLinks.astro`
   loads its fonts. `public/images/` holds the blocks' default images.
+- Colors are GQ Design's palette (GETQUICK → Design → Branding → Colors):
+  the tokens are WordPress's `--wp--preset--color--<slug>` variables, which
+  the Layout defines on `:root` from the stored design presets, and core
+  blocks' preset slugs resolve to the same variables. No color is copied
+  here; `tests/nomia-palette.test.mjs` fails on a slug the palette lacks.
+  `apps/cms/scripts/nomia-palette.php` applies Nomia's palette to a CMS once
+  (`wp eval-file scripts/nomia-palette.php`).
 - `/wp-block-preview` renders one block for the editor's preview iframe;
   `/wp-block-preview/catalog` renders every block's fixture.
 - Blocks render only what they store: the podcast list and the platforms

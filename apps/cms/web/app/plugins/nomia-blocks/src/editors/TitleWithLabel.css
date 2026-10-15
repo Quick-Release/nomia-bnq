@@ -7,9 +7,9 @@
  * a per-field token chosen in the sidebar typography panels replaces inline.
  */
 .getquick-title-with-label-editor {
-  background: #ffffff;
+  background: var(--wp--preset--color--branco);
   box-sizing: border-box;
-  color: #444444;
+  color: var(--wp--preset--color--cinza-700);
   font-family:
     Montserrat,
     ui-sans-serif,
@@ -52,7 +52,7 @@
 }
 
 .getquick-title-with-label-editor__eyebrow-icon {
-  color: #2ad2c9;
+  color: var(--wp--preset--color--ciano-400);
   display: inline-flex;
   flex: 0 0 24px;
   height: 24px;
@@ -65,7 +65,7 @@
 }
 
 .getquick-title-with-label-editor__eyebrow-label {
-  color: #2ad2c9;
+  color: var(--wp--preset--color--ciano-400);
   font-size: 16px;
   font-weight: 500;
   letter-spacing: 0;
@@ -78,7 +78,7 @@
 /* Both lines are one heading, laid out as a subgrid of the block grid so line 1
    sits beside the eyebrow and line 2 runs full width, as on the site. */
 .getquick-title-with-label-editor__title {
-  color: #444444;
+  color: var(--wp--preset--color--cinza-700);
   display: grid;
   font-size: 32px;
   font-weight: 600;

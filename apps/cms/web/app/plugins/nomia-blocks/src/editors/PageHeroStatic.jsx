@@ -25,7 +25,7 @@ import {
 import { useCallback } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 import { contractEnum } from '../lib/contract-enum';
-import { NOMIA_SECTION_COLORS } from '../lib/colors';
+import { useSiteColors } from '../lib/colors';
 import {
 	pageHeroCanvasPadding,
 	pageHeroCanvasStyle,
@@ -161,12 +161,13 @@ function textFieldLabel( field ) {
  * The stored colour is a swatch name where the palette has one, so the closed
  * control reads as a theme choice rather than a hex code.
  *
- * @param {string}  color Effective six-digit hex colour, lowercase.
- * @param {boolean} isSet Whether the block stores an override for this text.
+ * @param {string}  color  Effective six-digit hex colour, lowercase.
+ * @param {boolean} isSet  Whether the block stores an override for this text.
+ * @param {Array}   colors The site's palette (useSiteColors).
  * @return {string} Label for the closed colour control.
  */
-function colorSwatchLabel( color, isSet ) {
-	const swatch = NOMIA_SECTION_COLORS.find(
+function colorSwatchLabel( color, isSet, colors ) {
+	const swatch = colors.find(
 		( option ) => option.color.toLowerCase() === color
 	);
 	if ( swatch ) {
@@ -197,6 +198,7 @@ function colorSwatchLabel( color, isSet ) {
  * @param {Function} props.onChange Commits a colour, or a falsy value to clear.
  */
 function TextColorControl( { id, label, color, isSet, onChange } ) {
+	const siteColors = useSiteColors();
 	return (
 		<BaseControl __nextHasNoMarginBottom id={ id } label={ label }>
 			<Dropdown
@@ -212,13 +214,13 @@ function TextColorControl( { id, label, color, isSet, onChange } ) {
 						aria-haspopup="true"
 					>
 						<ColorIndicator colorValue={ color } />
-						<span>{ colorSwatchLabel( color, isSet ) }</span>
+						<span>{ colorSwatchLabel( color, isSet, siteColors ) }</span>
 					</Button>
 				) }
 				renderContent={ () => (
 					<div className="page-hero-static-editor__color-palette">
 						<ColorPalette
-							colors={ NOMIA_SECTION_COLORS }
+							colors={ siteColors }
 							value={ color }
 							enableAlpha={ false }
 							clearable={ isSet }

@@ -66,7 +66,7 @@
 }
 
 .getquick-nomia-blocks-media-upload__preview span {
-  color: #1e1e1e;
+  color: var(--wp--preset--color--monocromatico-escuro-600);
   display: block;
   font-size: 12px;
   line-height: 1.4;
@@ -76,7 +76,7 @@
 }
 
 .getquick-nomia-blocks-selection-button {
-  background: #fff;
+  background: var(--wp--preset--color--branco);
   border: 1px solid #3858e9;
   border-radius: 2px;
   color: #313131;
@@ -87,7 +87,7 @@
 
 .getquick-nomia-blocks-selection-button[aria-pressed="true"] {
   background: #3858e9;
-  color: #fff;
+  color: var(--wp--preset--color--branco);
 }
 
 .getquick-nomia-blocks-selection-button:focus-visible {
@@ -129,14 +129,14 @@
 }
 
 .getquick-nomia-blocks-array-field__item-header span {
-  color: #1e1e1e;
+  color: var(--wp--preset--color--monocromatico-escuro-600);
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
 }
 
 .getquick-nomia-blocks-inline-editor {
-  background: #fff;
+  background: var(--wp--preset--color--branco);
   border: 1px solid #dcdcde;
   border-radius: 2px;
   padding: 16px;
@@ -167,7 +167,7 @@
 
 .getquick-nomia-page-background-panel__swatch {
   aspect-ratio: 1;
-  background: var(--nomia-page-background-swatch, #fff);
+  background: var(--nomia-page-background-swatch, var(--wp--preset--color--branco));
   border: 1px solid #dcdcde;
   border-radius: 2px;
   box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.45);
@@ -187,7 +187,7 @@
 }
 
 .getquick-nomia-page-background-panel__preview {
-  background: var(--nomia-page-background-preview, #fff);
+  background: var(--nomia-page-background-preview, var(--wp--preset--color--branco));
   border: 1px solid #dcdcde;
   border-radius: 2px;
   display: block;

@@ -6,11 +6,11 @@
  */
 .getquick-contact-details-card-editor {
   align-items: center;
-  background: #f0f0f0;
-  border: 2px solid #e1e1e1;
+  background: var(--wp--preset--color--cinza-100);
+  border: 2px solid var(--wp--preset--color--cinza-200);
   border-radius: 16px;
   box-sizing: border-box;
-  color: #444444;
+  color: var(--wp--preset--color--cinza-700);
   display: flex;
   flex-wrap: wrap;
   font-family:
@@ -36,7 +36,7 @@
   background: transparent;
   border: 0;
   border-radius: 8px;
-  color: #878787;
+  color: var(--wp--preset--color--cinza-400);
   cursor: pointer;
   display: flex;
   flex-shrink: 0;
@@ -47,7 +47,7 @@
 }
 
 .getquick-contact-details-card-editor__icon[data-empty="true"] {
-  border: 1px dashed #878787;
+  border: 1px dashed var(--wp--preset--color--cinza-400);
   font-size: 28px;
 }
 
@@ -89,7 +89,7 @@
 
 .getquick-contact-details-card-editor__button {
   align-items: center;
-  border: 1px solid #444444;
+  border: 1px solid var(--wp--preset--color--cinza-700);
   border-radius: 40px;
   display: inline-flex;
   flex-shrink: 0;
@@ -122,10 +122,10 @@
 
 /* Editor-only: shows where the button points, or that it needs a link. */
 .getquick-contact-details-card-editor__link-chip {
-  background: #ffffff;
-  border: 1px solid #c3c3c3;
+  background: var(--wp--preset--color--branco);
+  border: 1px solid var(--wp--preset--color--cinza-300);
   border-radius: 4px;
-  color: #444444;
+  color: var(--wp--preset--color--cinza-700);
   cursor: pointer;
   font-family: inherit;
   font-size: 12px;

@@ -52,9 +52,17 @@ Blocks with the `preview` experience show the Frontend's rendering of their
 attributes in an iframe: `<GETQUICK_NOMIA_FE_URL>/wp-block-preview`.
 `config/application.php` sets `GETQUICK_NOMIA_FE_URL` from
 `GETQUICK_FRONTEND_URL` (`https://nomia.bnq.pt` in production, the Astro dev
-server locally). To require a token, set `NOMIA_WP_BLOCK_PREVIEW_TOKEN` when
-the Frontend is built and the matching `GETQUICK_NOMIA_BLOCK_PREVIEW_TOKEN`
-in WordPress; without one the preview is open, as on bioeconomia.pt.
+server locally). This site sets no preview token, so the preview is open, as
+on bioeconomia.pt.
+
+## Colors
+
+Every color control (the page background, the Section block, the page
+heroes' text and column colors) offers the site's palette as the editor has
+it: GQ Design's colors (GETQUICK → Design → Branding → Colors), through
+`useSiteColors()` in `src/lib/colors.jsx`. The editor styles name palette
+colors by their preset variables (`--wp--preset--color--<slug>`). Nomia's
+palette is applied to a CMS once by `apps/cms/scripts/nomia-palette.php`.
 
 ## The editor allowlist
 

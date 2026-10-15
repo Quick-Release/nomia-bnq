@@ -25,9 +25,9 @@ const siteTitle = content?.page.title || content?.settings.title || "Nomia";
 const isVideoHeroPage = content?.page.hasVideoHero ?? false;
 ---
 
-<Layout title={siteTitle} description={content?.settings.description} chrome={chrome} language={language} alternates={alternates} pageBackgroundColor={content?.page.nomia?.pageBackgroundColor}>
+<Layout title={siteTitle} description={content?.settings.description} chrome={chrome} language={language} alternates={alternates} design={content ? { spacingSizes: content.spacingSizes, colors: content.colors } : undefined} pageBackgroundColor={content?.page.nomia?.pageBackgroundColor}>
   {content?.page.nomia ? (
-    <NomiaBlocks nomia={content.page.nomia} />
+    <NomiaBlocks nomia={content.page.nomia} design={content} />
   ) : content?.page.content ? (
     <>
       <style is:global set:html={colorRules} />

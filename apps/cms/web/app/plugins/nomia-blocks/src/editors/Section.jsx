@@ -14,8 +14,8 @@ import {
 import { __ } from '@wordpress/i18n';
 import {
 	isLightColor,
-	NOMIA_SECTION_COLORS,
 	normalizeHexColor,
+	useSiteColors,
 } from '../lib/colors';
 import { contractEnum } from '../lib/contract-enum';
 import { MediaUploadButton } from '../fields/MediaUploadButton';
@@ -112,6 +112,7 @@ const HORIZONTAL_PADDING_PREVIEW = {
 };
 
 export function SectionEdit( { attributes, setAttributes } ) {
+	const siteColors = useSiteColors();
 	const backgroundColor = normalizeHexColor( attributes.backgroundColor );
 	const paddingTop = attributes.paddingTop || 'medium';
 	const paddingBottom = attributes.paddingBottom || 'medium';
@@ -156,13 +157,13 @@ export function SectionEdit( { attributes, setAttributes } ) {
 					initialOpen
 				>
 					<div className="nomia-section-editor__swatches">
-						{ NOMIA_SECTION_COLORS.map( ( option ) => {
+						{ siteColors.map( ( option ) => {
 							const color = normalizeHexColor( option.color );
 							const isSelected = backgroundColor === color;
 
 							return (
 								<button
-									key={ option.color }
+									key={ option.slug }
 									type="button"
 									className="nomia-section-editor__swatch"
 									data-selected={

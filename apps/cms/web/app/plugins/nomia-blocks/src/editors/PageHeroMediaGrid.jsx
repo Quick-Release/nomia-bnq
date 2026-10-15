@@ -19,6 +19,7 @@ import {
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { UrlField } from '../fields/UrlField';
+import { useSiteColors } from '../lib/colors';
 import './PageHeroMediaGrid.css';
 
 const DEFAULT_COLUMN_BACKGROUND = '#ffffff';
@@ -30,16 +31,6 @@ const DEFAULT_TEXT_VERTICAL_ALIGN = 'bottom';
 const SHARE_HREF = 'https://nomia.getquick.io/partilhar/';
 const SHARE_LABEL = 'Partilhar';
 const TEXT_VERTICAL_ALIGN_OPTIONS = new Set( [ 'top', 'bottom' ] );
-
-const COLUMN_COLOR_OPTIONS = [
-	{ name: 'White', color: '#ffffff' },
-	{ name: 'Orange', color: '#f2a900' },
-	{ name: 'Teal', color: '#007b73' },
-	{ name: 'Dark teal', color: '#003333' },
-	{ name: 'Cyan', color: '#00a9ce' },
-	{ name: 'Botanical', color: '#67863f' },
-	{ name: 'Grey', color: '#444444' },
-];
 
 function TextTopIcon() {
 	return (
@@ -127,6 +118,7 @@ function ColumnPanel( {
 	attributes,
 	setAttributes,
 } ) {
+	const siteColors = useSiteColors();
 	const backgroundColor =
 		attributes[ backgroundName ] || DEFAULT_COLUMN_BACKGROUND;
 	const hoverBackgroundColor =
@@ -146,7 +138,7 @@ function ColumnPanel( {
 				{ __( 'Background color', 'getquick-nomia-blocks' ) }
 			</p>
 			<ColorPalette
-				colors={ COLUMN_COLOR_OPTIONS }
+				colors={ siteColors }
 				value={ backgroundColor }
 				onChange={ ( next ) =>
 					setAttributes( {
@@ -158,7 +150,7 @@ function ColumnPanel( {
 				{ __( 'Hover color', 'getquick-nomia-blocks' ) }
 			</p>
 			<ColorPalette
-				colors={ COLUMN_COLOR_OPTIONS }
+				colors={ siteColors }
 				value={ hoverBackgroundColor }
 				onChange={ ( next ) =>
 					setAttributes( {
@@ -171,7 +163,7 @@ function ColumnPanel( {
 				{ __( 'Title color', 'getquick-nomia-blocks' ) }
 			</p>
 			<ColorPalette
-				colors={ COLUMN_COLOR_OPTIONS }
+				colors={ siteColors }
 				value={ titleColor }
 				onChange={ ( next ) =>
 					setAttributes( {
@@ -183,7 +175,7 @@ function ColumnPanel( {
 				{ __( 'Paragraph color', 'getquick-nomia-blocks' ) }
 			</p>
 			<ColorPalette
-				colors={ COLUMN_COLOR_OPTIONS }
+				colors={ siteColors }
 				value={ textColor }
 				onChange={ ( next ) =>
 					setAttributes( {

@@ -536,6 +536,30 @@ export async function pageChrome(siteOrigin?: string): Promise<SiteChrome | null
   }
 }
 
+/**
+ * The stored design presets (GQ Design's palette and spacing), for a page that
+ * wasn't served with its own, or null without them. In `pnpm dev` without a
+ * store they are read from the CMS, as the chrome is.
+ */
+export async function pageDesign(): Promise<DesignPresets | null> {
+  const store = await boundStore();
+  if (!store) {
+    // Only `pnpm dev` reads the CMS for them: a built Frontend without its
+    // store serves no CMS content.
+    if (!import.meta.env.DEV) return null;
+    const design = await getDesignPresets();
+    return design.kind === "found" ? design.content : null;
+  }
+  try {
+    const stored = usable(await store.read(DESIGN, parseDesign));
+    return stored?.state === "published" ? stored.content : null;
+  } catch (error) {
+    if (!(error instanceof StoreFailure)) throw error;
+    console.error(`Delivery: the design presets can't be served (store): ${error.message}`);
+    return null;
+  }
+}
+
 export type RefreshFailureReason = CmsFailureReason | "partial" | "store";
 
 interface RefreshFailure {
