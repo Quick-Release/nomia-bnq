@@ -1,0 +1,29 @@
+---
+import NomiaBibliotecaSection from "../../sections/landing/NomiaBibliotecaSection.astro";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { optionalText } from "../normalizers";
+import { readLibraryGridCards } from "../../../structured-blocks/registrations/library-grid";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props { block: WpParsedBlock }
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/library-grid">;
+const cards = readLibraryGridCards(attrs);
+const eyebrow = optionalText(attrs.eyebrow) ?? "";
+const heading = optionalText(attrs.heading) ?? "";
+const body = optionalText(attrs.body) ?? "";
+const ctaHref = optionalText(attrs.ctaHref, attrs.ctaUrl) ?? "";
+const ctaLabel = optionalText(attrs.ctaLabel) ?? "";
+const canRender = Boolean(heading && body && ctaHref && ctaLabel && cards.length > 0);
+---
+
+{canRender ? (
+  <NomiaBibliotecaSection
+    eyebrow={eyebrow}
+    heading={heading}
+    body={body}
+    ctaHref={ctaHref}
+    ctaLabel={ctaLabel}
+    cards={cards}
+  />
+) : null}

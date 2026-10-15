@@ -19,6 +19,7 @@ import {
   type StoredPublication,
   type Unusable,
 } from "./publications";
+import { storedNomiaContent } from "./nomia-content";
 import { frontendBindings } from "./runtime";
 import {
   defaultLanguage,
@@ -164,7 +165,13 @@ const spacingSizes = z.array(z.object({ slug: z.string(), size: z.string() }));
 const colors = z.array(z.object({ slug: z.string(), color: z.string() }));
 const homePublication = z.object({
   settings: z.object({ title: z.string(), description: z.string() }),
-  page: z.object({ title: z.string(), content: z.string(), hasVideoHero: z.boolean() }),
+  page: z.object({
+    title: z.string(),
+    content: z.string(),
+    hasVideoHero: z.boolean(),
+    // Built with Nomia's blocks. Optional, so rows stored before it still serve.
+    nomia: storedNomiaContent.optional(),
+  }),
   spacingSizes,
   colors,
 });
@@ -181,6 +188,8 @@ const entryPublication = z.object({
   date: z.string(),
   featuredImage: image,
   hasVideoHero: z.boolean(),
+  // Built with Nomia's blocks. Optional, so rows stored before it still serve.
+  nomia: storedNomiaContent.optional(),
   spacingSizes,
   colors,
 });

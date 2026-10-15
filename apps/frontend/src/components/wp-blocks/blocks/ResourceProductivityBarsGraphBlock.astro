@@ -1,0 +1,43 @@
+---
+import NomiaProdutividadeRecursosSection from "../../charts/bar/NomiaProdutividadeRecursosSection.astro";
+import type { ResourceProductivityBarsPoint } from "../../charts/bar/NomiaProdutividadeRecursosChart";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { firstArray, mapValid, wpNumber as num, wpText as text } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props { block: WpParsedBlock }
+type PointAttrs = { year?: unknown; label?: unknown; value?: unknown };
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/resource-productivity-bars">;
+
+function point(raw: unknown): ResourceProductivityBarsPoint | null {
+  if (!raw || typeof raw !== "object") return null;
+  const item = raw as PointAttrs;
+  const year = num(item.year);
+  const value = num(item.value);
+  if (!Number.isInteger(year) || !Number.isFinite(value) || value < 0) return null;
+  return { year, value, label: text(item.label) || undefined };
+}
+
+const points = mapValid(firstArray(attrs.points, attrs.items), point);
+const yMax = num(attrs.yMax);
+const title = text(attrs.title);
+const badge = text(attrs.badge);
+const intro = text(attrs.intro);
+const metricLabel = text(attrs.metricLabel);
+const periodLabel = text(attrs.periodLabel);
+const scopeLabel = text(attrs.scopeLabel);
+---
+
+{points.length > 0 ? (
+  <NomiaProdutividadeRecursosSection
+    title={title}
+    badge={badge}
+    intro={intro}
+    points={points}
+    yMax={Number.isFinite(yMax) ? yMax : undefined}
+    metricLabel={metricLabel}
+    periodLabel={periodLabel}
+    scopeLabel={scopeLabel}
+  />
+) : null}

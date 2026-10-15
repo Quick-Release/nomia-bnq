@@ -1,0 +1,37 @@
+---
+import NomiaEconomiaCircularIndicadoresSpotlightSection from "../../sections/economia-circular/NomiaEconomiaCircularIndicadoresSpotlightSection.astro";
+import type { EconomiaCircularIndicatorSpotlightCard } from "../../sections/economia-circular/NomiaEconomiaCircularIndicadoresSpotlightSection.astro";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { enumText, firstArray, mapValid, optionalText, textOr } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props { block: WpParsedBlock }
+type CardAttrs = Partial<Record<keyof EconomiaCircularIndicatorSpotlightCard, unknown>> & { imageUrl?: unknown };
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/circular-economy-indicators-spotlight">;
+function card(raw: unknown): EconomiaCircularIndicatorSpotlightCard | null {
+  if (!raw || typeof raw !== "object") return null;
+  const item = raw as CardAttrs;
+  const title = textOr(item.title);
+  const description = textOr(item.description);
+  const imageSrc = textOr(item.imageSrc, item.imageUrl);
+  if (!title || !description || !imageSrc) return null;
+  return { title, description, imageSrc, imageAlt: textOr(item.imageAlt), href: optionalText(item.href), layout: enumText(item.layout, ["start", "stagger"], "start") };
+}
+const cards = mapValid(firstArray(attrs.cards, attrs.items), card);
+const eyebrow = optionalText(attrs.eyebrow) ?? "";
+const heading = optionalText(attrs.heading) ?? "";
+const ctaHref = optionalText(attrs.ctaHref, attrs.ctaUrl) ?? "";
+const ctaLabel = optionalText(attrs.ctaLabel) ?? "";
+const canRender = Boolean(heading && ctaHref && ctaLabel && cards.length > 0);
+---
+
+{canRender ? (
+  <NomiaEconomiaCircularIndicadoresSpotlightSection
+    eyebrow={eyebrow}
+    heading={heading}
+    ctaHref={ctaHref}
+    ctaLabel={ctaLabel}
+    cards={cards}
+  />
+) : null}

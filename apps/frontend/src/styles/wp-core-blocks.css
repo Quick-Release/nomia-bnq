@@ -1,0 +1,906 @@
+/*
+ * Static core blocks rendered from their saved HTML.
+ *
+ * Astro does not load WordPress's block-library stylesheet (ADR 0013), so the
+ * core blocks the editor allows beyond Astro's own renderers — group, cover,
+ * media & text, gallery, audio, video, table, separator, spacer, code,
+ * preformatted, pullquote, verse, details, math — get their layout here. The
+ * rules follow core's own defaults so the page reads like the editor.
+ *
+ * The preset section is generated from the nomia-black theme.json palette and
+ * font sizes; `wp-core-blocks-css.test.mjs` fails when it drifts. WordPress
+ * marks preset classes `!important`, and so does this copy.
+ */
+
+@layer components {
+  /* Native `core/button` variation sourced from bio-botao/index.html. */
+  .nomia-bioeconomia-button-wrapper {
+    margin-inline: auto;
+    max-width: 100%;
+    width: fit-content;
+  }
+
+  .nomia-bioeconomia-button {
+    align-items: center;
+    animation: nomia-bioeconomia-button-click 2s ease-in-out infinite;
+    background: #2ad2c9;
+    border: 0;
+    border-radius: 999px;
+    box-shadow:
+      -1rem -1rem 0 #00524d,
+      -2rem -2rem 0 #808080;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    font:
+      900 clamp(1.25rem, 4vw, 2.5rem) / 1.1 Arial,
+      sans-serif;
+    justify-content: center;
+    letter-spacing: 0.02em;
+    max-width: 100%;
+    padding: 2rem 3rem;
+    text-align: center;
+    text-decoration: none !important;
+    width: fit-content;
+  }
+
+  .nomia-bioeconomia-button > * {
+    color: inherit !important;
+  }
+
+  .nomia-bioeconomia-button:focus-visible {
+    outline: 3px solid #0a2822;
+    outline-offset: 8px;
+  }
+
+  @keyframes nomia-bioeconomia-button-click {
+    0%,
+    78%,
+    100% {
+      color: #fff;
+      transform: translate(0, 0);
+      box-shadow:
+        -1rem -1rem 0 #00524d,
+        -2rem -2rem 0 #808080;
+    }
+
+    84%,
+    92% {
+      color: #fcd380;
+      transform: translate(-0.35rem, -0.35rem) scale(0.98);
+      box-shadow:
+        -0.5rem -0.5rem 0 #00524d,
+        -1rem -1rem 0 #808080;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nomia-bioeconomia-button {
+      animation: none;
+    }
+  }
+
+  /* Theme presets (generated from theme.json). */
+  .has-main-cinza-100-color {
+    color: #f0f0f0 !important;
+  }
+  .has-main-cinza-100-background-color {
+    background-color: #f0f0f0 !important;
+  }
+  .has-main-cinza-100-border-color {
+    border-color: #f0f0f0 !important;
+  }
+  .has-main-cinza-200-color {
+    color: #e1e1e1 !important;
+  }
+  .has-main-cinza-200-background-color {
+    background-color: #e1e1e1 !important;
+  }
+  .has-main-cinza-200-border-color {
+    border-color: #e1e1e1 !important;
+  }
+  .has-main-cinza-400-color {
+    color: #878787 !important;
+  }
+  .has-main-cinza-400-background-color {
+    background-color: #878787 !important;
+  }
+  .has-main-cinza-400-border-color {
+    border-color: #878787 !important;
+  }
+  .has-main-cinza-500-color {
+    color: #777777 !important;
+  }
+  .has-main-cinza-500-background-color {
+    background-color: #777777 !important;
+  }
+  .has-main-cinza-500-border-color {
+    border-color: #777777 !important;
+  }
+  .has-main-cinza-600-color {
+    color: #666666 !important;
+  }
+  .has-main-cinza-600-background-color {
+    background-color: #666666 !important;
+  }
+  .has-main-cinza-600-border-color {
+    border-color: #666666 !important;
+  }
+  .has-main-cinza-700-color {
+    color: #444444 !important;
+  }
+  .has-main-cinza-700-background-color {
+    background-color: #444444 !important;
+  }
+  .has-main-cinza-700-border-color {
+    border-color: #444444 !important;
+  }
+  .has-main-ciano-100-color {
+    color: #e5faf9 !important;
+  }
+  .has-main-ciano-100-background-color {
+    background-color: #e5faf9 !important;
+  }
+  .has-main-ciano-100-border-color {
+    border-color: #e5faf9 !important;
+  }
+  .has-main-ciano-200-color {
+    color: #caf4f2 !important;
+  }
+  .has-main-ciano-200-background-color {
+    background-color: #caf4f2 !important;
+  }
+  .has-main-ciano-200-border-color {
+    border-color: #caf4f2 !important;
+  }
+  .has-main-ciano-400-color {
+    color: #2ad2c9 !important;
+  }
+  .has-main-ciano-400-background-color {
+    background-color: #2ad2c9 !important;
+  }
+  .has-main-ciano-400-border-color {
+    border-color: #2ad2c9 !important;
+  }
+  .has-main-ciano-500-color {
+    color: #209e97 !important;
+  }
+  .has-main-ciano-500-background-color {
+    background-color: #209e97 !important;
+  }
+  .has-main-ciano-500-border-color {
+    border-color: #209e97 !important;
+  }
+  .has-main-ciano-600-color {
+    color: #156965 !important;
+  }
+  .has-main-ciano-600-background-color {
+    background-color: #156965 !important;
+  }
+  .has-main-ciano-600-border-color {
+    border-color: #156965 !important;
+  }
+  .has-main-ciano-700-color {
+    color: #104f4c !important;
+  }
+  .has-main-ciano-700-background-color {
+    background-color: #104f4c !important;
+  }
+  .has-main-ciano-700-border-color {
+    border-color: #104f4c !important;
+  }
+  .has-main-teal-100-color {
+    color: #e0f4f3 !important;
+  }
+  .has-main-teal-100-background-color {
+    background-color: #e0f4f3 !important;
+  }
+  .has-main-teal-100-border-color {
+    border-color: #e0f4f3 !important;
+  }
+  .has-main-teal-200-color {
+    color: #c0e9e6 !important;
+  }
+  .has-main-teal-200-background-color {
+    background-color: #c0e9e6 !important;
+  }
+  .has-main-teal-200-border-color {
+    border-color: #c0e9e6 !important;
+  }
+  .has-main-teal-400-color {
+    color: #00a499 !important;
+  }
+  .has-main-teal-400-background-color {
+    background-color: #00a499 !important;
+  }
+  .has-main-teal-400-border-color {
+    border-color: #00a499 !important;
+  }
+  .has-main-teal-500-color {
+    color: #007b73 !important;
+  }
+  .has-main-teal-500-background-color {
+    background-color: #007b73 !important;
+  }
+  .has-main-teal-500-border-color {
+    border-color: #007b73 !important;
+  }
+  .has-main-teal-600-color {
+    color: #00524d !important;
+  }
+  .has-main-teal-600-background-color {
+    background-color: #00524d !important;
+  }
+  .has-main-teal-600-border-color {
+    border-color: #00524d !important;
+  }
+  .has-main-teal-700-color {
+    color: #003333 !important;
+  }
+  .has-main-teal-700-background-color {
+    background-color: #003333 !important;
+  }
+  .has-main-teal-700-border-color {
+    border-color: #003333 !important;
+  }
+  .has-main-botanico-100-color {
+    color: #f4faec !important;
+  }
+  .has-main-botanico-100-background-color {
+    background-color: #f4faec !important;
+  }
+  .has-main-botanico-100-border-color {
+    border-color: #f4faec !important;
+  }
+  .has-main-botanico-200-color {
+    color: #e9f5d8 !important;
+  }
+  .has-main-botanico-200-background-color {
+    background-color: #e9f5d8 !important;
+  }
+  .has-main-botanico-200-border-color {
+    border-color: #e9f5d8 !important;
+  }
+  .has-main-botanico-400-color {
+    color: #a4d663 !important;
+  }
+  .has-main-botanico-400-background-color {
+    background-color: #a4d663 !important;
+  }
+  .has-main-botanico-400-border-color {
+    border-color: #a4d663 !important;
+  }
+  .has-main-botanico-500-color {
+    color: #90bc57 !important;
+  }
+  .has-main-botanico-500-background-color {
+    background-color: #90bc57 !important;
+  }
+  .has-main-botanico-500-border-color {
+    border-color: #90bc57 !important;
+  }
+  .has-main-botanico-600-color {
+    color: #7ba14b !important;
+  }
+  .has-main-botanico-600-background-color {
+    background-color: #7ba14b !important;
+  }
+  .has-main-botanico-600-border-color {
+    border-color: #7ba14b !important;
+  }
+  .has-main-botanico-700-color {
+    color: #67863f !important;
+  }
+  .has-main-botanico-700-background-color {
+    background-color: #67863f !important;
+  }
+  .has-main-botanico-700-border-color {
+    border-color: #67863f !important;
+  }
+  .has-main-laranja-100-color {
+    color: #fef4e0 !important;
+  }
+  .has-main-laranja-100-background-color {
+    background-color: #fef4e0 !important;
+  }
+  .has-main-laranja-100-border-color {
+    border-color: #fef4e0 !important;
+  }
+  .has-main-laranja-200-color {
+    color: #fde9c0 !important;
+  }
+  .has-main-laranja-200-background-color {
+    background-color: #fde9c0 !important;
+  }
+  .has-main-laranja-200-border-color {
+    border-color: #fde9c0 !important;
+  }
+  .has-main-laranja-400-color {
+    color: #f7a600 !important;
+  }
+  .has-main-laranja-400-background-color {
+    background-color: #f7a600 !important;
+  }
+  .has-main-laranja-400-border-color {
+    border-color: #f7a600 !important;
+  }
+  .has-main-laranja-500-color {
+    color: #d99200 !important;
+  }
+  .has-main-laranja-500-background-color {
+    background-color: #d99200 !important;
+  }
+  .has-main-laranja-500-border-color {
+    border-color: #d99200 !important;
+  }
+  .has-main-laranja-600-color {
+    color: #ba7d00 !important;
+  }
+  .has-main-laranja-600-background-color {
+    background-color: #ba7d00 !important;
+  }
+  .has-main-laranja-600-border-color {
+    border-color: #ba7d00 !important;
+  }
+  .has-main-laranja-700-color {
+    color: #7c5300 !important;
+  }
+  .has-main-laranja-700-background-color {
+    background-color: #7c5300 !important;
+  }
+  .has-main-laranja-700-border-color {
+    border-color: #7c5300 !important;
+  }
+  .has-monochorme-light-100-color {
+    color: #eeeeee !important;
+  }
+  .has-monochorme-light-100-background-color {
+    background-color: #eeeeee !important;
+  }
+  .has-monochorme-light-100-border-color {
+    border-color: #eeeeee !important;
+  }
+  .has-monochorme-light-200-color {
+    color: #eaeaea !important;
+  }
+  .has-monochorme-light-200-background-color {
+    background-color: #eaeaea !important;
+  }
+  .has-monochorme-light-200-border-color {
+    border-color: #eaeaea !important;
+  }
+  .has-monochorme-light-400-color {
+    color: #dddddd !important;
+  }
+  .has-monochorme-light-400-background-color {
+    background-color: #dddddd !important;
+  }
+  .has-monochorme-light-400-border-color {
+    border-color: #dddddd !important;
+  }
+  .has-monochorme-light-500-color {
+    color: #d5d5d5 !important;
+  }
+  .has-monochorme-light-500-background-color {
+    background-color: #d5d5d5 !important;
+  }
+  .has-monochorme-light-500-border-color {
+    border-color: #d5d5d5 !important;
+  }
+  .has-monochorme-light-600-color {
+    color: #cccccc !important;
+  }
+  .has-monochorme-light-600-background-color {
+    background-color: #cccccc !important;
+  }
+  .has-monochorme-light-600-border-color {
+    border-color: #cccccc !important;
+  }
+  .has-monochorme-grey-100-color {
+    color: #969696 !important;
+  }
+  .has-monochorme-grey-100-background-color {
+    background-color: #969696 !important;
+  }
+  .has-monochorme-grey-100-border-color {
+    border-color: #969696 !important;
+  }
+  .has-monochorme-grey-200-color {
+    color: #939393 !important;
+  }
+  .has-monochorme-grey-200-background-color {
+    background-color: #939393 !important;
+  }
+  .has-monochorme-grey-200-border-color {
+    border-color: #939393 !important;
+  }
+  .has-monochorme-grey-400-color {
+    color: #878787 !important;
+  }
+  .has-monochorme-grey-400-background-color {
+    background-color: #878787 !important;
+  }
+  .has-monochorme-grey-400-border-color {
+    border-color: #878787 !important;
+  }
+  .has-monochorme-grey-500-color {
+    color: #808080 !important;
+  }
+  .has-monochorme-grey-500-background-color {
+    background-color: #808080 !important;
+  }
+  .has-monochorme-grey-500-border-color {
+    border-color: #808080 !important;
+  }
+  .has-monochorme-grey-600-color {
+    color: #787878 !important;
+  }
+  .has-monochorme-grey-600-background-color {
+    background-color: #787878 !important;
+  }
+  .has-monochorme-grey-600-border-color {
+    border-color: #787878 !important;
+  }
+  .has-monochorme-dark-100-color {
+    color: #323232 !important;
+  }
+  .has-monochorme-dark-100-background-color {
+    background-color: #323232 !important;
+  }
+  .has-monochorme-dark-100-border-color {
+    border-color: #323232 !important;
+  }
+  .has-monochorme-dark-200-color {
+    color: #2d2d2d !important;
+  }
+  .has-monochorme-dark-200-background-color {
+    background-color: #2d2d2d !important;
+  }
+  .has-monochorme-dark-200-border-color {
+    border-color: #2d2d2d !important;
+  }
+  .has-monochorme-dark-400-color {
+    color: #282828 !important;
+  }
+  .has-monochorme-dark-400-background-color {
+    background-color: #282828 !important;
+  }
+  .has-monochorme-dark-400-border-color {
+    border-color: #282828 !important;
+  }
+  .has-monochorme-dark-500-color {
+    color: #232323 !important;
+  }
+  .has-monochorme-dark-500-background-color {
+    background-color: #232323 !important;
+  }
+  .has-monochorme-dark-500-border-color {
+    border-color: #232323 !important;
+  }
+  .has-monochorme-dark-600-color {
+    color: #1e1e1e !important;
+  }
+  .has-monochorme-dark-600-background-color {
+    background-color: #1e1e1e !important;
+  }
+  .has-monochorme-dark-600-border-color {
+    border-color: #1e1e1e !important;
+  }
+  .has-body-font-size {
+    font-size: 1rem !important;
+  }
+  .has-lead-font-size {
+    font-size: 1.125rem !important;
+  }
+  .has-heading-sm-font-size {
+    font-size: 1.5rem !important;
+  }
+  .has-heading-md-font-size {
+    font-size: 2rem !important;
+  }
+  .has-heading-lg-font-size {
+    font-size: 2.75rem !important;
+  }
+  /* End of theme presets. */
+
+  .wp-element-caption {
+    color: var(--main-cinza-600);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+
+  /* Group: backgrounds get core's padding; flex layouts are added by the renderer. */
+  .wp-block-group,
+  .wp-block-cover,
+  .wp-block-media-text {
+    box-sizing: border-box;
+    margin: 0 0 1.5rem;
+  }
+
+  .wp-block-group.has-background {
+    padding: 1.25rem 2.375rem;
+  }
+
+  .wp-block-group.is-layout-flex {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+  }
+
+  .wp-block-group.is-layout-flex.is-nowrap {
+    flex-wrap: nowrap;
+  }
+
+  .wp-block-group.is-layout-flex.is-vertical {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .wp-block-group.is-layout-flex.is-content-justification-center {
+    justify-content: center;
+  }
+
+  .wp-block-group.is-layout-flex.is-content-justification-right {
+    justify-content: flex-end;
+  }
+
+  .wp-block-group.is-layout-flex.is-content-justification-space-between {
+    justify-content: space-between;
+  }
+
+  .wp-block-group.is-layout-grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(12rem, 100%), 1fr));
+  }
+
+  /* Paragraph spacing (a Tailwind utility) would push row items apart. */
+  .wp-block-group.is-layout-flex p,
+  .wp-block-group.is-layout-grid p {
+    padding-bottom: 0 !important;
+  }
+
+  /* Cover: image and overlay fill the block behind its content. */
+  .wp-block-cover {
+    align-items: center;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    min-height: 430px;
+    overflow: hidden;
+    padding: 1rem;
+    position: relative;
+  }
+
+  .wp-block-cover .wp-block-cover__image-background,
+  .wp-block-cover .wp-block-cover__video-background {
+    border: none;
+    height: 100%;
+    inset: 0;
+    margin: 0;
+    max-height: none;
+    max-width: none;
+    object-fit: cover;
+    padding: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+  .wp-block-cover .wp-block-cover__background {
+    background-color: #000;
+    inset: 0;
+    opacity: 0.5;
+    position: absolute;
+  }
+
+  .wp-block-cover .has-background-dim-0 {
+    opacity: 0;
+  }
+  .wp-block-cover .has-background-dim-10 {
+    opacity: 0.1;
+  }
+  .wp-block-cover .has-background-dim-20 {
+    opacity: 0.2;
+  }
+  .wp-block-cover .has-background-dim-30 {
+    opacity: 0.3;
+  }
+  .wp-block-cover .has-background-dim-40 {
+    opacity: 0.4;
+  }
+  .wp-block-cover .has-background-dim-50 {
+    opacity: 0.5;
+  }
+  .wp-block-cover .has-background-dim-60 {
+    opacity: 0.6;
+  }
+  .wp-block-cover .has-background-dim-70 {
+    opacity: 0.7;
+  }
+  .wp-block-cover .has-background-dim-80 {
+    opacity: 0.8;
+  }
+  .wp-block-cover .has-background-dim-90 {
+    opacity: 0.9;
+  }
+  .wp-block-cover .has-background-dim-100 {
+    opacity: 1;
+  }
+
+  .wp-block-cover .wp-block-cover__inner-container {
+    color: #fff;
+    position: relative;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .wp-block-cover .wp-block-cover__inner-container p {
+    padding-bottom: 0 !important;
+  }
+
+  /* Media & text: two columns (the saved inline style sets the split), stacked on phones. */
+  .wp-block-media-text {
+    align-items: center;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 50% 1fr;
+    grid-template-rows: auto;
+  }
+
+  .wp-block-media-text.has-media-on-the-right {
+    grid-template-columns: 1fr 50%;
+  }
+
+  .wp-block-media-text > .wp-block-media-text__media {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0;
+  }
+
+  .wp-block-media-text > .wp-block-media-text__content {
+    grid-column: 2;
+    grid-row: 1;
+    padding: 0 8%;
+  }
+
+  .wp-block-media-text.has-media-on-the-right > .wp-block-media-text__media {
+    grid-column: 2;
+  }
+
+  .wp-block-media-text.has-media-on-the-right > .wp-block-media-text__content {
+    grid-column: 1;
+  }
+
+  .wp-block-media-text__media img,
+  .wp-block-media-text__media video {
+    height: auto;
+    max-width: unset;
+    vertical-align: middle;
+    width: 100%;
+  }
+
+  @media (max-width: 600px) {
+    .wp-block-media-text.is-stacked-on-mobile {
+      grid-template-columns: 100% !important;
+    }
+
+    .wp-block-media-text.is-stacked-on-mobile > .wp-block-media-text__media {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .wp-block-media-text.is-stacked-on-mobile > .wp-block-media-text__content {
+      grid-column: 1;
+      grid-row: 2;
+      padding: 1.5rem 0 0;
+    }
+  }
+
+  /* Gallery: images in rows of `columns-N`, cropped to equal height unless turned off. */
+  .wp-block-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0 0 1.5rem;
+  }
+
+  .wp-block-gallery > .wp-block-image {
+    margin: 0;
+    width: 100%;
+  }
+
+  .wp-block-gallery > .wp-block-image figure {
+    height: 100%;
+    margin: 0;
+  }
+
+  @media (min-width: 600px) {
+    .wp-block-gallery.columns-2 > .wp-block-image {
+      width: calc(50% - 0.5rem * 0.5);
+    }
+    .wp-block-gallery.columns-3 > .wp-block-image {
+      width: calc(33.3333% - 0.5rem * 0.6667);
+    }
+    .wp-block-gallery.columns-4 > .wp-block-image {
+      width: calc(25% - 0.5rem * 0.75);
+    }
+    .wp-block-gallery.columns-5 > .wp-block-image {
+      width: calc(20% - 0.5rem * 0.8);
+    }
+    .wp-block-gallery.columns-6 > .wp-block-image {
+      width: calc(16.6667% - 0.5rem * 0.8333);
+    }
+    .wp-block-gallery.columns-7 > .wp-block-image {
+      width: calc(14.2857% - 0.5rem * 0.8571);
+    }
+    .wp-block-gallery.columns-8 > .wp-block-image {
+      width: calc(12.5% - 0.5rem * 0.875);
+    }
+  }
+
+  .wp-block-gallery.is-cropped > .wp-block-image img {
+    aspect-ratio: 4 / 3;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  /* Audio and video fill the text column. */
+  .wp-block-audio,
+  .wp-block-video {
+    margin: 0 0 1.5rem;
+  }
+
+  .wp-block-audio audio,
+  .wp-block-video video {
+    display: block;
+    width: 100%;
+  }
+
+  /* Table: scrolls sideways on small screens rather than overflowing the page. */
+  .wp-block-table {
+    margin: 0 0 1.5rem;
+    overflow-x: auto;
+  }
+
+  .wp-block-table table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  .wp-block-table table.has-fixed-layout {
+    table-layout: fixed;
+  }
+
+  .wp-block-table th,
+  .wp-block-table td {
+    border: 1px solid var(--main-cinza-200);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .wp-block-table thead th {
+    background: var(--main-cinza-100);
+    font-weight: 600;
+  }
+
+  .wp-block-table.is-style-stripes th,
+  .wp-block-table.is-style-stripes td {
+    border-color: transparent;
+  }
+
+  .wp-block-table.is-style-stripes tbody tr:nth-child(odd) {
+    background: var(--main-cinza-100);
+  }
+
+  /* Separator: a short centred rule by default; Wide spans the column; Dots is three dots. */
+  .wp-block-separator {
+    border: none;
+    border-top: 2px solid currentColor;
+    color: var(--main-cinza-400);
+    margin: 2rem auto;
+  }
+
+  .wp-block-separator:not(.is-style-wide):not(.is-style-dots) {
+    width: 100px;
+  }
+
+  .wp-block-separator.has-background:not(.is-style-dots) {
+    border-top: none;
+    height: 2px;
+  }
+
+  .wp-block-separator.is-style-dots {
+    background: none !important;
+    border: none;
+    height: auto;
+    line-height: 1;
+    text-align: center;
+  }
+
+  .wp-block-separator.is-style-dots::before {
+    color: currentColor;
+    content: "\00b7 \00b7 \00b7";
+    font-size: 1.5rem;
+    letter-spacing: 2rem;
+    padding-left: 2rem;
+  }
+
+  /* Code, preformatted and verse keep their line breaks. */
+  .wp-block-code,
+  .wp-block-preformatted,
+  .wp-block-verse {
+    margin: 0 0 1.5rem;
+    overflow-x: auto;
+    white-space: pre-wrap;
+  }
+
+  .wp-block-code {
+    background: var(--main-cinza-100);
+    border-radius: 0.25rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.875rem;
+    padding: 1rem 1.25rem;
+  }
+
+  .wp-block-preformatted {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.875rem;
+  }
+
+  .wp-block-verse {
+    font-family: inherit;
+  }
+
+  /* Pullquote: a centred, emphasised quote between two rules. */
+  .wp-block-pullquote {
+    border-bottom: 4px solid currentColor;
+    border-top: 4px solid currentColor;
+    margin: 0 0 1.5rem;
+    padding: 2.5rem 0;
+    text-align: center;
+  }
+
+  .wp-block-pullquote blockquote {
+    margin: 0;
+  }
+
+  .wp-block-pullquote p {
+    font-size: 1.5rem;
+    line-height: 1.5;
+    padding-bottom: 0;
+  }
+
+  .wp-block-pullquote cite {
+    display: block;
+    font-size: 0.875rem;
+    font-style: normal;
+    margin-top: 1rem;
+    text-transform: uppercase;
+  }
+
+  /* Details: a native disclosure; the summary is the control. */
+  .wp-block-details {
+    margin: 0 0 1.5rem;
+  }
+
+  .wp-block-details > summary {
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .wp-block-details > :not(summary) {
+    margin-top: 0.75rem;
+  }
+
+  /* Math: centred, and scrolls rather than overflowing on small screens. */
+  .wp-block-math {
+    margin: 0 0 1.5rem;
+    overflow-x: auto;
+    text-align: center;
+  }
+}

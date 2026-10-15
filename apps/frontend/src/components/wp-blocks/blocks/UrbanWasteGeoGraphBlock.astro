@@ -1,0 +1,65 @@
+---
+import NomiaResiduosUrbanosGeoSection from "../../charts/bar/NomiaResiduosUrbanosGeoSection.astro";
+import type { UrbanWasteRegion, UrbanWasteYear } from "../../charts/bar/NomiaResiduosUrbanosGeoChart";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { firstArray, mapValid, wpNumber as num, wpText as text } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props { block: WpParsedBlock }
+
+type RegionAttrs = {
+  id?: unknown;
+  label?: unknown;
+  values?: unknown;
+};
+
+const YEARS: readonly UrbanWasteYear[] = [2021, 2022, 2023, 2024];
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/urban-waste-geo-chart">;
+
+function region(raw: unknown): UrbanWasteRegion | null {
+  if (!raw || typeof raw !== "object") return null;
+  const item = raw as RegionAttrs;
+  if (!item.values || typeof item.values !== "object" || Array.isArray(item.values)) return null;
+
+  const values = item.values as Record<string, unknown>;
+  const normalizedValues = Object.fromEntries(
+    YEARS.map((year) => [year, num(values[year])]),
+  ) as Record<UrbanWasteYear, number>;
+  if (
+    Object.values(normalizedValues).some(
+      (value) => !Number.isFinite(value) || value < 0 || value > 1000,
+    )
+  ) {
+    return null;
+  }
+
+  const id = text(item.id);
+  const label = text(item.label);
+  return id && label ? { id, label, values: normalizedValues } : null;
+}
+
+const regions = mapValid(firstArray(attrs.regions), region);
+const title = text(attrs.title);
+const badge = text(attrs.badge);
+const intro = text(attrs.intro);
+const summary = text(attrs.summary);
+const comparisonLabel = text(attrs.comparisonLabel);
+const metricLabel = text(attrs.metricLabel);
+const periodLabel = text(attrs.periodLabel);
+const scopeLabel = text(attrs.scopeLabel);
+---
+
+{regions.length >= 2 ? (
+  <NomiaResiduosUrbanosGeoSection
+    title={title}
+    badge={badge}
+    intro={intro}
+    summary={summary}
+    comparisonLabel={comparisonLabel}
+    metricLabel={metricLabel}
+    periodLabel={periodLabel}
+    scopeLabel={scopeLabel}
+    regions={regions}
+  />
+) : null}

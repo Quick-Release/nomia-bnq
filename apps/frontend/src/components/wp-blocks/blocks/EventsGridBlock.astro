@@ -1,0 +1,37 @@
+---
+import NomiaHomeEvents from "../../sections/landing/NomiaHomeEvents.astro";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import type { WpEventoHomeCard } from "../../../lib/wp-event-card";
+import { firstArray, mapValid, optionalText, textOr } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props {
+  block: WpParsedBlock;
+}
+type EventAttrs = Partial<Record<keyof WpEventoHomeCard, unknown>> & { href?: unknown };
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/events-grid">;
+function eventCard(raw: unknown): WpEventoHomeCard | null {
+  if (!raw || typeof raw !== "object") return null;
+  const item = raw as EventAttrs;
+  const title = textOr(item.title);
+  if (!title) return null;
+  const href = textOr(item.href);
+  const slug = textOr(item.slug) || href.replace(/^\/+|\/+$/g, "").split("/").pop();
+  if (!slug) return null;
+  return {
+    title,
+    slug,
+    href: href || undefined,
+    date: textOr(item.date) || null,
+    imageUrl: textOr(item.imageUrl) || null,
+    imageAlt: textOr(item.imageAlt) || null,
+    startDate: textOr(item.startDate) || null,
+    endDate: textOr(item.endDate) || null,
+  };
+}
+const events = mapValid(firstArray(attrs.events, attrs.items), eventCard);
+const eventBasePath = optionalText(attrs.eventBasePath);
+---
+
+{events.length > 0 ? <NomiaHomeEvents events={events} eventBasePath={eventBasePath} /> : null}

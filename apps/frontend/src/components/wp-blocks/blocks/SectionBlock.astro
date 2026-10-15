@@ -1,0 +1,78 @@
+---
+/**
+ * Container band for nested Gutenberg blocks.
+ *
+ * Children arrive as slot content from `WpCustomBlock.astro`, which forwards the
+ * pieces `WpBlock.astro` already built from `innerBlocks`. When no background is
+ * chosen the section stays transparent and inherits the page surface, so it must
+ * not claim a text colour or a header contrast it cannot guarantee.
+ */
+import { isLightHexColor } from "../../../lib/color-contrast";
+import {
+  normalizeSectionBackground,
+  normalizeSectionBackgroundImage,
+  readSectionBackgroundPosition,
+  readSectionBackgroundSize,
+  sectionBackgroundPositionCss,
+  sectionBackgroundSizeClass,
+  sectionContrastClasses,
+  sectionPaddingClasses,
+} from "../../../lib/section-block";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props {
+  block: WpParsedBlock;
+}
+
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/section">;
+
+const backgroundColor = normalizeSectionBackground(attrs.backgroundColor);
+const isLight = backgroundColor !== null && isLightHexColor(backgroundColor);
+const padding = sectionPaddingClasses(attrs);
+const backgroundImage = normalizeSectionBackgroundImage(attrs.backgroundImageSrc);
+const backgroundImageStyle = backgroundImage
+  ? `object-position: ${sectionBackgroundPositionCss(readSectionBackgroundPosition(attrs.backgroundImagePosition))}`
+  : undefined;
+const backgroundImageSize = readSectionBackgroundSize(attrs.backgroundImageSize);
+/**
+ * A filling image is a background at every width. A fitted or natural-size one
+ * usually sits beside the copy (a square image on the right), which on a phone
+ * would land under the text, so there it follows the content instead.
+ */
+const backgroundImageClass = [
+  sectionBackgroundSizeClass(backgroundImageSize),
+  backgroundImageSize === "cover"
+    ? "absolute inset-0 -z-10 size-full"
+    : "block h-64 w-full md:absolute md:inset-0 md:-z-10 md:size-full",
+];
+---
+
+<section
+  class:list={[
+    "w-full",
+    backgroundImage ? "relative isolate overflow-hidden" : null,
+    backgroundColor ? sectionContrastClasses(isLight) : null,
+  ]}
+  style={backgroundColor ? `background-color: ${backgroundColor}` : undefined}
+  data-nomia-header-surface={backgroundColor && isLight ? "light" : undefined}
+>
+  <div class:list={["mx-auto w-full max-w-[1792px]", ...padding]} data-nomia-section-inner>
+    <slot />
+  </div>
+  {
+    backgroundImage ? (
+      <img
+        src={backgroundImage}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        class:list={["pointer-events-none", ...backgroundImageClass]}
+        style={backgroundImageStyle}
+        data-nomia-section-background-image
+      />
+    ) : null
+  }
+</section>

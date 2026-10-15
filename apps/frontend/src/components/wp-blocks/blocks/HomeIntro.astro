@@ -1,0 +1,54 @@
+---
+import HomeIntro from "../../sections/landing/home-intro.astro";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { wpText as text, optionalText } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props {
+  block: WpParsedBlock;
+}
+
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/home-intro">;
+
+const eyebrow = optionalText(attrs.eyebrowLabel, attrs.eyebrow) ?? "";
+const accentRaw = text(attrs.accent);
+const accent =
+  accentRaw === "ciano" || accentRaw === "botnico"
+    ? accentRaw
+    : eyebrow.toLowerCase().includes("bioeconomia") || eyebrow.toLowerCase().includes("sustent")
+      ? "botnico"
+      : "ciano";
+const heading = text(attrs.heading);
+const body = text(attrs.body);
+const ctaHref = optionalText(attrs.ctaHref, attrs.ctaUrl) ?? "";
+const ctaLabel = text(attrs.ctaLabel);
+const heroSrc = optionalText(attrs.heroSrc, attrs.heroUrl) ?? "";
+const heroAlt = text(attrs.heroAlt);
+const captionHeading = text(attrs.captionHeading);
+const captionBody = text(attrs.captionBody);
+
+const canRender = Boolean(heading && body && heroSrc);
+const showCta =
+  attrs.hideCta !== true && attrs.showCta !== false && Boolean(ctaHref && ctaLabel);
+const showTematica = attrs.showTematica !== false && Boolean(eyebrow);
+const showCaption = attrs.showCaption !== false && Boolean(captionHeading && captionBody);
+---
+
+{canRender ? (
+  <HomeIntro
+    eyebrow={eyebrow}
+    accent={accent}
+    heading={heading}
+    body={body}
+    ctaHref={ctaHref}
+    ctaLabel={ctaLabel}
+    showCta={showCta}
+    showTematica={showTematica}
+    showCaption={showCaption}
+    heroSrc={heroSrc}
+    heroAlt={heroAlt}
+    captionHeading={captionHeading}
+    captionBody={captionBody}
+  />
+) : null}

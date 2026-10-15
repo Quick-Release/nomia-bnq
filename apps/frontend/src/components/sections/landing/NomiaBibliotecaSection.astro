@@ -1,0 +1,192 @@
+---
+/**
+ * Biblioteca — Nomia Website 2 · Figma node 40017128:4247
+ * https://www.figma.com/design/gWqEtVBfoWbYMHQh1rW6s3/Nomia-%E2%80%94-Website--2-?node-id=40017128-4247
+ */
+import NomiaEyebrowIconLabel from "../../ui/NomiaEyebrowIconLabel.astro";
+import NomiaOutlinePillButton from "../../ui/NomiaOutlinePillButton.astro";
+import { BIBLIOTECA_ARCHIVE_PATHS as paths } from "../../../config/biblioteca-archives";
+
+type TagKind = "bioeconomia" | "economia";
+
+export type NomiaBibliotecaCard = {
+  title: string;
+  tag: string;
+  tagKind: TagKind;
+  imageSrc: string;
+  href: string;
+  nodeId?: string;
+};
+
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  body?: string;
+  ctaHref?: string;
+  ctaLabel?: string;
+  cards?: readonly NomiaBibliotecaCard[];
+}
+
+const defaultCards: NomiaBibliotecaCard[] = [
+  {
+    title: "Legislação",
+    tag: "BIOECONOMIA",
+    tagKind: "bioeconomia",
+    imageSrc: "/images/biblioteca/legislacao.jpg",
+    href: paths.legislacao,
+    nodeId: "40017128:4259",
+  },
+  {
+    title: "Publicações",
+    tag: "ECONOMIA",
+    tagKind: "economia",
+    imageSrc: "/images/biblioteca/publicacoes.jpg",
+    href: paths.publicacoes,
+    nodeId: "40017128:4264",
+  },
+  {
+    title: "Boas Práticas",
+    tag: "ECONOMIA",
+    tagKind: "economia",
+    imageSrc: "/images/biblioteca/boas-praticas.jpg",
+    href: paths.boasPraticas,
+    nodeId: "40017128:4269",
+  },
+  {
+    title: "Newsletters",
+    tag: "BIOECONOMIA",
+    tagKind: "bioeconomia",
+    imageSrc: "/images/biblioteca/newsletters.jpg",
+    href: paths.newsletters,
+    nodeId: "40017128:4274",
+  },
+  {
+    title: "Glossário",
+    tag: "BIOECONOMIA",
+    tagKind: "bioeconomia",
+    imageSrc: "/images/biblioteca/glossario.jpg",
+    href: paths.glossario,
+    nodeId: "40017128:4279",
+  },
+  {
+    title: "Geral",
+    tag: "ECONOMIA",
+    tagKind: "economia",
+    imageSrc: "/images/biblioteca/geral.jpg",
+    href: paths.biblioteca,
+    nodeId: "40017128:4284",
+  },
+];
+
+const tagTextClass: Record<TagKind, string> = {
+  bioeconomia: "text-main-botnico-400",
+  economia: "text-main-ciano-400",
+};
+
+const {
+  eyebrow = "NOMIA",
+  heading = "Biblioteca",
+  body = "Descubra recursos úteis para promover uma economia mais sustentável, inovadora e regenerativa.",
+  ctaHref = paths.biblioteca,
+  ctaLabel = "Saber Mais",
+  cards = defaultCards,
+} = Astro.props;
+---
+
+<section
+  class="bg-neutral-bw-white w-full overflow-x-hidden"
+  aria-labelledby="biblioteca-heading"
+  data-node-id="40017128:4247"
+  data-nomia-header-surface="light"
+>
+  <div
+    class="mx-auto flex w-full max-w-[1920px] flex-col gap-12 px-4 py-16 md:px-16 md:py-28"
+  >
+    <div
+      class="mx-auto flex w-full max-w-[880px] flex-col items-center gap-10 text-center"
+      data-node-id="40017128:4248"
+    >
+      <NomiaEyebrowIconLabel
+        label={eyebrow}
+        accent="cinza"
+        uppercase={false}
+        wrapperNodeId="40017128:4249"
+        labelNodeId="40017128:4251"
+      />
+
+      <div class="flex w-full flex-col gap-4" data-node-id="40017128:4252">
+        <h2
+          id="biblioteca-heading"
+          class="text-h4 font-primary text-main-cinza-700 w-full font-semibold leading-[var(--typography-line-height-f)] tracking-[var(--tracking-typography-0)]"
+          data-node-id="40017128:4253"
+        >
+          {heading}
+        </h2>
+        <p
+          class="text-subtitle font-primary text-main-cinza-700 w-full font-normal leading-[var(--typography-line-height-g)] tracking-[var(--tracking-typography-0)]"
+          data-node-id="40017128:4254"
+        >
+          {body}
+        </p>
+      </div>
+
+      <NomiaOutlinePillButton href={ctaHref} label={ctaLabel} nodeId="40017128:4255" />
+    </div>
+
+    <div
+      class="overflow-hidden rounded-2xl bg-neutral-bw-white"
+      data-node-id="40017128:4258"
+    >
+      <div
+        class="grid w-full grid-cols-1 gap-1 md:grid-cols-2 md:grid-rows-3"
+      >
+        {
+          cards.map(({ title, tag, tagKind, imageSrc, href, nodeId }) => (
+            <a
+              href={href}
+              class="group relative flex min-h-[240px] w-full items-center gap-4 overflow-hidden p-8 no-underline transition-[filter,transform] duration-200 ease-out hover:brightness-95 focus-visible:ring-main-teal-400 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-bw-white focus-visible:outline-none active:scale-[0.995]"
+              data-node-id={nodeId}
+            >
+              <span class="pointer-events-none absolute inset-0" aria-hidden="true">
+                <img
+                  src={imageSrc}
+                  alt=""
+                  class="absolute inset-0 size-full max-w-none object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="bg-main-cinza-700/40 absolute inset-0" />
+              </span>
+
+              <span class="relative z-10 flex items-center gap-4">
+                <span class="bg-neutral-bw-white inline-flex items-center gap-1 rounded-[32px] px-2 py-1">
+                  <span class:list={[tagTextClass[tagKind], "inline-flex size-4 shrink-0"]} aria-hidden="true">
+                    <svg class="size-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M8 2v12M2 8h12M3.5 3.5l9 9m0-9-9 9"
+                        stroke="currentColor"
+                        stroke-width="1.2"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class:list={[
+                      "text-extra font-primary font-medium leading-[var(--typography-line-height-j)] tracking-[var(--tracking-typography-0)]",
+                      tagTextClass[tagKind],
+                    ]}
+                  >
+                    {tag}
+                  </span>
+                </span>
+                <span class="text-h4 font-primary text-main-cinza-100 font-semibold leading-[var(--typography-line-height-f)] tracking-[var(--tracking-typography-0)]">
+                  {title}
+                </span>
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

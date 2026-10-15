@@ -192,3 +192,31 @@ defaults to `/wp/graphql`; `/graphql` is also supported). An explicit process
 wiring passes the public URL into Astro's build environment; local DDEV keeps
 its `/wp/graphql` env template. `pnpm deploy:frontend` redeploys by hand with
 the token in Sigillo `staging`.
+
+## Nomia's blocks
+
+Pages and posts built with Nomia's blocks (`getquick/*`, the CMS's
+`nomia-blocks` plugin) are rendered by the Nomia block components, migrated
+from bioeconomia.pt's Astro renderer. A refresh reads the entry's parsed
+blocks (`wpBlocksJson`) and page background (`nomiaPageBackgroundColor`) and
+stores them with it (`nomia` in the stored body, `src/lib/nomia-content.ts`);
+a visit renders them with `src/components/NomiaBlocks.astro`, still without
+reading WordPress. An entry without Nomia's blocks is served as WordPress
+rendered it.
+
+- `src/structured-blocks/registrations/` defines each block; `pnpm
+structured-blocks:sync` writes the generated files here
+  (`custom-block-contracts.ts`, `WpCustomBlock.astro`, the fixtures and
+  `data/`) and in the plugin. `pnpm check` fails when they drift.
+- `src/components/wp-blocks/` is the dispatcher and the block renderers;
+  `src/components/{page-heroes,sections,charts,...}` what they render. The
+  carousels, charts and the map are React islands.
+- `src/styles/nomia-theme.css` holds Nomia's design tokens (Tailwind
+  `@theme`) and core-block styles; `src/components/layout/FontLinks.astro`
+  loads its fonts. `public/images/` holds the blocks' default images.
+- `/wp-block-preview` renders one block for the editor's preview iframe;
+  `/wp-block-preview/catalog` renders every block's fixture.
+- Blocks render only what they store: the podcast list and the platforms
+  grid no longer read WordPress when their lists are empty.
+- `docs/gutenberg-blocks/` documents each block; `tests/` holds their tests
+  (`pnpm test:blocks`, also run by `pnpm test`).

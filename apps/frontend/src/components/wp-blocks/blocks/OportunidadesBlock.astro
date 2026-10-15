@@ -1,0 +1,39 @@
+---
+import NomiaOportunidadesSection from "../../sections/landing/NomiaOportunidadesSection.astro";
+import type { NomiaOportunidadesTile } from "../../sections/landing/NomiaOportunidadesSection.astro";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { firstArray, mapValid, optionalText, textOr } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props { block: WpParsedBlock }
+type TileAttrs = { label?: unknown; href?: unknown };
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/opportunities-grid">;
+const TILE_BACKGROUND_CLASSES = [
+  "bg-main-laranja-200",
+  "bg-main-laranja-300",
+  "bg-main-laranja-400",
+  "bg-main-laranja-500",
+] as const;
+function tile(raw: unknown, index: number): NomiaOportunidadesTile | null {
+  if (!raw || typeof raw !== "object") return null;
+  const item = raw as TileAttrs;
+  const label = textOr(item.label);
+  const href = textOr(item.href);
+  if (!label || !href) return null;
+  return {
+    label,
+    href,
+    bgClass: TILE_BACKGROUND_CLASSES[index % TILE_BACKGROUND_CLASSES.length]!,
+  };
+}
+const tiles = mapValid(firstArray(attrs.tiles, attrs.items), tile);
+const eyebrow = optionalText(attrs.eyebrow) ?? "";
+const heading = optionalText(attrs.heading) ?? "";
+const body = optionalText(attrs.body) ?? "";
+const canRender = Boolean(heading && body && tiles.length > 0);
+---
+
+{canRender ? (
+  <NomiaOportunidadesSection eyebrow={eyebrow} heading={heading} body={body} tiles={tiles} />
+) : null}

@@ -1,0 +1,27 @@
+---
+import type { ContactDetailsRun } from "../../lib/contact-details-card";
+
+/**
+ * One run of editor text with its bold/italic flags as real elements. The text
+ * is interpolated, never `set:html`, so Astro escapes it.
+ */
+interface Props {
+  run: ContactDetailsRun;
+}
+
+const { run } = Astro.props;
+---
+
+{
+  run.bold && run.italic ? (
+    <strong>
+      <em>{run.text}</em>
+    </strong>
+  ) : run.bold ? (
+    <strong>{run.text}</strong>
+  ) : run.italic ? (
+    <em>{run.text}</em>
+  ) : (
+    run.text
+  )
+}

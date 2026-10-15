@@ -1,0 +1,41 @@
+---
+/** Internal visual smoke page for Astro-rendered WordPress custom blocks. */
+import FontLinks from "../../components/layout/FontLinks.astro";
+import WpBlock from "../../components/wp-blocks/WpBlock.astro";
+import { WP_CUSTOM_BLOCK_FIXTURES } from "../../fixtures/wp-custom-block-fixtures";
+import "../../styles/global.css";
+
+const docTitle = "WP block preview catalog · Nomia";
+---
+
+<html lang="pt">
+  <head>
+    <FontLinks />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>{docTitle}</title>
+  </head>
+  <body class="bg-main-ciano-700 text-main-cinza-100 min-h-dvh">
+    <main class="mx-auto w-full max-w-[1920px]">
+      <header class="px-4 py-8 md:px-16">
+        <h1 class="font-primary text-h4 font-semibold">WordPress custom block preview catalog</h1>
+        <p class="text-body text-main-cinza-400 mt-2 max-w-3xl">
+          Visual smoke page for Gutenberg content-contract blocks rendered through the Astro WpBlock dispatcher.
+        </p>
+      </header>
+
+      {
+        WP_CUSTOM_BLOCK_FIXTURES.map(({ label, block }) => (
+          <section class="border-monochrome-dark-300 border-t">
+            <div class="bg-monochrome-dark-800 px-4 py-4 md:px-16">
+              <p class="text-main-cinza-400 text-notes uppercase tracking-wide">{block.blockName}</p>
+              <h2 class="font-primary text-subtitle mt-1 font-semibold">{label}</h2>
+            </div>
+            <WpBlock block={block} />
+          </section>
+        ))
+      }
+    </main>
+  </body>
+</html>

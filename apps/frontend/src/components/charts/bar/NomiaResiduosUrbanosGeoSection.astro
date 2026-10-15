@@ -1,0 +1,32 @@
+---
+/** Resíduos urbanos por habitante por localização geográfica. */
+import NomiaResiduosUrbanosGeoChart from "./NomiaResiduosUrbanosGeoChart";
+import type { UrbanWasteRegion } from "./NomiaResiduosUrbanosGeoChart";
+
+interface Props {
+  title?: string;
+  badge?: string;
+  intro?: string;
+  summary?: string;
+  comparisonLabel?: string;
+  metricLabel?: string;
+  periodLabel?: string;
+  scopeLabel?: string;
+  regions?: readonly UrbanWasteRegion[];
+}
+
+const { title, badge, intro, summary, comparisonLabel, metricLabel, periodLabel, scopeLabel, regions } = Astro.props;
+---
+
+<NomiaResiduosUrbanosGeoChart
+  client:only="react"
+  title={title}
+  badge={badge}
+  intro={intro}
+  summary={summary}
+  comparisonLabel={comparisonLabel}
+  metricLabel={metricLabel}
+  periodLabel={periodLabel}
+  scopeLabel={scopeLabel}
+  regions={regions}
+/>

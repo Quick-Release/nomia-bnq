@@ -1,0 +1,91 @@
+---
+import NomiaPageHeroMediaGrid from "../../page-heroes/NomiaPageHeroMediaGrid.astro";
+import type { PageHeroMediaGridAction } from "../../page-heroes/NomiaPageHeroMediaGrid.astro";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { optionalText, wpText as text } from "../normalizers";
+import {
+  normalizeTextVerticalAlign,
+  PAGE_HERO_MEDIA_GRID_DEFAULTS,
+} from "../../page-heroes/pageHeroMediaGridShared";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props {
+	block: WpParsedBlock;
+}
+
+type PageHeroMediaGridAttrs = AttrsFor<"getquick/page-hero-media-grid">;
+
+const { block } = Astro.props;
+const attrs = block.attrs as PageHeroMediaGridAttrs;
+
+function action(title: unknown, body: unknown, href: unknown): PageHeroMediaGridAction {
+	return {
+		title: text(title),
+		text: text(body),
+		href: text(href),
+	};
+}
+
+const backgroundImageSrc = optionalText(attrs.backgroundImageSrc);
+const backgroundImageAlt = text(attrs.backgroundImageAlt);
+const videoSrc = optionalText(attrs.videoSrc);
+const videoPosterSrc = optionalText(attrs.videoPosterSrc);
+const heading = text(attrs.heading) || PAGE_HERO_MEDIA_GRID_DEFAULTS.heading;
+const videoTitle = text(attrs.videoTitle) || "Video";
+
+const actions: [PageHeroMediaGridAction, PageHeroMediaGridAction] = [
+	action(attrs.firstTitle, attrs.firstText, attrs.firstHref),
+	action(attrs.secondTitle, attrs.secondText, attrs.secondHref),
+];
+
+const firstBackgroundColor = optionalText(attrs.firstBackgroundColor) || PAGE_HERO_MEDIA_GRID_DEFAULTS.firstBackgroundColor;
+const firstHoverBackgroundColor = optionalText(attrs.firstHoverBackgroundColor) || PAGE_HERO_MEDIA_GRID_DEFAULTS.firstHoverBackgroundColor;
+const firstTitleColor = optionalText(attrs.firstTitleColor) || PAGE_HERO_MEDIA_GRID_DEFAULTS.firstTitleColor;
+const firstTextColor = optionalText(attrs.firstTextColor) || PAGE_HERO_MEDIA_GRID_DEFAULTS.firstTextColor;
+const firstBorderRadius = optionalText(attrs.firstBorderRadius) || PAGE_HERO_MEDIA_GRID_DEFAULTS.firstBorderRadius;
+
+const secondBackgroundColor = optionalText(attrs.secondBackgroundColor) || PAGE_HERO_MEDIA_GRID_DEFAULTS.secondBackgroundColor;
+const secondHoverBackgroundColor = optionalText(attrs.secondHoverBackgroundColor) || PAGE_HERO_MEDIA_GRID_DEFAULTS.secondHoverBackgroundColor;
+const secondTitleColor = optionalText(attrs.secondTitleColor) || PAGE_HERO_MEDIA_GRID_DEFAULTS.secondTitleColor;
+const secondTextColor = optionalText(attrs.secondTextColor) || PAGE_HERO_MEDIA_GRID_DEFAULTS.secondTextColor;
+const secondBorderRadius = optionalText(attrs.secondBorderRadius) || PAGE_HERO_MEDIA_GRID_DEFAULTS.secondBorderRadius;
+
+const textVerticalAlign = normalizeTextVerticalAlign(attrs.textVerticalAlign);
+const videoBorderRadius = optionalText(attrs.videoBorderRadius) || PAGE_HERO_MEDIA_GRID_DEFAULTS.videoBorderRadius;
+const shareHref = Object.hasOwn(attrs, "shareHref")
+  ? optionalText(attrs.shareHref)
+  : PAGE_HERO_MEDIA_GRID_DEFAULTS.shareHref;
+const shareLabel = Object.hasOwn(attrs, "shareLabel")
+  ? text(attrs.shareLabel)
+  : PAGE_HERO_MEDIA_GRID_DEFAULTS.shareLabel;
+
+const canRender = Boolean(backgroundImageSrc || actions.some((item) => item.title) || videoSrc);
+---
+
+{
+	canRender ? (
+		<NomiaPageHeroMediaGrid
+			backgroundImageSrc={backgroundImageSrc}
+			backgroundImageAlt={backgroundImageAlt}
+			heading={heading}
+			actions={actions}
+			videoSrc={videoSrc}
+			videoPosterSrc={videoPosterSrc}
+			videoTitle={videoTitle}
+			textVerticalAlign={textVerticalAlign}
+			shareHref={shareHref}
+			shareLabel={shareLabel}
+			firstBackgroundColor={firstBackgroundColor}
+			firstHoverBackgroundColor={firstHoverBackgroundColor}
+			firstTitleColor={firstTitleColor}
+			firstTextColor={firstTextColor}
+			firstBorderRadius={firstBorderRadius}
+			secondBackgroundColor={secondBackgroundColor}
+			secondHoverBackgroundColor={secondHoverBackgroundColor}
+			secondTitleColor={secondTitleColor}
+			secondTextColor={secondTextColor}
+			secondBorderRadius={secondBorderRadius}
+			videoBorderRadius={videoBorderRadius}
+		/>
+	) : null
+}

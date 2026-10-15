@@ -1,0 +1,28 @@
+---
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { addDefaultPdfEmbeds } from "../../../lib/wp-pdf-embeds";
+
+interface Props {
+  block: WpParsedBlock;
+  wrapped?: boolean;
+  openingTag?: string;
+  closingTag?: string;
+}
+
+const { block, wrapped, openingTag, closingTag } = Astro.props;
+---
+
+{wrapped === undefined ? (
+  <div
+    class="leading-relaxed [&_li]:list-inside [&_ol]:list-decimal [&_ul]:list-disc"
+    set:html={addDefaultPdfEmbeds(block.innerHTML)}
+  />
+) : wrapped ? (
+  <>
+    {openingTag && <Fragment set:html={openingTag} />}
+    <slot />
+    {closingTag && <Fragment set:html={closingTag} />}
+  </>
+) : (
+  <slot />
+)}

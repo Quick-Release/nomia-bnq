@@ -1,0 +1,134 @@
+---
+/**
+ * Lightweight iframe target for WordPress editor previews.
+ *
+ * Usage:
+ * /wp-block-preview?block=getquick/page-hero-static&attrs=<urlencoded-json>
+ * /wp-block-preview?block=getquick/page-hero-static&attrs64=<base64url-json>
+ */
+import FontLinks from "../components/layout/FontLinks.astro";
+import WpBlock from "../components/wp-blocks/WpBlock.astro";
+import type { WpParsedBlock } from "../lib/wp-blocks";
+import { parsePreviewRequest } from "../lib/wp-block-preview-format";
+import "../styles/global.css";
+
+const { blockName, previewToken, attributes } = parsePreviewRequest(Astro.url.searchParams);
+const requiredPreviewToken = import.meta.env.NOMIA_WP_BLOCK_PREVIEW_TOKEN?.trim() ?? "";
+const isPreviewAuthorized = !requiredPreviewToken || previewToken === requiredPreviewToken;
+if (!isPreviewAuthorized) Astro.response.status = 403;
+else if (!attributes.ok) Astro.response.status = 400;
+
+const block = blockName && attributes.ok
+  ? ({
+      blockName,
+      attrs: attributes.attributes,
+      innerBlocks: [],
+      innerHTML: "",
+      innerContent: [],
+    } as WpParsedBlock)
+  : null;
+---
+
+<html lang="pt">
+  <head>
+    <FontLinks />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Nomia block preview</title>
+  </head>
+  <body class="bg-neutral-bw-white text-main-cinza-700 min-h-dvh" data-nomia-wp-block-preview>
+    <script>
+      import {
+        buildPreviewResizeMessage,
+        getPreviewParentOrigin,
+      } from "../lib/wp-block-preview-format";
+
+      (() => {
+        let lastHeight = 0;
+        let rafId = 0;
+
+        function measureHeight() {
+          const body = document.body;
+          const html = document.documentElement;
+          return Math.max(
+            body?.scrollHeight || 0,
+            body?.offsetHeight || 0,
+            html?.scrollHeight || 0,
+            html?.offsetHeight || 0,
+            html?.clientHeight || 0,
+          );
+        }
+
+        const parentOrigin = getPreviewParentOrigin(document.referrer);
+
+        function postHeight() {
+          rafId = 0;
+          const message = buildPreviewResizeMessage(measureHeight());
+          if (message === null || Math.abs(message.height - lastHeight) < 1) return;
+          lastHeight = message.height;
+          window.parent?.postMessage(message, parentOrigin);
+        }
+
+        function schedulePostHeight() {
+          if (rafId) return;
+          rafId = window.requestAnimationFrame(postHeight);
+        }
+
+        window.addEventListener("load", schedulePostHeight);
+        window.addEventListener("resize", schedulePostHeight);
+
+        if ("ResizeObserver" in window) {
+          const resizeObserver = new ResizeObserver(schedulePostHeight);
+          resizeObserver.observe(document.documentElement);
+          resizeObserver.observe(document.body);
+        }
+
+        if ("MutationObserver" in window) {
+          const mutationObserver = new MutationObserver(schedulePostHeight);
+          mutationObserver.observe(document.documentElement, {
+            attributes: true,
+            childList: true,
+            subtree: true,
+            characterData: true,
+          });
+        }
+
+        schedulePostHeight();
+        window.setTimeout(schedulePostHeight, 250);
+        window.setTimeout(schedulePostHeight, 1000);
+      })();
+    </script>
+    {
+      !isPreviewAuthorized ? (
+        <main class="font-secondary mx-auto flex min-h-dvh max-w-2xl flex-col justify-center px-4 py-12">
+          <h1 class="font-primary text-h4 font-semibold">Forbidden block preview</h1>
+          <p class="text-body mt-4 text-main-cinza-500">
+            This preview endpoint requires a valid <code>previewToken</code>.
+          </p>
+        </main>
+      ) : !attributes.ok ? (
+        <main
+          class="font-secondary mx-auto flex min-h-dvh max-w-2xl flex-col justify-center px-4 py-12"
+          data-nomia-preview-error={attributes.error}
+        >
+          <h1 class="font-primary text-h4 font-semibold">Invalid block preview data</h1>
+          <p class="text-body mt-4 text-main-cinza-500">
+            The <code>{attributes.source}</code> preview attributes are malformed.
+          </p>
+        </main>
+      ) : block ? (
+        <main class="w-full">
+          <WpBlock block={block} unsupportedFallback="diagnostic" />
+        </main>
+      ) : (
+        <main class="font-secondary mx-auto flex min-h-dvh max-w-2xl flex-col justify-center px-4 py-12">
+          <h1 class="font-primary text-h4 font-semibold">Missing block preview data</h1>
+          <p class="text-body mt-4 text-main-cinza-500">
+            Provide a WordPress block name with <code>block</code> and attributes with <code>attrs</code> or <code>attrs64</code>.
+          </p>
+        </main>
+      )
+    }
+  </body>
+</html>

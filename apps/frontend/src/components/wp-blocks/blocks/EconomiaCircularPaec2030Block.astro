@@ -1,0 +1,61 @@
+---
+import NomiaEconomiaCircularPaec2030Section from "../../sections/economia-circular/NomiaEconomiaCircularPaec2030Section.astro";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { firstArray, mapValid, wpText as text, optionalText } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props {
+  block: WpParsedBlock;
+}
+
+type Objective = { code: string; description: string };
+type ObjectiveAttrs = { code?: unknown; description?: unknown };
+
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/paec-2030">;
+
+function normalizeObjective(raw: unknown): Objective | null {
+  if (!raw || typeof raw !== "object") return null;
+  const objective = raw as ObjectiveAttrs;
+  const code = text(objective.code);
+  const description = text(objective.description);
+  return code && description ? { code, description } : null;
+}
+
+const heading = text(attrs.heading);
+const imageLeftSrc = optionalText(attrs.imageLeftSrc, attrs.imageLeftUrl) ?? "";
+const imageLeftAlt = text(attrs.imageLeftAlt);
+const imageRightSrc = optionalText(attrs.imageRightSrc, attrs.imageRightUrl) ?? "";
+const imageRightAlt = text(attrs.imageRightAlt);
+const intro = text(attrs.intro);
+const saberMaisHref = optionalText(attrs.saberMaisHref, attrs.saberMaisUrl) ?? "";
+const saberMaisLabel = text(attrs.saberMaisLabel);
+const eyebrow = text(attrs.eyebrow) || undefined;
+const objectives = mapValid(firstArray(attrs.objectives), normalizeObjective);
+const canRender = Boolean(
+  heading &&
+    imageLeftSrc &&
+    imageRightSrc &&
+    intro &&
+    saberMaisHref &&
+    saberMaisLabel &&
+    objectives.length > 0,
+);
+---
+
+{
+  canRender ? (
+    <NomiaEconomiaCircularPaec2030Section
+      eyebrow={eyebrow}
+      heading={heading}
+      imageLeftSrc={imageLeftSrc}
+      imageLeftAlt={imageLeftAlt}
+      imageRightSrc={imageRightSrc}
+      imageRightAlt={imageRightAlt}
+      intro={intro}
+      saberMaisHref={saberMaisHref}
+      saberMaisLabel={saberMaisLabel}
+      objectives={objectives}
+    />
+  ) : null
+}

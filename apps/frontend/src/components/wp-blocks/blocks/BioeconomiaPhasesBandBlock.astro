@@ -1,0 +1,31 @@
+---
+import NomiaBioeconomiaPhasesBandSection from "../../sections/bioeconomia/NomiaBioeconomiaPhasesBandSection.astro";
+import type { NomiaBioeconomiaPhaseBandItem } from "../../sections/bioeconomia/NomiaBioeconomiaPhasesBandSection.astro";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { firstArray, mapValid, optionalText, wpText as text } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props { block: WpParsedBlock }
+type PhaseAttrs = { phase?: unknown; title?: unknown; body?: unknown };
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/bioeconomy-phases-band">;
+function phase(raw: unknown): NomiaBioeconomiaPhaseBandItem | null {
+  if (!raw || typeof raw !== "object") return null;
+  const item = raw as PhaseAttrs;
+  const phase = text(item.phase);
+  const title = text(item.title);
+  const body = text(item.body);
+  return phase && title && body ? { phase, title, body } : null;
+}
+const phases = mapValid(firstArray(attrs.phases, attrs.items), phase);
+const imageSrc = optionalText(attrs.imageSrc, attrs.imageUrl);
+const canRender = Boolean(imageSrc && phases.length > 0);
+---
+
+{canRender ? (
+  <NomiaBioeconomiaPhasesBandSection
+    imageSrc={imageSrc}
+    phases={phases}
+    annotateFigmaNodes={false}
+  />
+) : null}

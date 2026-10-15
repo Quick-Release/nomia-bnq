@@ -1,0 +1,46 @@
+---
+import NomiaConsumoSustentavelChart from "../../charts/bar/NomiaConsumoSustentavelChart";
+import type { VerticalBarDatum } from "../../charts/bar/NomiaConsumoSustentavelChart";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { firstArray, mapValid, wpText as text, wpNumber as num } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props { block: WpParsedBlock }
+type BarAttrs = { band?: unknown; label?: unknown; pct?: unknown };
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/sustainable-consumption-bars">;
+const BAR_FILLS = [
+  "var(--main-cinza-200)",
+  "var(--main-cinza-300)",
+  "var(--main-cinza-400)",
+  "var(--main-cinza-500)",
+] as const;
+
+function bar(raw: unknown, index: number): VerticalBarDatum | null {
+  if (!raw || typeof raw !== "object") return null;
+  const item = raw as BarAttrs;
+  const band = text(item.band);
+  const label = text(item.label);
+  const pct = num(item.pct);
+  if (!band || !label || !Number.isFinite(pct) || pct < 0 || pct > 100) return null;
+  return { band, label, pct, fill: BAR_FILLS[index % BAR_FILLS.length]! };
+}
+const bars = mapValid(firstArray(attrs.bars, attrs.items), bar);
+const title = text(attrs.title);
+const subtitle = text(attrs.subtitle);
+const summary = text(attrs.summary);
+const headingId = text(attrs.headingId) || undefined;
+const sectionId = text(attrs.sectionId) || undefined;
+---
+
+{bars.length > 0 ? (
+  <NomiaConsumoSustentavelChart
+    client:only="react"
+    bars={bars}
+    title={title}
+    subtitle={subtitle}
+    summary={summary}
+    headingId={headingId}
+    sectionId={sectionId}
+  />
+) : null}

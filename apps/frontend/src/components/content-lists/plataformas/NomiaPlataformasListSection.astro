@@ -1,0 +1,21 @@
+---
+/**
+ * Plataformas archive grid — Nomia Website 2 · node 40017272:12228
+ */
+import NomiaPlataformasGrid from "./NomiaPlataformasGrid";
+import type { NomiaPlataformasListData } from "../../../types/nomia-plataformas-list";
+
+interface Props extends NomiaPlataformasListData {
+	heading?: string;
+}
+
+const { items, tematicas, setores, heading } = Astro.props;
+---
+
+<NomiaPlataformasGrid
+	client:only="react"
+	items={items}
+	tematicas={tematicas}
+	setores={setores}
+	heading={heading}
+/>

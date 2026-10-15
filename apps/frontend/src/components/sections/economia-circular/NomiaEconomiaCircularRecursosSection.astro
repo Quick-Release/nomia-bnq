@@ -1,0 +1,157 @@
+---
+/**
+ * Recursos — Economia Circular (Figma 40017244:13058).
+ * Cinco cartões com gradiente ciano e overlay cinza, sobre fundo cinza claro.
+ * https://www.figma.com/design/gWqEtVBfoWbYMHQh1rW6s3/Nomia-%E2%80%94-Website--2-?node-id=40017244-13058
+ */
+
+type RecursoCard = {
+	title: string;
+	description: string;
+	/** Base fill — overlay cinza 40% aplicado no markup */
+	toneClass: string;
+	href: string;
+	nodeId: string;
+	titleNodeId: string;
+	descNodeId: string;
+};
+
+const defaultCards: readonly RecursoCard[] = [
+	{
+		title: "Documentos estratégicos",
+		description: "PAEC 2030, planos europeus, estratégias nacionais e documentos de enquadramento.",
+		toneClass: "bg-main-ciano-300",
+		href: "/biblioteca/",
+		nodeId: "40017244:13066",
+		titleNodeId: "40017244:13067",
+		descNodeId: "40017244:13068",
+	},
+	{
+		title: "Guias práticos",
+		description: "Ferramentas para empresas, municípios, escolas e cidadãos.",
+		toneClass: "bg-main-ciano-400",
+		href: "/biblioteca/",
+		nodeId: "40017244:13069",
+		titleNodeId: "40017244:13070",
+		descNodeId: "40017244:13071",
+	},
+	{
+		title: "Casos de estudo",
+		description: "Exemplos nacionais e internacionais de boas práticas.",
+		toneClass: "bg-main-ciano-500",
+		href: "/biblioteca/",
+		nodeId: "40017244:13072",
+		titleNodeId: "40017244:13073",
+		descNodeId: "40017244:13074",
+	},
+	{
+		title: "Financiamento e oportunidades",
+		description: "Avisos, programas e instrumentos de apoio à transição circular.",
+		toneClass: "bg-main-ciano-600",
+		href: "/oportunidades/",
+		nodeId: "40017244:13075",
+		titleNodeId: "40017244:13076",
+		descNodeId: "40017244:13077",
+	},
+	{
+		title: "Glossário",
+		description: "Definições simples de conceito.",
+		toneClass: "bg-main-ciano-700",
+		href: "/glossario/",
+		nodeId: "40017244:13078",
+		titleNodeId: "40017244:13079",
+		descNodeId: "40017244:13080",
+	},
+] as const;
+
+interface Props {
+	eyebrow?: string;
+	heading?: string;
+	cards?: readonly RecursoCard[];
+}
+
+const {
+	eyebrow = "Recursos",
+	heading = "Encontre documentos, guias, relatórios e plataformas úteis para compreender e aplicar a economia circular.",
+	cards = defaultCards,
+} = Astro.props;
+
+const headingId = "economia-circular-recursos-heading";
+---
+
+<section
+	class="bg-monochrome-light-100 w-full"
+	aria-labelledby={headingId}
+	data-node-id="40017244:13058"
+	data-nomia-header-surface="light"
+>
+	<div
+		class="font-primary text-main-cinza-700 mx-auto flex w-full max-w-[1920px] flex-col items-center gap-12 px-4 py-28 md:px-16"
+	>
+		<div class="flex w-full max-w-[55rem] flex-col items-center gap-10 text-center" data-node-id="40017244:13059">
+			<div class="flex items-center gap-1" data-node-id="40017244:13060">
+				<span class="text-main-botnico-400 inline-flex size-6 shrink-0" aria-hidden="true" data-node-id="40017244:13061">
+					<svg class="size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path
+							d="M12 4v16M4.93 7.76l14.14 8.48M4.93 16.24l14.14-8.48"
+							stroke="currentColor"
+							stroke-width="1.35"
+							stroke-linecap="round"
+							stroke-linejoin="round"></path>
+					</svg>
+				</span>
+				<p
+					class="text-body text-main-botnico-400 font-medium leading-[var(--typography-line-height-i)] tracking-[var(--tracking-typography-0)] uppercase"
+					data-node-id="40017244:13062"
+				>
+					{eyebrow}
+				</p>
+			</div>
+			<div class="flex w-full flex-col items-center" data-node-id="40017244:13063">
+				<h2
+					id={headingId}
+					class="text-h4 font-semibold leading-[var(--typography-line-height-f)] tracking-[var(--tracking-typography-0)]"
+					data-node-id="40017244:13064"
+				>
+					{heading}
+				</h2>
+			</div>
+		</div>
+
+		<div
+			class="flex w-full flex-col gap-4 lg:flex-row lg:gap-[5px]"
+			data-node-id="40017244:13065"
+		>
+			{
+				cards.map((card) => (
+					<a
+						href={card.href}
+						aria-label={`${card.title}: ${card.description}`}
+						class:list={[
+							card.toneClass,
+							"focus-visible:ring-main-teal-400 group relative flex min-h-[min(22rem,60vh)] w-full flex-col gap-8 overflow-hidden rounded-2xl px-4 py-10 text-center no-underline outline-none transition-[filter] duration-200 hover:brightness-[1.04] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-monochrome-light-100 lg:min-h-[544px] lg:min-w-0 lg:flex-1 lg:basis-0 lg:gap-8",
+						]}
+						data-node-id={card.nodeId}
+					>
+						<span
+							class="bg-main-cinza-700/40 pointer-events-none absolute inset-0 rounded-2xl"
+							aria-hidden="true"
+						/>
+						<h3
+							class="text-h4 text-main-cinza-100 relative z-10 flex-1 font-semibold leading-[var(--typography-line-height-f)] tracking-[var(--tracking-typography-0)]"
+							data-node-id={card.titleNodeId}
+						>
+							{card.title}
+						</h3>
+						<p
+							class="text-body text-neutral-bw-white relative z-10 min-h-[5rem] font-normal leading-[var(--typography-line-height-i)] tracking-[var(--tracking-typography-0)]"
+							data-node-id={card.descNodeId}
+						>
+							{card.description}
+						</p>
+					</a>
+				))
+			}
+		</div>
+	</div>
+</section>

@@ -1,0 +1,63 @@
+---
+import TwoColumnsTextImage from "../../content/TwoColumnsTextImage/index.astro";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { wpBoolean as bool, wpText as text, optionalText } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props { block: WpParsedBlock }
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/two-columns-text-image">;
+const accentRaw = text(attrs.accent);
+const accent = accentRaw === "botnico" ? "botnico" : accentRaw === "ciano" ? "ciano" : undefined;
+const mediaPositionRaw = text(attrs.mediaPosition);
+const mediaPosition = mediaPositionRaw === "left" ? "left" : mediaPositionRaw === "right" ? "right" : undefined;
+
+function imageFromCoreBlock(imageBlock: WpParsedBlock | undefined) {
+  if (!imageBlock || imageBlock.blockName !== "core/image") return null;
+  const imageAttrs = (imageBlock.attrs ?? {}) as Record<string, unknown>;
+  const src = text(imageAttrs.url);
+  if (!src) return null;
+  return {
+    src,
+    alt: text(imageAttrs.alt),
+    className: text(imageAttrs.className),
+  };
+}
+
+const nativeImages = block.innerBlocks
+  .map(imageFromCoreBlock)
+  .filter(
+    (image): image is NonNullable<ReturnType<typeof imageFromCoreBlock>> => image !== null,
+  );
+const primaryImage = nativeImages.find((image) => image.className.includes("is-primary-image")) ?? nativeImages[0];
+const heading = text(attrs.heading);
+const body = text(attrs.body);
+const ctaHref = optionalText(attrs.ctaHref, attrs.ctaUrl) ?? "";
+const ctaLabel = text(attrs.ctaLabel);
+const primarySrc = primaryImage?.src || optionalText(attrs.primarySrc, attrs.primaryUrl) || "";
+const primaryAlt = primaryImage?.alt || optionalText(attrs.primaryAlt) || "";
+const hideCta = bool(attrs.hideCta);
+const canRender = Boolean(
+  heading &&
+    body &&
+    primarySrc &&
+    (hideCta || (ctaHref && ctaLabel)),
+);
+---
+
+{canRender ? (
+  <TwoColumnsTextImage
+    eyebrowLabel={optionalText(attrs.eyebrowLabel, attrs.eyebrow)}
+    accent={accent}
+    heading={heading}
+    body={body}
+    ctaHref={ctaHref}
+    ctaLabel={ctaLabel}
+    primarySrc={primarySrc}
+    primaryAlt={primaryAlt}
+    mediaPosition={mediaPosition}
+    hideCta={hideCta}
+    hideTaxonomy={bool(attrs.hideTaxonomy)}
+    headingId={text(attrs.headingId) || undefined}
+  />
+) : null}

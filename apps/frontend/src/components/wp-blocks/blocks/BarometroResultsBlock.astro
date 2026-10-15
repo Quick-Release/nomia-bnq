@@ -1,0 +1,39 @@
+---
+import NomiaBarometroResultsSection from "../../sections/landing/NomiaBarometroResultsSection.astro";
+import type { BarometroResultCard } from "../../../config/barometro-results";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { firstArray, mapValid, textOr } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props {
+  block: WpParsedBlock;
+}
+
+type ResultAttrs = Partial<Record<keyof BarometroResultCard, unknown>>;
+
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/cta-results">;
+
+function normalizeResult(raw: unknown, index: number): BarometroResultCard | null {
+  if (!raw || typeof raw !== "object") return null;
+  const item = raw as ResultAttrs;
+  const year = textOr(item.year);
+  const value = textOr(item.value);
+  const unit = textOr(item.unit);
+  const description = textOr(item.description);
+  const href = textOr(item.href);
+  if (!year || !value || !unit || !description || !href) return null;
+  return {
+    year,
+    value,
+    unit,
+    description,
+    href,
+    nodeId: textOr(item.nodeId) || `wp-barometro-result-${index + 1}`,
+  };
+}
+
+const results = mapValid(firstArray(attrs.results, attrs.items), normalizeResult);
+---
+
+{results.length > 0 ? <NomiaBarometroResultsSection results={results} /> : null}

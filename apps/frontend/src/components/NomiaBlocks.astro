@@ -1,0 +1,19 @@
+---
+import WpBlockRenderer from "./wp-blocks/WpBlockRenderer.astro";
+import type { NomiaContent } from "../lib/nomia-content";
+import type { WordPressImage } from "../lib/wordpress";
+
+// A page or post built with Nomia's blocks, rendered from its stored blocks by
+// the Nomia block components (migrated from bioeconomia.pt's Astro renderer).
+interface Props {
+  nomia: NomiaContent;
+  /** The page's featured image: a page hero without its own image shows it. */
+  featuredImage?: WordPressImage | null;
+}
+
+const { nomia, featuredImage = null } = Astro.props;
+---
+
+<main class="nomia-blocks">
+  <WpBlockRenderer blocks={nomia.blocks} bare wrapCoreBlocks pageFeaturedImage={featuredImage} />
+</main>

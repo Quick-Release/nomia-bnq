@@ -1,0 +1,23 @@
+---
+/**
+ * Map + filters + list — Nomia Website 2 · node 40017244:29312
+ */
+import NomiaMapListExplorer from "./NomiaMapListExplorer";
+import { MOCK_MAP_LIST_EXPLORER } from "../../lib/map-list-explorer/mock-data";
+import type { NomiaMapListExplorerData } from "../../types/nomia-map-list-explorer";
+
+interface Props extends Partial<NomiaMapListExplorerData> {}
+
+const {
+	regions = MOCK_MAP_LIST_EXPLORER.regions,
+	audiences = MOCK_MAP_LIST_EXPLORER.audiences,
+	items = MOCK_MAP_LIST_EXPLORER.items,
+} = Astro.props;
+---
+
+<NomiaMapListExplorer
+	client:only="react"
+	regions={regions}
+	audiences={audiences}
+	items={items}
+/>

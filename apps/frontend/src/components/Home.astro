@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import NomiaBlocks from "./NomiaBlocks.astro";
 import { copyFor } from "../lib/copy";
 import type { HomeDelivery } from "../lib/delivery";
 import type { SiteLanguage } from "../lib/site-language";
@@ -24,8 +25,10 @@ const siteTitle = content?.page.title || content?.settings.title || "Nomia";
 const isVideoHeroPage = content?.page.hasVideoHero ?? false;
 ---
 
-<Layout title={siteTitle} description={content?.settings.description} chrome={chrome} language={language} alternates={alternates}>
-  {content?.page.content ? (
+<Layout title={siteTitle} description={content?.settings.description} chrome={chrome} language={language} alternates={alternates} pageBackgroundColor={content?.page.nomia?.pageBackgroundColor}>
+  {content?.page.nomia ? (
+    <NomiaBlocks nomia={content.page.nomia} />
+  ) : content?.page.content ? (
     <>
       <style is:global set:html={colorRules} />
       <main class={isVideoHeroPage ? "prose-wp prose-wp--video-hero" : "prose-wp"} style={vars} set:html={content.page.content}></main>

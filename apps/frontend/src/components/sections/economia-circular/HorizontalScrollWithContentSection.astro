@@ -1,0 +1,79 @@
+---
+import HorizontalScrollWithContent from "./HorizontalScrollWithContent";
+import type { HorizontalScrollWithContentProps } from "./HorizontalScrollWithContent";
+
+interface Props extends Partial<HorizontalScrollWithContentProps> {}
+
+/** Stand-in for WordPress — replace with CMS fields when available */
+const defaultPills = [
+	{ label: "Princípios" },
+	{ label: "Building blocks" },
+	{ label: "Planos" },
+	{ label: "Propostas" },
+] as const;
+
+const defaultSlides = [
+	{
+		id: "concecao",
+		imageSrc: "/images/economia-circular/overview-slider/concecao.jpg",
+		imageAlt: "Espaço interior com vegetação e estrutura escultural",
+		caption: "Conceção/design",
+		href: "/economia-circular/conceicao-design/",
+	},
+	{
+		id: "producao",
+		imageSrc: "/images/economia-circular/overview-slider/producao.jpg",
+		imageAlt: "Antena parabólica em campo aberto",
+		caption: "Produção",
+		href: "/economia-circular/producao/",
+	},
+	{
+		id: "distribuicao",
+		imageSrc: "/images/economia-circular/overview-slider/distribuicao.jpg",
+		imageAlt: "Ave em pastagem",
+		caption: "Distribuição",
+		href: "/economia-circular/distribuicao/",
+	},
+	{
+		id: "utilizacao",
+		imageSrc: "/images/economia-circular/overview-slider/utilizacao.jpg",
+		imageAlt: "Mão a segurar ramo de pinheiro junto a lago de montanha",
+		caption: "Utilização",
+		href: "/economia-circular/utilizacao/",
+	},
+	{
+		id: "eliminacao",
+		imageSrc: "/images/economia-circular/overview-slider/eliminacao.jpg",
+		imageAlt: "Floresta densa vista de cima",
+		caption: "Eliminação",
+		href: "/economia-circular/eliminacao/",
+	},
+] as const;
+
+const {
+	eyebrow = "Visão geral",
+	headingLine1 = "A Economia Circular promove um modelo económico reorganizado,",
+	headingLine2 = "através da coordenação dos sistemas de produção e consumo em circuitos fechados.",
+	pills = defaultPills,
+	verTodosHref = "/biblioteca/",
+	verTodosLabel = "Ver Todos",
+	slides = defaultSlides,
+} = Astro.props;
+---
+
+<section
+	class="bg-neutral-bw-white w-full"
+	data-nomia-header-surface="light"
+	aria-label="Visão geral da economia circular"
+>
+	<HorizontalScrollWithContent
+		client:visible
+		eyebrow={eyebrow}
+		headingLine1={headingLine1}
+		headingLine2={headingLine2}
+		pills={pills}
+		verTodosHref={verTodosHref}
+		verTodosLabel={verTodosLabel}
+		slides={slides}
+	/>
+</section>
