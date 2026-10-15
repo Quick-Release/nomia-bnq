@@ -1,5 +1,6 @@
 packages:
   - "apps/*"
+  - "apps/cms/web/app/plugins/nomia-blocks"
   - "infra"
   - "infra/ci"
 
@@ -7,6 +8,12 @@ allowBuilds:
   esbuild: true
   msgpackr-extract: true
   workerd: true
+  # The nomia-blocks editor build (@wordpress/scripts) doesn't need these:
+  # prebuilt binaries and funding notices.
+  "@parcel/watcher": false
+  core-js: false
+  core-js-pure: false
+  unrs-resolver: false
 # GETQUICK's own tooling may be installed the day it is released.
 minimumReleaseAgeExclude:
   - "@getquick/site"

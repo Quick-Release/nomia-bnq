@@ -1,0 +1,1582 @@
+# Copyright (C) 2026 Getquick
+# This file is distributed under the same license as the Getquick Nomia Blocks plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Getquick Nomia Blocks 0.63.6\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/getquick-nomia-blocks\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-09-21T17:58:43+01:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: getquick-nomia-blocks\n"
+
+#. Plugin Name of the plugin
+#: getquick-nomia-blocks.php
+msgid "Getquick Nomia Blocks"
+msgstr ""
+
+#. Description of the plugin
+#: getquick-nomia-blocks.php
+msgid "Gutenberg content-contract blocks for Nomia. Astro renders the final frontend markup."
+msgstr ""
+
+#. Author of the plugin
+#: getquick-nomia-blocks.php
+msgid "Getquick"
+msgstr ""
+
+#: getquick-nomia-blocks.php:170
+#: getquick-nomia-blocks.php:187
+msgid "Cor de fundo da página Nomia."
+msgstr ""
+
+#: getquick-nomia-blocks.php:270
+msgid "Getquick Nomia"
+msgstr ""
+
+#: src/editors/ContactDetailsCard.jsx:120
+msgid "Este link não é aceite e o botão não aparece no site. Use uma página, https://…, mailto: ou tel:."
+msgstr ""
+
+#: src/editors/ContactDetailsCard.jsx:124
+msgid "O botão só aparece no site com texto e link."
+msgstr ""
+
+#: src/editors/ContactDetailsCard.jsx:152
+msgid "Link do botão"
+msgstr ""
+
+#: src/editors/ContactDetailsCard.jsx:157
+msgid "Página, https://…, mailto:email@exemplo.pt ou tel:+351…. Sem link, o botão não aparece no site."
+msgstr ""
+
+#: src/editors/ContactDetailsCard.jsx:172
+msgid "Editar link do botão"
+msgstr ""
+
+#: src/editors/ContactDetailsCard.jsx:198
+msgid "Ícone"
+msgstr ""
+
+#: src/editors/ContactDetailsCard.jsx:203
+msgid "Mostrar ícone"
+msgstr ""
+
+#: src/editors/ContactDetailsCard.jsx:215
+#: src/editors/ContactDetailsCard.jsx:307
+msgid "Carregar ícone"
+msgstr ""
+
+#: src/editors/ContactDetailsCard.jsx:219
+#: src/editors/ContactDetailsCard.jsx:303
+msgid "Substituir ícone"
+msgstr ""
+
+#: src/editors/ContactDetailsCard.jsx:232
+msgid "Remover ícone"
+msgstr ""
+
+#: src/editors/ContactDetailsCard.jsx:251
+msgid "Botão"
+msgstr ""
+
+#: src/editors/ContactDetailsCard.jsx:256
+#: src/editors/PageHeroStatic.jsx:482
+msgid "Mostrar botão"
+msgstr ""
+
+#: src/editors/ContactDetailsCard.jsx:271
+msgid "Este bloco não aparece no site enquanto o título, os detalhes e o botão estiverem vazios."
+msgstr ""
+
+#: src/editors/ContactDetailsCard.jsx:330
+#: src/editors/ContactDetailsCard.jsx:333
+#: src/editors/PageHeroStatic.jsx:156
+msgid "Título"
+msgstr ""
+
+#: src/editors/ContactDetailsCard.jsx:342
+msgid "Detalhes"
+msgstr ""
+
+#: src/editors/ContactDetailsCard.jsx:345
+msgid "Detalhes (Enter para nova linha)"
+msgstr ""
+
+#: src/editors/ContactDetailsCard.jsx:367
+#: src/editors/ContactDetailsCard.jsx:372
+#: src/editors/PageHeroStatic.jsx:647
+msgid "Texto do botão"
+msgstr ""
+
+#: src/editors/ContactDetailsCard.jsx:394
+msgid "Adicionar link — sem link o botão não aparece"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:102
+msgid "Name"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:112
+#: src/editors/ContentGridFilters.jsx:239
+msgid "Slug"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:123
+#: src/editors/ContentGridFilters.jsx:435
+#: src/editors/CtaResults.jsx:230
+#: src/editors/MapList.jsx:355
+#: src/editors/PodcastList.jsx:217
+msgid "Remove"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:128
+msgid "Add term"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:212
+msgid "Filters"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:216
+#: src/editors/ContentGridFilters.jsx:287
+msgid "Temáticas"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:223
+#: src/editors/ContentGridFilters.jsx:304
+msgid "Setores"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:232
+msgid "Selected platform fields"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:251
+#: src/editors/MapList.jsx:402
+#: src/editors/PodcastList.jsx:248
+msgid "Date label"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:261
+msgid "Date"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:269
+msgid "Featured"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:276
+msgid "Platform URL"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:328
+#: src/editors/HomeIntro.jsx:119
+#: src/editors/TwoColumnsTextImage.jsx:159
+msgid "Heading"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:338
+#: src/editors/ContentGridFilters.jsx:496
+msgid "Add platform"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:342
+msgid "Pesquisa"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:345
+msgid "Temática: Todas"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:351
+msgid "Sector: Todos"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:357
+msgid "Ordenar por: Mais recente"
+msgstr ""
+
+#. translators: %d: the platform position in the list.
+#: src/editors/ContentGridFilters.jsx:388
+#, js-format
+msgid "Select platform %d"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:402
+#: src/editors/CtaResults.jsx:214
+#: src/editors/MapList.jsx:318
+#: src/editors/PodcastList.jsx:184
+msgid "Selected"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:406
+#: src/editors/CtaResults.jsx:218
+#: src/editors/MapList.jsx:322
+#: src/editors/PodcastList.jsx:188
+msgid "Select"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:416
+#: src/editors/ImageZoom.jsx:40
+#: src/editors/ImageZoom.jsx:72
+#: src/editors/MapList.jsx:290
+#: src/editors/MapList.jsx:335
+#: src/editors/PodcastList.jsx:158
+#: src/editors/TwoColumnsTextImage.jsx:221
+#: src/fields/ArrayField.jsx:92
+msgid "Select image"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:420
+#: src/editors/ImageZoom.jsx:44
+#: src/editors/ImageZoom.jsx:76
+#: src/editors/MapList.jsx:339
+#: src/editors/TwoColumnsTextImage.jsx:225
+#: src/fields/ArrayField.jsx:96
+msgid "Replace image"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:443
+msgid "Destaque"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:453
+msgid "Platform title"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:471
+#: src/editors/CtaResults.jsx:286
+msgid "Description"
+msgstr ""
+
+#: src/editors/ContentGridFilters.jsx:490
+msgid "Add a platform to start editing the grid."
+msgstr ""
+
+#: src/editors/CtaResults.jsx:101
+msgid "Selected result settings"
+msgstr ""
+
+#: src/editors/CtaResults.jsx:108
+msgid "Result URL"
+msgstr ""
+
+#: src/editors/CtaResults.jsx:120
+msgid "Node/content ID"
+msgstr ""
+
+#: src/editors/CtaResults.jsx:139
+msgid "ECONOMIA"
+msgstr ""
+
+#: src/editors/CtaResults.jsx:147
+msgid "Barómetro"
+msgstr ""
+
+#: src/editors/CtaResults.jsx:153
+msgid "Promovendo a coordenação, o desenvolvimento e a divulgação da atividade estatística nacional."
+msgstr ""
+
+#: src/editors/CtaResults.jsx:167
+#: src/editors/CtaResults.jsx:312
+msgid "Add result"
+msgstr ""
+
+#. translators: %d: the result position in the list.
+#: src/editors/CtaResults.jsx:194
+#, js-format
+msgid "Select result %d"
+msgstr ""
+
+#: src/editors/CtaResults.jsx:241
+msgid "Year"
+msgstr ""
+
+#: src/editors/CtaResults.jsx:257
+msgid "Value"
+msgstr ""
+
+#: src/editors/CtaResults.jsx:271
+msgid "Unit"
+msgstr ""
+
+#: src/editors/CtaResults.jsx:306
+msgid "Add a result to start editing the CTA results section."
+msgstr ""
+
+#: src/editors/HomeIntro.jsx:59
+#: src/editors/TwoColumnsTextImage.jsx:104
+msgid "Content"
+msgstr ""
+
+#: src/editors/HomeIntro.jsx:63
+msgid "Show Tematic selector"
+msgstr ""
+
+#: src/editors/HomeIntro.jsx:73
+msgid "Show CTA button"
+msgstr ""
+
+#: src/editors/HomeIntro.jsx:84
+#: src/editors/TwoColumnsTextImage.jsx:129
+msgid "CTA URL"
+msgstr ""
+
+#: src/editors/HomeIntro.jsx:92
+msgid "Show description text"
+msgstr ""
+
+#: src/editors/HomeIntro.jsx:131
+#: src/editors/TwoColumnsTextImage.jsx:171
+msgid "Body copy"
+msgstr ""
+
+#: src/editors/HomeIntro.jsx:149
+#: src/editors/PageHeroSlider.jsx:264
+#: src/editors/TwoColumnsTextImage.jsx:189
+msgid "CTA label"
+msgstr ""
+
+#: src/editors/HomeIntro.jsx:169
+#: src/editors/ImageZoom.jsx:64
+#: src/editors/TwoColumnsTextImage.jsx:210
+msgid "Select an image"
+msgstr ""
+
+#: src/editors/HomeIntro.jsx:180
+msgid "Select hero image"
+msgstr ""
+
+#: src/editors/HomeIntro.jsx:184
+msgid "Replace hero image"
+msgstr ""
+
+#: src/editors/HomeIntro.jsx:197
+msgid "Caption heading"
+msgstr ""
+
+#: src/editors/HomeIntro.jsx:212
+msgid "Caption body"
+msgstr ""
+
+#: src/editors/ImageZoom.jsx:34
+msgid "Image"
+msgstr ""
+
+#: src/editors/ImageZoom.jsx:86
+msgid "Optional caption"
+msgstr ""
+
+#: src/editors/MapList.jsx:166
+msgid "Selected item fields"
+msgstr ""
+
+#: src/editors/MapList.jsx:179
+msgid "Item URL"
+msgstr ""
+
+#: src/editors/MapList.jsx:186
+msgid "Region"
+msgstr ""
+
+#: src/editors/MapList.jsx:195
+msgid "Audiences"
+msgstr ""
+
+#: src/editors/MapList.jsx:216
+msgid "Portugal regions map preview"
+msgstr ""
+
+#: src/editors/MapList.jsx:224
+msgid "Filtros"
+msgstr ""
+
+#: src/editors/MapList.jsx:231
+msgid "Região"
+msgstr ""
+
+#: src/editors/MapList.jsx:233
+msgid "Region label"
+msgstr ""
+
+#: src/editors/MapList.jsx:250
+msgid "Audience label"
+msgstr ""
+
+#: src/editors/MapList.jsx:265
+#: src/editors/MapList.jsx:426
+msgid "Add item"
+msgstr ""
+
+#. translators: %d: the item position in the list.
+#: src/editors/MapList.jsx:302
+#, js-format
+msgid "Select item %d"
+msgstr ""
+
+#: src/editors/MapList.jsx:366
+msgid "Item title"
+msgstr ""
+
+#: src/editors/MapList.jsx:385
+msgid "Excerpt"
+msgstr ""
+
+#: src/editors/MapList.jsx:420
+msgid "Add an item to start editing the map list."
+msgstr ""
+
+#: src/editors/NomiaContactMap.jsx:20
+msgid "Centrado (predefinição)"
+msgstr ""
+
+#: src/editors/NomiaContactMap.jsx:21
+msgid "Alinhado à esquerda"
+msgstr ""
+
+#: src/editors/NomiaContactMap.jsx:22
+msgid "Alinhado à direita"
+msgstr ""
+
+#: src/editors/NomiaContactMap.jsx:23
+msgid "Largura total"
+msgstr ""
+
+#: src/editors/NomiaContactMap.jsx:79
+msgid "Alinhamento:"
+msgstr ""
+
+#: src/editors/NomiaContactMap.jsx:89
+msgid "Mapa"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:141
+msgid "URL"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:146
+msgid "Background color"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:158
+msgid "Hover color"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:171
+msgid "Title color"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:183
+msgid "Paragraph color"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:195
+#: src/editors/PageHeroMediaGrid.jsx:421
+msgid "Corner radius"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:270
+msgid "Paragraph vertical alignment"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:277
+msgid "Top aligned"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:286
+msgid "Bottom aligned"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:300
+msgid "Background"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:305
+msgid "Accessible section label"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:315
+msgid "Background image"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:324
+#: src/editors/PageHeroSlider.jsx:213
+msgid "Select background image"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:328
+#: src/editors/PageHeroSlider.jsx:217
+msgid "Replace background image"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:336
+msgid "Column A"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:351
+msgid "Column B"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:366
+msgid "Column C"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:371
+msgid "Video"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:377
+msgid "Select video"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:381
+msgid "Replace video"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:387
+msgid "Video URL"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:394
+msgid "Video title"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:404
+#: src/editors/PodcastList.jsx:120
+msgid "Share URL"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:411
+msgid "Share label"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:432
+msgid "Video poster image"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:441
+msgid "Select poster image"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:445
+msgid "Replace poster image"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:480
+msgid "First title"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:493
+msgid "First text"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:521
+msgid "Second title"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:534
+msgid "Second text"
+msgstr ""
+
+#: src/editors/PageHeroMediaGrid.jsx:575
+msgid "Select a video"
+msgstr ""
+
+#: src/editors/PageHeroSlider.jsx:125
+msgid "CTA link"
+msgstr ""
+
+#: src/editors/PageHeroSlider.jsx:139
+msgid "Visibility"
+msgstr ""
+
+#: src/editors/PageHeroSlider.jsx:143
+msgid "Show spotlight section"
+msgstr ""
+
+#: src/editors/PageHeroSlider.jsx:176
+msgid "Slide"
+msgstr ""
+
+#: src/editors/PageHeroSlider.jsx:184
+#: src/editors/PageHeroSlider.jsx:379
+msgid "Add slide"
+msgstr ""
+
+#: src/editors/PageHeroSlider.jsx:191
+msgid "Remove selected"
+msgstr ""
+
+#: src/editors/PageHeroSlider.jsx:202
+msgid "Select a background image"
+msgstr ""
+
+#: src/editors/PageHeroSlider.jsx:232
+msgid "Slide title"
+msgstr ""
+
+#: src/editors/PageHeroSlider.jsx:246
+msgid "Slide subtitle"
+msgstr ""
+
+#: src/editors/PageHeroSlider.jsx:287
+msgid "Spotlight image"
+msgstr ""
+
+#: src/editors/PageHeroSlider.jsx:299
+msgid "Select spotlight image"
+msgstr ""
+
+#: src/editors/PageHeroSlider.jsx:303
+msgid "Replace spotlight image"
+msgstr ""
+
+#: src/editors/PageHeroSlider.jsx:319
+msgid "Spotlight title"
+msgstr ""
+
+#: src/editors/PageHeroSlider.jsx:336
+msgid "Spotlight body"
+msgstr ""
+
+#: src/editors/PageHeroSlider.jsx:351
+msgid "Spotlight URL"
+msgstr ""
+
+#: src/editors/PageHeroSlider.jsx:373
+msgid "Add a slide to start editing the hero slider."
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:72
+msgid "Predefinido (da altura)"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:73
+#: src/editors/Section.jsx:85
+msgid "Nenhum"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:74
+#: src/editors/Section.jsx:86
+#: src/editors/Section.jsx:96
+msgid "Pequeno"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:75
+#: src/editors/Section.jsx:87
+msgid "Médio"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:76
+#: src/editors/Section.jsx:88
+#: src/editors/TitleWithLabel.jsx:55
+msgid "Grande"
+msgstr ""
+
+#. translators: %s: pixels.
+#: src/editors/PageHeroStatic.jsx:93
+#, js-format
+msgid "Predefinido (%spx)"
+msgstr ""
+
+#. translators: %s: pixels.
+#: src/editors/PageHeroStatic.jsx:100
+#: src/editors/TitleWithLabel.jsx:72
+#, js-format
+msgid "%spx"
+msgstr ""
+
+#. translators: 1: comma-separated steps, e.g. "XS, S, M". 2: the last step, e.g. "L".
+#: src/editors/PageHeroStatic.jsx:148
+#, js-format
+msgid "%1$s e %2$s"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:157
+#: src/editors/TitleWithLabel.jsx:50
+msgid "Subtítulo"
+msgstr ""
+
+#. translators: %s: palette swatch name, e.g. "Cinza 100".
+#: src/editors/PageHeroStatic.jsx:177
+#, js-format
+msgid "%s (predefinido)"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:183
+#: src/editors/Section.jsx:97
+msgid "Predefinido"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:238
+msgid "Alinhar texto à esquerda"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:243
+msgid "Alinhar texto ao centro"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:248
+msgid "Alinhar texto à direita"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:266
+msgid "Alinhamento do texto"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:267
+msgid "Move o título, o subtítulo e o botão em conjunto."
+msgstr ""
+
+#. translators: %s: hero text field name, e.g. "Título".
+#: src/editors/PageHeroStatic.jsx:311
+#, js-format
+msgid "Tamanho de letra (%s)"
+msgstr ""
+
+#. translators: %s: hero text field name, e.g. "Subtítulo".
+#: src/editors/PageHeroStatic.jsx:332
+#, js-format
+msgid "Altura da linha (%s)"
+msgstr ""
+
+#. translators: %s: hero text field name, e.g. "Título".
+#: src/editors/PageHeroStatic.jsx:350
+#, js-format
+msgid "Cor do texto (%s)"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:419
+msgid "Imagem do cabeçalho"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:434
+#: src/editors/PageHeroStatic.jsx:465
+#: src/editors/Section.jsx:239
+msgid "Substituir imagem"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:438
+#: src/editors/PageHeroStatic.jsx:461
+#: src/editors/Section.jsx:235
+#: src/fields/MediaField.jsx:34
+msgid "Selecionar imagem"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:453
+msgid "Conteúdo"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:472
+msgid "Mostrar subtítulo"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:488
+msgid "URL do botão"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:498
+msgid "Tipografia"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:517
+msgid "Disposição"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:523
+msgid "Altura"
+msgstr ""
+
+#. translators: 1: tallest step, e.g. XL. 2: the remaining steps, e.g. "XS, S, M e L".
+#: src/editors/PageHeroStatic.jsx:526
+#, js-format
+msgid "%1$s ocupa o ecrã inteiro; %2$s são faixas progressivamente mais baixas."
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:555
+msgid "Espaço superior"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:564
+msgid "Espaço inferior"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:583
+msgid "Selecionar imagem de fundo (opcional)"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:613
+msgid "Título do cabeçalho"
+msgstr ""
+
+#: src/editors/PageHeroStatic.jsx:631
+msgid "Subtítulo ou descrição (Enter para novo parágrafo)"
+msgstr ""
+
+#: src/editors/PodcastList.jsx:97
+msgid "Selected episode fields"
+msgstr ""
+
+#: src/editors/PodcastList.jsx:104
+msgid "Listen URL"
+msgstr ""
+
+#: src/editors/PodcastList.jsx:136
+#: src/editors/PodcastList.jsx:299
+msgid "Add episode"
+msgstr ""
+
+#. translators: %d: the episode position in the list.
+#: src/editors/PodcastList.jsx:170
+#, js-format
+msgid "Select episode %d"
+msgstr ""
+
+#: src/editors/PodcastList.jsx:198
+msgid "Select episode image"
+msgstr ""
+
+#: src/editors/PodcastList.jsx:202
+msgid "Replace episode image"
+msgstr ""
+
+#: src/editors/PodcastList.jsx:227
+msgid "Episode"
+msgstr ""
+
+#: src/editors/PodcastList.jsx:263
+msgid "Episode title"
+msgstr ""
+
+#: src/editors/PodcastList.jsx:274
+msgid "Ouvir"
+msgstr ""
+
+#: src/editors/PodcastList.jsx:280
+msgid "Partilhar"
+msgstr ""
+
+#: src/editors/PodcastList.jsx:293
+msgid "Add an episode to start editing the podcast list."
+msgstr ""
+
+#: src/editors/Section.jsx:55
+msgid "Em cima à esquerda"
+msgstr ""
+
+#: src/editors/Section.jsx:56
+msgid "Em cima ao centro"
+msgstr ""
+
+#: src/editors/Section.jsx:57
+msgid "Em cima à direita"
+msgstr ""
+
+#: src/editors/Section.jsx:58
+msgid "Ao centro à esquerda"
+msgstr ""
+
+#: src/editors/Section.jsx:59
+msgid "Ao centro"
+msgstr ""
+
+#: src/editors/Section.jsx:60
+msgid "Ao centro à direita"
+msgstr ""
+
+#: src/editors/Section.jsx:61
+msgid "Em baixo à esquerda"
+msgstr ""
+
+#: src/editors/Section.jsx:62
+msgid "Em baixo ao centro"
+msgstr ""
+
+#: src/editors/Section.jsx:63
+msgid "Em baixo à direita"
+msgstr ""
+
+#: src/editors/Section.jsx:69
+msgid "Preencher (recorta a imagem)"
+msgstr ""
+
+#: src/editors/Section.jsx:70
+msgid "Ajustar (imagem inteira)"
+msgstr ""
+
+#: src/editors/Section.jsx:71
+msgid "Tamanho original"
+msgstr ""
+
+#: src/editors/Section.jsx:94
+msgid "Nenhum (largura total)"
+msgstr ""
+
+#: src/editors/Section.jsx:155
+msgid "Fundo da secção"
+msgstr ""
+
+#: src/editors/Section.jsx:207
+#: src/editors/TitleWithLabel.jsx:180
+#: src/index.jsx:121
+msgid "Repor"
+msgstr ""
+
+#: src/editors/Section.jsx:212
+msgid "O texto dos blocos interiores fica automaticamente legível sobre este fundo."
+msgstr ""
+
+#: src/editors/Section.jsx:216
+msgid "Sem cor definida, a secção herda o fundo da página."
+msgstr ""
+
+#: src/editors/Section.jsx:223
+msgid "Imagem de fundo"
+msgstr ""
+
+#: src/editors/Section.jsx:259
+msgid "Remover imagem"
+msgstr ""
+
+#: src/editors/Section.jsx:267
+msgid "Alinhamento da imagem"
+msgstr ""
+
+#: src/editors/Section.jsx:302
+msgid "Tamanho da imagem"
+msgstr ""
+
+#: src/editors/Section.jsx:315
+msgid "Para uma imagem quadrada encostada a um lado, escolha \"Ajustar\" e o alinhamento desse lado. A imagem fica por cima da cor de fundo."
+msgstr ""
+
+#: src/editors/Section.jsx:324
+msgid "Espaçamento"
+msgstr ""
+
+#: src/editors/Section.jsx:329
+msgid "Topo"
+msgstr ""
+
+#: src/editors/Section.jsx:338
+msgid "Base"
+msgstr ""
+
+#: src/editors/Section.jsx:347
+msgid "Laterais"
+msgstr ""
+
+#: src/editors/TitleWithLabel.jsx:38
+#: src/editors/TitleWithLabel.jsx:274
+msgid "Etiqueta"
+msgstr ""
+
+#: src/editors/TitleWithLabel.jsx:39
+msgid "Título · linha 1"
+msgstr ""
+
+#: src/editors/TitleWithLabel.jsx:40
+msgid "Título · linha 2"
+msgstr ""
+
+#: src/editors/TitleWithLabel.jsx:46
+msgid "Extra"
+msgstr ""
+
+#: src/editors/TitleWithLabel.jsx:47
+msgid "Notas"
+msgstr ""
+
+#: src/editors/TitleWithLabel.jsx:48
+msgid "Corpo"
+msgstr ""
+
+#: src/editors/TitleWithLabel.jsx:49
+msgid "Corpo grande"
+msgstr ""
+
+#: src/editors/TitleWithLabel.jsx:51
+msgid "Título 4"
+msgstr ""
+
+#: src/editors/TitleWithLabel.jsx:52
+msgid "Título 3"
+msgstr ""
+
+#: src/editors/TitleWithLabel.jsx:53
+msgid "Título 2"
+msgstr ""
+
+#: src/editors/TitleWithLabel.jsx:54
+msgid "Título 1"
+msgstr ""
+
+#: src/editors/TitleWithLabel.jsx:56
+msgid "Super"
+msgstr ""
+
+#. translators: 1: design-system size name, e.g. "Título 4". 2: pixels.
+#: src/editors/TitleWithLabel.jsx:63
+#, js-format
+msgid "%1$s · %2$spx"
+msgstr ""
+
+#. translators: %s: the design default, e.g. "Título 4 · 32px".
+#: src/editors/TitleWithLabel.jsx:92
+#, js-format
+msgid "Predefinido (%s)"
+msgstr ""
+
+#. translators: %s: field name, e.g. "Título · linha 1".
+#: src/editors/TitleWithLabel.jsx:131
+#, js-format
+msgid "Tipografia: %s"
+msgstr ""
+
+#: src/editors/TitleWithLabel.jsx:140
+msgid "Tamanho"
+msgstr ""
+
+#: src/editors/TitleWithLabel.jsx:152
+msgid "Altura da linha"
+msgstr ""
+
+#: src/editors/TitleWithLabel.jsx:163
+msgid "Negrito"
+msgstr ""
+
+#: src/editors/TitleWithLabel.jsx:169
+msgid "Itálico"
+msgstr ""
+
+#: src/editors/TitleWithLabel.jsx:238
+msgid "Este bloco não aparece no site enquanto a etiqueta e a primeira linha do título estiverem vazias."
+msgstr ""
+
+#: src/editors/TitleWithLabel.jsx:294
+msgid "Primeira linha do título"
+msgstr ""
+
+#: src/editors/TitleWithLabel.jsx:312
+msgid "Segunda linha do título (opcional)"
+msgstr ""
+
+#: src/editors/TwoColumnsTextImage.jsx:80
+msgid "Image position"
+msgstr ""
+
+#: src/editors/TwoColumnsTextImage.jsx:85
+msgid "Image left"
+msgstr ""
+
+#: src/editors/TwoColumnsTextImage.jsx:94
+msgid "Image right"
+msgstr ""
+
+#: src/editors/TwoColumnsTextImage.jsx:108
+msgid "Hide taxonomy label"
+msgstr ""
+
+#: src/editors/TwoColumnsTextImage.jsx:118
+msgid "Hide CTA button"
+msgstr ""
+
+#: src/fields/ArrayField.jsx:247
+msgid "Adicionar item"
+msgstr ""
+
+#: src/fields/ArrayField.jsx:255
+msgid "incomplete item(s). Complete the required fields before publishing."
+msgstr ""
+
+#: src/fields/ArrayField.jsx:263
+msgid "Ainda sem itens."
+msgstr ""
+
+#: src/fields/ArrayField.jsx:277
+msgid "Item"
+msgstr ""
+
+#: src/fields/ArrayField.jsx:285
+msgid "Remover"
+msgstr ""
+
+#: src/fields/ImageAltControl.jsx:15
+msgid "Texto alternativo da imagem"
+msgstr ""
+
+#: src/fields/JsonField.jsx:15
+msgid "Structured content only. Visual styling is controlled by the Astro web app."
+msgstr ""
+
+#: src/index.jsx:74
+msgid "Fundo da página"
+msgstr ""
+
+#: src/index.jsx:142
+msgid "Contrato de bloco Nomia em falta."
+msgstr ""
+
+#. translators: %s: block title.
+#: src/index.jsx:185
+#, js-format
+msgid "Pré-visualização: %s"
+msgstr ""
+
+#: src/index.jsx:234
+msgid "Botão Bioeconomia"
+msgstr ""
+
+#: src/index.jsx:235
+msgid "Botão animado com o estilo visual da Bioeconomia."
+msgstr ""
+
+#: src/lib/tematica.jsx:106
+msgid "Temática"
+msgstr ""
+
+#: blocks/bioeconomy-phases-band/block.json
+msgctxt "block title"
+msgid "Bioeconomia: faixa de fases"
+msgstr ""
+
+#: blocks/bioeconomy-phases-band/block.json
+msgctxt "block description"
+msgid "Faixa sobre fotografia com as fases da bioeconomia, cada uma com fase, título e texto."
+msgstr ""
+
+#: blocks/circular-economy-indicators-spotlight/block.json
+msgctxt "block title"
+msgid "Economia circular: indicadores em destaque"
+msgstr ""
+
+#: blocks/circular-economy-indicators-spotlight/block.json
+msgctxt "block description"
+msgid "Indicadores em cartões com imagem, título e texto, em disposição escalonada, com cabeçalho e botão."
+msgstr ""
+
+#: blocks/circular-economy-overview-slider/block.json
+msgctxt "block title"
+msgid "Economia circular: slider geral"
+msgstr ""
+
+#: blocks/circular-economy-overview-slider/block.json
+msgctxt "block description"
+msgid "Carrossel de imagens com legenda e ligação, precedido de título, etiquetas e botão «Ver todos»."
+msgstr ""
+
+#: blocks/circular-economy-overview/block.json
+msgctxt "block title"
+msgid "Obsoleto: visão geral da economia circular"
+msgstr ""
+
+#: blocks/circular-economy-overview/block.json
+msgctxt "block description"
+msgid "Bloco antigo mantido para conteúdos já publicados. Use Scroll horizontal com conteúdo."
+msgstr ""
+
+#: blocks/circular-economy-resources/block.json
+msgctxt "block title"
+msgid "Economia circular: recursos"
+msgstr ""
+
+#: blocks/circular-economy-resources/block.json
+msgctxt "block description"
+msgid "Lista de recursos com cabeçalho e cartões de ligação, cada um com título e descrição."
+msgstr ""
+
+#: blocks/contact-details-card/block.json
+msgctxt "block title"
+msgid "Cartão de contacto"
+msgstr ""
+
+#: blocks/contact-details-card/block.json
+msgctxt "block description"
+msgid "Cartão com ícone, título, detalhes de contacto e botão opcional."
+msgstr ""
+
+#: blocks/contact-details-card/block.json
+msgctxt "block keyword"
+msgid "contacto"
+msgstr ""
+
+#: blocks/contact-details-card/block.json
+msgctxt "block keyword"
+msgid "morada"
+msgstr ""
+
+#: blocks/contact-details-card/block.json
+msgctxt "block keyword"
+msgid "telefone"
+msgstr ""
+
+#: blocks/contact-details-card/block.json
+msgctxt "block keyword"
+msgid "email"
+msgstr ""
+
+#: blocks/contact-details-card/block.json
+msgctxt "block keyword"
+msgid "cartão"
+msgstr ""
+
+#: blocks/content-grid-filters/block.json
+msgctxt "block title"
+msgid "Grelha de conteúdos com filtros"
+msgstr ""
+
+#: blocks/content-grid-filters/block.json
+msgctxt "block description"
+msgid "Grelha de cartões com imagem, título e descrição, que os visitantes filtram por temáticas e setores."
+msgstr ""
+
+#: blocks/content-list/block.json
+msgctxt "block title"
+msgid "Lista de conteúdos"
+msgstr ""
+
+#: blocks/content-list/block.json
+msgctxt "block description"
+msgid "Lista de episódios com imagem, número, data e botões para ouvir e partilhar."
+msgstr ""
+
+#: blocks/cta-results/block.json
+msgctxt "block title"
+msgid "Chamada para resultados"
+msgstr ""
+
+#: blocks/cta-results/block.json
+msgctxt "block description"
+msgid "Resultados do Barómetro em destaque, cada um com ano, valor, unidade, descrição e ligação."
+msgstr ""
+
+#: blocks/energy-consumption-chart/block.json
+msgctxt "block title"
+msgid "Gráfico de consumo de energia"
+msgstr ""
+
+#: blocks/energy-consumption-chart/block.json
+msgctxt "block description"
+msgid "Gráfico de linhas com o consumo mensal por fonte de energia, com título, descrição e resumo."
+msgstr ""
+
+#: blocks/event-card-compact/block.json
+msgctxt "block title"
+msgid "Cartão compacto de evento"
+msgstr ""
+
+#: blocks/event-card-compact/block.json
+msgctxt "block description"
+msgid "Cartão pequeno de um evento com imagem, título e datas, com ligação para a página do evento."
+msgstr ""
+
+#: blocks/events-grid/block.json
+msgctxt "block title"
+msgid "Grelha de eventos"
+msgstr ""
+
+#: blocks/events-grid/block.json
+msgctxt "block description"
+msgid "Grelha de eventos com um cartão em destaque e cartões compactos, ligados à página de cada evento."
+msgstr ""
+
+#: blocks/grafico-donut/block.json
+msgctxt "block title"
+msgid "Gráfico donut"
+msgstr ""
+
+#: blocks/grafico-donut/block.json
+msgctxt "block description"
+msgid "Só o gráfico donut com legenda, sem título nem texto, para usar dentro de outros blocos."
+msgstr ""
+
+#: blocks/home-intro/block.json
+msgctxt "block title"
+msgid "Introdução da homepage"
+msgstr ""
+
+#: blocks/home-intro/block.json
+msgctxt "block description"
+msgid "Introdução com etiqueta, título, texto, botão e imagem grande com legenda opcional."
+msgstr ""
+
+#: blocks/horizontal-scroll-with-content/block.json
+msgctxt "block title"
+msgid "Scroll horizontal com conteúdo"
+msgstr ""
+
+#: blocks/horizontal-scroll-with-content/block.json
+msgctxt "block description"
+msgid "Imagens com legenda e ligação em deslocamento horizontal, com título, etiquetas e botão «Ver todos»."
+msgstr ""
+
+#: blocks/image-zoom/block.json
+msgctxt "block title"
+msgid "Imagem com zoom"
+msgstr ""
+
+#: blocks/image-zoom/block.json
+msgctxt "block description"
+msgid "Imagem com legenda opcional que amplia ao passar o rato e abre em ecrã inteiro ao clicar."
+msgstr ""
+
+#: blocks/indicators-grid/block.json
+msgctxt "block title"
+msgid "Grelha de indicadores"
+msgstr ""
+
+#: blocks/indicators-grid/block.json
+msgctxt "block description"
+msgid "Cartões de indicadores com imagem, título e texto em três colunas, com cabeçalho e botão."
+msgstr ""
+
+#: blocks/library-grid/block.json
+msgctxt "block title"
+msgid "Grelha da biblioteca"
+msgstr ""
+
+#: blocks/library-grid/block.json
+msgctxt "block description"
+msgid "Grelha de ligações para a biblioteca com cabeçalho, texto, botão e cartões com imagem e etiqueta."
+msgstr ""
+
+#: blocks/macro-meso-micro/block.json
+msgctxt "block title"
+msgid "Macro, meso e micro"
+msgstr ""
+
+#: blocks/macro-meso-micro/block.json
+msgctxt "block description"
+msgid "Imagem ao lado de separadores macro, meso e micro, cada um com título, retrato e descrição."
+msgstr ""
+
+#: blocks/map-list/block.json
+msgctxt "block title"
+msgid "Mapa com lista"
+msgstr ""
+
+#: blocks/map-list/block.json
+msgctxt "block description"
+msgid "Mapa de regiões com filtros por público e lista dos conteúdos de cada região."
+msgstr ""
+
+#: blocks/multimedia-grid/block.json
+msgctxt "block title"
+msgid "Grelha multimédia"
+msgstr ""
+
+#: blocks/multimedia-grid/block.json
+msgctxt "block description"
+msgid "Grelha de ligações para conteúdos multimédia e ferramentas, com cabeçalho, texto e etiquetas."
+msgstr ""
+
+#: blocks/nomia-contact-map/block.json
+msgctxt "block title"
+msgid "Mapa de contacto"
+msgstr ""
+
+#: blocks/nomia-contact-map/block.json
+msgctxt "block description"
+msgid "Mapa Google para páginas de contacto. Cole um link do Google Maps."
+msgstr ""
+
+#: blocks/opportunities-grid/block.json
+msgctxt "block title"
+msgid "Grelha de oportunidades"
+msgstr ""
+
+#: blocks/opportunities-grid/block.json
+msgctxt "block description"
+msgid "Cabeçalho com texto e mosaicos de ligação para oportunidades, como avisos e publicações."
+msgstr ""
+
+#: blocks/pabs-content-slider/block.json
+msgctxt "block title"
+msgid "PABS: slider de conteúdos"
+msgstr ""
+
+#: blocks/pabs-content-slider/block.json
+msgctxt "block description"
+msgid "Conteúdos do PABS em separadores: menu lateral e painel com imagem, título, texto e etiquetas."
+msgstr ""
+
+#: blocks/paec-2030/block.json
+msgctxt "block title"
+msgid "PAEC 2030"
+msgstr ""
+
+#: blocks/paec-2030/block.json
+msgctxt "block description"
+msgid "Secção do PAEC 2030 com título, duas imagens, introdução, objetivos com código e ligação."
+msgstr ""
+
+#: blocks/page-hero-media-grid/block.json
+msgctxt "block title"
+msgid "Hero de página: vídeo e destaques"
+msgstr ""
+
+#: blocks/page-hero-media-grid/block.json
+msgctxt "block description"
+msgid "Hero com imagem de fundo, duas chamadas com ligação e uma coluna de vídeo."
+msgstr ""
+
+#: blocks/page-hero-slider/block.json
+msgctxt "block title"
+msgid "Hero de página: slider"
+msgstr ""
+
+#: blocks/page-hero-slider/block.json
+msgctxt "block description"
+msgid "Hero em carrossel em que cada diapositivo tem imagem de fundo, título, botão e destaque opcional."
+msgstr ""
+
+#: blocks/page-hero-static/block.json
+msgctxt "block title"
+msgid "Cabeçalho página com imagem"
+msgstr ""
+
+#: blocks/page-hero-static/block.json
+msgctxt "block description"
+msgid "Hero no topo da página com imagem de fundo, título, subtítulo e botão opcional."
+msgstr ""
+
+#: blocks/page-hero-static/block.json
+msgctxt "block keyword"
+msgid "hero"
+msgstr ""
+
+#: blocks/page-hero-static/block.json
+#: blocks/title-with-label/block.json
+msgctxt "block keyword"
+msgid "cabeçalho"
+msgstr ""
+
+#: blocks/page-hero-static/block.json
+msgctxt "block keyword"
+msgid "capa"
+msgstr ""
+
+#: blocks/page-hero-static/block.json
+msgctxt "block keyword"
+msgid "banner"
+msgstr ""
+
+#: blocks/page-hero-static/block.json
+msgctxt "block keyword"
+msgid "destaque"
+msgstr ""
+
+#: blocks/pie-chart-donut/block.json
+msgctxt "block title"
+msgid "Gráfico circular donut"
+msgstr ""
+
+#: blocks/pie-chart-donut/block.json
+msgctxt "block description"
+msgid "Gráfico donut com título, descrição, resumo e legenda, por exemplo para percentagens de reciclagem."
+msgstr ""
+
+#: blocks/resource-productivity-bars/block.json
+msgctxt "block title"
+msgid "Barras de produtividade dos recursos"
+msgstr ""
+
+#: blocks/resource-productivity-bars/block.json
+msgctxt "block description"
+msgid "Gráfico de barras anual da produtividade dos recursos, com título, etiqueta, introdução e filtros."
+msgstr ""
+
+#: blocks/resource-productivity-chart/block.json
+msgctxt "block title"
+msgid "Gráfico de produtividade dos recursos"
+msgstr ""
+
+#: blocks/resource-productivity-chart/block.json
+msgctxt "block description"
+msgid "Gráfico de barras simples da produtividade dos recursos por ano, com título e etiquetas de filtro."
+msgstr ""
+
+#: blocks/section/block.json
+msgctxt "block title"
+msgid "Secção"
+msgstr ""
+
+#: blocks/section/block.json
+msgctxt "block description"
+msgid "Faixa Nomia que agrupa outros blocos, com fundo e espaçamento próprios."
+msgstr ""
+
+#: blocks/sustainable-bioeconomy-dual-cards/block.json
+msgctxt "block title"
+msgid "Bioeconomia sustentável: cartões duplos"
+msgstr ""
+
+#: blocks/sustainable-bioeconomy-dual-cards/block.json
+msgctxt "block description"
+msgid "Cabeçalho com dois cartões lado a lado, cada um com imagem, título e texto."
+msgstr ""
+
+#: blocks/sustainable-consumption-bars/block.json
+msgctxt "block title"
+msgid "Barras de consumo sustentável"
+msgstr ""
+
+#: blocks/sustainable-consumption-bars/block.json
+msgctxt "block description"
+msgid "Gráfico de barras verticais com percentagens por grupo, com título, subtítulo e resumo."
+msgstr ""
+
+#: blocks/title-with-label/block.json
+msgctxt "block title"
+msgid "Título com etiqueta"
+msgstr ""
+
+#: blocks/title-with-label/block.json
+msgctxt "block description"
+msgid "Título de secção numa ou duas linhas, com uma etiqueta curta por cima."
+msgstr ""
+
+#: blocks/title-with-label/block.json
+msgctxt "block keyword"
+msgid "título"
+msgstr ""
+
+#: blocks/title-with-label/block.json
+msgctxt "block keyword"
+msgid "etiqueta"
+msgstr ""
+
+#: blocks/title-with-label/block.json
+msgctxt "block keyword"
+msgid "secção"
+msgstr ""
+
+#: blocks/title-with-label/block.json
+msgctxt "block keyword"
+msgid "eyebrow"
+msgstr ""
+
+#: blocks/two-columns-text-image/block.json
+msgctxt "block title"
+msgid "Duas colunas com texto e imagem"
+msgstr ""
+
+#: blocks/two-columns-text-image/block.json
+msgctxt "block description"
+msgid "Texto com etiqueta, título e botão ao lado de uma imagem, à esquerda ou à direita."
+msgstr ""
+
+#: blocks/urban-waste-geo-chart/block.json
+msgctxt "block title"
+msgid "Gráfico geográfico de resíduos urbanos"
+msgstr ""
+
+#: blocks/urban-waste-geo-chart/block.json
+msgctxt "block description"
+msgid "Barras horizontais de resíduos urbanos por habitante, por região e ano, com anos filtráveis."
+msgstr ""

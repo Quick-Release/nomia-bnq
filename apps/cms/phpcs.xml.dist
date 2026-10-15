@@ -10,9 +10,20 @@
     <config name="installed_paths" value="../../phpcompatibility/php-compatibility,../../phpcompatibility/phpcompatibility-paragonie,../../phpcompatibility/phpcompatibility-wp,../../phpcsstandards/phpcsextra,../../phpcsstandards/phpcsutils,../../wp-coding-standards/wpcs" />
 
     <file>web/app/plugins/nomia-cpt</file>
+    <file>web/app/plugins/nomia-blocks</file>
 
     <!-- The translation catalogs aren't authored PHP. -->
     <exclude-pattern>*/languages/*</exclude-pattern>
+    <!--
+        nomia-blocks' tests and their WordPress stubs, its local test
+        dependencies, and what is generated: the editor build, and the block
+        contracts apps/frontend's structured-blocks:sync writes.
+    -->
+    <exclude-pattern>*/nomia-blocks/tests/*</exclude-pattern>
+    <exclude-pattern>*/nomia-blocks/vendor/*</exclude-pattern>
+    <exclude-pattern>*/nomia-blocks/build/*</exclude-pattern>
+    <exclude-pattern>*/nomia-blocks/blocks/*</exclude-pattern>
+    <exclude-pattern>*/nomia-blocks/includes/contracts.php</exclude-pattern>
 
     <!-- WordPress is the complete WPCS ruleset (Core, Docs, and Extra). -->
     <rule ref="WordPress" />

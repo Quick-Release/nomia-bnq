@@ -1,0 +1,85 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/cta-results",
+	"title": "Chamada para resultados",
+	"category": "getquick-nomia",
+	"icon": "analytics",
+	"description": "Resultados do Barómetro em destaque, cada um com ano, valor, unidade, descrição e ligação.",
+	"textdomain": "getquick-nomia-blocks",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "cta-results"
+		},
+		"results": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object",
+				"required": [
+					"year",
+					"value",
+					"unit",
+					"description",
+					"href"
+				],
+				"properties": {
+					"year": {
+						"type": "string",
+						"default": ""
+					},
+					"value": {
+						"type": "string",
+						"default": ""
+					},
+					"unit": {
+						"type": "string",
+						"default": ""
+					},
+					"description": {
+						"type": "string",
+						"default": ""
+					},
+					"href": {
+						"type": "string",
+						"default": ""
+					},
+					"nodeId": {
+						"type": "string",
+						"default": ""
+					}
+				}
+			}
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"results": [
+				{
+					"year": "2024",
+					"value": "87,13",
+					"unit": "%",
+					"description": "Indicador de teste",
+					"href": "/indicadores/"
+				}
+			]
+		}
+	},
+	"editorScript": "getquick-nomia-blocks-editor",
+	"editorStyle": "getquick-nomia-blocks-editor-style"
+}

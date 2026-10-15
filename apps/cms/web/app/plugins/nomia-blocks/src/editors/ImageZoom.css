@@ -1,0 +1,43 @@
+.image-zoom-editor {
+	background: #fff;
+	border: 1px solid #dcdcde;
+	margin: 0;
+	padding: 16px;
+}
+
+.image-zoom-editor__frame {
+	align-items: center;
+	background: #f6f7f7;
+	display: flex;
+	justify-content: center;
+	min-height: 220px;
+	overflow: hidden;
+	width: 100%;
+}
+
+.image-zoom-editor__frame img {
+	display: block;
+	height: auto;
+	max-height: 520px;
+	object-fit: contain;
+	width: 100%;
+}
+
+.image-zoom-editor__placeholder {
+	color: #646970;
+	font-size: 13px;
+	line-height: 1.4;
+	padding: 32px;
+	text-align: center;
+}
+
+.image-zoom-editor__actions {
+	margin-top: 12px;
+}
+
+.image-zoom-editor figcaption {
+	color: #646970;
+	font-size: 13px;
+	line-height: 1.5;
+	margin-top: 12px;
+}

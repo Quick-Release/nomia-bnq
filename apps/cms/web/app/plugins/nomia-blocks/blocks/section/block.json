@@ -1,0 +1,104 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/section",
+	"title": "Secção",
+	"category": "getquick-nomia",
+	"icon": "editor-table",
+	"description": "Faixa Nomia que agrupa outros blocos, com fundo e espaçamento próprios.",
+	"textdomain": "getquick-nomia-blocks",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "section"
+		},
+		"backgroundColor": {
+			"type": "string",
+			"default": ""
+		},
+		"backgroundImageId": {
+			"type": "number"
+		},
+		"backgroundImageSrc": {
+			"type": "string",
+			"default": ""
+		},
+		"backgroundImagePosition": {
+			"type": "string",
+			"default": "center",
+			"enum": [
+				"top-left",
+				"top",
+				"top-right",
+				"left",
+				"center",
+				"right",
+				"bottom-left",
+				"bottom",
+				"bottom-right"
+			]
+		},
+		"backgroundImageSize": {
+			"type": "string",
+			"default": "cover",
+			"enum": [
+				"cover",
+				"contain",
+				"none"
+			]
+		},
+		"paddingTop": {
+			"type": "string",
+			"default": "medium",
+			"enum": [
+				"none",
+				"small",
+				"medium",
+				"large"
+			]
+		},
+		"paddingBottom": {
+			"type": "string",
+			"default": "medium",
+			"enum": [
+				"none",
+				"small",
+				"medium",
+				"large"
+			]
+		},
+		"paddingX": {
+			"type": "string",
+			"default": "default",
+			"enum": [
+				"none",
+				"small",
+				"default"
+			]
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"backgroundColor": "#00524d",
+			"paddingTop": "medium",
+			"paddingBottom": "medium",
+			"paddingX": "default"
+		}
+	},
+	"editorScript": "getquick-nomia-blocks-editor",
+	"editorStyle": "getquick-nomia-blocks-editor-style"
+}
