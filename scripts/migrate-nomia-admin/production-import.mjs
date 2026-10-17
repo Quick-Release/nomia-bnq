@@ -41,15 +41,19 @@ const oldMediaHost = "nomia-media.getquick.io";
 const oldAdminHost = "nomia-admin.getquick.io";
 const oldFrontHost = "nomia.getquick.io";
 
-// What the posts export is known to contain; the runner warns, not fails,
+// What the pages export run is known to produce; the runner warns, not fails,
 // when the server's numbers drift from these (they are re-verified from the
-// outside afterwards anyway).
+// outside afterwards anyway). Posts-side numbers are the production state
+// after the posts run (188 posts, 187 attachments); the pages export brings 41
+// pages (40 publish + 1 draft) and 61 attachments with no guid overlap with
+// the posts export, and 5 páginas whose _thumbnail_id references attachments
+// in the same export (the importer remaps those itself).
 const expected = {
   POSTS: 188,
-  ATTACHMENTS: 187,
+  ATTACHMENTS: 248,
   CATEGORY: 1,
   TAGS: 442,
-  THUMBNAILS: 187,
+  THUMBNAILS: 192,
   RESIDUAL: 0,
   MEDIA_FAILS: 0,
 };
@@ -263,7 +267,7 @@ if (drift.length > 0) {
       .join("; ")}. Verify before going further.`,
   );
 } else {
-  console.log("\nAll counts match the posts rehearsal. Verify GraphQL and the frontend next.");
+  console.log("\nAll counts match expectations. Verify GraphQL and the frontend next.");
 }
 console.log(
   `\nThe WXR stays in R2 at r2://${ops.releases.bucket}/${key} for audit or a rerun.\n` +
