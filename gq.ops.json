@@ -53,7 +53,7 @@
     "prefix": "db/"
   },
   "local": {
-    "adminEmail": "dev@tipme.to"
+    "adminEmail": "dev+local@tipme.to"
   },
   "artifacts": {
     "namespace": "nomia-bnq",
