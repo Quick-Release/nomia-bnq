@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b34c0720821e40835493b728b71247d1",
+    "content-hash": "b0c9b58ad133b3bb87b0941f4019a8fe",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -414,17 +414,17 @@
         },
         {
             "name": "getquick/gq-design",
-            "version": "0.3.13",
+            "version": "0.3.19",
             "source": {
                 "type": "git",
                 "url": "git@github.com:Quick-Release/gq-design.git",
-                "reference": "fb14a5a1a304acfe53c749ec4a127607318e7a6c"
+                "reference": "f6617db4fb1a066898e84191a2d57b14dbe9eec5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-design/getquick-gq-design-fb14a5a1a304acfe53c749ec4a127607318e7a6c-zip-3e99cd.zip",
-                "reference": "fb14a5a1a304acfe53c749ec4a127607318e7a6c",
-                "shasum": "c28d83a95ba19bd2a0a17e3c6ca7ca29e227ee27"
+                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-design/getquick-gq-design-f6617db4fb1a066898e84191a2d57b14dbe9eec5-zip-2e36d8.zip",
+                "reference": "f6617db4fb1a066898e84191a2d57b14dbe9eec5",
+                "shasum": "e407eef4c48d487ac92950b991f9efc34f12c134"
             },
             "require": {
                 "php": ">=8.4.1"
@@ -449,6 +449,7 @@
                     "/*",
                     "/.*",
                     "!/gq-design.php",
+                    "!/readme.txt",
                     "!/composer.json",
                     "!/assets",
                     "!/blocks",
@@ -471,24 +472,24 @@
             ],
             "description": "Native Gutenberg templates and headless layout delivery for GETQUICK sites.",
             "support": {
-                "source": "https://github.com/Quick-Release/gq-design/tree/v0.3.13",
+                "source": "https://github.com/Quick-Release/gq-design/tree/v0.3.19",
                 "issues": "https://github.com/Quick-Release/gq-design/issues"
             },
-            "time": "2026-10-14T18:03:43+00:00"
+            "time": "2026-10-16T16:47:38+00:00"
         },
         {
             "name": "getquick/gq-support",
-            "version": "v0.1.4",
+            "version": "v0.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Quick-Release/gq-support.git",
-                "reference": "171d3be60aeed2b6e232f0a8b836bbae233ab66b"
+                "reference": "7810399152cf0e8b270948a1ce9f22aec52712f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-support/getquick-gq-support-171d3be60aeed2b6e232f0a8b836bbae233ab66b-zip-0719fb.zip",
-                "reference": "171d3be60aeed2b6e232f0a8b836bbae233ab66b",
-                "shasum": "d394ba06745b7560b1079e40495e7ab7a8c8925b"
+                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-support/getquick-gq-support-7810399152cf0e8b270948a1ce9f22aec52712f0-zip-4255f0.zip",
+                "reference": "7810399152cf0e8b270948a1ce9f22aec52712f0",
+                "shasum": "c43bedc2ad195c51d22255310ce0d2b4809cc34f"
             },
             "require": {
                 "composer/installers": "^2.0",
@@ -499,6 +500,7 @@
                 "phpcompatibility/phpcompatibility-wp": "^2.1",
                 "phpstan/extension-installer": "^1.4",
                 "phpstan/phpstan": "^2.2",
+                "phpunit/phpunit": "^9.6",
                 "squizlabs/php_codesniffer": "^3.9",
                 "szepeviktor/phpstan-wordpress": "^2.0",
                 "wp-coding-standards/wpcs": "^3.1"
@@ -533,7 +535,7 @@
                 "issues": "https://github.com/Quick-Release/gq-support/issues",
                 "source": "https://github.com/Quick-Release/gq-support"
             },
-            "time": "2026-10-02T16:56:57+00:00"
+            "time": "2026-10-16T18:09:49+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -1470,7 +1472,7 @@
         },
         {
             "name": "roots/wordpress",
-            "version": "7.1.2",
+            "version": "7.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/roots/wordpress.git",
@@ -1501,7 +1503,7 @@
             ],
             "support": {
                 "issues": "https://github.com/roots/wordpress/issues",
-                "source": "https://github.com/roots/wordpress/tree/7.1.2"
+                "source": "https://github.com/roots/wordpress/tree/7.1.3"
             },
             "funding": [
                 {
@@ -1580,23 +1582,23 @@
         },
         {
             "name": "roots/wordpress-no-content",
-            "version": "7.1.2",
+            "version": "7.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WordPress/WordPress.git",
-                "reference": "7.1.2"
+                "reference": "7.1.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/release/wordpress-7.1.2-no-content.zip",
-                "reference": "7.1.2",
-                "shasum": "52c0250854a52621dc024651b63d1e088287ee16"
+                "url": "https://downloads.wordpress.org/release/wordpress-7.1.3-no-content.zip",
+                "reference": "7.1.3",
+                "shasum": "6c6f1135c8fd1e6f63c4d511e8be9e952d0b3433"
             },
             "require": {
                 "php": ">= 7.4"
             },
             "provide": {
-                "wordpress/core-implementation": "7.1.2"
+                "wordpress/core-implementation": "7.1.3"
             },
             "suggest": {
                 "ext-curl": "Performs remote request operations.",
@@ -1647,7 +1649,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2026-09-22T13:36:10+00:00"
+            "time": "2026-10-06T16:28:51+00:00"
         },
         {
             "name": "roots/wp-config",
@@ -2348,15 +2350,15 @@
         },
         {
             "name": "wp-plugin/wp-graphql",
-            "version": "2.24.0",
+            "version": "2.24.2",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wp-graphql/",
-                "reference": "tags/2.24.0"
+                "reference": "tags/2.24.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-graphql.2.24.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/wp-graphql.2.24.2.zip"
             },
             "require": {
                 "composer/installers": "~1.0|~2.0"
@@ -2375,7 +2377,7 @@
                 "issues": "https://wordpress.org/support/plugin/wp-graphql",
                 "source": "https://plugins.svn.wordpress.org/wp-graphql"
             },
-            "time": "2026-10-14T03:17:09+00:00"
+            "time": "2026-10-16T04:31:54+00:00"
         },
         {
             "name": "wp-plugin/wpgraphql-blocks",
