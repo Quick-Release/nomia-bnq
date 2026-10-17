@@ -34,3 +34,8 @@ coverage/
 # WordPress language packs, which the CMS deploy (and gq db sync) installs
 apps/cms/web/app/languages/
 # END gq
+
+# Local rehearsal working files for the nomia-admin content migration
+apps/cms/.ddev/
+apps/cms/migration/
+__pycache__/
