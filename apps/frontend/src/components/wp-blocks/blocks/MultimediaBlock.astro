@@ -1,0 +1,43 @@
+---
+import NomiaMultimediaSection from "../../sections/landing/NomiaMultimediaSection.astro";
+import type { NomiaMultimediaCard } from "../../sections/landing/NomiaMultimediaSection.astro";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { firstArray, mapValid, optionalText, textOr } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props { block: WpParsedBlock }
+type CardAttrs = { title?: unknown; tag?: unknown; href?: unknown };
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/multimedia-grid">;
+const CARD_BACKGROUND_CLASSES = [
+  "bg-main-ciano-200",
+  "bg-main-ciano-300",
+  "bg-main-ciano-400",
+  "bg-main-ciano-500",
+  "bg-main-ciano-600",
+  "bg-main-ciano-700",
+] as const;
+function card(raw: unknown, index: number): NomiaMultimediaCard | null {
+  if (!raw || typeof raw !== "object") return null;
+  const item = raw as CardAttrs;
+  const title = textOr(item.title);
+  const tag = textOr(item.tag);
+  const href = textOr(item.href);
+  if (!title || !tag || !href) return null;
+  return {
+    title,
+    tag,
+    href,
+    bgClass: CARD_BACKGROUND_CLASSES[index % CARD_BACKGROUND_CLASSES.length]!,
+  };
+}
+const cards = mapValid(firstArray(attrs.cards, attrs.items), card);
+const eyebrow = optionalText(attrs.eyebrow) ?? "";
+const heading = optionalText(attrs.heading) ?? "";
+const body = optionalText(attrs.body) ?? "";
+const canRender = Boolean(heading && body && cards.length > 0);
+---
+
+{canRender ? (
+  <NomiaMultimediaSection eyebrow={eyebrow} heading={heading} body={body} cards={cards} />
+) : null}

@@ -1,0 +1,134 @@
+---
+/**
+ * Oportunidades block — Nomia Website 2 · Figma node 40017128:4363
+ * https://www.figma.com/design/gWqEtVBfoWbYMHQh1rW6s3/Nomia-%E2%80%94-Website--2-?node-id=40017128-4363
+ */
+export type NomiaOportunidadesTile = {
+  label: string;
+  href: string;
+  bgClass: string;
+  nodeId?: string;
+};
+
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  body?: string;
+  tiles?: readonly NomiaOportunidadesTile[];
+}
+
+const defaultTiles = [
+  {
+    label: "Avisos",
+    href: "#avisos",
+    bgClass: "bg-main-laranja-200",
+    nodeId: "40017128:4372",
+  },
+  {
+    label: "Publicações",
+    href: "#publicacoes",
+    bgClass: "bg-main-laranja-300",
+    nodeId: "40017128:4374",
+  },
+  {
+    label: "Boas Práticas",
+    href: "#boas-praticas",
+    bgClass: "bg-main-laranja-400",
+    nodeId: "40017128:4376",
+  },
+  {
+    label: "Newsletters",
+    href: "#newsletters",
+    bgClass: "bg-main-laranja-500",
+    nodeId: "40017128:4378",
+  },
+] as const satisfies readonly NomiaOportunidadesTile[];
+
+const {
+  eyebrow = "NOMIA",
+  heading = "Oportunidades",
+  body = "Acompanhe oportunidades, conteúdos e iniciativas relevantes para identificar e implementar recursos úteis.",
+  tiles = defaultTiles,
+} = Astro.props;
+---
+
+<section
+  class="bg-neutral-bw-white w-full"
+  aria-labelledby="oportunidades-heading"
+  data-node-id="40017128:4363"
+  data-nomia-header-surface="light"
+>
+  <div
+    class="mx-auto flex max-w-[1920px] flex-col items-center gap-12 px-4 py-16 md:px-16 md:py-28"
+  >
+    <div
+      class="flex w-full max-w-[55rem] flex-col items-center gap-10 text-center"
+      data-node-id="40017128:4364"
+    >
+      <div class="flex items-center gap-1" data-node-id="40017128:4365">
+        <span class="text-main-cinza-400 inline-flex size-6 shrink-0" aria-hidden="true">
+          <svg class="size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M12 4v16M4 12h16M6.34 6.34l11.32 11.32M17.66 6.34L6.34 17.66"
+              stroke="currentColor"
+              stroke-width="1.35"
+              stroke-linecap="round"
+            />
+          </svg>
+        </span>
+        <p
+          class="text-body text-main-cinza-400 font-primary font-medium tracking-[var(--tracking-typography-0)]"
+          data-node-id="40017128:4367"
+        >
+          {eyebrow}
+        </p>
+      </div>
+      <div
+        class="text-main-cinza-700 flex w-full flex-col items-center gap-4"
+        data-node-id="40017128:4368"
+      >
+        <h2
+          id="oportunidades-heading"
+          class="text-h4 font-primary w-full font-semibold leading-[var(--typography-line-height-f)] tracking-[var(--tracking-typography-0)]"
+          data-node-id="40017128:4369"
+        >
+          {heading}
+        </h2>
+        <p
+          class="text-subtitle font-primary w-full max-w-[55rem] font-normal leading-[var(--typography-line-height-g)] tracking-[var(--tracking-typography-0)]"
+          data-node-id="40017128:4370"
+        >
+          {body}
+        </p>
+      </div>
+    </div>
+
+    <div
+      class="grid w-full max-w-[112rem] grid-cols-1 gap-1 overflow-hidden rounded-2xl sm:grid-cols-2"
+      data-node-id="40017128:4371"
+    >
+      {
+        tiles.map(({ label, href, bgClass, nodeId }) => (
+          <a
+            href={href}
+            class:list={[
+              bgClass,
+              "group relative flex min-h-[240px] flex-col items-center justify-center p-8 no-underline transition-[transform,filter] duration-200 ease-out hover:brightness-95 focus-visible:ring-main-teal-400 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-bw-white focus-visible:outline-none active:scale-[0.99]",
+            ]}
+            data-node-id={nodeId}
+          >
+            <span
+              class="bg-main-cinza-700/40 pointer-events-none absolute inset-0"
+              aria-hidden="true"
+            />
+            <span
+              class="text-h4 font-primary text-main-cinza-100 relative z-10 font-semibold leading-[var(--typography-line-height-f)] tracking-[var(--tracking-typography-0)]"
+            >
+              {label}
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

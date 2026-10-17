@@ -1,0 +1,11 @@
+---
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+
+interface Props {
+  block: WpParsedBlock;
+}
+
+const { block } = Astro.props;
+---
+
+<div class="leading-relaxed [&_p]:m-0 [&_p]:pb-6" set:html={block.innerHTML} />

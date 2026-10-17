@@ -1,0 +1,148 @@
+---
+/**
+ * Bioeconomia — faixa com quatro fases sobre fotografia (Figma 40017259:12208).
+ * https://www.figma.com/design/gWqEtVBfoWbYMHQh1rW6s3/Nomia-%E2%80%94-Website--2-?node-id=40017259-12208
+ */
+export interface NomiaBioeconomiaPhaseBandItem {
+	phase: string;
+	title: string;
+	body: string;
+}
+
+interface Props {
+	imageSrc?: string;
+	phases?: readonly NomiaBioeconomiaPhaseBandItem[];
+	/** Quando false, omite `data-node-id` (útil em catálogos). */
+	annotateFigmaNodes?: boolean;
+}
+
+const defaultPhases = [
+	{
+		phase: "1ª Fase",
+		title: "Circular",
+		body: "Capaz de valorizar resíduos, subprodutos e fluxos biológicos ao longo das cadeias de valor.",
+	},
+	{
+		phase: "2ª Fase",
+		title: "Baixo Carbono",
+		body: "Orientada para a substituição gradual de recursos fósseis e para a redução de emissões.",
+	},
+	{
+		phase: "3ª Fase",
+		title: "Sustentável",
+		body: "Assente na proteção dos ecossistemas, na gestão responsável dos recursos e na utilização eficiente da biomassa.",
+	},
+	{
+		phase: "4ª Fase",
+		title: "Competitiva",
+		body: "Capaz de gerar inovação, emprego, investimento e novas oportunidades económicas.",
+	},
+] as const satisfies readonly NomiaBioeconomiaPhaseBandItem[];
+
+const columnFigma = [
+	{ col: "40017244:13231", badge: "40017244:13232", icon: "40017244:13233", phase: "40017244:13234", title: "40017244:13235", body: "40017244:13236" },
+	{ col: "40017244:13237", badge: "40017244:13238", icon: "40017244:13239", phase: "40017244:13240", title: "40017244:13241", body: "40017244:13242" },
+	{ col: "40017244:13243", badge: "40017244:13244", icon: "40017244:13245", phase: "40017244:13246", title: "40017244:13247", body: "40017244:13248" },
+	{ col: "40017244:13249", badge: "40017244:13250", icon: "40017244:13251", phase: "40017244:13252", title: "40017244:13253", body: "40017244:13254" },
+] as const;
+
+const {
+	imageSrc = "/images/bioeconomia-sustentavel/phases-band-background.jpg",
+	phases = defaultPhases,
+	annotateFigmaNodes = true,
+} = Astro.props;
+
+const f = annotateFigmaNodes;
+const sectionHeadingId = "nomia-bioeconomia-phases-band-heading";
+---
+
+<section
+	class="font-primary relative w-full overflow-hidden"
+	aria-labelledby={sectionHeadingId}
+	data-node-id={f ? "40017259:12208" : undefined}
+>
+	<h2 id={sectionHeadingId} class="sr-only">Fases da bioeconomia sustentável</h2>
+
+	<div
+		class="pointer-events-none absolute inset-0 min-h-[min(744px,100svh)] w-full"
+		aria-hidden="true"
+		data-node-id={f ? "40017244:13228" : undefined}
+	>
+		<img
+			src={imageSrc}
+			alt=""
+			class="absolute inset-0 size-full max-w-none object-cover"
+			loading="lazy"
+			decoding="async"
+			width="3840"
+			height="2560"
+		/>
+	</div>
+
+	<div class="relative z-10 mx-auto w-full max-w-[1920px] px-4 py-12 md:px-16 md:py-16">
+		<div
+			class="bg-monochrome-light-100 text-main-cinza-700 w-full rounded-2xl p-8 md:p-16"
+			data-nomia-header-surface="light"
+			data-node-id={f ? "40017244:13229" : undefined}
+		>
+			<div
+				class="grid w-full grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-4 xl:gap-8"
+				data-node-id={f ? "40017244:13230" : undefined}
+			>
+				{
+					phases.map((item, i) => {
+						const ids = i < columnFigma.length ? columnFigma[i] : undefined;
+						return (
+							<div
+								class="flex min-w-0 flex-col gap-4"
+								data-node-id={f && ids ? ids.col : undefined}
+								role="group"
+								aria-label={`${item.phase}: ${item.title}`}
+							>
+								<div
+									class="bg-neutral-bw-white text-main-botnico-400 inline-flex w-fit items-center gap-1 rounded-full px-2 py-1"
+									data-node-id={f && ids ? ids.badge : undefined}
+								>
+									<span
+										class="inline-flex size-4 shrink-0 items-center justify-center"
+										aria-hidden="true"
+										data-node-id={f && ids ? ids.icon : undefined}
+									>
+										<svg viewBox="0 0 24 24" fill="none" class="size-4" xmlns="http://www.w3.org/2000/svg">
+											<path
+												d="M12 3v18M3 12h18M5.64 5.64l12.72 12.72M18.36 5.64L5.64 18.36"
+												stroke="currentColor"
+												stroke-width="1.35"
+												stroke-linecap="round"
+											/>
+										</svg>
+									</span>
+									<p
+										class="text-extra font-medium leading-[var(--typography-line-height-j)] tracking-[var(--tracking-typography-0)] whitespace-nowrap"
+										data-node-id={f && ids ? ids.phase : undefined}
+									>
+										{item.phase}
+									</p>
+								</div>
+								<p
+									class="text-h4 font-semibold leading-[var(--typography-line-height-f)] tracking-[var(--tracking-typography-0)]"
+									data-node-id={f && ids ? ids.title : undefined}
+								>
+									{item.title}
+								</p>
+								<p
+									class="text-body font-normal leading-[var(--typography-line-height-i)] tracking-[var(--tracking-typography-0)]"
+									data-node-id={f && ids ? ids.body : undefined}
+								>
+									{item.body}
+								</p>
+							</div>
+						);
+					})
+				}
+			</div>
+		</div>
+	</div>
+
+	<div class="relative z-0 h-40 w-full shrink-0 md:h-56 lg:h-64" aria-hidden="true"></div>
+</section>

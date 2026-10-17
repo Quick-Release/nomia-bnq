@@ -1,0 +1,76 @@
+---
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { readWpButton, wpButtonWidthStyle } from "../../../lib/wp-buttons";
+
+/**
+ * `core/button` with the look Gutenberg shows (theme.json `elements.button`
+ * and the Outline variation), plus the Bioeconomia variation sourced from the
+ * button prototype. Palette colours and preset font sizes override the native
+ * styles inline where the variation does not fix them.
+ */
+interface Props {
+  block: WpParsedBlock;
+}
+
+const { block } = Astro.props;
+const button = readWpButton(block);
+/**
+ * Body copy bands colour and underline every link (`WpBlockRenderer.astro`),
+ * so the button's own defaults are `!important`. A palette colour the editor
+ * picked is an inline style and wins on its own, so its default is left out.
+ */
+const baseClass =
+  "font-primary inline-flex min-h-11 items-center justify-center rounded-[40px] border-2 border-solid px-6 py-2.5 text-center text-base leading-normal font-medium no-underline! transition-opacity hover:opacity-90 focus-visible:ring-main-teal-400 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none [&_*]:text-[inherit]!";
+const variantClass =
+  button.variant === "outline"
+    ? [
+        "border-current",
+        button.hasTextColor ? null : "text-main-teal-500!",
+        button.hasBackgroundColor ? null : "bg-transparent",
+      ]
+    : [
+        "border-transparent",
+        button.hasTextColor ? null : "text-neutral-bw-white!",
+        button.hasBackgroundColor ? null : "bg-main-teal-500",
+      ];
+const isBioeconomia = button.variant === "bioeconomia";
+const wrapperClass = isBioeconomia
+  ? ["wp-block-button", "nomia-bioeconomia-button-wrapper"]
+  : "wp-block-button";
+const linkClass = isBioeconomia
+  ? ["nomia-bioeconomia-button", button.width ? "w-full" : null]
+  : [baseClass, ...variantClass, button.width ? "w-full" : null];
+---
+
+{
+  button.labelHtml ? (
+    <div
+      class:list={wrapperClass}
+      id={button.id}
+      style={wpButtonWidthStyle(button.width)}
+      data-button-variant={button.variant}
+    >
+      {button.href ? (
+        <a
+          class:list={linkClass}
+          href={button.href}
+          target={button.target}
+          rel={button.rel}
+          title={button.title}
+          style={button.style}
+          set:html={button.labelHtml}
+        />
+      ) : isBioeconomia ? (
+        <button
+          class:list={linkClass}
+          type="button"
+          title={button.title}
+          style={button.style}
+          set:html={button.labelHtml}
+        />
+      ) : (
+        <span class:list={linkClass} title={button.title} style={button.style} set:html={button.labelHtml} />
+      )}
+    </div>
+  ) : null
+}

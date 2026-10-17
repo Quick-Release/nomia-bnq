@@ -1,0 +1,73 @@
+---
+import NomiaPageHero from "../../page-heroes/NomiaPageHero.astro";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import type { WpPagePayload } from "../../../lib/wp-page-payload";
+import { resolvePageHeroPadding, type PageHeroCta } from "../../page-heroes/pageHeroShared";
+import { wpText as text, optionalText, plainText, plainTextLines } from "../normalizers";
+import {
+  readPageHeroTextAlign,
+  readPageHeroTextTypography,
+} from "../../../lib/page-hero-typography";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props {
+  block: WpParsedBlock;
+  pageFeaturedImage?: WpPagePayload["featuredImage"];
+}
+
+type PageHeroStaticAttrs = AttrsFor<"getquick/page-hero-static">;
+
+const { block, pageFeaturedImage = null } = Astro.props;
+const attrs = block.attrs as PageHeroStaticAttrs;
+
+function normalizeCta(attrs: PageHeroStaticAttrs): PageHeroCta | undefined {
+  const showCta = attrs.showCta !== false && attrs.hideCta !== true;
+  if (!showCta) return undefined;
+
+  if (attrs.cta && typeof attrs.cta === "object") {
+    const cta = attrs.cta as { label?: unknown; href?: unknown; url?: unknown };
+    const label = plainText(cta.label);
+    const href = optionalText(cta.href, cta.url) ?? "";
+    if (label && href) return { label, href };
+  }
+
+  const label = plainText(attrs.ctaLabel);
+  const href = optionalText(attrs.ctaHref, attrs.ctaUrl) ?? "";
+  return label && href ? { label, href } : undefined;
+}
+
+const title = plainText(attrs.title);
+// Each line the editor typed is its own paragraph; the hero splits on newlines.
+const subtitle =
+  attrs.showSubtitle === false ? "" : plainTextLines(attrs.subtitle).join("\n");
+const blockImageSrc = optionalText(attrs.imageSrc, attrs.imageUrl) ?? "";
+const imageSrc = blockImageSrc || pageFeaturedImage?.sourceUrl || "";
+const imageAlt = blockImageSrc ? text(attrs.imageAlt) : pageFeaturedImage?.altText || "";
+const cta = normalizeCta(attrs);
+const heroHeight = text(attrs.height) || undefined;
+const titleTypography = readPageHeroTextTypography(attrs, "title");
+const subtitleTypography = readPageHeroTextTypography(attrs, "subtitle");
+const textAlign = readPageHeroTextAlign(attrs);
+const paddingTop = resolvePageHeroPadding(attrs.paddingTop);
+const paddingBottom = resolvePageHeroPadding(attrs.paddingBottom);
+const canRender = Boolean(title);
+---
+
+{
+  canRender ? (
+    <NomiaPageHero
+      variant="static"
+      title={title}
+      subtitle={subtitle}
+      imageSrc={imageSrc}
+      imageAlt={imageAlt}
+      heroHeight={heroHeight}
+      cta={cta}
+      titleTypography={titleTypography}
+      subtitleTypography={subtitleTypography}
+      textAlign={textAlign}
+      paddingTop={paddingTop}
+      paddingBottom={paddingBottom}
+    />
+  ) : null
+}

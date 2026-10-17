@@ -1,0 +1,30 @@
+---
+import { wpAlignmentClass } from "../../../lib/wp-alignment";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+
+interface Props {
+  block: WpParsedBlock;
+}
+
+const { block } = Astro.props;
+const attrs = (block.attrs ?? {}) as Record<string, unknown>;
+const url = typeof attrs.url === "string" ? attrs.url : null;
+const alt = typeof attrs.alt === "string" ? attrs.alt : "";
+const cls = typeof attrs.className === "string" ? attrs.className : "";
+/**
+ * Only the figure this component builds needs the alignment class added back.
+ * The saved-markup branch below already carries WordPress's own `align*` class
+ * on the inner `<figure>`, and repeating it on the wrapper would float twice.
+ */
+const alignment = wpAlignmentClass(attrs.align);
+---
+
+{
+  url ? (
+    <figure class:list={["wp-block-image", alignment, cls]}>
+      <img src={url} alt={alt} class="h-auto max-w-full" loading="lazy" decoding="async" />
+    </figure>
+  ) : (
+    <div class:list={["wp-block-image", cls]} set:html={block.innerHTML} />
+  )
+}

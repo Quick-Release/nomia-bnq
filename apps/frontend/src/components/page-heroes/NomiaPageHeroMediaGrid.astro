@@ -1,0 +1,213 @@
+---
+/**
+ * Full-bleed page hero with a background image, two CTA panels, and a video panel.
+ *
+ * The action and video content are data-driven; layout and visual policy stay in
+ * this Astro module rather than crossing the WordPress content contract.
+ */
+import { HEADER_GUTTER_X } from "../../lib/site-gutters";
+import { externalLinkAttrs } from "./pageHeroShared";
+import {
+	normalizeBorderRadius,
+	normalizeCssColor,
+	normalizeTextVerticalAlign,
+	PAGE_HERO_MEDIA_GRID_DEFAULTS,
+} from "./pageHeroMediaGridShared";
+import type { PageHeroMediaGridTextVerticalAlign } from "./pageHeroMediaGridShared";
+
+export type PageHeroMediaGridAction = {
+	title: string;
+	text: string;
+	href: string;
+};
+
+interface Props {
+	backgroundImageSrc?: string;
+	backgroundImageAlt?: string;
+	heading?: string;
+	actions: [PageHeroMediaGridAction, PageHeroMediaGridAction];
+	videoSrc?: string;
+	videoPosterSrc?: string;
+	videoTitle?: string;
+	firstBackgroundColor?: string;
+	firstHoverBackgroundColor?: string;
+	firstTitleColor?: string;
+	firstTextColor?: string;
+	firstBorderRadius?: string;
+	secondBackgroundColor?: string;
+	secondHoverBackgroundColor?: string;
+	secondTitleColor?: string;
+	secondTextColor?: string;
+	secondBorderRadius?: string;
+	textVerticalAlign?: PageHeroMediaGridTextVerticalAlign;
+	videoBorderRadius?: string;
+	shareHref?: string;
+	shareLabel?: string;
+}
+
+const {
+	backgroundImageSrc,
+	backgroundImageAlt = "",
+	heading = PAGE_HERO_MEDIA_GRID_DEFAULTS.heading,
+	actions,
+	videoSrc,
+	videoPosterSrc,
+	videoTitle = "Video",
+	firstBackgroundColor = PAGE_HERO_MEDIA_GRID_DEFAULTS.firstBackgroundColor,
+	firstHoverBackgroundColor = PAGE_HERO_MEDIA_GRID_DEFAULTS.firstHoverBackgroundColor,
+	firstTitleColor = PAGE_HERO_MEDIA_GRID_DEFAULTS.firstTitleColor,
+	firstTextColor = PAGE_HERO_MEDIA_GRID_DEFAULTS.firstTextColor,
+	firstBorderRadius = PAGE_HERO_MEDIA_GRID_DEFAULTS.firstBorderRadius,
+	secondBackgroundColor = PAGE_HERO_MEDIA_GRID_DEFAULTS.secondBackgroundColor,
+	secondHoverBackgroundColor = PAGE_HERO_MEDIA_GRID_DEFAULTS.secondHoverBackgroundColor,
+	secondTitleColor = PAGE_HERO_MEDIA_GRID_DEFAULTS.secondTitleColor,
+	secondTextColor = PAGE_HERO_MEDIA_GRID_DEFAULTS.secondTextColor,
+	secondBorderRadius = PAGE_HERO_MEDIA_GRID_DEFAULTS.secondBorderRadius,
+	textVerticalAlign = PAGE_HERO_MEDIA_GRID_DEFAULTS.textVerticalAlign,
+	videoBorderRadius = PAGE_HERO_MEDIA_GRID_DEFAULTS.videoBorderRadius,
+	shareHref = PAGE_HERO_MEDIA_GRID_DEFAULTS.shareHref,
+	shareLabel = PAGE_HERO_MEDIA_GRID_DEFAULTS.shareLabel,
+} = Astro.props;
+
+const hasBackgroundImage = Boolean(backgroundImageSrc);
+const visibleActions = actions
+	.map((action, index) => ({ action, index }))
+	.filter(({ action }) => action.title || action.text);
+const safeHeading = heading.trim() || PAGE_HERO_MEDIA_GRID_DEFAULTS.heading;
+const safeShareHref = typeof shareHref === "string" ? shareHref.trim() : "";
+const safeShareLabel = typeof shareLabel === "string" ? shareLabel.trim() : "";
+const textAlignment = normalizeTextVerticalAlign(textVerticalAlign);
+
+function buildActionStyle(baseColor: string, hoverColor: string, borderRadius: string): string {
+	return `
+		--action-background: ${normalizeCssColor(baseColor, PAGE_HERO_MEDIA_GRID_DEFAULTS.firstBackgroundColor)};
+		--action-hover-background: ${normalizeCssColor(hoverColor, PAGE_HERO_MEDIA_GRID_DEFAULTS.firstHoverBackgroundColor)};
+		border-radius: ${normalizeBorderRadius(borderRadius, PAGE_HERO_MEDIA_GRID_DEFAULTS.firstBorderRadius)};
+	`.trim().replace(/\s+/g, " ");
+}
+
+function buildTitleStyle(titleColor: string): string {
+	return `color: ${normalizeCssColor(titleColor, PAGE_HERO_MEDIA_GRID_DEFAULTS.firstTitleColor)};`;
+}
+
+function buildTextStyle(textColor: string): string {
+	return `color: ${normalizeCssColor(textColor, PAGE_HERO_MEDIA_GRID_DEFAULTS.firstTextColor)};`;
+}
+---
+
+<section class="relative w-full overflow-hidden bg-main-teal-700" aria-label={safeHeading}>
+	<div class="absolute inset-0" aria-hidden="true">
+		{
+			hasBackgroundImage ? (
+				<img
+					src={backgroundImageSrc}
+					alt={backgroundImageAlt}
+					class="absolute inset-0 size-full max-w-none object-cover"
+					loading="eager"
+					fetchpriority="high"
+				/>
+			) : null
+		}
+		<div class="absolute inset-0 bg-main-cinza-700/45"></div>
+	</div>
+
+	<div
+		class={`font-primary relative z-10 mx-auto flex min-h-[min(100svh,944px)] w-full max-w-[1920px] items-end pt-24 pb-10 md:pt-32 md:pb-16 lg:min-h-[min(50svh,781px)] ${HEADER_GUTTER_X}`}
+	>
+		<h2 class="sr-only">{safeHeading}</h2>
+		<div class="grid w-full grid-cols-1 gap-4 lg:grid-cols-[25%_25%_minmax(0,1fr)]">
+			{
+				visibleActions.map(({ action, index }) => {
+					const isFirst = index === 0;
+					const baseColor = isFirst ? firstBackgroundColor : secondBackgroundColor;
+					const hoverColor = isFirst ? firstHoverBackgroundColor : secondHoverBackgroundColor;
+					const titleColor = isFirst ? firstTitleColor : secondTitleColor;
+					const textColor = isFirst ? firstTextColor : secondTextColor;
+					const borderRadius = isFirst ? firstBorderRadius : secondBorderRadius;
+					const actionStyle = buildActionStyle(baseColor, hoverColor, borderRadius);
+					const titleStyle = buildTitleStyle(titleColor);
+					const textStyle = buildTextStyle(textColor);
+
+					return action.href ? (
+						<a
+							href={action.href}
+							{...externalLinkAttrs(action.href)}
+							class:list={[
+								"action group flex min-h-56 flex-col p-6 no-underline transition-colors focus-visible:ring-2 focus-visible:ring-main-ciano-400 focus-visible:ring-offset-2 focus-visible:ring-offset-main-cinza-700 focus-visible:outline-none md:min-h-64 md:p-8",
+								textAlignment === "top" ? "action--text-top" : "action--text-bottom",
+							]}
+							style={actionStyle}
+						>
+							<span class="action-title text-subtitle min-h-[5rem] font-semibold tracking-[var(--tracking-typography-0)]" style={titleStyle}>
+								{action.title}
+							</span>
+							<span class="action-text text-body mt-6 leading-relaxed" style={textStyle}>
+								{action.text}
+							</span>
+						</a>
+					) : (
+						<div
+							class:list={[
+								"action group flex min-h-56 flex-col p-6 no-underline transition-colors focus-visible:ring-2 focus-visible:ring-main-ciano-400 focus-visible:ring-offset-2 focus-visible:ring-offset-main-cinza-700 focus-visible:outline-none md:min-h-64 md:p-8",
+								textAlignment === "top" ? "action--text-top" : "action--text-bottom",
+							]}
+							style={actionStyle}
+						>
+							<span class="action-title text-subtitle min-h-[5rem] font-semibold tracking-[var(--tracking-typography-0)]" style={titleStyle}>
+								{action.title}
+							</span>
+							<span class="action-text text-body mt-6 leading-relaxed" style={textStyle}>
+								{action.text}
+							</span>
+						</div>
+					);
+				})
+			}
+
+			{
+				videoSrc ? (
+					<div
+						class="relative min-h-72 overflow-hidden"
+						style={`border-radius: ${normalizeBorderRadius(videoBorderRadius, PAGE_HERO_MEDIA_GRID_DEFAULTS.videoBorderRadius)}`}
+					>
+						<video
+							class="block size-full min-h-72 object-cover md:min-h-80"
+							autoplay
+							loop
+							muted
+							playsinline
+							preload="metadata"
+							poster={videoPosterSrc || undefined}
+							aria-label={videoTitle}
+						>
+							<source src={videoSrc} />
+						</video>
+						{safeShareHref && safeShareLabel ? (
+							<a
+								href={safeShareHref}
+								{...externalLinkAttrs(safeShareHref)}
+								class="text-body absolute bottom-6 left-6 inline-flex min-h-12 items-center justify-center bg-neutral-bw-white px-6 font-semibold text-main-cinza-700 no-underline transition-colors hover:bg-main-laranja-400 focus-visible:ring-2 focus-visible:ring-main-ciano-400 focus-visible:ring-offset-2 focus-visible:ring-offset-main-ciano-700 focus-visible:outline-none"
+							>
+								{safeShareLabel}
+							</a>
+						) : null}
+					</div>
+				) : null
+			}
+		</div>
+	</div>
+	<style>
+		.action {
+			background-color: var(--action-background);
+		}
+		.action:hover {
+			background-color: var(--action-hover-background);
+		}
+		.action--text-top {
+			justify-content: flex-start;
+		}
+		.action--text-bottom {
+			justify-content: space-between;
+		}
+	</style>
+</section>

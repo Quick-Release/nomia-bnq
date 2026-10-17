@@ -1,0 +1,68 @@
+/*
+ * Mapa de contacto — the alignment preview mirrors
+ * apps/frontend/src/components/wp-blocks/blocks/NomiaContactMapBlock.astro:
+ * centred by default, pinned to one side at a narrower width, or full width.
+ */
+.getquick-contact-map-editor__alignment {
+  color: var(--wp--preset--color--monocromatico-escuro-600);
+  font-size: 13px;
+  margin: 16px 0 8px;
+}
+
+.getquick-contact-map-editor__stage {
+  background: var(--wp--preset--color--cinza-100);
+  border-radius: 2px;
+  display: flex;
+  padding: 12px;
+}
+
+.getquick-contact-map-editor__map {
+  margin: 0 auto;
+  max-width: 100%;
+  width: 80%;
+}
+
+.getquick-contact-map-editor.is-align-left .getquick-contact-map-editor__map {
+  margin-left: 0;
+  width: 50%;
+}
+
+.getquick-contact-map-editor.is-align-right .getquick-contact-map-editor__map {
+  margin-right: 0;
+  width: 50%;
+}
+
+/*
+ * Full width: the block spans the canvas edge to edge (see `alignfull` in
+ * NomiaContactMap.jsx) and the map bleeds past the fields' padding at the
+ * site's minimum full-width height.
+ */
+.getquick-contact-map-editor.is-align-full {
+  border-inline: 0;
+  border-radius: 0;
+  padding-bottom: 0;
+}
+
+.getquick-contact-map-editor.is-align-full .getquick-contact-map-editor__stage {
+  background: none;
+  border-radius: 0;
+  margin-inline: -16px;
+  padding: 0;
+}
+
+.getquick-contact-map-editor.is-align-full .getquick-contact-map-editor__map {
+  width: 100%;
+}
+
+.getquick-contact-map-editor.is-align-full .getquick-contact-map-editor__map iframe {
+  aspect-ratio: auto;
+  height: clamp(420px, 60vh, 720px);
+}
+
+.getquick-contact-map-editor__map iframe {
+  aspect-ratio: 16 / 9;
+  border: 0;
+  display: block;
+  pointer-events: none;
+  width: 100%;
+}

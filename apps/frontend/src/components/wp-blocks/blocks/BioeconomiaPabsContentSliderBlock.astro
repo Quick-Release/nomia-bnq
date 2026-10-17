@@ -1,0 +1,47 @@
+---
+import NomiaBioeconomiaPabsContentSliderSection from "../../sections/bioeconomia/NomiaBioeconomiaPabsContentSliderSection.astro";
+import type { NomiaBioeconomiaPabsPane } from "../../sections/bioeconomia/NomiaBioeconomiaPabsContentSlider";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { firstArray, mapValid, optionalText, textOr } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props {
+  block: WpParsedBlock;
+}
+type TagAttrs = { label?: unknown; href?: unknown };
+type PaneAttrs = Partial<Record<keyof NomiaBioeconomiaPabsPane, unknown>> & { imageUrl?: unknown };
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/pabs-content-slider">;
+function tag(raw: unknown) {
+  if (!raw || typeof raw !== "object") return null;
+  const item = raw as TagAttrs;
+  const label = textOr(item.label);
+  const href = textOr(item.href);
+  return label && href ? { label, href } : null;
+}
+function pane(raw: unknown): NomiaBioeconomiaPabsPane | null {
+  if (!raw || typeof raw !== "object") return null;
+  const item = raw as PaneAttrs;
+  const navLabel = textOr(item.navLabel);
+  const title = textOr(item.title);
+  const subtitle = textOr(item.subtitle);
+  const imageSrc = textOr(item.imageSrc, item.imageUrl);
+  if (!navLabel || !title || !subtitle || !imageSrc) return null;
+  const tags = mapValid(firstArray(item.tags), tag);
+  return { navLabel, title, subtitle, imageSrc, imageAlt: textOr(item.imageAlt), tags };
+}
+const panes = mapValid(firstArray(attrs.panes, attrs.items), pane);
+const eyebrow = optionalText(attrs.eyebrow) ?? "";
+const heading = optionalText(attrs.heading) ?? "";
+const intro = optionalText(attrs.intro) ?? "";
+const canRender = Boolean(heading && intro && panes.length > 0);
+---
+
+{canRender ? (
+  <NomiaBioeconomiaPabsContentSliderSection
+    eyebrow={eyebrow}
+    heading={heading}
+    intro={intro}
+    panes={panes}
+  />
+) : null}

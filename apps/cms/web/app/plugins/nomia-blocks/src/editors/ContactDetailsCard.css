@@ -1,0 +1,178 @@
+/*
+ * Cartão de contacto — mirrors apps/frontend/src/components/wp-blocks/blocks/ContactDetailsCardBlock.astro.
+ *
+ * Px values are the Nomia tokens resolved at 16px root (text-body-large
+ * 20/32, text-notes 14/24, main/cinza 100/200/700).
+ */
+.getquick-contact-details-card-editor {
+  align-items: center;
+  background: var(--wp--preset--color--cinza-100);
+  border: 2px solid var(--wp--preset--color--cinza-200);
+  border-radius: 16px;
+  box-sizing: border-box;
+  color: var(--wp--preset--color--cinza-700);
+  display: flex;
+  flex-wrap: wrap;
+  font-family:
+    Montserrat,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+  gap: 24px;
+  padding: 32px clamp(24px, 6%, 64px);
+  width: 100%;
+}
+
+.getquick-contact-details-card-editor *,
+.getquick-contact-details-card-editor *::before,
+.getquick-contact-details-card-editor *::after {
+  box-sizing: border-box;
+}
+
+.getquick-contact-details-card-editor__icon {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: var(--wp--preset--color--cinza-400);
+  cursor: pointer;
+  display: flex;
+  flex-shrink: 0;
+  height: 64px;
+  justify-content: center;
+  padding: 0;
+  width: 64px;
+}
+
+.getquick-contact-details-card-editor__icon[data-empty="true"] {
+  border: 1px dashed var(--wp--preset--color--cinza-400);
+  font-size: 28px;
+}
+
+.getquick-contact-details-card-editor__icon img {
+  display: block;
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
+}
+
+.getquick-contact-details-card-editor__icon:focus-visible {
+  outline: 2px solid #3858e9;
+  outline-offset: 2px;
+}
+
+.getquick-contact-details-card-editor__copy {
+  display: flex;
+  /* Below ~16rem of text the button wraps to its own line instead of squeezing the copy. */
+  flex: 1 1 16rem;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.getquick-contact-details-card-editor .getquick-contact-details-card-editor__title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 32px;
+  margin: 0;
+}
+
+.getquick-contact-details-card-editor .getquick-contact-details-card-editor__details {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  margin: 0;
+}
+
+.getquick-contact-details-card-editor__button {
+  align-items: center;
+  border: 1px solid var(--wp--preset--color--cinza-700);
+  border-radius: 40px;
+  display: inline-flex;
+  flex-shrink: 0;
+  font-size: 14px;
+  font-weight: 500;
+  gap: 8px;
+  height: 56px;
+  justify-content: center;
+  line-height: 24px;
+  padding: 8px 24px 8px 32px;
+  white-space: nowrap;
+}
+
+.getquick-contact-details-card-editor__button svg {
+  flex-shrink: 0;
+}
+
+.getquick-contact-details-card-editor__button-group {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 8px;
+  max-width: 100%;
+}
+
+.getquick-contact-details-card-editor__button[data-missing-link="true"] {
+  border-style: dashed;
+}
+
+/* Editor-only: shows where the button points, or that it needs a link. */
+.getquick-contact-details-card-editor__link-chip {
+  background: var(--wp--preset--color--branco);
+  border: 1px solid var(--wp--preset--color--cinza-300);
+  border-radius: 4px;
+  color: var(--wp--preset--color--cinza-700);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 18px;
+  max-width: 280px;
+  overflow: hidden;
+  padding: 2px 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.getquick-contact-details-card-editor__link-chip[data-missing="true"] {
+  background: #fcf0f1;
+  border-color: #d63638;
+  color: #8a2424;
+}
+
+.getquick-contact-details-card-editor__link-chip:focus-visible {
+  outline: 2px solid #3858e9;
+  outline-offset: 2px;
+}
+
+.getquick-contact-details-card-editor__icon-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.getquick-contact-details-card-editor__hint {
+  color: #757575;
+  font-size: 12px;
+  margin: 8px 0 16px;
+}
+
+.getquick-contact-details-card-editor__link-popover .components-popover__content {
+  min-width: 320px;
+  padding: 12px;
+}
+
+.getquick-contact-details-card-editor .block-editor-rich-text__editable:focus {
+  outline: 1px solid #3858e9;
+  outline-offset: 4px;
+}
+
+/* The warning takes a whole row of the wrapping card, above the content. */
+.getquick-contact-details-card-editor__warning {
+  flex-basis: 100%;
+  margin: 0;
+}

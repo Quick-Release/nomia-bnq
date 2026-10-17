@@ -1,0 +1,91 @@
+---
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { toGoogleMapsEmbedUrl } from "../../../lib/google-maps";
+import { readNomiaContactMapAlignment } from "../../../lib/nomia-contact-map";
+import { optionalText, wpText as text } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props {
+  block: WpParsedBlock;
+}
+
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/nomia-contact-map">;
+const mapUrl = optionalText(attrs.mapUrl, attrs.url) ?? "";
+const blockTitle = text(attrs.title);
+const title = blockTitle || "Mapa";
+const embedUrl = toGoogleMapsEmbedUrl(mapUrl, blockTitle);
+const align = readNomiaContactMapAlignment(attrs.align);
+---
+
+{
+  embedUrl ? (
+    <div class="nomia-page-gutter">
+    <section
+      class:list={["nomia-contact-map", align !== "none" && `nomia-contact-map--align-${align}`]}
+      aria-label={title}
+    >
+      <iframe
+        src={embedUrl}
+        title={title}
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen
+      />
+    </section>
+    </div>
+  ) : null
+}
+
+<style>
+  .nomia-contact-map {
+    margin: clamp(32px, 6vw, 72px) auto;
+    max-width: min(100%, 1180px);
+    width: 100%;
+  }
+
+  .nomia-contact-map iframe {
+    aspect-ratio: 16 / 9;
+    background: var(--color-monochrome-light-100, #f3f3f3);
+    border: 0;
+    display: block;
+    min-height: 320px;
+    width: 100%;
+  }
+
+  /* Pinned to one side at a narrower width; mobile keeps the full column. */
+  .nomia-contact-map--align-left,
+  .nomia-contact-map--align-right {
+    max-width: min(100%, 720px);
+  }
+
+  .nomia-contact-map--align-left {
+    margin-left: 0;
+  }
+
+  .nomia-contact-map--align-right {
+    margin-right: 0;
+  }
+
+  /*
+   * Full bleed past any gutters. `overflow-x: clip` on the body (BaseLayout)
+   * absorbs the scrollbar width that `100vw` does not account for.
+   */
+  .nomia-contact-map--align-full {
+    margin-inline: calc(50% - 50vw);
+    max-width: 100vw;
+    width: 100vw;
+  }
+
+  .nomia-contact-map--align-full iframe {
+    aspect-ratio: auto;
+    height: clamp(420px, 60vh, 720px);
+  }
+
+  @media (max-width: 640px) {
+    .nomia-contact-map iframe {
+      aspect-ratio: 4 / 5;
+      min-height: 420px;
+    }
+  }
+</style>

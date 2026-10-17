@@ -1,0 +1,109 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/indicators-grid",
+	"title": "Grelha de indicadores",
+	"category": "getquick-nomia",
+	"icon": "dashboard",
+	"description": "Cartões de indicadores com imagem, título e texto em três colunas, com cabeçalho e botão.",
+	"textdomain": "getquick-nomia-blocks",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "indicators-grid"
+		},
+		"eyebrow": {
+			"type": "string",
+			"default": ""
+		},
+		"heading": {
+			"type": "string",
+			"default": ""
+		},
+		"ctaHref": {
+			"type": "string",
+			"default": ""
+		},
+		"ctaLabel": {
+			"type": "string",
+			"default": ""
+		},
+		"cards": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object",
+				"required": [
+					"title",
+					"description",
+					"imageSrc"
+				],
+				"properties": {
+					"title": {
+						"type": "string",
+						"default": ""
+					},
+					"description": {
+						"type": "string",
+						"default": ""
+					},
+					"imageId": {
+						"type": "number"
+					},
+					"imageSrc": {
+						"type": "string",
+						"default": ""
+					},
+					"imageAlt": {
+						"type": "string",
+						"default": ""
+					},
+					"href": {
+						"type": "string",
+						"default": ""
+					}
+				}
+			}
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"eyebrow": "Indicadores",
+			"heading": "Acompanhe a transição para uma economia circular",
+			"ctaHref": "/indicadores/",
+			"ctaLabel": "Ver todos",
+			"cards": [
+				{
+					"title": "Produtividade dos recursos",
+					"description": "Veja a evolução da eficiência na utilização de recursos.",
+					"imageSrc": "/images/home/indicators/produtividade-recursos.jpg",
+					"imageAlt": "Indicador de produtividade",
+					"href": "/indicadores/"
+				},
+				{
+					"title": "Taxa de circularidade",
+					"description": "Conheça a incorporação de materiais reciclados.",
+					"imageSrc": "/images/home/indicators/taxa-circular.jpg",
+					"imageAlt": "Indicador de circularidade",
+					"href": "/indicadores/"
+				}
+			]
+		}
+	},
+	"editorScript": "getquick-nomia-blocks-editor",
+	"editorStyle": "getquick-nomia-blocks-editor-style"
+}

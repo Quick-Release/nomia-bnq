@@ -1,0 +1,172 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/page-hero-media-grid",
+	"title": "Hero de página: vídeo e destaques",
+	"category": "getquick-nomia",
+	"icon": "format-video",
+	"description": "Hero com imagem de fundo, duas chamadas com ligação e uma coluna de vídeo.",
+	"textdomain": "getquick-nomia-blocks",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "page-hero-media-grid"
+		},
+		"backgroundImageId": {
+			"type": "number"
+		},
+		"backgroundImageSrc": {
+			"type": "string",
+			"default": ""
+		},
+		"backgroundImageAlt": {
+			"type": "string",
+			"default": ""
+		},
+		"heading": {
+			"type": "string",
+			"default": "Destaques e video"
+		},
+		"firstTitle": {
+			"type": "string",
+			"default": ""
+		},
+		"firstText": {
+			"type": "string",
+			"default": ""
+		},
+		"firstHref": {
+			"type": "string",
+			"default": ""
+		},
+		"firstBackgroundColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"firstHoverBackgroundColor": {
+			"type": "string",
+			"default": "#f2a900"
+		},
+		"firstTitleColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"firstTextColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"firstBorderRadius": {
+			"type": "string",
+			"default": "40"
+		},
+		"secondTitle": {
+			"type": "string",
+			"default": ""
+		},
+		"secondText": {
+			"type": "string",
+			"default": ""
+		},
+		"secondHref": {
+			"type": "string",
+			"default": ""
+		},
+		"secondBackgroundColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"secondHoverBackgroundColor": {
+			"type": "string",
+			"default": "#f2a900"
+		},
+		"secondTitleColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"secondTextColor": {
+			"type": "string",
+			"default": "#ffffff"
+		},
+		"secondBorderRadius": {
+			"type": "string",
+			"default": "40"
+		},
+		"textVerticalAlign": {
+			"type": "string",
+			"default": "bottom",
+			"enum": [
+				"top",
+				"bottom"
+			]
+		},
+		"videoId": {
+			"type": "number"
+		},
+		"videoSrc": {
+			"type": "string",
+			"default": ""
+		},
+		"videoPosterId": {
+			"type": "number"
+		},
+		"videoPosterSrc": {
+			"type": "string",
+			"default": ""
+		},
+		"videoTitle": {
+			"type": "string",
+			"default": "Video"
+		},
+		"videoBorderRadius": {
+			"type": "string",
+			"default": "40"
+		},
+		"shareHref": {
+			"type": "string",
+			"default": "https://nomia.getquick.io/partilhar/"
+		},
+		"shareLabel": {
+			"type": "string",
+			"default": "Partilhar"
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"backgroundImageSrc": "/images/hero-carousel/economia-circular.jpg",
+			"backgroundImageAlt": "Paisagem de economia circular",
+			"firstTitle": "Explorar",
+			"firstText": "Conheça os principais recursos e iniciativas disponíveis.",
+			"firstHref": "/biblioteca/",
+			"firstBackgroundColor": "#ffffff",
+			"firstHoverBackgroundColor": "#f2a900",
+			"firstBorderRadius": "40",
+			"secondTitle": "Participar",
+			"secondText": "Acompanhe oportunidades, eventos e avisos relevantes.",
+			"secondHref": "/oportunidades/",
+			"secondBackgroundColor": "#ffffff",
+			"secondHoverBackgroundColor": "#00a9ce",
+			"secondBorderRadius": "24",
+			"textVerticalAlign": "bottom",
+			"videoSrc": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+			"videoPosterSrc": "/images/home/bioeconomia-intro/hero.jpg",
+			"videoTitle": "Video de exemplo",
+			"videoBorderRadius": "40"
+		}
+	},
+	"editorScript": "getquick-nomia-blocks-editor",
+	"editorStyle": "getquick-nomia-blocks-editor-style"
+}

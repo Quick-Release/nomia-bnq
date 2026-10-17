@@ -1,0 +1,130 @@
+---
+/**
+ * Home intro — bioeconomia editorial band (Figma 40017244:12785).
+ * https://www.figma.com/design/gWqEtVBfoWbYMHQh1rW6s3/Nomia-%E2%80%94-Website--2-?node-id=40017244-12785
+ */
+import NomiaEyebrowIconLabel from "../../ui/NomiaEyebrowIconLabel.astro";
+import NomiaOutlinePillButton from "../../ui/NomiaOutlinePillButton.astro";
+
+interface Props {
+  eyebrow?: string;
+  accent?: "ciano" | "botnico";
+  heading?: string;
+  body?: string;
+  ctaHref?: string;
+  ctaLabel?: string;
+  showCta?: boolean;
+  showTematica?: boolean;
+  showCaption?: boolean;
+  heroSrc?: string;
+  heroAlt?: string;
+  captionHeading?: string;
+  captionBody?: string;
+}
+
+const {
+  eyebrow = "Bioeconomia",
+  accent = "botnico",
+  heading = "Recursos renováveis de base biológica",
+  body = "Desenvolvimento económico e social respeitando os limites naturais dos ecossistemas terrestres e marinhos.",
+  ctaHref = "/bioeconomia-sustentavel/",
+  ctaLabel = "Saber Mais",
+  showCta = true,
+  showTematica = true,
+  showCaption = true,
+  heroSrc = "/images/home/bioeconomia-intro/hero.jpg",
+  heroAlt = "Mãos a segurar uma muda com terra, sobre um chão de floresta desfocado, evocando crescimento sustentável.",
+  captionHeading = "Plano de ação para a bioeconomia sustentável",
+  captionBody =
+    "O plano articula metas e iniciativas para valorizar recursos biológicos de forma sustentável, em linha com o horizonte 2025 e a transição para uma economia mais circular e resiliente.",
+} = Astro.props;
+---
+
+<section
+  class="w-full overflow-x-hidden bg-[#f5f5f5]"
+  aria-labelledby="home-intro-heading"
+  data-node-id="40017244:12785"
+  data-nomia-header-surface="light"
+>
+  <div
+    class="mx-auto flex w-full max-w-[1920px] flex-col items-center gap-10 px-4 py-16 md:gap-12 md:px-16 md:py-20 lg:gap-12 lg:py-28"
+  >
+    <div
+      class="flex w-full max-w-[55rem] flex-col items-center gap-10 text-center"
+      data-node-id="40017244:12786"
+    >
+      {
+        showTematica && (
+          <NomiaEyebrowIconLabel
+            label={eyebrow}
+            accent={accent}
+            wrapperNodeId="40017244:12787"
+            iconNodeId="40017244:12788"
+            labelNodeId="40017244:12789"
+          />
+        )
+      }
+
+      <div class="flex w-full flex-col gap-4 text-main-cinza-700" data-node-id="40017244:12790">
+        <h2
+          id="home-intro-heading"
+          class="text-h4 font-primary font-semibold leading-[var(--typography-line-height-f)] tracking-[var(--tracking-typography-0)]"
+          data-node-id="40017244:12791"
+        >
+          {heading}
+        </h2>
+        <p
+          class="text-subtitle font-primary font-normal leading-[var(--typography-line-height-g)] tracking-[var(--tracking-typography-0)]"
+          data-node-id="40017244:12792"
+        >
+          {body}
+        </p>
+      </div>
+
+      {
+        showCta && (
+          <NomiaOutlinePillButton
+            href={ctaHref}
+            label={ctaLabel}
+            class="w-fit"
+            focusOffsetClass="focus-visible:ring-offset-[#f5f5f5]"
+            nodeId="40017244:12793"
+          />
+        )
+      }
+    </div>
+
+    <figure class="w-full max-w-[112rem]" data-node-id="40017244:12796">
+      <div class="aspect-[1792/672] w-full overflow-hidden rounded-2xl">
+        <img
+          src={heroSrc}
+          alt={heroAlt}
+          class="size-full object-cover"
+          width="3000"
+          height="1718"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+
+      {
+        showCaption && (
+          <figcaption class="mt-8 flex w-full flex-col gap-4 text-main-cinza-700 md:mt-10 md:flex-row md:items-start md:gap-8" data-node-id="40017244:12797">
+            <p
+              class="text-h4 font-primary max-w-[45.5rem] shrink-0 font-semibold leading-[var(--typography-line-height-f)] tracking-[var(--tracking-typography-0)] md:text-left"
+              data-node-id="40017244:12798"
+            >
+              {captionHeading}
+            </p>
+            <p
+              class="text-subtitle font-primary min-w-0 flex-1 text-left font-normal leading-[var(--typography-line-height-g)] tracking-[var(--tracking-typography-0)]"
+              data-node-id="40017244:12799"
+            >
+              {captionBody}
+            </p>
+          </figcaption>
+        )
+      }
+    </figure>
+  </div>
+</section>

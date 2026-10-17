@@ -1,0 +1,87 @@
+---
+import {
+	TITLE_WITH_LABEL_DEFAULT_HEADING_LEVEL,
+	titleWithLabelFieldStyle,
+	type TitleWithLabelField,
+	type TitleWithLabelHeadingLevel,
+	type TitleWithLabelTypography,
+} from "../../lib/title-with-label-typography";
+import NomiaEyebrowIconLabel from "../ui/NomiaEyebrowIconLabel.astro";
+
+/** Copy comes only from the block: an empty second line renders nothing. */
+interface Props {
+	label: string;
+	titleLine1: string;
+	titleLine2?: string;
+	level?: TitleWithLabelHeadingLevel;
+	typography?: Partial<Record<TitleWithLabelField, TitleWithLabelTypography>>;
+}
+
+const {
+	label,
+	titleLine1,
+	titleLine2,
+	level = TITLE_WITH_LABEL_DEFAULT_HEADING_LEVEL,
+	typography = {},
+} = Astro.props;
+
+const Heading = `h${level}` as "h2" | "h3" | "h4";
+const labelStyle = titleWithLabelFieldStyle(typography.label);
+const titleLine1Style = titleWithLabelFieldStyle(typography.titleLine1);
+const titleLine2Style = titleWithLabelFieldStyle(typography.titleLine2);
+
+/*
+ * Both title lines are one heading, so a screen reader announces the whole
+ * title rather than only the first line. The heading is a subgrid spanning the
+ * layout grid, which lets line 1 sit beside the eyebrow and line 2 run the full
+ * width below it without splitting the heading element. The eyebrow sits in
+ * the heading's empty first cell, raised so it stays selectable.
+ */
+---
+
+<section
+	class="bg-neutral-bw-white w-full"
+	data-nomia-header-surface="light"
+	data-node-id="40017244:13021"
+>
+	<div class="font-primary w-full px-4 py-12 md:px-16 md:py-14">
+		<div class="mx-auto w-full max-w-[1792px]">
+			<div
+				class="grid grid-cols-1 gap-y-0 md:grid-cols-[auto_minmax(0,1fr)] md:items-center md:gap-x-[30px]"
+				data-node-id="40017244:13022"
+			>
+				<NomiaEyebrowIconLabel
+					label={label}
+					accent="ciano"
+					class="relative z-10 col-start-1 row-start-1 shrink-0"
+					labelStyle={labelStyle}
+					wrapperNodeId="40017244:13023"
+					iconNodeId="40017244:13024"
+					labelNodeId="40017244:13025"
+				/>
+				<Heading
+					class:list={[
+						"text-h4 text-main-cinza-700 col-start-1 row-start-2 grid min-w-0 grid-cols-subgrid grid-rows-subgrid font-semibold leading-[var(--typography-line-height-f)] tracking-[var(--tracking-typography-0)] md:col-span-2 md:row-start-1 md:items-center",
+						titleLine2 ? "row-span-2" : "row-span-1",
+					]}
+				>
+					<span
+						class="col-start-1 row-start-1 block min-w-0 md:col-start-2"
+						style={titleLine1Style}
+						data-node-id="40017244:13026">{titleLine1}</span
+					>{" "}{
+						titleLine2 ? (
+							<span
+								class="col-span-full row-start-2 block"
+								style={titleLine2Style}
+								data-node-id="40017244:13027"
+							>
+								{titleLine2}
+							</span>
+						) : null
+					}
+				</Heading>
+			</div>
+		</div>
+	</div>
+</section>

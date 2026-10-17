@@ -1,0 +1,175 @@
+.two-columns-text-image-editor {
+  background: var(--wp--preset--color--branco);
+  box-sizing: border-box;
+  color: #313131;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  overflow: hidden;
+  width: 100%;
+}
+
+.two-columns-text-image-editor *,
+.two-columns-text-image-editor *::before,
+.two-columns-text-image-editor *::after {
+  box-sizing: border-box;
+}
+
+.two-columns-text-image-editor__inner {
+  align-items: center;
+  display: flex;
+  gap: 64px;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1440px;
+  padding: 96px 64px;
+  width: 100%;
+}
+
+.two-columns-text-image-editor.has-media-left .two-columns-text-image-editor__inner {
+  flex-direction: row-reverse;
+}
+
+.two-columns-text-image-editor__copy {
+  display: flex;
+  flex: 1 1 50%;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 880px;
+  min-width: 0;
+}
+
+.two-columns-text-image-editor__text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.two-columns-text-image-editor__text h2 {
+  color: #313131;
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.14;
+  margin: 0;
+}
+
+.two-columns-text-image-editor__text p {
+  color: #313131;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.two-columns-text-image-editor__cta {
+  align-items: center;
+  border: 1px solid #313131;
+  border-radius: 40px;
+  color: #313131;
+  display: inline-flex;
+  font-size: 14px;
+  font-weight: 600;
+  justify-content: center;
+  letter-spacing: 0;
+  line-height: 1.3;
+  min-height: 36px;
+  padding: 8px 16px;
+  width: fit-content;
+}
+
+.two-columns-text-image-editor__visual {
+  flex: 1 1 42%;
+  max-width: 672px;
+  min-width: 360px;
+}
+
+.two-columns-text-image-editor__frame {
+  margin-left: auto;
+  max-width: 664px;
+  width: 100%;
+}
+
+.two-columns-text-image-editor.has-media-left .two-columns-text-image-editor__frame {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.two-columns-text-image-editor__native-image {
+  aspect-ratio: 664 / 376;
+  background: #f6f7f7;
+  border: 1px solid #dcdcde;
+  border-radius: 16px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 8%);
+  margin: 0;
+  overflow: hidden;
+  border-color: #313131;
+}
+
+.two-columns-text-image-editor__native-image img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.two-columns-text-image-editor__native-image-placeholder {
+  align-items: center;
+  color: #50575e;
+  display: flex;
+  font-size: 14px;
+  height: 100%;
+  justify-content: center;
+}
+
+.two-columns-text-image-editor__image-actions {
+  margin-top: 12px;
+}
+
+.two-columns-text-image-editor .block-editor-rich-text__editable:focus {
+  outline: 1px solid #3858e9;
+  outline-offset: 4px;
+}
+
+@media (max-width: 1100px) {
+  .two-columns-text-image-editor__inner {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 48px;
+    padding: 64px 24px;
+  }
+
+  .two-columns-text-image-editor__visual {
+    max-width: 672px;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .two-columns-text-image-editor.has-media-left .two-columns-text-image-editor__inner {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 700px) {
+  .two-columns-text-image-editor__inner {
+    gap: 40px;
+    padding: 48px 16px;
+  }
+
+  .two-columns-text-image-editor__copy {
+    gap: 32px;
+  }
+
+  .two-columns-text-image-editor__text h2 {
+    font-size: 30px;
+  }
+
+  .two-columns-text-image-editor__text p {
+    font-size: 18px;
+  }
+}

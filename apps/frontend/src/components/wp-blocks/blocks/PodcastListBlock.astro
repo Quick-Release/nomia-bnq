@@ -1,0 +1,62 @@
+---
+import PodcastList from "../../content-lists/podcasts/PodcastList.astro";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import type { NomiaPodcastListItem } from "../../../types/nomia-podcast-list";
+import { firstArray, mapValid, textOr, wpText as text } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props {
+  block: WpParsedBlock;
+}
+
+type PodcastItemAttrs = {
+  episodeNumber?: unknown;
+  dateLabel?: unknown;
+  title?: unknown;
+  imageSrc?: unknown;
+  imageUrl?: unknown;
+  imageAlt?: unknown;
+  listenHref?: unknown;
+  listenUrl?: unknown;
+  shareUrl?: unknown;
+};
+
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/content-list">;
+
+function episodeNumber(value: unknown): number | null {
+  if (value === null || value === undefined || value === "") return null;
+  const numeric = typeof value === "number" ? value : Number(value);
+  return Number.isFinite(numeric) ? numeric : null;
+}
+
+function normalizeItem(raw: unknown): NomiaPodcastListItem | null {
+  if (!raw || typeof raw !== "object") return null;
+
+  const item = raw as PodcastItemAttrs;
+  const title = text(item.title);
+  const dateLabel = text(item.dateLabel);
+  const imageSrc = textOr(item.imageSrc, item.imageUrl);
+  const listenHref = textOr(item.listenHref, item.listenUrl);
+  const shareUrl = textOr(item.shareUrl, listenHref);
+
+  if (!title || !dateLabel || !imageSrc || !listenHref) return null;
+
+  return {
+    episodeNumber: episodeNumber(item.episodeNumber),
+    dateLabel,
+    title,
+    imageSrc,
+    imageAlt: text(item.imageAlt),
+    listenHref,
+    shareUrl,
+  };
+}
+
+const items = mapValid(firstArray(attrs.items, attrs.episodes), normalizeItem);
+// The block renders only the episodes saved in it: pages are served from the
+// publication store, never by reading WordPress on a visit.
+const resolvedItems = items;
+---
+
+{resolvedItems.length > 0 ? <PodcastList items={resolvedItems} /> : null}

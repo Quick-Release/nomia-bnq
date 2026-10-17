@@ -1,0 +1,99 @@
+.nomia-section-editor {
+	border: 1px dashed #dcdcde;
+	margin: 0;
+	min-height: 96px;
+}
+
+/*
+ * The canvas mirrors the frontend contrast rule so a dark section is judged
+ * against readable children instead of the editor's default black text.
+ */
+.nomia-section-editor[data-nomia-section-contrast='dark'],
+.nomia-section-editor[data-nomia-section-contrast='dark'] a,
+.nomia-section-editor[data-nomia-section-contrast='dark'] strong {
+	color: var(--wp--preset--color--branco);
+}
+
+.nomia-section-editor[data-nomia-section-contrast='dark'] {
+	border-color: rgb(255 255 255 / 0.35);
+}
+
+.nomia-section-editor__swatches {
+	display: grid;
+	gap: 6px;
+	grid-template-columns: repeat(6, minmax(0, 1fr));
+	margin-bottom: 12px;
+}
+
+.nomia-section-editor__swatch {
+	aspect-ratio: 1;
+	background: var(--nomia-section-swatch, var(--wp--preset--color--branco));
+	border: 1px solid #dcdcde;
+	border-radius: 2px;
+	box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.45);
+	cursor: pointer;
+	min-width: 0;
+	padding: 0;
+}
+
+.nomia-section-editor__swatch:hover,
+.nomia-section-editor__swatch:focus-visible,
+.nomia-section-editor__swatch[data-selected='true'] {
+	border-color: #007cba;
+	box-shadow:
+		inset 0 0 0 1px rgb(255 255 255 / 0.45),
+		0 0 0 2px #007cba;
+	outline: none;
+}
+
+.nomia-section-editor__actions {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 12px;
+}
+
+.nomia-section-editor__hint {
+	color: #646970;
+	font-size: 12px;
+	line-height: 1.4;
+	margin: 8px 0 0;
+}
+
+.nomia-section-editor__position {
+	border: 0;
+	margin: 12px 0 16px;
+	padding: 0;
+}
+
+.nomia-section-editor__position legend {
+	font-size: 11px;
+	font-weight: 500;
+	margin-bottom: 8px;
+	text-transform: uppercase;
+}
+
+.nomia-section-editor__position-grid {
+	display: grid;
+	gap: 4px;
+	grid-template-columns: repeat(3, 32px);
+}
+
+.nomia-section-editor__position-cell {
+	background: var(--wp--preset--color--branco);
+	border: 1px solid #949494;
+	border-radius: 2px;
+	cursor: pointer;
+	height: 32px;
+	padding: 0;
+	width: 32px;
+}
+
+.nomia-section-editor__position-cell[aria-pressed='true'] {
+	background: #007cba;
+	border-color: #007cba;
+}
+
+.nomia-section-editor__position-cell:focus-visible {
+	outline: 2px solid #007cba;
+	outline-offset: 2px;
+}

@@ -1,0 +1,163 @@
+---
+/**
+ * PAEC 2030 block — Nomia Website 2 · node 40017244:13081
+ * https://www.figma.com/design/gWqEtVBfoWbYMHQh1rW6s3/Nomia-%E2%80%94-Website--2-?node-id=40017244-13081
+ */
+
+interface Objective {
+	code: string;
+	description: string;
+}
+
+interface Props {
+	eyebrow?: string;
+	heading: string;
+	imageLeftSrc: string;
+	imageLeftAlt: string;
+	imageRightSrc: string;
+	imageRightAlt: string;
+	intro: string;
+	saberMaisHref: string;
+	saberMaisLabel?: string;
+	objectives: readonly Objective[];
+}
+
+const {
+	eyebrow = "PAEC 2030",
+	heading,
+	imageLeftSrc,
+	imageLeftAlt,
+	imageRightSrc,
+	imageRightAlt,
+	intro,
+	saberMaisHref,
+	saberMaisLabel = "Saber Mais",
+	objectives,
+} = Astro.props;
+
+const headingId = "nomia-paec-2030-heading";
+const isExternalCta = saberMaisHref.startsWith("http");
+---
+
+<section
+	class="bg-neutral-bw-white w-full"
+	data-nomia-header-surface="light"
+	aria-labelledby={headingId}
+	data-node-id="40017244:13081"
+>
+	<div
+		class="font-primary text-main-cinza-700 mx-auto flex w-full max-w-[1920px] flex-col items-center gap-28 px-4 py-28 md:px-16"
+	>
+		<div class="flex w-full flex-col items-center gap-14">
+			<header class="flex max-w-[36rem] flex-col items-center gap-10 text-center">
+				<div
+					class="text-main-ciano-400 flex items-center gap-1 text-body font-medium leading-[var(--typography-line-height-i)] tracking-[var(--tracking-typography-0)]"
+					data-node-id="40017244:13085"
+				>
+					<span class="inline-flex size-6 shrink-0 items-center justify-center" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" class="size-6" xmlns="http://www.w3.org/2000/svg">
+							<path
+								d="M12 4v16M4.93 7.76l14.14 8.48M4.93 16.24l14.14-8.48"
+								stroke="currentColor"
+								stroke-width="1.35"
+								stroke-linecap="round"
+								stroke-linejoin="round"></path>
+						</svg>
+					</span>
+					<span class="whitespace-nowrap uppercase">{eyebrow}</span>
+				</div>
+				<h2
+					id={headingId}
+					class="text-h4 font-semibold leading-[var(--typography-line-height-f)] tracking-[var(--tracking-typography-0)]"
+					data-node-id="40017244:13088"
+				>
+					{heading}
+				</h2>
+			</header>
+
+			<div class="flex w-full max-w-[1792px] flex-col items-center gap-6">
+				<div
+					class="grid w-full grid-cols-1 gap-0 md:grid-cols-2"
+					data-node-id="40017244:13090"
+				>
+					<div class="relative aspect-[960/944] w-full overflow-hidden">
+						<img
+							src={imageLeftSrc}
+							alt={imageLeftAlt}
+							class="absolute inset-0 size-full object-cover"
+							loading="lazy"
+							decoding="async"
+							width="960"
+							height="944"
+						/>
+					</div>
+					<div class="relative aspect-[960/944] w-full overflow-hidden">
+						<img
+							src={imageRightSrc}
+							alt={imageRightAlt}
+							class="absolute inset-0 size-full object-cover"
+							loading="lazy"
+							decoding="async"
+							width="960"
+							height="944"
+						/>
+					</div>
+				</div>
+
+				<div
+					class="flex w-full flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-8"
+					data-node-id="40017244:13093"
+				>
+					<p
+						class="text-body-large max-w-none flex-1 font-normal leading-[var(--typography-line-height-h)] tracking-[var(--tracking-typography-0)] lg:max-w-[52.25rem]"
+						data-node-id="40017244:13094"
+					>
+						{intro}
+					</p>
+					<a
+						href={saberMaisHref}
+						{...(isExternalCta ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+						class="text-notes border-main-cinza-700 hover:bg-main-cinza-700 focus-visible:ring-main-teal-400 inline-flex shrink-0 items-center justify-center gap-2 self-start rounded-[40px] border border-solid px-4 py-2 font-medium tracking-[var(--tracking-typography-0)] transition-colors hover:text-neutral-bw-white focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-bw-white focus-visible:outline-none lg:self-auto"
+						data-node-id="40017244:13096"
+					>
+						{saberMaisLabel}
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<div
+			class="grid w-full max-w-[1792px] grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-x-6 xl:grid-cols-5 xl:gap-x-6"
+			data-node-id="40017244:13099"
+		>
+			{
+				objectives.map((obj) => (
+					<div class="flex gap-6">
+						<span
+							class="text-main-cinza-400 inline-flex size-20 shrink-0 items-center justify-center"
+							aria-hidden="true"
+						>
+							<svg viewBox="0 0 24 24" fill="none" class="size-20" xmlns="http://www.w3.org/2000/svg">
+								<path
+									d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 1 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"
+									stroke="currentColor"
+									stroke-width="1.15"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+							</svg>
+						</span>
+						<div class="flex min-w-0 flex-1 flex-col gap-4">
+							<h3 class="text-h2 font-semibold leading-[var(--typography-line-height-d)] tracking-[var(--tracking-typography-0)]">
+								{obj.code}
+							</h3>
+							<p class="text-body font-normal leading-[var(--typography-line-height-i)] tracking-[var(--tracking-typography-0)]">
+								{obj.description}
+							</p>
+						</div>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>

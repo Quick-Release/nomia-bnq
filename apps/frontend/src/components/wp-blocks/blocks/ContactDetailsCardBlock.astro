@@ -1,0 +1,88 @@
+---
+import ArrowLargeRight from "../../../assets/icons/nomia/arrows-arrow-large-right--40017530-15789.svg";
+import {
+  contactDetailsLines,
+  contactDetailsRichLines,
+  type ContactDetailsRun,
+} from "../../../lib/contact-details-card";
+import { safeHref } from "../../../lib/safe-href";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { externalLinkAttrs, isExternalHref } from "../../page-heroes/pageHeroShared";
+import { wpBoolean as bool, wpText as text } from "../normalizers";
+import RichRun from "../RichTextRun.astro";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props {
+  block: WpParsedBlock;
+}
+
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/contact-details-card">;
+
+const iconUrl = bool(attrs.hideIcon) ? "" : text(attrs.iconUrl);
+const iconAlt = text(attrs.iconAlt);
+// Title lines join with a space: the editor allows no line breaks there, but
+// content saved before that may hold some.
+const title: ContactDetailsRun[] = contactDetailsRichLines(attrs.title).flatMap((line, index) =>
+  index > 0 ? [{ text: " ", bold: false, italic: false }, ...line] : line,
+);
+const lines = contactDetailsRichLines(attrs.details);
+const buttonLabel = contactDetailsLines(attrs.buttonLabel).join(" ");
+const buttonHref = safeHref(attrs.buttonHref);
+const hasButton = !bool(attrs.hideButton) && Boolean(buttonLabel && buttonHref);
+const canRender = Boolean(title.length > 0 || lines.length > 0 || hasButton);
+---
+
+{
+  canRender ? (
+    <div
+      class="bg-main-cinza-100 border-main-cinza-200 text-main-cinza-700 font-primary flex w-full flex-wrap items-center gap-6 rounded-2xl border-2 border-solid px-[clamp(1.5rem,6%,4rem)] py-8"
+    >
+      {iconUrl ? (
+        <div class="size-16 shrink-0">
+          <img
+            src={iconUrl}
+            alt={iconAlt}
+            width="64"
+            height="64"
+            loading="lazy"
+            decoding="async"
+            class="block size-full object-contain"
+          />
+        </div>
+      ) : null}
+      <div class="flex min-w-0 flex-[1_1_16rem] flex-col items-start gap-4 break-words tracking-[var(--tracking-typography-0)]">
+        {title.length > 0 ? (
+          <p class="text-body-large w-full font-semibold">
+            {title.map((run) => (
+              <RichRun run={run} />
+            ))}
+          </p>
+        ) : null}
+        {lines.length > 0 ? (
+          <p class="text-notes w-full font-normal">
+            {lines.map((line, index) => (
+              <Fragment>
+                {index > 0 ? <br /> : null}
+                {line.map((run) => (
+                  <RichRun run={run} />
+                ))}
+              </Fragment>
+            ))}
+          </p>
+        ) : null}
+      </div>
+      {hasButton ? (
+        <a
+          href={buttonHref}
+          {...externalLinkAttrs(buttonHref)}
+          class="text-notes text-main-cinza-700 border-main-cinza-700 hover:bg-main-cinza-700 focus-visible:ring-main-teal-400 focus-visible:ring-offset-main-cinza-100 inline-flex h-14 shrink-0 items-center justify-center gap-2 rounded-[40px] border border-solid py-2 pr-6 pl-8 font-medium whitespace-nowrap tracking-[var(--tracking-typography-0)] transition-colors hover:text-neutral-bw-white focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+        >
+          {buttonLabel}
+          {isExternalHref(buttonHref) ? <span class="sr-only">(abre numa nova janela)</span> : null}
+          <ArrowLargeRight class="size-8 shrink-0" aria-hidden="true" focusable="false" />
+        </a>
+      ) : null}
+    </div>
+  ) : null
+}

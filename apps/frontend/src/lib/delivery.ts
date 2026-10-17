@@ -19,6 +19,7 @@ import {
   type StoredPublication,
   type Unusable,
 } from "./publications";
+import { storedNomiaContent } from "./nomia-content";
 import { frontendBindings } from "./runtime";
 import {
   defaultLanguage,
@@ -164,7 +165,13 @@ const spacingSizes = z.array(z.object({ slug: z.string(), size: z.string() }));
 const colors = z.array(z.object({ slug: z.string(), color: z.string() }));
 const homePublication = z.object({
   settings: z.object({ title: z.string(), description: z.string() }),
-  page: z.object({ title: z.string(), content: z.string(), hasVideoHero: z.boolean() }),
+  page: z.object({
+    title: z.string(),
+    content: z.string(),
+    hasVideoHero: z.boolean(),
+    // Built with Nomia's blocks. Optional, so rows stored before it still serve.
+    nomia: storedNomiaContent.optional(),
+  }),
   spacingSizes,
   colors,
 });
@@ -181,6 +188,8 @@ const entryPublication = z.object({
   date: z.string(),
   featuredImage: image,
   hasVideoHero: z.boolean(),
+  // Built with Nomia's blocks. Optional, so rows stored before it still serve.
+  nomia: storedNomiaContent.optional(),
   spacingSizes,
   colors,
 });
@@ -523,6 +532,30 @@ export async function pageChrome(siteOrigin?: string): Promise<SiteChrome | null
   } catch (error) {
     if (!(error instanceof StoreFailure)) throw error;
     console.error(`Delivery: the site chrome can't be served (store): ${error.message}`);
+    return null;
+  }
+}
+
+/**
+ * The stored design presets (GQ Design's palette and spacing), for a page that
+ * wasn't served with its own, or null without them. In `pnpm dev` without a
+ * store they are read from the CMS, as the chrome is.
+ */
+export async function pageDesign(): Promise<DesignPresets | null> {
+  const store = await boundStore();
+  if (!store) {
+    // Only `pnpm dev` reads the CMS for them: a built Frontend without its
+    // store serves no CMS content.
+    if (!import.meta.env.DEV) return null;
+    const design = await getDesignPresets();
+    return design.kind === "found" ? design.content : null;
+  }
+  try {
+    const stored = usable(await store.read(DESIGN, parseDesign));
+    return stored?.state === "published" ? stored.content : null;
+  } catch (error) {
+    if (!(error instanceof StoreFailure)) throw error;
+    console.error(`Delivery: the design presets can't be served (store): ${error.message}`);
     return null;
   }
 }

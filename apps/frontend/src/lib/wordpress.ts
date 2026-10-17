@@ -1,5 +1,6 @@
 import { z } from "astro/zod";
 import ops from "../../../../gq.ops.json";
+import { nomiaContent, type NomiaContent } from "./nomia-content";
 import { frontendBindings } from "./runtime";
 import { defaultLanguage, languageSubject, multilingual, type SiteLanguage } from "./site-language";
 import { hasVideoHero, parseWordPressBlocks, renderWordPressBlocks } from "./wp-block-renderer";
@@ -18,6 +19,8 @@ export interface WordPressPost {
   date: string;
   featuredImage: WordPressImage | null;
   hasVideoHero: boolean;
+  /** Built with Nomia's blocks: rendered by their components on a visit. */
+  nomia?: NomiaContent;
 }
 
 export interface WordPressMenuItem {
@@ -42,7 +45,7 @@ export interface HomeContent extends DesignPresets {
   /** The front page's WordPress entry (WPGraphQL's global id), if WordPress gave it. */
   nodeId: string | null;
   settings: WordPressSettings;
-  page: { title: string; content: string; hasVideoHero: boolean };
+  page: { title: string; content: string; hasVideoHero: boolean; nomia?: NomiaContent };
   /** WordPress failed on the blocks, so this is the page without them. */
   blocksOmitted: boolean;
 }
@@ -140,6 +143,8 @@ const homeData = z.object({
         content: z.string().nullable(),
         // Left out when read without blocks.
         blocks: z.unknown().optional(),
+        wpBlocksJson: z.string().nullable().optional(),
+        nomiaPageBackgroundColor: z.string().nullable().optional(),
       }),
       z.object({ __typename: z.string().refine((typename) => typename !== "Page") }),
     ])
@@ -162,6 +167,9 @@ const pageEntry = z.object({
   featuredImage: imageEdge,
   // Left out when read without blocks.
   blocks: z.unknown().optional(),
+  wpBlocksJson: z.string().nullable().optional(),
+  // Pages only (nomia-blocks' page setting).
+  nomiaPageBackgroundColor: z.string().nullable().optional(),
 });
 const postEntry = pageEntry.extend({ excerpt: z.string().nullable(), date: z.string().nullable() });
 
@@ -240,6 +248,8 @@ const homeQuery = /* GraphQL */ `
         content
         blocks(attributes: true, htmlContent: true, dynamicContent: true, postTemplate: false)
           @include(if: $withBlocks)
+        wpBlocksJson @include(if: $withBlocks)
+        nomiaPageBackgroundColor @include(if: $withBlocks)
         isFrontPage
       }
     }
@@ -271,6 +281,8 @@ const languageHomeQuery = /* GraphQL */ `
         content
         blocks(attributes: true, htmlContent: true, dynamicContent: true, postTemplate: false)
           @include(if: $withBlocks)
+        wpBlocksJson @include(if: $withBlocks)
+        nomiaPageBackgroundColor @include(if: $withBlocks)
         isFrontPage
       }
     }
@@ -357,6 +369,7 @@ function entryQueryText(translated: boolean) {
       content
       blocks(attributes: true, htmlContent: true, dynamicContent: true, postTemplate: false)
         @include(if: $withBlocks)
+      wpBlocksJson @include(if: $withBlocks)
       uri${languageFields}
       date
       status
@@ -375,6 +388,8 @@ function entryQueryText(translated: boolean) {
       content
       blocks(attributes: true, htmlContent: true, dynamicContent: true, postTemplate: false)
         @include(if: $withBlocks)
+      wpBlocksJson @include(if: $withBlocks)
+      nomiaPageBackgroundColor @include(if: $withBlocks)
       uri${languageFields}
       status
       isRestricted
@@ -477,6 +492,11 @@ function normalizePost(post: RawEntry): WordPressPost {
     featuredImage: normalizeImage(post.featuredImage),
     hasVideoHero: hasVideoHero(parseWordPressBlocks(post.blocks)),
   };
+}
+
+/** `{ nomia }` for content built with Nomia's blocks, else nothing (the key left out). */
+function withNomia(nomia: NomiaContent | undefined): { nomia?: NomiaContent } {
+  return nomia ? { nomia } : {};
 }
 
 /** A read WordPress didn't complete; becomes an Unavailable delivery. */
@@ -681,6 +701,7 @@ export async function getHomeContent(
             title: node.title ?? "",
             content: containsVideoHero ? renderWordPressBlocks(blocks) : (node.content ?? ""),
             hasVideoHero: containsVideoHero,
+            ...withNomia(nomiaContent(node.wpBlocksJson, node.nomiaPageBackgroundColor)),
           },
           blocksOmitted,
           spacingSizes: data.designTokens.spacingSizes,
@@ -713,6 +734,7 @@ export async function getEntryByUri(uri: string): Promise<Delivery<EntryContent>
         ...normalized,
         content: containsVideoHero ? renderWordPressBlocks(blocks) : normalized.content,
         hasVideoHero: containsVideoHero,
+        ...withNomia(nomiaContent(post.wpBlocksJson, post.nomiaPageBackgroundColor)),
         blocksOmitted,
         modifiedAt: cmsTime(post.modifiedGmt),
         spacingSizes: data.designTokens.spacingSizes,

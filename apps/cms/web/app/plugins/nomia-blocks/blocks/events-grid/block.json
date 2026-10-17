@@ -1,0 +1,98 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/events-grid",
+	"title": "Grelha de eventos",
+	"category": "getquick-nomia",
+	"icon": "calendar-alt",
+	"description": "Grelha de eventos com um cartão em destaque e cartões compactos, ligados à página de cada evento.",
+	"textdomain": "getquick-nomia-blocks",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "events-grid"
+		},
+		"events": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object",
+				"required": [
+					"title"
+				],
+				"properties": {
+					"title": {
+						"type": "string",
+						"default": ""
+					},
+					"slug": {
+						"type": "string",
+						"default": ""
+					},
+					"href": {
+						"type": "string",
+						"default": ""
+					},
+					"date": {
+						"type": "string",
+						"default": ""
+					},
+					"imageId": {
+						"type": "number"
+					},
+					"imageUrl": {
+						"type": "string",
+						"default": ""
+					},
+					"imageAlt": {
+						"type": "string",
+						"default": ""
+					},
+					"startDate": {
+						"type": "string",
+						"default": ""
+					},
+					"endDate": {
+						"type": "string",
+						"default": ""
+					}
+				}
+			}
+		},
+		"eventBasePath": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"events": [
+				{
+					"title": "Evento de teste",
+					"slug": "evento-de-teste",
+					"date": "2026-01-01",
+					"startDate": "2026-02-01",
+					"endDate": null,
+					"imageUrl": "/images/hero-carousel/economia-circular.jpg",
+					"imageAlt": "Evento"
+				}
+			]
+		}
+	},
+	"editorScript": "getquick-nomia-blocks-editor",
+	"editorStyle": "getquick-nomia-blocks-editor-style"
+}

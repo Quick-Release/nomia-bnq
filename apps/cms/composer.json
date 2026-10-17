@@ -110,6 +110,9 @@
       "pint config scripts tests web/app/mu-plugins/*.php web/index.php web/wp-config.php",
       "phpcbf"
     ],
-    "test": "pest"
+    "test": [
+      "pest",
+      "pest --configuration=web/app/plugins/nomia-blocks/phpunit.xml.dist --test-directory=web/app/plugins/nomia-blocks/tests"
+    ]
   }
 }

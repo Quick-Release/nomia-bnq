@@ -1,0 +1,183 @@
+---
+/**
+ * Indicadores — teaser em três colunas (Figma 40017178:6344).
+ * https://www.figma.com/design/gWqEtVBfoWbYMHQh1rW6s3/Nomia-%E2%80%94-Website--2-?node-id=40017178-6344
+ */
+import { INDICADORES_ARCHIVE_PATH } from "../../../config/barometro-results";
+
+export type NomiaIndicadoresCard = {
+  imageSrc: string;
+  imageAlt: string;
+  title: string;
+  description: string;
+  href?: string;
+  nodeId?: string;
+  imageNodeId?: string;
+  textNodeId?: string;
+  titleNodeId?: string;
+  descNodeId?: string;
+  ctaNodeId?: string;
+};
+
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  ctaHref?: string;
+  ctaLabel?: string;
+  cards?: readonly NomiaIndicadoresCard[];
+}
+
+const defaultCards: readonly NomiaIndicadoresCard[] = [
+  {
+    imageSrc: "/images/home/indicators/produtividade-recursos.jpg",
+    imageAlt: "Água a correr sobre rochas cobertas de musgo.",
+    title: "Produtividade dos recursos",
+    description: "Mede o valor económico gerado por unidade de material consumido.",
+    nodeId: "40017178:6355",
+    imageNodeId: "40017178:6356",
+    textNodeId: "40017178:6357",
+    titleNodeId: "40017178:6358",
+    descNodeId: "40017178:6359",
+    ctaNodeId: "40017178:6360",
+  },
+  {
+    imageSrc: "/images/home/indicators/taxa-circular.jpg",
+    imageAlt: "Tocos de madeira cortada em secção.",
+    title: "Taxa de utilização circular de materiais",
+    description:
+      "Indica a proporção de materiais reciclados que regressam à economia, reduzindo a necessidade de extração de matérias-primas primárias.",
+    nodeId: "40017178:6363",
+    imageNodeId: "40017178:6364",
+    textNodeId: "40017178:6365",
+    titleNodeId: "40017178:6366",
+    descNodeId: "40017178:6367",
+    ctaNodeId: "40017178:6368",
+  },
+  {
+    imageSrc: "/images/home/indicators/producao-residuos.jpg",
+    imageAlt: "Superfície de água com reflexos de luz.",
+    title: "Produção de resíduos",
+    description:
+      "Acompanha a evolução da quantidade de resíduos gerados por setor, território ou habitante.",
+    nodeId: "40017178:6371",
+    imageNodeId: "40017178:6372",
+    textNodeId: "40017178:6373",
+    titleNodeId: "40017178:6374",
+    descNodeId: "40017178:6375",
+    ctaNodeId: "40017178:6376",
+  },
+];
+
+const {
+  eyebrow = "Indicadores",
+  heading = "A monitorização é essencial para perceber se a transição para a economia circular está a gerar resultados.",
+  ctaHref = INDICADORES_ARCHIVE_PATH,
+  ctaLabel = "Todos os Indicadores",
+  cards = defaultCards,
+} = Astro.props;
+---
+
+<section
+  class="bg-neutral-bw-white w-full overflow-x-hidden"
+  aria-labelledby="indicadores-heading"
+  data-node-id="40017178:6344"
+  data-nomia-header-surface="light"
+>
+  <div
+    class="mx-auto flex w-full max-w-[1920px] flex-col items-center gap-14 px-4 py-20 md:gap-16 md:px-16 md:py-28 lg:gap-[3.5rem] lg:py-32"
+  >
+    <div class="mx-auto flex w-full max-w-[36rem] flex-col items-center gap-10 text-center" data-node-id="40017178:6345">
+      <div class="flex w-full flex-col items-center gap-10" data-node-id="40017178:6346">
+        <div class="flex items-center gap-1" data-node-id="40017178:6347">
+          <span class="text-main-ciano-400 inline-flex size-6 shrink-0" aria-hidden="true">
+            <svg class="size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12 4v16M4 12h16M6.34 6.34l11.32 11.32M17.66 6.34L6.34 17.66"
+                stroke="currentColor"
+                stroke-width="1.35"
+                stroke-linecap="round"
+              />
+            </svg>
+          </span>
+          <p
+            class="text-body text-main-ciano-400 font-primary font-medium tracking-[var(--tracking-typography-0)] uppercase"
+            data-node-id="40017178:6349"
+          >
+            {eyebrow}
+          </p>
+        </div>
+
+        <h2
+          id="indicadores-heading"
+          class="text-h4 text-main-cinza-700 font-primary w-full font-semibold leading-[var(--typography-line-height-f)] tracking-[var(--tracking-typography-0)]"
+          data-node-id="40017178:6350"
+        >
+          {heading}
+        </h2>
+      </div>
+
+      <a
+        href={ctaHref}
+        class="text-notes text-main-cinza-700 font-primary border-main-cinza-700 hover:bg-main-cinza-700 focus-visible:ring-main-teal-400 inline-flex items-center justify-center gap-2 rounded-[40px] border border-solid px-4 py-2 font-medium tracking-[var(--tracking-typography-0)] transition-colors hover:text-neutral-bw-white focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-bw-white focus-visible:outline-none"
+        data-node-id="40017178:6351"
+      >
+        {ctaLabel}
+      </a>
+    </div>
+
+    <div
+      class="grid w-full max-w-[120rem] grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-8"
+      data-node-id="40017178:6354"
+    >
+      {
+        cards.map((card) => (
+          <article
+            class="flex h-full w-full max-w-[36rem] flex-col items-center gap-4 justify-self-center lg:max-w-none"
+            data-node-id={card.nodeId}
+          >
+            <div
+              class="relative aspect-[576/416] w-full shrink-0 overflow-hidden rounded-lg"
+              data-node-id={card.imageNodeId}
+            >
+              <img
+                src={card.imageSrc}
+                alt={card.imageAlt}
+                class="pointer-events-none absolute inset-0 size-full max-w-none object-cover"
+                loading="lazy"
+                decoding="async"
+                width={576}
+                height={416}
+              />
+            </div>
+
+            <div
+              class="text-main-cinza-700 flex flex-1 flex-col items-center gap-0 text-center tracking-[var(--tracking-typography-0)]"
+              data-node-id={card.textNodeId}
+            >
+              <h3
+                class="text-subtitle text-main-cinza-700 font-primary w-full font-semibold leading-[var(--typography-line-height-g)]"
+                data-node-id={card.titleNodeId}
+              >
+                {card.title}
+              </h3>
+              <p
+                class="text-body text-main-cinza-700 font-primary mt-0 w-full font-normal leading-[var(--typography-line-height-i)]"
+                data-node-id={card.descNodeId}
+              >
+                {card.description}
+              </p>
+            </div>
+
+            <a
+              href={card.href ?? ctaHref}
+              class="text-notes text-main-cinza-700 font-primary hover:text-main-teal-500 focus-visible:ring-main-teal-400 mt-auto rounded-[40px] px-4 py-2 font-medium tracking-[var(--tracking-typography-0)] transition-colors hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-bw-white focus-visible:outline-none"
+              data-node-id={card.ctaNodeId}
+            >
+              Saber Mais
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

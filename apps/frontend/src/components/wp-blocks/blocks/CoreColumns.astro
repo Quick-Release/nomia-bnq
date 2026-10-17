@@ -1,0 +1,26 @@
+---
+import { WP_PDF_EMBED_PREVIEW } from "../../../lib/wp-content-classes";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { wpColumnWrapper, wpColumnsWrapper } from "../../../lib/wp-columns";
+
+interface Props {
+  block: WpParsedBlock;
+  wrapped: boolean;
+}
+
+const { block, wrapped } = Astro.props;
+const wrapper =
+  block.blockName === "core/column"
+    ? wpColumnWrapper(block.attrs)
+    : { ...wpColumnsWrapper(block.attrs), style: undefined };
+---
+
+{wrapped ? (
+  <div class:list={wrapper.classNames} id={wrapper.id} style={wrapper.style}>
+    <slot />
+  </div>
+) : (
+  <div class:list={["contents", WP_PDF_EMBED_PREVIEW]}>
+    <slot />
+  </div>
+)}

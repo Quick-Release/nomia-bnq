@@ -1,0 +1,127 @@
+---
+/**
+ * Bioeconomia Sustentável — intro + dual cards (Figma 40017244:13360)
+ * https://www.figma.com/design/gWqEtVBfoWbYMHQh1rW6s3/Nomia-%E2%80%94-Website--2-?node-id=40017244-13360
+ */
+export type BioeconomiaSustentavelIntroCard = {
+	title: string;
+	body: string;
+	imageSrc: string;
+	imageAlt?: string;
+	headingId: string;
+};
+
+interface Props {
+	eyebrow?: string;
+	heading?: string;
+	cards?: readonly BioeconomiaSustentavelIntroCard[];
+}
+
+const defaultCards: readonly BioeconomiaSustentavelIntroCard[] = [
+	{
+		title: "O que é?",
+		body:
+			"Quando é sustentável, a bioeconomia não se limita a substituir recursos fósseis por recursos biológicos. A sua aplicação deve garantir que a produção, extração, transformação e utilização da biomassa respeitam os limites naturais dos ecossistemas terrestres e marinhos.",
+		imageSrc: "/images/bioeconomia-sustentavel/card-o-que-e.jpg",
+		headingId: "bioeconomia-card-o-que-e",
+	},
+	{
+		title: "Porque é importante?",
+		body:
+			"Para Portugal, esta transição representa uma oportunidade particular. O país tem potencial associado às fileiras agrícola, florestal, das pescas e da aquicultura, bem como à sua dimensão marítima e à capacidade científica e tecnológica existente.",
+		imageSrc: "/images/bioeconomia-sustentavel/card-porque-importante.jpg",
+		headingId: "bioeconomia-card-porque",
+	},
+];
+
+const {
+	eyebrow = "Bioeconomia sustentável",
+	heading = "Modelo económico baseado na utilização de recursos biológicos renováveis",
+	cards = defaultCards,
+} = Astro.props;
+
+const headingId = "nomia-bioeconomia-sustentavel-intro-heading";
+---
+
+<section
+	class="bg-neutral-bw-white text-main-cinza-700 w-full"
+	data-nomia-header-surface="light"
+	aria-labelledby={headingId}
+	data-node-id="40017244:13360"
+>
+	<div
+		class="font-primary mx-auto flex w-full max-w-[1920px] flex-col items-center gap-14 px-4 py-16 md:gap-16 md:px-16 md:py-28"
+	>
+		<header class="flex w-full max-w-[36rem] flex-col items-center gap-10 text-center">
+			<div
+				class="text-main-botnico-400 flex items-center gap-1 text-body font-medium leading-[var(--typography-line-height-i)] tracking-[var(--tracking-typography-0)] uppercase"
+				data-node-id="40017244:13362"
+			>
+				<span class="inline-flex size-6 shrink-0 items-center justify-center" aria-hidden="true" data-node-id="40017244:13363">
+					<svg viewBox="0 0 24 24" fill="none" class="size-6" xmlns="http://www.w3.org/2000/svg">
+						<path
+							d="M12 3v18M3 12h18M5.64 5.64l12.72 12.72M18.36 5.64L5.64 18.36"
+							stroke="currentColor"
+							stroke-width="1.35"
+							stroke-linecap="round"></path>
+					</svg>
+				</span>
+				<span class="whitespace-nowrap" data-node-id="40017244:13364">{eyebrow}</span>
+			</div>
+			<h2
+				id={headingId}
+				class="text-h4 font-semibold leading-[var(--typography-line-height-f)] tracking-[var(--tracking-typography-0)]"
+				data-node-id="40017244:13365"
+			>
+				{heading}
+			</h2>
+		</header>
+
+		<div
+			class="grid w-full max-w-[1504px] grid-cols-1 gap-8 md:grid-cols-2 md:gap-8"
+			data-node-id="40017244:13366"
+		>
+			{
+				cards.map((card, index) => (
+					<article
+						class:list={[
+							"relative isolate flex min-h-[22rem] flex-col items-start overflow-hidden rounded-lg p-10 sm:min-h-[28rem] lg:min-h-[46rem]",
+							index === 0 && "shadow-[0_4px_4px_rgba(0,0,0,0.25)]",
+						]}
+						data-node-id={index === 0 ? "40017244:13367" : "40017244:13371"}
+						aria-labelledby={card.headingId}
+					>
+						<div class="pointer-events-none absolute inset-0 rounded-lg" aria-hidden="true">
+							<img
+								src={card.imageSrc}
+								alt={card.imageAlt ?? ""}
+								class="absolute inset-0 size-full max-w-none object-cover"
+								loading="lazy"
+								decoding="async"
+							/>
+							<div class="bg-main-cinza-700/80 absolute inset-0 rounded-lg"></div>
+						</div>
+						<div
+							class="relative z-10 flex max-w-[383px] flex-col gap-4 text-neutral-bw-white tracking-[var(--tracking-typography-0)]"
+							data-node-id={index === 0 ? "40017244:13368" : "40017244:13372"}
+						>
+							<h3
+								id={card.headingId}
+								class="text-h4 font-semibold leading-[var(--typography-line-height-f)]"
+								data-node-id={index === 0 ? "40017244:13369" : "40017244:13373"}
+							>
+								{card.title}
+							</h3>
+							<p
+								class="text-body font-normal leading-[var(--typography-line-height-i)]"
+								data-node-id={index === 0 ? "40017244:13370" : "40017244:13374"}
+							>
+								{card.body}
+							</p>
+						</div>
+					</article>
+				))
+			}
+		</div>
+	</div>
+</section>

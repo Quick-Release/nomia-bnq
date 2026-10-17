@@ -1,0 +1,116 @@
+---
+/**
+ * Barómetro — resultados em destaque · Figma node 40017128:4198
+ * https://www.figma.com/design/gWqEtVBfoWbYMHQh1rW6s3/Nomia-%E2%80%94-Website--2-?node-id=40017128-4198
+ */
+import {
+  DEFAULT_BAROMETRO_RESULTS,
+  type BarometroResultCard,
+} from "../../../config/barometro-results";
+
+interface Props {
+  results?: readonly BarometroResultCard[];
+}
+
+const { results = DEFAULT_BAROMETRO_RESULTS } = Astro.props;
+---
+
+<section
+  id="barometro"
+  class="bg-main-ciano-700 w-full"
+  aria-labelledby="barometro-heading"
+  data-node-id="40017128:4198"
+>
+  <div class="mx-auto w-full max-w-[1920px] px-4 py-12 md:px-16 md:py-16">
+    <div
+      class="bg-monochrome-light-100 font-primary flex w-full flex-col gap-8 rounded-2xl p-8 md:flex-row md:items-start md:gap-8 md:p-16"
+      data-nomia-header-surface="light"
+    >
+      <div
+        class="flex min-w-0 flex-1 flex-col gap-10 text-main-cinza-700"
+        data-node-id="40017128:4199"
+      >
+        <div class="flex items-center gap-1" data-node-id="40017128:4200">
+          <span class="text-main-ciano-400 inline-flex size-6 shrink-0" aria-hidden="true">
+            <svg class="size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12 4v16M4 12h16M6.34 6.34l11.32 11.32M17.66 6.34L6.34 17.66"
+                stroke="currentColor"
+                stroke-width="1.35"
+                stroke-linecap="round"
+              />
+            </svg>
+          </span>
+          <p
+            class="text-body text-main-ciano-400 font-medium tracking-[var(--tracking-typography-0)]"
+            data-node-id="40017128:4202"
+          >
+            ECONOMIA
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-4" data-node-id="40017128:4203">
+          <h2
+            id="barometro-heading"
+            class="text-h4 font-semibold leading-[var(--typography-line-height-f)] tracking-[var(--tracking-typography-0)]"
+            data-node-id="40017128:4204"
+          >
+            Barómetro
+          </h2>
+          <p
+            class="text-subtitle font-normal leading-[var(--typography-line-height-g)] tracking-[var(--tracking-typography-0)]"
+            data-node-id="40017128:4205"
+          >
+            Promovendo a coordenação, o desenvolvimento e a divulgação da atividade estatística nacional.
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="flex min-h-0 w-full flex-col gap-8 md:min-h-[208px] md:flex-1 md:flex-row md:gap-8 lg:max-w-[968px]"
+        data-node-id="40017128:4206"
+      >
+        {
+          results.map(({ year, value, unit, description, href, nodeId }) => (
+            <a
+              href={href}
+              class="text-main-cinza-700 focus-visible:ring-main-teal-400 group flex min-w-0 flex-1 flex-col gap-4 no-underline transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-monochrome-light-100 focus-visible:outline-none"
+              data-node-id={nodeId}
+            >
+              <div
+                class="bg-neutral-bw-white inline-flex w-fit items-center gap-1 rounded-[32px] px-2 py-1"
+              >
+                <span class="text-main-ciano-400 inline-flex size-4 shrink-0" aria-hidden="true">
+                  <svg class="size-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M8 2v12M2 8h12M3.5 3.5l9 9m0-9-9 9"
+                      stroke="currentColor"
+                      stroke-width="1.2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </span>
+                <span class="text-extra text-main-ciano-400 font-medium leading-[var(--typography-line-height-j)] tracking-[var(--tracking-typography-0)]">
+                  {year}
+                </span>
+              </div>
+
+              <div class="flex flex-wrap items-baseline gap-2 whitespace-nowrap">
+                <span class="text-h2 font-semibold leading-[var(--typography-line-height-d)] tracking-[var(--tracking-typography-0)]">
+                  {value}
+                </span>
+                <span class="text-subtitle font-semibold leading-[var(--typography-line-height-g)] tracking-[var(--tracking-typography-0)]">
+                  {unit}
+                </span>
+              </div>
+
+              <p class="text-body font-normal leading-[var(--typography-line-height-i)] tracking-[var(--tracking-typography-0)] min-w-0 flex-1 whitespace-normal">
+                {description}
+              </p>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,141 @@
+---
+/**
+ * Full-bleed hero with background image + title + subtitle (no carousel).
+ * Visual parity with a single slide in PageHeroSlider.tsx.
+ */
+import {
+	externalLinkAttrs,
+	pageHeroClasses,
+	pageHeroContentClass,
+	pageHeroCopyStackClass,
+	pageHeroViewportClass,
+	resolvePageHeroHeight,
+} from "./pageHeroShared";
+import type { PageHeroContent, PageHeroPadding } from "./pageHeroShared";
+import { pageHeroTextStyle, resolvePageHeroTextAlign } from "../../lib/page-hero-typography";
+import type { PageHeroTextAlign, PageHeroTextTypography } from "../../lib/page-hero-typography";
+
+interface Props extends PageHeroContent {
+	imageSrc?: string;
+	imageAlt?: string;
+	/** Named height step ("xs" | "s" | "m" | "l" | "xl"); legacy "full" / "half" still resolve. */
+	heroHeight?: string;
+	/** Optional per-text typography overrides from the Gutenberg block. */
+	titleTypography?: PageHeroTextTypography;
+	subtitleTypography?: PageHeroTextTypography;
+	/** Horizontal placement of the copy stack; defaults to the left. */
+	textAlign?: PageHeroTextAlign;
+	/** Named vertical padding steps; "default" keeps the height step's padding. */
+	paddingTop?: PageHeroPadding;
+	paddingBottom?: PageHeroPadding;
+}
+
+const {
+	imageSrc,
+	imageAlt = "",
+	title,
+	subtitle,
+	cta,
+	heroHeight,
+	titleTypography,
+	subtitleTypography,
+	textAlign,
+	paddingTop,
+	paddingBottom,
+} = Astro.props;
+const hasImage = Boolean(imageSrc);
+const titleStyle = pageHeroTextStyle(titleTypography);
+const subtitleStyle = pageHeroTextStyle(subtitleTypography);
+/**
+ * The subtitle reads as a short description and may run to several paragraphs,
+ * one per line. A single paragraph keeps its original `<p>`; several share one
+ * styled wrapper so size, colour and line height apply to all of them.
+ */
+const subtitleParagraphs = (subtitle ?? "")
+	.split(/\r?\n/)
+	.map((paragraph) => paragraph.trim())
+	.filter(Boolean);
+const subtitleClass = `text-subtitle ${pageHeroClasses.subtitle}`.trim();
+const resolvedHeroHeight = resolvePageHeroHeight(heroHeight);
+const headingId = "nomia-page-hero-heading";
+
+const copyStackClass = pageHeroCopyStackClass(resolvePageHeroTextAlign(textAlign));
+const viewportClass = pageHeroViewportClass(resolvedHeroHeight);
+const contentClass = pageHeroContentClass(resolvedHeroHeight, {
+	top: paddingTop,
+	bottom: paddingBottom,
+});
+---
+
+<section
+	class={pageHeroClasses.section}
+	aria-labelledby={headingId}
+	data-node-id="40017244:13001"
+>
+	<div class={viewportClass}>
+		{/*
+		 * Hidden from assistive technology unless the image carries a
+		 * description. The editor stores the media library's alt text on the
+		 * block, so hiding the layer unconditionally meant that description
+		 * was collected and then never announced; an image with no alt is
+		 * decorative and stays hidden.
+		 */}
+		<div
+			class:list={[pageHeroClasses.mediaLayer, !hasImage && "bg-main-teal-600"]}
+			aria-hidden={hasImage && imageAlt ? undefined : "true"}
+		>
+			{hasImage ? (
+				<>
+					<img
+						src={imageSrc}
+						alt={imageAlt}
+						class={pageHeroClasses.image}
+						loading="eager"
+						fetchpriority="high"
+					/>
+					<div class={pageHeroClasses.overlay}></div>
+				</>
+			) : null}
+		</div>
+
+		<div class={contentClass}>
+			<div class={copyStackClass}>
+				<h1
+					id={headingId}
+					class={`text-h2 ${pageHeroClasses.title}`.trim()}
+					style={titleStyle}
+				>
+					{title}
+				</h1>
+				{
+					subtitleParagraphs.length > 1 ? (
+						<div
+							class={`${subtitleClass} flex flex-col gap-4`}
+							style={subtitleStyle}
+							data-page-hero-subtitle
+						>
+							{subtitleParagraphs.map((paragraph) => (
+								<p>{paragraph}</p>
+							))}
+						</div>
+					) : subtitleParagraphs.length === 1 ? (
+						<p class={subtitleClass} style={subtitleStyle} data-page-hero-subtitle>
+							{subtitleParagraphs[0]}
+						</p>
+					) : null
+				}
+				{
+					cta ? (
+						<a
+							href={cta.href}
+							{...externalLinkAttrs(cta.href)}
+							class={pageHeroClasses.cta}
+						>
+							{cta.label}
+						</a>
+					) : null
+				}
+			</div>
+		</div>
+	</div>
+</section>
