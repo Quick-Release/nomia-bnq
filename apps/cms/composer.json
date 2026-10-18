@@ -63,7 +63,7 @@
     "wp-plugin/safe-svg": "^2.5",
     "wp-plugin/simple-history": "^5.34",
     "wp-plugin/wp-graphql": "^2.23",
-    "wp-plugin/wpgraphql-blocks": "^2.2",
+    "wp-plugin/wpgraphql-blocks": "2.2.0",
     "wp-theme/twentytwentyfive": "^1.0"
   },
   "require-dev": {
@@ -110,6 +110,10 @@
       "pint config scripts tests web/app/mu-plugins/*.php web/index.php web/wp-config.php",
       "phpcbf"
     ],
-    "test": "pest"
+    "test": "pest",
+    "patch:dependencies": "@php scripts/patch-dependencies.php",
+    "post-autoload-dump": [
+      "@patch:dependencies"
+    ]
   }
 }

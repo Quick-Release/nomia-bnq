@@ -3,8 +3,10 @@
 ## Root cause (2026-10-19)
 
 `wpgraphql-blocks` 2.2.0 does unchecked array/property access in
-`plugin.php` (lines 52, 56, 60, 372, 387) and `includes/utils.php`
-(286, 289, 297), emitting a PHP warning for every block on every request.
+`plugin.php` and `includes/utils.php` (production log showed
+utils.php 286/289/297 among others; the local inventory found a strictly
+larger set — see apps/cms/patches/wpgraphql-blocks/README.md),
+emitting a PHP warning for every block on every request.
 Production PHP-FPM runs `display_errors=Off, log_errors=On`, so each warning
 travels the FastCGI **stderr** channel (`PHP message: PHP Warning ...` in the
 nginx site error log). On block-heavy entries that wave overflows nginx's
@@ -37,12 +39,27 @@ unaffected.
 
 Delete `web/app/mu-plugins/gq-silence-low-severity.php` on the server.
 
-## Durable fix (follow-up)
+## Durable fix (done, 2026-10-17)
 
-Patch the plugin's unchecked access (guard with `??`/`isset`) — 2.2.0 is the
-latest upstream release, so a fix requires a composer patch. Because plugin
-pins come from the `@getquick/site` blueprint, decide whether the patch
-mechanism belongs in `@getquick/site` (Quick-Release/gq-site) or as a
-site-local `composer.json` patches entry. The stderr pressure could also be
-softened with a larger nginx `fastcgi_buffer_size`, but that only delays the
-overflow; it is not a fix on its own.
+`apps/cms/patches/wpgraphql-blocks/2.2.0-quiet-unsafe-access.patch` guards
+every unchecked access site the inventory found (see the patch README for the
+full list and verification). Verified locally: 4043 warnings → 0 on the same
+five-query gate, response payload md5s byte-identical.
+
+On production it arrives via the deploy extension
+`deploy/ploi/admin.d/20-wpgraphql-blocks-quiet.sh`, which applies the patch
+idempotently from `apps/cms` on every full release and fails the deploy if
+the plugin source drifts out of match. Ship it with a `v*` tag; afterwards
+remove the `gq-silence-low-severity.php` hotfix mu-plugin (its whole job was
+to keep the warnings from reaching stderr) and confirm the error-log delta
+drops to zero with
+`pnpm exec gq sigillo run staging -- node scripts/ops/nomia-502-hotfix/log-audit-remote.mjs`.
+
+## Shared adoption (2026-10-18)
+
+Nomia adopts `@getquick/site` 0.18.2. Composer's post-autoload hook and both
+Ploi deployment paths run the shared dependency patch verifier. The original
+full-release extension is retained for the first rollout as a fallback.
+After a successful deployment, verify patched hashes before removing the
+production silence mu-plugin, then audit fresh real GraphQL requests without
+suppression. The patch itself is now blueprint-managed and must be retained.
