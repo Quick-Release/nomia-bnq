@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.3.0 - 2026-10-18
+
+Previous release: v0.2.2
+
+- 2284309 refactor(frontend): keep the blueprint's Layout and global.css
+- ebebfde feat: take Nomia's colors from GQ Design's palette
+- c2b667b feat(frontend): render Nomia's blocks from the publication store
+- 8d488aa feat(cms): migrate the nomia-blocks plugin from bioeconomia.pt
+
 ## v0.2.2 - 2026-10-18
 
 Previous release: v0.2.1
