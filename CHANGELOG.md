@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.2.1 - 2026-10-18
+
+Previous release: v0.2.0
+
+- 71382a7 fix(cms): adopt shared wpgraphql-blocks patch from site 0.18.2
+- cb67c7d chore(ops): move the local dev admin email to a plus-address that production doesn't use
+- 72f863d chore(cms): page-run import tooling and remote probes
+- 7dfe71d chore(cms): hotfix production 502s from the wpgraphql-blocks stderr flood
+- 68f08de chore(cms): add tooling for the nomia-admin content migration
+- 6d22ce0 chore(cms): update WordPress core to 7.1.3 and plugins
+
 ## v0.2.0 - 2026-10-14
 
 Previous release: v0.1.0
