@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.3.1 - 2026-10-18
+
+Previous release: v0.3.0
+
+- b52f8bd refactor(cms): build nomia-blocks the way GQ Design builds its blocks (#8)
+- 1217ef1 chore(cms): import tooling for the full nomia-admin export
+
 ## v0.3.0 - 2026-10-18
 
 Previous release: v0.2.2
