@@ -4,7 +4,7 @@
 # a repair otherwise; fails the deploy unless both files end up byte-exact with
 # the known patched content (so a partially applied or drifted state fails the
 # deploy loudly instead of half-silencing warnings).
-set -uo pipefail
+set -euo pipefail
 
 plugin="web/app/plugins/wpgraphql-blocks/plugin.php"
 utils="web/app/plugins/wpgraphql-blocks/includes/utils.php"

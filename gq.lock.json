@@ -1,5 +1,5 @@
 {
-  "gq": "0.18.0",
+  "gq": "0.18.2",
   "schemaVersion": 1,
   "files": {
     ".claude/skills": "sha256:e1ff59d80751d8af17631debcc3bc30ecdbec0b20dccded0bffb745fe5cea79c",
@@ -7,11 +7,13 @@
     ".nvmrc": "sha256:73fb1b615e2043a933be1c0895cde4358036acc28d785692509b822aa53c761f",
     ".vite-hooks/pre-commit": "sha256:99b1591232d839e6c384cf368dee093b45899872a4adcc318efb0865c31d9973",
     ".vite-hooks/pre-push": "sha256:0b7c92de7a5c6ec6f3b15d2cd1eeffd28b5e2d7cf1d3ecd06efab1b93ae8f15d",
-    "deploy/ploi/admin.sh": "sha256:1e4cb3fd9f52944f08f8115fa231973387ba41648cbabfe89fdecd68a9935885",
+    "apps/cms/patches/wpgraphql-blocks/2.2.0-quiet-unsafe-access.patch": "sha256:28511dbf2c6700b08ac402f5c78da8a71c4aa319b69584f5bfeb0847a30ad721",
+    "apps/cms/scripts/patch-dependencies.php": "sha256:80d042db7ead44126a160894c80a19df2cd2a4e56036efe76a93d1db5cc9ec25",
+    "deploy/ploi/admin.sh": "sha256:eae0d3635750f8ab9bfb5d283591762f03217e5ee005bc3935953ec7c2b74c84",
     "deploy/ploi/polylang.sh": "sha256:bd520605bef7355495cefbefa554a7c933e0df71df6a39d50c6ae2571e285fa2",
     "docs/adr/README.md": "sha256:7ceb57ced6c1c24592e17265bbebe9e9b8cfc4cc2c527a76972308a6c41950de",
     "docs/agents/README.md": "sha256:2a192cb2025d30c6da279fa2ed9dfeee2b6738af885e42df43dc0596793b6cc0",
-    "docs/agents/domain.md": "sha256:863536e3005d5e296860eb2d89454329bf76fc0bb9036f27cf552ec6838afe09",
+    "docs/agents/domain.md": "sha256:f94403dc0720a415bafa2dedbd05b658100283d3ee04ab4f4183cffd5334ca85",
     "docs/agents/issue-tracker.md": "sha256:afd6852a80185217bd28aa5cbe456bef1e85be25be7bd1fba382d5b8ee428325",
     "docs/agents/triage-labels.md": "sha256:f2b82b4705dad48687e77032df216d5beb6b26ad0cd843ac5280a0e3177e95e6",
     "docs/plans/README.md": "sha256:d9de303575af490445fcc63d5bfca191331eed78f6a16f4bb5426ed5215b96ad",

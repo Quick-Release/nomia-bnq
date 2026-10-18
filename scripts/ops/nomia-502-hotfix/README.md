@@ -54,3 +54,12 @@ remove the `gq-silence-low-severity.php` hotfix mu-plugin (its whole job was
 to keep the warnings from reaching stderr) and confirm the error-log delta
 drops to zero with
 `pnpm exec gq sigillo run staging -- node scripts/ops/nomia-502-hotfix/log-audit-remote.mjs`.
+
+## Shared adoption (2026-10-18)
+
+Nomia adopts `@getquick/site` 0.18.2. Composer's post-autoload hook and both
+Ploi deployment paths run the shared dependency patch verifier. The original
+full-release extension is retained for the first rollout as a fallback.
+After a successful deployment, verify patched hashes before removing the
+production silence mu-plugin, then audit fresh real GraphQL requests without
+suppression. The patch itself is now blueprint-managed and must be retained.
