@@ -1,0 +1,76 @@
+---
+import { WP_CONTENT_PROSE } from "../../lib/wp-content-classes";
+import type { WpParsedBlock } from "../../lib/wp-blocks";
+import type { WpPagePayload } from "../../lib/wp-page-payload";
+import WpBlock from "./WpBlock.astro";
+
+interface Props {
+  blocks: WpParsedBlock[];
+  bare?: boolean;
+  wrapCoreBlocks?: boolean;
+  pageFeaturedImage?: WpPagePayload["featuredImage"];
+}
+
+const { blocks, bare = false, wrapCoreBlocks = false, pageFeaturedImage = null } = Astro.props;
+/** Core Gutenberg body copy sits on the page's white surface, in black. */
+const coreBlockTemplate =
+  "bg-neutral-bw-white text-neutral-bw-black [&_a]:text-main-ciano-500 [&_a]:underline [&_a]:decoration-main-ciano-500/70 [&_a]:underline-offset-4 [&_strong]:text-neutral-bw-black";
+type BlockGroup =
+  | { type: "core"; blocks: WpParsedBlock[] }
+  | { type: "block"; block: WpParsedBlock };
+
+function isCoreContentBlock(block: WpParsedBlock): boolean {
+  return block.blockName === null || block.blockName?.startsWith("core/") === true;
+}
+
+/**
+ * An empty paragraph (or the whitespace between serialized blocks) renders nothing but would
+ * still open a padded white band, so it is dropped before grouping.
+ */
+function isBlankCoreBlock(block: WpParsedBlock): boolean {
+  if (block.blockName !== null && block.blockName !== "core/paragraph") return false;
+  if (block.innerBlocks.length > 0) return false;
+  const text = block.innerHTML.replace(/<[^>]*>/g, "").replace(/&nbsp;|&#160;|\u00a0/g, "");
+  return text.trim() === "";
+}
+
+const groupedBlocks = blocks.reduce<BlockGroup[]>((groups, block) => {
+  if (isBlankCoreBlock(block)) return groups;
+
+  if (!wrapCoreBlocks || !isCoreContentBlock(block)) {
+    groups.push({ type: "block", block });
+    return groups;
+  }
+
+  const previous = groups.at(-1);
+  if (previous?.type === "core") {
+    previous.blocks.push(block);
+  } else {
+    groups.push({ type: "core", blocks: [block] });
+  }
+
+  return groups;
+}, []);
+---
+
+<div class:list={[bare ? "contents" : WP_CONTENT_PROSE]}>
+  {groupedBlocks.map((group, index) => (
+    group.type === "core" ? (
+      <section class={coreBlockTemplate} data-nomia-header-surface="light">
+        <div
+          class:list={[
+            // `flow-root` keeps a floated `alignleft`/`alignright` image inside the band.
+            "mx-auto w-full max-w-[1792px] flow-root px-4 pb-16 md:px-16 md:pb-24",
+            index === 0 ? "pt-28 md:pt-32" : "pt-16 md:pt-24",
+          ]}
+        >
+          {group.blocks.map((block) => (
+            <WpBlock block={block} pageFeaturedImage={pageFeaturedImage} />
+          ))}
+        </div>
+      </section>
+    ) : (
+      <WpBlock block={group.block} pageFeaturedImage={pageFeaturedImage} />
+    )
+  ))}
+</div>

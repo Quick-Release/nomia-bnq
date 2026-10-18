@@ -1,0 +1,103 @@
+---
+import NomiaMapListExplorerSection from "../../map-list-explorer/NomiaMapListExplorerSection.astro";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import type {
+  NomiaMapAudienceId,
+  NomiaMapListItem,
+  NomiaMapRegionId,
+} from "../../../types/nomia-map-list-explorer";
+import { firstArray, mapValid, textOr, wpText as text } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props {
+  block: WpParsedBlock;
+}
+
+type TermAttrs = { id?: unknown; label?: unknown };
+type ItemAttrs = {
+  id?: unknown;
+  title?: unknown;
+  excerpt?: unknown;
+  dateLabel?: unknown;
+  imageId?: unknown;
+  imageSrc?: unknown;
+  imageUrl?: unknown;
+  imageAlt?: unknown;
+  href?: unknown;
+  url?: unknown;
+  regionId?: unknown;
+  audienceIds?: unknown;
+};
+
+const REGION_IDS = new Set(["norte", "centro", "lisboa", "alentejo", "algarve", "acores", "madeira"]);
+const AUDIENCE_IDS = new Set(["empresas", "cidadaos", "investigacao"]);
+
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/map-list">;
+
+function normalizeRegionId(value: unknown): NomiaMapRegionId | null {
+  const id = text(value);
+  return REGION_IDS.has(id) ? (id as NomiaMapRegionId) : null;
+}
+
+function normalizeAudienceId(value: unknown): NomiaMapAudienceId | null {
+  const id = text(value);
+  return AUDIENCE_IDS.has(id) ? (id as NomiaMapAudienceId) : null;
+}
+
+function normalizeRegion(raw: unknown): { id: NomiaMapRegionId; label: string } | null {
+  if (!raw || typeof raw !== "object") return null;
+  const term = raw as TermAttrs;
+  const id = normalizeRegionId(term.id);
+  const label = text(term.label);
+  return id && label ? { id, label } : null;
+}
+
+function normalizeAudience(raw: unknown): { id: NomiaMapAudienceId; label: string } | null {
+  if (!raw || typeof raw !== "object") return null;
+  const term = raw as TermAttrs;
+  const id = normalizeAudienceId(term.id);
+  const label = text(term.label);
+  return id && label ? { id, label } : null;
+}
+
+function normalizeAudienceIds(value: unknown): NomiaMapAudienceId[] {
+  return mapValid(firstArray(value), normalizeAudienceId);
+}
+
+function normalizeItem(raw: unknown): NomiaMapListItem | null {
+  if (!raw || typeof raw !== "object") return null;
+  const item = raw as ItemAttrs;
+  const title = text(item.title);
+  const href = textOr(item.href, item.url);
+  const imageSrc = textOr(item.imageSrc, item.imageUrl);
+  const regionId = normalizeRegionId(item.regionId);
+  const audienceIds = normalizeAudienceIds(item.audienceIds);
+
+  if (!title || !href || !imageSrc || !regionId || audienceIds.length === 0) return null;
+
+  return {
+    id: text(item.id) || title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),
+    title,
+    excerpt: text(item.excerpt),
+    dateLabel: text(item.dateLabel),
+    imageSrc,
+    imageAlt: text(item.imageAlt),
+    href,
+    regionId,
+    audienceIds,
+  };
+}
+
+const regionsRaw = firstArray(attrs.regions);
+const regions = regionsRaw.length ? mapValid(regionsRaw, normalizeRegion) : undefined;
+const audiencesRaw = firstArray(attrs.audiences);
+const audiences = audiencesRaw.length ? mapValid(audiencesRaw, normalizeAudience) : undefined;
+const itemsRaw = firstArray(attrs.items);
+const items = itemsRaw.length ? mapValid(itemsRaw, normalizeItem) : [];
+const canRender = Boolean(regions?.length && audiences?.length && items.length > 0);
+---
+
+{canRender ? (
+  <NomiaMapListExplorerSection regions={regions} audiences={audiences} items={items} />
+) : null}

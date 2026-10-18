@@ -1,0 +1,37 @@
+---
+import NomiaEconomiaCircularMacroMesoMicroSection from "../../sections/economia-circular/NomiaEconomiaCircularMacroMesoMicroSection.astro";
+import type { MacroMesoMicroTier, MacroMesoMicroTierId } from "../../sections/economia-circular/NomiaMacroMesoMicroSection";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { firstArray, mapValid, optionalText, textOr, wpText as text } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props { block: WpParsedBlock }
+type TierAttrs = { id?: unknown; pillLabel?: unknown; title?: unknown; portraitSrc?: unknown; portraitUrl?: unknown; portraitAlt?: unknown; description?: unknown };
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/macro-meso-micro">;
+const validIds = new Set(["macro", "meso", "micro"]);
+function tier(raw: unknown): MacroMesoMicroTier | null {
+  if (!raw || typeof raw !== "object") return null;
+  const item = raw as TierAttrs;
+  const id = text(item.id);
+  const pillLabel = text(item.pillLabel);
+  const title = text(item.title);
+  const portraitSrc = textOr(item.portraitSrc, item.portraitUrl);
+  const portraitAlt = text(item.portraitAlt);
+  const description = text(item.description);
+  if (!validIds.has(id) || !pillLabel || !title || !portraitSrc || !description) return null;
+  return { id: id as MacroMesoMicroTierId, pillLabel, title, portraitSrc, portraitAlt, description };
+}
+const tiers = mapValid(firstArray(attrs.tiers), tier);
+const leftImageSrc = optionalText(attrs.leftImageSrc, attrs.leftImageUrl);
+const leftImageAlt = text(attrs.leftImageAlt);
+const canRender = Boolean(leftImageSrc && tiers.length > 0);
+---
+
+{canRender ? (
+  <NomiaEconomiaCircularMacroMesoMicroSection
+    leftImageSrc={leftImageSrc}
+    leftImageAlt={leftImageAlt}
+    tiers={tiers}
+  />
+) : null}

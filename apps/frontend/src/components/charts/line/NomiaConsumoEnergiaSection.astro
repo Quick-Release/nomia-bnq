@@ -1,0 +1,17 @@
+---
+/** Consumo de Energia — linha (shadcn Chart + Recharts). */
+import NomiaConsumoEnergiaChart from "./NomiaConsumoEnergiaChart";
+import type { EnergyConsumptionDatum } from "./NomiaConsumoEnergiaChart";
+
+interface Props {
+  title?: string;
+  description?: string;
+  summary?: string;
+  data?: EnergyConsumptionDatum[];
+  yMax?: number;
+}
+
+const { title, description, summary, data, yMax } = Astro.props;
+---
+
+<NomiaConsumoEnergiaChart client:only="react" title={title} description={description} summary={summary} data={data} yMax={yMax} />

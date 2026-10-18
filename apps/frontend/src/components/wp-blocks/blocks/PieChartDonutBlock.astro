@@ -1,0 +1,21 @@
+---
+import PieChartDonutSection from "../../charts/pie/PieChartDonutSection.astro";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { normalizeDonutSlices } from "../donut-slice";
+import { optionalText } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props {
+  block: WpParsedBlock;
+}
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/pie-chart-donut">;
+const slices = normalizeDonutSlices(block);
+const title = optionalText(attrs.title) ?? "";
+const description = optionalText(attrs.description) ?? "";
+const summary = optionalText(attrs.summary) ?? "";
+---
+
+{slices.length > 0 ? (
+  <PieChartDonutSection title={title} description={description} summary={summary} slices={slices} />
+) : null}

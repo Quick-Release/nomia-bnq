@@ -1,0 +1,157 @@
+---
+/**
+ * Multimédia & Ferramentas — Nomia Website 2 · Figma node 40017128:4289
+ * https://www.figma.com/design/gWqEtVBfoWbYMHQh1rW6s3/Nomia-%E2%80%94-Website--2-?node-id=40017128-4289
+ */
+import { CONTENT_TYPE_ARCHIVE_PATHS as archives } from "../../../config/content-type-archives";
+
+export type NomiaMultimediaCard = {
+  title: string;
+  tag: string;
+  bgClass: string;
+  href: string;
+  nodeId?: string;
+};
+
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  body?: string;
+  cards?: readonly NomiaMultimediaCard[];
+}
+
+const defaultCards = [
+  {
+    title: "Infografias",
+    tag: "Multimédia",
+    bgClass: "bg-main-ciano-200",
+    href: archives.infografias,
+    nodeId: "40017128:4298",
+  },
+  {
+    title: "Vídeos",
+    tag: "Multimédia",
+    bgClass: "bg-main-ciano-300",
+    href: archives.videos,
+    nodeId: "40017128:4302",
+  },
+  {
+    title: "Podcasts",
+    tag: "Multimédia",
+    bgClass: "bg-main-ciano-400",
+    href: archives.podcasts,
+    nodeId: "40017128:4306",
+  },
+  {
+    title: "Galeria",
+    tag: "Multimédia",
+    bgClass: "bg-main-ciano-500",
+    href: archives.galeria,
+    nodeId: "40017128:4310",
+  },
+  {
+    title: "Plataformas",
+    tag: "Ferramenta",
+    bgClass: "bg-main-ciano-600",
+    href: archives.plataformas,
+    nodeId: "40017128:4314",
+  },
+  {
+    title: "Bases de Dados",
+    tag: "Ferramenta",
+    bgClass: "bg-main-ciano-700",
+    href: archives.basesDeDados,
+    nodeId: "40017128:4318",
+  },
+] as const satisfies readonly NomiaMultimediaCard[];
+
+const {
+  eyebrow = "NOMIA",
+  heading = "Multimédia & Ferramentas",
+  body = "Aceda a fotografias, vídeos, podcasts, galerias, plataformas e bases de dados que ajudam a conhecer projetos, iniciativas e recursos ligados à bioeconomia, à sustentabilidade e à inovação.",
+  cards = defaultCards,
+} = Astro.props;
+---
+
+<section
+  class="bg-neutral-bw-white w-full overflow-x-hidden"
+  aria-labelledby="multimedia-heading"
+  data-node-id="40017128:4289"
+  data-nomia-header-surface="light"
+>
+  <div
+    class="mx-auto flex w-full max-w-[1920px] flex-col gap-12 px-4 py-16 md:px-16 md:py-28"
+  >
+    <div
+      class="flex w-full flex-col gap-10 xl:flex-row xl:items-start xl:justify-between"
+      data-node-id="40017128:4290"
+    >
+      <div
+        class="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:gap-10 lg:gap-[65px]"
+        data-node-id="40017128:4291"
+      >
+        <div class="flex shrink-0 items-center gap-1" data-node-id="40017128:4292">
+          <span class="text-main-cinza-400 inline-flex size-6 shrink-0" aria-hidden="true">
+            <svg class="size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12 4v16M4 12h16M6.34 6.34l11.32 11.32M17.66 6.34L6.34 17.66"
+                stroke="currentColor"
+                stroke-width="1.35"
+                stroke-linecap="round"
+              />
+            </svg>
+          </span>
+          <p
+            class="text-body text-main-cinza-400 font-primary font-medium tracking-[var(--tracking-typography-0)]"
+            data-node-id="40017128:4294"
+          >
+            {eyebrow}
+          </p>
+        </div>
+        <h2
+          id="multimedia-heading"
+          class="text-h4 font-primary text-main-cinza-700 min-w-0 font-semibold leading-[var(--typography-line-height-f)] tracking-[var(--tracking-typography-0)] xl:max-w-[28rem]"
+          data-node-id="40017128:4295"
+        >
+          {heading}
+        </h2>
+      </div>
+      <p
+        class="text-subtitle font-primary text-main-cinza-700 max-w-full font-normal leading-[var(--typography-line-height-g)] tracking-[var(--tracking-typography-0)] xl:max-w-[1032px] xl:flex-1"
+        data-node-id="40017128:4296"
+      >
+        {body}
+      </p>
+    </div>
+  </div>
+
+  <!-- Full-bleed card strip: edge-to-edge, equal columns on wide screens -->
+  <div class="w-full" data-node-id="40017128:4297">
+    <div
+      class="grid w-full auto-rows-fr grid-cols-1 gap-[5px] sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6"
+    >
+      {
+        cards.map(({ title, tag, bgClass, href, nodeId }) => (
+          <a
+            href={href}
+            class:list={[
+              bgClass,
+              "group relative flex min-h-[min(50vh,544px)] w-full flex-col justify-between overflow-hidden rounded-2xl px-4 py-10 no-underline transition-[transform,filter] duration-200 ease-out hover:brightness-95 focus-visible:ring-main-teal-400 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-bw-white focus-visible:outline-none active:scale-[0.99] sm:min-h-[480px] md:min-h-[544px]",
+            ]}
+            data-node-id={nodeId}
+          >
+            <span class="bg-main-cinza-700/40 pointer-events-none absolute inset-0 rounded-2xl" aria-hidden="true" />
+            <span class="text-h4 font-primary text-main-cinza-100 relative z-10 text-center font-semibold leading-[var(--typography-line-height-f)] tracking-[var(--tracking-typography-0)]">
+              {title}
+            </span>
+            <div class="relative z-10 flex justify-center">
+              <span class="bg-neutral-bw-white text-extra text-main-cinza-400 font-primary rounded-[32px] px-2 py-1 font-medium leading-[var(--typography-line-height-j)] tracking-[var(--tracking-typography-0)]">
+                {tag}
+              </span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

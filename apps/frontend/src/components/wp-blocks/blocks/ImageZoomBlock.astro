@@ -1,0 +1,248 @@
+---
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { optionalText, wpText as text } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props {
+  block: WpParsedBlock;
+}
+
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/image-zoom">;
+const imageSrc = optionalText(attrs.imageSrc, attrs.imageUrl, attrs.url);
+const imageAlt = optionalText(attrs.imageAlt, attrs.alt) ?? "";
+const caption = text(attrs.caption);
+const lightboxId = `image-zoom-${crypto.randomUUID()}`;
+---
+
+{
+  imageSrc ? (
+    <div class="nomia-page-gutter">
+    <figure class="image-zoom-block">
+      <button
+        type="button"
+        class="image-zoom-block__trigger"
+        aria-haspopup="dialog"
+        aria-controls={lightboxId}
+        data-image-zoom-trigger
+      >
+        <span class="image-zoom-block__media">
+          <img src={imageSrc} alt={imageAlt} loading="lazy" decoding="async" />
+        </span>
+      </button>
+      {caption ? <figcaption>{caption}</figcaption> : null}
+      <div
+        id={lightboxId}
+        class="image-zoom-block__lightbox"
+        role="dialog"
+        aria-modal="true"
+        aria-label={caption || imageAlt || "Imagem ampliada"}
+        hidden
+        data-image-zoom-lightbox
+      >
+        <button
+          type="button"
+          class="image-zoom-block__backdrop"
+          aria-label="Fechar imagem ampliada"
+          data-image-zoom-close
+        />
+        <div class="image-zoom-block__dialog">
+          <button
+            type="button"
+            class="image-zoom-block__close"
+            aria-label="Fechar imagem ampliada"
+            data-image-zoom-close
+          >
+            <span aria-hidden="true">x</span>
+          </button>
+          <img src={imageSrc} alt={imageAlt} />
+          {caption ? <p>{caption}</p> : null}
+        </div>
+      </div>
+    </figure>
+    </div>
+  ) : null
+}
+
+<script>
+  const readyWindow = window as Window &
+    typeof globalThis & { __nomiaImageZoomReady?: boolean };
+
+  function closeLightbox(lightbox: Element | null) {
+    if (!(lightbox instanceof HTMLElement)) return;
+    lightbox.hidden = true;
+    document.documentElement.classList.remove("has-image-zoom-lightbox");
+    const trigger = document.querySelector(`[aria-controls="${lightbox.id}"]`);
+    if (trigger instanceof HTMLElement) trigger.focus();
+  }
+
+  function openLightbox(trigger: HTMLElement) {
+    const lightboxId = trigger.getAttribute("aria-controls");
+    if (!lightboxId) return;
+    const lightbox = document.getElementById(lightboxId);
+    if (!(lightbox instanceof HTMLElement)) return;
+    lightbox.hidden = false;
+    document.documentElement.classList.add("has-image-zoom-lightbox");
+    const closeButton = lightbox.querySelector("[data-image-zoom-close]");
+    if (closeButton instanceof HTMLElement) closeButton.focus();
+  }
+
+  if (!readyWindow.__nomiaImageZoomReady) {
+    readyWindow.__nomiaImageZoomReady = true;
+
+    document.addEventListener("click", (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+
+      const trigger = target.closest("[data-image-zoom-trigger]");
+      if (trigger instanceof HTMLElement) {
+        openLightbox(trigger);
+        return;
+      }
+
+      const close = target.closest("[data-image-zoom-close]");
+      if (close instanceof HTMLElement) {
+        closeLightbox(close.closest("[data-image-zoom-lightbox]"));
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      const openLightboxElement = document.querySelector(
+        "[data-image-zoom-lightbox]:not([hidden])",
+      );
+      closeLightbox(openLightboxElement);
+    });
+  }
+</script>
+
+<style>
+  :global(.has-image-zoom-lightbox) {
+    overflow: hidden;
+  }
+
+  .image-zoom-block {
+    margin: clamp(32px, 6vw, 72px) auto;
+    max-width: min(100%, 1080px);
+  }
+
+  .image-zoom-block__trigger {
+    background: transparent;
+    border: 0;
+    cursor: zoom-in;
+    display: block;
+    padding: 0;
+    width: 100%;
+  }
+
+  .image-zoom-block__trigger:focus-visible {
+    outline: 3px solid var(--color-ciano-500, #00a9ce);
+    outline-offset: 6px;
+  }
+
+  .image-zoom-block__media {
+    background: var(--color-monochrome-light-100, #f3f3f3);
+    display: block;
+    overflow: hidden;
+  }
+
+  .image-zoom-block__media img {
+    display: block;
+    height: auto;
+    max-height: 760px;
+    object-fit: contain;
+    transform: scale(1);
+    transition: transform 220ms ease;
+    width: 100%;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .image-zoom-block__trigger:hover .image-zoom-block__media img {
+      transform: scale(1.12);
+    }
+  }
+
+  .image-zoom-block figcaption {
+    color: var(--color-neutral-700, #444);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    margin-top: 12px;
+  }
+
+  .image-zoom-block__lightbox {
+    align-items: center;
+    display: grid;
+    inset: 0;
+    justify-items: center;
+    padding: clamp(16px, 4vw, 48px);
+    position: fixed;
+    z-index: 1200;
+  }
+
+  .image-zoom-block__lightbox[hidden] {
+    display: none;
+  }
+
+  .image-zoom-block__backdrop {
+    background: rgb(0 0 0 / 82%);
+    border: 0;
+    cursor: zoom-out;
+    inset: 0;
+    padding: 0;
+    position: absolute;
+  }
+
+  .image-zoom-block__dialog {
+    display: grid;
+    gap: 12px;
+    max-height: 100%;
+    max-width: min(1180px, 100%);
+    position: relative;
+    z-index: 1;
+  }
+
+  .image-zoom-block__dialog img {
+    display: block;
+    max-height: min(82vh, 900px);
+    max-width: 100%;
+    object-fit: contain;
+  }
+
+  .image-zoom-block__dialog p {
+    color: #fff;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 76ch;
+  }
+
+  .image-zoom-block__close {
+    align-items: center;
+    background: #fff;
+    border: 0;
+    color: #111;
+    cursor: pointer;
+    display: inline-flex;
+    font-size: 24px;
+    height: 44px;
+    justify-content: center;
+    justify-self: end;
+    line-height: 1;
+    width: 44px;
+  }
+
+  .image-zoom-block__close:focus-visible {
+    outline: 3px solid var(--color-ciano-500, #00a9ce);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 640px) {
+    .image-zoom-block {
+      margin-block: 32px;
+    }
+
+    .image-zoom-block__dialog {
+      width: 100%;
+    }
+  }
+</style>

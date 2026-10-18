@@ -1,0 +1,29 @@
+---
+import BioeconomiaSustentavelIntroSection from "../../sections/bioeconomia/BioeconomiaSustentavelIntroSection.astro";
+import type { BioeconomiaSustentavelIntroCard } from "../../sections/bioeconomia/BioeconomiaSustentavelIntroSection.astro";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { firstArray, mapValid, optionalText, textOr } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props { block: WpParsedBlock }
+type CardAttrs = Partial<Record<keyof BioeconomiaSustentavelIntroCard, unknown>> & { imageUrl?: unknown };
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/sustainable-bioeconomy-dual-cards">;
+function card(raw: unknown, index: number): BioeconomiaSustentavelIntroCard | null {
+  if (!raw || typeof raw !== "object") return null;
+  const item = raw as CardAttrs;
+  const title = textOr(item.title);
+  const body = textOr(item.body);
+  const imageSrc = textOr(item.imageSrc, item.imageUrl);
+  if (!title || !body || !imageSrc) return null;
+  return { title, body, imageSrc, imageAlt: textOr(item.imageAlt), headingId: textOr(item.headingId) || `bioeconomia-sustentavel-card-${index + 1}` };
+}
+const cards = mapValid(firstArray(attrs.cards, attrs.items), card);
+const eyebrow = optionalText(attrs.eyebrow) ?? "";
+const heading = optionalText(attrs.heading) ?? "";
+const canRender = Boolean(heading && cards.length > 0);
+---
+
+{canRender ? (
+  <BioeconomiaSustentavelIntroSection eyebrow={eyebrow} heading={heading} cards={cards} />
+) : null}

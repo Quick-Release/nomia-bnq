@@ -1,0 +1,27 @@
+---
+import type { NomiaPageHeroProps } from "../../types/nomia-page-hero";
+import PageHeroSlider from "./PageHeroSlider.astro";
+import NomiaPageHeroStatic from "./NomiaPageHeroStatic.astro";
+
+const props = Astro.props as NomiaPageHeroProps;
+---
+
+{
+	props.variant === "slider" ? (
+		<PageHeroSlider slides={props.slides} />
+	) : (
+		<NomiaPageHeroStatic
+			imageSrc={props.imageSrc}
+			imageAlt={props.imageAlt}
+			title={props.title}
+			subtitle={props.subtitle}
+			heroHeight={props.heroHeight}
+			titleTypography={props.titleTypography}
+			subtitleTypography={props.subtitleTypography}
+			textAlign={props.textAlign}
+			paddingTop={props.paddingTop}
+			paddingBottom={props.paddingBottom}
+			cta={props.cta}
+		/>
+	)
+}

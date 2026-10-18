@@ -1,7 +1,10 @@
 ---
+import FontLinks from "../components/layout/FontLinks.astro";
+import { isLightHexColor } from "../lib/color-contrast";
 import { copyFor } from "../lib/copy";
 import { pageChrome, type Alternate } from "../lib/delivery";
 import { defaultLanguage, languages, type SiteLanguage } from "../lib/site-language";
+import { normalizeSectionBackground } from "../lib/section-block";
 import type { SiteChrome } from "../lib/wordpress";
 import "../styles/global.css";
 
@@ -14,6 +17,8 @@ interface Props {
   language?: SiteLanguage;
   /** Where its readers may switch language (a multilingual Site's pages only). */
   alternates?: Alternate[];
+  /** A Nomia page's own surface colour (its "Fundo da página" setting), as a hex colour. */
+  pageBackgroundColor?: string | null;
 }
 
 const {
@@ -21,7 +26,13 @@ const {
   description = "",
   language = defaultLanguage,
   alternates = [],
+  pageBackgroundColor = null,
 } = Astro.props;
+// The text contrast follows a page's own background, as on bioeconomia.pt.
+const background = normalizeSectionBackground(pageBackgroundColor);
+const surface = background
+  ? { class: isLightHexColor(background) ? "text-neutral-bw-black" : "text-neutral-bw-white", style: `background-color: ${background}` }
+  : null;
 const chrome =
   Astro.props.chrome !== undefined ? Astro.props.chrome : await pageChrome(Astro.site?.origin);
 // Chrome that can't be served leaves the menu, logo and icon out of this
@@ -59,8 +70,9 @@ const xDefault = hreflang.find((alternate) => alternate.language.isDefault);
     {hreflang.map((alternate) => <link rel="alternate" hreflang={alternate.language.lang} href={alternate.href} />)}
     {xDefault && <link rel="alternate" hreflang="x-default" href={xDefault.href} />}
     <title>{title === "Nomia" ? title : `${title} — Nomia`}</title>
+    <FontLinks />
   </head>
-  <body>
+  <body class={surface?.class} style={surface?.style}>
     <header class="site-header">
       <a href={language.home} class="site-header__home">
         {siteLogo ? <img src={siteLogo.sourceUrl} alt={siteLogo.altText || "Nomia"} /> : "Nomia"}

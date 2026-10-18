@@ -1,0 +1,85 @@
+---
+import NomiaPageHero from "../../page-heroes/NomiaPageHero.astro";
+import type { PageHeroSlide } from "../../page-heroes/pageHeroShared";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { firstArray, mapValid, textOr, wpText as text } from "../normalizers";
+import { safeHref } from "../../../lib/safe-href";
+
+interface Props {
+  block?: WpParsedBlock;
+}
+
+type SliderSlideAttrs = {
+  id?: unknown;
+  title?: unknown;
+  subtitle?: unknown;
+  ctaLabel?: unknown;
+  ctaHref?: unknown;
+  ctaUrl?: unknown;
+  bgImage?: unknown;
+  imageSrc?: unknown;
+  imageUrl?: unknown;
+  spotlightImageSrc?: unknown;
+  spotlightImageUrl?: unknown;
+  showSpotlight?: unknown;
+  spotlightTitle?: unknown;
+  spotlightBody?: unknown;
+  spotlightHref?: unknown;
+  spotlightUrl?: unknown;
+};
+
+const { block } = Astro.props;
+
+function parseAnchorCta(value: string): { label: string; href: string } | null {
+  const anchor = value.match(/<a\b[^>]*\bhref=(["'])(.*?)\1[^>]*>(.*?)<\/a>/i);
+  if (!anchor) return null;
+
+  const [, , href, label] = anchor;
+  const cleanLabel = label.replace(/<[^>]+>/g, "").trim();
+  // A link typed into the label bypasses the dispatcher's link-key filter.
+  const cleanHref = safeHref(href);
+
+  return cleanLabel && cleanHref ? { label: cleanLabel, href: cleanHref } : null;
+}
+
+function normalizeSlide(raw: unknown, index: number): PageHeroSlide | null {
+  if (!raw || typeof raw !== "object") return null;
+
+  const attrs = raw as SliderSlideAttrs;
+  const anchorCta = parseAnchorCta(text(attrs.ctaLabel));
+  const title = text(attrs.title);
+  const subtitle = text(attrs.subtitle);
+  const ctaLabel = anchorCta?.label ?? text(attrs.ctaLabel);
+  const ctaHref = textOr(attrs.ctaHref, attrs.ctaUrl) || anchorCta?.href || "";
+  const bgImage = textOr(attrs.bgImage, attrs.imageSrc, attrs.imageUrl);
+
+  if (!title || !subtitle || !ctaLabel || !ctaHref || !bgImage) return null;
+
+  const spotlightImageSrc = textOr(attrs.spotlightImageSrc, attrs.spotlightImageUrl);
+  const spotlightTitle = text(attrs.spotlightTitle);
+  const spotlightBody = text(attrs.spotlightBody);
+  const spotlightHref = textOr(attrs.spotlightHref, attrs.spotlightUrl);
+  const showSpotlight = attrs.showSpotlight !== false;
+
+  return {
+    id: text(attrs.id) || `slide-${index + 1}`,
+    title,
+    subtitle,
+    cta: { label: ctaLabel, href: ctaHref },
+    bgImage,
+    spotlight:
+      showSpotlight && spotlightImageSrc && spotlightTitle && spotlightBody && spotlightHref
+        ? {
+            imageSrc: spotlightImageSrc,
+            title: spotlightTitle,
+            body: spotlightBody,
+            href: spotlightHref,
+          }
+        : undefined,
+  };
+}
+
+const slides = mapValid(firstArray(block?.attrs?.slides), normalizeSlide);
+---
+
+{slides.length > 0 ? <NomiaPageHero variant="slider" slides={slides} /> : null}

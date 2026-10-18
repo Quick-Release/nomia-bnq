@@ -1,0 +1,57 @@
+---
+/**
+ * Macro / Meso / Micro split block — Nomia Website 2 · node 40017244:13125
+ * https://www.figma.com/design/gWqEtVBfoWbYMHQh1rW6s3/Nomia-%E2%80%94-Website--2-?node-id=40017244-13125
+ */
+import NomiaMacroMesoMicroSection from "./NomiaMacroMesoMicroSection";
+import type { MacroMesoMicroTier } from "./NomiaMacroMesoMicroSection";
+
+interface Props {
+	leftImageSrc?: string;
+	leftImageAlt?: string;
+	tiers?: readonly MacroMesoMicroTier[];
+}
+
+const {
+	leftImageSrc = "/images/economia-circular/macro-meso-micro/column-wide.jpg",
+	leftImageAlt = "Quedas de água em paisagem natural com vegetação luxuriante",
+	tiers: tiersProp,
+} = Astro.props;
+
+/** Stand-in for WordPress — copy for Meso/Micro can be replaced when final */
+const defaultTiers = [
+	{
+		id: "macro" as const,
+		pillLabel: "Macro",
+		title: "Ações Macro",
+		portraitSrc: "/images/economia-circular/macro-meso-micro/panel-macro.jpg",
+		portraitAlt: "Fundo marinho com estrela-do-mar sobre areia ondulada",
+		description:
+			"De natureza estrutural, com efeitos transversais e sistémicos, potenciando a apropriação dos princípios da economia circular pela sociedade e contemplando as dimensões de ação do Plano de forma transversal, sendo aplicáveis a qualquer cadeia de valor ou fases do ciclo de vida.",
+	},
+	{
+		id: "meso" as const,
+		pillLabel: "Meso",
+		title: "Ações Meso",
+		portraitSrc: "/images/economia-circular/macro-meso-micro/panel-macro.jpg",
+		portraitAlt: "Ilustração de nível meso (placeholder até conteúdo WordPress)",
+		description:
+			"Intervêm ao nível intermédio das cadeias de valor e dos territórios, articulando regulação, infraestruturas e capacidades entre empresas, setores e governos para acelerar a transição circular.",
+	},
+	{
+		id: "micro" as const,
+		pillLabel: "Micro",
+		title: "Ações Micro",
+		portraitSrc: "/images/economia-circular/macro-meso-micro/panel-macro.jpg",
+		portraitAlt: "Ilustração de nível micro (placeholder até conteúdo WordPress)",
+		description:
+			"Focam-se na escala da organização, do consumidor e da comunidade, com medidas concretas de eco-inovação, eco-conceção, consumo e comportamento no dia a dia.",
+	},
+];
+
+const tiers = tiersProp ?? defaultTiers;
+---
+
+<section class="w-full" aria-label="Ações macro, meso e micro">
+	<NomiaMacroMesoMicroSection client:visible leftImageSrc={leftImageSrc} leftImageAlt={leftImageAlt} tiers={tiers} />
+</section>

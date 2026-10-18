@@ -1,3 +1,4 @@
+import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import { readFileSync } from "node:fs";
@@ -9,6 +10,8 @@ const ops = JSON.parse(readFileSync(new URL("../../gq.ops.json", import.meta.url
 export default defineConfig({
   site: ops.domains ? `https://${ops.domains.frontend}` : undefined,
   output: "server",
+  // React renders the interactive blocks (carousels, charts, the map) as islands.
+  integrations: [react()],
   vite: {
     plugins: [tailwindcss()],
   },

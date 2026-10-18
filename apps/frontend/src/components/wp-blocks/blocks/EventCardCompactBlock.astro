@@ -1,0 +1,29 @@
+---
+import NomiaHomeEventCard from "../../sections/landing/NomiaHomeEventCard.astro";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import type { WpEventoHomeCard } from "../../../lib/wp-event-card";
+import { wpText as text, optionalText } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props { block: WpParsedBlock }
+type Attrs = AttrsFor<"getquick/event-card-compact">;
+const { block } = Astro.props;
+const attrs = block.attrs as Attrs;
+const source = attrs.event && typeof attrs.event === "object" ? attrs.event as Attrs : attrs;
+const title = text(source.title);
+const href =
+  optionalText(attrs.href, attrs.url, source.href, source.url) ??
+  (text(source.slug) ? `/eventos/${text(source.slug)}/` : "");
+const slug = text(source.slug) || href.replace(/^\/+|\/+$/g, "").split("/").pop() || "";
+const event: WpEventoHomeCard = {
+  title,
+  slug,
+  date: text(source.date) || null,
+  imageUrl: text(source.imageUrl) || null,
+  imageAlt: text(source.imageAlt) || null,
+  startDate: text(source.startDate) || null,
+  endDate: text(source.endDate) || null,
+};
+---
+
+{title && href && slug ? <NomiaHomeEventCard variant="compact" event={event} href={href} /> : null}

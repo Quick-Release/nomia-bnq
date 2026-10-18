@@ -1,0 +1,30 @@
+---
+/** Produtividade de Recursos — séries temporal (barras verticais). */
+import NomiaProdutividadeRecursosChart from "./NomiaProdutividadeRecursosChart";
+import type { ResourceProductivityBarsPoint } from "./NomiaProdutividadeRecursosChart";
+
+interface Props {
+  title?: string;
+  badge?: string;
+  intro?: string;
+  points?: ResourceProductivityBarsPoint[];
+  yMax?: number;
+  metricLabel?: string;
+  periodLabel?: string;
+  scopeLabel?: string;
+}
+
+const { title, badge, intro, points, yMax, metricLabel, periodLabel, scopeLabel } = Astro.props;
+---
+
+<NomiaProdutividadeRecursosChart
+  client:only="react"
+  title={title}
+  badge={badge}
+  intro={intro}
+  points={points}
+  yMax={yMax}
+  metricLabel={metricLabel}
+  periodLabel={periodLabel}
+  scopeLabel={scopeLabel}
+/>

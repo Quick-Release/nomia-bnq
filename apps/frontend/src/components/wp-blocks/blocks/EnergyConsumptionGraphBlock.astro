@@ -1,0 +1,39 @@
+---
+import NomiaConsumoEnergiaSection from "../../charts/line/NomiaConsumoEnergiaSection.astro";
+import type { EnergyConsumptionDatum } from "../../charts/line/NomiaConsumoEnergiaChart";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { firstArray, mapValid, wpNumber as num, wpText as text } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props { block: WpParsedBlock }
+type RowAttrs = { month?: unknown; solar?: unknown; eletrica?: unknown; gas?: unknown };
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/energy-consumption-chart">;
+
+function row(raw: unknown): EnergyConsumptionDatum | null {
+  if (!raw || typeof raw !== "object") return null;
+  const item = raw as RowAttrs;
+  const month = text(item.month);
+  const solar = num(item.solar);
+  const eletrica = num(item.eletrica);
+  const gas = num(item.gas);
+  if (!month || !Number.isFinite(solar) || !Number.isFinite(eletrica) || !Number.isFinite(gas)) return null;
+  return { month, solar, eletrica, gas };
+}
+
+const data = mapValid(firstArray(attrs.data, attrs.items), row);
+const yMax = num(attrs.yMax);
+const title = text(attrs.title);
+const description = text(attrs.description);
+const summary = text(attrs.summary);
+---
+
+{data.length > 0 ? (
+  <NomiaConsumoEnergiaSection
+    title={title}
+    description={description}
+    summary={summary}
+    data={data}
+    yMax={Number.isFinite(yMax) ? yMax : undefined}
+  />
+) : null}

@@ -1,0 +1,15 @@
+---
+/**
+ * Chart-only donut — doughnut + legend pills (no title, description, or summary).
+ */
+import GraficoDonut from "./GraficoDonut";
+import type { PieChartDonutSlice } from "./PieChartDonutChart";
+
+interface Props {
+  slices?: PieChartDonutSlice[];
+}
+
+const { slices } = Astro.props;
+---
+
+<GraficoDonut client:only="react" slices={slices} />

@@ -1,0 +1,12 @@
+---
+import PageHeroSlider from "./PageHeroSlider";
+import type { PageHeroSlide } from "./pageHeroShared";
+
+interface Props {
+	slides?: readonly PageHeroSlide[];
+}
+
+const { slides } = Astro.props;
+---
+
+<PageHeroSlider slides={slides} client:load />

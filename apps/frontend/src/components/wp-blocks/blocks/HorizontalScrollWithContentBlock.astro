@@ -1,0 +1,51 @@
+---
+import HorizontalScrollWithContentSection from "../../sections/economia-circular/HorizontalScrollWithContentSection.astro";
+import type { HorizontalScrollWithContentPill, HorizontalScrollWithContentSlide } from "../../sections/economia-circular/HorizontalScrollWithContent";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { firstArray, mapValid, optionalText, textOr, wpText as text } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props { block: WpParsedBlock }
+type PillAttrs = { label?: unknown; href?: unknown };
+type SlideAttrs = Partial<Record<keyof HorizontalScrollWithContentSlide, unknown>> & { imageUrl?: unknown };
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/horizontal-scroll-with-content">;
+function pill(raw: unknown): HorizontalScrollWithContentPill | null {
+  if (!raw || typeof raw !== "object") return null;
+  const item = raw as PillAttrs;
+  const label = text(item.label);
+  if (!label) return null;
+  return { label, href: optionalText(item.href) };
+}
+function slide(raw: unknown, index: number): HorizontalScrollWithContentSlide | null {
+  if (!raw || typeof raw !== "object") return null;
+  const item = raw as SlideAttrs;
+  const caption = text(item.caption);
+  const imageSrc = textOr(item.imageSrc, item.imageUrl);
+  const href = text(item.href);
+  if (!caption || !imageSrc || !href) return null;
+  return { id: text(item.id) || `overview-slide-${index + 1}`, caption, imageSrc, imageAlt: text(item.imageAlt), href };
+}
+const pills = mapValid(firstArray(attrs.pills), pill);
+const slides = mapValid(firstArray(attrs.slides, attrs.items), slide);
+const eyebrow = text(attrs.eyebrow);
+const headingLine1 = text(attrs.headingLine1);
+const headingLine2 = text(attrs.headingLine2);
+const verTodosLabel = text(attrs.verTodosLabel);
+const verTodosHref = verTodosLabel
+  ? (optionalText(attrs.verTodosHref, attrs.verTodosUrl) ?? "")
+  : "";
+const canRender = Boolean(headingLine1 && headingLine2 && slides.length > 0);
+---
+
+{canRender ? (
+  <HorizontalScrollWithContentSection
+    eyebrow={eyebrow}
+    headingLine1={headingLine1}
+    headingLine2={headingLine2}
+    pills={pills}
+    verTodosHref={verTodosHref}
+    verTodosLabel={verTodosLabel}
+    slides={slides}
+  />
+) : null}

@@ -1,0 +1,193 @@
+---
+/**
+ * Dispatches parsed WordPress blocks.
+ * Core blocks render locally; custom Getquick blocks are delegated to `WpCustomBlock.astro`.
+ * Unsupported custom blocks preserve nested `innerContent` / `innerHTML`; previews can request a visible diagnostic.
+ */
+import {
+  type WpParsedBlock,
+  blockIsLeaf,
+  flattenInnerContent,
+  splitWpContainerInnerContent,
+} from "../../lib/wp-blocks";
+import { WP_PDF_EMBED_PREVIEW } from "../../lib/wp-content-classes";
+import type { WpPagePayload } from "../../lib/wp-page-payload";
+import { addDefaultPdfEmbeds } from "../../lib/wp-pdf-embeds";
+import { wpGroupLayoutClasses, withWpGroupLayoutClasses } from "../../lib/wp-group-layout";
+import type { WpUnsupportedFallbackMode } from "../../lib/wp-block-fallback";
+import CoreButton from "./blocks/CoreButton.astro";
+import CoreButtons from "./blocks/CoreButtons.astro";
+import CoreColumns from "./blocks/CoreColumns.astro";
+import CoreFile from "./blocks/CoreFile.astro";
+import CoreHeading from "./blocks/CoreHeading.astro";
+import CoreImage from "./blocks/CoreImage.astro";
+import CoreList from "./blocks/CoreList.astro";
+import CoreParagraph from "./blocks/CoreParagraph.astro";
+import CoreQuote from "./blocks/CoreQuote.astro";
+import WpBlock from "./WpBlock.astro";
+import WpCustomBlock from "./WpCustomBlock.astro";
+
+interface Props {
+  block: WpParsedBlock;
+  pageFeaturedImage?: WpPagePayload["featuredImage"];
+  unsupportedFallback?: WpUnsupportedFallbackMode;
+}
+
+const {
+  block,
+  pageFeaturedImage = null,
+  unsupportedFallback = "saved-content",
+} = Astro.props;
+const groupLayoutClasses = block.blockName === "core/group" ? wpGroupLayoutClasses(block.attrs) : [];
+// A group's opening tag gets its render-time layout classes (see wp-group-layout.ts).
+const pieces = flattenInnerContent(block).map((piece, index) =>
+  index === 0 && piece.type === "html"
+    ? { ...piece, html: withWpGroupLayoutClasses(piece.html, groupLayoutClasses) }
+    : piece,
+);
+const hasChildPieces = pieces.some((p) => p.type === "block");
+const leaf = blockIsLeaf(block);
+const isGetquickBlock = block.blockName?.startsWith("getquick/") ?? false;
+const htmlWithPdfEmbeds = addDefaultPdfEmbeds(block.innerHTML);
+const listTag = block.blockName === "core/list-item" ? "li" : block.attrs?.ordered === true ? "ol" : "ul";
+const listContent =
+  (block.blockName === "core/list" || block.blockName === "core/list-item") && !leaf
+    ? splitWpContainerInnerContent(block, listTag)
+    : null;
+const quoteContent =
+  block.blockName === "core/quote"
+    ? splitWpContainerInnerContent(block, "blockquote")
+    : null;
+const columnsContent =
+  block.blockName === "core/columns" || block.blockName === "core/column"
+    ? splitWpContainerInnerContent(block, "div")
+    : null;
+---
+
+{
+  block.blockName === null ? (
+    htmlWithPdfEmbeds?.trim() ? (
+      <div
+        class:list={["contents", WP_PDF_EMBED_PREVIEW]}
+        set:html={htmlWithPdfEmbeds}
+      />
+    ) : null
+  ) : isGetquickBlock ? (
+    <WpCustomBlock
+      block={block}
+      pageFeaturedImage={pageFeaturedImage}
+      unsupportedFallback={unsupportedFallback}
+      hasFallbackContent={hasChildPieces || Boolean(htmlWithPdfEmbeds?.trim())}
+    >
+      {hasChildPieces
+        ? pieces.map((piece) =>
+            piece.type === "html" ? (
+              <Fragment set:html={addDefaultPdfEmbeds(piece.html)} />
+            ) : (
+              <WpBlock
+                block={piece.block}
+                pageFeaturedImage={pageFeaturedImage}
+                unsupportedFallback={unsupportedFallback}
+              />
+            ),
+          )
+        : htmlWithPdfEmbeds?.trim() ? (
+            <div
+              class:list={["contents", WP_PDF_EMBED_PREVIEW]}
+              set:html={htmlWithPdfEmbeds}
+            />
+          ) : null}
+    </WpCustomBlock>
+  ) : block.blockName === "core/quote" && quoteContent ? (
+    <CoreQuote
+      block={block}
+      wrapped={quoteContent.wrapped}
+    >
+      {quoteContent.pieces.map((piece) =>
+        piece.type === "html" ? (
+          <Fragment set:html={addDefaultPdfEmbeds(piece.html)} />
+        ) : (
+          <WpBlock
+            block={piece.block}
+            pageFeaturedImage={pageFeaturedImage}
+            unsupportedFallback={unsupportedFallback}
+          />
+        ),
+      )}
+    </CoreQuote>
+  ) : columnsContent ? (
+    <CoreColumns block={block} wrapped={columnsContent.wrapped}>
+      {columnsContent.pieces.map((piece) =>
+        piece.type === "html" ? (
+          <Fragment set:html={addDefaultPdfEmbeds(piece.html)} />
+        ) : (
+          <WpBlock
+            block={piece.block}
+            pageFeaturedImage={pageFeaturedImage}
+            unsupportedFallback={unsupportedFallback}
+          />
+        ),
+      )}
+    </CoreColumns>
+  ) : block.blockName === "core/buttons" ? (
+    <CoreButtons block={block}>
+      {block.innerBlocks.map((child) => (
+        <WpBlock
+          block={child}
+          pageFeaturedImage={pageFeaturedImage}
+          unsupportedFallback={unsupportedFallback}
+        />
+      ))}
+    </CoreButtons>
+  ) : block.blockName === "core/button" ? (
+    <CoreButton block={block} />
+  ) : block.blockName === "core/list" && leaf ? (
+    <CoreList block={block} />
+  ) : block.blockName === "core/list-item" && leaf ? (
+    <Fragment set:html={htmlWithPdfEmbeds} />
+  ) : listContent ? (
+    <CoreList
+      block={block}
+      wrapped={listContent.wrapped}
+      openingTag={listContent.openingTag}
+      closingTag={listContent.closingTag}
+    >
+      {listContent.pieces.map((piece) =>
+        piece.type === "html" ? (
+          <Fragment set:html={addDefaultPdfEmbeds(piece.html)} />
+        ) : (
+          <WpBlock
+            block={piece.block}
+            pageFeaturedImage={pageFeaturedImage}
+            unsupportedFallback={unsupportedFallback}
+          />
+        ),
+      )}
+    </CoreList>
+  ) : block.blockName === "core/paragraph" && leaf ? (
+    <CoreParagraph block={block} />
+  ) : block.blockName === "core/heading" && leaf ? (
+    <CoreHeading block={block} />
+  ) : block.blockName === "core/file" && leaf ? (
+    <CoreFile block={block} />
+  ) : block.blockName === "core/image" && leaf ? (
+    <CoreImage block={block} />
+  ) : hasChildPieces ? (
+    pieces.map((piece) =>
+      piece.type === "html" ? (
+        <Fragment set:html={addDefaultPdfEmbeds(piece.html)} />
+      ) : (
+        <WpBlock
+          block={piece.block}
+          pageFeaturedImage={pageFeaturedImage}
+          unsupportedFallback={unsupportedFallback}
+        />
+      ),
+    )
+  ) : htmlWithPdfEmbeds?.trim() ? (
+    <div
+      class:list={["contents", WP_PDF_EMBED_PREVIEW]}
+      set:html={htmlWithPdfEmbeds}
+    />
+  ) : null
+}

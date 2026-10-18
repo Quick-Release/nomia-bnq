@@ -1,0 +1,18 @@
+---
+/**
+ * Pie chart donut — doughnut chart (shadcn chart + Recharts).
+ */
+import PieChartDonutChart from "./PieChartDonutChart";
+import type { PieChartDonutSlice } from "./PieChartDonutChart";
+
+interface Props {
+  title?: string;
+  description?: string;
+  summary?: string;
+  slices?: PieChartDonutSlice[];
+}
+
+const { title, description, summary, slices } = Astro.props;
+---
+
+<PieChartDonutChart client:only="react" title={title} description={description} summary={summary} slices={slices} />

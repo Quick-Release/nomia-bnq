@@ -1,0 +1,37 @@
+---
+import NomiaIndicadoresSection from "../../sections/landing/NomiaIndicadoresSection.astro";
+import type { NomiaIndicadoresCard } from "../../sections/landing/NomiaIndicadoresSection.astro";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { firstArray, mapValid, optionalText, textOr } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props { block: WpParsedBlock }
+type CardAttrs = Partial<Record<keyof NomiaIndicadoresCard, unknown>> & { imageUrl?: unknown };
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/indicators-grid">;
+function card(raw: unknown): NomiaIndicadoresCard | null {
+  if (!raw || typeof raw !== "object") return null;
+  const item = raw as CardAttrs;
+  const title = textOr(item.title);
+  const description = textOr(item.description);
+  const imageSrc = textOr(item.imageSrc, item.imageUrl);
+  if (!title || !description || !imageSrc) return null;
+  return { title, description, imageSrc, imageAlt: textOr(item.imageAlt), href: optionalText(item.href) };
+}
+const cards = mapValid(firstArray(attrs.cards, attrs.items), card);
+const eyebrow = optionalText(attrs.eyebrow) ?? "";
+const heading = optionalText(attrs.heading) ?? "";
+const ctaHref = optionalText(attrs.ctaHref, attrs.ctaUrl) ?? "";
+const ctaLabel = optionalText(attrs.ctaLabel) ?? "";
+const canRender = Boolean(heading && ctaHref && ctaLabel && cards.length > 0);
+---
+
+{canRender ? (
+  <NomiaIndicadoresSection
+    eyebrow={eyebrow}
+    heading={heading}
+    ctaHref={ctaHref}
+    ctaLabel={ctaLabel}
+    cards={cards}
+  />
+) : null}

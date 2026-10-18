@@ -1,0 +1,21 @@
+---
+import { addDefaultPdfEmbeds } from "../../../lib/wp-pdf-embeds";
+import { WP_PDF_EMBED_PREVIEW } from "../../../lib/wp-content-classes";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+
+interface Props {
+  block: WpParsedBlock;
+}
+
+const { block } = Astro.props;
+const html = addDefaultPdfEmbeds(block.innerHTML);
+---
+
+{
+  html?.trim() ? (
+    <div
+      class:list={["contents", WP_PDF_EMBED_PREVIEW]}
+      set:html={html}
+    />
+  ) : null
+}

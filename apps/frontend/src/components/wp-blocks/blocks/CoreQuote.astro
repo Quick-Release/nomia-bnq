@@ -1,0 +1,29 @@
+---
+import { WP_PDF_EMBED_PREVIEW } from "../../../lib/wp-content-classes";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+
+interface Props {
+  block: WpParsedBlock;
+  wrapped: boolean;
+}
+
+const { block, wrapped } = Astro.props;
+const attrs = block.attrs ?? {};
+const classNames = [
+  "wp-block-quote",
+  typeof attrs.align === "string" && attrs.align !== "none" ? `align${attrs.align}` : null,
+  typeof attrs.textAlign === "string" ? `has-text-align-${attrs.textAlign}` : null,
+  typeof attrs.className === "string" ? attrs.className : null,
+];
+const anchor = typeof attrs.anchor === "string" ? attrs.anchor : undefined;
+---
+
+{wrapped ? (
+  <blockquote class:list={classNames} id={anchor}>
+    <slot />
+  </blockquote>
+) : (
+  <div class:list={["contents", WP_PDF_EMBED_PREVIEW]}>
+    <slot />
+  </div>
+)}

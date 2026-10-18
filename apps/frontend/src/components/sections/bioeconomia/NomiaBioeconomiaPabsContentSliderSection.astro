@@ -1,0 +1,22 @@
+---
+/**
+ * PABS — lista vertical + painel (Figma 40017244:13264).
+ */
+import NomiaBioeconomiaPabsContentSlider, {
+	nomiaBioeconomiaPabsContentSliderDefaults,
+} from "./NomiaBioeconomiaPabsContentSlider";
+import type { NomiaBioeconomiaPabsContentSliderProps } from "./NomiaBioeconomiaPabsContentSlider";
+
+interface Props extends Partial<NomiaBioeconomiaPabsContentSliderProps> {}
+
+const props = Astro.props;
+const sliderProps = {
+	...nomiaBioeconomiaPabsContentSliderDefaults,
+	...props,
+	panes: props.panes?.length ? props.panes : nomiaBioeconomiaPabsContentSliderDefaults.panes,
+};
+---
+
+<section class="w-full" aria-labelledby="nomia-pabs-content-slider-heading">
+	<NomiaBioeconomiaPabsContentSlider client:visible {...sliderProps} />
+</section>

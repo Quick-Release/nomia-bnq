@@ -1,0 +1,53 @@
+---
+import NomiaEconomiaCircularRecursosSection from "../../sections/economia-circular/NomiaEconomiaCircularRecursosSection.astro";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { firstArray, mapValid, optionalText, textOr } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props { block: WpParsedBlock }
+type Card = {
+  title: string;
+  description: string;
+  toneClass: string;
+  href: string;
+  nodeId: string;
+  titleNodeId: string;
+  descNodeId: string;
+};
+type CardAttrs = { title?: unknown; description?: unknown; href?: unknown };
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/circular-economy-resources">;
+const CARD_TONE_CLASSES = [
+  "bg-main-ciano-300",
+  "bg-main-ciano-400",
+  "bg-main-ciano-500",
+  "bg-main-ciano-600",
+  "bg-main-ciano-700",
+] as const;
+function card(raw: unknown, index: number): Card | null {
+  if (!raw || typeof raw !== "object") return null;
+  const item = raw as CardAttrs;
+  const title = textOr(item.title);
+  const description = textOr(item.description);
+  const href = textOr(item.href);
+  if (!title || !description || !href) return null;
+  const n = index + 1;
+  return {
+    title,
+    description,
+    href,
+    toneClass: CARD_TONE_CLASSES[index % CARD_TONE_CLASSES.length]!,
+    nodeId: `wp-recursos-card-${n}`,
+    titleNodeId: `wp-recursos-card-${n}-title`,
+    descNodeId: `wp-recursos-card-${n}-description`,
+  };
+}
+const cards = mapValid(firstArray(attrs.cards, attrs.resources), card);
+const eyebrow = optionalText(attrs.eyebrow) ?? "";
+const heading = optionalText(attrs.heading) ?? "";
+const canRender = Boolean(heading && cards.length > 0);
+---
+
+{canRender ? (
+  <NomiaEconomiaCircularRecursosSection eyebrow={eyebrow} heading={heading} cards={cards} />
+) : null}

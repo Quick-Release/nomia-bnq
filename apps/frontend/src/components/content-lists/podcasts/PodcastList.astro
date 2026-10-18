@@ -1,0 +1,168 @@
+---
+/**
+ * Podcast archive rows — Nomia Website 2 · node 40017244:29741
+ * https://www.figma.com/design/gWqEtVBfoWbYMHQh1rW6s3/Nomia-%E2%80%94-Website--2-?node-id=40017244-29741
+ */
+import type { NomiaPodcastListItem } from "../../../types/nomia-podcast-list";
+
+interface Props {
+	items: NomiaPodcastListItem[];
+}
+
+const { items } = Astro.props;
+
+function episodeBadgeClass(index: number): string {
+	// Figma alternates teal-200 vs ciano-200 on some rows
+	return index % 3 === 2
+		? "bg-main-ciano-200 text-main-cinza-700"
+		: "bg-main-teal-200 text-main-cinza-700";
+}
+---
+
+<section
+	class="bg-neutral-bw-white text-main-cinza-700 w-full"
+	data-nomia-header-surface="light"
+	data-node-id="40017244:29741"
+	aria-label="Lista de podcasts"
+>
+	<div class="mx-auto flex w-full max-w-[1920px] flex-col">
+		{
+			items.map((item, index) => (
+				<article
+					class="border-monochrome-light-400 flex w-full flex-col gap-6 border-b px-4 py-10 last:border-b-0 md:flex-row md:items-center md:gap-[4.5rem] md:px-16 md:py-10 lg:gap-[4.5rem] lg:pr-[min(13.5rem,12vw)]"
+					data-node-id={index === 0 ? "40017244:29743" : undefined}
+				>
+					<div
+						class="relative aspect-[527/296] w-full shrink-0 overflow-hidden md:aspect-auto md:h-[296px] md:w-[min(527px,38vw)] md:max-w-[527px]"
+						data-node-id={index === 0 ? "40017244:29744" : undefined}
+					>
+						<img
+							src={item.imageSrc}
+							alt={item.imageAlt}
+							class="absolute inset-0 size-full object-cover"
+							loading={index < 2 ? "eager" : "lazy"}
+							decoding="async"
+							width="527"
+							height="296"
+						/>
+					</div>
+
+					<div class="font-secondary flex min-w-0 flex-1 flex-col gap-6">
+						<div class="flex flex-wrap items-center gap-4 md:gap-6">
+							{item.episodeNumber !== null ? (
+								<p
+									class:list={[
+										"font-additional text-body-large font-medium leading-[var(--typography-line-height-h)] tracking-[var(--tracking-typography-0)] rounded-[1.5rem] px-4 py-1 whitespace-nowrap",
+										episodeBadgeClass(index),
+									]}
+								>
+									Episódio {item.episodeNumber}
+								</p>
+							) : null}
+							<p class="text-body text-main-cinza-700 leading-[var(--typography-line-height-i)] tracking-[var(--tracking-typography-0)]">
+								{item.dateLabel}
+							</p>
+						</div>
+
+						<h2 class="text-h4 md:text-h2 text-main-teal-400 font-primary font-medium leading-[var(--typography-line-height-f)] tracking-[var(--tracking-typography-0)] md:leading-[var(--typography-line-height-d)]">
+							{item.title}
+						</h2>
+
+						<div class="flex flex-wrap gap-4">
+							<a
+								href={item.listenHref}
+								class="group border-main-cinza-700 text-body text-main-cinza-700 hover:border-main-teal-400 hover:text-main-teal-400 focus-visible:ring-main-teal-400 inline-flex items-center gap-2 rounded-lg border border-solid px-4 py-2 font-medium leading-[var(--typography-line-height-i)] tracking-[var(--tracking-typography-0)] transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+							>
+								<span>Ouvir</span>
+								<svg
+									class="text-main-cinza-700 group-hover:text-main-teal-400 size-6 shrink-0 transition-colors"
+									viewBox="0 0 24 24"
+									fill="none"
+									xmlns="http://www.w3.org/2000/svg"
+									aria-hidden="true"
+								>
+									<path
+										d="M12 14a3 3 0 0 0 3-3V7a3 3 0 1 0-6 0v4a3 3 0 0 0 3 3Z"
+										stroke="currentColor"
+										stroke-width="1.5"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+									<path
+										d="M19 11a7 7 0 0 1-14 0"
+										stroke="currentColor"
+										stroke-width="1.5"
+										stroke-linecap="round"
+									/>
+									<path
+										d="M12 18v3"
+										stroke="currentColor"
+										stroke-width="1.5"
+										stroke-linecap="round"
+									/>
+								</svg>
+							</a>
+							<button
+								type="button"
+								class="group border-main-cinza-700 text-body text-main-cinza-700 hover:border-main-teal-400 hover:text-main-teal-400 focus-visible:ring-main-teal-400 inline-flex cursor-pointer items-center gap-2 rounded-lg border border-solid bg-transparent px-4 py-2 font-medium leading-[var(--typography-line-height-i)] tracking-[var(--tracking-typography-0)] transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+								data-nomia-podcast-share
+								data-share-url={item.shareUrl}
+								data-share-title={item.title}
+							>
+								<span>Partilhar</span>
+								<svg
+									class="text-main-cinza-700 group-hover:text-main-teal-400 size-6 shrink-0 transition-colors"
+									viewBox="0 0 24 24"
+									fill="none"
+									xmlns="http://www.w3.org/2000/svg"
+									aria-hidden="true"
+								>
+									<path
+										d="M8.59 13.51 15.42 17M15.41 6.49 8.59 9.49M18 16a3 3 0 1 0-2.83-4M6 8a3 3 0 1 0 2.83 4M18 8a3 3 0 1 0-2.83-4M6 16a3 3 0 1 0 2.83-4"
+										stroke="currentColor"
+										stroke-width="1.5"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+								</svg>
+							</button>
+						</div>
+					</div>
+				</article>
+			))
+		}
+	</div>
+</section>
+
+<script>
+	const g = globalThis as typeof globalThis & { __nomiaPodcastShareBound?: boolean };
+
+	function resolveShareUrl(raw: string | null): string {
+		if (!raw) return window.location.href;
+		if (raw.startsWith("http://") || raw.startsWith("https://")) return raw;
+		return new URL(raw, window.location.origin).href;
+	}
+
+	function onDocClick(e: MouseEvent) {
+		const target = (e.target as HTMLElement | null)?.closest?.(
+			"[data-nomia-podcast-share]",
+		) as HTMLButtonElement | null;
+		if (!target) return;
+		const raw = target.getAttribute("data-share-url");
+		const title = target.getAttribute("data-share-title") ?? document.title;
+		const url = resolveShareUrl(raw);
+
+		if (navigator.share) {
+			void navigator.share({ title, url }).catch(() => {
+				void navigator.clipboard?.writeText(url);
+			});
+		} else {
+			void navigator.clipboard?.writeText(url);
+		}
+	}
+
+	if (!g.__nomiaPodcastShareBound) {
+		g.__nomiaPodcastShareBound = true;
+		document.addEventListener("click", onDocClick);
+	}
+</script>

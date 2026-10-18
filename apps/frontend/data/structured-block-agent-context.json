@@ -1,0 +1,5820 @@
+{
+  "schemaVersion": 1,
+  "source": "apps/web",
+  "visibility": "repository-local; not a public API projection.",
+  "purpose": "Repository-local context for AI-assisted structured block authoring.",
+  "workflow": {
+    "sourceOfTruth": "src/structured-blocks/registrations/",
+    "generate": "pnpm generate",
+    "check": "pnpm check",
+    "plan": "pnpm --dir apps/web structured-blocks:plan -- <block-name>",
+    "validateContent": "pnpm --dir apps/web structured-blocks:validate-content -- <file>",
+    "nativeContent": "pnpm block-runner convert <authored-html> --out <blocks.html>"
+  },
+  "contentPolicy": {
+    "persistence": "Gutenberg attributes only; Astro owns final frontend markup.",
+    "store": [
+      "editorial text",
+      "links",
+      "media identities",
+      "structured data"
+    ],
+    "avoid": [
+      "layout classes",
+      "responsive settings",
+      "arbitrary colors or typography",
+      "presentation-only attributes"
+    ],
+    "compatibility": "Legacy reads are accepted for old content; editors write canonical names only."
+  },
+  "fieldConventions": {
+    "media": "Pair numeric media IDs with source/URL and alt-text attributes; mark the source field ui.kind media.",
+    "links": "Mark editable links ui.kind url and store the URL as content, not rendered markup.",
+    "repeaters": "Declare row properties and required fields in the array item contract.",
+    "metadata": "schemaVersion and blockId are contract metadata and hidden from generic editors."
+  },
+  "nativeContent": {
+    "tool": "block-runner",
+    "versionSource": "root package.json#devDependencies.block-runner",
+    "blockFamilies": [
+      "core/group",
+      "core/heading",
+      "core/paragraph",
+      "core/buttons",
+      "core/image"
+    ],
+    "commands": {
+      "convert": "pnpm block-runner convert <authored-html> --out <blocks.html>",
+      "assemble": "pnpm block-runner assemble <intent-json> --out <blocks.html>",
+      "validate": "pnpm block-runner validate <blocks.html>"
+    },
+    "boundary": "Use native blocks for simple flexible editorial sections; custom getquick/* blocks remain registration-owned.",
+    "limitation": "Conversion can fall back to core/html; native validation does not validate Nomia attributes or Astro renderers."
+  },
+  "designSystem": {
+    "source": "src/styles/nomia-theme.css",
+    "sha256": "09532ebc7c93c8713466f3cf614d5da725c54cae01c331c95d35843676cb32ee",
+    "colorVariables": [
+      {
+        "name": "--color-main-cinza-100",
+        "value": "var(--main-cinza-100)"
+      },
+      {
+        "name": "--color-main-cinza-200",
+        "value": "var(--main-cinza-200)"
+      },
+      {
+        "name": "--color-main-cinza-300",
+        "value": "var(--main-cinza-300)"
+      },
+      {
+        "name": "--color-main-cinza-400",
+        "value": "var(--main-cinza-400)"
+      },
+      {
+        "name": "--color-main-cinza-500",
+        "value": "var(--main-cinza-500)"
+      },
+      {
+        "name": "--color-main-cinza-600",
+        "value": "var(--main-cinza-600)"
+      },
+      {
+        "name": "--color-main-cinza-700",
+        "value": "var(--main-cinza-700)"
+      },
+      {
+        "name": "--color-main-ciano-100",
+        "value": "var(--main-ciano-100)"
+      },
+      {
+        "name": "--color-main-ciano-200",
+        "value": "var(--main-ciano-200)"
+      },
+      {
+        "name": "--color-main-ciano-300",
+        "value": "var(--main-ciano-300)"
+      },
+      {
+        "name": "--color-main-ciano-400",
+        "value": "var(--main-ciano-400)"
+      },
+      {
+        "name": "--color-main-ciano-500",
+        "value": "var(--main-ciano-500)"
+      },
+      {
+        "name": "--color-main-ciano-600",
+        "value": "var(--main-ciano-600)"
+      },
+      {
+        "name": "--color-main-ciano-700",
+        "value": "var(--main-ciano-700)"
+      },
+      {
+        "name": "--color-main-teal-100",
+        "value": "var(--main-teal-100)"
+      },
+      {
+        "name": "--color-main-teal-200",
+        "value": "var(--main-teal-200)"
+      },
+      {
+        "name": "--color-main-teal-300",
+        "value": "var(--main-teal-300)"
+      },
+      {
+        "name": "--color-main-teal-400",
+        "value": "var(--main-teal-400)"
+      },
+      {
+        "name": "--color-main-teal-500",
+        "value": "var(--main-teal-500)"
+      },
+      {
+        "name": "--color-main-teal-600",
+        "value": "var(--main-teal-600)"
+      },
+      {
+        "name": "--color-main-teal-700",
+        "value": "var(--main-teal-700)"
+      },
+      {
+        "name": "--color-main-botnico-100",
+        "value": "var(--main-botnico-100)"
+      },
+      {
+        "name": "--color-main-botnico-200",
+        "value": "var(--main-botnico-200)"
+      },
+      {
+        "name": "--color-main-botnico-300",
+        "value": "var(--main-botnico-300)"
+      },
+      {
+        "name": "--color-main-botnico-400",
+        "value": "var(--main-botnico-400)"
+      },
+      {
+        "name": "--color-main-botnico-500",
+        "value": "var(--main-botnico-500)"
+      },
+      {
+        "name": "--color-main-botnico-600",
+        "value": "var(--main-botnico-600)"
+      },
+      {
+        "name": "--color-main-botnico-700",
+        "value": "var(--main-botnico-700)"
+      },
+      {
+        "name": "--color-main-laranja-100",
+        "value": "var(--main-laranja-100)"
+      },
+      {
+        "name": "--color-main-laranja-200",
+        "value": "var(--main-laranja-200)"
+      },
+      {
+        "name": "--color-main-laranja-300",
+        "value": "var(--main-laranja-300)"
+      },
+      {
+        "name": "--color-main-laranja-400",
+        "value": "var(--main-laranja-400)"
+      },
+      {
+        "name": "--color-main-laranja-500",
+        "value": "var(--main-laranja-500)"
+      },
+      {
+        "name": "--color-main-laranja-600",
+        "value": "var(--main-laranja-600)"
+      },
+      {
+        "name": "--color-main-laranja-700",
+        "value": "var(--main-laranja-700)"
+      },
+      {
+        "name": "--color-neutral-bw-black",
+        "value": "var(--neutral-bw-black)"
+      },
+      {
+        "name": "--color-neutral-bw-white",
+        "value": "var(--neutral-bw-white)"
+      },
+      {
+        "name": "--color-monochrome-light-100",
+        "value": "var(--monochrome-light-100)"
+      },
+      {
+        "name": "--color-monochrome-light-200",
+        "value": "var(--monochrome-light-200)"
+      },
+      {
+        "name": "--color-monochrome-light-300",
+        "value": "var(--monochrome-light-300)"
+      },
+      {
+        "name": "--color-monochrome-light-400",
+        "value": "var(--monochrome-light-400)"
+      },
+      {
+        "name": "--color-monochrome-light-500",
+        "value": "var(--monochrome-light-500)"
+      },
+      {
+        "name": "--color-monochrome-light-600",
+        "value": "var(--monochrome-light-600)"
+      },
+      {
+        "name": "--color-monochrome-grey-100",
+        "value": "var(--monochrome-grey-100)"
+      },
+      {
+        "name": "--color-monochrome-grey-200",
+        "value": "var(--monochrome-grey-200)"
+      },
+      {
+        "name": "--color-monochrome-grey-300",
+        "value": "var(--monochrome-grey-300)"
+      },
+      {
+        "name": "--color-monochrome-grey-400",
+        "value": "var(--monochrome-grey-400)"
+      },
+      {
+        "name": "--color-monochrome-grey-500",
+        "value": "var(--monochrome-grey-500)"
+      },
+      {
+        "name": "--color-monochrome-grey-600",
+        "value": "var(--monochrome-grey-600)"
+      },
+      {
+        "name": "--color-monochrome-dark-100",
+        "value": "var(--monochrome-dark-100)"
+      },
+      {
+        "name": "--color-monochrome-dark-200",
+        "value": "var(--monochrome-dark-200)"
+      },
+      {
+        "name": "--color-monochrome-dark-300",
+        "value": "var(--monochrome-dark-300)"
+      },
+      {
+        "name": "--color-monochrome-dark-400",
+        "value": "var(--monochrome-dark-400)"
+      },
+      {
+        "name": "--color-monochrome-dark-500",
+        "value": "var(--monochrome-dark-500)"
+      },
+      {
+        "name": "--color-monochrome-dark-600",
+        "value": "var(--monochrome-dark-600)"
+      },
+      {
+        "name": "--color-background",
+        "value": "var(--neutral-bw-white)"
+      },
+      {
+        "name": "--color-foreground",
+        "value": "var(--main-cinza-700)"
+      },
+      {
+        "name": "--color-muted",
+        "value": "var(--main-cinza-200)"
+      },
+      {
+        "name": "--color-muted-foreground",
+        "value": "var(--main-cinza-500)"
+      },
+      {
+        "name": "--color-border",
+        "value": "var(--main-cinza-300)"
+      },
+      {
+        "name": "--color-card",
+        "value": "var(--neutral-bw-white)"
+      },
+      {
+        "name": "--color-card-foreground",
+        "value": "var(--main-cinza-700)"
+      }
+    ],
+    "mainColorVariables": [
+      {
+        "name": "--main-cinza-100",
+        "value": "#f0f0f0"
+      },
+      {
+        "name": "--main-cinza-200",
+        "value": "#e1e1e1"
+      },
+      {
+        "name": "--main-cinza-300",
+        "value": "#c3c3c3"
+      },
+      {
+        "name": "--main-cinza-400",
+        "value": "#878787"
+      },
+      {
+        "name": "--main-cinza-500",
+        "value": "#777777"
+      },
+      {
+        "name": "--main-cinza-600",
+        "value": "#666666"
+      },
+      {
+        "name": "--main-cinza-700",
+        "value": "#444444"
+      },
+      {
+        "name": "--main-ciano-100",
+        "value": "#e5faf9"
+      },
+      {
+        "name": "--main-ciano-200",
+        "value": "#caf4f2"
+      },
+      {
+        "name": "--main-ciano-300",
+        "value": "#95e9e4"
+      },
+      {
+        "name": "--main-ciano-400",
+        "value": "#2ad2c9"
+      },
+      {
+        "name": "--main-ciano-500",
+        "value": "#209e97"
+      },
+      {
+        "name": "--main-ciano-600",
+        "value": "#156965"
+      },
+      {
+        "name": "--main-ciano-700",
+        "value": "#104f4c"
+      },
+      {
+        "name": "--main-teal-100",
+        "value": "#e0f4f3"
+      },
+      {
+        "name": "--main-teal-200",
+        "value": "#c0e9e6"
+      },
+      {
+        "name": "--main-teal-300",
+        "value": "#80d2cc"
+      },
+      {
+        "name": "--main-teal-400",
+        "value": "#00a499"
+      },
+      {
+        "name": "--main-teal-500",
+        "value": "#007b73"
+      },
+      {
+        "name": "--main-teal-600",
+        "value": "#00524d"
+      },
+      {
+        "name": "--main-teal-700",
+        "value": "#003333"
+      },
+      {
+        "name": "--main-botnico-100",
+        "value": "#f4faec"
+      },
+      {
+        "name": "--main-botnico-200",
+        "value": "#e9f5d8"
+      },
+      {
+        "name": "--main-botnico-300",
+        "value": "#d2ebb1"
+      },
+      {
+        "name": "--main-botnico-400",
+        "value": "#a4d663"
+      },
+      {
+        "name": "--main-botnico-500",
+        "value": "#90bc57"
+      },
+      {
+        "name": "--main-botnico-600",
+        "value": "#7ba14b"
+      },
+      {
+        "name": "--main-botnico-700",
+        "value": "#67863f"
+      },
+      {
+        "name": "--main-laranja-100",
+        "value": "#fef4e0"
+      },
+      {
+        "name": "--main-laranja-200",
+        "value": "#fde9c0"
+      },
+      {
+        "name": "--main-laranja-300",
+        "value": "#fbd380"
+      },
+      {
+        "name": "--main-laranja-400",
+        "value": "#f7a600"
+      },
+      {
+        "name": "--main-laranja-500",
+        "value": "#d99200"
+      },
+      {
+        "name": "--main-laranja-600",
+        "value": "#ba7d00"
+      },
+      {
+        "name": "--main-laranja-700",
+        "value": "#7c5300"
+      }
+    ],
+    "neutralColorVariables": [
+      {
+        "name": "--neutral-bw-black",
+        "value": "#000000"
+      },
+      {
+        "name": "--neutral-bw-white",
+        "value": "#ffffff"
+      }
+    ],
+    "monochromeColorVariables": [
+      {
+        "name": "--monochrome-light-100",
+        "value": "#eeeeee"
+      },
+      {
+        "name": "--monochrome-light-200",
+        "value": "#eaeaea"
+      },
+      {
+        "name": "--monochrome-light-300",
+        "value": "#e6e6e6"
+      },
+      {
+        "name": "--monochrome-light-400",
+        "value": "#dddddd"
+      },
+      {
+        "name": "--monochrome-light-500",
+        "value": "#d5d5d5"
+      },
+      {
+        "name": "--monochrome-light-600",
+        "value": "#cccccc"
+      },
+      {
+        "name": "--monochrome-grey-100",
+        "value": "#969696"
+      },
+      {
+        "name": "--monochrome-grey-200",
+        "value": "#939393"
+      },
+      {
+        "name": "--monochrome-grey-300",
+        "value": "#8f8f8f"
+      },
+      {
+        "name": "--monochrome-grey-400",
+        "value": "#878787"
+      },
+      {
+        "name": "--monochrome-grey-500",
+        "value": "#808080"
+      },
+      {
+        "name": "--monochrome-grey-600",
+        "value": "#787878"
+      },
+      {
+        "name": "--monochrome-dark-100",
+        "value": "#323232"
+      },
+      {
+        "name": "--monochrome-dark-200",
+        "value": "#2d2d2d"
+      },
+      {
+        "name": "--monochrome-dark-300",
+        "value": "#2b2b2b"
+      },
+      {
+        "name": "--monochrome-dark-400",
+        "value": "#282828"
+      },
+      {
+        "name": "--monochrome-dark-500",
+        "value": "#232323"
+      },
+      {
+        "name": "--monochrome-dark-600",
+        "value": "#1e1e1e"
+      }
+    ],
+    "fontFamilyVariables": [
+      {
+        "name": "--typography-font-family-primary",
+        "value": "\"Montserrat\", ui-sans-serif, system-ui, sans-serif"
+      },
+      {
+        "name": "--typography-font-family-secondary",
+        "value": "\"Inter\", ui-sans-serif, system-ui, sans-serif"
+      },
+      {
+        "name": "--typography-font-family-additional",
+        "value": "\"DM Sans\", ui-sans-serif, system-ui, sans-serif"
+      }
+    ],
+    "fontSizeVariables": [
+      {
+        "name": "--typography-font-size-super",
+        "value": "5.5rem"
+      },
+      {
+        "name": "--typography-font-size-large",
+        "value": "4.5rem"
+      },
+      {
+        "name": "--typography-font-size-h1",
+        "value": "4rem"
+      },
+      {
+        "name": "--typography-font-size-h2",
+        "value": "3.5rem"
+      },
+      {
+        "name": "--typography-font-size-h3",
+        "value": "2.5rem"
+      },
+      {
+        "name": "--typography-font-size-h4",
+        "value": "2rem"
+      },
+      {
+        "name": "--typography-font-size-subtitle",
+        "value": "1.5rem"
+      },
+      {
+        "name": "--typography-font-size-body-large",
+        "value": "1.25rem"
+      },
+      {
+        "name": "--typography-font-size-body",
+        "value": "1rem"
+      },
+      {
+        "name": "--typography-font-size-notes",
+        "value": "0.875rem"
+      },
+      {
+        "name": "--typography-font-size-extra",
+        "value": "0.75rem"
+      }
+    ],
+    "lineHeightVariables": [
+      {
+        "name": "--typography-line-height-a",
+        "value": "7rem"
+      },
+      {
+        "name": "--typography-line-height-b",
+        "value": "6rem"
+      },
+      {
+        "name": "--typography-line-height-c",
+        "value": "5.5rem"
+      },
+      {
+        "name": "--typography-line-height-d",
+        "value": "5rem"
+      },
+      {
+        "name": "--typography-line-height-e",
+        "value": "4rem"
+      },
+      {
+        "name": "--typography-line-height-f",
+        "value": "3rem"
+      },
+      {
+        "name": "--typography-line-height-g",
+        "value": "2.5rem"
+      },
+      {
+        "name": "--typography-line-height-h",
+        "value": "2rem"
+      },
+      {
+        "name": "--typography-line-height-i",
+        "value": "1.5rem"
+      },
+      {
+        "name": "--typography-line-height-j",
+        "value": "1rem"
+      }
+    ],
+    "letterSpacingVariables": [
+      {
+        "name": "--typography-letter-spacing-0",
+        "value": "0em"
+      }
+    ]
+  },
+  "verification": {
+    "levels": [
+      {
+        "id": "contract",
+        "command": "pnpm check",
+        "establishes": "Registration shape, generated projections, and cross-application parity."
+      },
+      {
+        "id": "astro-preview",
+        "command": "pnpm test:astro-preview",
+        "establishes": "The block preview route renders the fixture through the real Astro dispatcher."
+      },
+      {
+        "id": "cms-registration",
+        "command": "pnpm wp-plugin:test",
+        "establishes": "The tracked plugin registration and PHP test surfaces pass."
+      },
+      {
+        "id": "raw-round-trip",
+        "command": "pnpm structured-blocks:content-check",
+        "establishes": "Saved RAW block comments parse into contract-valid attributes."
+      },
+      {
+        "id": "browser-editor",
+        "command": "pnpm verify",
+        "establishes": "The complete gate covers build, CMS, browser preview, and packaging behavior."
+      }
+    ],
+    "limitation": "A passing contract check does not prove editor persistence or production behavior."
+  },
+  "blocks": [
+    {
+      "blockName": "getquick/page-hero-static",
+      "catalogId": "page-hero-static",
+      "schemaVersion": 1,
+      "order": 1,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/page-hero-static.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "page-hero-static"
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "subtitle": {
+          "type": "string",
+          "default": ""
+        },
+        "showSubtitle": {
+          "type": "boolean",
+          "default": true
+        },
+        "imageId": {
+          "type": "number"
+        },
+        "imageSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "imageAlt": {
+          "type": "string",
+          "default": ""
+        },
+        "cta": {
+          "type": "object"
+        },
+        "ctaLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "showCta": {
+          "type": "boolean",
+          "default": false
+        },
+        "ctaHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "titleTextFontSize": {
+          "type": "number",
+          "ui": {
+            "kind": "number"
+          }
+        },
+        "subtitleTextFontSize": {
+          "type": "number",
+          "ui": {
+            "kind": "number"
+          }
+        },
+        "titleTextColor": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "text"
+          }
+        },
+        "subtitleTextColor": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "text"
+          }
+        },
+        "subtitleLineHeight": {
+          "type": "string",
+          "default": "default",
+          "enum": [
+            "default",
+            "j",
+            "i",
+            "h",
+            "g",
+            "f",
+            "e",
+            "d",
+            "c",
+            "b",
+            "a"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        },
+        "textAlign": {
+          "type": "string",
+          "default": "left",
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        },
+        "height": {
+          "type": "string",
+          "default": "xl",
+          "enum": [
+            "xs",
+            "s",
+            "m",
+            "l",
+            "xl"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        },
+        "paddingTop": {
+          "type": "string",
+          "default": "default",
+          "enum": [
+            "default",
+            "none",
+            "small",
+            "medium",
+            "large"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        },
+        "paddingBottom": {
+          "type": "string",
+          "default": "default",
+          "enum": [
+            "default",
+            "none",
+            "small",
+            "medium",
+            "large"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        }
+      },
+      "compatibilityReads": {
+        "ctaUrl": "string",
+        "imageUrl": "string",
+        "hideCta": "boolean"
+      },
+      "editing": {
+        "mode": "bespoke",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/PageHeroStatic.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": null,
+        "note": "The bespoke editor module owns the visible controls; inspect it before editing."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/PageHeroStaticBlock.astro",
+        "previewLabel": "Page hero with image",
+        "previewAttributes": {
+          "title": "Título vindo do WordPress",
+          "subtitle": "Subtítulo editável no Gutenberg, renderizado pelo Astro.",
+          "imageSrc": "/images/home/bioeconomia-intro/hero.jpg",
+          "imageAlt": "Muda em mãos",
+          "ctaLabel": "Saber Mais",
+          "ctaHref": "/bioeconomia-sustentavel/",
+          "showCta": true,
+          "showSubtitle": true,
+          "titleTextFontSize": 64,
+          "subtitleTextFontSize": 28,
+          "titleTextColor": "#ffffff",
+          "subtitleTextColor": "#e5faf9",
+          "textAlign": "left",
+          "height": "xl"
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Cabeçalho página com imagem",
+        "description": "Hero no topo da página com imagem de fundo, título, subtítulo e botão opcional.",
+        "icon": "cover-image",
+        "experience": "preview",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/PageHeroStatic.jsx"
+      },
+      "documentation": "docs/gutenberg-blocks/page-heroes/page-hero-static.md"
+    },
+    {
+      "blockName": "getquick/page-hero-media-grid",
+      "catalogId": "page-hero-media-grid",
+      "schemaVersion": 1,
+      "order": 2,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/page-hero-media-grid.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "page-hero-media-grid"
+        },
+        "backgroundImageId": {
+          "type": "number"
+        },
+        "backgroundImageSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "backgroundImageAlt": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": "Destaques e video"
+        },
+        "firstTitle": {
+          "type": "string",
+          "default": ""
+        },
+        "firstText": {
+          "type": "string",
+          "default": ""
+        },
+        "firstHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "firstBackgroundColor": {
+          "type": "string",
+          "default": "#ffffff"
+        },
+        "firstHoverBackgroundColor": {
+          "type": "string",
+          "default": "#f2a900"
+        },
+        "firstTitleColor": {
+          "type": "string",
+          "default": "#ffffff"
+        },
+        "firstTextColor": {
+          "type": "string",
+          "default": "#ffffff"
+        },
+        "firstBorderRadius": {
+          "type": "string",
+          "default": "40"
+        },
+        "secondTitle": {
+          "type": "string",
+          "default": ""
+        },
+        "secondText": {
+          "type": "string",
+          "default": ""
+        },
+        "secondHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "secondBackgroundColor": {
+          "type": "string",
+          "default": "#ffffff"
+        },
+        "secondHoverBackgroundColor": {
+          "type": "string",
+          "default": "#f2a900"
+        },
+        "secondTitleColor": {
+          "type": "string",
+          "default": "#ffffff"
+        },
+        "secondTextColor": {
+          "type": "string",
+          "default": "#ffffff"
+        },
+        "secondBorderRadius": {
+          "type": "string",
+          "default": "40"
+        },
+        "textVerticalAlign": {
+          "type": "string",
+          "default": "bottom",
+          "enum": [
+            "top",
+            "bottom"
+          ]
+        },
+        "videoId": {
+          "type": "number"
+        },
+        "videoSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "videoPosterId": {
+          "type": "number"
+        },
+        "videoPosterSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "videoTitle": {
+          "type": "string",
+          "default": "Video"
+        },
+        "videoBorderRadius": {
+          "type": "string",
+          "default": "40"
+        },
+        "shareHref": {
+          "type": "string",
+          "default": "https://nomia.getquick.io/partilhar/",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "shareLabel": {
+          "type": "string",
+          "default": "Partilhar"
+        }
+      },
+      "compatibilityReads": {},
+      "editing": {
+        "mode": "bespoke",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/PageHeroMediaGrid.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": null,
+        "note": "The bespoke editor module owns the visible controls; inspect it before editing."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/PageHeroMediaGridBlock.astro",
+        "previewLabel": "Page hero media grid",
+        "previewAttributes": {
+          "backgroundImageSrc": "/images/hero-carousel/economia-circular.jpg",
+          "backgroundImageAlt": "Paisagem de economia circular",
+          "firstTitle": "Explorar",
+          "firstText": "Conheça os principais recursos e iniciativas disponíveis.",
+          "firstHref": "/biblioteca/",
+          "firstBackgroundColor": "#ffffff",
+          "firstHoverBackgroundColor": "#f2a900",
+          "firstBorderRadius": "40",
+          "secondTitle": "Participar",
+          "secondText": "Acompanhe oportunidades, eventos e avisos relevantes.",
+          "secondHref": "/oportunidades/",
+          "secondBackgroundColor": "#ffffff",
+          "secondHoverBackgroundColor": "#00a9ce",
+          "secondBorderRadius": "24",
+          "textVerticalAlign": "bottom",
+          "videoSrc": "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+          "videoPosterSrc": "/images/home/bioeconomia-intro/hero.jpg",
+          "videoTitle": "Video de exemplo",
+          "videoBorderRadius": "40"
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Hero de página: vídeo e destaques",
+        "description": "Hero com imagem de fundo, duas chamadas com ligação e uma coluna de vídeo.",
+        "icon": "format-video",
+        "experience": "preview",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/PageHeroMediaGrid.jsx"
+      },
+      "documentation": "docs/gutenberg-blocks/page-heroes/page-hero-media-grid.md"
+    },
+    {
+      "blockName": "getquick/page-hero-slider",
+      "catalogId": "page-hero-slider",
+      "schemaVersion": 1,
+      "order": 3,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/page-hero-slider.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "page-hero-slider"
+        },
+        "slides": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "default": ""
+              },
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "subtitle": {
+                "type": "string",
+                "default": ""
+              },
+              "ctaLabel": {
+                "type": "string",
+                "default": ""
+              },
+              "ctaHref": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "ctaUrl"
+                ],
+                "ui": {
+                  "kind": "url"
+                }
+              },
+              "bgImageId": {
+                "type": "number"
+              },
+              "bgImage": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "imageSrc",
+                  "imageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "spotlightImageId": {
+                "type": "number"
+              },
+              "spotlightImageSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "spotlightImageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "showSpotlight": {
+                "type": "boolean",
+                "default": true
+              },
+              "spotlightTitle": {
+                "type": "string",
+                "default": ""
+              },
+              "spotlightBody": {
+                "type": "string",
+                "default": ""
+              },
+              "spotlightHref": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "spotlightUrl"
+                ],
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "title",
+              "subtitle",
+              "ctaLabel",
+              "ctaHref",
+              "bgImage"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {},
+      "editing": {
+        "mode": "bespoke",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/PageHeroSlider.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": null,
+        "note": "The bespoke editor module owns the visible controls; inspect it before editing."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/PageHeroSliderBlock.astro",
+        "previewLabel": "Page hero slider",
+        "previewAttributes": {
+          "slides": [
+            {
+              "id": "economia-circular",
+              "title": "Economia Circular",
+              "subtitle": "Um modelo económico reorganizado focado na coordenação dos sistemas de produção e consumo.",
+              "ctaLabel": "Explorar",
+              "ctaHref": "/economia-circular/",
+              "bgImage": "/images/hero-carousel/economia-circular.jpg",
+              "showSpotlight": true,
+              "spotlightImageSrc": "/images/hero-carousel/spotlight-bike.jpg",
+              "spotlightTitle": "Design circular",
+              "spotlightBody": "Conheça soluções para produtos e processos menos intensivos em recursos.",
+              "spotlightHref": "/biblioteca/"
+            },
+            {
+              "id": "barometro",
+              "title": "Barómetro",
+              "subtitle": "Indicadores e estatísticas para acompanhar a transição ambiental.",
+              "ctaLabel": "Explorar indicadores",
+              "ctaHref": "/indicadores/",
+              "bgImage": "/images/hero-carousel/barometro.jpg",
+              "showSpotlight": false
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Hero de página: slider",
+        "description": "Hero em carrossel em que cada diapositivo tem imagem de fundo, título, botão e destaque opcional.",
+        "icon": "images-alt2",
+        "experience": "preview",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/PageHeroSlider.jsx"
+      },
+      "documentation": "docs/gutenberg-blocks/page-heroes/page-hero-slider.md"
+    },
+    {
+      "blockName": "getquick/title-with-label",
+      "catalogId": "title-with-label",
+      "schemaVersion": 1,
+      "order": 4,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/title-with-label.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "title-with-label"
+        },
+        "label": {
+          "type": "string",
+          "default": ""
+        },
+        "titleLine1": {
+          "type": "string",
+          "default": ""
+        },
+        "titleLine2": {
+          "type": "string",
+          "default": ""
+        },
+        "level": {
+          "type": "number",
+          "default": 2
+        },
+        "typography": {
+          "type": "object",
+          "properties": {
+            "label": {
+              "type": "object",
+              "properties": {
+                "size": {
+                  "type": "string",
+                  "enum": [
+                    "extra",
+                    "notes",
+                    "body",
+                    "body-large",
+                    "subtitle",
+                    "h4",
+                    "h3",
+                    "h2",
+                    "h1",
+                    "large",
+                    "super"
+                  ]
+                },
+                "lineHeight": {
+                  "type": "string",
+                  "enum": [
+                    "j",
+                    "i",
+                    "h",
+                    "g",
+                    "f",
+                    "e",
+                    "d",
+                    "c",
+                    "b",
+                    "a"
+                  ]
+                },
+                "bold": {
+                  "type": "boolean"
+                },
+                "italic": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "titleLine1": {
+              "type": "object",
+              "properties": {
+                "size": {
+                  "type": "string",
+                  "enum": [
+                    "extra",
+                    "notes",
+                    "body",
+                    "body-large",
+                    "subtitle",
+                    "h4",
+                    "h3",
+                    "h2",
+                    "h1",
+                    "large",
+                    "super"
+                  ]
+                },
+                "lineHeight": {
+                  "type": "string",
+                  "enum": [
+                    "j",
+                    "i",
+                    "h",
+                    "g",
+                    "f",
+                    "e",
+                    "d",
+                    "c",
+                    "b",
+                    "a"
+                  ]
+                },
+                "bold": {
+                  "type": "boolean"
+                },
+                "italic": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "titleLine2": {
+              "type": "object",
+              "properties": {
+                "size": {
+                  "type": "string",
+                  "enum": [
+                    "extra",
+                    "notes",
+                    "body",
+                    "body-large",
+                    "subtitle",
+                    "h4",
+                    "h3",
+                    "h2",
+                    "h1",
+                    "large",
+                    "super"
+                  ]
+                },
+                "lineHeight": {
+                  "type": "string",
+                  "enum": [
+                    "j",
+                    "i",
+                    "h",
+                    "g",
+                    "f",
+                    "e",
+                    "d",
+                    "c",
+                    "b",
+                    "a"
+                  ]
+                },
+                "bold": {
+                  "type": "boolean"
+                },
+                "italic": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "compatibilityReads": {
+        "labelFontSize": "number",
+        "labelLineHeight": "number",
+        "labelBold": "boolean",
+        "labelItalic": "boolean",
+        "titleLine1FontSize": "number",
+        "titleLine1LineHeight": "number",
+        "titleLine1Bold": "boolean",
+        "titleLine1Italic": "boolean",
+        "titleLine2FontSize": "number",
+        "titleLine2LineHeight": "number",
+        "titleLine2Bold": "boolean",
+        "titleLine2Italic": "boolean"
+      },
+      "editing": {
+        "mode": "bespoke",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/TitleWithLabel.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": null,
+        "note": "The bespoke editor module owns the visible controls; inspect it before editing."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/TitleWithLabelBlock.astro",
+        "previewLabel": "Title with label",
+        "previewAttributes": {
+          "label": "Visão geral",
+          "titleLine1": "A Economia Circular promove um modelo económico reorganizado,",
+          "titleLine2": "através da coordenação dos sistemas de produção e consumo em circuitos fechados.",
+          "typography": {
+            "titleLine1": {
+              "size": "h3",
+              "lineHeight": "f",
+              "bold": true
+            }
+          }
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Título com etiqueta",
+        "description": "Título de secção numa ou duas linhas, com uma etiqueta curta por cima.",
+        "icon": "heading",
+        "experience": "inline-fields",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/TitleWithLabel.jsx"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/landing/title-with-label.md"
+    },
+    {
+      "blockName": "getquick/content-list",
+      "catalogId": "content-list",
+      "schemaVersion": 1,
+      "order": 5,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/content-list.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "content-list"
+        },
+        "items": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "episodeNumber": {
+                "type": "number"
+              },
+              "dateLabel": {
+                "type": "string",
+                "default": ""
+              },
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "imageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "listenHref": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "listenUrl"
+                ],
+                "ui": {
+                  "kind": "url"
+                }
+              },
+              "shareUrl": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "title",
+              "dateLabel",
+              "imageSrc",
+              "listenHref"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "episodes": "array"
+      },
+      "editing": {
+        "mode": "bespoke",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/PodcastList.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": null,
+        "note": "The bespoke editor module owns the visible controls; inspect it before editing."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/PodcastListBlock.astro",
+        "previewLabel": "Podcasts list",
+        "previewAttributes": {
+          "items": [
+            {
+              "episodeNumber": 1,
+              "dateLabel": "2 de Janeiro 2026",
+              "title": "Episódio de teste para Gutenberg",
+              "imageSrc": "/images/home/bioeconomia-intro/hero.jpg",
+              "imageAlt": "Imagem de podcast",
+              "listenHref": "#podcast-1",
+              "shareUrl": "/podcasts/"
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Lista de conteúdos",
+        "description": "Lista de episódios com imagem, número, data e botões para ouvir e partilhar.",
+        "icon": "playlist-audio",
+        "experience": "preview",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/PodcastList.jsx"
+      },
+      "documentation": "docs/gutenberg-blocks/content-lists/content-list.md"
+    },
+    {
+      "blockName": "getquick/content-grid-filters",
+      "catalogId": "content-grid-filters",
+      "schemaVersion": 1,
+      "order": 6,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/content-grid-filters.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "content-grid-filters"
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "items": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "default": ""
+              },
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "slug": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              },
+              "date": {
+                "type": "string",
+                "default": ""
+              },
+              "dateLabel": {
+                "type": "string",
+                "default": ""
+              },
+              "description": {
+                "type": "string",
+                "default": ""
+              },
+              "subtitle": {
+                "type": "string",
+                "default": ""
+              },
+              "featured": {
+                "type": "boolean",
+                "default": false
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageUrl": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "tematicas": {
+                "type": "array",
+                "default": [],
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "slug": {
+                      "type": "string",
+                      "default": ""
+                    },
+                    "name": {
+                      "type": "string",
+                      "default": ""
+                    }
+                  },
+                  "required": [
+                    "slug",
+                    "name"
+                  ]
+                }
+              },
+              "setores": {
+                "type": "array",
+                "default": [],
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "slug": {
+                      "type": "string",
+                      "default": ""
+                    },
+                    "name": {
+                      "type": "string",
+                      "default": ""
+                    }
+                  },
+                  "required": [
+                    "slug",
+                    "name"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "title",
+              "href"
+            ]
+          }
+        },
+        "tematicas": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "slug": {
+                "type": "string",
+                "default": ""
+              },
+              "name": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "slug",
+              "name"
+            ]
+          }
+        },
+        "setores": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "slug": {
+                "type": "string",
+                "default": ""
+              },
+              "name": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "slug",
+              "name"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "plataformas": "array"
+      },
+      "editing": {
+        "mode": "bespoke",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/ContentGridFilters.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": null,
+        "note": "The bespoke editor module owns the visible controls; inspect it before editing."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/PlataformasGridBlock.astro",
+        "previewLabel": "Plataformas grid",
+        "previewAttributes": {
+          "heading": "Plataformas",
+          "tematicas": [
+            {
+              "slug": "circular",
+              "name": "Circular"
+            }
+          ],
+          "setores": [
+            {
+              "slug": "industria",
+              "name": "Indústria"
+            }
+          ],
+          "items": [
+            {
+              "id": "fixture-platform",
+              "title": "Plataforma de teste",
+              "slug": "plataforma-de-teste",
+              "href": "#plataforma",
+              "dateLabel": "2026",
+              "description": "Descrição curta da plataforma.",
+              "subtitle": "Subtítulo",
+              "featured": true,
+              "imageUrl": "/images/hero-carousel/economia-circular.jpg",
+              "imageAlt": "Imagem de plataforma",
+              "tematicas": [
+                {
+                  "slug": "circular",
+                  "name": "Circular"
+                }
+              ],
+              "setores": [
+                {
+                  "slug": "industria",
+                  "name": "Indústria"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Grelha de conteúdos com filtros",
+        "description": "Grelha de cartões com imagem, título e descrição, que os visitantes filtram por temáticas e setores.",
+        "icon": "filter",
+        "experience": "preview",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/ContentGridFilters.jsx"
+      },
+      "documentation": "docs/gutenberg-blocks/content-lists/content-grid-filters.md"
+    },
+    {
+      "blockName": "getquick/map-list",
+      "catalogId": "map-list",
+      "schemaVersion": 1,
+      "order": 7,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/map-list.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "map-list"
+        },
+        "regions": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "default": ""
+              },
+              "label": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "id",
+              "label"
+            ]
+          }
+        },
+        "audiences": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "default": ""
+              },
+              "label": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "id",
+              "label"
+            ]
+          }
+        },
+        "items": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "default": ""
+              },
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "excerpt": {
+                "type": "string",
+                "default": ""
+              },
+              "dateLabel": {
+                "type": "string",
+                "default": ""
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "imageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "url"
+                ],
+                "ui": {
+                  "kind": "url"
+                }
+              },
+              "regionId": {
+                "type": "string",
+                "default": ""
+              },
+              "audienceIds": {
+                "type": "array",
+                "default": [],
+                "items": {
+                  "type": "string",
+                  "default": ""
+                }
+              }
+            },
+            "required": [
+              "title",
+              "href",
+              "imageSrc",
+              "regionId",
+              "audienceIds"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {},
+      "editing": {
+        "mode": "bespoke",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/MapList.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": null,
+        "note": "The bespoke editor module owns the visible controls; inspect it before editing."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/MapListExplorerBlock.astro",
+        "previewLabel": "Map list",
+        "previewAttributes": {
+          "regions": [
+            {
+              "id": "alentejo",
+              "label": "Alentejo"
+            }
+          ],
+          "audiences": [
+            {
+              "id": "empresas",
+              "label": "Empresas"
+            }
+          ],
+          "items": [
+            {
+              "id": "map-list-fixture",
+              "title": "Iniciativa de teste",
+              "excerpt": "Resumo curto vindo do WordPress.",
+              "href": "#iniciativa",
+              "dateLabel": "2026",
+              "imageUrl": "/images/hero-carousel/economia-circular.jpg",
+              "imageAlt": "Mapa",
+              "regionId": "alentejo",
+              "audienceIds": [
+                "empresas"
+              ]
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Mapa com lista",
+        "description": "Mapa de regiões com filtros por público e lista dos conteúdos de cada região.",
+        "icon": "location",
+        "experience": "preview",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/MapList.jsx"
+      },
+      "documentation": "docs/gutenberg-blocks/map-list.md"
+    },
+    {
+      "blockName": "getquick/cta-results",
+      "catalogId": "cta-results",
+      "schemaVersion": 1,
+      "order": 8,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/cta-results.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "cta-results"
+        },
+        "results": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "year": {
+                "type": "string",
+                "default": ""
+              },
+              "value": {
+                "type": "string",
+                "default": ""
+              },
+              "unit": {
+                "type": "string",
+                "default": ""
+              },
+              "description": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              },
+              "nodeId": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "year",
+              "value",
+              "unit",
+              "description",
+              "href"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "items": "array"
+      },
+      "editing": {
+        "mode": "bespoke",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/CtaResults.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": null,
+        "note": "The bespoke editor module owns the visible controls; inspect it before editing."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/BarometroResultsBlock.astro",
+        "previewLabel": "Barómetro results",
+        "previewAttributes": {
+          "results": [
+            {
+              "year": "2024",
+              "value": "87,13",
+              "unit": "%",
+              "description": "Indicador de teste",
+              "href": "/indicadores/"
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Chamada para resultados",
+        "description": "Resultados do Barómetro em destaque, cada um com ano, valor, unidade, descrição e ligação.",
+        "icon": "analytics",
+        "experience": "preview",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/CtaResults.jsx"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/landing/cta-results.md"
+    },
+    {
+      "blockName": "getquick/two-columns-text-image",
+      "catalogId": "two-columns-text-image",
+      "schemaVersion": 1,
+      "order": 9,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/two-columns-text-image.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "two-columns-text-image"
+        },
+        "eyebrowLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "accent": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "body": {
+          "type": "string",
+          "default": ""
+        },
+        "ctaHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "ctaLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "primaryId": {
+          "type": "number"
+        },
+        "primarySrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "primaryAlt": {
+          "type": "string",
+          "default": ""
+        },
+        "mediaPosition": {
+          "type": "string",
+          "default": ""
+        },
+        "hideCta": {
+          "type": "boolean",
+          "default": false
+        },
+        "hideTaxonomy": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "compatibilityReads": {
+        "ctaUrl": "string",
+        "primaryUrl": "string",
+        "headingId": "string"
+      },
+      "editing": {
+        "mode": "bespoke",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/TwoColumnsTextImage.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": null,
+        "note": "The bespoke editor module owns the visible controls; inspect it before editing."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/TwoColumnsTextImageBlock.astro",
+        "previewLabel": "Two columns text image",
+        "previewAttributes": {
+          "eyebrow": "NOMIA",
+          "heading": "Two columns text image WP",
+          "body": "Texto do WordPress.",
+          "ctaHref": "/biblioteca/",
+          "ctaLabel": "Saber mais",
+          "primarySrc": "/images/home/bioeconomia-intro/hero.jpg",
+          "primaryAlt": "Muda em mãos",
+          "mediaPosition": "left"
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Duas colunas com texto e imagem",
+        "description": "Texto com etiqueta, título e botão ao lado de uma imagem, à esquerda ou à direita.",
+        "icon": "align-pull-left",
+        "experience": "preview",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/TwoColumnsTextImage.jsx"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/landing/two-columns-text-image.md"
+    },
+    {
+      "blockName": "getquick/image-zoom",
+      "catalogId": "image-zoom",
+      "schemaVersion": 1,
+      "order": 10,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/image-zoom.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "image-zoom"
+        },
+        "imageId": {
+          "type": "number"
+        },
+        "imageSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "imageAlt": {
+          "type": "string",
+          "default": ""
+        },
+        "caption": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "compatibilityReads": {
+        "imageUrl": "string",
+        "url": "string",
+        "alt": "string"
+      },
+      "editing": {
+        "mode": "bespoke",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/ImageZoom.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": null,
+        "note": "The bespoke editor module owns the visible controls; inspect it before editing."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/ImageZoomBlock.astro",
+        "previewLabel": "Image zoom",
+        "previewAttributes": {
+          "imageSrc": "/images/hero-carousel/economia-circular.jpg",
+          "imageAlt": "Paisagem de economia circular",
+          "caption": "Clique na imagem para abrir em modo ampliado."
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Imagem com zoom",
+        "description": "Imagem com legenda opcional que amplia ao passar o rato e abre em ecrã inteiro ao clicar.",
+        "icon": "search",
+        "experience": "preview",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/ImageZoom.jsx"
+      },
+      "documentation": "docs/gutenberg-blocks/media/image-zoom.md"
+    },
+    {
+      "blockName": "getquick/home-intro",
+      "catalogId": "home-intro",
+      "schemaVersion": 1,
+      "order": 11,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/home-intro.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "home-intro"
+        },
+        "eyebrowLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "accent": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "body": {
+          "type": "string",
+          "default": ""
+        },
+        "ctaHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "ctaLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "showCta": {
+          "type": "boolean",
+          "default": false
+        },
+        "showTematica": {
+          "type": "boolean",
+          "default": false
+        },
+        "showCaption": {
+          "type": "boolean",
+          "default": false
+        },
+        "heroId": {
+          "type": "number"
+        },
+        "heroSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "heroAlt": {
+          "type": "string",
+          "default": ""
+        },
+        "captionHeading": {
+          "type": "string",
+          "default": ""
+        },
+        "captionBody": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "compatibilityReads": {
+        "ctaUrl": "string",
+        "heroUrl": "string",
+        "hideCta": "boolean"
+      },
+      "editing": {
+        "mode": "bespoke",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/HomeIntro.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": null,
+        "note": "The bespoke editor module owns the visible controls; inspect it before editing."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/HomeIntro.astro",
+        "previewLabel": "Home intro",
+        "previewAttributes": {
+          "eyebrow": "NOMIA",
+          "accent": "ciano",
+          "heading": "Bioeconomia para um futuro sustentável",
+          "body": "Conheça projetos, iniciativas e recursos para uma economia mais sustentável.",
+          "ctaHref": "/bioeconomia-sustentavel/",
+          "ctaLabel": "Explorar",
+          "showCta": true,
+          "showTematica": true,
+          "showCaption": false,
+          "heroSrc": "/images/home/bioeconomia-intro/hero.jpg",
+          "heroAlt": "Muda em mãos"
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Introdução da homepage",
+        "description": "Introdução com etiqueta, título, texto, botão e imagem grande com legenda opcional.",
+        "icon": "admin-home",
+        "experience": "preview",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/HomeIntro.jsx"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/landing/home-intro.md"
+    },
+    {
+      "blockName": "getquick/sustainable-bioeconomy-dual-cards",
+      "catalogId": "sustainable-bioeconomy-dual-cards",
+      "schemaVersion": 1,
+      "order": 12,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/sustainable-bioeconomy-dual-cards.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "sustainable-bioeconomy-dual-cards"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "cards": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "body": {
+                "type": "string",
+                "default": ""
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "imageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "headingId": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "title",
+              "body",
+              "imageSrc"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "items": "array"
+      },
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "eyebrow",
+          "heading",
+          "cards"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/BioeconomiaSustentavelDualCardsBlock.astro",
+        "previewLabel": "Bioeconomia sustentável dual cards",
+        "previewAttributes": {
+          "eyebrow": "Bioeconomia sustentável",
+          "heading": "Uma bioeconomia que regenera recursos e territórios",
+          "cards": [
+            {
+              "title": "O que é",
+              "body": "Conheça os princípios de uma bioeconomia sustentável.",
+              "imageSrc": "/images/bioeconomia-sustentavel/card-o-que-e.jpg",
+              "imageAlt": "Planta em crescimento"
+            },
+            {
+              "title": "Porque importa",
+              "body": "Descubra como a inovação pode apoiar a regeneração.",
+              "imageSrc": "/images/bioeconomia-sustentavel/card-porque-importante.jpg",
+              "imageAlt": "Paisagem natural"
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Bioeconomia sustentável: cartões duplos",
+        "description": "Cabeçalho com dois cartões lado a lado, cada um com imagem, título e texto.",
+        "icon": "columns",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/bioeconomia/sustentavel-dual-cards.md"
+    },
+    {
+      "blockName": "getquick/bioeconomy-phases-band",
+      "catalogId": "bioeconomy-phases-band",
+      "schemaVersion": 1,
+      "order": 13,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/bioeconomy-phases-band.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "bioeconomy-phases-band"
+        },
+        "imageId": {
+          "type": "number"
+        },
+        "imageSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "phases": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "phase": {
+                "type": "string",
+                "default": ""
+              },
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "body": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "phase",
+              "title",
+              "body"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "imageUrl": "string",
+        "items": "array"
+      },
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "imageId",
+          "imageSrc",
+          "phases"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/BioeconomiaPhasesBandBlock.astro",
+        "previewLabel": "Bioeconomia phases band",
+        "previewAttributes": {
+          "imageSrc": "/images/bioeconomia-sustentavel/phases-band-background.jpg",
+          "phases": [
+            {
+              "phase": "01",
+              "title": "Produção",
+              "body": "Matérias-primas renováveis e processos regenerativos."
+            },
+            {
+              "phase": "02",
+              "title": "Transformação",
+              "body": "Valorização de recursos biológicos em produtos."
+            },
+            {
+              "phase": "03",
+              "title": "Regeneração",
+              "body": "Ciclos produtivos que devolvem valor ao território."
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Bioeconomia: faixa de fases",
+        "description": "Faixa sobre fotografia com as fases da bioeconomia, cada uma com fase, título e texto.",
+        "icon": "editor-ol",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/bioeconomia/phases-band.md"
+    },
+    {
+      "blockName": "getquick/pabs-content-slider",
+      "catalogId": "pabs-content-slider",
+      "schemaVersion": 1,
+      "order": 14,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/pabs-content-slider.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "pabs-content-slider"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "intro": {
+          "type": "string",
+          "default": ""
+        },
+        "panes": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "navLabel": {
+                "type": "string",
+                "default": ""
+              },
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "subtitle": {
+                "type": "string",
+                "default": ""
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "imageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "tags": {
+                "type": "array",
+                "default": [],
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "type": "string",
+                      "default": ""
+                    },
+                    "href": {
+                      "type": "string",
+                      "default": "",
+                      "ui": {
+                        "kind": "url"
+                      }
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "href"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "navLabel",
+              "title",
+              "subtitle",
+              "imageSrc"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "items": "array"
+      },
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "eyebrow",
+          "heading",
+          "intro",
+          "panes"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/BioeconomiaPabsContentSliderBlock.astro",
+        "previewLabel": "Bioeconomia PABS slider",
+        "previewAttributes": {
+          "eyebrow": "Bioeconomia sustentável",
+          "heading": "Planos de ação para uma bioeconomia sustentável",
+          "intro": "Explore conteúdos e recursos organizados por tema.",
+          "panes": [
+            {
+              "navLabel": "O que é",
+              "title": "O que é a bioeconomia sustentável?",
+              "subtitle": "Um modelo que valoriza recursos biológicos de forma responsável.",
+              "imageSrc": "/images/bioeconomia-sustentavel/pabs-slider-sustentavel.jpg",
+              "imageAlt": "Paisagem natural",
+              "tags": [
+                {
+                  "label": "Conhecer",
+                  "href": "/bioeconomia-sustentavel/"
+                }
+              ]
+            },
+            {
+              "navLabel": "Porque importa",
+              "title": "Porque é importante",
+              "subtitle": "A transição combina inovação, circularidade e regeneração.",
+              "imageSrc": "/images/bioeconomia-sustentavel/card-porque-importante.jpg",
+              "imageAlt": "Recursos naturais",
+              "tags": [
+                {
+                  "label": "Explorar",
+                  "href": "/biblioteca/"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "PABS: slider de conteúdos",
+        "description": "Conteúdos do PABS em separadores: menu lateral e painel com imagem, título, texto e etiquetas.",
+        "icon": "list-view",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/bioeconomia/pabs-content-slider.md"
+    },
+    {
+      "blockName": "getquick/horizontal-scroll-with-content",
+      "catalogId": "horizontal-scroll-with-content",
+      "schemaVersion": 1,
+      "order": 15,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/horizontal-scroll-with-content.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "horizontal-scroll-with-content"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "headingLine1": {
+          "type": "string",
+          "default": ""
+        },
+        "headingLine2": {
+          "type": "string",
+          "default": ""
+        },
+        "pills": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "label"
+            ]
+          }
+        },
+        "verTodosHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "verTodosLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "slides": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "default": ""
+              },
+              "caption": {
+                "type": "string",
+                "default": ""
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "imageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "caption",
+              "imageSrc",
+              "href"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "verTodosUrl": "string",
+        "items": "array"
+      },
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "eyebrow",
+          "headingLine1",
+          "headingLine2",
+          "pills",
+          "verTodosHref",
+          "verTodosLabel",
+          "slides"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/HorizontalScrollWithContentBlock.astro",
+        "previewLabel": "Horizontal scroll with content",
+        "previewAttributes": {
+          "eyebrow": "Visão geral",
+          "headingLine1": "A Economia Circular promove um modelo económico reorganizado,",
+          "headingLine2": "através da coordenação dos sistemas de produção e consumo em circuitos fechados.",
+          "pills": [
+            {
+              "label": "Princípios",
+              "href": "#principios"
+            },
+            {
+              "label": "Produção",
+              "href": "#producao"
+            },
+            {
+              "label": "Consumo",
+              "href": "#consumo"
+            }
+          ],
+          "verTodosHref": "/biblioteca/",
+          "verTodosLabel": "Ver todos",
+          "slides": [
+            {
+              "id": "concecao",
+              "caption": "Conceção/design",
+              "imageSrc": "/images/economia-circular/overview-slider/concecao.jpg",
+              "imageAlt": "Espaço interior com vegetação",
+              "href": "/economia-circular/concecao-design/"
+            },
+            {
+              "id": "producao",
+              "caption": "Produção",
+              "imageSrc": "/images/economia-circular/overview-slider/producao.jpg",
+              "imageAlt": "Antena parabólica em campo aberto",
+              "href": "/economia-circular/producao/"
+            },
+            {
+              "id": "distribuicao",
+              "caption": "Distribuição",
+              "imageSrc": "/images/economia-circular/overview-slider/distribuicao.jpg",
+              "imageAlt": "Ave em pastagem",
+              "href": "/economia-circular/distribuicao/"
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Scroll horizontal com conteúdo",
+        "description": "Imagens com legenda e ligação em deslocamento horizontal, com título, etiquetas e botão «Ver todos».",
+        "icon": "leftright",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/economia-circular/horizontal-scroll-with-content.md"
+    },
+    {
+      "blockName": "getquick/circular-economy-overview",
+      "catalogId": "circular-economy-overview",
+      "schemaVersion": 1,
+      "order": 16,
+      "status": "legacy",
+      "inserter": false,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/circular-economy-overview.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "circular-economy-overview"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "headingLine1": {
+          "type": "string",
+          "default": ""
+        },
+        "headingLine2": {
+          "type": "string",
+          "default": ""
+        },
+        "pills": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "label"
+            ]
+          }
+        },
+        "verTodosHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "verTodosLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "slides": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "default": ""
+              },
+              "caption": {
+                "type": "string",
+                "default": ""
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "imageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "caption",
+              "imageSrc",
+              "href"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "verTodosUrl": "string",
+        "items": "array"
+      },
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "eyebrow",
+          "headingLine1",
+          "headingLine2",
+          "pills",
+          "verTodosHref",
+          "verTodosLabel",
+          "slides"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/HorizontalScrollWithContentBlock.astro",
+        "previewLabel": "Legacy circular economy overview",
+        "previewAttributes": {
+          "eyebrow": "Visão geral",
+          "headingLine1": "A Economia Circular promove um modelo económico reorganizado,",
+          "headingLine2": "através da coordenação dos sistemas de produção e consumo em circuitos fechados.",
+          "pills": [
+            {
+              "label": "Princípios",
+              "href": "#principios"
+            }
+          ],
+          "verTodosHref": "/biblioteca/",
+          "verTodosLabel": "Ver todos",
+          "slides": [
+            {
+              "id": "concecao",
+              "caption": "Conceção/design",
+              "imageSrc": "/images/economia-circular/overview-slider/concecao.jpg",
+              "imageAlt": "Espaço interior com vegetação",
+              "href": "/economia-circular/concecao-design/"
+            },
+            {
+              "id": "producao",
+              "caption": "Produção",
+              "imageSrc": "/images/economia-circular/overview-slider/producao.jpg",
+              "imageAlt": "Antena parabólica em campo aberto",
+              "href": "/economia-circular/producao/"
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Obsoleto: visão geral da economia circular",
+        "description": "Bloco antigo mantido para conteúdos já publicados. Use Scroll horizontal com conteúdo.",
+        "icon": "warning",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/economia-circular/overview.md"
+    },
+    {
+      "blockName": "getquick/circular-economy-overview-slider",
+      "catalogId": "circular-economy-overview-slider",
+      "schemaVersion": 1,
+      "order": 17,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/circular-economy-overview-slider.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "circular-economy-overview-slider"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "headingLine1": {
+          "type": "string",
+          "default": ""
+        },
+        "headingLine2": {
+          "type": "string",
+          "default": ""
+        },
+        "pills": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "label"
+            ]
+          }
+        },
+        "verTodosHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "verTodosLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "slides": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "default": ""
+              },
+              "caption": {
+                "type": "string",
+                "default": ""
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "imageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "caption",
+              "imageSrc",
+              "href"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "verTodosUrl": "string",
+        "items": "array"
+      },
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "eyebrow",
+          "headingLine1",
+          "headingLine2",
+          "pills",
+          "verTodosHref",
+          "verTodosLabel",
+          "slides"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/EconomiaCircularOverviewSliderBlock.astro",
+        "previewLabel": "Economia circular overview slider",
+        "previewAttributes": {
+          "eyebrow": "Visão geral",
+          "headingLine1": "A Economia Circular promove um modelo económico reorganizado,",
+          "headingLine2": "através da coordenação dos sistemas de produção e consumo em circuitos fechados.",
+          "pills": [
+            {
+              "label": "Princípios",
+              "href": "#principios"
+            }
+          ],
+          "verTodosHref": "/biblioteca/",
+          "verTodosLabel": "Ver todos",
+          "slides": [
+            {
+              "id": "concecao",
+              "caption": "Conceção/design",
+              "imageSrc": "/images/economia-circular/overview-slider/concecao.jpg",
+              "imageAlt": "Espaço interior com vegetação",
+              "href": "/economia-circular/concecao-design/"
+            },
+            {
+              "id": "producao",
+              "caption": "Produção",
+              "imageSrc": "/images/economia-circular/overview-slider/producao.jpg",
+              "imageAlt": "Antena parabólica em campo aberto",
+              "href": "/economia-circular/producao/"
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Economia circular: slider geral",
+        "description": "Carrossel de imagens com legenda e ligação, precedido de título, etiquetas e botão «Ver todos».",
+        "icon": "slides",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/economia-circular/overview-slider.md"
+    },
+    {
+      "blockName": "getquick/paec-2030",
+      "catalogId": "paec-2030",
+      "schemaVersion": 1,
+      "order": 18,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/paec-2030.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "paec-2030"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "imageLeftId": {
+          "type": "number"
+        },
+        "imageLeftSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "imageLeftAlt": {
+          "type": "string",
+          "default": ""
+        },
+        "imageRightId": {
+          "type": "number"
+        },
+        "imageRightSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "imageRightAlt": {
+          "type": "string",
+          "default": ""
+        },
+        "intro": {
+          "type": "string",
+          "default": ""
+        },
+        "saberMaisHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "saberMaisLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "objectives": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "default": ""
+              },
+              "description": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "code",
+              "description"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "imageLeftUrl": "string",
+        "imageRightUrl": "string",
+        "saberMaisUrl": "string"
+      },
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "eyebrow",
+          "heading",
+          "imageLeftId",
+          "imageLeftSrc",
+          "imageLeftAlt",
+          "imageRightId",
+          "imageRightSrc",
+          "imageRightAlt",
+          "intro",
+          "saberMaisHref",
+          "saberMaisLabel",
+          "objectives"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/EconomiaCircularPaec2030Block.astro",
+        "previewLabel": "Economia circular PAEC 2030",
+        "previewAttributes": {
+          "heading": "PAEC 2030 em teste",
+          "imageLeftSrc": "/images/economia-circular/paec-2030/split-left.jpg",
+          "imageLeftAlt": "Imagem esquerda",
+          "imageRightSrc": "/images/economia-circular/paec-2030/split-right.jpg",
+          "imageRightAlt": "Imagem direita",
+          "intro": "Introdução do WordPress.",
+          "saberMaisHref": "/biblioteca/",
+          "saberMaisLabel": "Saber mais",
+          "objectives": [
+            {
+              "code": "OE1",
+              "description": "Objetivo editável"
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "PAEC 2030",
+        "description": "Secção do PAEC 2030 com título, duas imagens, introdução, objetivos com código e ligação.",
+        "icon": "flag",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/economia-circular/paec-2030.md"
+    },
+    {
+      "blockName": "getquick/macro-meso-micro",
+      "catalogId": "macro-meso-micro",
+      "schemaVersion": 1,
+      "order": 19,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/macro-meso-micro.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "macro-meso-micro"
+        },
+        "leftImageId": {
+          "type": "number"
+        },
+        "leftImageSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "leftImageAlt": {
+          "type": "string",
+          "default": ""
+        },
+        "tiers": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "default": ""
+              },
+              "pillLabel": {
+                "type": "string",
+                "default": ""
+              },
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "portraitId": {
+                "type": "number"
+              },
+              "portraitSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "portraitUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "portraitAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "description": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "id",
+              "pillLabel",
+              "title",
+              "portraitSrc",
+              "description"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "leftImageUrl": "string"
+      },
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "leftImageId",
+          "leftImageSrc",
+          "leftImageAlt",
+          "tiers"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/EconomiaCircularMacroMesoMicroBlock.astro",
+        "previewLabel": "Macro meso micro",
+        "previewAttributes": {
+          "leftImageSrc": "/images/economia-circular/macro-meso-micro/column-wide.jpg",
+          "leftImageAlt": "Paisagem para ilustrar os níveis de intervenção",
+          "tiers": [
+            {
+              "id": "macro",
+              "pillLabel": "Macro",
+              "title": "Sistemas e políticas",
+              "portraitSrc": "/images/economia-circular/macro-meso-micro/panel-macro.jpg",
+              "portraitAlt": "Nível macro",
+              "description": "Transformação à escala das políticas e dos sistemas económicos."
+            },
+            {
+              "id": "meso",
+              "pillLabel": "Meso",
+              "title": "Redes e territórios",
+              "portraitSrc": "/images/economia-circular/macro-meso-micro/panel-macro.jpg",
+              "portraitAlt": "Nível meso",
+              "description": "Cooperação entre organizações e comunidades num território."
+            },
+            {
+              "id": "micro",
+              "pillLabel": "Micro",
+              "title": "Produtos e serviços",
+              "portraitSrc": "/images/economia-circular/macro-meso-micro/panel-macro.jpg",
+              "portraitAlt": "Nível micro",
+              "description": "Soluções concretas para produtos, serviços e utilizadores."
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Macro, meso e micro",
+        "description": "Imagem ao lado de separadores macro, meso e micro, cada um com título, retrato e descrição.",
+        "icon": "networking",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/economia-circular/macro-meso-micro.md"
+    },
+    {
+      "blockName": "getquick/circular-economy-indicators-spotlight",
+      "catalogId": "circular-economy-indicators-spotlight",
+      "schemaVersion": 1,
+      "order": 20,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/circular-economy-indicators-spotlight.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "circular-economy-indicators-spotlight"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "ctaHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "ctaLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "cards": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "description": {
+                "type": "string",
+                "default": ""
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "imageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              },
+              "layout": {
+                "type": "string",
+                "default": "start",
+                "enum": [
+                  "start",
+                  "stagger"
+                ]
+              }
+            },
+            "required": [
+              "title",
+              "description",
+              "imageSrc"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "ctaUrl": "string",
+        "items": "array"
+      },
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "eyebrow",
+          "heading",
+          "ctaHref",
+          "ctaLabel",
+          "cards"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/EconomiaCircularIndicadoresSpotlightBlock.astro",
+        "previewLabel": "Indicadores spotlight",
+        "previewAttributes": {
+          "eyebrow": "Indicadores",
+          "heading": "Dados para compreender a economia circular",
+          "ctaHref": "/indicadores/",
+          "ctaLabel": "Ver todos",
+          "cards": [
+            {
+              "title": "Produtividade dos recursos",
+              "description": "Acompanhe a eficiência na utilização dos recursos.",
+              "imageSrc": "/images/economia-circular/indicadores-spotlight/produtividade-recursos.jpg",
+              "imageAlt": "Produtividade dos recursos",
+              "href": "/indicadores/"
+            },
+            {
+              "title": "Taxa de circularidade",
+              "description": "Observe a utilização de materiais circulares.",
+              "imageSrc": "/images/economia-circular/indicadores-spotlight/taxa-circular.jpg",
+              "imageAlt": "Taxa de circularidade",
+              "href": "/indicadores/",
+              "layout": "stagger"
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Economia circular: indicadores em destaque",
+        "description": "Indicadores em cartões com imagem, título e texto, em disposição escalonada, com cabeçalho e botão.",
+        "icon": "star-filled",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/economia-circular/indicadores-spotlight.md"
+    },
+    {
+      "blockName": "getquick/circular-economy-resources",
+      "catalogId": "circular-economy-resources",
+      "schemaVersion": 1,
+      "order": 21,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/circular-economy-resources.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "circular-economy-resources"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "cards": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "description": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "title",
+              "description",
+              "href"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "resources": "array"
+      },
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "eyebrow",
+          "heading",
+          "cards"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/EconomiaCircularRecursosBlock.astro",
+        "previewLabel": "Recursos",
+        "previewAttributes": {
+          "eyebrow": "Recursos",
+          "heading": "Encontre documentos, guias e plataformas úteis",
+          "cards": [
+            {
+              "title": "Documentos estratégicos",
+              "description": "Planos, estratégias e documentos de enquadramento.",
+              "href": "/biblioteca/"
+            },
+            {
+              "title": "Guias práticos",
+              "description": "Ferramentas para apoiar a transição circular.",
+              "href": "/biblioteca/"
+            },
+            {
+              "title": "Casos de estudo",
+              "description": "Exemplos nacionais e internacionais de boas práticas.",
+              "href": "/biblioteca/"
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Economia circular: recursos",
+        "description": "Lista de recursos com cabeçalho e cartões de ligação, cada um com título e descrição.",
+        "icon": "portfolio",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/economia-circular/recursos.md"
+    },
+    {
+      "blockName": "getquick/indicators-grid",
+      "catalogId": "indicators-grid",
+      "schemaVersion": 1,
+      "order": 22,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/indicators-grid.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "indicators-grid"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "ctaHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "ctaLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "cards": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "description": {
+                "type": "string",
+                "default": ""
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "imageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "title",
+              "description",
+              "imageSrc"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "ctaUrl": "string",
+        "items": "array"
+      },
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "eyebrow",
+          "heading",
+          "ctaHref",
+          "ctaLabel",
+          "cards"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/IndicadoresBlock.astro",
+        "previewLabel": "Indicadores",
+        "previewAttributes": {
+          "eyebrow": "Indicadores",
+          "heading": "Acompanhe a transição para uma economia circular",
+          "ctaHref": "/indicadores/",
+          "ctaLabel": "Ver todos",
+          "cards": [
+            {
+              "title": "Produtividade dos recursos",
+              "description": "Veja a evolução da eficiência na utilização de recursos.",
+              "imageSrc": "/images/home/indicators/produtividade-recursos.jpg",
+              "imageAlt": "Indicador de produtividade",
+              "href": "/indicadores/"
+            },
+            {
+              "title": "Taxa de circularidade",
+              "description": "Conheça a incorporação de materiais reciclados.",
+              "imageSrc": "/images/home/indicators/taxa-circular.jpg",
+              "imageAlt": "Indicador de circularidade",
+              "href": "/indicadores/"
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Grelha de indicadores",
+        "description": "Cartões de indicadores com imagem, título e texto em três colunas, com cabeçalho e botão.",
+        "icon": "dashboard",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/landing/indicadores.md"
+    },
+    {
+      "blockName": "getquick/opportunities-grid",
+      "catalogId": "opportunities-grid",
+      "schemaVersion": 1,
+      "order": 23,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/opportunities-grid.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "opportunities-grid"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "body": {
+          "type": "string",
+          "default": ""
+        },
+        "items": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "label",
+              "href"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "tiles": "array"
+      },
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "eyebrow",
+          "heading",
+          "body",
+          "items"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/OportunidadesBlock.astro",
+        "previewLabel": "Oportunidades",
+        "previewAttributes": {
+          "eyebrow": "NOMIA",
+          "heading": "Encontre novas oportunidades",
+          "body": "Acompanhe avisos, publicações e iniciativas relevantes.",
+          "items": [
+            {
+              "label": "Avisos",
+              "href": "/oportunidades/avisos/"
+            },
+            {
+              "label": "Publicações",
+              "href": "/biblioteca/publicacoes/"
+            },
+            {
+              "label": "Boas práticas",
+              "href": "/biblioteca/boas-praticas/"
+            },
+            {
+              "label": "Newsletters",
+              "href": "/newsletters/"
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Grelha de oportunidades",
+        "description": "Cabeçalho com texto e mosaicos de ligação para oportunidades, como avisos e publicações.",
+        "icon": "megaphone",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/landing/oportunidades.md"
+    },
+    {
+      "blockName": "getquick/multimedia-grid",
+      "catalogId": "multimedia-grid",
+      "schemaVersion": 1,
+      "order": 24,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/multimedia-grid.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "multimedia-grid"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "body": {
+          "type": "string",
+          "default": ""
+        },
+        "cards": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "tag": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "title",
+              "tag",
+              "href"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "items": "array"
+      },
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "eyebrow",
+          "heading",
+          "body",
+          "cards"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/MultimediaBlock.astro",
+        "previewLabel": "Multimedia",
+        "previewAttributes": {
+          "eyebrow": "NOMIA",
+          "heading": "Multimédia e ferramentas",
+          "body": "Explore conteúdos e recursos para conhecer projetos, iniciativas e dados.",
+          "cards": [
+            {
+              "title": "Infografias",
+              "tag": "Multimédia",
+              "href": "/infografias/"
+            },
+            {
+              "title": "Vídeos",
+              "tag": "Multimédia",
+              "href": "/videos/"
+            },
+            {
+              "title": "Podcasts",
+              "tag": "Multimédia",
+              "href": "/podcasts/"
+            },
+            {
+              "title": "Galeria",
+              "tag": "Multimédia",
+              "href": "/galeria/"
+            },
+            {
+              "title": "Plataformas",
+              "tag": "Ferramenta",
+              "href": "/ferramentas/plataformas/"
+            },
+            {
+              "title": "Bases de dados",
+              "tag": "Ferramenta",
+              "href": "/bases-de-dados/"
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Grelha multimédia",
+        "description": "Grelha de ligações para conteúdos multimédia e ferramentas, com cabeçalho, texto e etiquetas.",
+        "icon": "admin-media",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/landing/multimedia.md"
+    },
+    {
+      "blockName": "getquick/library-grid",
+      "catalogId": "library-grid",
+      "schemaVersion": 1,
+      "order": 25,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/library-grid.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "library-grid"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "body": {
+          "type": "string",
+          "default": ""
+        },
+        "ctaHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "ctaLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "cards": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "tag": {
+                "type": "string",
+                "default": ""
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "imageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              },
+              "tagKind": {
+                "type": "string",
+                "default": "economia",
+                "enum": [
+                  "bioeconomia",
+                  "economia"
+                ]
+              }
+            },
+            "required": [
+              "title",
+              "tag",
+              "imageSrc",
+              "href"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "ctaUrl": "string",
+        "items": "array"
+      },
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "eyebrow",
+          "heading",
+          "body",
+          "ctaHref",
+          "ctaLabel",
+          "cards"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/BibliotecaBlock.astro",
+        "previewLabel": "Biblioteca",
+        "previewAttributes": {
+          "eyebrow": "Biblioteca",
+          "heading": "Conteúdos para compreender a economia circular",
+          "body": "Consulte documentos, publicações e recursos de apoio.",
+          "ctaHref": "/biblioteca/",
+          "ctaLabel": "Ver biblioteca",
+          "cards": [
+            {
+              "title": "Legislação",
+              "tag": "Economia",
+              "imageSrc": "/images/biblioteca/legislacao.jpg",
+              "imageAlt": "Documentos de legislação",
+              "href": "/biblioteca/legislacao/",
+              "tagKind": "economia"
+            },
+            {
+              "title": "Publicações",
+              "tag": "Bioeconomia",
+              "imageSrc": "/images/biblioteca/publicacoes.jpg",
+              "imageAlt": "Publicações",
+              "href": "/biblioteca/publicacoes/",
+              "tagKind": "bioeconomia"
+            },
+            {
+              "title": "Boas práticas",
+              "tag": "Economia",
+              "imageSrc": "/images/biblioteca/boas-praticas.jpg",
+              "imageAlt": "Boas práticas",
+              "href": "/biblioteca/boas-praticas/",
+              "tagKind": "economia"
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Grelha da biblioteca",
+        "description": "Grelha de ligações para a biblioteca com cabeçalho, texto, botão e cartões com imagem e etiqueta.",
+        "icon": "book",
+        "experience": "inline-fields"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/landing/biblioteca.md"
+    },
+    {
+      "blockName": "getquick/events-grid",
+      "catalogId": "events-grid",
+      "schemaVersion": 1,
+      "order": 26,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/events-grid.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "events-grid"
+        },
+        "events": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "slug": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              },
+              "date": {
+                "type": "string",
+                "default": ""
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageUrl": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "startDate": {
+                "type": "string",
+                "default": ""
+              },
+              "endDate": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "title"
+            ]
+          }
+        },
+        "eventBasePath": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "compatibilityReads": {
+        "items": "array"
+      },
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "events",
+          "eventBasePath"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/EventsGridBlock.astro",
+        "previewLabel": "Events grid",
+        "previewAttributes": {
+          "events": [
+            {
+              "title": "Evento de teste",
+              "slug": "evento-de-teste",
+              "date": "2026-01-01",
+              "startDate": "2026-02-01",
+              "endDate": null,
+              "imageUrl": "/images/hero-carousel/economia-circular.jpg",
+              "imageAlt": "Evento"
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Grelha de eventos",
+        "description": "Grelha de eventos com um cartão em destaque e cartões compactos, ligados à página de cada evento.",
+        "icon": "calendar-alt",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/landing/events-grid.md"
+    },
+    {
+      "blockName": "getquick/event-card-compact",
+      "catalogId": "event-card-compact",
+      "schemaVersion": 1,
+      "order": 27,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/event-card-compact.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "event-card-compact"
+        },
+        "event": {
+          "type": "object"
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "slug": {
+          "type": "string",
+          "default": ""
+        },
+        "href": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "date": {
+          "type": "string",
+          "default": ""
+        },
+        "imageId": {
+          "type": "number"
+        },
+        "imageUrl": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "imageAlt": {
+          "type": "string",
+          "default": ""
+        },
+        "startDate": {
+          "type": "string",
+          "default": ""
+        },
+        "endDate": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "compatibilityReads": {
+        "url": "string"
+      },
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "event",
+          "title",
+          "slug",
+          "href",
+          "date",
+          "imageId",
+          "imageUrl",
+          "imageAlt",
+          "startDate",
+          "endDate"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/EventCardCompactBlock.astro",
+        "previewLabel": "Event card compact",
+        "previewAttributes": {
+          "title": "Evento compacto",
+          "slug": "evento-compacto",
+          "date": "2026-01-01",
+          "imageUrl": "/images/hero-carousel/economia-circular.jpg",
+          "imageAlt": "Evento"
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Cartão compacto de evento",
+        "description": "Cartão pequeno de um evento com imagem, título e datas, com ligação para a página do evento.",
+        "icon": "calendar",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/landing/event-card-compact.md"
+    },
+    {
+      "blockName": "getquick/pie-chart-donut",
+      "catalogId": "pie-chart-donut",
+      "schemaVersion": 1,
+      "order": 28,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/pie-chart-donut.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "pie-chart-donut"
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "description": {
+          "type": "string",
+          "default": ""
+        },
+        "summary": {
+          "type": "string",
+          "default": ""
+        },
+        "slices": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "default": ""
+              },
+              "label": {
+                "type": "string",
+                "default": ""
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "type",
+              "label",
+              "value"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "items": "array"
+      },
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "title",
+          "description",
+          "summary",
+          "slices"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/PieChartDonutBlock.astro",
+        "previewLabel": "Pie chart donut",
+        "previewAttributes": {
+          "title": "Reciclagem de resíduos",
+          "description": "Compare a percentagem de resíduos reciclados por material.",
+          "summary": "Os valores apresentados são dados de demonstração do gráfico.",
+          "slices": [
+            {
+              "type": "vidro",
+              "label": "Vidro",
+              "value": 30
+            },
+            {
+              "type": "metal",
+              "label": "Metal",
+              "value": 25
+            },
+            {
+              "type": "papel",
+              "label": "Papel",
+              "value": 28
+            },
+            {
+              "type": "plastico",
+              "label": "Plástico",
+              "value": 17
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Gráfico circular donut",
+        "description": "Gráfico donut com título, descrição, resumo e legenda, por exemplo para percentagens de reciclagem.",
+        "icon": "chart-pie",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/charts/pie-chart-donut.md"
+    },
+    {
+      "blockName": "getquick/grafico-donut",
+      "catalogId": "grafico-donut",
+      "schemaVersion": 1,
+      "order": 29,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/grafico-donut.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "grafico-donut"
+        },
+        "slices": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "default": ""
+              },
+              "label": {
+                "type": "string",
+                "default": ""
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "type",
+              "label",
+              "value"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "items": "array"
+      },
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "slices"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/GraficoDonutBlock.astro",
+        "previewLabel": "Gráfico Donut",
+        "previewAttributes": {
+          "slices": [
+            {
+              "type": "vidro",
+              "label": "Vidro",
+              "value": 30
+            },
+            {
+              "type": "metal",
+              "label": "Metal",
+              "value": 25
+            },
+            {
+              "type": "papel",
+              "label": "Papel",
+              "value": 28
+            },
+            {
+              "type": "plastico",
+              "label": "Plástico",
+              "value": 17
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Gráfico donut",
+        "description": "Só o gráfico donut com legenda, sem título nem texto, para usar dentro de outros blocos.",
+        "icon": "chart-pie",
+        "experience": "inline-fields"
+      },
+      "documentation": "docs/gutenberg-blocks/charts/grafico-donut.md"
+    },
+    {
+      "blockName": "getquick/energy-consumption-chart",
+      "catalogId": "energy-consumption-chart",
+      "schemaVersion": 1,
+      "order": 30,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/energy-consumption-chart.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "energy-consumption-chart"
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "description": {
+          "type": "string",
+          "default": ""
+        },
+        "summary": {
+          "type": "string",
+          "default": ""
+        },
+        "data": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "month": {
+                "type": "string",
+                "default": ""
+              },
+              "solar": {
+                "type": "number"
+              },
+              "eletrica": {
+                "type": "number"
+              },
+              "gas": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "month",
+              "solar",
+              "eletrica",
+              "gas"
+            ]
+          }
+        },
+        "yMax": {
+          "type": "number"
+        }
+      },
+      "compatibilityReads": {
+        "items": "array"
+      },
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "title",
+          "description",
+          "summary",
+          "data",
+          "yMax"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/EnergyConsumptionGraphBlock.astro",
+        "previewLabel": "Graph energy consumption",
+        "previewAttributes": {
+          "title": "Consumo de energia por fonte",
+          "description": "Compare a evolução mensal das principais fontes de energia.",
+          "summary": "Os valores apresentados são dados de demonstração do gráfico.",
+          "yMax": 100,
+          "data": [
+            {
+              "month": "Jan",
+              "solar": 32,
+              "eletrica": 48,
+              "gas": 20
+            },
+            {
+              "month": "Abr",
+              "solar": 41,
+              "eletrica": 44,
+              "gas": 15
+            },
+            {
+              "month": "Jul",
+              "solar": 58,
+              "eletrica": 31,
+              "gas": 11
+            },
+            {
+              "month": "Out",
+              "solar": 45,
+              "eletrica": 39,
+              "gas": 16
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Gráfico de consumo de energia",
+        "description": "Gráfico de linhas com o consumo mensal por fonte de energia, com título, descrição e resumo.",
+        "icon": "chart-line",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/charts/energy-consumption.md"
+    },
+    {
+      "blockName": "getquick/sustainable-consumption-bars",
+      "catalogId": "sustainable-consumption-bars",
+      "schemaVersion": 1,
+      "order": 31,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/sustainable-consumption-bars.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "sustainable-consumption-bars"
+        },
+        "bars": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "band": {
+                "type": "string",
+                "default": ""
+              },
+              "label": {
+                "type": "string",
+                "default": ""
+              },
+              "pct": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "band",
+              "label",
+              "pct"
+            ]
+          }
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "subtitle": {
+          "type": "string",
+          "default": ""
+        },
+        "summary": {
+          "type": "string",
+          "default": ""
+        },
+        "headingId": {
+          "type": "string",
+          "default": ""
+        },
+        "sectionId": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "compatibilityReads": {
+        "items": "array"
+      },
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "bars",
+          "title",
+          "subtitle",
+          "summary",
+          "headingId",
+          "sectionId"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/SustainableConsumptionBarsGraphBlock.astro",
+        "previewLabel": "Graph vertical bars",
+        "previewAttributes": {
+          "title": "Participação em programas de reciclagem",
+          "subtitle": "Compare a participação por faixa etária.",
+          "summary": "Os valores apresentados são dados de demonstração do gráfico.",
+          "bars": [
+            {
+              "band": "18-25",
+              "label": "18–25 anos",
+              "pct": 20
+            },
+            {
+              "band": "26-40",
+              "label": "26–40 anos",
+              "pct": 40
+            },
+            {
+              "band": "41-60",
+              "label": "41–60 anos",
+              "pct": 27
+            },
+            {
+              "band": "60plus",
+              "label": "+60 anos",
+              "pct": 13
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Barras de consumo sustentável",
+        "description": "Gráfico de barras verticais com percentagens por grupo, com título, subtítulo e resumo.",
+        "icon": "chart-bar",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/charts/sustainable-consumption-bars.md"
+    },
+    {
+      "blockName": "getquick/urban-waste-geo-chart",
+      "catalogId": "urban-waste-geo-chart",
+      "schemaVersion": 1,
+      "order": 32,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/urban-waste-geo-chart.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "urban-waste-geo-chart"
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "badge": {
+          "type": "string",
+          "default": ""
+        },
+        "intro": {
+          "type": "string",
+          "default": ""
+        },
+        "summary": {
+          "type": "string",
+          "default": ""
+        },
+        "comparisonLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "metricLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "periodLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "scopeLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "regions": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "default": ""
+              },
+              "label": {
+                "type": "string",
+                "default": ""
+              },
+              "values": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "id",
+              "label",
+              "values"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {},
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "title",
+          "badge",
+          "intro",
+          "summary",
+          "comparisonLabel",
+          "metricLabel",
+          "periodLabel",
+          "scopeLabel",
+          "regions"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/UrbanWasteGeoGraphBlock.astro",
+        "previewLabel": "Graph urban waste geo",
+        "previewAttributes": {
+          "title": "Resíduos urbanos por habitante",
+          "badge": "2021–2024",
+          "intro": "Comparação ilustrativa por localização geográfica.",
+          "summary": "Valores de demonstração para o gráfico.",
+          "comparisonLabel": "Localização vs resíduos urbanos",
+          "metricLabel": "kg/habitante",
+          "periodLabel": "Anual",
+          "scopeLabel": "Portugal",
+          "regions": [
+            {
+              "id": "pt",
+              "label": "Portugal",
+              "values": {
+                "2021": 349,
+                "2022": 735,
+                "2023": 876,
+                "2024": 787
+              }
+            },
+            {
+              "id": "cont",
+              "label": "Continente",
+              "values": {
+                "2021": 680,
+                "2022": 956,
+                "2023": 735,
+                "2024": 720
+              }
+            },
+            {
+              "id": "norte",
+              "label": "Norte",
+              "values": {
+                "2021": 735,
+                "2022": 1000,
+                "2023": 959,
+                "2024": 915
+              }
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Gráfico geográfico de resíduos urbanos",
+        "description": "Barras horizontais de resíduos urbanos por habitante, por região e ano, com anos filtráveis.",
+        "icon": "admin-site-alt3",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/charts/urban-waste-geo.md"
+    },
+    {
+      "blockName": "getquick/resource-productivity-bars",
+      "catalogId": "resource-productivity-bars",
+      "schemaVersion": 1,
+      "order": 33,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/resource-productivity-bars.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "resource-productivity-bars"
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "badge": {
+          "type": "string",
+          "default": ""
+        },
+        "intro": {
+          "type": "string",
+          "default": ""
+        },
+        "points": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "year": {
+                "type": "number"
+              },
+              "label": {
+                "type": "string",
+                "default": ""
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "year",
+              "value"
+            ]
+          }
+        },
+        "yMax": {
+          "type": "number"
+        },
+        "metricLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "periodLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "scopeLabel": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "compatibilityReads": {
+        "items": "array"
+      },
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "title",
+          "badge",
+          "intro",
+          "points",
+          "yMax",
+          "metricLabel",
+          "periodLabel",
+          "scopeLabel"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/ResourceProductivityBarsGraphBlock.astro",
+        "previewLabel": "Graph resource productivity bars",
+        "previewAttributes": {
+          "title": "Produtividade dos recursos",
+          "badge": "2020–2023",
+          "intro": "A evolução da produtividade dos recursos em Portugal.",
+          "metricLabel": "€/kg",
+          "periodLabel": "Anual",
+          "scopeLabel": "Portugal",
+          "yMax": 2,
+          "points": [
+            {
+              "year": 2020,
+              "label": "2020",
+              "value": 1.1
+            },
+            {
+              "year": 2021,
+              "label": "2021",
+              "value": 1.25
+            },
+            {
+              "year": 2022,
+              "label": "2022",
+              "value": 1.38
+            },
+            {
+              "year": 2023,
+              "label": "2023",
+              "value": 1.41
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Barras de produtividade dos recursos",
+        "description": "Gráfico de barras anual da produtividade dos recursos, com título, etiqueta, introdução e filtros.",
+        "icon": "chart-bar",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/charts/resource-productivity-bars.md"
+    },
+    {
+      "blockName": "getquick/resource-productivity-chart",
+      "catalogId": "resource-productivity-chart",
+      "schemaVersion": 1,
+      "order": 34,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/resource-productivity-chart.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "resource-productivity-chart"
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "filterLabels": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string",
+            "default": ""
+          }
+        },
+        "points": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "year": {
+                "type": "number"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "year",
+              "value"
+            ]
+          }
+        },
+        "yMax": {
+          "type": "number"
+        },
+        "locale": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "compatibilityReads": {},
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "title",
+          "filterLabels",
+          "points",
+          "yMax",
+          "locale"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/ResourceProductivityGraphBlock.astro",
+        "previewLabel": "Graph resource productivity",
+        "previewAttributes": {
+          "title": "Produtividade dos recursos",
+          "filterLabels": [
+            "Portugal",
+            "União Europeia"
+          ],
+          "locale": "pt-PT",
+          "points": [
+            {
+              "year": 2020,
+              "value": 1.1
+            },
+            {
+              "year": 2021,
+              "value": 1.25
+            },
+            {
+              "year": 2022,
+              "value": 1.38
+            },
+            {
+              "year": 2023,
+              "value": 1.41
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Gráfico de produtividade dos recursos",
+        "description": "Gráfico de barras simples da produtividade dos recursos por ano, com título e etiquetas de filtro.",
+        "icon": "chart-area",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/charts/resource-productivity.md"
+    },
+    {
+      "blockName": "getquick/nomia-contact-map",
+      "catalogId": "nomia-contact-map",
+      "schemaVersion": 1,
+      "order": 35,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/nomia-contact-map.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "nomia-contact-map"
+        },
+        "mapUrl": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "align": {
+          "type": "string",
+          "default": "none",
+          "enum": [
+            "none",
+            "left",
+            "right",
+            "full"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        }
+      },
+      "compatibilityReads": {
+        "url": "string"
+      },
+      "editing": {
+        "mode": "bespoke",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/NomiaContactMap.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": null,
+        "note": "The bespoke editor module owns the visible controls; inspect it before editing."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/NomiaContactMapBlock.astro",
+        "previewLabel": "Nomia contact map",
+        "previewAttributes": {
+          "mapUrl": "https://www.google.com/maps/search/?api=1&query=Lisboa%2C%20Portugal",
+          "title": "Mapa de contacto"
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Mapa de contacto",
+        "description": "Mapa Google para páginas de contacto. Cole um link do Google Maps.",
+        "icon": "location-alt",
+        "experience": "inline-fields",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/NomiaContactMap.jsx"
+      },
+      "documentation": "docs/gutenberg-blocks/nomia-contact-map.md"
+    },
+    {
+      "blockName": "getquick/section",
+      "catalogId": "section",
+      "schemaVersion": 1,
+      "order": 36,
+      "status": "active",
+      "inserter": true,
+      "container": true,
+      "sourceFile": "src/structured-blocks/registrations/section.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "section"
+        },
+        "backgroundColor": {
+          "type": "string",
+          "default": ""
+        },
+        "backgroundImageId": {
+          "type": "number"
+        },
+        "backgroundImageSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "backgroundImagePosition": {
+          "type": "string",
+          "default": "center",
+          "enum": [
+            "top-left",
+            "top",
+            "top-right",
+            "left",
+            "center",
+            "right",
+            "bottom-left",
+            "bottom",
+            "bottom-right"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        },
+        "backgroundImageSize": {
+          "type": "string",
+          "default": "cover",
+          "enum": [
+            "cover",
+            "contain",
+            "none"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        },
+        "paddingTop": {
+          "type": "string",
+          "default": "medium",
+          "enum": [
+            "none",
+            "small",
+            "medium",
+            "large"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        },
+        "paddingBottom": {
+          "type": "string",
+          "default": "medium",
+          "enum": [
+            "none",
+            "small",
+            "medium",
+            "large"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        },
+        "paddingX": {
+          "type": "string",
+          "default": "default",
+          "enum": [
+            "none",
+            "small",
+            "default"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        }
+      },
+      "compatibilityReads": {},
+      "editing": {
+        "mode": "bespoke",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/Section.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": null,
+        "note": "The bespoke editor module owns the visible controls; inspect it before editing."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/SectionBlock.astro",
+        "previewLabel": "Section",
+        "previewAttributes": {
+          "backgroundColor": "#00524d",
+          "paddingTop": "medium",
+          "paddingBottom": "medium",
+          "paddingX": "default"
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Secção",
+        "description": "Faixa Nomia que agrupa outros blocos, com fundo e espaçamento próprios.",
+        "icon": "editor-table",
+        "experience": "inline-fields",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/Section.jsx"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/section.md"
+    },
+    {
+      "blockName": "getquick/contact-details-card",
+      "catalogId": "contact-details-card",
+      "schemaVersion": 1,
+      "order": 37,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/contact-details-card.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "contact-details-card"
+        },
+        "iconId": {
+          "type": "number"
+        },
+        "iconUrl": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "iconAlt": {
+          "type": "string",
+          "default": ""
+        },
+        "hideIcon": {
+          "type": "boolean",
+          "default": false
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "details": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "textarea"
+          }
+        },
+        "buttonLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "buttonHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "hideButton": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "compatibilityReads": {},
+      "editing": {
+        "mode": "bespoke",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/ContactDetailsCard.jsx",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": null,
+        "note": "The bespoke editor module owns the visible controls; inspect it before editing."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/ContactDetailsCardBlock.astro",
+        "previewLabel": "Contact details card",
+        "previewAttributes": {
+          "iconUrl": "/images/contact-details-card/adults.svg",
+          "title": "Morada",
+          "details": "Serviços Centrais Rua da Murgueira, 9<br>Zambujal - Alfragide<br>2610-124 Amadora",
+          "buttonLabel": "Direções",
+          "buttonHref": "https://www.google.com/maps/search/?api=1&query=Rua%20da%20Murgueira%209%20Amadora"
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Cartão de contacto",
+        "description": "Cartão com ícone, título, detalhes de contacto e botão opcional.",
+        "icon": "id",
+        "experience": "inline-fields",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/ContactDetailsCard.jsx"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/contact-details-card.md"
+    }
+  ]
+}

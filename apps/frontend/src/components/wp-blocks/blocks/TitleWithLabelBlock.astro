@@ -1,0 +1,39 @@
+---
+import {
+	normalizeTitleWithLabelHeadingLevel,
+	readTitleWithLabelTypographies,
+} from "../../../lib/title-with-label-typography";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import TitleWithLabel from "../../sections/TitleWithLabel.astro";
+import { plainText } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props {
+  block: WpParsedBlock;
+}
+
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/title-with-label">;
+
+// The editor fields are RichText, which stores HTML: a typed "&" arrives as
+// "&amp;", so the copy is decoded to text before Astro escapes it again.
+const label = plainText(attrs.label);
+const titleLine1 = plainText(attrs.titleLine1);
+const titleLine2 = plainText(attrs.titleLine2);
+const level = normalizeTitleWithLabelHeadingLevel(attrs.level);
+const typography = readTitleWithLabelTypographies(attrs);
+// The editor warns about the same two required fields before publishing.
+const canRender = Boolean(label && titleLine1);
+---
+
+{
+  canRender ? (
+    <TitleWithLabel
+      label={label}
+      titleLine1={titleLine1}
+      titleLine2={titleLine2 || undefined}
+      level={level}
+      typography={typography}
+    />
+  ) : null
+}

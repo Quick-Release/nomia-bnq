@@ -1,0 +1,3820 @@
+{
+  "schemaVersion": 1,
+  "source": "apps/web",
+  "contracts": [
+    {
+      "blockName": "getquick/page-hero-static",
+      "catalogId": "page-hero-static",
+      "schemaVersion": 1,
+      "order": 1,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "title",
+        "subtitle",
+        "showSubtitle",
+        "imageId",
+        "imageSrc",
+        "imageAlt",
+        "cta",
+        "ctaLabel",
+        "showCta",
+        "ctaHref",
+        "titleTextFontSize",
+        "subtitleTextFontSize",
+        "titleTextColor",
+        "subtitleTextColor",
+        "subtitleLineHeight",
+        "textAlign",
+        "height",
+        "paddingTop",
+        "paddingBottom"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "page-hero-static"
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "subtitle": {
+          "type": "string",
+          "default": ""
+        },
+        "showSubtitle": {
+          "type": "boolean",
+          "default": true
+        },
+        "imageId": {
+          "type": "number"
+        },
+        "imageSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "imageAlt": {
+          "type": "string",
+          "default": ""
+        },
+        "cta": {
+          "type": "object"
+        },
+        "ctaLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "showCta": {
+          "type": "boolean",
+          "default": false
+        },
+        "ctaHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "titleTextFontSize": {
+          "type": "number",
+          "ui": {
+            "kind": "number"
+          }
+        },
+        "subtitleTextFontSize": {
+          "type": "number",
+          "ui": {
+            "kind": "number"
+          }
+        },
+        "titleTextColor": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "text"
+          }
+        },
+        "subtitleTextColor": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "text"
+          }
+        },
+        "subtitleLineHeight": {
+          "type": "string",
+          "default": "default",
+          "enum": [
+            "default",
+            "j",
+            "i",
+            "h",
+            "g",
+            "f",
+            "e",
+            "d",
+            "c",
+            "b",
+            "a"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        },
+        "textAlign": {
+          "type": "string",
+          "default": "left",
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        },
+        "height": {
+          "type": "string",
+          "default": "xl",
+          "enum": [
+            "xs",
+            "s",
+            "m",
+            "l",
+            "xl"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        },
+        "paddingTop": {
+          "type": "string",
+          "default": "default",
+          "enum": [
+            "default",
+            "none",
+            "small",
+            "medium",
+            "large"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        },
+        "paddingBottom": {
+          "type": "string",
+          "default": "default",
+          "enum": [
+            "default",
+            "none",
+            "small",
+            "medium",
+            "large"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        }
+      },
+      "compatibilityReads": {
+        "ctaUrl": "string",
+        "imageUrl": "string",
+        "hideCta": "boolean"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Cabeçalho página com imagem",
+      "editorDescription": "Hero no topo da página com imagem de fundo, título, subtítulo e botão opcional.",
+      "editorIcon": "cover-image"
+    },
+    {
+      "blockName": "getquick/page-hero-media-grid",
+      "catalogId": "page-hero-media-grid",
+      "schemaVersion": 1,
+      "order": 2,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "backgroundImageId",
+        "backgroundImageSrc",
+        "backgroundImageAlt",
+        "heading",
+        "firstTitle",
+        "firstText",
+        "firstHref",
+        "firstBackgroundColor",
+        "firstHoverBackgroundColor",
+        "firstTitleColor",
+        "firstTextColor",
+        "firstBorderRadius",
+        "secondTitle",
+        "secondText",
+        "secondHref",
+        "secondBackgroundColor",
+        "secondHoverBackgroundColor",
+        "secondTitleColor",
+        "secondTextColor",
+        "secondBorderRadius",
+        "textVerticalAlign",
+        "videoId",
+        "videoSrc",
+        "videoPosterId",
+        "videoPosterSrc",
+        "videoTitle",
+        "videoBorderRadius",
+        "shareHref",
+        "shareLabel"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "page-hero-media-grid"
+        },
+        "backgroundImageId": {
+          "type": "number"
+        },
+        "backgroundImageSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "backgroundImageAlt": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": "Destaques e video"
+        },
+        "firstTitle": {
+          "type": "string",
+          "default": ""
+        },
+        "firstText": {
+          "type": "string",
+          "default": ""
+        },
+        "firstHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "firstBackgroundColor": {
+          "type": "string",
+          "default": "#ffffff"
+        },
+        "firstHoverBackgroundColor": {
+          "type": "string",
+          "default": "#f2a900"
+        },
+        "firstTitleColor": {
+          "type": "string",
+          "default": "#ffffff"
+        },
+        "firstTextColor": {
+          "type": "string",
+          "default": "#ffffff"
+        },
+        "firstBorderRadius": {
+          "type": "string",
+          "default": "40"
+        },
+        "secondTitle": {
+          "type": "string",
+          "default": ""
+        },
+        "secondText": {
+          "type": "string",
+          "default": ""
+        },
+        "secondHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "secondBackgroundColor": {
+          "type": "string",
+          "default": "#ffffff"
+        },
+        "secondHoverBackgroundColor": {
+          "type": "string",
+          "default": "#f2a900"
+        },
+        "secondTitleColor": {
+          "type": "string",
+          "default": "#ffffff"
+        },
+        "secondTextColor": {
+          "type": "string",
+          "default": "#ffffff"
+        },
+        "secondBorderRadius": {
+          "type": "string",
+          "default": "40"
+        },
+        "textVerticalAlign": {
+          "type": "string",
+          "default": "bottom",
+          "enum": [
+            "top",
+            "bottom"
+          ]
+        },
+        "videoId": {
+          "type": "number"
+        },
+        "videoSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "videoPosterId": {
+          "type": "number"
+        },
+        "videoPosterSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "videoTitle": {
+          "type": "string",
+          "default": "Video"
+        },
+        "videoBorderRadius": {
+          "type": "string",
+          "default": "40"
+        },
+        "shareHref": {
+          "type": "string",
+          "default": "https://nomia.getquick.io/partilhar/",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "shareLabel": {
+          "type": "string",
+          "default": "Partilhar"
+        }
+      },
+      "compatibilityReads": {},
+      "editorExperience": "preview",
+      "editorTitle": "Hero de página: vídeo e destaques",
+      "editorDescription": "Hero com imagem de fundo, duas chamadas com ligação e uma coluna de vídeo.",
+      "editorIcon": "format-video"
+    },
+    {
+      "blockName": "getquick/page-hero-slider",
+      "catalogId": "page-hero-slider",
+      "schemaVersion": 1,
+      "order": 3,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "slides"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "page-hero-slider"
+        },
+        "slides": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "default": ""
+              },
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "subtitle": {
+                "type": "string",
+                "default": ""
+              },
+              "ctaLabel": {
+                "type": "string",
+                "default": ""
+              },
+              "ctaHref": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "ctaUrl"
+                ],
+                "ui": {
+                  "kind": "url"
+                }
+              },
+              "bgImageId": {
+                "type": "number"
+              },
+              "bgImage": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "imageSrc",
+                  "imageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "spotlightImageId": {
+                "type": "number"
+              },
+              "spotlightImageSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "spotlightImageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "showSpotlight": {
+                "type": "boolean",
+                "default": true
+              },
+              "spotlightTitle": {
+                "type": "string",
+                "default": ""
+              },
+              "spotlightBody": {
+                "type": "string",
+                "default": ""
+              },
+              "spotlightHref": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "spotlightUrl"
+                ],
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "title",
+              "subtitle",
+              "ctaLabel",
+              "ctaHref",
+              "bgImage"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {},
+      "editorExperience": "preview",
+      "editorTitle": "Hero de página: slider",
+      "editorDescription": "Hero em carrossel em que cada diapositivo tem imagem de fundo, título, botão e destaque opcional.",
+      "editorIcon": "images-alt2"
+    },
+    {
+      "blockName": "getquick/title-with-label",
+      "catalogId": "title-with-label",
+      "schemaVersion": 1,
+      "order": 4,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "label",
+        "titleLine1",
+        "titleLine2",
+        "level",
+        "typography"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "title-with-label"
+        },
+        "label": {
+          "type": "string",
+          "default": ""
+        },
+        "titleLine1": {
+          "type": "string",
+          "default": ""
+        },
+        "titleLine2": {
+          "type": "string",
+          "default": ""
+        },
+        "level": {
+          "type": "number",
+          "default": 2
+        },
+        "typography": {
+          "type": "object",
+          "properties": {
+            "label": {
+              "type": "object",
+              "properties": {
+                "size": {
+                  "type": "string",
+                  "enum": [
+                    "extra",
+                    "notes",
+                    "body",
+                    "body-large",
+                    "subtitle",
+                    "h4",
+                    "h3",
+                    "h2",
+                    "h1",
+                    "large",
+                    "super"
+                  ]
+                },
+                "lineHeight": {
+                  "type": "string",
+                  "enum": [
+                    "j",
+                    "i",
+                    "h",
+                    "g",
+                    "f",
+                    "e",
+                    "d",
+                    "c",
+                    "b",
+                    "a"
+                  ]
+                },
+                "bold": {
+                  "type": "boolean"
+                },
+                "italic": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "titleLine1": {
+              "type": "object",
+              "properties": {
+                "size": {
+                  "type": "string",
+                  "enum": [
+                    "extra",
+                    "notes",
+                    "body",
+                    "body-large",
+                    "subtitle",
+                    "h4",
+                    "h3",
+                    "h2",
+                    "h1",
+                    "large",
+                    "super"
+                  ]
+                },
+                "lineHeight": {
+                  "type": "string",
+                  "enum": [
+                    "j",
+                    "i",
+                    "h",
+                    "g",
+                    "f",
+                    "e",
+                    "d",
+                    "c",
+                    "b",
+                    "a"
+                  ]
+                },
+                "bold": {
+                  "type": "boolean"
+                },
+                "italic": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "titleLine2": {
+              "type": "object",
+              "properties": {
+                "size": {
+                  "type": "string",
+                  "enum": [
+                    "extra",
+                    "notes",
+                    "body",
+                    "body-large",
+                    "subtitle",
+                    "h4",
+                    "h3",
+                    "h2",
+                    "h1",
+                    "large",
+                    "super"
+                  ]
+                },
+                "lineHeight": {
+                  "type": "string",
+                  "enum": [
+                    "j",
+                    "i",
+                    "h",
+                    "g",
+                    "f",
+                    "e",
+                    "d",
+                    "c",
+                    "b",
+                    "a"
+                  ]
+                },
+                "bold": {
+                  "type": "boolean"
+                },
+                "italic": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "compatibilityReads": {
+        "labelFontSize": "number",
+        "labelLineHeight": "number",
+        "labelBold": "boolean",
+        "labelItalic": "boolean",
+        "titleLine1FontSize": "number",
+        "titleLine1LineHeight": "number",
+        "titleLine1Bold": "boolean",
+        "titleLine1Italic": "boolean",
+        "titleLine2FontSize": "number",
+        "titleLine2LineHeight": "number",
+        "titleLine2Bold": "boolean",
+        "titleLine2Italic": "boolean"
+      },
+      "editorExperience": "inline-fields",
+      "editorTitle": "Título com etiqueta",
+      "editorDescription": "Título de secção numa ou duas linhas, com uma etiqueta curta por cima.",
+      "editorIcon": "heading"
+    },
+    {
+      "blockName": "getquick/content-list",
+      "catalogId": "content-list",
+      "schemaVersion": 1,
+      "order": 5,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "items"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "content-list"
+        },
+        "items": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "episodeNumber": {
+                "type": "number"
+              },
+              "dateLabel": {
+                "type": "string",
+                "default": ""
+              },
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "imageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "listenHref": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "listenUrl"
+                ],
+                "ui": {
+                  "kind": "url"
+                }
+              },
+              "shareUrl": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "title",
+              "dateLabel",
+              "imageSrc",
+              "listenHref"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "episodes": "array"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Lista de conteúdos",
+      "editorDescription": "Lista de episódios com imagem, número, data e botões para ouvir e partilhar.",
+      "editorIcon": "playlist-audio"
+    },
+    {
+      "blockName": "getquick/content-grid-filters",
+      "catalogId": "content-grid-filters",
+      "schemaVersion": 1,
+      "order": 6,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "heading",
+        "items",
+        "tematicas",
+        "setores"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "content-grid-filters"
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "items": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "default": ""
+              },
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "slug": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              },
+              "date": {
+                "type": "string",
+                "default": ""
+              },
+              "dateLabel": {
+                "type": "string",
+                "default": ""
+              },
+              "description": {
+                "type": "string",
+                "default": ""
+              },
+              "subtitle": {
+                "type": "string",
+                "default": ""
+              },
+              "featured": {
+                "type": "boolean",
+                "default": false
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageUrl": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "tematicas": {
+                "type": "array",
+                "default": [],
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "slug": {
+                      "type": "string",
+                      "default": ""
+                    },
+                    "name": {
+                      "type": "string",
+                      "default": ""
+                    }
+                  },
+                  "required": [
+                    "slug",
+                    "name"
+                  ]
+                }
+              },
+              "setores": {
+                "type": "array",
+                "default": [],
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "slug": {
+                      "type": "string",
+                      "default": ""
+                    },
+                    "name": {
+                      "type": "string",
+                      "default": ""
+                    }
+                  },
+                  "required": [
+                    "slug",
+                    "name"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "title",
+              "href"
+            ]
+          }
+        },
+        "tematicas": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "slug": {
+                "type": "string",
+                "default": ""
+              },
+              "name": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "slug",
+              "name"
+            ]
+          }
+        },
+        "setores": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "slug": {
+                "type": "string",
+                "default": ""
+              },
+              "name": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "slug",
+              "name"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "plataformas": "array"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Grelha de conteúdos com filtros",
+      "editorDescription": "Grelha de cartões com imagem, título e descrição, que os visitantes filtram por temáticas e setores.",
+      "editorIcon": "filter"
+    },
+    {
+      "blockName": "getquick/map-list",
+      "catalogId": "map-list",
+      "schemaVersion": 1,
+      "order": 7,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "regions",
+        "audiences",
+        "items"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "map-list"
+        },
+        "regions": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "default": ""
+              },
+              "label": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "id",
+              "label"
+            ]
+          }
+        },
+        "audiences": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "default": ""
+              },
+              "label": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "id",
+              "label"
+            ]
+          }
+        },
+        "items": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "default": ""
+              },
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "excerpt": {
+                "type": "string",
+                "default": ""
+              },
+              "dateLabel": {
+                "type": "string",
+                "default": ""
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "imageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "url"
+                ],
+                "ui": {
+                  "kind": "url"
+                }
+              },
+              "regionId": {
+                "type": "string",
+                "default": ""
+              },
+              "audienceIds": {
+                "type": "array",
+                "default": [],
+                "items": {
+                  "type": "string",
+                  "default": ""
+                }
+              }
+            },
+            "required": [
+              "title",
+              "href",
+              "imageSrc",
+              "regionId",
+              "audienceIds"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {},
+      "editorExperience": "preview",
+      "editorTitle": "Mapa com lista",
+      "editorDescription": "Mapa de regiões com filtros por público e lista dos conteúdos de cada região.",
+      "editorIcon": "location"
+    },
+    {
+      "blockName": "getquick/cta-results",
+      "catalogId": "cta-results",
+      "schemaVersion": 1,
+      "order": 8,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "results"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "cta-results"
+        },
+        "results": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "year": {
+                "type": "string",
+                "default": ""
+              },
+              "value": {
+                "type": "string",
+                "default": ""
+              },
+              "unit": {
+                "type": "string",
+                "default": ""
+              },
+              "description": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              },
+              "nodeId": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "year",
+              "value",
+              "unit",
+              "description",
+              "href"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "items": "array"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Chamada para resultados",
+      "editorDescription": "Resultados do Barómetro em destaque, cada um com ano, valor, unidade, descrição e ligação.",
+      "editorIcon": "analytics"
+    },
+    {
+      "blockName": "getquick/two-columns-text-image",
+      "catalogId": "two-columns-text-image",
+      "schemaVersion": 1,
+      "order": 9,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "eyebrowLabel",
+        "eyebrow",
+        "accent",
+        "heading",
+        "body",
+        "ctaHref",
+        "ctaLabel",
+        "primaryId",
+        "primarySrc",
+        "primaryAlt",
+        "mediaPosition",
+        "hideCta",
+        "hideTaxonomy"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "two-columns-text-image"
+        },
+        "eyebrowLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "accent": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "body": {
+          "type": "string",
+          "default": ""
+        },
+        "ctaHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "ctaLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "primaryId": {
+          "type": "number"
+        },
+        "primarySrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "primaryAlt": {
+          "type": "string",
+          "default": ""
+        },
+        "mediaPosition": {
+          "type": "string",
+          "default": ""
+        },
+        "hideCta": {
+          "type": "boolean",
+          "default": false
+        },
+        "hideTaxonomy": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "compatibilityReads": {
+        "ctaUrl": "string",
+        "primaryUrl": "string",
+        "headingId": "string"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Duas colunas com texto e imagem",
+      "editorDescription": "Texto com etiqueta, título e botão ao lado de uma imagem, à esquerda ou à direita.",
+      "editorIcon": "align-pull-left"
+    },
+    {
+      "blockName": "getquick/image-zoom",
+      "catalogId": "image-zoom",
+      "schemaVersion": 1,
+      "order": 10,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "imageId",
+        "imageSrc",
+        "imageAlt",
+        "caption"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "image-zoom"
+        },
+        "imageId": {
+          "type": "number"
+        },
+        "imageSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "imageAlt": {
+          "type": "string",
+          "default": ""
+        },
+        "caption": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "compatibilityReads": {
+        "imageUrl": "string",
+        "url": "string",
+        "alt": "string"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Imagem com zoom",
+      "editorDescription": "Imagem com legenda opcional que amplia ao passar o rato e abre em ecrã inteiro ao clicar.",
+      "editorIcon": "search"
+    },
+    {
+      "blockName": "getquick/home-intro",
+      "catalogId": "home-intro",
+      "schemaVersion": 1,
+      "order": 11,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "eyebrowLabel",
+        "eyebrow",
+        "accent",
+        "heading",
+        "body",
+        "ctaHref",
+        "ctaLabel",
+        "showCta",
+        "showTematica",
+        "showCaption",
+        "heroId",
+        "heroSrc",
+        "heroAlt",
+        "captionHeading",
+        "captionBody"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "home-intro"
+        },
+        "eyebrowLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "accent": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "body": {
+          "type": "string",
+          "default": ""
+        },
+        "ctaHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "ctaLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "showCta": {
+          "type": "boolean",
+          "default": false
+        },
+        "showTematica": {
+          "type": "boolean",
+          "default": false
+        },
+        "showCaption": {
+          "type": "boolean",
+          "default": false
+        },
+        "heroId": {
+          "type": "number"
+        },
+        "heroSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "heroAlt": {
+          "type": "string",
+          "default": ""
+        },
+        "captionHeading": {
+          "type": "string",
+          "default": ""
+        },
+        "captionBody": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "compatibilityReads": {
+        "ctaUrl": "string",
+        "heroUrl": "string",
+        "hideCta": "boolean"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Introdução da homepage",
+      "editorDescription": "Introdução com etiqueta, título, texto, botão e imagem grande com legenda opcional.",
+      "editorIcon": "admin-home"
+    },
+    {
+      "blockName": "getquick/sustainable-bioeconomy-dual-cards",
+      "catalogId": "sustainable-bioeconomy-dual-cards",
+      "schemaVersion": 1,
+      "order": 12,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "eyebrow",
+        "heading",
+        "cards"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "sustainable-bioeconomy-dual-cards"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "cards": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "body": {
+                "type": "string",
+                "default": ""
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "imageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "headingId": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "title",
+              "body",
+              "imageSrc"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "items": "array"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Bioeconomia sustentável: cartões duplos",
+      "editorDescription": "Cabeçalho com dois cartões lado a lado, cada um com imagem, título e texto.",
+      "editorIcon": "columns"
+    },
+    {
+      "blockName": "getquick/bioeconomy-phases-band",
+      "catalogId": "bioeconomy-phases-band",
+      "schemaVersion": 1,
+      "order": 13,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "imageId",
+        "imageSrc",
+        "phases"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "bioeconomy-phases-band"
+        },
+        "imageId": {
+          "type": "number"
+        },
+        "imageSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "phases": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "phase": {
+                "type": "string",
+                "default": ""
+              },
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "body": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "phase",
+              "title",
+              "body"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "imageUrl": "string",
+        "items": "array"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Bioeconomia: faixa de fases",
+      "editorDescription": "Faixa sobre fotografia com as fases da bioeconomia, cada uma com fase, título e texto.",
+      "editorIcon": "editor-ol"
+    },
+    {
+      "blockName": "getquick/pabs-content-slider",
+      "catalogId": "pabs-content-slider",
+      "schemaVersion": 1,
+      "order": 14,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "eyebrow",
+        "heading",
+        "intro",
+        "panes"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "pabs-content-slider"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "intro": {
+          "type": "string",
+          "default": ""
+        },
+        "panes": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "navLabel": {
+                "type": "string",
+                "default": ""
+              },
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "subtitle": {
+                "type": "string",
+                "default": ""
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "imageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "tags": {
+                "type": "array",
+                "default": [],
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "type": "string",
+                      "default": ""
+                    },
+                    "href": {
+                      "type": "string",
+                      "default": "",
+                      "ui": {
+                        "kind": "url"
+                      }
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "href"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "navLabel",
+              "title",
+              "subtitle",
+              "imageSrc"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "items": "array"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "PABS: slider de conteúdos",
+      "editorDescription": "Conteúdos do PABS em separadores: menu lateral e painel com imagem, título, texto e etiquetas.",
+      "editorIcon": "list-view"
+    },
+    {
+      "blockName": "getquick/horizontal-scroll-with-content",
+      "catalogId": "horizontal-scroll-with-content",
+      "schemaVersion": 1,
+      "order": 15,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "eyebrow",
+        "headingLine1",
+        "headingLine2",
+        "pills",
+        "verTodosHref",
+        "verTodosLabel",
+        "slides"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "horizontal-scroll-with-content"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "headingLine1": {
+          "type": "string",
+          "default": ""
+        },
+        "headingLine2": {
+          "type": "string",
+          "default": ""
+        },
+        "pills": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "label"
+            ]
+          }
+        },
+        "verTodosHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "verTodosLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "slides": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "default": ""
+              },
+              "caption": {
+                "type": "string",
+                "default": ""
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "imageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "caption",
+              "imageSrc",
+              "href"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "verTodosUrl": "string",
+        "items": "array"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Scroll horizontal com conteúdo",
+      "editorDescription": "Imagens com legenda e ligação em deslocamento horizontal, com título, etiquetas e botão «Ver todos».",
+      "editorIcon": "leftright"
+    },
+    {
+      "blockName": "getquick/circular-economy-overview",
+      "catalogId": "circular-economy-overview",
+      "schemaVersion": 1,
+      "order": 16,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "eyebrow",
+        "headingLine1",
+        "headingLine2",
+        "pills",
+        "verTodosHref",
+        "verTodosLabel",
+        "slides"
+      ],
+      "status": "legacy",
+      "inserter": false,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "circular-economy-overview"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "headingLine1": {
+          "type": "string",
+          "default": ""
+        },
+        "headingLine2": {
+          "type": "string",
+          "default": ""
+        },
+        "pills": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "label"
+            ]
+          }
+        },
+        "verTodosHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "verTodosLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "slides": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "default": ""
+              },
+              "caption": {
+                "type": "string",
+                "default": ""
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "imageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "caption",
+              "imageSrc",
+              "href"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "verTodosUrl": "string",
+        "items": "array"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Obsoleto: visão geral da economia circular",
+      "editorDescription": "Bloco antigo mantido para conteúdos já publicados. Use Scroll horizontal com conteúdo.",
+      "editorIcon": "warning"
+    },
+    {
+      "blockName": "getquick/circular-economy-overview-slider",
+      "catalogId": "circular-economy-overview-slider",
+      "schemaVersion": 1,
+      "order": 17,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "eyebrow",
+        "headingLine1",
+        "headingLine2",
+        "pills",
+        "verTodosHref",
+        "verTodosLabel",
+        "slides"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "circular-economy-overview-slider"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "headingLine1": {
+          "type": "string",
+          "default": ""
+        },
+        "headingLine2": {
+          "type": "string",
+          "default": ""
+        },
+        "pills": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "label"
+            ]
+          }
+        },
+        "verTodosHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "verTodosLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "slides": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "default": ""
+              },
+              "caption": {
+                "type": "string",
+                "default": ""
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "imageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "caption",
+              "imageSrc",
+              "href"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "verTodosUrl": "string",
+        "items": "array"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Economia circular: slider geral",
+      "editorDescription": "Carrossel de imagens com legenda e ligação, precedido de título, etiquetas e botão «Ver todos».",
+      "editorIcon": "slides"
+    },
+    {
+      "blockName": "getquick/paec-2030",
+      "catalogId": "paec-2030",
+      "schemaVersion": 1,
+      "order": 18,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "eyebrow",
+        "heading",
+        "imageLeftId",
+        "imageLeftSrc",
+        "imageLeftAlt",
+        "imageRightId",
+        "imageRightSrc",
+        "imageRightAlt",
+        "intro",
+        "saberMaisHref",
+        "saberMaisLabel",
+        "objectives"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "paec-2030"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "imageLeftId": {
+          "type": "number"
+        },
+        "imageLeftSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "imageLeftAlt": {
+          "type": "string",
+          "default": ""
+        },
+        "imageRightId": {
+          "type": "number"
+        },
+        "imageRightSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "imageRightAlt": {
+          "type": "string",
+          "default": ""
+        },
+        "intro": {
+          "type": "string",
+          "default": ""
+        },
+        "saberMaisHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "saberMaisLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "objectives": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string",
+                "default": ""
+              },
+              "description": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "code",
+              "description"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "imageLeftUrl": "string",
+        "imageRightUrl": "string",
+        "saberMaisUrl": "string"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "PAEC 2030",
+      "editorDescription": "Secção do PAEC 2030 com título, duas imagens, introdução, objetivos com código e ligação.",
+      "editorIcon": "flag"
+    },
+    {
+      "blockName": "getquick/macro-meso-micro",
+      "catalogId": "macro-meso-micro",
+      "schemaVersion": 1,
+      "order": 19,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "leftImageId",
+        "leftImageSrc",
+        "leftImageAlt",
+        "tiers"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "macro-meso-micro"
+        },
+        "leftImageId": {
+          "type": "number"
+        },
+        "leftImageSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "leftImageAlt": {
+          "type": "string",
+          "default": ""
+        },
+        "tiers": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "default": ""
+              },
+              "pillLabel": {
+                "type": "string",
+                "default": ""
+              },
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "portraitId": {
+                "type": "number"
+              },
+              "portraitSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "portraitUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "portraitAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "description": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "id",
+              "pillLabel",
+              "title",
+              "portraitSrc",
+              "description"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "leftImageUrl": "string"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Macro, meso e micro",
+      "editorDescription": "Imagem ao lado de separadores macro, meso e micro, cada um com título, retrato e descrição.",
+      "editorIcon": "networking"
+    },
+    {
+      "blockName": "getquick/circular-economy-indicators-spotlight",
+      "catalogId": "circular-economy-indicators-spotlight",
+      "schemaVersion": 1,
+      "order": 20,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "eyebrow",
+        "heading",
+        "ctaHref",
+        "ctaLabel",
+        "cards"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "circular-economy-indicators-spotlight"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "ctaHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "ctaLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "cards": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "description": {
+                "type": "string",
+                "default": ""
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "imageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              },
+              "layout": {
+                "type": "string",
+                "default": "start",
+                "enum": [
+                  "start",
+                  "stagger"
+                ]
+              }
+            },
+            "required": [
+              "title",
+              "description",
+              "imageSrc"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "ctaUrl": "string",
+        "items": "array"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Economia circular: indicadores em destaque",
+      "editorDescription": "Indicadores em cartões com imagem, título e texto, em disposição escalonada, com cabeçalho e botão.",
+      "editorIcon": "star-filled"
+    },
+    {
+      "blockName": "getquick/circular-economy-resources",
+      "catalogId": "circular-economy-resources",
+      "schemaVersion": 1,
+      "order": 21,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "eyebrow",
+        "heading",
+        "cards"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "circular-economy-resources"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "cards": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "description": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "title",
+              "description",
+              "href"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "resources": "array"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Economia circular: recursos",
+      "editorDescription": "Lista de recursos com cabeçalho e cartões de ligação, cada um com título e descrição.",
+      "editorIcon": "portfolio"
+    },
+    {
+      "blockName": "getquick/indicators-grid",
+      "catalogId": "indicators-grid",
+      "schemaVersion": 1,
+      "order": 22,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "eyebrow",
+        "heading",
+        "ctaHref",
+        "ctaLabel",
+        "cards"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "indicators-grid"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "ctaHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "ctaLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "cards": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "description": {
+                "type": "string",
+                "default": ""
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "imageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "title",
+              "description",
+              "imageSrc"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "ctaUrl": "string",
+        "items": "array"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Grelha de indicadores",
+      "editorDescription": "Cartões de indicadores com imagem, título e texto em três colunas, com cabeçalho e botão.",
+      "editorIcon": "dashboard"
+    },
+    {
+      "blockName": "getquick/opportunities-grid",
+      "catalogId": "opportunities-grid",
+      "schemaVersion": 1,
+      "order": 23,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "eyebrow",
+        "heading",
+        "body",
+        "items"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "opportunities-grid"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "body": {
+          "type": "string",
+          "default": ""
+        },
+        "items": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "label",
+              "href"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "tiles": "array"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Grelha de oportunidades",
+      "editorDescription": "Cabeçalho com texto e mosaicos de ligação para oportunidades, como avisos e publicações.",
+      "editorIcon": "megaphone"
+    },
+    {
+      "blockName": "getquick/multimedia-grid",
+      "catalogId": "multimedia-grid",
+      "schemaVersion": 1,
+      "order": 24,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "eyebrow",
+        "heading",
+        "body",
+        "cards"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "multimedia-grid"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "body": {
+          "type": "string",
+          "default": ""
+        },
+        "cards": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "tag": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              }
+            },
+            "required": [
+              "title",
+              "tag",
+              "href"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "items": "array"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Grelha multimédia",
+      "editorDescription": "Grelha de ligações para conteúdos multimédia e ferramentas, com cabeçalho, texto e etiquetas.",
+      "editorIcon": "admin-media"
+    },
+    {
+      "blockName": "getquick/library-grid",
+      "catalogId": "library-grid",
+      "schemaVersion": 1,
+      "order": 25,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "eyebrow",
+        "heading",
+        "body",
+        "ctaHref",
+        "ctaLabel",
+        "cards"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "library-grid"
+        },
+        "eyebrow": {
+          "type": "string",
+          "default": ""
+        },
+        "heading": {
+          "type": "string",
+          "default": ""
+        },
+        "body": {
+          "type": "string",
+          "default": ""
+        },
+        "ctaHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "ctaLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "cards": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "tag": {
+                "type": "string",
+                "default": ""
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageSrc": {
+                "type": "string",
+                "default": "",
+                "legacyReads": [
+                  "imageUrl"
+                ],
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              },
+              "tagKind": {
+                "type": "string",
+                "default": "economia",
+                "enum": [
+                  "bioeconomia",
+                  "economia"
+                ]
+              }
+            },
+            "required": [
+              "title",
+              "tag",
+              "imageSrc",
+              "href"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "ctaUrl": "string",
+        "items": "array"
+      },
+      "editorExperience": "inline-fields",
+      "editorTitle": "Grelha da biblioteca",
+      "editorDescription": "Grelha de ligações para a biblioteca com cabeçalho, texto, botão e cartões com imagem e etiqueta.",
+      "editorIcon": "book"
+    },
+    {
+      "blockName": "getquick/events-grid",
+      "catalogId": "events-grid",
+      "schemaVersion": 1,
+      "order": 26,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "events",
+        "eventBasePath"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "events-grid"
+        },
+        "events": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "slug": {
+                "type": "string",
+                "default": ""
+              },
+              "href": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              },
+              "date": {
+                "type": "string",
+                "default": ""
+              },
+              "imageId": {
+                "type": "number"
+              },
+              "imageUrl": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "media"
+                }
+              },
+              "imageAlt": {
+                "type": "string",
+                "default": ""
+              },
+              "startDate": {
+                "type": "string",
+                "default": ""
+              },
+              "endDate": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "title"
+            ]
+          }
+        },
+        "eventBasePath": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "compatibilityReads": {
+        "items": "array"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Grelha de eventos",
+      "editorDescription": "Grelha de eventos com um cartão em destaque e cartões compactos, ligados à página de cada evento.",
+      "editorIcon": "calendar-alt"
+    },
+    {
+      "blockName": "getquick/event-card-compact",
+      "catalogId": "event-card-compact",
+      "schemaVersion": 1,
+      "order": 27,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "event",
+        "title",
+        "slug",
+        "href",
+        "date",
+        "imageId",
+        "imageUrl",
+        "imageAlt",
+        "startDate",
+        "endDate"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "event-card-compact"
+        },
+        "event": {
+          "type": "object"
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "slug": {
+          "type": "string",
+          "default": ""
+        },
+        "href": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "date": {
+          "type": "string",
+          "default": ""
+        },
+        "imageId": {
+          "type": "number"
+        },
+        "imageUrl": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "imageAlt": {
+          "type": "string",
+          "default": ""
+        },
+        "startDate": {
+          "type": "string",
+          "default": ""
+        },
+        "endDate": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "compatibilityReads": {
+        "url": "string"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Cartão compacto de evento",
+      "editorDescription": "Cartão pequeno de um evento com imagem, título e datas, com ligação para a página do evento.",
+      "editorIcon": "calendar"
+    },
+    {
+      "blockName": "getquick/pie-chart-donut",
+      "catalogId": "pie-chart-donut",
+      "schemaVersion": 1,
+      "order": 28,
+      "componentVersion": "0.1.01",
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "title",
+        "description",
+        "summary",
+        "slices"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "pie-chart-donut"
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "description": {
+          "type": "string",
+          "default": ""
+        },
+        "summary": {
+          "type": "string",
+          "default": ""
+        },
+        "slices": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "default": ""
+              },
+              "label": {
+                "type": "string",
+                "default": ""
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "type",
+              "label",
+              "value"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "items": "array"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Gráfico circular donut",
+      "editorDescription": "Gráfico donut com título, descrição, resumo e legenda, por exemplo para percentagens de reciclagem.",
+      "editorIcon": "chart-pie"
+    },
+    {
+      "blockName": "getquick/grafico-donut",
+      "catalogId": "grafico-donut",
+      "schemaVersion": 1,
+      "order": 29,
+      "componentVersion": "0.2.0",
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "slices"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "grafico-donut"
+        },
+        "slices": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "default": ""
+              },
+              "label": {
+                "type": "string",
+                "default": ""
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "type",
+              "label",
+              "value"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {
+        "items": "array"
+      },
+      "editorExperience": "inline-fields",
+      "editorTitle": "Gráfico donut",
+      "editorDescription": "Só o gráfico donut com legenda, sem título nem texto, para usar dentro de outros blocos.",
+      "editorIcon": "chart-pie"
+    },
+    {
+      "blockName": "getquick/energy-consumption-chart",
+      "catalogId": "energy-consumption-chart",
+      "schemaVersion": 1,
+      "order": 30,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "title",
+        "description",
+        "summary",
+        "data",
+        "yMax"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "energy-consumption-chart"
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "description": {
+          "type": "string",
+          "default": ""
+        },
+        "summary": {
+          "type": "string",
+          "default": ""
+        },
+        "data": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "month": {
+                "type": "string",
+                "default": ""
+              },
+              "solar": {
+                "type": "number"
+              },
+              "eletrica": {
+                "type": "number"
+              },
+              "gas": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "month",
+              "solar",
+              "eletrica",
+              "gas"
+            ]
+          }
+        },
+        "yMax": {
+          "type": "number"
+        }
+      },
+      "compatibilityReads": {
+        "items": "array"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Gráfico de consumo de energia",
+      "editorDescription": "Gráfico de linhas com o consumo mensal por fonte de energia, com título, descrição e resumo.",
+      "editorIcon": "chart-line"
+    },
+    {
+      "blockName": "getquick/sustainable-consumption-bars",
+      "catalogId": "sustainable-consumption-bars",
+      "schemaVersion": 1,
+      "order": 31,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "bars",
+        "title",
+        "subtitle",
+        "summary",
+        "headingId",
+        "sectionId"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "sustainable-consumption-bars"
+        },
+        "bars": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "band": {
+                "type": "string",
+                "default": ""
+              },
+              "label": {
+                "type": "string",
+                "default": ""
+              },
+              "pct": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "band",
+              "label",
+              "pct"
+            ]
+          }
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "subtitle": {
+          "type": "string",
+          "default": ""
+        },
+        "summary": {
+          "type": "string",
+          "default": ""
+        },
+        "headingId": {
+          "type": "string",
+          "default": ""
+        },
+        "sectionId": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "compatibilityReads": {
+        "items": "array"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Barras de consumo sustentável",
+      "editorDescription": "Gráfico de barras verticais com percentagens por grupo, com título, subtítulo e resumo.",
+      "editorIcon": "chart-bar"
+    },
+    {
+      "blockName": "getquick/urban-waste-geo-chart",
+      "catalogId": "urban-waste-geo-chart",
+      "schemaVersion": 1,
+      "order": 32,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "title",
+        "badge",
+        "intro",
+        "summary",
+        "comparisonLabel",
+        "metricLabel",
+        "periodLabel",
+        "scopeLabel",
+        "regions"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "urban-waste-geo-chart"
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "badge": {
+          "type": "string",
+          "default": ""
+        },
+        "intro": {
+          "type": "string",
+          "default": ""
+        },
+        "summary": {
+          "type": "string",
+          "default": ""
+        },
+        "comparisonLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "metricLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "periodLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "scopeLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "regions": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "default": ""
+              },
+              "label": {
+                "type": "string",
+                "default": ""
+              },
+              "values": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "id",
+              "label",
+              "values"
+            ]
+          }
+        }
+      },
+      "compatibilityReads": {},
+      "editorExperience": "preview",
+      "editorTitle": "Gráfico geográfico de resíduos urbanos",
+      "editorDescription": "Barras horizontais de resíduos urbanos por habitante, por região e ano, com anos filtráveis.",
+      "editorIcon": "admin-site-alt3"
+    },
+    {
+      "blockName": "getquick/resource-productivity-bars",
+      "catalogId": "resource-productivity-bars",
+      "schemaVersion": 1,
+      "order": 33,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "title",
+        "badge",
+        "intro",
+        "points",
+        "yMax",
+        "metricLabel",
+        "periodLabel",
+        "scopeLabel"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "resource-productivity-bars"
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "badge": {
+          "type": "string",
+          "default": ""
+        },
+        "intro": {
+          "type": "string",
+          "default": ""
+        },
+        "points": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "year": {
+                "type": "number"
+              },
+              "label": {
+                "type": "string",
+                "default": ""
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "year",
+              "value"
+            ]
+          }
+        },
+        "yMax": {
+          "type": "number"
+        },
+        "metricLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "periodLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "scopeLabel": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "compatibilityReads": {
+        "items": "array"
+      },
+      "editorExperience": "preview",
+      "editorTitle": "Barras de produtividade dos recursos",
+      "editorDescription": "Gráfico de barras anual da produtividade dos recursos, com título, etiqueta, introdução e filtros.",
+      "editorIcon": "chart-bar"
+    },
+    {
+      "blockName": "getquick/resource-productivity-chart",
+      "catalogId": "resource-productivity-chart",
+      "schemaVersion": 1,
+      "order": 34,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "title",
+        "filterLabels",
+        "points",
+        "yMax",
+        "locale"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "resource-productivity-chart"
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "filterLabels": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string",
+            "default": ""
+          }
+        },
+        "points": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "year": {
+                "type": "number"
+              },
+              "value": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "year",
+              "value"
+            ]
+          }
+        },
+        "yMax": {
+          "type": "number"
+        },
+        "locale": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "compatibilityReads": {},
+      "editorExperience": "preview",
+      "editorTitle": "Gráfico de produtividade dos recursos",
+      "editorDescription": "Gráfico de barras simples da produtividade dos recursos por ano, com título e etiquetas de filtro.",
+      "editorIcon": "chart-area"
+    },
+    {
+      "blockName": "getquick/nomia-contact-map",
+      "catalogId": "nomia-contact-map",
+      "schemaVersion": 1,
+      "order": 35,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "mapUrl",
+        "title",
+        "align"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "nomia-contact-map"
+        },
+        "mapUrl": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "align": {
+          "type": "string",
+          "default": "none",
+          "enum": [
+            "none",
+            "left",
+            "right",
+            "full"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        }
+      },
+      "compatibilityReads": {
+        "url": "string"
+      },
+      "editorExperience": "inline-fields",
+      "editorTitle": "Mapa de contacto",
+      "editorDescription": "Mapa Google para páginas de contacto. Cole um link do Google Maps.",
+      "editorIcon": "location-alt"
+    },
+    {
+      "blockName": "getquick/section",
+      "catalogId": "section",
+      "schemaVersion": 1,
+      "order": 36,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "backgroundColor",
+        "backgroundImageId",
+        "backgroundImageSrc",
+        "backgroundImagePosition",
+        "backgroundImageSize",
+        "paddingTop",
+        "paddingBottom",
+        "paddingX"
+      ],
+      "status": "active",
+      "inserter": true,
+      "container": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "section"
+        },
+        "backgroundColor": {
+          "type": "string",
+          "default": ""
+        },
+        "backgroundImageId": {
+          "type": "number"
+        },
+        "backgroundImageSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "backgroundImagePosition": {
+          "type": "string",
+          "default": "center",
+          "enum": [
+            "top-left",
+            "top",
+            "top-right",
+            "left",
+            "center",
+            "right",
+            "bottom-left",
+            "bottom",
+            "bottom-right"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        },
+        "backgroundImageSize": {
+          "type": "string",
+          "default": "cover",
+          "enum": [
+            "cover",
+            "contain",
+            "none"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        },
+        "paddingTop": {
+          "type": "string",
+          "default": "medium",
+          "enum": [
+            "none",
+            "small",
+            "medium",
+            "large"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        },
+        "paddingBottom": {
+          "type": "string",
+          "default": "medium",
+          "enum": [
+            "none",
+            "small",
+            "medium",
+            "large"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        },
+        "paddingX": {
+          "type": "string",
+          "default": "default",
+          "enum": [
+            "none",
+            "small",
+            "default"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        }
+      },
+      "compatibilityReads": {},
+      "editorExperience": "inline-fields",
+      "editorTitle": "Secção",
+      "editorDescription": "Faixa Nomia que agrupa outros blocos, com fundo e espaçamento próprios.",
+      "editorIcon": "editor-table"
+    },
+    {
+      "blockName": "getquick/contact-details-card",
+      "catalogId": "contact-details-card",
+      "schemaVersion": 1,
+      "order": 37,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "iconId",
+        "iconUrl",
+        "iconAlt",
+        "hideIcon",
+        "title",
+        "details",
+        "buttonLabel",
+        "buttonHref",
+        "hideButton"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "contact-details-card"
+        },
+        "iconId": {
+          "type": "number"
+        },
+        "iconUrl": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "iconAlt": {
+          "type": "string",
+          "default": ""
+        },
+        "hideIcon": {
+          "type": "boolean",
+          "default": false
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "details": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "textarea"
+          }
+        },
+        "buttonLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "buttonHref": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "hideButton": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "compatibilityReads": {},
+      "editorExperience": "inline-fields",
+      "editorTitle": "Cartão de contacto",
+      "editorDescription": "Cartão com ícone, título, detalhes de contacto e botão opcional.",
+      "editorIcon": "id"
+    }
+  ]
+}

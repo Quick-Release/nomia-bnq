@@ -1,0 +1,86 @@
+---
+import NomiaPlataformasListSection from "../../content-lists/plataformas/NomiaPlataformasListSection.astro";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import type {
+  NomiaPlataformaFilterTerm,
+  NomiaPlataformaListItem,
+} from "../../../types/nomia-plataformas-list";
+import { firstArray, mapValid, wpBoolean as bool, wpText as text } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+// The cards' accent colours, in rotation.
+const PLATAFORMAS_ACCENT_CLASSES = [
+  "bg-main-ciano-400",
+  "bg-main-botnico-400",
+  "bg-main-laranja-400",
+] as const;
+
+interface Props {
+  block: WpParsedBlock;
+}
+
+type TermAttrs = { slug?: unknown; name?: unknown };
+type ItemAttrs = Partial<Omit<Record<keyof NomiaPlataformaListItem, unknown>, "accentClass">>;
+
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/content-grid-filters">;
+
+function normalizeTerm(raw: unknown): NomiaPlataformaFilterTerm | null {
+  if (!raw || typeof raw !== "object") return null;
+  const term = raw as TermAttrs;
+  const slug = text(term.slug);
+  const name = text(term.name);
+  return slug && name ? { slug, name } : null;
+}
+
+function normalizeTerms(value: unknown): NomiaPlataformaFilterTerm[] {
+  return mapValid(firstArray(value), normalizeTerm);
+}
+
+function normalizeItem(raw: unknown, index: number): NomiaPlataformaListItem | null {
+  if (!raw || typeof raw !== "object") return null;
+  const item = raw as ItemAttrs;
+  const title = text(item.title);
+  const href = text(item.href);
+  if (!title || !href) return null;
+
+  const slug = text(item.slug) || title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+
+  return {
+    id: text(item.id) || slug,
+    title,
+    slug,
+    href,
+    date: text(item.date) || null,
+    dateLabel: text(item.dateLabel),
+    description: text(item.description),
+    subtitle: text(item.subtitle) || null,
+    featured: bool(item.featured),
+    imageUrl: text(item.imageUrl) || null,
+    imageAlt: text(item.imageAlt) || null,
+    setores: normalizeTerms(item.setores),
+    tematicas: normalizeTerms(item.tematicas),
+    accentClass: PLATAFORMAS_ACCENT_CLASSES[index % PLATAFORMAS_ACCENT_CLASSES.length]!,
+  };
+}
+
+const items = mapValid(firstArray(attrs.items, attrs.plataformas), normalizeItem);
+const tematicas = normalizeTerms(attrs.tematicas);
+const setores = normalizeTerms(attrs.setores);
+const heading = text(attrs.heading);
+// The block renders only the platforms saved in it: pages are served from the
+// publication store, never by reading WordPress on a visit.
+const resolvedItems = items;
+const resolvedTematicas = tematicas;
+const resolvedSetores = setores;
+const canRender = Boolean(heading && resolvedItems.length > 0);
+---
+
+{canRender ? (
+  <NomiaPlataformasListSection
+    items={resolvedItems}
+    tematicas={resolvedTematicas}
+    setores={resolvedSetores}
+    heading={heading}
+  />
+) : null}

@@ -1,0 +1,39 @@
+---
+import ResourceProductivityChart from "../../charts/bar/ResourceProductivityChart.astro";
+import { PAGE_FRAME } from "../../../lib/site-gutters";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import type { ResourceProductivityPoint } from "../../../lib/productivity-chart/types";
+import { firstArray, mapValid, wpText as text, wpNumber as num } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props { block: WpParsedBlock }
+type PointAttrs = { year?: unknown; value?: unknown };
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/resource-productivity-chart">;
+function point(raw: unknown): ResourceProductivityPoint | null {
+  if (!raw || typeof raw !== "object") return null;
+  const item = raw as PointAttrs;
+  const year = num(item.year);
+  const value = num(item.value);
+  if (!Number.isInteger(year) || !Number.isFinite(value) || value < 0) return null;
+  return { year, value };
+}
+const points = mapValid(firstArray(attrs.points), point);
+const filterLabelsRaw = firstArray(attrs.filterLabels);
+const filterLabels = filterLabelsRaw.length ? mapValid(filterLabelsRaw, (raw): string | null => text(raw) || null) : undefined;
+const yMax = num(attrs.yMax);
+const title = text(attrs.title);
+const locale = text(attrs.locale) || "pt-PT";
+---
+
+{points.length > 0 ? (
+  <div class={`${PAGE_FRAME} py-16 md:py-20`}>
+    <ResourceProductivityChart
+      title={title}
+      filterLabels={filterLabels ?? []}
+      points={points}
+      yMax={Number.isFinite(yMax) ? yMax : undefined}
+      locale={locale}
+    />
+  </div>
+) : null}

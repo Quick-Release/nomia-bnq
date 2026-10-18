@@ -1,0 +1,84 @@
+---
+/**
+ * Homepage event grid — Nomia Website 2 · Figma node 40017059:1861
+ * https://www.figma.com/design/gWqEtVBfoWbYMHQh1rW6s3/Nomia-%E2%80%94-Website--2-?node-id=40017059-1861
+ */
+import NomiaHomeEventCard from "./NomiaHomeEventCard.astro";
+import type { WpEventoHomeCard } from "../../../lib/wp-event-card";
+
+interface Props {
+  events: WpEventoHomeCard[];
+  /** Detail routes: `src/pages/eventos/[slug].astro` (WordPress permalink parity). */
+  eventBasePath?: string;
+}
+
+const { events, eventBasePath = "/eventos" } = Astro.props;
+
+const e0 = events[0];
+const e1 = events[1];
+const e2 = events[2];
+const e3 = events[3];
+
+const href = (event: WpEventoHomeCard) =>
+  event.href?.trim() || `${eventBasePath.replace(/\/$/, "")}/${event.slug}/`;
+---
+
+<section
+  id="eventos"
+  class="border-monochrome-dark-300/80 w-full border-t bg-main-ciano-700 py-16 md:py-24"
+  aria-labelledby="home-events-heading"
+  data-node-id="40017059:1861"
+>
+  <div class="mx-auto max-w-[1920px] px-4 md:px-16">
+    <h2
+      id="home-events-heading"
+      class="font-primary text-subtitle text-main-cinza-100 mb-10 font-semibold tracking-tight"
+    >
+      Eventos
+    </h2>
+
+    {
+      events.length === 0 ? (
+        <p class="font-secondary text-body text-main-cinza-400">
+          Não há eventos publicados de momento. Adicione eventos no WordPress para os ver aqui.
+        </p>
+      ) : (
+        <div
+          class:list={[
+            "flex flex-col gap-8",
+            events.length > 1 && "lg:flex-row lg:items-stretch lg:gap-8",
+            events.length === 1 && "max-w-4xl",
+          ]}
+        >
+          {e0 ? (
+            <div class:list={["min-w-0", events.length > 1 && "lg:flex-1"]}>
+              <NomiaHomeEventCard variant="featured" event={e0} href={href(e0)} />
+            </div>
+          ) : null}
+
+          {e1 || e2 || e3 ? (
+            <div class="flex min-w-0 flex-col gap-8 lg:flex-1">
+              {e1 || e2 ? (
+                <div
+                  class:list={[
+                    "grid gap-8",
+                    e1 && e2 ? "sm:grid-cols-2" : "grid-cols-1",
+                  ]}
+                  data-node-id="40017059:1868"
+                >
+                  {e1 ? (
+                    <NomiaHomeEventCard variant="compact" event={e1} href={href(e1)} />
+                  ) : null}
+                  {e2 ? (
+                    <NomiaHomeEventCard variant="compact" event={e2} href={href(e2)} />
+                  ) : null}
+                </div>
+              ) : null}
+              {e3 ? <NomiaHomeEventCard variant="split" event={e3} href={href(e3)} /> : null}
+            </div>
+          ) : null}
+        </div>
+      )
+    }
+  </div>
+</section>

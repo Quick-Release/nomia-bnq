@@ -1,0 +1,104 @@
+---
+/**
+ * Event card — Nomia Website 2 · Figma node 40017059:1861 (event grid).
+ * https://www.figma.com/design/gWqEtVBfoWbYMHQh1rW6s3/Nomia-%E2%80%94-Website--2-?node-id=40017059-1861
+ */
+import NomiaHomeEventCardArrow from "./NomiaHomeEventCardArrow.astro";
+import { formatEventDateRangePt } from "../../../lib/evento-dates";
+import type { WpEventoHomeCard } from "../../../lib/wp-event-card";
+
+interface Props {
+  variant: "featured" | "compact" | "split";
+  event: WpEventoHomeCard;
+  href: string;
+}
+
+const { variant, event, href } = Astro.props;
+const dateLine = formatEventDateRangePt(event.startDate, event.endDate, event.date);
+---
+
+{
+  variant === "split" ? (
+    <a
+      href={href}
+      class="group relative flex min-h-[320px] w-full flex-col overflow-hidden sm:min-h-[436px] sm:flex-row sm:items-stretch"
+      data-node-id="40017059:1883"
+    >
+      <span class="sr-only">Ver evento: {event.title}</span>
+      <div class="relative min-h-[200px] flex-1 sm:min-h-0 sm:flex-[1_0_0]" data-node-id="40017059:1884">
+        {event.imageUrl ? (
+          <img
+            src={event.imageUrl}
+            alt={event.imageAlt || ""}
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div
+            class="absolute inset-0 bg-gradient-to-br from-main-botnico-500 via-main-teal-600 to-main-cinza-700"
+            aria-hidden="true"
+          />
+        )}
+      </div>
+      <div
+        class="relative flex flex-[1_0_0] flex-col gap-6 bg-main-teal-400 p-8 text-main-cinza-100 sm:min-w-0 sm:p-8"
+        data-node-id="40017059:1885"
+      >
+        <div class="flex max-w-full flex-col gap-6 pr-16 sm:pr-20">
+          <p class="font-secondary text-body leading-[var(--typography-line-height-i)] font-normal">
+            {dateLine || "—"}
+          </p>
+          <p class="font-secondary text-h4 font-medium leading-[var(--typography-line-height-f)]">
+            {event.title}
+          </p>
+        </div>
+        <div class="absolute right-8 bottom-8" data-node-id="40017059:1888">
+          <NomiaHomeEventCardArrow />
+        </div>
+      </div>
+    </a>
+  ) : (
+    <a
+      href={href}
+      class:list={[
+        "group relative flex w-full flex-col justify-between overflow-hidden text-main-cinza-100",
+        variant === "featured" && "min-h-[min(70vh,640px)] sm:min-h-[520px] lg:min-h-full",
+        variant === "compact" && "min-h-[420px]",
+      ]}
+      data-node-id={variant === "featured" ? "40017059:1862" : "40017059:1869"}
+    >
+      <span class="sr-only">Ver evento: {event.title}</span>
+      <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+        {event.imageUrl ? (
+          <img
+            src={event.imageUrl}
+            alt=""
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div
+            class="absolute inset-0 bg-gradient-to-br from-main-laranja-600 via-main-teal-700 to-main-cinza-700"
+            aria-hidden="true"
+          />
+        )}
+        <div class="absolute inset-0 bg-[rgba(68,68,68,0.4)]" />
+      </div>
+      <div class="relative z-10 flex h-full flex-col justify-between p-8 md:p-12 lg:p-[72px]">
+        <div class="flex flex-col gap-8">
+          <p class="font-secondary text-body leading-[var(--typography-line-height-i)] font-normal">
+            {dateLine || "—"}
+          </p>
+          <p class="font-secondary text-h4 font-medium leading-[var(--typography-line-height-f)]">
+            {event.title}
+          </p>
+        </div>
+        <div class="flex justify-end pt-8">
+          <NomiaHomeEventCardArrow />
+        </div>
+      </div>
+    </a>
+  )
+}

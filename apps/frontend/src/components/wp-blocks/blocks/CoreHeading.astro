@@ -1,0 +1,11 @@
+---
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+
+interface Props {
+  block: WpParsedBlock;
+}
+
+const { block } = Astro.props;
+---
+
+<div class="wp-block-heading [&_h1]:text-3xl [&_h1]:font-semibold [&_h2]:mt-8 [&_h2]:text-xl [&_h2]:font-semibold [&_h3]:mt-6 [&_h3]:text-lg [&_h3]:font-semibold" set:html={block.innerHTML} />
