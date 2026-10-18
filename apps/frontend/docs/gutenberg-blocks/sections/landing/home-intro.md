@@ -4,7 +4,7 @@
 - Block ID: `home-intro`
 - WordPress block name: `getquick/home-intro`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/HomeIntro.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/src/editors/HomeIntro.jsx`
+- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/blocks/home-intro/index.js`
 - Lifecycle: `active`
 <!-- END GENERATED: structured-block-metadata -->
 

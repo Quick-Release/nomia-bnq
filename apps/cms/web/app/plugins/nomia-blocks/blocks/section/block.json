@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/section",
 	"title": "Secção",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "editor-table",
 	"description": "Faixa Nomia que agrupa outros blocos, com fundo e espaçamento próprios.",
 	"textdomain": "getquick-nomia-blocks",
@@ -99,6 +99,8 @@
 			"paddingX": "default"
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": [
+		"getquick-nomia-blocks-editor",
+		"file:./editor.css"
+	]
 }

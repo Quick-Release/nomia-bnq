@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/pie-chart-donut",
 	"title": "Gráfico circular donut",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "chart-pie",
 	"description": "Gráfico donut com título, descrição, resumo e legenda, por exemplo para percentagens de reciclagem.",
 	"textdomain": "getquick-nomia-blocks",
@@ -93,6 +93,5 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": "getquick-nomia-blocks-editor"
 }

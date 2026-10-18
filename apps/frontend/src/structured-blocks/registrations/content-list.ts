@@ -69,7 +69,7 @@ export default defineStructuredBlock({
     description: "Lista de episódios com imagem, número, data e botões para ouvir e partilhar.",
     icon: "playlist-audio",
     experience: "preview",
-    module: "PodcastList.jsx",
+    bespoke: true,
   },
   documentation: {
     path: "content-lists/content-list.md",

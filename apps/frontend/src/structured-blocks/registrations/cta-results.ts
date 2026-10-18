@@ -60,7 +60,7 @@ export default defineStructuredBlock({
       "Resultados do Barómetro em destaque, cada um com ano, valor, unidade, descrição e ligação.",
     icon: "analytics",
     experience: "preview",
-    module: "CtaResults.jsx",
+    bespoke: true,
   },
   documentation: {
     path: "sections/landing/cta-results.md",

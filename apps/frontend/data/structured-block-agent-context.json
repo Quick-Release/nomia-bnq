@@ -840,7 +840,7 @@
       },
       "editing": {
         "mode": "bespoke",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/PageHeroStatic.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/page-hero-static/index.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -874,7 +874,7 @@
         "description": "Hero no topo da página com imagem de fundo, título, subtítulo e botão opcional.",
         "icon": "cover-image",
         "experience": "preview",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/PageHeroStatic.jsx"
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/page-hero-static/index.js"
       },
       "documentation": "docs/gutenberg-blocks/page-heroes/page-hero-static.md"
     },
@@ -1035,7 +1035,7 @@
       "compatibilityReads": {},
       "editing": {
         "mode": "bespoke",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/PageHeroMediaGrid.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/page-hero-media-grid/index.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -1074,7 +1074,7 @@
         "description": "Hero com imagem de fundo, duas chamadas com ligação e uma coluna de vídeo.",
         "icon": "format-video",
         "experience": "preview",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/PageHeroMediaGrid.jsx"
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/page-hero-media-grid/index.js"
       },
       "documentation": "docs/gutenberg-blocks/page-heroes/page-hero-media-grid.md"
     },
@@ -1191,7 +1191,7 @@
       "compatibilityReads": {},
       "editing": {
         "mode": "bespoke",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/PageHeroSlider.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/page-hero-slider/index.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -1235,7 +1235,7 @@
         "description": "Hero em carrossel em que cada diapositivo tem imagem de fundo, título, botão e destaque opcional.",
         "icon": "images-alt2",
         "experience": "preview",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/PageHeroSlider.jsx"
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/page-hero-slider/index.js"
       },
       "documentation": "docs/gutenberg-blocks/page-heroes/page-hero-slider.md"
     },
@@ -1425,7 +1425,7 @@
       },
       "editing": {
         "mode": "bespoke",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/TitleWithLabel.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/title-with-label/index.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -1455,7 +1455,7 @@
         "description": "Título de secção numa ou duas linhas, com uma etiqueta curta por cima.",
         "icon": "heading",
         "experience": "inline-fields",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/TitleWithLabel.jsx"
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/title-with-label/index.js"
       },
       "documentation": "docs/gutenberg-blocks/sections/landing/title-with-label.md"
     },
@@ -1543,7 +1543,7 @@
       },
       "editing": {
         "mode": "bespoke",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/PodcastList.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/content-list/index.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -1574,7 +1574,7 @@
         "description": "Lista de episódios com imagem, número, data e botões para ouvir e partilhar.",
         "icon": "playlist-audio",
         "experience": "preview",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/PodcastList.jsx"
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/content-list/index.js"
       },
       "documentation": "docs/gutenberg-blocks/content-lists/content-list.md"
     },
@@ -1756,7 +1756,7 @@
       },
       "editing": {
         "mode": "bespoke",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/ContentGridFilters.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/content-grid-filters/index.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -1815,7 +1815,7 @@
         "description": "Grelha de cartões com imagem, título e descrição, que os visitantes filtram por temáticas e setores.",
         "icon": "filter",
         "experience": "preview",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/ContentGridFilters.jsx"
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/content-grid-filters/index.js"
       },
       "documentation": "docs/gutenberg-blocks/content-lists/content-grid-filters.md"
     },
@@ -1954,7 +1954,7 @@
       "compatibilityReads": {},
       "editing": {
         "mode": "bespoke",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/MapList.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/map-list/index.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -2001,7 +2001,7 @@
         "description": "Mapa de regiões com filtros por público e lista dos conteúdos de cada região.",
         "icon": "location",
         "experience": "preview",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/MapList.jsx"
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/map-list/index.js"
       },
       "documentation": "docs/gutenberg-blocks/map-list.md"
     },
@@ -2072,7 +2072,7 @@
       },
       "editing": {
         "mode": "bespoke",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/CtaResults.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/cta-results/index.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -2101,7 +2101,7 @@
         "description": "Resultados do Barómetro em destaque, cada um com ano, valor, unidade, descrição e ligação.",
         "icon": "analytics",
         "experience": "preview",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/CtaResults.jsx"
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/cta-results/index.js"
       },
       "documentation": "docs/gutenberg-blocks/sections/landing/cta-results.md"
     },
@@ -2188,7 +2188,7 @@
       },
       "editing": {
         "mode": "bespoke",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/TwoColumnsTextImage.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/two-columns-text-image/index.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -2216,7 +2216,7 @@
         "description": "Texto com etiqueta, título e botão ao lado de uma imagem, à esquerda ou à direita.",
         "icon": "align-pull-left",
         "experience": "preview",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/TwoColumnsTextImage.jsx"
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/two-columns-text-image/index.js"
       },
       "documentation": "docs/gutenberg-blocks/sections/landing/two-columns-text-image.md"
     },
@@ -2264,7 +2264,7 @@
       },
       "editing": {
         "mode": "bespoke",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/ImageZoom.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/image-zoom/index.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -2287,7 +2287,7 @@
         "description": "Imagem com legenda opcional que amplia ao passar o rato e abre em ecrã inteiro ao clicar.",
         "icon": "search",
         "experience": "preview",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/ImageZoom.jsx"
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/image-zoom/index.js"
       },
       "documentation": "docs/gutenberg-blocks/media/image-zoom.md"
     },
@@ -2382,7 +2382,7 @@
       },
       "editing": {
         "mode": "bespoke",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/HomeIntro.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/home-intro/index.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -2413,7 +2413,7 @@
         "description": "Introdução com etiqueta, título, texto, botão e imagem grande com legenda opcional.",
         "icon": "admin-home",
         "experience": "preview",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/HomeIntro.jsx"
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/home-intro/index.js"
       },
       "documentation": "docs/gutenberg-blocks/sections/landing/home-intro.md"
     },
@@ -2492,7 +2492,7 @@
       },
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -2596,7 +2596,7 @@
       },
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -2745,7 +2745,7 @@
       },
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -2921,7 +2921,7 @@
       },
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -3111,7 +3111,7 @@
       },
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -3286,7 +3286,7 @@
       },
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -3442,7 +3442,7 @@
       },
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -3579,7 +3579,7 @@
       },
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -3733,7 +3733,7 @@
       },
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -3844,7 +3844,7 @@
       },
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -3980,7 +3980,7 @@
       },
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -4089,7 +4089,7 @@
       },
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -4203,7 +4203,7 @@
       },
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -4369,7 +4369,7 @@
       },
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -4511,7 +4511,7 @@
       },
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -4616,7 +4616,7 @@
       },
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -4716,7 +4716,7 @@
       },
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -4818,7 +4818,7 @@
       },
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -4932,7 +4932,7 @@
       },
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -5060,7 +5060,7 @@
       },
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -5194,7 +5194,7 @@
       "compatibilityReads": {},
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -5341,7 +5341,7 @@
       },
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -5462,7 +5462,7 @@
       "compatibilityReads": {},
       "editing": {
         "mode": "generic",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/index.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/assets/editor.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -5563,7 +5563,7 @@
       },
       "editing": {
         "mode": "bespoke",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/NomiaContactMap.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/nomia-contact-map/index.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -5585,7 +5585,7 @@
         "description": "Mapa Google para páginas de contacto. Cole um link do Google Maps.",
         "icon": "location-alt",
         "experience": "inline-fields",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/NomiaContactMap.jsx"
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/nomia-contact-map/index.js"
       },
       "documentation": "docs/gutenberg-blocks/nomia-contact-map.md"
     },
@@ -5693,7 +5693,7 @@
       "compatibilityReads": {},
       "editing": {
         "mode": "bespoke",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/Section.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/section/index.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -5717,7 +5717,7 @@
         "description": "Faixa Nomia que agrupa outros blocos, com fundo e espaçamento próprios.",
         "icon": "editor-table",
         "experience": "inline-fields",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/Section.jsx"
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/section/index.js"
       },
       "documentation": "docs/gutenberg-blocks/sections/section.md"
     },
@@ -5787,7 +5787,7 @@
       "compatibilityReads": {},
       "editing": {
         "mode": "bespoke",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/ContactDetailsCard.jsx",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/contact-details-card/index.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
@@ -5812,7 +5812,7 @@
         "description": "Cartão com ícone, título, detalhes de contacto e botão opcional.",
         "icon": "id",
         "experience": "inline-fields",
-        "module": "apps/cms/web/app/plugins/nomia-blocks/src/editors/ContactDetailsCard.jsx"
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/contact-details-card/index.js"
       },
       "documentation": "docs/gutenberg-blocks/sections/contact-details-card.md"
     }

@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/library-grid",
 	"title": "Grelha da biblioteca",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "book",
 	"description": "Grelha de ligações para a biblioteca com cabeçalho, texto, botão e cartões com imagem e etiqueta.",
 	"textdomain": "getquick-nomia-blocks",
@@ -128,6 +128,5 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": "getquick-nomia-blocks-editor"
 }

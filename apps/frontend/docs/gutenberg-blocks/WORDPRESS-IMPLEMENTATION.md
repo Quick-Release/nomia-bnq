@@ -36,7 +36,7 @@ ignored `blocks/` directory (ADR 0014). An abridged example of the output:
   "apiVersion": 3,
   "name": "getquick/page-hero-static",
   "title": "Cabeçalho página com imagem",
-  "category": "getquick-nomia",
+  "category": "getquick-design",
   "icon": "cover-image",
   "textdomain": "getquick-nomia-blocks",
   "supports": {

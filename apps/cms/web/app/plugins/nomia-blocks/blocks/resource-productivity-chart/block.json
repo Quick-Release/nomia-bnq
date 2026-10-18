@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/resource-productivity-chart",
 	"title": "Gráfico de produtividade dos recursos",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "chart-area",
 	"description": "Gráfico de barras simples da produtividade dos recursos por ano, com título e etiquetas de filtro.",
 	"textdomain": "getquick-nomia-blocks",
@@ -93,6 +93,5 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": "getquick-nomia-blocks-editor"
 }

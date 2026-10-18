@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { enumFromContracts } from "../../cms/web/app/plugins/nomia-blocks/src/lib/contract-enum.mjs";
+import { enumFromContracts } from "./nomia-blocks-lib.mjs";
 import { resolvePageHeroHeight } from "../src/components/page-heroes/pageHeroShared.ts";
 
 const CONTRACTS = [

@@ -56,7 +56,7 @@ export default defineStructuredBlock({
     icon: "id",
     keywords: ["contacto", "morada", "telefone", "email", "cartão"],
     experience: "inline-fields",
-    module: "ContactDetailsCard.jsx",
+    bespoke: true,
   },
   documentation: {
     path: "sections/contact-details-card.md",

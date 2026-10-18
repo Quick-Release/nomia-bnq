@@ -4,7 +4,7 @@
 - Block ID: `bioeconomy-phases-band`
 - WordPress block name: `getquick/bioeconomy-phases-band`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/BioeconomiaPhasesBandBlock.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/src/index.jsx`
+- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/assets/editor.js`
 - Lifecycle: `active`
 <!-- END GENERATED: structured-block-metadata -->
 

@@ -4,7 +4,7 @@
 - Block ID: `content-grid-filters`
 - WordPress block name: `getquick/content-grid-filters`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/PlataformasGridBlock.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/src/editors/ContentGridFilters.jsx`
+- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/blocks/content-grid-filters/index.js`
 - Lifecycle: `active`
 <!-- END GENERATED: structured-block-metadata -->
 

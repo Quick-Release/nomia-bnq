@@ -4,7 +4,7 @@
 - Block ID: `resource-productivity-chart`
 - WordPress block name: `getquick/resource-productivity-chart`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/ResourceProductivityGraphBlock.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/src/index.jsx`
+- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/assets/editor.js`
 - Lifecycle: `active`
 <!-- END GENERATED: structured-block-metadata -->
 

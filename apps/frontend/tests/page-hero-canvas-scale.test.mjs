@@ -10,7 +10,7 @@ import {
   pageHeroCanvasPadding,
   pageHeroCanvasStyle,
   pageHeroHeightLabels,
-} from "../../cms/web/app/plugins/nomia-blocks/src/lib/page-hero-canvas-scale.mjs";
+} from "./nomia-blocks-lib.mjs";
 
 /**
  * The Gutenberg canvas approximates the published hero with plain CSS, because

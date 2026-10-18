@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/page-hero-slider",
 	"title": "Hero de página: slider",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "images-alt2",
 	"description": "Hero em carrossel em que cada diapositivo tem imagem de fundo, título, botão e destaque opcional.",
 	"textdomain": "getquick-nomia-blocks",
@@ -121,6 +121,8 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": [
+		"getquick-nomia-blocks-editor",
+		"file:./editor.css"
+	]
 }

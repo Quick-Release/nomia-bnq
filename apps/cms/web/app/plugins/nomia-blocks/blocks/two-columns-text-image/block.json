@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/two-columns-text-image",
 	"title": "Duas colunas com texto e imagem",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "align-pull-left",
 	"description": "Texto com etiqueta, título e botão ao lado de uma imagem, à esquerda ou à direita.",
 	"textdomain": "getquick-nomia-blocks",
@@ -90,6 +90,8 @@
 			"mediaPosition": "left"
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": [
+		"getquick-nomia-blocks-editor",
+		"file:./editor.css"
+	]
 }

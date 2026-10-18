@@ -63,7 +63,7 @@ export default defineStructuredBlock({
       "Texto com etiqueta, título e botão ao lado de uma imagem, à esquerda ou à direita.",
     icon: "align-pull-left",
     experience: "preview",
-    module: "TwoColumnsTextImage.jsx",
+    bespoke: true,
   },
   documentation: {
     path: "sections/landing/two-columns-text-image.md",

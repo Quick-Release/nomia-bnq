@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/page-hero-static",
 	"title": "Cabeçalho página com imagem",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "cover-image",
 	"description": "Hero no topo da página com imagem de fundo, título, subtítulo e botão opcional.",
 	"keywords": [
@@ -163,6 +163,8 @@
 			"height": "xl"
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": [
+		"getquick-nomia-blocks-editor",
+		"file:./editor.css"
+	]
 }

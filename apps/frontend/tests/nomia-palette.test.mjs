@@ -9,7 +9,7 @@ const palette = JSON.parse(
   readFileSync(new URL("../../cms/scripts/nomia-palette.json", import.meta.url), "utf8"),
 );
 const slugs = new Set([...Object.keys(palette.theme), ...palette.colors.map(({ slug }) => slug)]);
-const plugin = new URL("../../cms/web/app/plugins/nomia-blocks/src/", import.meta.url).pathname;
+const plugin = new URL("../../cms/web/app/plugins/nomia-blocks/", import.meta.url).pathname;
 const read = (path) => readFileSync(path, "utf8");
 
 test("the palette lists each color once, as a six-digit hex color", () => {
@@ -36,7 +36,7 @@ test("every preset color the Frontend and the editor styles name is in the palet
       // Tests describe other palettes (the stub CMS's).
       exclude: (file) => /\.test\.ts$/.test(file),
     }).map((file) => new URL(`../${file}`, import.meta.url).pathname),
-    ...globSync("**/*.{css,jsx,js}", { cwd: plugin }).map((file) => `${plugin}${file}`),
+    ...globSync("{assets,blocks}/**/*.{css,js}", { cwd: plugin }).map((file) => `${plugin}${file}`),
   ];
   for (const file of files) {
     for (const [, slug] of read(file).matchAll(/--wp--preset--color--([a-z0-9-]+)/g)) {

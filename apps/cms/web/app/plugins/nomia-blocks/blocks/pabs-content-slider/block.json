@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/pabs-content-slider",
 	"title": "PABS: slider de conteúdos",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "list-view",
 	"description": "Conteúdos do PABS em separadores: menu lateral e painel com imagem, título, texto e etiquetas.",
 	"textdomain": "getquick-nomia-blocks",
@@ -133,6 +133,5 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": "getquick-nomia-blocks-editor"
 }

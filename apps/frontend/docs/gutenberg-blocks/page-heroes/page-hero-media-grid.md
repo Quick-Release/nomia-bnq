@@ -4,7 +4,7 @@
 - Block ID: `page-hero-media-grid`
 - WordPress block name: `getquick/page-hero-media-grid`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/PageHeroMediaGridBlock.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/src/editors/PageHeroMediaGrid.jsx`
+- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/blocks/page-hero-media-grid/index.js`
 - Lifecycle: `active`
 <!-- END GENERATED: structured-block-metadata -->
 

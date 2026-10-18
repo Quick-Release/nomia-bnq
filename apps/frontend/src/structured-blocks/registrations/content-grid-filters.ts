@@ -115,7 +115,7 @@ export default defineStructuredBlock({
       "Grelha de cartões com imagem, título e descrição, que os visitantes filtram por temáticas e setores.",
     icon: "filter",
     experience: "preview",
-    module: "ContentGridFilters.jsx",
+    bespoke: true,
   },
   documentation: {
     path: "content-lists/content-grid-filters.md",

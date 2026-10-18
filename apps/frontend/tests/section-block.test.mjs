@@ -8,7 +8,10 @@ import {
   sectionContrastClasses,
   sectionPaddingClasses,
 } from "../src/lib/section-block.ts";
-import { synchronizeStructuredBlocks } from "../scripts/sync-wp-plugin-contracts.mjs";
+import {
+  pluginContract,
+  synchronizeStructuredBlocks,
+} from "../scripts/sync-wp-plugin-contracts.mjs";
 
 test("section backgrounds accept six-digit hex and nothing else", () => {
   assert.equal(normalizeSectionBackground("#00A499"), "#00a499");
@@ -55,20 +58,18 @@ test("padding steps resolve to responsive classes, and none emits nothing", () =
 });
 
 test("the section block is the registered container and carries the flag to both adapters", async () => {
-  const { registrations, outputs } = await synchronizeStructuredBlocks({ operation: "check" });
+  const { registrations } = await synchronizeStructuredBlocks({ operation: "check" });
   const section = registrations.find(
     (registration) => registration.identity.blockName === "getquick/section",
   );
 
   assert.ok(section);
   assert.equal(section.container, true);
-  assert.equal(section.editor.module, "Section.jsx");
+  assert.equal(section.editor.bespoke, true);
   assert.deepEqual(section.attributes.paddingTop.enum, ["none", "small", "medium", "large"]);
   assert.deepEqual(section.attributes.paddingX.enum, ["none", "small", "default"]);
 
-  const pluginContracts = JSON.parse(
-    outputs.get("../cms/web/app/plugins/nomia-blocks/src/contracts.json"),
-  );
+  const pluginContracts = registrations.map(pluginContract);
   const pluginSection = pluginContracts.find(
     (contract) => contract.blockName === "getquick/section",
   );

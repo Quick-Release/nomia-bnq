@@ -78,7 +78,7 @@ export default defineStructuredBlock({
     description: "Faixa Nomia que agrupa outros blocos, com fundo e espaçamento próprios.",
     icon: "editor-table",
     experience: "inline-fields",
-    module: "Section.jsx",
+    bespoke: true,
   },
   documentation: {
     path: "sections/section.md",

@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/energy-consumption-chart",
 	"title": "Gráfico de consumo de energia",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "chart-line",
 	"description": "Gráfico de linhas com o consumo mensal por fonte de energia, com título, descrição e resumo.",
 	"textdomain": "getquick-nomia-blocks",
@@ -104,6 +104,5 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": "getquick-nomia-blocks-editor"
 }

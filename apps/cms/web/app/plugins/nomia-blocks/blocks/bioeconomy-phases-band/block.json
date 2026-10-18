@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/bioeconomy-phases-band",
 	"title": "Bioeconomia: faixa de fases",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "editor-ol",
 	"description": "Faixa sobre fotografia com as fases da bioeconomia, cada uma com fase, título e texto.",
 	"textdomain": "getquick-nomia-blocks",
@@ -82,6 +82,5 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": "getquick-nomia-blocks-editor"
 }

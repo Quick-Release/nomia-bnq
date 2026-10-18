@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/cta-results",
 	"title": "Chamada para resultados",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "analytics",
 	"description": "Resultados do Barómetro em destaque, cada um com ano, valor, unidade, descrição e ligação.",
 	"textdomain": "getquick-nomia-blocks",
@@ -80,6 +80,8 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": [
+		"getquick-nomia-blocks-editor",
+		"file:./editor.css"
+	]
 }

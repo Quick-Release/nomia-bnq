@@ -114,7 +114,7 @@ export default defineStructuredBlock({
     icon: "cover-image",
     keywords: ["hero", "cabeçalho", "capa", "banner", "destaque"],
     experience: "preview",
-    module: "PageHeroStatic.jsx",
+    bespoke: true,
   },
   documentation: {
     path: "page-heroes/page-hero-static.md",

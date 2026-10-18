@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/sustainable-consumption-bars",
 	"title": "Barras de consumo sustentável",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "chart-bar",
 	"description": "Gráfico de barras verticais com percentagens por grupo, com título, subtítulo e resumo.",
 	"textdomain": "getquick-nomia-blocks",
@@ -101,6 +101,5 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": "getquick-nomia-blocks-editor"
 }

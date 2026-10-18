@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/circular-economy-indicators-spotlight",
 	"title": "Economia circular: indicadores em destaque",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "star-filled",
 	"description": "Indicadores em cartões com imagem, título e texto, em disposição escalonada, com cabeçalho e botão.",
 	"textdomain": "getquick-nomia-blocks",
@@ -113,6 +113,5 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": "getquick-nomia-blocks-editor"
 }

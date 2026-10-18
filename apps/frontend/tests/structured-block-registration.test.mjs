@@ -3,6 +3,7 @@ import test from "node:test";
 
 import {
   linkKeys,
+  pluginContract,
   synchronizeStructuredBlocks,
   validateRegistrations,
 } from "../scripts/sync-wp-plugin-contracts.mjs";
@@ -26,16 +27,14 @@ test("structured block registration is the single generated source", async () =>
   );
   assert.ok(outputs.has("src/components/wp-blocks/WpCustomBlock.astro"));
   assert.ok(outputs.has("src/fixtures/wp-custom-block-fixtures.ts"));
-  assert.ok(outputs.has("../cms/web/app/plugins/nomia-blocks/src/editors/index.jsx"));
-  assert.ok(outputs.has("../cms/web/app/plugins/nomia-blocks/src/contracts.json"));
-  assert.ok(outputs.has("../cms/web/app/plugins/nomia-blocks/includes/contracts.php"));
+  assert.ok(outputs.has("../cms/web/app/plugins/nomia-blocks/src/Contracts.php"));
   assert.ok(outputs.has("../cms/web/app/plugins/nomia-blocks/blocks/blocks-manifest.php"));
+  assert.ok(outputs.has("../cms/web/app/plugins/nomia-blocks/assets/frontend-rules.js"));
   for (const registration of registrations) {
-    assert.ok(
-      outputs.has(
-        `../cms/web/app/plugins/nomia-blocks/blocks/${registration.identity.catalogId}/block.json`,
-      ),
-    );
+    const block = `../cms/web/app/plugins/nomia-blocks/blocks/${registration.identity.catalogId}`;
+    assert.ok(outputs.has(`${block}/block.json`));
+    // A bespoke editor's script is hand-written; every other block's is generated.
+    assert.equal(outputs.has(`${block}/index.js`), !registration.editor.bespoke);
   }
 });
 
@@ -54,7 +53,10 @@ test("every block ships standard block.json metadata", async () => {
     assert.equal(metadata.title, registration.editor.title);
     assert.equal(metadata.textdomain, "getquick-nomia-blocks");
     assert.equal(metadata.supports.inserter, registration.lifecycle.inserter);
-    assert.equal(metadata.editorScript, "getquick-nomia-blocks-editor");
+    // GQ Design's category; PHP registers the block's own editor script.
+    assert.equal(metadata.category, "getquick-design");
+    assert.equal(metadata.editorScript, undefined);
+    assert.ok([metadata.editorStyle].flat().includes("getquick-nomia-blocks-editor"));
     assert.deepEqual(Object.keys(metadata.attributes), Object.keys(registration.attributes));
     // Contract-only hints never reach WordPress's attribute schema.
     assert.doesNotMatch(JSON.stringify(metadata.attributes), /"(ui|legacyReads)":/);
@@ -249,13 +251,11 @@ test("media fields have paired uploader IDs and previews contain canonical conte
 });
 
 test("legacy lifecycle drives both Gutenberg adapters", async () => {
-  const { registrations, outputs } = await synchronized;
+  const { registrations } = await synchronized;
   const legacy = registrations.find(
     (registration) => registration.identity.blockName === "getquick/circular-economy-overview",
   );
-  const pluginContracts = JSON.parse(
-    outputs.get("../cms/web/app/plugins/nomia-blocks/src/contracts.json"),
-  );
+  const pluginContracts = registrations.map(pluginContract);
   const pluginLegacy = pluginContracts.find(
     (contract) => contract.blockName === legacy.identity.blockName,
   );

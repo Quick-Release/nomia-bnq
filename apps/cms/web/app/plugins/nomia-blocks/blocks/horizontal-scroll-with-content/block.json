@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/horizontal-scroll-with-content",
 	"title": "Scroll horizontal com conteúdo",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "leftright",
 	"description": "Imagens com legenda e ligação em deslocamento horizontal, com título, etiquetas e botão «Ver todos».",
 	"textdomain": "getquick-nomia-blocks",
@@ -150,6 +150,5 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": "getquick-nomia-blocks-editor"
 }

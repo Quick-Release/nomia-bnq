@@ -4,7 +4,7 @@
 - Block ID: `content-list`
 - WordPress block name: `getquick/content-list`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/PodcastListBlock.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/src/editors/PodcastList.jsx`
+- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/blocks/content-list/index.js`
 - Lifecycle: `active`
 <!-- END GENERATED: structured-block-metadata -->
 

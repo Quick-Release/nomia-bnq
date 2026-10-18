@@ -43,7 +43,7 @@ export default defineStructuredBlock({
       "Imagem com legenda opcional que amplia ao passar o rato e abre em ecrã inteiro ao clicar.",
     icon: "search",
     experience: "preview",
-    module: "ImageZoom.jsx",
+    bespoke: true,
   },
   documentation: {
     path: "media/image-zoom.md",

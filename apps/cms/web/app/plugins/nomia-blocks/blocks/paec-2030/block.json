@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/paec-2030",
 	"title": "PAEC 2030",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "flag",
 	"description": "Secção do PAEC 2030 com título, duas imagens, introdução, objetivos com código e ligação.",
 	"textdomain": "getquick-nomia-blocks",
@@ -108,6 +108,5 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": "getquick-nomia-blocks-editor"
 }

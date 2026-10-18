@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/content-grid-filters",
 	"title": "Grelha de conteúdos com filtros",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "filter",
 	"description": "Grelha de cartões com imagem, título e descrição, que os visitantes filtram por temáticas e setores.",
 	"textdomain": "getquick-nomia-blocks",
@@ -218,6 +218,8 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": [
+		"getquick-nomia-blocks-editor",
+		"file:./editor.css"
+	]
 }

@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/event-card-compact",
 	"title": "Cartão compacto de evento",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "calendar",
 	"description": "Cartão pequeno de um evento com imagem, título e datas, com ligação para a página do evento.",
 	"textdomain": "getquick-nomia-blocks",
@@ -74,6 +74,5 @@
 			"imageAlt": "Evento"
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": "getquick-nomia-blocks-editor"
 }
