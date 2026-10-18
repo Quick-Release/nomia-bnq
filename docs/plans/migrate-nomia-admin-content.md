@@ -83,11 +83,37 @@ Verified on the posts WXR (`nomia.WordPress.2026-10-17.xml`, posts only:
 
 ### Post types beyond posts
 
-The new frontend reads `PAGE` and `POST` only; the CPT content
-(biblioteca, eventos, oportunidades, …) is not used by `nomia.bnq.pt`.
-A pages export (source has 40 pages; ~80 media links live in page
-content/CPT data) is to run through the same scripts with
-`POST_TYPES=page,attachment`.
+The custom post types (biblioteca, eventos, oportunidades, …), their
+terms, the media posts and pages didn't carry, and the menus come from a
+full export (`nomia.WordPress.2026-10-18.xml`, Tools → Export → All
+content). Nomia's blocks (events, library, opportunities grids) show
+this content. The prepared WXR keeps every type except the old theme's
+`wp_global_styles` (2) and `wp_navigation` (1), which would compete with
+GQ Design; posts and pages stay in so menu items resolve to them (the
+importer skips those that exist).
+
+### Rehearsal findings (2026-10-18, full export)
+
+Against a `pnpm db:sync` copy of production (188 posts, 42 pages, 248
+attachments already imported):
+
+- Result: 44 custom-type entries (43 published + 1 draft), every term
+  (tematicas 2, setor_atividade 7, categoria_oportunidade 6), 5 menus with
+  45 items, 412 attachments, 0 broken thumbnails, 0 old-domain strings.
+- The importer keeps a source post's ID when it's free, so most IDs
+  (the gallery's 87 images, the "Fake Content" reusable block 15) need no
+  remap; `remap.php` and `block-refs.php` still run for the ones that moved.
+- Attachment 844 (`CESAM_Calcado_21.01.2026-4.pdf`) is skipped: the source
+  uploaded that PDF six times, with the same title and date, and nothing
+  references this copy.
+- **Run it once.** The importer skips posts and attachments that already
+  exist, but adds every menu item again; three passes tripled the menus.
+- **As an administrator.** Without a user, safe-svg refuses SVG (4 icons);
+  it only allows SVG through the admin's upload screens even for admins, so
+  the import allows SVG for its own run and `sanitize-svgs.php` cleans the
+  files with safe-svg's sanitizer afterwards.
+- The remap marker from the posts import has to be cleared: each import is
+  another WXR.
 
 ## URL rewrites (after import, `wp search-replace`)
 

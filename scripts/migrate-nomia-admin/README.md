@@ -16,6 +16,15 @@ site's CMS. The plan and its context live in
   (`nomia_cpt_gallery_image_ids` post meta and the
   `nomia_cpt_footer_logo_ids` option) to the IDs assigned by `wp import`.
   Idempotent via a marker option; run once per import.
+- `block-refs.php` — WP-CLI script (`wp eval-file block-refs.php wxr=…`)
+  that points `<!-- wp:block {"ref":N} -->` refs at the reusable blocks the
+  import created, matched by title; `wp import` keeps the source's IDs.
+- `sanitize-svgs.php` — runs every SVG attachment through safe-svg's
+  sanitizer (`wp eval-file sanitize-svgs.php`). The import allows SVG for
+  its own run, since safe-svg only allows it on the admin's upload screens.
+- `production-import.mjs` — the same steps on the production CMS over a
+  one-off Ploi script, as `--wp-user=<admin>`, with the WXR and helpers
+  passed through R2. Plan first without `--yes`; run it once per WXR.
 - `local-import.sh` — rehearses the migration in DDEV against a
   `pnpm db:sync` copy: prepare the WXR, snapshot, import, remap, URL
   rewrites. Everything runs locally; production is a separate reviewed

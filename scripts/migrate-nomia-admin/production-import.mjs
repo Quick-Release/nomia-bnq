@@ -1,7 +1,7 @@
 // Imports a prepared WXR into the CMS the Ploi site serves, over a one-off
 // Ploi script (the same transport `gq db sync` uses for exports, in reverse).
 //
-//   node scripts/migrate-nomia-admin/production-import.mjs <prepared.wxr>
+//   node scripts/migrate-nomia-admin/production-import.mjs <prepared.wxr> --wp-user=<admin>
 //   … --yes
 //
 // Without --yes the runner only prints the plan and the server script. With
@@ -16,11 +16,15 @@
 //     node scripts/migrate-nomia-admin/production-import.mjs <prepared.wxr> --yes
 //
 // What the server script does, in order: fetch and checksum the WXR, decode
-// the embedded remap.php, install and activate the WordPress importer, run
-// `wp import --authors=create`, remap nomia-cpt attachment IDs, rewrite the
-// old domains (media host, admin, frontend), remove the importer, flush the
-// caches, then report counts on one marker line. The script is additive: it
-// only adds posts/attachments/terms and rewrites old-domain strings.
+// the PHP helpers (remap.php, block-refs.php, sanitize-svgs.php), install and
+// activate the WordPress importer, run `wp import --authors=create` as
+// --wp-user with SVG allowed for that run, sanitize the SVGs, point
+// reusable-block refs at the imported blocks, remap nomia-cpt attachment IDs,
+// rewrite the old domains (media host, admin, frontend), remove the importer,
+// flush the caches, then report counts on one marker line. The script is
+// additive: it only adds posts/attachments/terms/menu items and rewrites
+// old-domain strings. Run it once per WXR: the importer skips posts and
+// attachments that already exist, but adds every menu item again.
 
 import { readFile, stat } from "node:fs/promises";
 import { createHash } from "node:crypto";
@@ -41,19 +45,19 @@ const oldMediaHost = "nomia-media.getquick.io";
 const oldAdminHost = "nomia-admin.getquick.io";
 const oldFrontHost = "nomia.getquick.io";
 
-// What the pages export run is known to produce; the runner warns, not fails,
-// when the server's numbers drift from these (they are re-verified from the
-// outside afterwards anyway). Posts-side numbers are the production state
-// after the posts run (188 posts, 187 attachments); the pages export brings 41
-// pages (40 publish + 1 draft) and 61 attachments with no guid overlap with
-// the posts export, and 5 páginas whose _thumbnail_id references attachments
-// in the same export (the importer remaps those itself).
+// What the full export (2026-10-18) produced in the local rehearsal against a
+// copy of production; the runner warns, not fails, when the server's numbers
+// drift from these. 412 attachments: the source's 413 less one duplicate
+// upload (same title and date) the importer skips.
 const expected = {
   POSTS: 188,
-  ATTACHMENTS: 248,
-  CATEGORY: 1,
+  PAGES: 42,
+  ATTACHMENTS: 412,
+  CPT: 44,
+  MENUS: 5,
+  MENU_ITEMS: 45,
+  CATEGORY: 2,
   TAGS: 442,
-  THUMBNAILS: 192,
   RESIDUAL: 0,
   MEDIA_FAILS: 0,
 };
@@ -63,9 +67,15 @@ const args = process.argv.slice(2);
 const yes = args.includes("--yes");
 const timeoutArg = args.find((arg) => arg.startsWith("--timeout-ms="));
 const timeoutMs = timeoutArg ? Number(timeoutArg.slice("--timeout-ms=".length)) : 1_800_000;
+const wpUserArg = args.find((arg) => arg.startsWith("--wp-user="));
+const wpUser = wpUserArg ? wpUserArg.slice("--wp-user=".length) : "";
 const wxrPath = args.find((arg) => !arg.startsWith("--"));
-if (!wxrPath) {
-  console.error("usage: production-import.mjs <prepared.wxr> [--yes] [--timeout-ms=…]");
+// As an administrator: without a user, WordPress skips capability-gated steps
+// (safe-svg's SVG uploads among them).
+if (!wxrPath || !/^[\w.@+-]+$/.test(wpUser)) {
+  console.error(
+    "usage: production-import.mjs <prepared.wxr> --wp-user=<admin> [--yes] [--timeout-ms=…]",
+  );
   process.exit(2);
 }
 const wxrFile = join(process.cwd(), wxrPath);
@@ -93,39 +103,56 @@ if (!wxr.toString().trimEnd().endsWith("</rss>")) {
 }
 const sha256 = createHash("sha256").update(wxr).digest("hex");
 const { size } = await stat(wxrFile);
-const remap = await readFile(new URL("remap.php", here));
-const remapSha = createHash("sha256").update(remap).digest("hex");
+// The PHP helpers the server runs after the import, by file name.
+const helpers = await Promise.all(
+  ["remap.php", "block-refs.php", "sanitize-svgs.php"].map(async (name) => {
+    const body = await readFile(new URL(name, here));
+    return { name, body, sha: createHash("sha256").update(body).digest("hex") };
+  }),
+);
 
 const cmsDir = `/home/${ops.ploi.systemUser}/${ops.domains.admin}/apps/cms`;
 const key = `${ops.releases?.prefix ?? "admin/"}migration/${basename(wxrFile)}`;
 const marker = "NOMIA_IMPORT=success";
-const remapKey = `${key.replace(/\.wxr$/, "")}.remap.php`;
+const helperKey = (name) => `${key.replace(/\.wxr$/, "")}.${name}`;
 
 // ── The one-off script that runs on the server ───────────────────────────────
-// `wxrUrl` and `remapUrl` are presigned GETs; Ploi caps one-off scripts at
-// 7,500 characters, so the files travel through R2 rather than being embedded.
-// The whole script is additive (import, rewrites) except the importer plugin
-// being installed and removed again.
-function serverScript(wxrUrl, remapUrl) {
+// `wxrUrl` and the helpers' URLs are presigned GETs; Ploi caps one-off
+// scripts at 7,500 characters, so the files travel through R2 rather than
+// being embedded. The whole script is additive (import, rewrites) except the
+// importer plugin being installed and removed again.
+function serverScript(wxrUrl, helperUrls) {
+  const fetchHelpers = helpers
+    .map(
+      ({
+        name,
+        sha,
+      }) => `curl -fsS --retry 3 --connect-timeout 20 -o "$dir/${name}" '${helperUrls[name]}'
+printf '%s  %s\\n' '${sha}' "$dir/${name}" | sha256sum -c - >/dev/null`,
+    )
+    .join("\n");
   return `set -euo pipefail
 umask 077
 cd ${cmsDir}
-wxr="$(mktemp /tmp/nomia-import.XXXXXX.wxr)"
-remap="$(mktemp /tmp/nomia-remap.XXXXXX.php)"
-trap 'rm -f "$wxr" "$remap"' EXIT
+dir="$(mktemp -d /tmp/nomia-import.XXXXXX)"
+wxr="$dir/import.wxr"
+trap 'rm -rf "$dir"' EXIT
 curl -fsS --retry 3 --connect-timeout 20 -o "$wxr" '${wxrUrl}'
 printf '%s  %s\\n' '${sha256}' "$wxr" | sha256sum -c - >/dev/null
-curl -fsS --retry 3 --connect-timeout 20 -o "$remap" '${remapUrl}'
-printf '%s  %s\\n' '${remapSha}' "$remap" | sha256sum -c - >/dev/null
+${fetchHelpers}
+wp() { command wp --user=${wpUser} "$@"; }
 
 wp plugin get wordpress-importer >/dev/null 2>&1 || wp plugin install wordpress-importer --quiet
 wp plugin activate wordpress-importer --quiet
 
-import_out="$(wp import "$wxr" --authors=create 2>&1)"
+import_out="$(wp --exec='WP_CLI::add_wp_hook("upload_mimes", static fn($m) => $m + ["svg" => "image/svg+xml"]);' import "$wxr" --authors=create 2>&1)"
 media_fails="$(printf '%s\\n' "$import_out" | grep -ci 'failed' || true)"
 printf '%s\\n' "$import_out" | grep -i 'failed' || true
 
-wp eval-file "$remap" wxr="$wxr"
+wp eval-file "$dir/sanitize-svgs.php"
+wp eval-file "$dir/block-refs.php" wxr="$wxr"
+wp option delete nomia_cpt_migration_attachment_remap >/dev/null 2>&1 || true
+wp eval-file "$dir/remap.php" wxr="$wxr"
 
 count() { printf '%s' "$1" | grep -oE '[0-9]+ replacement' | head -1 | grep -oE '^[0-9]+' || echo 0; }
 r1="$(wp search-replace 'https://${oldMediaHost}/uploads/' 'https://${ops.media.domain}/' --all-tables-with-prefix --precise --report-changed-only)"
@@ -139,35 +166,35 @@ wp cache flush --quiet
 wp rewrite flush --quiet
 
 prefix="$(wp db prefix)"
-posts="$(wp post list --post_type=post --post_status=publish --format=count)"
-attachments="$(wp post list --post_type=attachment --post_status=inherit --format=count)"
-categories="$(wp term list category --format=count)"
-tags="$(wp term list post_tag --format=count)"
-thumbnails="$(wp db query --skip-column-names "SELECT COUNT(*) FROM \${prefix}postmeta WHERE meta_key = '_thumbnail_id'")"
+n() { wp post list --post_type="$1" --post_status="$2" --format=count; }
+cpt=0
+for t in nomia_gallery biblioteca glossario recursos_educativos eventos indicadores podcasts videos infografias oportunidades plataformas; do cpt=$((cpt + $(n $t any))); done
+menu_items="$(wp db query --skip-column-names "SELECT COUNT(*) FROM \${prefix}posts WHERE post_type = 'nav_menu_item'")"
 residual="$(wp db query --skip-column-names "SELECT (SELECT COUNT(*) FROM \${prefix}posts WHERE CONCAT(post_content, post_excerpt, guid) LIKE '%getquick.io%') + (SELECT COUNT(*) FROM \${prefix}postmeta WHERE meta_value LIKE '%getquick.io%')")"
-echo "${marker} POSTS=$posts ATTACHMENTS=$attachments CATEGORY=$categories TAGS=$tags THUMBNAILS=$thumbnails RESIDUAL=$residual MEDIA_FAILS=$media_fails"
+echo "${marker} POSTS=$(n post publish) PAGES=$(n page publish) ATTACHMENTS=$(n attachment inherit) CPT=$cpt MENUS=$(wp menu list --format=count) MENU_ITEMS=$menu_items CATEGORY=$(wp term list category --format=count) TAGS=$(wp term list post_tag --format=count) RESIDUAL=$residual MEDIA_FAILS=$media_fails"
 `;
 }
 
 function parseMarker(output) {
-  const match = new RegExp(
-    `${marker} POSTS=(\\d+) ATTACHMENTS=(\\d+) CATEGORY=(\\d+) TAGS=(\\d+) THUMBNAILS=(\\d+) RESIDUAL=(\\d+) MEDIA_FAILS=(\\d+)`,
-    "u",
-  ).exec(output ?? "");
-  if (!match) return null;
-  const [POSTS, ATTACHMENTS, CATEGORY, TAGS, THUMBNAILS, RESIDUAL, MEDIA_FAILS] = match
-    .slice(1)
-    .map(Number);
-  return { POSTS, ATTACHMENTS, CATEGORY, TAGS, THUMBNAILS, RESIDUAL, MEDIA_FAILS };
+  const line = (output ?? "").split("\n").find((row) => row.startsWith(`${marker} `));
+  if (!line) return null;
+  return Object.fromEntries(
+    [...line.matchAll(/([A-Z_]+)=(\d+)/g)].map(([, field, value]) => [field, Number(value)]),
+  );
 }
 
 // ── Plan ─────────────────────────────────────────────────────────────────────
-const planScript = serverScript("PRESIGNED_WXR_URL", "PRESIGNED_REMAP_URL");
+const planScript = serverScript(
+  "PRESIGNED_WXR_URL",
+  Object.fromEntries(
+    helpers.map(({ name }) => [name, `PRESIGNED_${name.toUpperCase().replace(/\W/g, "_")}_URL`]),
+  ),
+);
 console.log(`WXR      ${wxrPath} (${(size / 1024 / 1024).toFixed(1)} MB, sha256 ${sha256.slice(0, 16)}…)
 R2 keys  r2://${ops.releases.bucket}/${key}
-         r2://${ops.releases.bucket}/${remapKey}
+${helpers.map(({ name }) => `         r2://${ops.releases.bucket}/${helperKey(name)}`).join("\n")}
 Server   ${cmsDir} (Ploi site ${ops.ploi.siteId})
-Import   wordpress-importer, --authors=create, then remap.php and the three
+Import   wordpress-importer as ${wpUser}, --authors=create, then the helpers and the three
          rewrites (${oldMediaHost}, ${oldAdminHost}, ${oldFrontHost} → bnq.pt),
          importer removed again; additive only.
 
@@ -197,16 +224,19 @@ const uploaded = await r2.upload(key, [wxr], "application/xml");
 if (uploaded.sha256 !== sha256 || uploaded.size !== size) {
   throw new Error("The uploaded WXR does not match the local checksum.");
 }
-const uploadedRemap = await r2.upload(remapKey, [remap], "application/x-php");
-if (uploadedRemap.sha256 !== remapSha) {
-  throw new Error("The uploaded remap.php does not match the local checksum.");
+const helperUrls = {};
+for (const { name, body, sha } of helpers) {
+  const uploadedHelper = await r2.upload(helperKey(name), [body], "application/x-php");
+  if (uploadedHelper.sha256 !== sha) {
+    throw new Error(`The uploaded ${name} does not match the local checksum.`);
+  }
+  helperUrls[name] = await r2.presignGet(helperKey(name), 3600);
 }
 const wxrUrl = await r2.presignGet(key, 3600);
-const remapUrl = await r2.presignGet(remapKey, 3600);
 console.log("Uploaded; handing the presigned URLs to the one-off script.");
 
 const started = await client.request("POST", "/scripts/run", {
-  content: serverScript(wxrUrl, remapUrl),
+  content: serverScript(wxrUrl, helperUrls),
   user: ops.ploi.systemUser,
 });
 const id = started.data?.id ?? started.id;

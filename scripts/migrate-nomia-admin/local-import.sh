@@ -25,7 +25,13 @@ export POST_TYPES
 WXR_SRC="$(realpath "$1")"
 CMS="apps/cms"
 MIGRATION="$CMS/migration"
-WP="ddev wp"
+# As an administrator: without a user, WordPress skips capability-gated steps
+# (safe-svg's SVG uploads, a Global Styles record's theme link).
+WP="ddev wp --user=${WP_USER:-dev}"
+# `wp import` side-loads files outside safe-svg's upload screens, so SVG is
+# allowed for the import run only; sanitize-svgs.php cleans them right after.
+ALLOW_SVG='WP_CLI::add_wp_hook("upload_mimes", static fn($m) => $m + ["svg" => "image/svg+xml"]);'
+
 # Old domains of the source site (its media host, admin host, and the old
 # frontend host), rewritten to this site's production web/media domains.
 MEDIA_OLD="https://nomia-media.getquick.io/uploads/"
@@ -46,7 +52,7 @@ mkdir -p "$MIGRATION"
 echo "» Staging the WXR in $MIGRATION"
 python3 scripts/migrate-nomia-admin/filter-wxr.py \
   "$WXR_SRC" "$MIGRATION/import.wxr" "$POST_TYPES"
-cp scripts/migrate-nomia-admin/remap.php "$MIGRATION/remap.php"
+cp scripts/migrate-nomia-admin/{remap,block-refs,sanitize-svgs}.php "$MIGRATION/"
 WXR="$MIGRATION/import.wxr"
 
 echo "» Snapshotting the local DDEV database"
@@ -61,14 +67,28 @@ echo "» Installing the WordPress importer plugin"
 $WP plugin install wordpress-importer --activate
 
 echo "» Importing $POST_TYPES from the WXR"
-$WP import "migration/import.wxr" --authors=create
+# Once per WXR: the importer skips posts and attachments that already exist,
+# but adds every menu item again.
+$WP --exec="$ALLOW_SVG" import "migration/import.wxr" --authors=create
+
+echo "» Sanitizing SVG attachments"
+$WP eval-file migration/sanitize-svgs.php
+
+echo "» Pointing reusable-block refs at the imported blocks"
+$WP eval-file migration/block-refs.php wxr="migration/import.wxr"
 
 echo "» Remapping attachment IDs in nomia-cpt stores"
+# The marker guards one WXR's remap; this import is another.
+$WP option delete nomia_cpt_migration_attachment_remap >/dev/null 2>&1 || true
 $WP eval-file migration/remap.php wxr="migration/import.wxr"
 
 echo "» Rewriting source URLs"
-$WP search-replace "$MEDIA_OLD" "https://nomia-media.bnq.pt/" --precise --report-tables
-$WP search-replace "$OLD_ADMIN_HOST" "https://nomia-cms.bnq.pt" --precise --report-tables
-$WP search-replace "$OLD_FRONT_HOST" "https://nomia.bnq.pt" --precise --report-tables
+$WP search-replace "$MEDIA_OLD" "https://nomia-media.bnq.pt/" --all-tables-with-prefix --precise --report-changed-only
+$WP search-replace "$OLD_ADMIN_HOST" "https://nomia-cms.bnq.pt" --all-tables-with-prefix --precise --report-changed-only
+$WP search-replace "$OLD_FRONT_HOST" "https://nomia.bnq.pt" --all-tables-with-prefix --precise --report-changed-only
+
+echo "» Removing the WordPress importer plugin"
+$WP plugin deactivate wordpress-importer --quiet
+$WP plugin delete wordpress-importer --quiet
 
 echo "» Done. See docs/plans/migrate-nomia-admin-content.md for the verification checklist."
