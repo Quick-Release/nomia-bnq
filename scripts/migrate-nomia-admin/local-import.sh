@@ -83,7 +83,7 @@ $WP option delete nomia_cpt_migration_attachment_remap >/dev/null 2>&1 || true
 $WP eval-file migration/remap.php wxr="migration/import.wxr"
 
 echo "» Rewriting source URLs"
-$WP search-replace "$MEDIA_OLD" "https://nomia-media.bnq.pt/" --all-tables-with-prefix --precise --report-changed-only
+$WP search-replace "$MEDIA_OLD" "https://nomia-media.bnq.pt/uploads/" --all-tables-with-prefix --precise --report-changed-only
 $WP search-replace "$OLD_ADMIN_HOST" "https://nomia-cms.bnq.pt" --all-tables-with-prefix --precise --report-changed-only
 $WP search-replace "$OLD_FRONT_HOST" "https://nomia.bnq.pt" --all-tables-with-prefix --precise --report-changed-only
 
