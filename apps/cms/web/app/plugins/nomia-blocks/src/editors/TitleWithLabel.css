@@ -1,0 +1,140 @@
+/*
+ * Título com etiqueta — mirrors apps/frontend/src/components/sections/TitleWithLabel.astro.
+ *
+ * The px values below are the Nomia type tokens resolved at 16px root
+ * (text-body 1rem / line-height-i 1.5rem for the eyebrow, text-h4 2rem /
+ * line-height-f 3rem for the title lines). They are the canvas baseline that
+ * a per-field token chosen in the sidebar typography panels replaces inline.
+ */
+.getquick-title-with-label-editor {
+  background: #ffffff;
+  box-sizing: border-box;
+  color: #444444;
+  font-family:
+    Montserrat,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+  width: 100%;
+}
+
+.getquick-title-with-label-editor *,
+.getquick-title-with-label-editor *::before,
+.getquick-title-with-label-editor *::after {
+  box-sizing: border-box;
+}
+
+.getquick-title-with-label-editor__inner {
+  padding: 48px 16px;
+  width: 100%;
+}
+
+.getquick-title-with-label-editor__grid {
+  display: grid;
+  gap: 0;
+  grid-template-columns: 1fr;
+  margin: 0 auto;
+  max-width: 1792px;
+  width: 100%;
+}
+
+.getquick-title-with-label-editor__eyebrow {
+  align-items: center;
+  display: flex;
+  gap: 4px;
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.getquick-title-with-label-editor__eyebrow-icon {
+  color: #2ad2c9;
+  display: inline-flex;
+  flex: 0 0 24px;
+  height: 24px;
+  width: 24px;
+}
+
+.getquick-title-with-label-editor__eyebrow-icon svg {
+  height: 24px;
+  width: 24px;
+}
+
+.getquick-title-with-label-editor__eyebrow-label {
+  color: #2ad2c9;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 24px;
+  margin: 0;
+  min-width: 40px;
+  text-transform: uppercase;
+}
+
+/* Both lines are one heading, laid out as a subgrid of the block grid so line 1
+   sits beside the eyebrow and line 2 runs full width, as on the site. */
+.getquick-title-with-label-editor__title {
+  color: #444444;
+  display: grid;
+  font-size: 32px;
+  font-weight: 600;
+  grid-column: 1;
+  grid-row: 2 / span 2;
+  grid-template-columns: subgrid;
+  grid-template-rows: subgrid;
+  letter-spacing: 0;
+  line-height: 48px;
+  margin: 0;
+  min-width: 0;
+}
+
+.getquick-title-with-label-editor__line {
+  display: block;
+  grid-column: 1;
+  min-width: 0;
+}
+
+.getquick-title-with-label-editor__line--2 {
+  grid-row: 2;
+}
+
+@media (min-width: 768px) {
+  .getquick-title-with-label-editor__inner {
+    padding: 56px 64px;
+  }
+
+  .getquick-title-with-label-editor__grid {
+    align-items: center;
+    column-gap: 30px;
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .getquick-title-with-label-editor__title {
+    align-items: center;
+    grid-column: 1 / -1;
+    grid-row: 1 / span 2;
+  }
+
+  .getquick-title-with-label-editor__line--1 {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .getquick-title-with-label-editor__line--2 {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Sidebar typography panels: controls stacked with the inspector's rhythm. */
+.getquick-title-with-label-editor-panel {
+  display: grid;
+  gap: 16px;
+}
+
+.getquick-title-with-label-editor-panel .components-button {
+  justify-self: start;
+}

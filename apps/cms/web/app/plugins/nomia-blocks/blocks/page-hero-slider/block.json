@@ -1,0 +1,126 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/page-hero-slider",
+	"title": "Hero de página: slider",
+	"category": "getquick-nomia",
+	"icon": "images-alt2",
+	"description": "Hero em carrossel em que cada diapositivo tem imagem de fundo, título, botão e destaque opcional.",
+	"textdomain": "getquick-nomia-blocks",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "page-hero-slider"
+		},
+		"slides": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object",
+				"required": [
+					"title",
+					"subtitle",
+					"ctaLabel",
+					"ctaHref",
+					"bgImage"
+				],
+				"properties": {
+					"id": {
+						"type": "string",
+						"default": ""
+					},
+					"title": {
+						"type": "string",
+						"default": ""
+					},
+					"subtitle": {
+						"type": "string",
+						"default": ""
+					},
+					"ctaLabel": {
+						"type": "string",
+						"default": ""
+					},
+					"ctaHref": {
+						"type": "string",
+						"default": ""
+					},
+					"bgImageId": {
+						"type": "number"
+					},
+					"bgImage": {
+						"type": "string",
+						"default": ""
+					},
+					"spotlightImageId": {
+						"type": "number"
+					},
+					"spotlightImageSrc": {
+						"type": "string",
+						"default": ""
+					},
+					"showSpotlight": {
+						"type": "boolean",
+						"default": true
+					},
+					"spotlightTitle": {
+						"type": "string",
+						"default": ""
+					},
+					"spotlightBody": {
+						"type": "string",
+						"default": ""
+					},
+					"spotlightHref": {
+						"type": "string",
+						"default": ""
+					}
+				}
+			}
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"slides": [
+				{
+					"id": "economia-circular",
+					"title": "Economia Circular",
+					"subtitle": "Um modelo económico reorganizado focado na coordenação dos sistemas de produção e consumo.",
+					"ctaLabel": "Explorar",
+					"ctaHref": "/economia-circular/",
+					"bgImage": "/images/hero-carousel/economia-circular.jpg",
+					"showSpotlight": true,
+					"spotlightImageSrc": "/images/hero-carousel/spotlight-bike.jpg",
+					"spotlightTitle": "Design circular",
+					"spotlightBody": "Conheça soluções para produtos e processos menos intensivos em recursos.",
+					"spotlightHref": "/biblioteca/"
+				},
+				{
+					"id": "barometro",
+					"title": "Barómetro",
+					"subtitle": "Indicadores e estatísticas para acompanhar a transição ambiental.",
+					"ctaLabel": "Explorar indicadores",
+					"ctaHref": "/indicadores/",
+					"bgImage": "/images/hero-carousel/barometro.jpg",
+					"showSpotlight": false
+				}
+			]
+		}
+	},
+	"editorScript": "getquick-nomia-blocks-editor",
+	"editorStyle": "getquick-nomia-blocks-editor-style"
+}

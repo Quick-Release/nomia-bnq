@@ -1,0 +1,153 @@
+/* Page hero static — visual policy mirrors NomiaPageHeroStatic.astro */
+.page-hero-static-editor {
+  box-sizing: border-box;
+  color: #f0f0f0;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  width: 100%;
+}
+
+.page-hero-static-editor *,
+.page-hero-static-editor *::before,
+.page-hero-static-editor *::after {
+  box-sizing: border-box;
+}
+
+/*
+ * `--page-hero-static-height` / `--page-hero-static-padding` are set per height
+ * step by PageHeroStatic.jsx; the fallbacks are the XL step.
+ */
+.page-hero-static-editor__viewport {
+  background: #00524d;
+  min-height: var(--page-hero-static-height, 100svh);
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.page-hero-static-editor__media {
+  background: #00524d;
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.page-hero-static-editor__media img {
+  display: block;
+  height: 100%;
+  inset: 0;
+  max-width: none;
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+}
+
+.page-hero-static-editor__image-placeholder {
+  align-items: center;
+  background: transparent;
+  color: #fff;
+  display: flex;
+  font-size: 14px;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+}
+
+.page-hero-static-editor__overlay {
+  background: rgb(49 49 49 / 40%);
+  inset: 0;
+  position: absolute;
+}
+
+.page-hero-static-editor__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: var(--page-hero-static-height, 100svh);
+  padding: var(--page-hero-static-padding, 128px 64px 192px);
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+.page-hero-static-editor__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 728px;
+}
+
+/* Mirrors `pageHeroCopyStackClass` in pageHeroShared.ts. */
+.page-hero-static-editor__copy--left {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.page-hero-static-editor__copy--center {
+  align-items: center;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.page-hero-static-editor__copy--right {
+  align-items: flex-end;
+  margin-inline-start: auto;
+  text-align: right;
+}
+
+.page-hero-static-editor__copy h1 {
+  color: #f0f0f0;
+  font-size: 56px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.page-hero-static-editor__copy p {
+  color: #f0f0f0;
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.page-hero-static-editor__cta {
+  align-items: center;
+  background: #fff;
+  border-radius: 40px;
+  color: #313131;
+  display: inline-flex;
+  font-size: 16px;
+  font-weight: 500;
+  justify-content: center;
+  letter-spacing: 0;
+  line-height: 1.4;
+  min-height: 40px;
+  padding: 8px 16px;
+  width: fit-content;
+}
+
+.page-hero-static-editor .block-editor-rich-text__editable:focus {
+  outline: 1px solid #3858e9;
+  outline-offset: 4px;
+}
+
+/* The colour control stays closed until asked: swatch + name, then the palette. */
+.page-hero-static-editor__color-toggle {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.page-hero-static-editor__color-palette {
+  min-width: 240px;
+  padding: 16px;
+}

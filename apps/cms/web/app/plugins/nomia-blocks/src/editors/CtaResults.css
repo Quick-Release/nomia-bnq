@@ -1,0 +1,259 @@
+/* CTA results — mirrors apps/frontend/src/components/sections/landing/NomiaBarometroResultsSection.astro */
+.cta-results-editor {
+  background: #104f4c;
+  box-sizing: border-box;
+  color: #313131;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  width: 100%;
+}
+
+.cta-results-editor *,
+.cta-results-editor *::before,
+.cta-results-editor *::after {
+  box-sizing: border-box;
+}
+
+.cta-results-editor__item-row {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.cta-results-editor__outer {
+  margin: 0 auto;
+  max-width: 1920px;
+  padding: 48px 16px;
+  width: 100%;
+}
+
+.cta-results-editor__panel {
+  align-items: flex-start;
+  background: #f5f5f5;
+  border-radius: 16px;
+  display: flex;
+  gap: 32px;
+  padding: 64px;
+  width: 100%;
+}
+
+.cta-results-editor__intro {
+  color: #313131;
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 40px;
+  min-width: 0;
+}
+
+.cta-results-editor__eyebrow {
+  align-items: center;
+  color: #008998;
+  display: flex;
+  gap: 4px;
+}
+
+.cta-results-editor__eyebrow span {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.cta-results-editor__eyebrow p {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.cta-results-editor__heading {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cta-results-editor__heading h2 {
+  color: #313131;
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.14;
+  margin: 0;
+}
+
+.cta-results-editor__heading p {
+  color: #313131;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.cta-results-editor__results {
+  display: flex;
+  flex: 1 1 0;
+  flex-wrap: wrap;
+  gap: 32px;
+  min-height: 208px;
+  min-width: 0;
+}
+
+.cta-results-editor__toolbar {
+  display: flex;
+  flex: 1 0 100%;
+  justify-content: flex-end;
+}
+
+.cta-results-editor__card {
+  color: #313131;
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  outline: 1px solid transparent;
+  outline-offset: 8px;
+  position: relative;
+}
+
+.cta-results-editor__card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cta-results-editor__card.is-selected {
+  outline-color: #3858e9;
+}
+
+.cta-results-editor__year {
+  align-items: center;
+  background: #fff;
+  border-radius: 32px;
+  color: #008998;
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px 8px;
+  width: fit-content;
+}
+
+.cta-results-editor__year span {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.cta-results-editor__metric {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.cta-results-editor__metric span:first-child {
+  color: #313131;
+  font-size: 56px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.cta-results-editor__metric span:last-child {
+  color: #313131;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.45;
+}
+
+.cta-results-editor__card p {
+  color: #313131;
+  flex: 1 1 auto;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.4;
+  margin: 0;
+  min-width: 0;
+}
+
+.cta-results-editor__empty {
+  align-items: flex-start;
+  background: #fff;
+  border: 1px solid #dcdcde;
+  border-radius: 8px;
+  color: #50575e;
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+  min-height: 208px;
+  padding: 24px;
+}
+
+.cta-results-editor__empty p {
+  margin: 0;
+}
+
+.cta-results-editor .block-editor-rich-text__editable:focus {
+  outline: 1px solid #3858e9;
+  outline-offset: 4px;
+}
+
+@media (max-width: 1100px) {
+  .cta-results-editor__panel {
+    flex-direction: column;
+    padding: 48px 24px;
+  }
+
+  .cta-results-editor__results {
+    width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .cta-results-editor__outer {
+    padding: 48px 16px;
+  }
+
+  .cta-results-editor__panel {
+    padding: 32px;
+  }
+
+  .cta-results-editor__results {
+    flex-direction: column;
+  }
+
+  .cta-results-editor__heading h2 {
+    font-size: 30px;
+  }
+
+  .cta-results-editor__heading p {
+    font-size: 18px;
+  }
+
+  .cta-results-editor__metric span:first-child {
+    font-size: 44px;
+  }
+}
+
+@media (max-width: 700px) {
+  .getquick-home-intro-editor__text h2,
+  .getquick-home-intro-editor__caption-title {
+    font-size: 30px;
+  }
+
+  .getquick-home-intro-editor__text p,
+  .getquick-home-intro-editor__caption-body {
+    font-size: 18px;
+  }
+}

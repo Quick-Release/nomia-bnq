@@ -1,0 +1,133 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/library-grid",
+	"title": "Grelha da biblioteca",
+	"category": "getquick-nomia",
+	"icon": "book",
+	"description": "Grelha de ligações para a biblioteca com cabeçalho, texto, botão e cartões com imagem e etiqueta.",
+	"textdomain": "getquick-nomia-blocks",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "library-grid"
+		},
+		"eyebrow": {
+			"type": "string",
+			"default": ""
+		},
+		"heading": {
+			"type": "string",
+			"default": ""
+		},
+		"body": {
+			"type": "string",
+			"default": ""
+		},
+		"ctaHref": {
+			"type": "string",
+			"default": ""
+		},
+		"ctaLabel": {
+			"type": "string",
+			"default": ""
+		},
+		"cards": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object",
+				"required": [
+					"title",
+					"tag",
+					"imageSrc",
+					"href"
+				],
+				"properties": {
+					"title": {
+						"type": "string",
+						"default": ""
+					},
+					"tag": {
+						"type": "string",
+						"default": ""
+					},
+					"imageId": {
+						"type": "number"
+					},
+					"imageSrc": {
+						"type": "string",
+						"default": ""
+					},
+					"imageAlt": {
+						"type": "string",
+						"default": ""
+					},
+					"href": {
+						"type": "string",
+						"default": ""
+					},
+					"tagKind": {
+						"type": "string",
+						"default": "economia",
+						"enum": [
+							"bioeconomia",
+							"economia"
+						]
+					}
+				}
+			}
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"eyebrow": "Biblioteca",
+			"heading": "Conteúdos para compreender a economia circular",
+			"body": "Consulte documentos, publicações e recursos de apoio.",
+			"ctaHref": "/biblioteca/",
+			"ctaLabel": "Ver biblioteca",
+			"cards": [
+				{
+					"title": "Legislação",
+					"tag": "Economia",
+					"imageSrc": "/images/biblioteca/legislacao.jpg",
+					"imageAlt": "Documentos de legislação",
+					"href": "/biblioteca/legislacao/",
+					"tagKind": "economia"
+				},
+				{
+					"title": "Publicações",
+					"tag": "Bioeconomia",
+					"imageSrc": "/images/biblioteca/publicacoes.jpg",
+					"imageAlt": "Publicações",
+					"href": "/biblioteca/publicacoes/",
+					"tagKind": "bioeconomia"
+				},
+				{
+					"title": "Boas práticas",
+					"tag": "Economia",
+					"imageSrc": "/images/biblioteca/boas-praticas.jpg",
+					"imageAlt": "Boas práticas",
+					"href": "/biblioteca/boas-praticas/",
+					"tagKind": "economia"
+				}
+			]
+		}
+	},
+	"editorScript": "getquick-nomia-blocks-editor",
+	"editorStyle": "getquick-nomia-blocks-editor-style"
+}

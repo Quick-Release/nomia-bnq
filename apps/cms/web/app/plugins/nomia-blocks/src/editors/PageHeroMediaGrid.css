@@ -1,0 +1,206 @@
+.page-hero-media-grid-editor {
+  background: #003333;
+  box-sizing: border-box;
+  color: #313131;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  min-height: min(100svh, 944px);
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.editor-styles-wrapper
+  :where(.block-editor-block-list__block[data-type="getquick/page-hero-media-grid"]) {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.editor-styles-wrapper
+  :where(
+    .block-editor-block-list__block[data-type="getquick/page-hero-media-grid"]
+      > .wp-block-getquick-page-hero-media-grid
+  ) {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.page-hero-media-grid-editor *,
+.page-hero-media-grid-editor *::before,
+.page-hero-media-grid-editor *::after {
+  box-sizing: border-box;
+}
+
+.page-hero-media-grid-editor__background {
+  inset: 0;
+  position: absolute;
+}
+
+.page-hero-media-grid-editor__background img {
+  display: block;
+  height: 100%;
+  inset: 0;
+  max-width: none;
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+}
+
+.page-hero-media-grid-editor__overlay {
+  background: rgb(49 49 49 / 45%);
+  inset: 0;
+  position: absolute;
+}
+
+.page-hero-media-grid-editor__content {
+  align-items: flex-end;
+  display: flex;
+  min-height: min(100svh, 944px);
+  padding: 128px 64px 64px;
+  position: relative;
+  z-index: 1;
+}
+
+.page-hero-media-grid-editor__grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 25% 25% minmax(0, 1fr);
+  width: 100%;
+}
+
+.page-hero-media-grid-editor__button {
+  background: var(--column-background, #fff);
+  border-radius: var(--column-border-radius, 40px);
+  color: var(--column-text-color, #fff);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 256px;
+  padding: 32px;
+  text-decoration: none;
+  transition: background-color 160ms ease;
+}
+
+.page-hero-media-grid-editor__button--text-top {
+  justify-content: flex-start;
+}
+
+.page-hero-media-grid-editor__button--text-bottom {
+  justify-content: space-between;
+}
+
+.page-hero-media-grid-editor__button:hover,
+.page-hero-media-grid-editor__button:focus-within {
+  background: var(--column-hover-background, #f2a900);
+}
+
+.page-hero-media-grid-editor__button-title {
+  color: var(--column-title-color, #fff);
+  display: block;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.25;
+  min-height: 60px;
+}
+
+.page-hero-media-grid-editor__button-text {
+  color: var(--column-text-color, #fff);
+  display: block;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 1.55;
+  margin-top: 24px;
+}
+
+.page-hero-media-grid-editor__video {
+  background: #104f4c;
+  border-radius: var(--video-border-radius, 40px);
+  min-height: 320px;
+  overflow: hidden;
+  position: relative;
+}
+
+.page-hero-media-grid-editor__video video {
+  display: block;
+  height: 100%;
+  min-height: 320px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.page-hero-media-grid-editor__share {
+  align-items: center;
+  background: #fff;
+  bottom: 24px;
+  color: #444;
+  display: inline-flex;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  left: 24px;
+  line-height: 1.5;
+  min-height: 48px;
+  padding: 0 24px;
+  position: absolute;
+  text-decoration: none;
+}
+
+.page-hero-media-grid-editor__share:hover,
+.page-hero-media-grid-editor__share:focus {
+  background: #f2a900;
+  color: #444;
+}
+
+.page-hero-media-grid-editor__video-placeholder {
+  align-items: center;
+  color: #fff;
+  display: flex;
+  font-size: 14px;
+  height: 100%;
+  justify-content: center;
+  min-height: 320px;
+}
+
+.page-hero-media-grid-editor .block-editor-rich-text__editable:focus {
+  outline: 1px solid #3858e9;
+  outline-offset: 4px;
+}
+
+.page-hero-media-grid-editor__inspector-group {
+  border-top: 1px solid #dcdcde;
+  margin-top: 16px;
+  padding-top: 16px;
+}
+
+.page-hero-media-grid-editor__inspector-group:first-child {
+  border-top: 0;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.page-hero-media-grid-editor__inspector-label {
+  color: #1d2327;
+  font-size: 13px;
+  font-weight: 500;
+  margin: 0 0 8px;
+}
+
+@media (max-width: 960px) {
+  .page-hero-media-grid-editor__content {
+    padding: 96px 24px 40px;
+  }
+
+  .page-hero-media-grid-editor__grid {
+    grid-template-columns: 1fr;
+  }
+}

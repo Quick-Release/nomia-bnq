@@ -1,0 +1,87 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/bioeconomy-phases-band",
+	"title": "Bioeconomia: faixa de fases",
+	"category": "getquick-nomia",
+	"icon": "editor-ol",
+	"description": "Faixa sobre fotografia com as fases da bioeconomia, cada uma com fase, título e texto.",
+	"textdomain": "getquick-nomia-blocks",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "bioeconomy-phases-band"
+		},
+		"imageId": {
+			"type": "number"
+		},
+		"imageSrc": {
+			"type": "string",
+			"default": ""
+		},
+		"phases": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object",
+				"required": [
+					"phase",
+					"title",
+					"body"
+				],
+				"properties": {
+					"phase": {
+						"type": "string",
+						"default": ""
+					},
+					"title": {
+						"type": "string",
+						"default": ""
+					},
+					"body": {
+						"type": "string",
+						"default": ""
+					}
+				}
+			}
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"imageSrc": "/images/bioeconomia-sustentavel/phases-band-background.jpg",
+			"phases": [
+				{
+					"phase": "01",
+					"title": "Produção",
+					"body": "Matérias-primas renováveis e processos regenerativos."
+				},
+				{
+					"phase": "02",
+					"title": "Transformação",
+					"body": "Valorização de recursos biológicos em produtos."
+				},
+				{
+					"phase": "03",
+					"title": "Regeneração",
+					"body": "Ciclos produtivos que devolvem valor ao território."
+				}
+			]
+		}
+	},
+	"editorScript": "getquick-nomia-blocks-editor",
+	"editorStyle": "getquick-nomia-blocks-editor-style"
+}

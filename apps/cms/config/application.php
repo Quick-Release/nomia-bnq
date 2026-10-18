@@ -175,6 +175,8 @@ if (trim((string) env('S3_UPLOADS_BUCKET_URL')) !== '') {
 // GETQUICK → Options → Frontend (gq-config's `frontend_url`).
 if (env('GETQUICK_FRONTEND_URL')) {
     Config::define('GETQUICK_FRONTEND_URL', env('GETQUICK_FRONTEND_URL'));
+    // nomia-blocks' editor previews are rendered by the Frontend (/wp-block-preview).
+    Config::define('GETQUICK_NOMIA_FE_URL', env('GETQUICK_FRONTEND_URL'));
 }
 
 // The key this CMS signs its publication events to the Frontend with

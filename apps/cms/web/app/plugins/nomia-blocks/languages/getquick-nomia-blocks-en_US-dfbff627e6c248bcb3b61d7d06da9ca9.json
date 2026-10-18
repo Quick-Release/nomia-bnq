@@ -1,0 +1,765 @@
+{
+    "translation-revision-date": "2026-09-21 00:00+0000",
+    "generator": "WP-CLI\/2.12.0",
+    "source": "build\/index.js",
+    "domain": "messages",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "messages",
+                "lang": "en_US",
+                "plural-forms": "nplurals=2; plural=(n != 1);"
+            },
+            "Link do bot\u00e3o": [
+                "Button link"
+            ],
+            "P\u00e1gina, https:\/\/\u2026, mailto:email@exemplo.pt ou tel:+351\u2026. Sem link, o bot\u00e3o n\u00e3o aparece no site.": [
+                "A page, https:\/\/\u2026, mailto:email@example.com or tel:+351\u2026. Without a link the button does not appear on the site."
+            ],
+            "Editar link do bot\u00e3o": [
+                "Edit button link"
+            ],
+            "\u00cdcone": [
+                "Icon"
+            ],
+            "Mostrar \u00edcone": [
+                "Show icon"
+            ],
+            "Carregar \u00edcone": [
+                "Upload icon"
+            ],
+            "Substituir \u00edcone": [
+                "Replace icon"
+            ],
+            "Remover \u00edcone": [
+                "Remove icon"
+            ],
+            "Bot\u00e3o": [
+                "Button"
+            ],
+            "Mostrar bot\u00e3o": [
+                "Show button"
+            ],
+            "T\u00edtulo": [
+                "Title"
+            ],
+            "Detalhes (Enter para nova linha)": [
+                "Details (Enter for a new line)"
+            ],
+            "Texto do bot\u00e3o": [
+                "Button text"
+            ],
+            "Adicionar link \u2014 sem link o bot\u00e3o n\u00e3o aparece": [
+                "Add a link \u2014 without one the button does not appear"
+            ],
+            "Name": [
+                ""
+            ],
+            "Slug": [
+                ""
+            ],
+            "Remove": [
+                ""
+            ],
+            "Add term": [
+                ""
+            ],
+            "Filters": [
+                ""
+            ],
+            "Tem\u00e1ticas": [
+                "Themes"
+            ],
+            "Setores": [
+                "Sectors"
+            ],
+            "Selected platform fields": [
+                ""
+            ],
+            "Date label": [
+                ""
+            ],
+            "Date": [
+                ""
+            ],
+            "Featured": [
+                ""
+            ],
+            "Platform URL": [
+                ""
+            ],
+            "Heading": [
+                ""
+            ],
+            "Add platform": [
+                ""
+            ],
+            "Pesquisa": [
+                "Search"
+            ],
+            "Tem\u00e1tica: Todas": [
+                "Theme: All"
+            ],
+            "Sector: Todos": [
+                "Sector: All"
+            ],
+            "Ordenar por: Mais recente": [
+                "Sort by: Most recent"
+            ],
+            "Select platform %d": [
+                ""
+            ],
+            "Selected": [
+                ""
+            ],
+            "Select": [
+                ""
+            ],
+            "Select image": [
+                ""
+            ],
+            "Replace image": [
+                ""
+            ],
+            "Destaque": [
+                "Featured"
+            ],
+            "Platform title": [
+                ""
+            ],
+            "Description": [
+                ""
+            ],
+            "Add a platform to start editing the grid.": [
+                ""
+            ],
+            "Selected result settings": [
+                ""
+            ],
+            "Result URL": [
+                ""
+            ],
+            "Node\/content ID": [
+                ""
+            ],
+            "ECONOMIA": [
+                ""
+            ],
+            "Bar\u00f3metro": [
+                ""
+            ],
+            "Promovendo a coordena\u00e7\u00e3o, o desenvolvimento e a divulga\u00e7\u00e3o da atividade estat\u00edstica nacional.": [
+                "Promoting the coordination, development and dissemination of national statistical activity."
+            ],
+            "Add result": [
+                ""
+            ],
+            "Select result %d": [
+                ""
+            ],
+            "Year": [
+                ""
+            ],
+            "Value": [
+                ""
+            ],
+            "Unit": [
+                ""
+            ],
+            "Add a result to start editing the CTA results section.": [
+                ""
+            ],
+            "Content": [
+                ""
+            ],
+            "Show Tematic selector": [
+                ""
+            ],
+            "Show CTA button": [
+                ""
+            ],
+            "CTA URL": [
+                ""
+            ],
+            "Show description text": [
+                ""
+            ],
+            "Body copy": [
+                ""
+            ],
+            "CTA label": [
+                ""
+            ],
+            "Select an image": [
+                ""
+            ],
+            "Select hero image": [
+                ""
+            ],
+            "Replace hero image": [
+                ""
+            ],
+            "Caption heading": [
+                ""
+            ],
+            "Caption body": [
+                ""
+            ],
+            "Image": [
+                ""
+            ],
+            "Optional caption": [
+                ""
+            ],
+            "Selected item fields": [
+                ""
+            ],
+            "Item URL": [
+                ""
+            ],
+            "Region": [
+                ""
+            ],
+            "Audiences": [
+                ""
+            ],
+            "Portugal regions map preview": [
+                ""
+            ],
+            "Filtros": [
+                "Filters"
+            ],
+            "Regi\u00e3o": [
+                "Region"
+            ],
+            "Region label": [
+                ""
+            ],
+            "Audience label": [
+                ""
+            ],
+            "Add item": [
+                ""
+            ],
+            "Select item %d": [
+                ""
+            ],
+            "Item title": [
+                ""
+            ],
+            "Excerpt": [
+                ""
+            ],
+            "Add an item to start editing the map list.": [
+                ""
+            ],
+            "Centrado (predefini\u00e7\u00e3o)": [
+                "Centred (default)"
+            ],
+            "Alinhado \u00e0 esquerda": [
+                "Left aligned"
+            ],
+            "Alinhado \u00e0 direita": [
+                "Right aligned"
+            ],
+            "Largura total": [
+                "Full width"
+            ],
+            "Alinhamento:": [
+                "Alignment:"
+            ],
+            "Mapa": [
+                "Map"
+            ],
+            "URL": [
+                ""
+            ],
+            "Background color": [
+                ""
+            ],
+            "Hover color": [
+                ""
+            ],
+            "Title color": [
+                ""
+            ],
+            "Paragraph color": [
+                ""
+            ],
+            "Corner radius": [
+                ""
+            ],
+            "Paragraph vertical alignment": [
+                ""
+            ],
+            "Top aligned": [
+                ""
+            ],
+            "Bottom aligned": [
+                ""
+            ],
+            "Background": [
+                ""
+            ],
+            "Accessible section label": [
+                ""
+            ],
+            "Background image": [
+                ""
+            ],
+            "Select background image": [
+                ""
+            ],
+            "Replace background image": [
+                ""
+            ],
+            "Column A": [
+                ""
+            ],
+            "Column B": [
+                ""
+            ],
+            "Column C": [
+                ""
+            ],
+            "Video": [
+                ""
+            ],
+            "Select video": [
+                ""
+            ],
+            "Replace video": [
+                ""
+            ],
+            "Video URL": [
+                ""
+            ],
+            "Video title": [
+                ""
+            ],
+            "Share URL": [
+                ""
+            ],
+            "Share label": [
+                ""
+            ],
+            "Video poster image": [
+                ""
+            ],
+            "Select poster image": [
+                ""
+            ],
+            "Replace poster image": [
+                ""
+            ],
+            "First title": [
+                ""
+            ],
+            "First text": [
+                ""
+            ],
+            "Second title": [
+                ""
+            ],
+            "Second text": [
+                ""
+            ],
+            "Select a video": [
+                ""
+            ],
+            "CTA link": [
+                ""
+            ],
+            "Visibility": [
+                ""
+            ],
+            "Show spotlight section": [
+                ""
+            ],
+            "Slide": [
+                ""
+            ],
+            "Add slide": [
+                ""
+            ],
+            "Remove selected": [
+                ""
+            ],
+            "Select a background image": [
+                ""
+            ],
+            "Slide title": [
+                ""
+            ],
+            "Slide subtitle": [
+                ""
+            ],
+            "Spotlight image": [
+                ""
+            ],
+            "Select spotlight image": [
+                ""
+            ],
+            "Replace spotlight image": [
+                ""
+            ],
+            "Spotlight title": [
+                ""
+            ],
+            "Spotlight body": [
+                ""
+            ],
+            "Spotlight URL": [
+                ""
+            ],
+            "Add a slide to start editing the hero slider.": [
+                ""
+            ],
+            "Selected episode fields": [
+                ""
+            ],
+            "Listen URL": [
+                ""
+            ],
+            "Add episode": [
+                ""
+            ],
+            "Select episode %d": [
+                ""
+            ],
+            "Select episode image": [
+                ""
+            ],
+            "Replace episode image": [
+                ""
+            ],
+            "Episode": [
+                ""
+            ],
+            "Episode title": [
+                ""
+            ],
+            "Ouvir": [
+                "Listen"
+            ],
+            "Partilhar": [
+                "Share"
+            ],
+            "Add an episode to start editing the podcast list.": [
+                ""
+            ],
+            "Nenhum": [
+                "None"
+            ],
+            "Pequeno": [
+                "Small"
+            ],
+            "M\u00e9dio": [
+                "Medium"
+            ],
+            "Grande": [
+                "Large"
+            ],
+            "Nenhum (largura total)": [
+                "None (full width)"
+            ],
+            "Predefinido": [
+                "Default"
+            ],
+            "Fundo da sec\u00e7\u00e3o": [
+                "Section background"
+            ],
+            "Repor": [
+                "Reset"
+            ],
+            "O texto dos blocos interiores fica automaticamente leg\u00edvel sobre este fundo.": [
+                "Text in the inner blocks stays legible over this background automatically."
+            ],
+            "Sem cor definida, a sec\u00e7\u00e3o herda o fundo da p\u00e1gina.": [
+                "With no colour set, the section inherits the page background."
+            ],
+            "Espa\u00e7amento": [
+                "Spacing"
+            ],
+            "Topo": [
+                "Top"
+            ],
+            "Base": [
+                "Bottom"
+            ],
+            "Laterais": [
+                "Sides"
+            ],
+            "Etiqueta": [
+                "Label"
+            ],
+            "T\u00edtulo \u00b7 linha 1": [
+                "Title \u00b7 line 1"
+            ],
+            "T\u00edtulo \u00b7 linha 2": [
+                "Title \u00b7 line 2"
+            ],
+            "Tipografia: %s": [
+                "Typography: %s"
+            ],
+            "Negrito": [
+                "Bold"
+            ],
+            "It\u00e1lico": [
+                "Italic"
+            ],
+            "Primeira linha do t\u00edtulo": [
+                "First line of the title"
+            ],
+            "Segunda linha do t\u00edtulo (opcional)": [
+                "Second line of the title (optional)"
+            ],
+            "Image position": [
+                ""
+            ],
+            "Image left": [
+                ""
+            ],
+            "Image right": [
+                ""
+            ],
+            "Hide taxonomy label": [
+                ""
+            ],
+            "Hide CTA button": [
+                ""
+            ],
+            "incomplete item(s). Complete the required fields before publishing.": [
+                ""
+            ],
+            "Item": [
+                ""
+            ],
+            "Structured content only. Visual styling is controlled by the Astro web app.": [
+                ""
+            ],
+            "Fundo da p\u00e1gina": [
+                "Page background"
+            ],
+            "Tem\u00e1tica": [
+                "Theme"
+            ],
+            "%1$s e %2$s": [
+                "%1$s and %2$s"
+            ],
+            "Subt\u00edtulo": [
+                "Subtitle"
+            ],
+            "%s (predefinido)": [
+                "%s (default)"
+            ],
+            "Alinhar texto \u00e0 esquerda": [
+                "Align text left"
+            ],
+            "Alinhar texto ao centro": [
+                "Align text center"
+            ],
+            "Alinhar texto \u00e0 direita": [
+                "Align text right"
+            ],
+            "Alinhamento do texto": [
+                "Text alignment"
+            ],
+            "Move o t\u00edtulo, o subt\u00edtulo e o bot\u00e3o em conjunto.": [
+                "Moves the title, subtitle and CTA together."
+            ],
+            "Tamanho de letra (%s)": [
+                "Font size (%s)"
+            ],
+            "Cor do texto (%s)": [
+                "Text color (%s)"
+            ],
+            "Imagem do cabe\u00e7alho": [
+                "Hero image"
+            ],
+            "Substituir imagem": [
+                "Replace image"
+            ],
+            "Selecionar imagem": [
+                "Select image"
+            ],
+            "Conte\u00fado": [
+                "Content"
+            ],
+            "Mostrar subt\u00edtulo": [
+                "Show subtitle"
+            ],
+            "URL do bot\u00e3o": [
+                "CTA URL"
+            ],
+            "Tipografia": [
+                "Typography"
+            ],
+            "Disposi\u00e7\u00e3o": [
+                "Layout"
+            ],
+            "Altura": [
+                "Height"
+            ],
+            "%1$s ocupa o ecr\u00e3 inteiro; %2$s s\u00e3o faixas progressivamente mais baixas.": [
+                "%1$s fills the viewport; %2$s are progressively shorter bands."
+            ],
+            "Selecionar imagem de fundo (opcional)": [
+                "Select a hero image (optional)"
+            ],
+            "T\u00edtulo do cabe\u00e7alho": [
+                "Hero title"
+            ],
+            "Adicionar item": [
+                "Add item"
+            ],
+            "Ainda sem itens.": [
+                "No items yet."
+            ],
+            "Remover": [
+                "Remove"
+            ],
+            "Texto alternativo da imagem": [
+                "Image alt text"
+            ],
+            "Contrato de bloco Nomia em falta.": [
+                "Missing Nomia block contract."
+            ],
+            "Pr\u00e9-visualiza\u00e7\u00e3o: %s": [
+                "Preview: %s"
+            ],
+            "Extra": [
+                "Extra"
+            ],
+            "Notas": [
+                "Notes"
+            ],
+            "Corpo": [
+                "Body"
+            ],
+            "Corpo grande": [
+                "Large body"
+            ],
+            "T\u00edtulo 4": [
+                "Heading 4"
+            ],
+            "T\u00edtulo 3": [
+                "Heading 3"
+            ],
+            "T\u00edtulo 2": [
+                "Heading 2"
+            ],
+            "T\u00edtulo 1": [
+                "Heading 1"
+            ],
+            "Super": [
+                "Super"
+            ],
+            "%1$s \u00b7 %2$spx": [
+                "%1$s \u00b7 %2$spx"
+            ],
+            "%spx": [
+                "%spx"
+            ],
+            "Predefinido (%s)": [
+                "Default (%s)"
+            ],
+            "Tamanho": [
+                "Size"
+            ],
+            "Altura da linha": [
+                "Line height"
+            ],
+            "Este bloco n\u00e3o aparece no site enquanto a etiqueta e a primeira linha do t\u00edtulo estiverem vazias.": [
+                "This block does not appear on the site while the label and the first title line are empty."
+            ],
+            "Este link n\u00e3o \u00e9 aceite e o bot\u00e3o n\u00e3o aparece no site. Use uma p\u00e1gina, https:\/\/\u2026, mailto: ou tel:.": [
+                "This link is not allowed, so the button does not appear on the site. Use a page, https:\/\/\u2026, mailto: or tel:."
+            ],
+            "O bot\u00e3o s\u00f3 aparece no site com texto e link.": [
+                "The button only appears on the site with both text and a link."
+            ],
+            "Este bloco n\u00e3o aparece no site enquanto o t\u00edtulo, os detalhes e o bot\u00e3o estiverem vazios.": [
+                "This block does not appear on the site while the title, details and button are empty."
+            ],
+            "Detalhes": [
+                "Details"
+            ],
+            "Predefinido (da altura)": [
+                "Default (from height)"
+            ],
+            "Predefinido (%spx)": [
+                "Default (%spx)"
+            ],
+            "Altura da linha (%s)": [
+                "Line height (%s)"
+            ],
+            "Espa\u00e7o superior": [
+                "Top spacing"
+            ],
+            "Espa\u00e7o inferior": [
+                "Bottom spacing"
+            ],
+            "Subt\u00edtulo ou descri\u00e7\u00e3o (Enter para novo par\u00e1grafo)": [
+                "Subtitle or description (Enter for a new paragraph)"
+            ],
+            "Em cima \u00e0 esquerda": [
+                "Top left"
+            ],
+            "Em cima ao centro": [
+                "Top center"
+            ],
+            "Em cima \u00e0 direita": [
+                "Top right"
+            ],
+            "Ao centro \u00e0 esquerda": [
+                "Center left"
+            ],
+            "Ao centro": [
+                "Center"
+            ],
+            "Ao centro \u00e0 direita": [
+                "Center right"
+            ],
+            "Em baixo \u00e0 esquerda": [
+                "Bottom left"
+            ],
+            "Em baixo ao centro": [
+                "Bottom center"
+            ],
+            "Em baixo \u00e0 direita": [
+                "Bottom right"
+            ],
+            "Preencher (recorta a imagem)": [
+                "Fill (crops the image)"
+            ],
+            "Ajustar (imagem inteira)": [
+                "Fit (whole image)"
+            ],
+            "Tamanho original": [
+                "Original size"
+            ],
+            "Imagem de fundo": [
+                "Background image"
+            ],
+            "Remover imagem": [
+                "Remove image"
+            ],
+            "Alinhamento da imagem": [
+                "Image alignment"
+            ],
+            "Tamanho da imagem": [
+                "Image size"
+            ],
+            "Para uma imagem quadrada encostada a um lado, escolha \"Ajustar\" e o alinhamento desse lado. A imagem fica por cima da cor de fundo.": [
+                "For a square image against one side, choose \"Fit\" and that side's alignment. The image sits above the background colour."
+            ],
+            "Bot\u00e3o Bioeconomia": [
+                "Bioeconomia Button"
+            ],
+            "Bot\u00e3o animado com o estilo visual da Bioeconomia.": [
+                "Animated button with the Bioeconomia visual style."
+            ]
+        }
+    }
+}

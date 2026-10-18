@@ -1,0 +1,109 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/energy-consumption-chart",
+	"title": "Gráfico de consumo de energia",
+	"category": "getquick-nomia",
+	"icon": "chart-line",
+	"description": "Gráfico de linhas com o consumo mensal por fonte de energia, com título, descrição e resumo.",
+	"textdomain": "getquick-nomia-blocks",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "energy-consumption-chart"
+		},
+		"title": {
+			"type": "string",
+			"default": ""
+		},
+		"description": {
+			"type": "string",
+			"default": ""
+		},
+		"summary": {
+			"type": "string",
+			"default": ""
+		},
+		"data": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object",
+				"required": [
+					"month",
+					"solar",
+					"eletrica",
+					"gas"
+				],
+				"properties": {
+					"month": {
+						"type": "string",
+						"default": ""
+					},
+					"solar": {
+						"type": "number"
+					},
+					"eletrica": {
+						"type": "number"
+					},
+					"gas": {
+						"type": "number"
+					}
+				}
+			}
+		},
+		"yMax": {
+			"type": "number"
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"title": "Consumo de energia por fonte",
+			"description": "Compare a evolução mensal das principais fontes de energia.",
+			"summary": "Os valores apresentados são dados de demonstração do gráfico.",
+			"yMax": 100,
+			"data": [
+				{
+					"month": "Jan",
+					"solar": 32,
+					"eletrica": 48,
+					"gas": 20
+				},
+				{
+					"month": "Abr",
+					"solar": 41,
+					"eletrica": 44,
+					"gas": 15
+				},
+				{
+					"month": "Jul",
+					"solar": 58,
+					"eletrica": 31,
+					"gas": 11
+				},
+				{
+					"month": "Out",
+					"solar": 45,
+					"eletrica": 39,
+					"gas": 16
+				}
+			]
+		}
+	},
+	"editorScript": "getquick-nomia-blocks-editor",
+	"editorStyle": "getquick-nomia-blocks-editor-style"
+}

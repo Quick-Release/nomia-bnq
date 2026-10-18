@@ -1,0 +1,83 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/grafico-donut",
+	"title": "Gráfico donut",
+	"category": "getquick-nomia",
+	"icon": "chart-pie",
+	"description": "Só o gráfico donut com legenda, sem título nem texto, para usar dentro de outros blocos.",
+	"textdomain": "getquick-nomia-blocks",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "grafico-donut"
+		},
+		"slices": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object",
+				"required": [
+					"type",
+					"label",
+					"value"
+				],
+				"properties": {
+					"type": {
+						"type": "string",
+						"default": ""
+					},
+					"label": {
+						"type": "string",
+						"default": ""
+					},
+					"value": {
+						"type": "number"
+					}
+				}
+			}
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"slices": [
+				{
+					"type": "vidro",
+					"label": "Vidro",
+					"value": 30
+				},
+				{
+					"type": "metal",
+					"label": "Metal",
+					"value": 25
+				},
+				{
+					"type": "papel",
+					"label": "Papel",
+					"value": 28
+				},
+				{
+					"type": "plastico",
+					"label": "Plástico",
+					"value": 17
+				}
+			]
+		}
+	},
+	"editorScript": "getquick-nomia-blocks-editor",
+	"editorStyle": "getquick-nomia-blocks-editor-style"
+}
