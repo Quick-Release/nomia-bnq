@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.2.2 - 2026-10-18
+
+Previous release: v0.2.1
+
+- f8b5585 fix(ci): adopt site 0.18.3 Composer installer fix
+
 ## v0.2.1 - 2026-10-18
 
 Previous release: v0.2.0
