@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/image-zoom",
 	"title": "Imagem com zoom",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "search",
 	"description": "Imagem com legenda opcional que amplia ao passar o rato e abre em ecrã inteiro ao clicar.",
 	"textdomain": "getquick-nomia-blocks",
@@ -49,6 +49,8 @@
 			"caption": "Clique na imagem para abrir em modo ampliado."
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": [
+		"getquick-nomia-blocks-editor",
+		"file:./editor.css"
+	]
 }

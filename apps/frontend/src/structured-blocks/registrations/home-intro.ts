@@ -68,7 +68,7 @@ export default defineStructuredBlock({
       "Introdução com etiqueta, título, texto, botão e imagem grande com legenda opcional.",
     icon: "admin-home",
     experience: "preview",
-    module: "HomeIntro.jsx",
+    bespoke: true,
   },
   documentation: {
     path: "sections/landing/home-intro.md",

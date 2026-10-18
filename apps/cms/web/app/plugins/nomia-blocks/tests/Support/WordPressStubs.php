@@ -11,7 +11,7 @@ declare(strict_types=1);
  * records every call into $GLOBALS['nomia_blocks_test_state'] for assertions.
  *
  * Mirrors the CMS tests/Support/WordPressStubs.php pattern, but
- * scoped to the ~13 functions getquick-nomia-blocks.php actually uses.
+ * scoped to the functions nomia-blocks actually uses.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -25,7 +25,8 @@ if ( ! isset( $GLOBALS['nomia_blocks_test_state'] ) ) {
 		'apply_filters_calls'  => array(),
 		'registered_scripts'   => array(),
 		'registered_styles'    => array(),
-		'localized_scripts'    => array(),
+		'inline_scripts'       => array(),
+		'enqueued_scripts'     => array(),
 		'registered_blocks'    => array(),
 		'block_metadata_collections' => array(),
 		'registered_post_meta' => array(),
@@ -188,11 +189,36 @@ if ( ! function_exists( 'wp_register_style' ) ) {
 	}
 }
 
-if ( ! function_exists( 'wp_localize_script' ) ) {
-	function wp_localize_script( $handle, $object_name, $l10n ) {
-		$GLOBALS['nomia_blocks_test_state']['localized_scripts'][ $handle ][ $object_name ] = $l10n;
+if ( ! function_exists( 'wp_add_inline_script' ) ) {
+	function wp_add_inline_script( $handle, $data, $position = 'after' ) {
+		$GLOBALS['nomia_blocks_test_state']['inline_scripts'][ $handle ][] = compact( 'data', 'position' );
 
 		return true;
+	}
+}
+
+if ( ! function_exists( 'wp_enqueue_script' ) ) {
+	function wp_enqueue_script( $handle ) {
+		$GLOBALS['nomia_blocks_test_state']['enqueued_scripts'][] = $handle;
+	}
+}
+
+/**
+ * Run the callbacks the plugin added to an action, in priority order, the
+ * way `do_action()` does.
+ */
+function nomia_blocks_do_action( string $hook, ...$args ): void {
+	$actions = array_values(
+		array_filter(
+			$GLOBALS['nomia_blocks_test_state']['actions'],
+			static fn( $action ) => $action['hook'] === $hook
+		)
+	);
+
+	usort( $actions, static fn( $left, $right ) => $left['priority'] <=> $right['priority'] );
+
+	foreach ( $actions as $action ) {
+		( $action['callback'] )( ...array_slice( $args, 0, (int) $action['accepted_args'] ) );
 	}
 }
 
@@ -302,7 +328,8 @@ function nomia_blocks_reset_test_state(): void {
 		'apply_filters_calls' => array(),
 		'registered_scripts'  => array(),
 		'registered_styles'   => array(),
-		'localized_scripts'   => array(),
+		'inline_scripts'      => array(),
+		'enqueued_scripts'    => array(),
 		'registered_blocks'   => array(),
 		'block_metadata_collections' => array(),
 		'registered_post_meta' => array(),

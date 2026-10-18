@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/sustainable-bioeconomy-dual-cards",
 	"title": "Bioeconomia sustentável: cartões duplos",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "columns",
 	"description": "Cabeçalho com dois cartões lado a lado, cada um com imagem, título e texto.",
 	"textdomain": "getquick-nomia-blocks",
@@ -92,6 +92,5 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": "getquick-nomia-blocks-editor"
 }

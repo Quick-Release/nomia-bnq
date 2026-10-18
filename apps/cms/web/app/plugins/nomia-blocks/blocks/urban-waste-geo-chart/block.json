@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/urban-waste-geo-chart",
 	"title": "Gráfico geográfico de resíduos urbanos",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "admin-site-alt3",
 	"description": "Barras horizontais de resíduos urbanos por habitante, por região e ano, com anos filtráveis.",
 	"textdomain": "getquick-nomia-blocks",
@@ -128,6 +128,5 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": "getquick-nomia-blocks-editor"
 }

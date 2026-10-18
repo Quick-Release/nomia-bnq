@@ -70,7 +70,7 @@ export default defineStructuredBlock({
     icon: "heading",
     keywords: ["título", "etiqueta", "cabeçalho", "secção", "eyebrow"],
     experience: "inline-fields",
-    module: "TitleWithLabel.jsx",
+    bespoke: true,
   },
   documentation: {
     path: "sections/landing/title-with-label.md",

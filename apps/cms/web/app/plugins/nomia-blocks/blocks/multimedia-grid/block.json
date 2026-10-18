@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/multimedia-grid",
 	"title": "Grelha multimédia",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "admin-media",
 	"description": "Grelha de ligações para conteúdos multimédia e ferramentas, com cabeçalho, texto e etiquetas.",
 	"textdomain": "getquick-nomia-blocks",
@@ -104,6 +104,5 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": "getquick-nomia-blocks-editor"
 }

@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/circular-economy-overview-slider",
 	"title": "Economia circular: slider geral",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "slides",
 	"description": "Carrossel de imagens com legenda e ligação, precedido de título, etiquetas e botão «Ver todos».",
 	"textdomain": "getquick-nomia-blocks",
@@ -135,6 +135,5 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": "getquick-nomia-blocks-editor"
 }

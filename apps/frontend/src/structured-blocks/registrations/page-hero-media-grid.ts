@@ -80,7 +80,7 @@ export default defineStructuredBlock({
     description: "Hero com imagem de fundo, duas chamadas com ligação e uma coluna de vídeo.",
     icon: "format-video",
     experience: "preview",
-    module: "PageHeroMediaGrid.jsx",
+    bespoke: true,
   },
   documentation: {
     path: "page-heroes/page-hero-media-grid.md",

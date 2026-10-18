@@ -2,12 +2,17 @@
 
 declare(strict_types=1);
 
+use GetQuick\NomiaBlocks\Blocks\BlockPolicy;
+use GetQuick\NomiaBlocks\Blocks\ContractBlocks;
+use GetQuick\NomiaBlocks\Blocks\EditorAssets;
+use GetQuick\NomiaBlocks\Contracts;
+
 /*
 |--------------------------------------------------------------------------
 | Contracts
 |--------------------------------------------------------------------------
 |
-| Every entry from getquick_nomia_blocks_contracts() must be shaped so that
+| Every entry from Contracts::all() must be shaped so that
 | register_block_type would accept it, and the same set must end up registered
 | after the single bootstrap (beforeAll).
 */
@@ -22,19 +27,11 @@ function nomia_blocks_valid_attribute_types(): array {
 }
 
 test('the plugin exposes a non-empty contracts list', function () {
-	expect( getquick_nomia_blocks_contracts() )->not()->toBeEmpty();
-} );
-
-test('the PHP runtime contract matches the generated JSON adapter', function () {
-	$json = file_get_contents( __DIR__ . '/../src/contracts.json' );
-	expect( $json )->not()->toBeFalse();
-
-	$generated_contracts = json_decode( (string) $json, true, 512, JSON_THROW_ON_ERROR );
-	expect( getquick_nomia_blocks_contracts() )->toEqual( $generated_contracts );
+	expect( Contracts::all() )->not()->toBeEmpty();
 } );
 
 test('every contract has the required keys with correct types', function () {
-	foreach ( getquick_nomia_blocks_contracts() as $contract ) {
+	foreach ( Contracts::all() as $contract ) {
 		expect( $contract )->toHaveKeys( array( 'blockName', 'title', 'status', 'inserter', 'attributes' ) )
 			->and( $contract['blockName'] )->toBeString()->toStartWith( 'getquick/' )
 			->and( $contract['title'] )->toBeString()
@@ -47,7 +44,7 @@ test('every contract has the required keys with correct types', function () {
 test('every declared attribute has a valid WordPress type', function () {
 	$valid = nomia_blocks_valid_attribute_types();
 
-	foreach ( getquick_nomia_blocks_contracts() as $contract ) {
+	foreach ( Contracts::all() as $contract ) {
 		foreach ( $contract['attributes'] as $name => $attribute ) {
 			expect( $attribute )->toBeArray()
 				->and( $attribute )->toHaveKey( 'type' )
@@ -57,7 +54,7 @@ test('every declared attribute has a valid WordPress type', function () {
 } );
 
 test('block names are unique across contracts', function () {
-	$names = array_map( static fn( $contract ) => $contract['blockName'], getquick_nomia_blocks_contracts() );
+	$names = array_map( static fn( $contract ) => $contract['blockName'], Contracts::all() );
 
 	expect( $names )->toHaveCount( count( array_unique( $names ) ) );
 } );
@@ -67,7 +64,7 @@ test('allowed block types keep the editor focused on supported Nomia content', f
 	register_block_type( 'getquick-design/container' );
 	register_block_type( 'getquick-design/video-hero' );
 	register_block_type( 'other-vendor/widget' );
-	$allowed = getquick_nomia_blocks_allowed_block_types();
+	$allowed = BlockPolicy::supportedBlockTypes();
 	$GLOBALS['nomia_blocks_test_state']['registered_blocks'] = $registered;
 
 	expect( $allowed )->toContain( 'core/paragraph' )
@@ -102,7 +99,7 @@ test('every contract is registered from its generated block.json metadata', func
 	$registered  = $GLOBALS['nomia_blocks_test_state']['registered_blocks'];
 	$blocks_root = dirname( __DIR__ ) . '/blocks';
 
-	foreach ( getquick_nomia_blocks_contracts() as $contract ) {
+	foreach ( Contracts::all() as $contract ) {
 		expect( $registered )->toHaveKey( $contract['blockName'] );
 
 		$block    = $registered[ $contract['blockName'] ];
@@ -112,13 +109,31 @@ test('every contract is registered from its generated block.json metadata', func
 			->and( $metadata['title'] )->toBe( $contract['title'] )
 			->and( $metadata['description'] )->toBe( $contract['description'] )
 			->and( $metadata['textdomain'] )->toBe( 'getquick-nomia-blocks' )
-			->and( $metadata['category'] )->toBe( 'getquick-nomia' )
+			// GQ Design's category, which site block plugins share.
+			->and( $metadata['category'] )->toBe( 'getquick-design' )
 			->and( array_keys( $metadata['attributes'] ) )->toBe( array_keys( $contract['attributes'] ) )
-			->and( $metadata['editorScript'] )->toBe( GETQUICK_NOMIA_BLOCKS_HANDLE )
-			->and( $metadata['editorStyle'] )->toBe( GETQUICK_NOMIA_BLOCKS_STYLE_HANDLE )
+			->and( $metadata )->not()->toHaveKey( 'editorScript' )
+			->and( (array) $metadata['editorStyle'] )->toContain( EditorAssets::HANDLE )
+			->and( $block['args']['editor_script'] )->toBe( ContractBlocks::editorHandle( $contract['catalogId'] ) )
 			->and( $metadata['supports']['html'] )->toBeFalse()
 			->and( $metadata['supports']['inserter'] )->toBe( $contract['inserter'] )
 			->and( $metadata['example']['attributes'] )->toEqual( $contract['example'] );
+	}
+} );
+
+test('every block registers its own editor script, as GQ Design blocks do', function () {
+	$scripts      = $GLOBALS['nomia_blocks_test_state']['registered_scripts'];
+	$translations = $GLOBALS['nomia_blocks_test_state']['script_translations'];
+	$blocks_root  = dirname( __DIR__ ) . '/blocks';
+
+	foreach ( Contracts::all() as $contract ) {
+		$handle = ContractBlocks::editorHandle( $contract['catalogId'] );
+		$script = $blocks_root . '/' . $contract['catalogId'] . '/index.js';
+
+		expect( $scripts[ $handle ]['src'] )->toEndWith( 'blocks/' . $contract['catalogId'] . '/index.js' )
+			->and( $scripts[ $handle ]['deps'] )->toContain( EditorAssets::HANDLE )
+			->and( $translations[ $handle ]['domain'] )->toBe( 'getquick-nomia-blocks' )
+			->and( (string) file_get_contents( $script ) )->toContain( '"' . $contract['blockName'] . '"' );
 	}
 } );
 
@@ -129,7 +144,7 @@ test('blocks register through one metadata collection that matches every block.j
 	expect( $collections )->toBe( array( $blocks_root => $blocks_root . '/blocks-manifest.php' ) );
 
 	$manifest = require $blocks_root . '/blocks-manifest.php';
-	foreach ( getquick_nomia_blocks_contracts() as $contract ) {
+	foreach ( Contracts::all() as $contract ) {
 		$json = file_get_contents( $blocks_root . '/' . $contract['catalogId'] . '/block.json' );
 		expect( $json )->not()->toBeFalse();
 		expect( $manifest[ $contract['catalogId'] ] )

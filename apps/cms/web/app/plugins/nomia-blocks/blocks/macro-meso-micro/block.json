@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/macro-meso-micro",
 	"title": "Macro, meso e micro",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "networking",
 	"description": "Imagem ao lado de separadores macro, meso e micro, cada um com título, retrato e descrição.",
 	"textdomain": "getquick-nomia-blocks",
@@ -113,6 +113,5 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": "getquick-nomia-blocks-editor"
 }

@@ -46,7 +46,7 @@ export default defineStructuredBlock({
     description: "Mapa Google para páginas de contacto. Cole um link do Google Maps.",
     icon: "location-alt",
     experience: "inline-fields",
-    module: "NomiaContactMap.jsx",
+    bespoke: true,
   },
   documentation: {
     path: "nomia-contact-map.md",

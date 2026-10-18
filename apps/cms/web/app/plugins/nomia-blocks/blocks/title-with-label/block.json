@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/title-with-label",
 	"title": "Título com etiqueta",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "heading",
 	"description": "Título de secção numa ou duas linhas, com uma etiqueta curta por cima.",
 	"keywords": [
@@ -199,6 +199,8 @@
 			}
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": [
+		"getquick-nomia-blocks-editor",
+		"file:./editor.css"
+	]
 }

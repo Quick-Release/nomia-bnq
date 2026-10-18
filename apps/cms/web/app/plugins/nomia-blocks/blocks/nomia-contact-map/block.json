@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/nomia-contact-map",
 	"title": "Mapa de contacto",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "location-alt",
 	"description": "Mapa Google para páginas de contacto. Cole um link do Google Maps.",
 	"textdomain": "getquick-nomia-blocks",
@@ -51,6 +51,8 @@
 			"title": "Mapa de contacto"
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": [
+		"getquick-nomia-blocks-editor",
+		"file:./editor.css"
+	]
 }

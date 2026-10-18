@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { pageHeroLegacyAttributePatch } from "../../cms/web/app/plugins/nomia-blocks/src/lib/page-hero-legacy-attributes.mjs";
+import { pageHeroLegacyAttributePatch } from "./nomia-blocks-lib.mjs";
 
 test("a hero with no legacy keys is left alone", () => {
   assert.deepEqual(

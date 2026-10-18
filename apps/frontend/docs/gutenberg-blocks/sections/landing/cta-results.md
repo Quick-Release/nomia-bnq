@@ -4,7 +4,7 @@
 - Block ID: `cta-results`
 - WordPress block name: `getquick/cta-results`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/BarometroResultsBlock.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/src/editors/CtaResults.jsx`
+- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/blocks/cta-results/index.js`
 - Lifecycle: `active`
 <!-- END GENERATED: structured-block-metadata -->
 

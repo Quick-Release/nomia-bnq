@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/grafico-donut",
 	"title": "Gráfico donut",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "chart-pie",
 	"description": "Só o gráfico donut com legenda, sem título nem texto, para usar dentro de outros blocos.",
 	"textdomain": "getquick-nomia-blocks",
@@ -78,6 +78,5 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": "getquick-nomia-blocks-editor"
 }

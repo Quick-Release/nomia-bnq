@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/home-intro",
 	"title": "Introdução da homepage",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "admin-home",
 	"description": "Introdução com etiqueta, título, texto, botão e imagem grande com legenda opcional.",
 	"textdomain": "getquick-nomia-blocks",
@@ -101,6 +101,8 @@
 			"heroAlt": "Muda em mãos"
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": [
+		"getquick-nomia-blocks-editor",
+		"file:./editor.css"
+	]
 }

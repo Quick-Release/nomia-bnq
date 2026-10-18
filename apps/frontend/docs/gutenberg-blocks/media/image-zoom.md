@@ -4,7 +4,7 @@
 - Block ID: `image-zoom`
 - WordPress block name: `getquick/image-zoom`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/ImageZoomBlock.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/src/editors/ImageZoom.jsx`
+- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/blocks/image-zoom/index.js`
 - Lifecycle: `active`
 <!-- END GENERATED: structured-block-metadata -->
 

@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/circular-economy-overview",
 	"title": "Obsoleto: visão geral da economia circular",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "warning",
 	"description": "Bloco antigo mantido para conteúdos já publicados. Use Scroll horizontal com conteúdo.",
 	"textdomain": "getquick-nomia-blocks",
@@ -135,6 +135,5 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": "getquick-nomia-blocks-editor"
 }

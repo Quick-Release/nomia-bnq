@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
+use GetQuick\NomiaBlocks\Contracts;
+
 /*
 |--------------------------------------------------------------------------
 | Translation catalogs
 |--------------------------------------------------------------------------
 |
 | Source strings are Portuguese; `languages/` carries the catalogs that
-| translate them. `pnpm wp-plugin:i18n` regenerates those files through WP-CLI,
-| which needs DDEV — these tests need neither. They read the catalogs as files
+| translate them. WP-CLI's `i18n` commands regenerate those files (see the
+| plugin README) — these tests don't need WP-CLI. They read the catalogs as files
 | and check the two things that silently rot: a block whose Portuguese name
 | never reached the English catalog, and a PO file edited without recompiling.
 |
-| The block titles come from the generated `includes/contracts.php`, so the
-| suite runs after `structured-blocks:materialize-plugin` like every other
-| contract test.
+| The block titles come from the generated `src/Contracts.php`.
 */
 
 /**
@@ -81,7 +81,7 @@ function nomia_blocks_catalog_key( string $msgid, ?string $context = null ): str
 function nomia_blocks_registered_strings(): array {
 	$strings = array();
 
-	foreach ( getquick_nomia_blocks_contracts() as $contract ) {
+	foreach ( Contracts::all() as $contract ) {
 		$block = (string) $contract['blockName'];
 
 		$strings[ $block . ' title' ] = (string) $contract['title'];
@@ -110,12 +110,25 @@ test( 'bootstrap loads the plugin textdomain from its own languages directory', 
 		->toEndWith( '/languages' );
 } );
 
-test( 'the editor bundle is wired to the JSON catalogs', function () {
+test( 'every editor script with translated strings has its JSON catalog', function () {
+	$catalog      = nomia_blocks_parse_po( nomia_blocks_language_path( 'getquick-nomia-blocks-en_US.po' ) );
+	$scripts      = $GLOBALS['nomia_blocks_test_state']['registered_scripts'];
 	$translations = $GLOBALS['nomia_blocks_test_state']['script_translations'];
+	$plugin       = dirname( __DIR__ );
 
-	expect( $translations )->toHaveKey( GETQUICK_NOMIA_BLOCKS_HANDLE );
-	expect( $translations[ GETQUICK_NOMIA_BLOCKS_HANDLE ]['domain'] )->toBe( 'getquick-nomia-blocks' );
-	expect( $translations[ GETQUICK_NOMIA_BLOCKS_HANDLE ]['path'] )->toEndWith( 'languages' );
+	foreach ( $scripts as $handle => $script ) {
+		$path = preg_replace( '#^https://example\\.com/plugins/nomia-blocks/#', '', $script['src'] );
+
+		expect( $translations[ $handle ]['domain'] ?? null )->toBe( 'getquick-nomia-blocks', $handle )
+			->and( $translations[ $handle ]['path'] )->toEndWith( 'languages' );
+
+		// WordPress looks the catalog up by the md5 of the script's path.
+		preg_match_all( '/__\(\s*"((?:[^"\\\\]|\\\\.)*)",\s*"getquick-nomia-blocks"/', (string) file_get_contents( "{$plugin}/{$path}" ), $calls );
+		$translated = array_filter( $calls[1], static fn( string $msgid ): bool => '' !== ( $catalog[ stripcslashes( $msgid ) ] ?? '' ) );
+		$json       = nomia_blocks_language_path( 'getquick-nomia-blocks-en_US-' . md5( $path ) . '.json' );
+
+		expect( [] === $translated || is_file( $json ) )->toBeTrue( "{$path} has translated strings but no {$json}" );
+	}
 } );
 
 test( 'the English catalog translates every block title and description', function () {
@@ -136,7 +149,7 @@ test( 'the English catalog translates every block title and description', functi
 	}
 
 	// Anything listed here is a block whose Portuguese name never reached the
-	// English catalog: run `pnpm wp-plugin:i18n` and translate the new entries.
+	// English catalog: regenerate the catalogs (see the plugin README) and translate the new entries.
 	expect( $missing )->toBe( array() );
 } );
 

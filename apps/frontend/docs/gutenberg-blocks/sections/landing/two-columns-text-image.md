@@ -4,7 +4,7 @@
 - Block ID: `two-columns-text-image`
 - WordPress block name: `getquick/two-columns-text-image`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/TwoColumnsTextImageBlock.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/src/editors/TwoColumnsTextImage.jsx`
+- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/blocks/two-columns-text-image/index.js`
 - Lifecycle: `active`
 <!-- END GENERATED: structured-block-metadata -->
 

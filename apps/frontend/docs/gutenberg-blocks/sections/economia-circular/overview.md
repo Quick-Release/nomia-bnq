@@ -4,7 +4,7 @@
 - Block ID: `circular-economy-overview`
 - WordPress block name: `getquick/circular-economy-overview`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/HorizontalScrollWithContentBlock.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/src/index.jsx`
+- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/assets/editor.js`
 - Lifecycle: `legacy`
 <!-- END GENERATED: structured-block-metadata -->
 

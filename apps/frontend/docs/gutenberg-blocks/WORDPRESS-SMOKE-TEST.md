@@ -3,8 +3,8 @@
 Use this checklist in a real WordPress install after building the same revision with
 `pnpm cms:build` and deploying the tracked
 `apps/cms/web/app/plugins/nomia-blocks` source and its built assets. The build
-must provide `getquick-nomia-blocks.php`, `includes/contracts.php`,
-`build/index.js`, `build/index.css`, and `build/index.asset.php`. The optional
+must provide `getquick-nomia-blocks.php`, `src/`, `assets/`, `blocks/` and
+`languages/`: the editor scripts ship as written, with no build output. The optional
 deployment zip is equivalent; the plugin is no longer installed through Composer.
 
 ## Prerequisites
@@ -53,14 +53,14 @@ foreach ($expected as $name) {
 '
 ```
 
-Expected: every listed block prints `OK`. For a full check, compare the registered `getquick/*` names against `apps/cms/web/app/plugins/nomia-blocks/src/contracts.json`.
+Expected: every listed block prints `OK`. For a full check, compare the registered `getquick/*` names against `apps/cms/web/app/plugins/nomia-blocks/src/Contracts.php`.
 
 ## 3. Verify editor assets are enqueued
 
 Create or edit a post in wp-admin and open the inserter. Expected:
 
-- Category `Getquick Nomia` appears.
-- Blocks listed in `apps/cms/web/app/plugins/nomia-blocks/src/contracts.json` are available.
+- The blocks appear under GQ Design's `GETQUICK` category.
+- Blocks listed in `apps/cms/web/app/plugins/nomia-blocks/src/Contracts.php` are available.
 - Inspector controls expose content-only fields.
 - Visual controls for color, typography, spacing, arbitrary classes, and alignment are absent.
 - The Astro iframe preview loads from `/wp-block-preview` and auto-resizes.

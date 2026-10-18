@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/events-grid",
 	"title": "Grelha de eventos",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "calendar-alt",
 	"description": "Grelha de eventos com um cartão em destaque e cartões compactos, ligados à página de cada evento.",
 	"textdomain": "getquick-nomia-blocks",
@@ -93,6 +93,5 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": "getquick-nomia-blocks-editor"
 }

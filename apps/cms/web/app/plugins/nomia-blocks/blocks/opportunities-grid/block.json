@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/opportunities-grid",
 	"title": "Grelha de oportunidades",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "megaphone",
 	"description": "Cabeçalho com texto e mosaicos de ligação para oportunidades, como avisos e publicações.",
 	"textdomain": "getquick-nomia-blocks",
@@ -85,6 +85,5 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": "getquick-nomia-blocks-editor"
 }

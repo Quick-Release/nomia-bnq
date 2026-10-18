@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use GetQuick\NomiaBlocks\Contracts;
+
 /*
 |--------------------------------------------------------------------------
 | render_callback placeholder
@@ -16,7 +18,7 @@ declare(strict_types=1);
 test('every registered block exposes a render_callback', function () {
 	$registered = $GLOBALS['nomia_blocks_test_state']['registered_blocks'];
 
-	foreach ( getquick_nomia_blocks_contracts() as $contract ) {
+	foreach ( Contracts::all() as $contract ) {
 		expect( $registered[ $contract['blockName'] ]['args'] )->toHaveKey( 'render_callback' );
 	}
 } );
@@ -24,7 +26,7 @@ test('every registered block exposes a render_callback', function () {
 test('render_callback returns a non-empty debug comment rather than blank output', function () {
 	$registered = $GLOBALS['nomia_blocks_test_state']['registered_blocks'];
 
-	foreach ( getquick_nomia_blocks_contracts() as $contract ) {
+	foreach ( Contracts::all() as $contract ) {
 		$callback = $registered[ $contract['blockName'] ]['args']['render_callback'];
 		$output   = $callback( array( 'blockId' => $contract['catalogId'], 'title' => 'Hello' ) );
 
@@ -39,7 +41,7 @@ test('render_callback returns a non-empty debug comment rather than blank output
 
 test('render_callback echoes the serialized attributes for debuggability', function () {
 	$registered = $GLOBALS['nomia_blocks_test_state']['registered_blocks'];
-	$contract   = getquick_nomia_blocks_contracts()[0];
+	$contract   = Contracts::all()[0];
 	$callback   = $registered[ $contract['blockName'] ]['args']['render_callback'];
 
 	$attributes = array( 'title' => 'A test title', 'count' => 3 );
@@ -49,7 +51,7 @@ test('render_callback echoes the serialized attributes for debuggability', funct
 
 test('attribute text cannot close the debug comment', function () {
 	$registered = $GLOBALS['nomia_blocks_test_state']['registered_blocks'];
-	$contract   = getquick_nomia_blocks_contracts()[0];
+	$contract   = Contracts::all()[0];
 	$callback   = $registered[ $contract['blockName'] ]['args']['render_callback'];
 
 	$attributes = array( 'title' => 'Bioeconomia --> <script>alert(1)</script>' );
@@ -63,7 +65,7 @@ test('attribute text cannot close the debug comment', function () {
 
 test('escaped attributes still decode to the value an editor typed', function () {
 	$registered = $GLOBALS['nomia_blocks_test_state']['registered_blocks'];
-	$contract   = getquick_nomia_blocks_contracts()[0];
+	$contract   = Contracts::all()[0];
 	$callback   = $registered[ $contract['blockName'] ]['args']['render_callback'];
 
 	$attributes = array( 'title' => 'a --> b & c <em>d</em>' );
@@ -78,7 +80,7 @@ test('escaped attributes still decode to the value an editor typed', function ()
 test('container blocks keep their nested content in the rendered projection', function () {
 	$registered = $GLOBALS['nomia_blocks_test_state']['registered_blocks'];
 	$containers = array_filter(
-		getquick_nomia_blocks_contracts(),
+		Contracts::all(),
 		static fn( array $contract ): bool => (bool) ( $contract['container'] ?? false )
 	);
 
@@ -97,7 +99,7 @@ test('container blocks keep their nested content in the rendered projection', fu
 test('leaf blocks still render only the debug comment', function () {
 	$registered = $GLOBALS['nomia_blocks_test_state']['registered_blocks'];
 
-	foreach ( getquick_nomia_blocks_contracts() as $contract ) {
+	foreach ( Contracts::all() as $contract ) {
 		if ( (bool) ( $contract['container'] ?? false ) ) {
 			continue;
 		}

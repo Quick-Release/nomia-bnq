@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/map-list",
 	"title": "Mapa com lista",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "location",
 	"description": "Mapa de regiões com filtros por público e lista dos conteúdos de cada região.",
 	"textdomain": "getquick-nomia-blocks",
@@ -159,6 +159,8 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": [
+		"getquick-nomia-blocks-editor",
+		"file:./editor.css"
+	]
 }

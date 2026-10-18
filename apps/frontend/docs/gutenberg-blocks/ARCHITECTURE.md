@@ -196,12 +196,16 @@ content-contract adapter, mechanical documentation sections, the docs projection
 WordPress — one `blocks/<catalogId>/block.json` per block plus `blocks/blocks-manifest.php`
 ([ADR 0014](../../../../docs/adr/0014-generate-block-json-from-registrations.md)).
 
-- **Generated, never edited.** The `block.json` files and manifest are Git-ignored package
-  adapters, materialized by `cms:build` like `includes/contracts.php`, so they cannot drift
-  into a second writable copy of the contract.
-- **Standard registration.** The plugin calls `wp_register_block_metadata_collection()` and
-  then `register_block_type( <dir>, array( 'render_callback' => … ) )`. Every block shares the
-  one registered `editorScript`/`editorStyle` handle pair, named in its metadata.
+- **Generated, never edited.** The `block.json` files and manifest, `src/Contracts.php`, the
+  editor script of every block without a bespoke editor, and `assets/frontend-rules.js` are
+  committed generated files; `pnpm structured-blocks:check` fails when they drift.
+- **Registered the way GQ Design registers its blocks.** The editors are plain scripts on
+  `window.wp`, with no build step. `Blocks\ContractBlocks` calls
+  `wp_register_block_metadata_collection()`, then registers each block's own
+  `blocks/<catalogId>/index.js` (with its translations) and
+  `register_block_type( <dir>, [ 'editor_script' => …, 'render_callback' => … ] )`. Blocks use
+  GQ Design's `getquick-design` inserter category and share the `getquick-nomia-blocks-editor`
+  style.
 - **i18n follows core.** `block.json` declares the `getquick-nomia-blocks` text domain, so
   WordPress translates titles, descriptions, and keywords under its `block title` /
   `block description` / `block keyword` contexts.
@@ -209,9 +213,10 @@ WordPress — one `blocks/<catalogId>/block.json` per block plus `blocks/blocks-
   This only holds because the server owns block metadata outright. Gutenberg merges the two
   registrations as `{ ...serverDefinition, ...jsSettings }`, so a `title` passed to
   `registerBlockType` in the editor bundle silently overrides the server's — and the
-  server's is the translated copy, while `contracts.json` carries the raw Portuguese
-  source. `src/index.jsx` therefore registers `edit`, `save`, and `deprecated` and nothing
-  else, and PHP passes only `render_callback`. `pnpm check` enforces both sides.
+  server's is the translated copy, while the contracts carry the raw Portuguese
+  source. `registerContractBlock()` (`assets/editor.js`) therefore registers `edit`, `save`,
+  and `deprecated` and nothing else, and PHP passes only the editor script and
+  `render_callback`. The plugin's tests enforce both sides.
 
 - **The render model is unusual.** `render_callback` returns a debug placeholder (Astro
   owns rendering via `content(format: RAW)`), so there is no `render`, `viewScript`, or

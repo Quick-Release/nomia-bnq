@@ -1,1143 +1,1143 @@
-# Copyright (C) 2026 Getquick
-# This file is distributed under the same license as the Getquick Nomia Blocks plugin.
+# Copyright (C) 2026 GETQUICK
+# This file is distributed under the same license as the GETQUICK Nomia Blocks plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Getquick Nomia Blocks 0.63.6\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/getquick-nomia-blocks\n"
+"Project-Id-Version: GETQUICK Nomia Blocks 0.64.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/plugin\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-21T17:58:43+01:00\n"
+"POT-Creation-Date: 2026-10-18T21:41:06+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: getquick-nomia-blocks\n"
 
 #. Plugin Name of the plugin
 #: getquick-nomia-blocks.php
-msgid "Getquick Nomia Blocks"
+msgid "GETQUICK Nomia Blocks"
 msgstr ""
 
 #. Description of the plugin
 #: getquick-nomia-blocks.php
-msgid "Gutenberg content-contract blocks for Nomia. Astro renders the final frontend markup."
+msgid "Nomia's content-contract blocks, built on GQ Design. Astro renders the final frontend markup."
 msgstr ""
 
 #. Author of the plugin
 #: getquick-nomia-blocks.php
-msgid "Getquick"
+msgid "GETQUICK"
 msgstr ""
 
-#: getquick-nomia-blocks.php:170
-#: getquick-nomia-blocks.php:187
+#: src/Editor/PageBackground.php:40
+#: src/Editor/PageBackground.php:58
 msgid "Cor de fundo da página Nomia."
 msgstr ""
 
-#: getquick-nomia-blocks.php:270
-msgid "Getquick Nomia"
+#: src/GraphQL/BlocksJson.php:37
+msgid "Blocos Gutenberg analisados a partir de post_content, em JSON, para o renderizador Astro."
 msgstr ""
 
-#: src/editors/ContactDetailsCard.jsx:120
+#: assets/document-settings.js:45
+msgid "Fundo da página"
+msgstr ""
+
+#: assets/document-settings.js:104
+#: blocks/section/index.js:211
+#: blocks/title-with-label/index.js:185
+msgid "Repor"
+msgstr ""
+
+#: assets/document-settings.js:117
+msgid "Botão Bioeconomia"
+msgstr ""
+
+#: assets/document-settings.js:118
+msgid "Botão animado com o estilo visual da Bioeconomia."
+msgstr ""
+
+#: assets/editor.js:220
+msgid "Temática"
+msgstr ""
+
+#: assets/editor.js:238
+msgid "Texto alternativo da imagem"
+msgstr ""
+
+#: assets/editor.js:250
+msgid "Structured content only. Visual styling is controlled by the Astro web app."
+msgstr ""
+
+#: assets/editor.js:361
+#: blocks/page-hero-static/index.js:413
+#: blocks/page-hero-static/index.js:435
+#: blocks/section/index.js:241
+msgid "Selecionar imagem"
+msgstr ""
+
+#: assets/editor.js:452
+#: blocks/content-grid-filters/index.js:398
+#: blocks/content-list/index.js:158
+#: blocks/image-zoom/index.js:38
+#: blocks/image-zoom/index.js:80
+#: blocks/map-list/index.js:313
+#: blocks/map-list/index.js:340
+#: blocks/two-columns-text-image/index.js:244
+msgid "Select image"
+msgstr ""
+
+#: assets/editor.js:453
+#: blocks/content-grid-filters/index.js:399
+#: blocks/image-zoom/index.js:39
+#: blocks/image-zoom/index.js:81
+#: blocks/map-list/index.js:341
+#: blocks/two-columns-text-image/index.js:245
+msgid "Replace image"
+msgstr ""
+
+#: assets/editor.js:565
+msgid "Adicionar item"
+msgstr ""
+
+#: assets/editor.js:575
+msgid "incomplete item(s). Complete the required fields before publishing."
+msgstr ""
+
+#: assets/editor.js:584
+msgid "Ainda sem itens."
+msgstr ""
+
+#: assets/editor.js:600
+msgid "Item"
+msgstr ""
+
+#: assets/editor.js:608
+msgid "Remover"
+msgstr ""
+
+#: assets/editor.js:751
+msgid "Contrato de bloco Nomia em falta."
+msgstr ""
+
+#. translators: %s: block title.
+#: assets/editor.js:790
+#, js-format
+msgid "Pré-visualização: %s"
+msgstr ""
+
+#: blocks/contact-details-card/index.js:114
 msgid "Este link não é aceite e o botão não aparece no site. Use uma página, https://…, mailto: ou tel:."
 msgstr ""
 
-#: src/editors/ContactDetailsCard.jsx:124
+#: blocks/contact-details-card/index.js:118
 msgid "O botão só aparece no site com texto e link."
 msgstr ""
 
-#: src/editors/ContactDetailsCard.jsx:152
+#: blocks/contact-details-card/index.js:140
 msgid "Link do botão"
 msgstr ""
 
-#: src/editors/ContactDetailsCard.jsx:157
+#: blocks/contact-details-card/index.js:152
 msgid "Página, https://…, mailto:email@exemplo.pt ou tel:+351…. Sem link, o botão não aparece no site."
 msgstr ""
 
-#: src/editors/ContactDetailsCard.jsx:172
+#: blocks/contact-details-card/index.js:171
 msgid "Editar link do botão"
 msgstr ""
 
-#: src/editors/ContactDetailsCard.jsx:198
+#: blocks/contact-details-card/index.js:197
 msgid "Ícone"
 msgstr ""
 
-#: src/editors/ContactDetailsCard.jsx:203
+#: blocks/contact-details-card/index.js:202
 msgid "Mostrar ícone"
 msgstr ""
 
-#: src/editors/ContactDetailsCard.jsx:215
-#: src/editors/ContactDetailsCard.jsx:307
+#: blocks/contact-details-card/index.js:222
+#: blocks/contact-details-card/index.js:327
 msgid "Carregar ícone"
 msgstr ""
 
-#: src/editors/ContactDetailsCard.jsx:219
-#: src/editors/ContactDetailsCard.jsx:303
+#: blocks/contact-details-card/index.js:223
+#: blocks/contact-details-card/index.js:326
 msgid "Substituir ícone"
 msgstr ""
 
-#: src/editors/ContactDetailsCard.jsx:232
+#: blocks/contact-details-card/index.js:235
 msgid "Remover ícone"
 msgstr ""
 
-#: src/editors/ContactDetailsCard.jsx:251
+#: blocks/contact-details-card/index.js:253
 msgid "Botão"
 msgstr ""
 
-#: src/editors/ContactDetailsCard.jsx:256
-#: src/editors/PageHeroStatic.jsx:482
+#: blocks/contact-details-card/index.js:258
+#: blocks/page-hero-static/index.js:448
 msgid "Mostrar botão"
 msgstr ""
 
-#: src/editors/ContactDetailsCard.jsx:271
+#: blocks/contact-details-card/index.js:282
 msgid "Este bloco não aparece no site enquanto o título, os detalhes e o botão estiverem vazios."
 msgstr ""
 
-#: src/editors/ContactDetailsCard.jsx:330
-#: src/editors/ContactDetailsCard.jsx:333
-#: src/editors/PageHeroStatic.jsx:156
+#: blocks/contact-details-card/index.js:356
+#: blocks/contact-details-card/index.js:359
+#: blocks/page-hero-static/index.js:139
 msgid "Título"
 msgstr ""
 
-#: src/editors/ContactDetailsCard.jsx:342
+#: blocks/contact-details-card/index.js:371
 msgid "Detalhes"
 msgstr ""
 
-#: src/editors/ContactDetailsCard.jsx:345
+#: blocks/contact-details-card/index.js:374
 msgid "Detalhes (Enter para nova linha)"
 msgstr ""
 
-#: src/editors/ContactDetailsCard.jsx:367
-#: src/editors/ContactDetailsCard.jsx:372
-#: src/editors/PageHeroStatic.jsx:647
+#: blocks/contact-details-card/index.js:401
+#: blocks/contact-details-card/index.js:403
+#: blocks/page-hero-static/index.js:635
 msgid "Texto do botão"
 msgstr ""
 
-#: src/editors/ContactDetailsCard.jsx:394
+#: blocks/contact-details-card/index.js:422
 msgid "Adicionar link — sem link o botão não aparece"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:102
+#: blocks/content-grid-filters/index.js:102
 msgid "Name"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:112
-#: src/editors/ContentGridFilters.jsx:239
+#: blocks/content-grid-filters/index.js:111
+#: blocks/content-grid-filters/index.js:242
 msgid "Slug"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:123
-#: src/editors/ContentGridFilters.jsx:435
-#: src/editors/CtaResults.jsx:230
-#: src/editors/MapList.jsx:355
-#: src/editors/PodcastList.jsx:217
+#: blocks/content-grid-filters/index.js:125
+#: blocks/content-grid-filters/index.js:409
+#: blocks/content-list/index.js:196
+#: blocks/cta-results/index.js:225
+#: blocks/map-list/index.js:351
 msgid "Remove"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:128
+#: blocks/content-grid-filters/index.js:135
 msgid "Add term"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:212
+#: blocks/content-grid-filters/index.js:214
 msgid "Filters"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:216
-#: src/editors/ContentGridFilters.jsx:287
+#: blocks/content-grid-filters/index.js:218
+#: blocks/content-grid-filters/index.js:285
 msgid "Temáticas"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:223
-#: src/editors/ContentGridFilters.jsx:304
+#: blocks/content-grid-filters/index.js:226
+#: blocks/content-grid-filters/index.js:298
 msgid "Setores"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:232
+#: blocks/content-grid-filters/index.js:238
 msgid "Selected platform fields"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:251
-#: src/editors/MapList.jsx:402
-#: src/editors/PodcastList.jsx:248
+#: blocks/content-grid-filters/index.js:251
+#: blocks/content-list/index.js:230
+#: blocks/map-list/index.js:384
 msgid "Date label"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:261
+#: blocks/content-grid-filters/index.js:259
 msgid "Date"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:269
+#: blocks/content-grid-filters/index.js:268
 msgid "Featured"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:276
+#: blocks/content-grid-filters/index.js:276
 msgid "Platform URL"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:328
-#: src/editors/HomeIntro.jsx:119
-#: src/editors/TwoColumnsTextImage.jsx:159
+#: blocks/content-grid-filters/index.js:325
+#: blocks/home-intro/index.js:131
+#: blocks/two-columns-text-image/index.js:176
 msgid "Heading"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:338
-#: src/editors/ContentGridFilters.jsx:496
+#: blocks/content-grid-filters/index.js:338
+#: blocks/content-grid-filters/index.js:467
 msgid "Add platform"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:342
+#: blocks/content-grid-filters/index.js:345
 msgid "Pesquisa"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:345
+#: blocks/content-grid-filters/index.js:346
 msgid "Temática: Todas"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:351
+#: blocks/content-grid-filters/index.js:347
 msgid "Sector: Todos"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:357
+#: blocks/content-grid-filters/index.js:348
 msgid "Ordenar por: Mais recente"
 msgstr ""
 
 #. translators: %d: the platform position in the list.
-#: src/editors/ContentGridFilters.jsx:388
+#: blocks/content-grid-filters/index.js:385
 #, js-format
 msgid "Select platform %d"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:402
-#: src/editors/CtaResults.jsx:214
-#: src/editors/MapList.jsx:318
-#: src/editors/PodcastList.jsx:184
+#: blocks/content-grid-filters/index.js:392
+#: blocks/content-list/index.js:179
+#: blocks/cta-results/index.js:215
+#: blocks/map-list/index.js:334
 msgid "Selected"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:406
-#: src/editors/CtaResults.jsx:218
-#: src/editors/MapList.jsx:322
-#: src/editors/PodcastList.jsx:188
+#: blocks/content-grid-filters/index.js:393
+#: blocks/content-list/index.js:180
+#: blocks/cta-results/index.js:216
+#: blocks/map-list/index.js:335
 msgid "Select"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:416
-#: src/editors/ImageZoom.jsx:40
-#: src/editors/ImageZoom.jsx:72
-#: src/editors/MapList.jsx:290
-#: src/editors/MapList.jsx:335
-#: src/editors/PodcastList.jsx:158
-#: src/editors/TwoColumnsTextImage.jsx:221
-#: src/fields/ArrayField.jsx:92
-msgid "Select image"
-msgstr ""
-
-#: src/editors/ContentGridFilters.jsx:420
-#: src/editors/ImageZoom.jsx:44
-#: src/editors/ImageZoom.jsx:76
-#: src/editors/MapList.jsx:339
-#: src/editors/TwoColumnsTextImage.jsx:225
-#: src/fields/ArrayField.jsx:96
-msgid "Replace image"
-msgstr ""
-
-#: src/editors/ContentGridFilters.jsx:443
+#: blocks/content-grid-filters/index.js:418
 msgid "Destaque"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:453
+#: blocks/content-grid-filters/index.js:429
 msgid "Platform title"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:471
-#: src/editors/CtaResults.jsx:286
+#: blocks/content-grid-filters/index.js:439
+#: blocks/cta-results/index.js:280
 msgid "Description"
 msgstr ""
 
-#: src/editors/ContentGridFilters.jsx:490
+#: blocks/content-grid-filters/index.js:459
 msgid "Add a platform to start editing the grid."
 msgstr ""
 
-#: src/editors/CtaResults.jsx:101
+#: blocks/content-list/index.js:91
+msgid "Selected episode fields"
+msgstr ""
+
+#: blocks/content-list/index.js:95
+msgid "Listen URL"
+msgstr ""
+
+#: blocks/content-list/index.js:103
+#: blocks/page-hero-media-grid/index.js:409
+msgid "Share URL"
+msgstr ""
+
+#: blocks/content-list/index.js:133
+#: blocks/content-list/index.js:276
+msgid "Add episode"
+msgstr ""
+
+#. translators: %d: the episode position in the list.
+#: blocks/content-list/index.js:172
+#, js-format
+msgid "Select episode %d"
+msgstr ""
+
+#: blocks/content-list/index.js:185
+msgid "Select episode image"
+msgstr ""
+
+#: blocks/content-list/index.js:186
+msgid "Replace episode image"
+msgstr ""
+
+#: blocks/content-list/index.js:215
+msgid "Episode"
+msgstr ""
+
+#: blocks/content-list/index.js:241
+msgid "Episode title"
+msgstr ""
+
+#: blocks/content-list/index.js:253
+msgid "Ouvir"
+msgstr ""
+
+#: blocks/content-list/index.js:254
+msgid "Partilhar"
+msgstr ""
+
+#: blocks/content-list/index.js:268
+msgid "Add an episode to start editing the podcast list."
+msgstr ""
+
+#: blocks/cta-results/index.js:94
 msgid "Selected result settings"
 msgstr ""
 
-#: src/editors/CtaResults.jsx:108
+#: blocks/cta-results/index.js:98
 msgid "Result URL"
 msgstr ""
 
-#: src/editors/CtaResults.jsx:120
+#: blocks/cta-results/index.js:106
 msgid "Node/content ID"
 msgstr ""
 
-#: src/editors/CtaResults.jsx:139
+#: blocks/cta-results/index.js:146
 msgid "ECONOMIA"
 msgstr ""
 
-#: src/editors/CtaResults.jsx:147
+#: blocks/cta-results/index.js:153
 msgid "Barómetro"
 msgstr ""
 
-#: src/editors/CtaResults.jsx:153
+#: blocks/cta-results/index.js:157
 msgid "Promovendo a coordenação, o desenvolvimento e a divulgação da atividade estatística nacional."
 msgstr ""
 
-#: src/editors/CtaResults.jsx:167
-#: src/editors/CtaResults.jsx:312
+#: blocks/cta-results/index.js:181
+#: blocks/cta-results/index.js:309
 msgid "Add result"
 msgstr ""
 
 #. translators: %d: the result position in the list.
-#: src/editors/CtaResults.jsx:194
+#: blocks/cta-results/index.js:207
 #, js-format
 msgid "Select result %d"
 msgstr ""
 
-#: src/editors/CtaResults.jsx:241
+#: blocks/cta-results/index.js:243
 msgid "Year"
 msgstr ""
 
-#: src/editors/CtaResults.jsx:257
+#: blocks/cta-results/index.js:259
 msgid "Value"
 msgstr ""
 
-#: src/editors/CtaResults.jsx:271
+#: blocks/cta-results/index.js:269
 msgid "Unit"
 msgstr ""
 
-#: src/editors/CtaResults.jsx:306
+#: blocks/cta-results/index.js:298
 msgid "Add a result to start editing the CTA results section."
 msgstr ""
 
-#: src/editors/HomeIntro.jsx:59
-#: src/editors/TwoColumnsTextImage.jsx:104
+#: blocks/home-intro/index.js:62
+#: blocks/two-columns-text-image/index.js:109
 msgid "Content"
 msgstr ""
 
-#: src/editors/HomeIntro.jsx:63
+#: blocks/home-intro/index.js:66
 msgid "Show Tematic selector"
 msgstr ""
 
-#: src/editors/HomeIntro.jsx:73
+#: blocks/home-intro/index.js:74
 msgid "Show CTA button"
 msgstr ""
 
-#: src/editors/HomeIntro.jsx:84
-#: src/editors/TwoColumnsTextImage.jsx:129
+#: blocks/home-intro/index.js:83
+#: blocks/two-columns-text-image/index.js:131
 msgid "CTA URL"
 msgstr ""
 
-#: src/editors/HomeIntro.jsx:92
+#: blocks/home-intro/index.js:92
 msgid "Show description text"
 msgstr ""
 
-#: src/editors/HomeIntro.jsx:131
-#: src/editors/TwoColumnsTextImage.jsx:171
+#: blocks/home-intro/index.js:141
+#: blocks/two-columns-text-image/index.js:186
 msgid "Body copy"
 msgstr ""
 
-#: src/editors/HomeIntro.jsx:149
-#: src/editors/PageHeroSlider.jsx:264
-#: src/editors/TwoColumnsTextImage.jsx:189
+#: blocks/home-intro/index.js:154
+#: blocks/page-hero-slider/index.js:258
+#: blocks/two-columns-text-image/index.js:200
 msgid "CTA label"
 msgstr ""
 
-#: src/editors/HomeIntro.jsx:169
-#: src/editors/ImageZoom.jsx:64
-#: src/editors/TwoColumnsTextImage.jsx:210
+#: blocks/home-intro/index.js:183
+#: blocks/image-zoom/index.js:69
+#: blocks/two-columns-text-image/index.js:233
 msgid "Select an image"
 msgstr ""
 
-#: src/editors/HomeIntro.jsx:180
+#: blocks/home-intro/index.js:194
 msgid "Select hero image"
 msgstr ""
 
-#: src/editors/HomeIntro.jsx:184
+#: blocks/home-intro/index.js:195
 msgid "Replace hero image"
 msgstr ""
 
-#: src/editors/HomeIntro.jsx:197
+#: blocks/home-intro/index.js:209
 msgid "Caption heading"
 msgstr ""
 
-#: src/editors/HomeIntro.jsx:212
+#: blocks/home-intro/index.js:220
 msgid "Caption body"
 msgstr ""
 
-#: src/editors/ImageZoom.jsx:34
+#: blocks/image-zoom/index.js:32
 msgid "Image"
 msgstr ""
 
-#: src/editors/ImageZoom.jsx:86
+#: blocks/image-zoom/index.js:88
 msgid "Optional caption"
 msgstr ""
 
-#: src/editors/MapList.jsx:166
+#: blocks/map-list/index.js:189
 msgid "Selected item fields"
 msgstr ""
 
-#: src/editors/MapList.jsx:179
+#: blocks/map-list/index.js:200
 msgid "Item URL"
 msgstr ""
 
-#: src/editors/MapList.jsx:186
+#: blocks/map-list/index.js:208
 msgid "Region"
 msgstr ""
 
-#: src/editors/MapList.jsx:195
+#: blocks/map-list/index.js:218
 msgid "Audiences"
 msgstr ""
 
-#: src/editors/MapList.jsx:216
+#: blocks/map-list/index.js:242
 msgid "Portugal regions map preview"
 msgstr ""
 
-#: src/editors/MapList.jsx:224
+#: blocks/map-list/index.js:254
 msgid "Filtros"
 msgstr ""
 
-#: src/editors/MapList.jsx:231
+#: blocks/map-list/index.js:260
 msgid "Região"
 msgstr ""
 
-#: src/editors/MapList.jsx:233
+#: blocks/map-list/index.js:261
 msgid "Region label"
 msgstr ""
 
-#: src/editors/MapList.jsx:250
+#: blocks/map-list/index.js:270
 msgid "Audience label"
 msgstr ""
 
-#: src/editors/MapList.jsx:265
-#: src/editors/MapList.jsx:426
+#: blocks/map-list/index.js:282
+#: blocks/map-list/index.js:411
 msgid "Add item"
 msgstr ""
 
 #. translators: %d: the item position in the list.
-#: src/editors/MapList.jsx:302
+#: blocks/map-list/index.js:327
 #, js-format
 msgid "Select item %d"
 msgstr ""
 
-#: src/editors/MapList.jsx:366
+#: blocks/map-list/index.js:363
 msgid "Item title"
 msgstr ""
 
-#: src/editors/MapList.jsx:385
+#: blocks/map-list/index.js:374
 msgid "Excerpt"
 msgstr ""
 
-#: src/editors/MapList.jsx:420
+#: blocks/map-list/index.js:403
 msgid "Add an item to start editing the map list."
 msgstr ""
 
-#: src/editors/NomiaContactMap.jsx:20
+#: blocks/nomia-contact-map/index.js:14
 msgid "Centrado (predefinição)"
 msgstr ""
 
-#: src/editors/NomiaContactMap.jsx:21
+#: blocks/nomia-contact-map/index.js:15
 msgid "Alinhado à esquerda"
 msgstr ""
 
-#: src/editors/NomiaContactMap.jsx:22
+#: blocks/nomia-contact-map/index.js:16
 msgid "Alinhado à direita"
 msgstr ""
 
-#: src/editors/NomiaContactMap.jsx:23
+#: blocks/nomia-contact-map/index.js:17
 msgid "Largura total"
 msgstr ""
 
-#: src/editors/NomiaContactMap.jsx:79
+#: blocks/nomia-contact-map/index.js:81
 msgid "Alinhamento:"
 msgstr ""
 
-#: src/editors/NomiaContactMap.jsx:89
+#: blocks/nomia-contact-map/index.js:98
 msgid "Mapa"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:141
+#: blocks/page-hero-media-grid/index.js:140
 msgid "URL"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:146
+#: blocks/page-hero-media-grid/index.js:152
 msgid "Background color"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:158
+#: blocks/page-hero-media-grid/index.js:167
 msgid "Hover color"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:171
+#: blocks/page-hero-media-grid/index.js:182
 msgid "Title color"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:183
+#: blocks/page-hero-media-grid/index.js:197
 msgid "Paragraph color"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:195
-#: src/editors/PageHeroMediaGrid.jsx:421
+#: blocks/page-hero-media-grid/index.js:208
+#: blocks/page-hero-media-grid/index.js:425
 msgid "Corner radius"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:270
+#: blocks/page-hero-media-grid/index.js:271
 msgid "Paragraph vertical alignment"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:277
+#: blocks/page-hero-media-grid/index.js:275
 msgid "Top aligned"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:286
+#: blocks/page-hero-media-grid/index.js:285
 msgid "Bottom aligned"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:300
+#: blocks/page-hero-media-grid/index.js:301
 msgid "Background"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:305
+#: blocks/page-hero-media-grid/index.js:310
 msgid "Accessible section label"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:315
+#: blocks/page-hero-media-grid/index.js:322
 msgid "Background image"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:324
-#: src/editors/PageHeroSlider.jsx:213
+#: blocks/page-hero-media-grid/index.js:328
+#: blocks/page-hero-slider/index.js:218
 msgid "Select background image"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:328
-#: src/editors/PageHeroSlider.jsx:217
+#: blocks/page-hero-media-grid/index.js:329
+#: blocks/page-hero-slider/index.js:219
 msgid "Replace background image"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:336
+#: blocks/page-hero-media-grid/index.js:336
 msgid "Column A"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:351
+#: blocks/page-hero-media-grid/index.js:353
 msgid "Column B"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:366
+#: blocks/page-hero-media-grid/index.js:370
 msgid "Column C"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:371
+#: blocks/page-hero-media-grid/index.js:383
 msgid "Video"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:377
+#: blocks/page-hero-media-grid/index.js:389
 msgid "Select video"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:381
+#: blocks/page-hero-media-grid/index.js:390
 msgid "Replace video"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:387
+#: blocks/page-hero-media-grid/index.js:393
 msgid "Video URL"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:394
+#: blocks/page-hero-media-grid/index.js:401
 msgid "Video title"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:404
-#: src/editors/PodcastList.jsx:120
-msgid "Share URL"
-msgstr ""
-
-#: src/editors/PageHeroMediaGrid.jsx:411
+#: blocks/page-hero-media-grid/index.js:417
 msgid "Share label"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:432
+#: blocks/page-hero-media-grid/index.js:441
 msgid "Video poster image"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:441
+#: blocks/page-hero-media-grid/index.js:447
 msgid "Select poster image"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:445
+#: blocks/page-hero-media-grid/index.js:448
 msgid "Replace poster image"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:480
+#: blocks/page-hero-media-grid/index.js:500
 msgid "First title"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:493
+#: blocks/page-hero-media-grid/index.js:511
 msgid "First text"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:521
+#: blocks/page-hero-media-grid/index.js:535
 msgid "Second title"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:534
+#: blocks/page-hero-media-grid/index.js:546
 msgid "Second text"
 msgstr ""
 
-#: src/editors/PageHeroMediaGrid.jsx:575
+#: blocks/page-hero-media-grid/index.js:595
 msgid "Select a video"
 msgstr ""
 
-#: src/editors/PageHeroSlider.jsx:125
+#: blocks/page-hero-slider/index.js:107
 msgid "CTA link"
 msgstr ""
 
-#: src/editors/PageHeroSlider.jsx:139
+#: blocks/page-hero-slider/index.js:126
 msgid "Visibility"
 msgstr ""
 
-#: src/editors/PageHeroSlider.jsx:143
+#: blocks/page-hero-slider/index.js:130
 msgid "Show spotlight section"
 msgstr ""
 
-#: src/editors/PageHeroSlider.jsx:176
+#: blocks/page-hero-slider/index.js:168
 msgid "Slide"
 msgstr ""
 
-#: src/editors/PageHeroSlider.jsx:184
-#: src/editors/PageHeroSlider.jsx:379
+#: blocks/page-hero-slider/index.js:178
+#: blocks/page-hero-slider/index.js:351
 msgid "Add slide"
 msgstr ""
 
-#: src/editors/PageHeroSlider.jsx:191
+#: blocks/page-hero-slider/index.js:187
 msgid "Remove selected"
 msgstr ""
 
-#: src/editors/PageHeroSlider.jsx:202
+#: blocks/page-hero-slider/index.js:205
 msgid "Select a background image"
 msgstr ""
 
-#: src/editors/PageHeroSlider.jsx:232
+#: blocks/page-hero-slider/index.js:237
 msgid "Slide title"
 msgstr ""
 
-#: src/editors/PageHeroSlider.jsx:246
+#: blocks/page-hero-slider/index.js:247
 msgid "Slide subtitle"
 msgstr ""
 
-#: src/editors/PageHeroSlider.jsx:287
+#: blocks/page-hero-slider/index.js:282
 msgid "Spotlight image"
 msgstr ""
 
-#: src/editors/PageHeroSlider.jsx:299
+#: blocks/page-hero-slider/index.js:292
 msgid "Select spotlight image"
 msgstr ""
 
-#: src/editors/PageHeroSlider.jsx:303
+#: blocks/page-hero-slider/index.js:293
 msgid "Replace spotlight image"
 msgstr ""
 
-#: src/editors/PageHeroSlider.jsx:319
+#: blocks/page-hero-slider/index.js:305
 msgid "Spotlight title"
 msgstr ""
 
-#: src/editors/PageHeroSlider.jsx:336
+#: blocks/page-hero-slider/index.js:315
 msgid "Spotlight body"
 msgstr ""
 
-#: src/editors/PageHeroSlider.jsx:351
+#: blocks/page-hero-slider/index.js:323
 msgid "Spotlight URL"
 msgstr ""
 
-#: src/editors/PageHeroSlider.jsx:373
+#: blocks/page-hero-slider/index.js:343
 msgid "Add a slide to start editing the hero slider."
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:72
+#: blocks/page-hero-static/index.js:61
 msgid "Predefinido (da altura)"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:73
-#: src/editors/Section.jsx:85
+#: blocks/page-hero-static/index.js:62
+#: blocks/section/index.js:70
 msgid "Nenhum"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:74
-#: src/editors/Section.jsx:86
-#: src/editors/Section.jsx:96
+#: blocks/page-hero-static/index.js:63
+#: blocks/section/index.js:74
+#: blocks/section/index.js:92
 msgid "Pequeno"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:75
-#: src/editors/Section.jsx:87
+#: blocks/page-hero-static/index.js:64
+#: blocks/section/index.js:78
 msgid "Médio"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:76
-#: src/editors/Section.jsx:88
-#: src/editors/TitleWithLabel.jsx:55
+#: blocks/page-hero-static/index.js:65
+#: blocks/section/index.js:82
+#: blocks/title-with-label/index.js:63
 msgid "Grande"
 msgstr ""
 
 #. translators: %s: pixels.
-#: src/editors/PageHeroStatic.jsx:93
+#: blocks/page-hero-static/index.js:82
 #, js-format
 msgid "Predefinido (%spx)"
 msgstr ""
 
 #. translators: %s: pixels.
-#: src/editors/PageHeroStatic.jsx:100
-#: src/editors/TitleWithLabel.jsx:72
+#: blocks/page-hero-static/index.js:87
+#: blocks/title-with-label/index.js:78
 #, js-format
 msgid "%spx"
 msgstr ""
 
 #. translators: 1: comma-separated steps, e.g. "XS, S, M". 2: the last step, e.g. "L".
-#: src/editors/PageHeroStatic.jsx:148
+#: blocks/page-hero-static/index.js:132
 #, js-format
 msgid "%1$s e %2$s"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:157
-#: src/editors/TitleWithLabel.jsx:50
+#: blocks/page-hero-static/index.js:140
+#: blocks/title-with-label/index.js:58
 msgid "Subtítulo"
 msgstr ""
 
 #. translators: %s: palette swatch name, e.g. "Cinza 100".
-#: src/editors/PageHeroStatic.jsx:177
+#: blocks/page-hero-static/index.js:159
 #, js-format
 msgid "%s (predefinido)"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:183
-#: src/editors/Section.jsx:97
+#: blocks/page-hero-static/index.js:163
+#: blocks/section/index.js:96
 msgid "Predefinido"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:238
+#: blocks/page-hero-static/index.js:231
 msgid "Alinhar texto à esquerda"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:243
+#: blocks/page-hero-static/index.js:236
 msgid "Alinhar texto ao centro"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:248
+#: blocks/page-hero-static/index.js:241
 msgid "Alinhar texto à direita"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:266
+#: blocks/page-hero-static/index.js:259
 msgid "Alinhamento do texto"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:267
+#: blocks/page-hero-static/index.js:260
 msgid "Move o título, o subtítulo e o botão em conjunto."
 msgstr ""
 
 #. translators: %s: hero text field name, e.g. "Título".
-#: src/editors/PageHeroStatic.jsx:311
+#: blocks/page-hero-static/index.js:299
 #, js-format
 msgid "Tamanho de letra (%s)"
 msgstr ""
 
 #. translators: %s: hero text field name, e.g. "Subtítulo".
-#: src/editors/PageHeroStatic.jsx:332
+#: blocks/page-hero-static/index.js:318
 #, js-format
 msgid "Altura da linha (%s)"
 msgstr ""
 
 #. translators: %s: hero text field name, e.g. "Título".
-#: src/editors/PageHeroStatic.jsx:350
+#: blocks/page-hero-static/index.js:333
 #, js-format
 msgid "Cor do texto (%s)"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:419
+#: blocks/page-hero-static/index.js:399
 msgid "Imagem do cabeçalho"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:434
-#: src/editors/PageHeroStatic.jsx:465
-#: src/editors/Section.jsx:239
+#: blocks/page-hero-static/index.js:412
+#: blocks/page-hero-static/index.js:436
+#: blocks/section/index.js:242
 msgid "Substituir imagem"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:438
-#: src/editors/PageHeroStatic.jsx:461
-#: src/editors/Section.jsx:235
-#: src/fields/MediaField.jsx:34
-msgid "Selecionar imagem"
-msgstr ""
-
-#: src/editors/PageHeroStatic.jsx:453
+#: blocks/page-hero-static/index.js:427
 msgid "Conteúdo"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:472
+#: blocks/page-hero-static/index.js:440
 msgid "Mostrar subtítulo"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:488
+#: blocks/page-hero-static/index.js:457
 msgid "URL do botão"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:498
+#: blocks/page-hero-static/index.js:469
 msgid "Tipografia"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:517
+#: blocks/page-hero-static/index.js:490
 msgid "Disposição"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:523
+#: blocks/page-hero-static/index.js:498
 msgid "Altura"
 msgstr ""
 
 #. translators: 1: tallest step, e.g. XL. 2: the remaining steps, e.g. "XS, S, M e L".
-#: src/editors/PageHeroStatic.jsx:526
+#: blocks/page-hero-static/index.js:501
 #, js-format
 msgid "%1$s ocupa o ecrã inteiro; %2$s são faixas progressivamente mais baixas."
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:555
+#: blocks/page-hero-static/index.js:531
 msgid "Espaço superior"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:564
+#: blocks/page-hero-static/index.js:540
 msgid "Espaço inferior"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:583
+#: blocks/page-hero-static/index.js:574
 msgid "Selecionar imagem de fundo (opcional)"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:613
+#: blocks/page-hero-static/index.js:604
 msgid "Título do cabeçalho"
 msgstr ""
 
-#: src/editors/PageHeroStatic.jsx:631
+#: blocks/page-hero-static/index.js:618
 msgid "Subtítulo ou descrição (Enter para novo parágrafo)"
 msgstr ""
 
-#: src/editors/PodcastList.jsx:97
-msgid "Selected episode fields"
-msgstr ""
-
-#: src/editors/PodcastList.jsx:104
-msgid "Listen URL"
-msgstr ""
-
-#: src/editors/PodcastList.jsx:136
-#: src/editors/PodcastList.jsx:299
-msgid "Add episode"
-msgstr ""
-
-#. translators: %d: the episode position in the list.
-#: src/editors/PodcastList.jsx:170
-#, js-format
-msgid "Select episode %d"
-msgstr ""
-
-#: src/editors/PodcastList.jsx:198
-msgid "Select episode image"
-msgstr ""
-
-#: src/editors/PodcastList.jsx:202
-msgid "Replace episode image"
-msgstr ""
-
-#: src/editors/PodcastList.jsx:227
-msgid "Episode"
-msgstr ""
-
-#: src/editors/PodcastList.jsx:263
-msgid "Episode title"
-msgstr ""
-
-#: src/editors/PodcastList.jsx:274
-msgid "Ouvir"
-msgstr ""
-
-#: src/editors/PodcastList.jsx:280
-msgid "Partilhar"
-msgstr ""
-
-#: src/editors/PodcastList.jsx:293
-msgid "Add an episode to start editing the podcast list."
-msgstr ""
-
-#: src/editors/Section.jsx:55
+#: blocks/section/index.js:39
 msgid "Em cima à esquerda"
 msgstr ""
 
-#: src/editors/Section.jsx:56
+#: blocks/section/index.js:40
 msgid "Em cima ao centro"
 msgstr ""
 
-#: src/editors/Section.jsx:57
+#: blocks/section/index.js:41
 msgid "Em cima à direita"
 msgstr ""
 
-#: src/editors/Section.jsx:58
+#: blocks/section/index.js:42
 msgid "Ao centro à esquerda"
 msgstr ""
 
-#: src/editors/Section.jsx:59
+#: blocks/section/index.js:43
 msgid "Ao centro"
 msgstr ""
 
-#: src/editors/Section.jsx:60
+#: blocks/section/index.js:44
 msgid "Ao centro à direita"
 msgstr ""
 
-#: src/editors/Section.jsx:61
+#: blocks/section/index.js:45
 msgid "Em baixo à esquerda"
 msgstr ""
 
-#: src/editors/Section.jsx:62
+#: blocks/section/index.js:46
 msgid "Em baixo ao centro"
 msgstr ""
 
-#: src/editors/Section.jsx:63
+#: blocks/section/index.js:47
 msgid "Em baixo à direita"
 msgstr ""
 
-#: src/editors/Section.jsx:69
+#: blocks/section/index.js:52
 msgid "Preencher (recorta a imagem)"
 msgstr ""
 
-#: src/editors/Section.jsx:70
+#: blocks/section/index.js:53
 msgid "Ajustar (imagem inteira)"
 msgstr ""
 
-#: src/editors/Section.jsx:71
+#: blocks/section/index.js:54
 msgid "Tamanho original"
 msgstr ""
 
-#: src/editors/Section.jsx:94
+#: blocks/section/index.js:88
 msgid "Nenhum (largura total)"
 msgstr ""
 
-#: src/editors/Section.jsx:155
+#: blocks/section/index.js:149
 msgid "Fundo da secção"
 msgstr ""
 
-#: src/editors/Section.jsx:207
-#: src/editors/TitleWithLabel.jsx:180
-#: src/index.jsx:121
-msgid "Repor"
-msgstr ""
-
-#: src/editors/Section.jsx:212
+#: blocks/section/index.js:220
 msgid "O texto dos blocos interiores fica automaticamente legível sobre este fundo."
 msgstr ""
 
-#: src/editors/Section.jsx:216
+#: blocks/section/index.js:224
 msgid "Sem cor definida, a secção herda o fundo da página."
 msgstr ""
 
-#: src/editors/Section.jsx:223
+#: blocks/section/index.js:230
 msgid "Imagem de fundo"
 msgstr ""
 
-#: src/editors/Section.jsx:259
+#: blocks/section/index.js:266
 msgid "Remover imagem"
 msgstr ""
 
-#: src/editors/Section.jsx:267
+#: blocks/section/index.js:277
 msgid "Alinhamento da imagem"
 msgstr ""
 
-#: src/editors/Section.jsx:302
+#: blocks/section/index.js:303
 msgid "Tamanho da imagem"
 msgstr ""
 
-#: src/editors/Section.jsx:315
+#: blocks/section/index.js:316
 msgid "Para uma imagem quadrada encostada a um lado, escolha \"Ajustar\" e o alinhamento desse lado. A imagem fica por cima da cor de fundo."
 msgstr ""
 
-#: src/editors/Section.jsx:324
+#: blocks/section/index.js:327
 msgid "Espaçamento"
 msgstr ""
 
-#: src/editors/Section.jsx:329
+#: blocks/section/index.js:332
 msgid "Topo"
 msgstr ""
 
-#: src/editors/Section.jsx:338
+#: blocks/section/index.js:342
 msgid "Base"
 msgstr ""
 
-#: src/editors/Section.jsx:347
+#: blocks/section/index.js:352
 msgid "Laterais"
 msgstr ""
 
-#: src/editors/TitleWithLabel.jsx:38
-#: src/editors/TitleWithLabel.jsx:274
+#: blocks/title-with-label/index.js:47
+#: blocks/title-with-label/index.js:300
 msgid "Etiqueta"
 msgstr ""
 
-#: src/editors/TitleWithLabel.jsx:39
+#: blocks/title-with-label/index.js:48
 msgid "Título · linha 1"
 msgstr ""
 
-#: src/editors/TitleWithLabel.jsx:40
+#: blocks/title-with-label/index.js:49
 msgid "Título · linha 2"
 msgstr ""
 
-#: src/editors/TitleWithLabel.jsx:46
+#: blocks/title-with-label/index.js:54
 msgid "Extra"
 msgstr ""
 
-#: src/editors/TitleWithLabel.jsx:47
+#: blocks/title-with-label/index.js:55
 msgid "Notas"
 msgstr ""
 
-#: src/editors/TitleWithLabel.jsx:48
+#: blocks/title-with-label/index.js:56
 msgid "Corpo"
 msgstr ""
 
-#: src/editors/TitleWithLabel.jsx:49
+#: blocks/title-with-label/index.js:57
 msgid "Corpo grande"
 msgstr ""
 
-#: src/editors/TitleWithLabel.jsx:51
+#: blocks/title-with-label/index.js:59
 msgid "Título 4"
 msgstr ""
 
-#: src/editors/TitleWithLabel.jsx:52
+#: blocks/title-with-label/index.js:60
 msgid "Título 3"
 msgstr ""
 
-#: src/editors/TitleWithLabel.jsx:53
+#: blocks/title-with-label/index.js:61
 msgid "Título 2"
 msgstr ""
 
-#: src/editors/TitleWithLabel.jsx:54
+#: blocks/title-with-label/index.js:62
 msgid "Título 1"
 msgstr ""
 
-#: src/editors/TitleWithLabel.jsx:56
+#: blocks/title-with-label/index.js:64
 msgid "Super"
 msgstr ""
 
 #. translators: 1: design-system size name, e.g. "Título 4". 2: pixels.
-#: src/editors/TitleWithLabel.jsx:63
+#: blocks/title-with-label/index.js:70
 #, js-format
 msgid "%1$s · %2$spx"
 msgstr ""
 
 #. translators: %s: the design default, e.g. "Título 4 · 32px".
-#: src/editors/TitleWithLabel.jsx:92
+#: blocks/title-with-label/index.js:98
 #, js-format
 msgid "Predefinido (%s)"
 msgstr ""
 
 #. translators: %s: field name, e.g. "Título · linha 1".
-#: src/editors/TitleWithLabel.jsx:131
+#: blocks/title-with-label/index.js:134
 #, js-format
 msgid "Tipografia: %s"
 msgstr ""
 
-#: src/editors/TitleWithLabel.jsx:140
+#: blocks/title-with-label/index.js:147
 msgid "Tamanho"
 msgstr ""
 
-#: src/editors/TitleWithLabel.jsx:152
+#: blocks/title-with-label/index.js:155
 msgid "Altura da linha"
 msgstr ""
 
-#: src/editors/TitleWithLabel.jsx:163
+#: blocks/title-with-label/index.js:166
 msgid "Negrito"
 msgstr ""
 
-#: src/editors/TitleWithLabel.jsx:169
+#: blocks/title-with-label/index.js:172
 msgid "Itálico"
 msgstr ""
 
-#: src/editors/TitleWithLabel.jsx:238
+#: blocks/title-with-label/index.js:249
 msgid "Este bloco não aparece no site enquanto a etiqueta e a primeira linha do título estiverem vazias."
 msgstr ""
 
-#: src/editors/TitleWithLabel.jsx:294
+#: blocks/title-with-label/index.js:323
 msgid "Primeira linha do título"
 msgstr ""
 
-#: src/editors/TitleWithLabel.jsx:312
+#: blocks/title-with-label/index.js:340
 msgid "Segunda linha do título (opcional)"
 msgstr ""
 
-#: src/editors/TwoColumnsTextImage.jsx:80
+#: blocks/two-columns-text-image/index.js:79
 msgid "Image position"
 msgstr ""
 
-#: src/editors/TwoColumnsTextImage.jsx:85
+#: blocks/two-columns-text-image/index.js:84
 msgid "Image left"
 msgstr ""
 
-#: src/editors/TwoColumnsTextImage.jsx:94
+#: blocks/two-columns-text-image/index.js:94
 msgid "Image right"
 msgstr ""
 
-#: src/editors/TwoColumnsTextImage.jsx:108
+#: blocks/two-columns-text-image/index.js:113
 msgid "Hide taxonomy label"
 msgstr ""
 
-#: src/editors/TwoColumnsTextImage.jsx:118
+#: blocks/two-columns-text-image/index.js:121
 msgid "Hide CTA button"
-msgstr ""
-
-#: src/fields/ArrayField.jsx:247
-msgid "Adicionar item"
-msgstr ""
-
-#: src/fields/ArrayField.jsx:255
-msgid "incomplete item(s). Complete the required fields before publishing."
-msgstr ""
-
-#: src/fields/ArrayField.jsx:263
-msgid "Ainda sem itens."
-msgstr ""
-
-#: src/fields/ArrayField.jsx:277
-msgid "Item"
-msgstr ""
-
-#: src/fields/ArrayField.jsx:285
-msgid "Remover"
-msgstr ""
-
-#: src/fields/ImageAltControl.jsx:15
-msgid "Texto alternativo da imagem"
-msgstr ""
-
-#: src/fields/JsonField.jsx:15
-msgid "Structured content only. Visual styling is controlled by the Astro web app."
-msgstr ""
-
-#: src/index.jsx:74
-msgid "Fundo da página"
-msgstr ""
-
-#: src/index.jsx:142
-msgid "Contrato de bloco Nomia em falta."
-msgstr ""
-
-#. translators: %s: block title.
-#: src/index.jsx:185
-#, js-format
-msgid "Pré-visualização: %s"
-msgstr ""
-
-#: src/index.jsx:234
-msgid "Botão Bioeconomia"
-msgstr ""
-
-#: src/index.jsx:235
-msgid "Botão animado com o estilo visual da Bioeconomia."
-msgstr ""
-
-#: src/lib/tematica.jsx:106
-msgid "Temática"
 msgstr ""
 
 #: blocks/bioeconomy-phases-band/block.json

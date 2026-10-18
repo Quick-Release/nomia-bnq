@@ -82,7 +82,12 @@ export type StructuredBlockRegistration = {
      */
     keywords?: readonly string[];
     experience: "preview" | "inline-fields";
-    module?: `${string}.jsx`;
+    /**
+     * The block has a hand-written editor, `blocks/<catalogId>/index.js` in
+     * nomia-blocks. Every other block's script is generated and registers the
+     * generic contract editor.
+     */
+    bespoke?: true;
   };
   documentation: {
     path: `${string}.md`;

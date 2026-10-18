@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/content-list",
 	"title": "Lista de conteúdos",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "playlist-audio",
 	"description": "Lista de episódios com imagem, número, data e botões para ouvir e partilhar.",
 	"textdomain": "getquick-nomia-blocks",
@@ -87,6 +87,8 @@
 			]
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": [
+		"getquick-nomia-blocks-editor",
+		"file:./editor.css"
+	]
 }

@@ -92,7 +92,7 @@ export default defineStructuredBlock({
     description: "Mapa de regiões com filtros por público e lista dos conteúdos de cada região.",
     icon: "location",
     experience: "preview",
-    module: "MapList.jsx",
+    bespoke: true,
   },
   documentation: {
     path: "map-list.md",

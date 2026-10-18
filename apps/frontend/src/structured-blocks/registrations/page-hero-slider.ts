@@ -92,7 +92,7 @@ export default defineStructuredBlock({
       "Hero em carrossel em que cada diapositivo tem imagem de fundo, título, botão e destaque opcional.",
     icon: "images-alt2",
     experience: "preview",
-    module: "PageHeroSlider.jsx",
+    bespoke: true,
   },
   documentation: {
     path: "page-heroes/page-hero-slider.md",

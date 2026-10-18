@@ -3,7 +3,7 @@
 	"apiVersion": 3,
 	"name": "getquick/page-hero-media-grid",
 	"title": "Hero de página: vídeo e destaques",
-	"category": "getquick-nomia",
+	"category": "getquick-design",
 	"icon": "format-video",
 	"description": "Hero com imagem de fundo, duas chamadas com ligação e uma coluna de vídeo.",
 	"textdomain": "getquick-nomia-blocks",
@@ -167,6 +167,8 @@
 			"videoBorderRadius": "40"
 		}
 	},
-	"editorScript": "getquick-nomia-blocks-editor",
-	"editorStyle": "getquick-nomia-blocks-editor-style"
+	"editorStyle": [
+		"getquick-nomia-blocks-editor",
+		"file:./editor.css"
+	]
 }
