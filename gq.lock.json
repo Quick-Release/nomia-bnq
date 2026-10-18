@@ -1,5 +1,5 @@
 {
-  "gq": "0.18.2",
+  "gq": "0.18.3",
   "schemaVersion": 1,
   "files": {
     ".claude/skills": "sha256:e1ff59d80751d8af17631debcc3bc30ecdbec0b20dccded0bffb745fe5cea79c",
@@ -18,7 +18,7 @@
     "docs/agents/triage-labels.md": "sha256:f2b82b4705dad48687e77032df216d5beb6b26ad0cd843ac5280a0e3177e95e6",
     "docs/plans/README.md": "sha256:d9de303575af490445fcc63d5bfca191331eed78f6a16f4bb5426ed5215b96ad",
     "docs/research/README.md": "sha256:f2f60713391572d03e30f21e43878090d02b67e4f42b20c2178ddbde22e1f999",
-    "infra/ci/Dockerfile": "sha256:c3bccdc16c6fea128b86ee83b69ba72f1cfd382fa9a544043fb60bf218034bd9",
+    "infra/ci/Dockerfile": "sha256:7f6d3027ebf32a9fecf2016010a5e341146fa6073f12c0c20e68f3286fa25261",
     "infra/ci/cloudflare.ci.ts": "sha256:e5a1b2edf9fe436db89747ae450329b6ca99c33ca6a54d0496333ec63a9d4636",
     "infra/ci/env.ts": "sha256:587c3346b0938bd21418422cc6bc8a01733b5d38bdce7f774c0dce7fd4f890d6",
     "infra/ci/github.ts": "sha256:0826c4e300a38d4219d1cd34205c79258393b9c3bd6cc2c441828bb1e626a269",

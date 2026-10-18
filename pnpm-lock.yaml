@@ -190,8 +190,8 @@ importers:
   .:
     devDependencies:
       '@getquick/site':
-        specifier: 0.18.2
-        version: 0.18.2
+        specifier: 0.18.3
+        version: 0.18.3
       sigillo:
         specifier: 0.13.0
         version: 0.13.0
@@ -1038,8 +1038,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@getquick/site@0.18.2':
-    resolution: {integrity: sha512-PhlK3mRJHMBKGcu2kq2wbES5erwJyZvIrsbjQuQ9w0LYaghkAV2nAGu2snTCKEpNge8ZdlWQo62xvExsRPlEkw==}
+  '@getquick/site@0.18.3':
+    resolution: {integrity: sha512-peSPppAeojvo/8QRZeEglpSn+Gv5jYBn/Fjy9ynL/0AkxL5zFjahgAelnCnTh9rtu2a6dz34wq5m1pODxDSHxA==}
     engines: {node: '>=22.12.0'}
     hasBin: true
 
@@ -5113,7 +5113,7 @@ snapshots:
   '@esbuild/win32-x64@0.28.2':
     optional: true
 
-  '@getquick/site@0.18.2':
+  '@getquick/site@0.18.3':
     dependencies:
       '@clack/prompts': 1.8.1
       aws4fetch: 1.0.20

@@ -73,7 +73,7 @@
     "sigillo:list:staging": "gq sigillo secrets staging"
   },
   "devDependencies": {
-    "@getquick/site": "0.18.2",
+    "@getquick/site": "0.18.3",
     "sigillo": "0.13.0",
     "vite": "catalog:",
     "vite-plus": "catalog:"
