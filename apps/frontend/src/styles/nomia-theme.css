@@ -1,30 +1,5 @@
-/* Nomia's design tokens and core-block styles, migrated from bioeconomia.pt (apps/web/src/styles/global.css). Imported by global.css after Tailwind. */
+/* Nomia's design tokens and core-block styles, migrated from bioeconomia.pt (apps/web/src/styles/global.css). Imported by nomia-blocks.css. */
 @import "./wp-core-blocks.css";
-
-.nomia-skip-link {
-  position: fixed;
-  top: 0.75rem;
-  left: 0.75rem;
-  z-index: 100;
-  transform: translateY(-150%);
-  border-radius: 0.5rem;
-  background: var(--neutral-bw-white);
-  color: var(--main-cinza-700);
-  padding: 0.75rem 1rem;
-  font-family: var(--typography-font-family-secondary);
-  font-size: 0.875rem;
-  font-weight: 700;
-  line-height: 1.25;
-  text-decoration: none;
-  box-shadow: 0 12px 32px rgb(0 0 0 / 0.22);
-  transition: transform 150ms ease-out;
-}
-
-.nomia-skip-link:focus-visible {
-  transform: translateY(0);
-  outline: 3px solid var(--main-teal-400);
-  outline-offset: 3px;
-}
 
 /*
  * Design tokens — Figma (Nomia — Website 2)

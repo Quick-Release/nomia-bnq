@@ -197,7 +197,6 @@ test("a page with Nomia's blocks is served from the store by their components, t
   const page = await visit("/economia-circular/");
 
   expect(page.status).toBe(200);
-  expect(page.html).toContain('<main class="nomia-blocks">');
   expect(page.html).toContain("Visão geral");
   expect(page.html).toContain("A Economia Circular promove um modelo económico reorganizado,");
   expect(page.html).toContain("Texto corrido.");
@@ -207,10 +206,12 @@ test("a page with Nomia's blocks is served from the store by their components, t
   expect(page.html).toContain(
     ".nomia-blocks .has-ciano-500-color{color:var(--wp--preset--color--ciano-500)}",
   );
-  // The page's own surface colour, with text that contrasts with it.
-  expect(page.html).toMatch(
-    /<body[^>]*class="text-neutral-bw-white"[^>]*style="background-color: #0b3d3a"/,
+  // The page's own surface colour, with text that contrasts with it, on the
+  // blocks' own <main>: the site's Layout stays as the blueprint ships it.
+  expect(page.html).toContain(
+    '<main class="nomia-blocks text-neutral-bw-white" style="background-color: #0b3d3a">',
   );
+  expect(page.html).toContain("<body>");
   expect(fetchMock).not.toHaveBeenCalled();
 });
 

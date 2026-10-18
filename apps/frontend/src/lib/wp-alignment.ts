@@ -3,7 +3,7 @@
  *
  * The align button stores its choice in the block's `align` attribute and, in
  * the markup WordPress saves, as an `align*` class on the block element. The
- * layout each class stands for lives in `src/styles/global.css`; this module
+ * layout each class stands for lives in `src/styles/nomia-theme.css`; this module
  * only turns the stored attribute back into that class, for the renderers that
  * build their own element instead of passing the saved markup through.
  */

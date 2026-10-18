@@ -1,8 +1,11 @@
 ---
 import WpBlockRenderer from "./wp-blocks/WpBlockRenderer.astro";
+import { isLightHexColor } from "../lib/color-contrast";
 import type { NomiaContent } from "../lib/nomia-content";
 import type { DesignPresets, WordPressImage } from "../lib/wordpress";
-import { blockPresetStyles } from "../lib/wp-block-styles";
+import { normalizeSectionBackground } from "../lib/section-block";
+import { blockPresetStyles, presetRootStyle } from "../lib/wp-block-styles";
+import "../styles/nomia-blocks.css";
 
 // A page or post built with Nomia's blocks, rendered from its stored blocks by
 // the Nomia block components (migrated from bioeconomia.pt's Astro renderer).
@@ -16,9 +19,17 @@ interface Props {
 
 const { nomia, design, featuredImage = null } = Astro.props;
 const { colorRules } = blockPresetStyles(design.spacingSizes, design.colors, ".nomia-blocks");
+// Nomia's tokens read GQ Design's palette from WordPress's preset variables.
+const presets = presetRootStyle(design.spacingSizes, design.colors);
+// The page's own surface ("Fundo da página"); the text contrast follows it.
+const background = normalizeSectionBackground(nomia.pageBackgroundColor);
+const surface = background
+  ? { class: isLightHexColor(background) ? "text-neutral-bw-black" : "text-neutral-bw-white", style: `background-color: ${background}` }
+  : null;
 ---
 
+{presets && <style is:global set:html={presets} />}
 <style is:global set:html={colorRules} />
-<main class="nomia-blocks">
+<main class:list={["nomia-blocks", surface?.class]} style={surface?.style}>
   <WpBlockRenderer blocks={nomia.blocks} bare wrapCoreBlocks pageFeaturedImage={featuredImage} />
 </main>

@@ -3,7 +3,7 @@
  *
  * WordPress's block-library stylesheet is not loaded (ADR 0013), so the Astro
  * renderers rebuild each wrapper from the block attributes instead of echoing
- * the saved tag: only the choices styled in `src/styles/global.css` reach the
+ * the saved tag: only the choices styled in `src/styles/nomia-theme.css` reach the
  * page, and anything else an editor might have stored is dropped.
  */
 

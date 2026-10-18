@@ -1,12 +1,8 @@
 ---
-import FontLinks from "../components/layout/FontLinks.astro";
-import { isLightHexColor } from "../lib/color-contrast";
 import { copyFor } from "../lib/copy";
-import { pageChrome, pageDesign, type Alternate } from "../lib/delivery";
+import { pageChrome, type Alternate } from "../lib/delivery";
 import { defaultLanguage, languages, type SiteLanguage } from "../lib/site-language";
-import { normalizeSectionBackground } from "../lib/section-block";
-import type { DesignPresets, SiteChrome } from "../lib/wordpress";
-import { presetRootStyle } from "../lib/wp-block-styles";
+import type { SiteChrome } from "../lib/wordpress";
 import "../styles/global.css";
 
 interface Props {
@@ -18,10 +14,6 @@ interface Props {
   language?: SiteLanguage;
   /** Where its readers may switch language (a multilingual Site's pages only). */
   alternates?: Alternate[];
-  /** The design presets the page was served with; left out, the layout looks them up. */
-  design?: DesignPresets | null;
-  /** A Nomia page's own surface colour (its "Fundo da página" setting), as a hex colour. */
-  pageBackgroundColor?: string | null;
 }
 
 const {
@@ -29,13 +21,7 @@ const {
   description = "",
   language = defaultLanguage,
   alternates = [],
-  pageBackgroundColor = null,
 } = Astro.props;
-// The text contrast follows a page's own background, as on bioeconomia.pt.
-const background = normalizeSectionBackground(pageBackgroundColor);
-const surface = background
-  ? { class: isLightHexColor(background) ? "text-neutral-bw-black" : "text-neutral-bw-white", style: `background-color: ${background}` }
-  : null;
 const chrome =
   Astro.props.chrome !== undefined ? Astro.props.chrome : await pageChrome(Astro.site?.origin);
 // Chrome that can't be served leaves the menu, logo and icon out of this
@@ -45,9 +31,6 @@ const { menuItems, siteIcon, siteLogo } = chrome ?? {
   siteIcon: null,
   siteLogo: null,
 };
-// GQ Design's palette and spacing, as WordPress's preset variables on :root.
-const design = Astro.props.design !== undefined ? Astro.props.design : await pageDesign();
-const presets = design ? presetRootStyle(design.spacingSizes, design.colors) : "";
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : Astro.url;
 // The page and its published translations, in the site's language order,
 // each under its language's tag, then the default language's as x-default.
@@ -76,10 +59,8 @@ const xDefault = hreflang.find((alternate) => alternate.language.isDefault);
     {hreflang.map((alternate) => <link rel="alternate" hreflang={alternate.language.lang} href={alternate.href} />)}
     {xDefault && <link rel="alternate" hreflang="x-default" href={xDefault.href} />}
     <title>{title === "Nomia" ? title : `${title} — Nomia`}</title>
-    <FontLinks />
-    {presets && <style is:global set:html={presets} />}
   </head>
-  <body class={surface?.class} style={surface?.style}>
+  <body>
     <header class="site-header">
       <a href={language.home} class="site-header__home">
         {siteLogo ? <img src={siteLogo.sourceUrl} alt={siteLogo.altText || "Nomia"} /> : "Nomia"}

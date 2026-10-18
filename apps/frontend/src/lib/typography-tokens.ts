@@ -1,5 +1,5 @@
 /**
- * The design system's `--typography-line-height-*` tokens (`src/styles/global.css`),
+ * The design system's `--typography-line-height-*` tokens (`src/styles/nomia-theme.css`),
  * ascending, with their pixel value at a 16px root.
  *
  * Blocks store the slug, never a measurement (ADR 0013): Astro emits

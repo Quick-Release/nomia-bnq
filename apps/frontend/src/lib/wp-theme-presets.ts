@@ -2,7 +2,7 @@
  * The Gutenberg presets core blocks store by slug (`backgroundColor:
  * "ciano-500"`, `fontSize: "lead"`), as the CSS variables WordPress names
  * them by. The colors are GQ Design's palette (GETQUICK → Design → Branding →
- * Colors), whose `--wp--preset--color--<slug>` values the Layout defines from
+ * Colors), whose `--wp--preset--color--<slug>` values the Nomia block renderer defines from
  * the stored design presets; a slug the palette lacks resolves to nothing, as
  * it would in WordPress.
  */

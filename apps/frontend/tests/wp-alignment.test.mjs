@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 import { WP_ALIGNMENTS, wpAlignmentClass } from "../src/lib/wp-alignment.ts";
 
-// Nomia's block styles (nomia-theme.css, imported by the site's global.css).
+// Nomia's block styles (nomia-theme.css, imported by nomia-blocks.css).
 const globalCss = readFileSync(new URL("../src/styles/nomia-theme.css", import.meta.url), "utf8");
 const siteCss = readFileSync(new URL("../src/styles/global.css", import.meta.url), "utf8");
 

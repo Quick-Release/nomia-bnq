@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "./nomia-theme.css";
 
 @theme {
   --font-display: Georgia, "Times New Roman", serif;
@@ -365,10 +364,4 @@ main > h1 {
   max-width: none;
   margin-left: calc(var(--gqd-layout-padding-left, 0px) * -1);
   margin-right: calc(var(--gqd-layout-padding-right, 0px) * -1);
-}
-
-/* Nomia's blocks are full-bleed sections that lay themselves out. */
-main.nomia-blocks {
-  max-width: none;
-  padding: 0;
 }

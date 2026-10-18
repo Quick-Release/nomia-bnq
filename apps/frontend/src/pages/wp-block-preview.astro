@@ -6,11 +6,11 @@
  * /wp-block-preview?block=getquick/page-hero-static&attrs=<urlencoded-json>
  * /wp-block-preview?block=getquick/page-hero-static&attrs64=<base64url-json>
  */
-import FontLinks from "../components/layout/FontLinks.astro";
 import WpBlock from "../components/wp-blocks/WpBlock.astro";
 import type { WpParsedBlock } from "../lib/wp-blocks";
 import { parsePreviewRequest } from "../lib/wp-block-preview-format";
 import "../styles/global.css";
+import "../styles/nomia-blocks.css";
 import { pageDesign } from "../lib/delivery";
 import { presetRootStyle } from "../lib/wp-block-styles";
 
@@ -36,7 +36,6 @@ const presets = design ? presetRootStyle(design.spacingSizes, design.colors) : "
 
 <html lang="pt">
   <head>
-    <FontLinks />
     {presets && <style is:global set:html={presets} />}
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />

@@ -1,0 +1,17 @@
+/*
+ * Nomia's block styles, loaded by the Nomia block renderer (NomiaBlocks.astro)
+ * and the block previews, not by the site's theme: global.css and the Layout
+ * stay as the blueprint ships them. Tailwind's theme and utilities again, so
+ * the blocks' classes resolve against Nomia's tokens; the base styles come
+ * from global.css.
+ */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+@import "./nomia-theme.css";
+
+/* Nomia's blocks are full-bleed sections that lay themselves out. */
+main.nomia-blocks {
+  max-width: none;
+  padding: 0;
+}
