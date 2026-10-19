@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.4.0 - 2026-10-19
+
+Previous release: v0.3.1
+
+- 377a4f0 feat(blocks): add the Navegação block, bioeconomia.pt's header navigation
+
 ## v0.3.1 - 2026-10-18
 
 Previous release: v0.3.0
