@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-19T08:50:41+00:00\n"
+"POT-Creation-Date: 2026-10-19T09:23:40+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: getquick-nomia-blocks\n"
@@ -453,10 +453,6 @@ msgstr ""
 
 #: blocks/header-navigation/index.js:62
 msgid "O menu escolhido foi apagado: o bloco não aparece no site."
-msgstr ""
-
-#: blocks/header-navigation/index.js:93
-msgid "Navegação"
 msgstr ""
 
 #: blocks/home-intro/index.js:62
@@ -1328,12 +1324,17 @@ msgstr ""
 
 #: blocks/header-navigation/block.json
 msgctxt "block title"
-msgid "Navegação"
+msgid "nomia_navigation"
 msgstr ""
 
 #: blocks/header-navigation/block.json
 msgctxt "block description"
 msgid "Barra de navegação com um menu do WordPress, no estilo do cabeçalho Nomia."
+msgstr ""
+
+#: blocks/header-navigation/block.json
+msgctxt "block keyword"
+msgid "nomia"
 msgstr ""
 
 #: blocks/header-navigation/block.json

@@ -2,11 +2,12 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "getquick/header-navigation",
-	"title": "Navegação",
+	"title": "nomia_navigation",
 	"category": "getquick-design",
 	"icon": "menu",
 	"description": "Barra de navegação com um menu do WordPress, no estilo do cabeçalho Nomia.",
 	"keywords": [
+		"nomia",
 		"navegação",
 		"menu",
 		"cabeçalho",

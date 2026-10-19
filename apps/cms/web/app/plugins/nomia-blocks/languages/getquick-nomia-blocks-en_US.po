@@ -1609,15 +1609,6 @@ msgstr "Shows the “%s” menu, styled as the Nomia header."
 msgid "O menu escolhido foi apagado: o bloco não aparece no site."
 msgstr "The chosen menu was deleted: the block does not appear on the site."
 
-#: blocks/header-navigation/index.js:93
-msgid "Navegação"
-msgstr "Navigation"
-
-#: blocks/header-navigation/block.json
-msgctxt "block title"
-msgid "Navegação"
-msgstr "Navigation"
-
 #: blocks/header-navigation/block.json
 msgctxt "block description"
 msgid "Barra de navegação com um menu do WordPress, no estilo do cabeçalho Nomia."
@@ -1642,3 +1633,13 @@ msgstr "navigation"
 msgctxt "block keyword"
 msgid "header"
 msgstr "header"
+
+#: blocks/header-navigation/block.json
+msgctxt "block title"
+msgid "nomia_navigation"
+msgstr "nomia_navigation"
+
+#: blocks/header-navigation/block.json
+msgctxt "block keyword"
+msgid "nomia"
+msgstr "nomia"

@@ -5926,7 +5926,7 @@
       },
       "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
       "editor": {
-        "title": "Navegação",
+        "title": "nomia_navigation",
         "description": "Barra de navegação com um menu do WordPress, no estilo do cabeçalho Nomia.",
         "icon": "menu",
         "experience": "inline-fields",

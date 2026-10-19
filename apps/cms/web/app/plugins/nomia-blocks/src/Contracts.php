@@ -4066,10 +4066,11 @@ final class Contracts {
 			[
 				'blockName'        => 'getquick/header-navigation',
 				'catalogId'        => 'header-navigation',
-				'title'            => 'Navegação',
+				'title'            => 'nomia_navigation',
 				'description'      => 'Barra de navegação com um menu do WordPress, no estilo do cabeçalho Nomia.',
 				'icon'             => 'menu',
 				'keywords'         => [
+					'nomia',
 					'navegação',
 					'menu',
 					'cabeçalho',

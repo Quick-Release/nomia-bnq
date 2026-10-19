@@ -677,7 +677,7 @@ export const WP_CUSTOM_BLOCK_CONTRACTS = [
       "menuItems",
     ],
     editorExperience: "inline-fields",
-    editorTitle: "Navegação",
+    editorTitle: "nomia_navigation",
     editorDescription: "Barra de navegação com um menu do WordPress, no estilo do cabeçalho Nomia.",
   },
 ] as const satisfies readonly WpCustomBlockContract[];

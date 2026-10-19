@@ -58,10 +58,10 @@ export default defineStructuredBlock({
     },
   },
   editor: {
-    title: "Navegação",
+    title: "nomia_navigation",
     description: "Barra de navegação com um menu do WordPress, no estilo do cabeçalho Nomia.",
     icon: "menu",
-    keywords: ["navegação", "menu", "cabeçalho", "navigation", "header"],
+    keywords: ["nomia", "navegação", "menu", "cabeçalho", "navigation", "header"],
     experience: "inline-fields",
     bespoke: true,
   },

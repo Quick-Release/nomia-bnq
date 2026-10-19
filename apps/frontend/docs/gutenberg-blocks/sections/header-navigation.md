@@ -1,4 +1,4 @@
-# Header navigation
+# Header navigation (`nomia_navigation`)
 
 <!-- BEGIN GENERATED: structured-block-metadata -->
 - Block ID: `header-navigation`

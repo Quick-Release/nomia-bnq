@@ -3875,7 +3875,7 @@
       },
       "compatibilityReads": {},
       "editorExperience": "inline-fields",
-      "editorTitle": "Navegação",
+      "editorTitle": "nomia_navigation",
       "editorDescription": "Barra de navegação com um menu do WordPress, no estilo do cabeçalho Nomia.",
       "editorIcon": "menu"
     }

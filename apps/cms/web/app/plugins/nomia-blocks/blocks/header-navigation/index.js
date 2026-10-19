@@ -90,7 +90,7 @@
           Placeholder,
           {
             icon: "menu",
-            label: __("Navegação", "getquick-nomia-blocks"),
+            label: "nomia_navigation",
             instructions,
           },
           select,
