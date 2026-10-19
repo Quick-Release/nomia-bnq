@@ -818,6 +818,11 @@ export async function getPublishedRoutes(): Promise<Found<string[]> | Unavailabl
   return { kind: "found", content: listed.content.entries.map((entry) => entry.uri) };
 }
 
+/** The origins a link into this site may use: WordPress's, and the frontend's. */
+export function internalOrigins(siteOrigin?: string) {
+  return [new URL(endpoint()).origin, ...(siteOrigin ? [siteOrigin] : [])];
+}
+
 /**
  * Links into this site (the WordPress origin, or the frontend origin WordPress
  * uses as its home URL) become frontend paths; other origins stay absolute.
@@ -870,7 +875,7 @@ export async function getSiteChrome(
     const data = language.isDefault
       ? await query(siteChromeData, siteChromeQuery, { location })
       : await query(siteChromeData, languageChromeQuery, { location, language: language.code });
-    const origins = [new URL(endpoint()).origin, ...(siteOrigin ? [siteOrigin] : [])];
+    const origins = internalOrigins(siteOrigin);
 
     return {
       kind: "found",

@@ -1060,4 +1060,50 @@ export const WP_CUSTOM_BLOCK_FIXTURES: readonly WpCustomBlockFixture[] = [
       },
     ),
   },
+  {
+    label: "Header navigation",
+    block: block(
+      "getquick/header-navigation",
+      {
+        menuId: 1,
+        menuItems: [
+          {
+            id: 1,
+            parentId: 0,
+            label: "Bioeconomia",
+            url: "/bioeconomia/",
+            target: "",
+          },
+          {
+            id: 2,
+            parentId: 0,
+            label: "Economia circular",
+            url: "/economia-circular/",
+            target: "",
+          },
+          {
+            id: 3,
+            parentId: 0,
+            label: "Indicadores",
+            url: "/indicadores/",
+            target: "",
+          },
+          {
+            id: 4,
+            parentId: 3,
+            label: "Barómetro",
+            url: "/indicadores/barometro/",
+            target: "",
+          },
+          {
+            id: 5,
+            parentId: 0,
+            label: "Notícias",
+            url: "/noticias/",
+            target: "",
+          },
+        ],
+      },
+    ),
+  },
 ];

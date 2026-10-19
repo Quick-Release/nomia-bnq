@@ -318,6 +318,41 @@ if ( ! function_exists( 'get_post_meta' ) ) {
 	}
 }
 
+if ( ! class_exists( 'WP_Post' ) ) {
+	/**
+	 * A post: the stubs set whichever fields a test needs.
+	 */
+	#[AllowDynamicProperties]
+	final class WP_Post {
+		/**
+		 * @param array<string, mixed> $fields The post's fields.
+		 */
+		public function __construct( array $fields = array() ) {
+			foreach ( $fields as $key => $value ) {
+				$this->$key = $value;
+			}
+		}
+	}
+}
+
+if ( ! function_exists( 'wp_get_nav_menus' ) ) {
+	function wp_get_nav_menus() {
+		return $GLOBALS['nomia_blocks_test_state']['nav_menus'] ?? array();
+	}
+}
+
+if ( ! function_exists( 'wp_get_nav_menu_items' ) ) {
+	function wp_get_nav_menu_items( $menu ) {
+		return $GLOBALS['nomia_blocks_test_state']['nav_menu_items'][ $menu ] ?? false;
+	}
+}
+
+if ( ! function_exists( 'wp_strip_all_tags' ) ) {
+	function wp_strip_all_tags( $text ) {
+		return trim( strip_tags( (string) $text ) );
+	}
+}
+
 /**
  * Reset the recorded-call state. Called from Pest.php beforeEach.
  */

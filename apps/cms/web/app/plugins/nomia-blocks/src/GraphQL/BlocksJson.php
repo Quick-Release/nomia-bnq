@@ -9,11 +9,13 @@ declare(strict_types=1);
 
 namespace GetQuick\NomiaBlocks\GraphQL;
 
+use GetQuick\NomiaBlocks\Blocks\HeaderNavigation;
 use WP_Post;
 
 /**
  * Registers `wpBlocksJson`: a page's or post's parsed blocks for the Astro
- * Frontend, which stores them and renders Nomia's blocks from them.
+ * Frontend, which stores them and renders Nomia's blocks from them. Each
+ * navigation block carries its menu's items (`HeaderNavigation::withMenus()`).
  */
 final class BlocksJson {
 
@@ -64,7 +66,7 @@ final class BlocksJson {
 			return '[]';
 		}
 
-		$json = wp_json_encode( parse_blocks( $post->post_content ) );
+		$json = wp_json_encode( HeaderNavigation::withMenus( parse_blocks( $post->post_content ) ) );
 
 		return is_string( $json ) ? $json : '[]';
 	}

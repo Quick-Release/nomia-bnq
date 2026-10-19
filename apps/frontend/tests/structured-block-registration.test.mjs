@@ -20,10 +20,10 @@ test("legacy synchronization options cannot silently generate files", async () =
 test("structured block registration is the single generated source", async () => {
   const { registrations, outputs } = await synchronized;
 
-  assert.equal(registrations.length, 37);
+  assert.equal(registrations.length, 38);
   assert.deepEqual(
     registrations.map((registration) => registration.identity.order),
-    Array.from({ length: 37 }, (_value, index) => index + 1),
+    Array.from({ length: 38 }, (_value, index) => index + 1),
   );
   assert.ok(outputs.has("src/components/wp-blocks/WpCustomBlock.astro"));
   assert.ok(outputs.has("src/fixtures/wp-custom-block-fixtures.ts"));
@@ -285,10 +285,10 @@ test("machine adapter exposes the public content contract without implementation
 
   assert.equal(artifact.schemaVersion, 1);
   assert.equal(artifact.source, "apps/web");
-  assert.equal(artifact.contracts.length, 37);
+  assert.equal(artifact.contracts.length, 38);
   assert.deepEqual(
     artifact.contracts.map((contract) => contract.order),
-    Array.from({ length: 37 }, (_value, index) => index + 1),
+    Array.from({ length: 38 }, (_value, index) => index + 1),
   );
   for (const contract of artifact.contracts) {
     assert.equal(typeof contract.editorTitle, "string");

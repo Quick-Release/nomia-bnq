@@ -666,6 +666,20 @@ export const WP_CUSTOM_BLOCK_CONTRACTS = [
     editorTitle: "Cartão de contacto",
     editorDescription: "Cartão com ícone, título, detalhes de contacto e botão opcional.",
   },
+  {
+    blockName: "getquick/header-navigation",
+    catalogId: "header-navigation",
+    schemaVersion: 1,
+    contentAttributes: [
+      "schemaVersion",
+      "blockId",
+      "menuId",
+      "menuItems",
+    ],
+    editorExperience: "inline-fields",
+    editorTitle: "Navegação",
+    editorDescription: "Barra de navegação com um menu do WordPress, no estilo do cabeçalho Nomia.",
+  },
 ] as const satisfies readonly WpCustomBlockContract[];
 
 export const WP_CUSTOM_BLOCK_COMPATIBILITY_READS = {
@@ -731,6 +745,7 @@ export const WP_CUSTOM_BLOCK_LINK_KEYS: Readonly<Record<string, readonly string[
   "getquick/event-card-compact": ["href","url"],
   "getquick/nomia-contact-map": ["mapUrl","url"],
   "getquick/contact-details-card": ["buttonHref"],
+  "getquick/header-navigation": ["url"],
 };
 
 export type WpCustomBlockName = (typeof WP_CUSTOM_BLOCK_CONTRACTS)[number]["blockName"];

@@ -14,66 +14,66 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Domain: getquick-nomia-blocks\n"
 
-#: blocks/contact-details-card/index.js:140
+#: blocks/contact-details-card/index.js:126
 msgid "Link do botão"
 msgstr "Button link"
 
-#: blocks/contact-details-card/index.js:152
+#: blocks/contact-details-card/index.js:138
 msgid "Página, https://…, mailto:email@exemplo.pt ou tel:+351…. Sem link, o botão não aparece no site."
 msgstr "A page, https://…, mailto:email@example.com or tel:+351…. Without a link the button does not appear on the site."
 
-#: blocks/contact-details-card/index.js:171
+#: blocks/contact-details-card/index.js:157
 msgid "Editar link do botão"
 msgstr "Edit button link"
 
-#: blocks/contact-details-card/index.js:197
+#: blocks/contact-details-card/index.js:183
 msgid "Ícone"
 msgstr "Icon"
 
-#: blocks/contact-details-card/index.js:202
+#: blocks/contact-details-card/index.js:188
 msgid "Mostrar ícone"
 msgstr "Show icon"
 
-#: blocks/contact-details-card/index.js:222
-#: blocks/contact-details-card/index.js:327
+#: blocks/contact-details-card/index.js:208
+#: blocks/contact-details-card/index.js:313
 msgid "Carregar ícone"
 msgstr "Upload icon"
 
-#: blocks/contact-details-card/index.js:223
-#: blocks/contact-details-card/index.js:326
+#: blocks/contact-details-card/index.js:209
+#: blocks/contact-details-card/index.js:312
 msgid "Substituir ícone"
 msgstr "Replace icon"
 
-#: blocks/contact-details-card/index.js:235
+#: blocks/contact-details-card/index.js:221
 msgid "Remover ícone"
 msgstr "Remove icon"
 
-#: blocks/contact-details-card/index.js:253
+#: blocks/contact-details-card/index.js:239
 msgid "Botão"
 msgstr "Button"
 
-#: blocks/contact-details-card/index.js:258
+#: blocks/contact-details-card/index.js:244
 #: blocks/page-hero-static/index.js:448
 msgid "Mostrar botão"
 msgstr "Show button"
 
-#: blocks/contact-details-card/index.js:356
-#: blocks/contact-details-card/index.js:359
+#: blocks/contact-details-card/index.js:341
+#: blocks/contact-details-card/index.js:344
 #: blocks/page-hero-static/index.js:139
 msgid "Título"
 msgstr "Title"
 
-#: blocks/contact-details-card/index.js:374
+#: blocks/contact-details-card/index.js:357
 msgid "Detalhes (Enter para nova linha)"
 msgstr "Details (Enter for a new line)"
 
-#: blocks/contact-details-card/index.js:401
-#: blocks/contact-details-card/index.js:403
+#: blocks/contact-details-card/index.js:382
+#: blocks/contact-details-card/index.js:384
 #: blocks/page-hero-static/index.js:635
 msgid "Texto do botão"
 msgstr "Button text"
 
-#: blocks/contact-details-card/index.js:422
+#: blocks/contact-details-card/index.js:402
 msgid "Adicionar link — sem link o botão não aparece"
 msgstr "Add a link — without one the button does not appear"
 
@@ -181,7 +181,7 @@ msgstr ""
 msgid "Select"
 msgstr ""
 
-#: assets/editor.js:452
+#: assets/editor.js:458
 #: blocks/content-grid-filters/index.js:398
 #: blocks/content-list/index.js:158
 #: blocks/image-zoom/index.js:38
@@ -192,7 +192,7 @@ msgstr ""
 msgid "Select image"
 msgstr ""
 
-#: assets/editor.js:453
+#: assets/editor.js:459
 #: blocks/content-grid-filters/index.js:399
 #: blocks/image-zoom/index.js:39
 #: blocks/image-zoom/index.js:81
@@ -415,135 +415,135 @@ msgstr "Alignment:"
 msgid "Mapa"
 msgstr "Map"
 
-#: blocks/page-hero-media-grid/index.js:140
+#: blocks/page-hero-media-grid/index.js:126
 msgid "URL"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:152
+#: blocks/page-hero-media-grid/index.js:138
 msgid "Background color"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:167
+#: blocks/page-hero-media-grid/index.js:153
 msgid "Hover color"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:182
+#: blocks/page-hero-media-grid/index.js:168
 msgid "Title color"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:197
+#: blocks/page-hero-media-grid/index.js:183
 msgid "Paragraph color"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:208
-#: blocks/page-hero-media-grid/index.js:425
+#: blocks/page-hero-media-grid/index.js:194
+#: blocks/page-hero-media-grid/index.js:411
 msgid "Corner radius"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:271
+#: blocks/page-hero-media-grid/index.js:257
 msgid "Paragraph vertical alignment"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:275
+#: blocks/page-hero-media-grid/index.js:261
 msgid "Top aligned"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:285
+#: blocks/page-hero-media-grid/index.js:271
 msgid "Bottom aligned"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:301
+#: blocks/page-hero-media-grid/index.js:287
 msgid "Background"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:310
+#: blocks/page-hero-media-grid/index.js:296
 msgid "Accessible section label"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:322
+#: blocks/page-hero-media-grid/index.js:308
 msgid "Background image"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:328
+#: blocks/page-hero-media-grid/index.js:314
 #: blocks/page-hero-slider/index.js:218
 msgid "Select background image"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:329
+#: blocks/page-hero-media-grid/index.js:315
 #: blocks/page-hero-slider/index.js:219
 msgid "Replace background image"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:336
+#: blocks/page-hero-media-grid/index.js:322
 msgid "Column A"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:353
+#: blocks/page-hero-media-grid/index.js:339
 msgid "Column B"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:370
+#: blocks/page-hero-media-grid/index.js:356
 msgid "Column C"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:383
+#: blocks/page-hero-media-grid/index.js:369
 msgid "Video"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:389
+#: blocks/page-hero-media-grid/index.js:375
 msgid "Select video"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:390
+#: blocks/page-hero-media-grid/index.js:376
 msgid "Replace video"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:393
+#: blocks/page-hero-media-grid/index.js:379
 msgid "Video URL"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:401
+#: blocks/page-hero-media-grid/index.js:387
 msgid "Video title"
 msgstr ""
 
 #: blocks/content-list/index.js:103
-#: blocks/page-hero-media-grid/index.js:409
+#: blocks/page-hero-media-grid/index.js:395
 msgid "Share URL"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:417
+#: blocks/page-hero-media-grid/index.js:403
 msgid "Share label"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:441
+#: blocks/page-hero-media-grid/index.js:427
 msgid "Video poster image"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:447
+#: blocks/page-hero-media-grid/index.js:433
 msgid "Select poster image"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:448
+#: blocks/page-hero-media-grid/index.js:434
 msgid "Replace poster image"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:500
+#: blocks/page-hero-media-grid/index.js:484
 msgid "First title"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:511
+#: blocks/page-hero-media-grid/index.js:495
 msgid "First text"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:535
+#: blocks/page-hero-media-grid/index.js:519
 msgid "Second title"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:546
+#: blocks/page-hero-media-grid/index.js:530
 msgid "Second text"
 msgstr ""
 
-#: blocks/page-hero-media-grid/index.js:595
+#: blocks/page-hero-media-grid/index.js:579
 msgid "Select a video"
 msgstr ""
 
@@ -677,7 +677,7 @@ msgstr "Medium"
 
 #: blocks/page-hero-static/index.js:65
 #: blocks/section/index.js:82
-#: blocks/title-with-label/index.js:63
+#: blocks/title-with-label/index.js:49
 msgid "Grande"
 msgstr "Large"
 
@@ -696,7 +696,7 @@ msgstr "Section background"
 
 #: assets/document-settings.js:104
 #: blocks/section/index.js:211
-#: blocks/title-with-label/index.js:185
+#: blocks/title-with-label/index.js:171
 msgid "Repor"
 msgstr "Reset"
 
@@ -724,38 +724,38 @@ msgstr "Bottom"
 msgid "Laterais"
 msgstr "Sides"
 
-#: blocks/title-with-label/index.js:47
-#: blocks/title-with-label/index.js:300
+#: blocks/title-with-label/index.js:33
+#: blocks/title-with-label/index.js:285
 msgid "Etiqueta"
 msgstr "Label"
 
-#: blocks/title-with-label/index.js:48
+#: blocks/title-with-label/index.js:34
 msgid "Título · linha 1"
 msgstr "Title · line 1"
 
-#: blocks/title-with-label/index.js:49
+#: blocks/title-with-label/index.js:35
 msgid "Título · linha 2"
 msgstr "Title · line 2"
 
 #. translators: %s: field name, e.g. "Título · linha 1".
-#: blocks/title-with-label/index.js:134
+#: blocks/title-with-label/index.js:120
 #, js-format
 msgid "Tipografia: %s"
 msgstr "Typography: %s"
 
-#: blocks/title-with-label/index.js:166
+#: blocks/title-with-label/index.js:152
 msgid "Negrito"
 msgstr "Bold"
 
-#: blocks/title-with-label/index.js:172
+#: blocks/title-with-label/index.js:158
 msgid "Itálico"
 msgstr "Italic"
 
-#: blocks/title-with-label/index.js:323
+#: blocks/title-with-label/index.js:306
 msgid "Primeira linha do título"
 msgstr "First line of the title"
 
-#: blocks/title-with-label/index.js:340
+#: blocks/title-with-label/index.js:321
 msgid "Segunda linha do título (opcional)"
 msgstr "Second line of the title (optional)"
 
@@ -779,15 +779,15 @@ msgstr ""
 msgid "Hide CTA button"
 msgstr ""
 
-#: assets/editor.js:575
+#: assets/editor.js:581
 msgid "incomplete item(s). Complete the required fields before publishing."
 msgstr ""
 
-#: assets/editor.js:600
+#: assets/editor.js:606
 msgid "Item"
 msgstr ""
 
-#: assets/editor.js:250
+#: assets/editor.js:256
 msgid "Structured content only. Visual styling is controlled by the Astro web app."
 msgstr ""
 
@@ -795,7 +795,7 @@ msgstr ""
 msgid "Fundo da página"
 msgstr "Page background"
 
-#: assets/editor.js:220
+#: assets/editor.js:226
 msgid "Temática"
 msgstr "Theme"
 
@@ -811,7 +811,7 @@ msgid "%1$s e %2$s"
 msgstr "%1$s and %2$s"
 
 #: blocks/page-hero-static/index.js:140
-#: blocks/title-with-label/index.js:58
+#: blocks/title-with-label/index.js:44
 msgid "Subtítulo"
 msgstr "Subtitle"
 
@@ -863,7 +863,7 @@ msgstr "Hero image"
 msgid "Substituir imagem"
 msgstr "Replace image"
 
-#: assets/editor.js:361
+#: assets/editor.js:367
 #: blocks/page-hero-static/index.js:413
 #: blocks/page-hero-static/index.js:435
 #: blocks/section/index.js:241
@@ -908,96 +908,96 @@ msgstr "Select a hero image (optional)"
 msgid "Título do cabeçalho"
 msgstr "Hero title"
 
-#: assets/editor.js:565
+#: assets/editor.js:571
 msgid "Adicionar item"
 msgstr "Add item"
 
-#: assets/editor.js:584
+#: assets/editor.js:590
 msgid "Ainda sem itens."
 msgstr "No items yet."
 
-#: assets/editor.js:608
+#: assets/editor.js:614
 msgid "Remover"
 msgstr "Remove"
 
-#: assets/editor.js:238
+#: assets/editor.js:244
 msgid "Texto alternativo da imagem"
 msgstr "Image alt text"
 
-#: assets/editor.js:751
+#: assets/editor.js:757
 msgid "Contrato de bloco Nomia em falta."
 msgstr "Missing Nomia block contract."
 
 #. translators: %s: block title.
-#: assets/editor.js:790
+#: assets/editor.js:796
 #, js-format
 msgid "Pré-visualização: %s"
 msgstr "Preview: %s"
 
-#: blocks/title-with-label/index.js:54
+#: blocks/title-with-label/index.js:40
 msgid "Extra"
 msgstr "Extra"
 
-#: blocks/title-with-label/index.js:55
+#: blocks/title-with-label/index.js:41
 msgid "Notas"
 msgstr "Notes"
 
-#: blocks/title-with-label/index.js:56
+#: blocks/title-with-label/index.js:42
 msgid "Corpo"
 msgstr "Body"
 
-#: blocks/title-with-label/index.js:57
+#: blocks/title-with-label/index.js:43
 msgid "Corpo grande"
 msgstr "Large body"
 
-#: blocks/title-with-label/index.js:59
+#: blocks/title-with-label/index.js:45
 msgid "Título 4"
 msgstr "Heading 4"
 
-#: blocks/title-with-label/index.js:60
+#: blocks/title-with-label/index.js:46
 msgid "Título 3"
 msgstr "Heading 3"
 
-#: blocks/title-with-label/index.js:61
+#: blocks/title-with-label/index.js:47
 msgid "Título 2"
 msgstr "Heading 2"
 
-#: blocks/title-with-label/index.js:62
+#: blocks/title-with-label/index.js:48
 msgid "Título 1"
 msgstr "Heading 1"
 
-#: blocks/title-with-label/index.js:64
+#: blocks/title-with-label/index.js:50
 msgid "Super"
 msgstr "Super"
 
 #. translators: 1: design-system size name, e.g. "Título 4". 2: pixels.
-#: blocks/title-with-label/index.js:70
+#: blocks/title-with-label/index.js:56
 #, js-format
 msgid "%1$s · %2$spx"
 msgstr "%1$s · %2$spx"
 
 #. translators: %s: pixels.
 #: blocks/page-hero-static/index.js:87
-#: blocks/title-with-label/index.js:78
+#: blocks/title-with-label/index.js:64
 #, js-format
 msgid "%spx"
 msgstr "%spx"
 
 #. translators: %s: the design default, e.g. "Título 4 · 32px".
-#: blocks/title-with-label/index.js:98
+#: blocks/title-with-label/index.js:84
 #, js-format
 msgid "Predefinido (%s)"
 msgstr "Default (%s)"
 
-#: blocks/title-with-label/index.js:147
+#: blocks/title-with-label/index.js:133
 msgid "Tamanho"
 msgstr "Size"
 
-#: blocks/title-with-label/index.js:155
+#: blocks/title-with-label/index.js:141
 msgid "Altura da linha"
 msgstr "Line height"
 
-#: blocks/title-with-label/index.js:249
+#: blocks/title-with-label/index.js:235
 msgid "Este bloco não aparece no site enquanto a etiqueta e a primeira linha do título estiverem vazias."
 msgstr "This block does not appear on the site while the label and the first title line are empty."
 
@@ -1286,6 +1286,7 @@ msgctxt "block keyword"
 msgid "hero"
 msgstr "hero"
 
+#: blocks/header-navigation/block.json
 #: blocks/page-hero-static/block.json
 #: blocks/title-with-label/block.json
 msgctxt "block keyword"
@@ -1417,19 +1418,19 @@ msgctxt "block description"
 msgid "Barras horizontais de resíduos urbanos por habitante, por região e ano, com anos filtráveis."
 msgstr "Horizontal bars of urban waste per inhabitant, by region and year, with filterable years."
 
-#: blocks/contact-details-card/index.js:114
+#: blocks/contact-details-card/index.js:100
 msgid "Este link não é aceite e o botão não aparece no site. Use uma página, https://…, mailto: ou tel:."
 msgstr "This link is not allowed, so the button does not appear on the site. Use a page, https://…, mailto: or tel:."
 
-#: blocks/contact-details-card/index.js:118
+#: blocks/contact-details-card/index.js:104
 msgid "O botão só aparece no site com texto e link."
 msgstr "The button only appears on the site with both text and a link."
 
-#: blocks/contact-details-card/index.js:282
+#: blocks/contact-details-card/index.js:268
 msgid "Este bloco não aparece no site enquanto o título, os detalhes e o botão estiverem vazios."
 msgstr "This block does not appear on the site while the title, details and button are empty."
 
-#: blocks/contact-details-card/index.js:371
+#: blocks/contact-details-card/index.js:354
 msgid "Detalhes"
 msgstr "Details"
 
@@ -1577,6 +1578,67 @@ msgstr ""
 msgid "GETQUICK"
 msgstr ""
 
-#: src/GraphQL/BlocksJson.php:37
+#: src/GraphQL/BlocksJson.php:39
 msgid "Blocos Gutenberg analisados a partir de post_content, em JSON, para o renderizador Astro."
 msgstr ""
+
+#: blocks/header-navigation/index.js:16
+#: blocks/header-navigation/index.js:80
+msgid "Menu"
+msgstr "Menu"
+
+#: blocks/header-navigation/index.js:21
+msgid "Escolher um menu"
+msgstr "Choose a menu"
+
+#: blocks/header-navigation/index.js:29
+msgid "Menu apagado"
+msgstr "Deleted menu"
+
+#: blocks/header-navigation/index.js:51
+msgid "Escolha o menu a mostrar. Os menus editam-se em Aparência → Menus."
+msgstr "Choose the menu to show. Menus are edited in Appearance → Menus."
+
+#. translators: %s: the menu's name.
+#: blocks/header-navigation/index.js:58
+#, js-format
+msgid "Mostra o menu “%s”, com o estilo do cabeçalho Nomia."
+msgstr "Shows the “%s” menu, styled as the Nomia header."
+
+#: blocks/header-navigation/index.js:62
+msgid "O menu escolhido foi apagado: o bloco não aparece no site."
+msgstr "The chosen menu was deleted: the block does not appear on the site."
+
+#: blocks/header-navigation/index.js:93
+msgid "Navegação"
+msgstr "Navigation"
+
+#: blocks/header-navigation/block.json
+msgctxt "block title"
+msgid "Navegação"
+msgstr "Navigation"
+
+#: blocks/header-navigation/block.json
+msgctxt "block description"
+msgid "Barra de navegação com um menu do WordPress, no estilo do cabeçalho Nomia."
+msgstr "Navigation bar showing a WordPress menu, styled as the Nomia header."
+
+#: blocks/header-navigation/block.json
+msgctxt "block keyword"
+msgid "navegação"
+msgstr "navigation"
+
+#: blocks/header-navigation/block.json
+msgctxt "block keyword"
+msgid "menu"
+msgstr "menu"
+
+#: blocks/header-navigation/block.json
+msgctxt "block keyword"
+msgid "navigation"
+msgstr "navigation"
+
+#: blocks/header-navigation/block.json
+msgctxt "block keyword"
+msgid "header"
+msgstr "header"

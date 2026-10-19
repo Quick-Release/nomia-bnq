@@ -3815,6 +3815,69 @@
       "editorTitle": "Cartão de contacto",
       "editorDescription": "Cartão com ícone, título, detalhes de contacto e botão opcional.",
       "editorIcon": "id"
+    },
+    {
+      "blockName": "getquick/header-navigation",
+      "catalogId": "header-navigation",
+      "schemaVersion": 1,
+      "order": 38,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "menuId",
+        "menuItems"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "header-navigation"
+        },
+        "menuId": {
+          "type": "number",
+          "default": 0
+        },
+        "menuItems": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "parentId": {
+                "type": "number"
+              },
+              "label": {
+                "type": "string",
+                "default": ""
+              },
+              "url": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              },
+              "target": {
+                "type": "string",
+                "default": ""
+              }
+            }
+          }
+        }
+      },
+      "compatibilityReads": {},
+      "editorExperience": "inline-fields",
+      "editorTitle": "Navegação",
+      "editorDescription": "Barra de navegação com um menu do WordPress, no estilo do cabeçalho Nomia.",
+      "editorIcon": "menu"
     }
   ]
 }

@@ -41,6 +41,7 @@ import ResourceProductivityGraphBlock from "./blocks/ResourceProductivityGraphBl
 import NomiaContactMapBlock from "./blocks/NomiaContactMapBlock.astro";
 import SectionBlock from "./blocks/SectionBlock.astro";
 import ContactDetailsCardBlock from "./blocks/ContactDetailsCardBlock.astro";
+import HeaderNavigationBlock from "./blocks/HeaderNavigationBlock.astro";
 
 /** children carries nested blocks to container renderers; leaf renderers ignore it. */
 type BlockRenderer = (props: {
@@ -87,6 +88,7 @@ const RENDERERS: Record<string, BlockRenderer> = {
   "getquick/nomia-contact-map": NomiaContactMapBlock,
   "getquick/section": SectionBlock,
   "getquick/contact-details-card": ContactDetailsCardBlock,
+  "getquick/header-navigation": HeaderNavigationBlock,
 };
 
 interface Props {

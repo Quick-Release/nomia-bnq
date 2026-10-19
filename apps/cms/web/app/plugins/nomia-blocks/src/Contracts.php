@@ -4063,6 +4063,107 @@ final class Contracts {
 					'buttonHref'  => 'https://www.google.com/maps/search/?api=1&query=Rua%20da%20Murgueira%209%20Amadora',
 				],
 			],
+			[
+				'blockName'        => 'getquick/header-navigation',
+				'catalogId'        => 'header-navigation',
+				'title'            => 'Navegação',
+				'description'      => 'Barra de navegação com um menu do WordPress, no estilo do cabeçalho Nomia.',
+				'icon'             => 'menu',
+				'keywords'         => [
+					'navegação',
+					'menu',
+					'cabeçalho',
+					'navigation',
+					'header',
+				],
+				'status'           => 'active',
+				'inserter'         => true,
+				'editorExperience' => 'inline-fields',
+				'attributes'       => [
+					'schemaVersion' => [
+						'type'    => 'number',
+						'default' => 1,
+					],
+					'blockId'       => [
+						'type'    => 'string',
+						'default' => 'header-navigation',
+					],
+					'menuId'        => [
+						'type'    => 'number',
+						'default' => 0,
+					],
+					'menuItems'     => [
+						'type'    => 'array',
+						'default' => [],
+						'items'   => [
+							'type'       => 'object',
+							'properties' => [
+								'id'       => [
+									'type' => 'number',
+								],
+								'parentId' => [
+									'type' => 'number',
+								],
+								'label'    => [
+									'type'    => 'string',
+									'default' => '',
+								],
+								'url'      => [
+									'type'    => 'string',
+									'default' => '',
+									'ui'      => [
+										'kind' => 'url',
+									],
+								],
+								'target'   => [
+									'type'    => 'string',
+									'default' => '',
+								],
+							],
+						],
+					],
+				],
+				'example'          => [
+					'menuId'    => 1,
+					'menuItems' => [
+						[
+							'id'       => 1,
+							'parentId' => 0,
+							'label'    => 'Bioeconomia',
+							'url'      => '/bioeconomia/',
+							'target'   => '',
+						],
+						[
+							'id'       => 2,
+							'parentId' => 0,
+							'label'    => 'Economia circular',
+							'url'      => '/economia-circular/',
+							'target'   => '',
+						],
+						[
+							'id'       => 3,
+							'parentId' => 0,
+							'label'    => 'Indicadores',
+							'url'      => '/indicadores/',
+							'target'   => '',
+						],
+						[
+							'id'       => 4,
+							'parentId' => 3,
+							'label'    => 'Barómetro',
+							'url'      => '/indicadores/barometro/',
+							'target'   => '',
+						],
+						[
+							'id'       => 5,
+							'parentId' => 0,
+							'label'    => 'Notícias',
+							'url'      => '/noticias/',
+							'target'   => '',
+						],
+					],
+				],
+			],
 		];
 	}
 }

@@ -12,6 +12,7 @@ namespace GetQuick\NomiaBlocks;
 use GetQuick\NomiaBlocks\Blocks\BlockPolicy;
 use GetQuick\NomiaBlocks\Blocks\ContractBlocks;
 use GetQuick\NomiaBlocks\Blocks\EditorAssets;
+use GetQuick\NomiaBlocks\Blocks\HeaderNavigation;
 use GetQuick\NomiaBlocks\Editor\PageBackground;
 use GetQuick\NomiaBlocks\GraphQL\BlocksJson;
 
@@ -39,6 +40,7 @@ final class Plugin {
 		( new EditorAssets() )->register();
 		( new ContractBlocks() )->register();
 		( new BlockPolicy() )->register();
+		( new HeaderNavigation() )->register();
 		( new BlocksJson() )->register();
 	}
 

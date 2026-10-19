@@ -5815,6 +5815,124 @@
         "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/contact-details-card/index.js"
       },
       "documentation": "docs/gutenberg-blocks/sections/contact-details-card.md"
+    },
+    {
+      "blockName": "getquick/header-navigation",
+      "catalogId": "header-navigation",
+      "schemaVersion": 1,
+      "order": 38,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/header-navigation.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "header-navigation"
+        },
+        "menuId": {
+          "type": "number",
+          "default": 0
+        },
+        "menuItems": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "parentId": {
+                "type": "number"
+              },
+              "label": {
+                "type": "string",
+                "default": ""
+              },
+              "url": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "url"
+                }
+              },
+              "target": {
+                "type": "string",
+                "default": ""
+              }
+            }
+          }
+        }
+      },
+      "compatibilityReads": {},
+      "editing": {
+        "mode": "bespoke",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/header-navigation/index.js",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": null,
+        "note": "The bespoke editor module owns the visible controls; inspect it before editing."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/HeaderNavigationBlock.astro",
+        "previewLabel": "Header navigation",
+        "previewAttributes": {
+          "menuId": 1,
+          "menuItems": [
+            {
+              "id": 1,
+              "parentId": 0,
+              "label": "Bioeconomia",
+              "url": "/bioeconomia/",
+              "target": ""
+            },
+            {
+              "id": 2,
+              "parentId": 0,
+              "label": "Economia circular",
+              "url": "/economia-circular/",
+              "target": ""
+            },
+            {
+              "id": 3,
+              "parentId": 0,
+              "label": "Indicadores",
+              "url": "/indicadores/",
+              "target": ""
+            },
+            {
+              "id": 4,
+              "parentId": 3,
+              "label": "Barómetro",
+              "url": "/indicadores/barometro/",
+              "target": ""
+            },
+            {
+              "id": 5,
+              "parentId": 0,
+              "label": "Notícias",
+              "url": "/noticias/",
+              "target": ""
+            }
+          ]
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Navegação",
+        "description": "Barra de navegação com um menu do WordPress, no estilo do cabeçalho Nomia.",
+        "icon": "menu",
+        "experience": "inline-fields",
+        "module": "apps/cms/web/app/plugins/nomia-blocks/blocks/header-navigation/index.js"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/header-navigation.md"
     }
   ]
 }

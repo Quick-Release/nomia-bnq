@@ -1,0 +1,256 @@
+---
+/**
+ * Navigation bar: the menu the editor picked, drawn as bioeconomia.pt's header
+ * navigation (`NomiaHeader.astro`, Nomia Website 2 · node 40017025:6739): the
+ * translucent teal bar, the first two links as pills, hover/focus submenus, and
+ * below the `nav` breakpoint a drawer opened from the menu button.
+ */
+import { headerNavigationTree } from "../../../lib/header-navigation";
+import { HEADER_GUTTER_X } from "../../../lib/site-gutters";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { internalOrigins } from "../../../lib/wordpress";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props {
+  block: WpParsedBlock;
+}
+
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/header-navigation">;
+
+const navItems = headerNavigationTree(attrs.menuItems, internalOrigins(Astro.site?.origin));
+// A page may hold more than one bar; each drawer needs its own id.
+const drawerId = `nomia-navigation-drawer-${Math.random().toString(36).slice(2, 10)}`;
+
+const topNavLinkBaseClass =
+  "inline-flex items-center gap-1 rounded-lg px-1.5 py-2 whitespace-nowrap no-underline transition-opacity hover:opacity-85 focus-visible:ring-main-teal-400 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:outline-none";
+const topNavPillClasses = [
+  "bg-main-ciano-400 text-main-cinza-700 hover:opacity-90",
+  "bg-main-botnico-400 text-main-cinza-700 hover:opacity-90",
+];
+const linkTarget = (target: string | null) =>
+  target === "_blank" ? { target, rel: "noopener noreferrer" } : {};
+---
+
+{
+  navItems.length > 0 ? (
+    <div class="contents" data-nomia-navigation>
+      {/* The drawer sits outside the bar: its backdrop blur would make the bar the
+          drawer's containing block and pin the fixed drawer to it. */}
+      <div class="bg-main-teal-500/80 sticky top-0 z-50 w-full backdrop-blur-sm">
+      <div
+        class={`mx-auto flex h-[72px] max-w-[1920px] items-center justify-between gap-3 md:h-auto md:min-h-[72px] md:py-4 2xl:gap-8 ${HEADER_GUTTER_X}`}
+      >
+        <nav
+          class="text-main-cinza-100 flex min-w-0 flex-1 items-center gap-3 2xl:gap-5"
+          aria-label="Navegação"
+        >
+          <ul class="font-secondary m-0 hidden min-w-0 list-none p-0 text-xs leading-snug font-medium nav:flex nav:flex-nowrap nav:gap-x-1 nav:gap-y-0">
+            {navItems.map(({ label, href, target, children }, index) => {
+              const topLinkClass = `${topNavLinkBaseClass} ${topNavPillClasses[index] ?? ""}`.trim();
+
+              return children.length ? (
+                <li class="group relative">
+                  <a href={href} class={topLinkClass} {...linkTarget(target)}>
+                    {label}
+                    <svg
+                      class="size-4 shrink-0 transition-transform duration-150 group-hover:rotate-180"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M6 9l6 6 6-6" />
+                    </svg>
+                  </a>
+                  {/* pt-2 bridge keeps hover path from parent link to submenu */}
+                  <div
+                    class="pointer-events-none invisible absolute top-full left-0 z-[60] min-w-[220px] pt-2 opacity-0 transition-[opacity,visibility] duration-150 group-hover:pointer-events-auto group-hover:visible group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:visible group-focus-within:opacity-100"
+                    role="presentation"
+                  >
+                    <ul
+                      class="bg-main-teal-400 text-neutral-bw-white m-0 list-none rounded-lg p-2 shadow-lg ring-1 ring-black/10"
+                      aria-label={`${label}: subpáginas`}
+                    >
+                      {children.map((sub) => (
+                        <li>
+                          <a
+                            href={sub.href}
+                            class="font-secondary text-neutral-bw-white hover:bg-neutral-bw-white hover:text-main-teal-400 focus-visible:ring-main-teal-600 block rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap no-underline transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-main-teal-400 focus-visible:outline-none"
+                            {...linkTarget(sub.target)}
+                          >
+                            {sub.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              ) : (
+                <li>
+                  <a href={href} class={topLinkClass} {...linkTarget(target)}>
+                    {label}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+
+        <div class="border-main-teal-400 bg-main-teal-400 text-neutral-bw-white flex shrink-0 overflow-hidden rounded-lg border nav:hidden">
+          <button
+            type="button"
+            class="text-neutral-bw-white inline-flex items-center gap-2 rounded-none p-2 transition-colors hover:bg-main-teal-500/25 focus-visible:ring-neutral-bw-white focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-main-teal-400 focus-visible:outline-none"
+            aria-expanded="false"
+            aria-controls={drawerId}
+            aria-label="Abrir menu"
+            data-navigation-open
+          >
+            <svg
+              class="size-6 shrink-0"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      </div>
+      <div
+        id={drawerId}
+        class="fixed top-0 left-0 z-[70] hidden h-dvh w-screen bg-main-ciano-700/70 nav:hidden"
+        data-navigation-drawer
+        aria-hidden="true"
+      >
+        <div class="absolute inset-y-0 right-0 flex w-full max-w-sm flex-col bg-neutral-bw-white p-4 text-main-cinza-700 shadow-2xl">
+          <div class="flex items-center justify-end gap-4 border-b border-monochrome-light-400 pb-4">
+            <button
+              type="button"
+              class="rounded-lg p-2 text-main-cinza-700 transition-colors hover:bg-monochrome-light-100 focus-visible:ring-main-teal-400 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-bw-white focus-visible:outline-none"
+              aria-label="Fechar menu"
+              data-navigation-close
+            >
+              <svg
+                class="size-6"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M18 6 6 18M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <nav class="overflow-y-auto py-4" aria-label="Navegação móvel">
+            <ul class="m-0 flex list-none flex-col gap-1 p-0">
+              {navItems.map(({ label, href, target, children }) => (
+                <li>
+                  <a
+                    href={href}
+                    class="block rounded-lg px-3 py-3 font-secondary text-base font-semibold text-main-cinza-700 no-underline transition-colors hover:bg-monochrome-light-100 focus-visible:ring-main-teal-400 focus-visible:ring-2 focus-visible:outline-none"
+                    {...linkTarget(target)}
+                  >
+                    {label}
+                  </a>
+                  {children.length ? (
+                    <ul class="m-0 list-none p-0 pb-2 pl-4">
+                      {children.map((sub) => (
+                        <li>
+                          <a
+                            href={sub.href}
+                            class="block rounded-lg px-3 py-2 font-secondary text-sm font-medium text-main-cinza-600 no-underline transition-colors hover:bg-monochrome-light-100 focus-visible:ring-main-teal-400 focus-visible:ring-2 focus-visible:outline-none"
+                            {...linkTarget(sub.target)}
+                          >
+                            {sub.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  ) : null
+}
+
+<script>
+  // The drawer behaves as the header's did: it traps focus while open, closes
+  // on Escape, on its close button and on a click outside its panel, and gives
+  // focus back to the button that opened it.
+  for (const root of document.querySelectorAll<HTMLElement>("[data-nomia-navigation]")) {
+    const drawer = root.querySelector<HTMLElement>("[data-navigation-drawer]");
+    const openBtn = root.querySelector<HTMLButtonElement>("[data-navigation-open]");
+    const closeBtn = root.querySelector<HTMLButtonElement>("[data-navigation-close]");
+    if (!drawer || !openBtn || !closeBtn) continue;
+
+    const isOpen = () => drawer.getAttribute("aria-hidden") === "false";
+
+    const getFocusable = () =>
+      Array.from(drawer.querySelectorAll<HTMLElement>("a, button")).filter(
+        (el) => !el.hasAttribute("disabled") && el.offsetParent !== null,
+      );
+
+    const close = ({ restoreFocus = true } = {}) => {
+      drawer.classList.add("hidden");
+      drawer.setAttribute("aria-hidden", "true");
+      openBtn.setAttribute("aria-expanded", "false");
+      document.documentElement.classList.remove("overflow-hidden");
+      if (restoreFocus) openBtn.focus();
+    };
+
+    const open = () => {
+      drawer.classList.remove("hidden");
+      drawer.setAttribute("aria-hidden", "false");
+      openBtn.setAttribute("aria-expanded", "true");
+      document.documentElement.classList.add("overflow-hidden");
+      queueMicrotask(() => closeBtn.focus());
+    };
+
+    openBtn.addEventListener("click", open);
+    closeBtn.addEventListener("click", () => close());
+    drawer.addEventListener("click", (e) => {
+      if (e.target === drawer) close();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (!isOpen()) return;
+      if (e.key === "Escape") {
+        close();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const focusable = getFocusable();
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (!first || !last) return;
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    });
+  }
+</script>
