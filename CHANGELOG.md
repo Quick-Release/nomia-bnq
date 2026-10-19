@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.4.2 - 2026-10-19
+
+Previous release: v0.4.1
+
+- 9e52d24 chore(cms): update GQ Design to 0.4.3 and plugins
+
 ## v0.4.1 - 2026-10-19
 
 Previous release: v0.4.0
