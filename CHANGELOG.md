@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.4.1 - 2026-10-19
+
+Previous release: v0.4.0
+
+- 16750b7 feat(blocks): title the navigation block nomia_navigation
+
 ## v0.4.0 - 2026-10-19
 
 Previous release: v0.3.1
