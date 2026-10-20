@@ -62,16 +62,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.401.2",
+            "version": "3.401.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "b1af9196bd0f94bcebdb6588a150dd85dc240758"
+                "reference": "b5941e2da9fb860f06ad5046d96219c4288ab6b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/b1af9196bd0f94bcebdb6588a150dd85dc240758",
-                "reference": "b1af9196bd0f94bcebdb6588a150dd85dc240758",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/b5941e2da9fb860f06ad5046d96219c4288ab6b8",
+                "reference": "b5941e2da9fb860f06ad5046d96219c4288ab6b8",
                 "shasum": ""
             },
             "require": {
@@ -153,9 +153,9 @@
             "support": {
                 "forum": "https://github.com/aws/aws-sdk-php/discussions",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.401.2"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.401.4"
             },
-            "time": "2026-10-14T18:09:34+00:00"
+            "time": "2026-10-20T18:15:27+00:00"
         },
         {
             "name": "composer/installers",
@@ -414,17 +414,17 @@
         },
         {
             "name": "getquick/gq-design",
-            "version": "0.4.3",
+            "version": "0.4.4",
             "source": {
                 "type": "git",
                 "url": "git@github.com:Quick-Release/gq-design.git",
-                "reference": "41a2d00f5f0ed4d286e2941d4f7b3d70c4376781"
+                "reference": "c238499dade860206a8fd4c120a7b69b66dcfa1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-design/getquick-gq-design-41a2d00f5f0ed4d286e2941d4f7b3d70c4376781-zip-0efa1b.zip",
-                "reference": "41a2d00f5f0ed4d286e2941d4f7b3d70c4376781",
-                "shasum": "67b85a2c4963ae9c65da2ffa8ffe5bcce42383d6"
+                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-design/getquick-gq-design-c238499dade860206a8fd4c120a7b69b66dcfa1e-zip-6ac8f6.zip",
+                "reference": "c238499dade860206a8fd4c120a7b69b66dcfa1e",
+                "shasum": "f826d23152eb00641bac32a61a100e6496c43ea1"
             },
             "require": {
                 "php": ">=8.4.1"
@@ -472,10 +472,10 @@
             ],
             "description": "Native Gutenberg templates and headless layout delivery for GETQUICK sites.",
             "support": {
-                "source": "https://github.com/Quick-Release/gq-design/tree/v0.4.3",
+                "source": "https://github.com/Quick-Release/gq-design/tree/v0.4.4",
                 "issues": "https://github.com/Quick-Release/gq-design/issues"
             },
-            "time": "2026-10-19T11:25:42+00:00"
+            "time": "2026-10-20T21:17:46+00:00"
         },
         {
             "name": "getquick/gq-support",
