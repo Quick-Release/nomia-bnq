@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.4.3 - 2026-10-20
+
+Previous release: v0.4.2
+
+- d33cfa0 Update CMS dependencies and add project skills and theme research
+
 ## v0.4.2 - 2026-10-19
 
 Previous release: v0.4.1
