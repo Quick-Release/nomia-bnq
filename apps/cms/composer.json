@@ -58,7 +58,7 @@
     "composer/installers": "^2.0",
     "getquick/getquick-theme": "^0.5.1",
     "getquick/gq-config": "^0.4.0",
-    "getquick/gq-design": "^0.4.3",
+    "getquick/gq-design": "dev-main as 0.5.99",
     "getquick/gq-support": "^0.1.3",
     "gravity/gravityforms": "^3.2",
     "humanmade/s3-uploads": "^3.0",

@@ -1,5 +1,5 @@
 {
-  "gq": "0.18.3",
+  "gq": "0.19.0",
   "schemaVersion": 1,
   "files": {
     ".claude/skills": "sha256:e1ff59d80751d8af17631debcc3bc30ecdbec0b20dccded0bffb745fe5cea79c",
@@ -74,6 +74,7 @@
       "scripts.ploi:status": "sha256:c86699643cd143a82c6f68fa757069b8781d4b5353d018ff458d252696f6da11",
       "scripts.ploi:provision": "sha256:6d07f4df858109e4a6a3ed5d5c59438e804dd66af84a8f58ade466a6b89b6a03",
       "scripts.ploi:release": "sha256:e658649235a25b7f4a51c56fc0d42628f3538dfab08435a291178d579fd0b27f",
+      "scripts.release:package": "sha256:4545da98411ffebaa65a91668561b2700ba01156dd7a50b09c550730d773447e",
       "scripts.cf:releases": "sha256:4b86c0256d6fc30e2ebe8adcd96d29394d1d0ad0837f397bf0976a955ae7c100",
       "scripts.cf:media": "sha256:014c40aa8ba99a386489e6a34acabe58cb8e07798e55c4ee217bb8f3fe3a711d",
       "scripts.ploi:media": "sha256:122d09ae88ef8b4518d1cbae3c643b3740f2bd68300d997e3889082f24116e4a",
