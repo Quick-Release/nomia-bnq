@@ -70,10 +70,11 @@
     "sigillo:setup": "gq sigillo setup local",
     "sigillo:list:local": "gq sigillo secrets local",
     "sigillo:list:ops": "gq sigillo secrets operations",
-    "sigillo:list:staging": "gq sigillo secrets staging"
+    "sigillo:list:staging": "gq sigillo secrets staging",
+    "release:package": "gq sigillo run staging -- gq release package"
   },
   "devDependencies": {
-    "@getquick/site": "0.18.3",
+    "@getquick/site": "0.19.0",
     "sigillo": "0.13.0",
     "vite": "catalog:",
     "vite-plus": "catalog:"

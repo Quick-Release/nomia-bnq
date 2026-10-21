@@ -14,6 +14,23 @@ site's own guidance in `AGENTS.md` and its own ignore rules in `.gitignore`
 outside their generated sections; this README and `GLOSSARY.md` are the
 site's to change.
 
+## Ship new gq-design code
+
+Until 2026-10-30 the CMS installs `getquick/gq-design` from its `main`
+branch (`"dev-main as 0.5.99"` in `apps/cms/composer.json`) instead of a
+tagged release. To ship new GQ Design code:
+
+1. Merge the change to gq-design's `main`.
+2. Wait about 3 minutes for the Composer registry to rebuild `dev-main`.
+3. From an up-to-date, clean `main` checkout here, run
+   `pnpm release:package getquick/gq-design`. It locks gq-design's newest
+   `main` commit, commits the lock and deploys that commit to the CMS.
+4. `git push` the commit it made.
+
+This is temporary. After 2026-10-30 the site returns to a tagged gq-design:
+set the caret constraint again (for example `^0.5.0`) and run
+`pnpm cms:composer:update getquick/gq-design`.
+
 ## Docs
 
 - [`GLOSSARY.md`](GLOSSARY.md): the site's glossary.
