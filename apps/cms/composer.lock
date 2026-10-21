@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b33c8c77243533d1580c0ded35ecaec7",
+    "content-hash": "def0646294718d888b4229962d9cfcea",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -598,6 +598,19 @@
                 }
             ],
             "time": "2026-08-24T09:06:52+00:00"
+        },
+        {
+            "name": "gravity/gravityforms",
+            "version": "3.2.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.gravity.io/downloads/?plugin=gravityforms&version=3.2.0"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "time": "2026-10-20T17:53:49+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

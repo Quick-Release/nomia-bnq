@@ -15,6 +15,10 @@ public WordPress frontend (`web/app/mu-plugins/content-api.php`).
   S3 Uploads (media on R2), Simple History, Cimo Image Optimizer and Safe SVG,
   from [WP Packages](https://wp-packages.org/)
 - PHP 8.3+, MariaDB
+- Gravity Forms, from its official Composer repository. Its license is kept in
+  Sigillo (`GRAVITY_FORMS_LICENSE_KEY` in staging) and included in `COMPOSER_AUTH`
+  for local installs, CI and deploys. The deploy activates the plugin and saves
+  its license through Gravity Forms' registration API, which stores a hash.
 
 Composer installs every plugin and theme, so none is committed. A plugin or
 child theme of the site's own goes in `web/app/plugins` or `web/app/themes`,
