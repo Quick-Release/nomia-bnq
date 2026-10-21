@@ -86,3 +86,31 @@ Use `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, and `won
 Use the single-context layout with root `GLOSSARY.md` and `docs/adr/`. See `docs/agents/domain.md`.
 
 <!-- END gq -->
+
+## Routing shared content work
+
+Before routing shared CMS/Frontend behaviour, read
+[gq-platform ADR 0001](https://github.com/Quick-Release/gq-platform/blob/main/docs/adr/0001-ownership-of-work-across-getquick-repositories.md)
+and the candidate owner's `AGENTS.md`. Route by the maintained behaviour or
+contract; a file's presence in the blueprint ownership manifest establishes
+how it is updated here, not which repository owns its behaviour. Runtime
+code can remain in blueprint templates while extraction is pending.
+
+- **Content runtime:** WPGraphQL reads, publication/settings events, delivery,
+  caching/reconciliation and content HTML helpers belong to
+  `Quick-Release/gq-content` (`/data/code/getquick/gq-content`). For shared
+  CMS-selected header/footer fetching and refresh, start there; see its
+  [accepted ADR 0003](https://github.com/Quick-Release/gq-content/blob/main/docs/adr/0003-serve-cms-selected-header-and-footer-patterns-with-site-chrome.md).
+  It distinguishes runtime parsing/delivery from Site rendering.
+- **Blueprint:** package wiring and pins, `gq sync`, provisioning, CI and
+  deployment tooling belong to `Quick-Release/gq-site`
+  (`/data/code/getquick/gq-site`). Runtime support may require a separate
+  blueprint adoption change after its owning runtime releases.
+- **Site:** Nomia-specific rendering, blocks, styling and configuration belong
+  here when implemented through supported, site-owned interfaces. For shared
+  plugin contracts, verify the providing plugin's owner; unresolved ownership
+  goes to `Quick-Release/gq-platform` (`/data/code/getquick/gq-platform`).
+
+Verify current implementation and release/adoption status before proposing new
+work: an accepted decision or code in another checkout does not establish that
+this Site has adopted it. Follow the Scope rule above for any handoff.
