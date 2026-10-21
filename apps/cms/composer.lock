@@ -414,17 +414,17 @@
         },
         {
             "name": "getquick/gq-design",
-            "version": "0.4.4",
+            "version": "0.4.6",
             "source": {
                 "type": "git",
                 "url": "git@github.com:Quick-Release/gq-design.git",
-                "reference": "c238499dade860206a8fd4c120a7b69b66dcfa1e"
+                "reference": "732f5525de40c20139929bd627330f5ff755ea6f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-design/getquick-gq-design-c238499dade860206a8fd4c120a7b69b66dcfa1e-zip-6ac8f6.zip",
-                "reference": "c238499dade860206a8fd4c120a7b69b66dcfa1e",
-                "shasum": "f826d23152eb00641bac32a61a100e6496c43ea1"
+                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-design/getquick-gq-design-732f5525de40c20139929bd627330f5ff755ea6f-zip-e1080c.zip",
+                "reference": "732f5525de40c20139929bd627330f5ff755ea6f",
+                "shasum": "374058df0397ef2f4f015fa789c0bef9c6af3331"
             },
             "require": {
                 "php": ">=8.4.1"
@@ -472,10 +472,10 @@
             ],
             "description": "Native Gutenberg templates and headless layout delivery for GETQUICK sites.",
             "support": {
-                "source": "https://github.com/Quick-Release/gq-design/tree/v0.4.4",
+                "source": "https://github.com/Quick-Release/gq-design/tree/v0.4.6",
                 "issues": "https://github.com/Quick-Release/gq-design/issues"
             },
-            "time": "2026-10-20T21:17:46+00:00"
+            "time": "2026-10-21T01:18:11+00:00"
         },
         {
             "name": "getquick/gq-support",
