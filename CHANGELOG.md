@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.4.4 - 2026-10-21
+
+Previous release: v0.4.3
+
+- 7f17d95 Install and license Gravity Forms through Composer
+
 ## v0.4.3 - 2026-10-20
 
 Previous release: v0.4.2
