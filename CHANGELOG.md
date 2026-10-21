@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.4.5 - 2026-10-21
+
+Previous release: v0.4.4
+
+- 6c12b83 Fix Gravity Forms license hook path during deploy
+
 ## v0.4.4 - 2026-10-21
 
 Previous release: v0.4.3
