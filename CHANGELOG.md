@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.4.6 - 2026-10-21
+
+Previous release: v0.4.5
+
+- 7394a1c Update GQ Design to 0.4.6
+
 ## v0.4.5 - 2026-10-21
 
 Previous release: v0.4.4
