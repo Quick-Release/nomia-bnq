@@ -73,7 +73,8 @@ export function content() {
     consent: { services: CONSENT_SERVICES, firstPartyHosts: MEDIA_HOSTS, cmsSettings: true },
     // nomia-cpt's types, stored as collections so their items are served and
     // listed from the store (src/lib/content-collections.ts). 0.2.0 doesn't
-    // declare the setting yet and ignores it: drop the cast on the bump.
+    // declare the setting and ignores it: on the bump to the release that
+    // does (gq-content#38), pass it without the cast.
     ...({ collections: RUNTIME_COLLECTIONS } as object),
   });
 }

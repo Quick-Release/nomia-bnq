@@ -12,10 +12,19 @@ release tag does.
 
 ## 0. Before you start
 
-- **gq-content has released collections:** the GETQUICK → Archives setting,
-  CPT items stored as collections, and `content.list` / `content.terms`. Until
-  the Site is on that release, both blocks render their empty state ("A lista
-  não está disponível de momento.").
+- **gq-content has released collections**
+  ([gq-content#38](https://github.com/Quick-Release/gq-content/pull/38)): the
+  GETQUICK → Archives setting, CPT items stored as collections, and
+  `content.list` / `content.terms`. Until the Site is on that release, both
+  blocks render their empty state ("A lista não está disponível de momento.").
+- **Every collection's taxonomy is in WPGraphQL on production.** The runtime
+  checks it on each refresh and reconciliation, and fails them, naming the
+  taxonomy, when one isn't. On 2026-10-22 production showed only
+  `setor_atividade`; this PR's nomia-cpt change adds `categoria_biblioteca`,
+  `tipo_evento`, `tematicas` and `categoria_oportunidade`. It must be live
+  before, or in the same release as, the collections setting. All 12 post
+  types are already shown under the `graphqlType` names
+  `src/lib/content-collections.ts` uses.
 - **@getquick/site pins that release.** Both pins are blueprint-managed keys
   (`gq.lock.json`): `getquick/gq-content` in `apps/cms/composer.json` and
   `@getquick/content` in `apps/frontend/package.json`. They move through a
@@ -45,17 +54,32 @@ pnpm cms:composer:update   # composer.lock picks up getquick/gq-content
 
 Then, in `apps/frontend`:
 
-- in `src/lib/content.ts`, drop the cast around `collections`
-  (`...({ collections: RUNTIME_COLLECTIONS } as object)`) and pass it as a
-  plain setting;
-- in `src/lib/content-listing.ts`, replace the provisional types with the
-  package's own, and remove the feature detection if `list` and `terms` are
-  always present.
+- in `src/lib/content.ts`, pass `collections: RUNTIME_COLLECTIONS` without
+  the cast;
+- in `src/lib/content-listing.ts`, import `CollectionListing`,
+  `CollectionTermListing` and `CollectionTermCount` from `@getquick/content`
+  in place of the local copies, and call `content().list` / `.terms` without
+  the feature detection;
+- in `src/lib/content-collections.ts`, type `RUNTIME_COLLECTIONS` as
+  `Record<string, CollectionConfig>`.
 
-Check the final API against the provisional one this code was written to:
-the `collections` setting's shape, `list`'s query and answer, and `terms`'s
-answer. Run `pnpm check`, `pnpm test`, `pnpm cms:test` and `pnpm cms:lint`, open
-the PR, merge it, and release (`pnpm push minor`).
+The code already matches #38: against a packed build of it (head 502ad25),
+with those three edits, `pnpm check`, `pnpm test` and `pnpm test:blocks` pass.
+`src/test/wordpress-stub.ts` already answers the runtime's new
+`ContentArchives` query and its `node: nodeByUri` entry read. Run `pnpm check`,
+`pnpm test`, `pnpm cms:test` and `pnpm cms:lint`, open the PR, merge it, and
+release (`pnpm push minor`).
+
+### Deploy order
+
+The release deploys both halves; make sure they land in this order:
+
+1. **The Frontend first.** An older Frontend rejects the CMS's new `archives`
+   settings event. The CMS retries it, so a CMS that lands first only
+   delays it, but deploy the Frontend first anyway.
+2. **The CMS** (`getquick/gq-content` and this nomia-cpt). From then on it
+   emits publish and withdraw events for every public custom post type in
+   WPGraphQL, so CPT items start reaching the store as they're edited.
 
 ## 2. Assign the archive Pages (production CMS, GETQUICK → Archives)
 
@@ -105,6 +129,11 @@ counts (10 Biblioteca items at most), the default of 12 per page leaves every
 listing on one page.
 
 ## 4. Refresh and check
+
+First, in the CMS, **Tools → Site Health** has gq-content's "Pages reachable at
+their addresses" check. It lists any Page whose URI another node takes. It
+must list none: if a child Page such as `/biblioteca/legislacao/` is there,
+#54 isn't live.
 
 ```sh
 pnpm frontend:refresh        # the whole-Site refresh: stores the Pages and every collection's items

@@ -1,8 +1,8 @@
 /**
  * Nomia's collections: the nomia-cpt content types gq-content stores, so their
  * items are served and listed from the publication store, never by reading
- * WordPress on a visit. The Listing and Filters blocks choose one by its key
- * (the post type's name). The editor reads the same table
+ * WordPress on a visit. A collection's key is its post type's name, and the
+ * Listing and Filters blocks choose one by it. The editor reads the same table
  * (`window.getquickNomiaFrontendRules`), so its choices match what renders.
  */
 
@@ -16,8 +16,8 @@ export interface CollectionTaxonomy {
 
 export interface ContentCollection {
   label: string;
-  /** WPGraphQL's ContentTypeEnum value for the post type. */
-  type: string;
+  /** Its WPGraphQL type, nomia-cpt's `graphql_single_name`. */
+  graphqlType: string;
   /** In the Filters block's order; the first is the collection's category. */
   taxonomies: readonly CollectionTaxonomy[];
 }
@@ -37,7 +37,7 @@ const GLOBAL_TAXONOMIES = [TEMATICAS, SETORES] as const;
 export const CONTENT_COLLECTIONS = {
   biblioteca: {
     label: "Biblioteca",
-    type: "BIBLIOTECA",
+    graphqlType: "Biblioteca",
     taxonomies: [
       { taxonomy: "categoria_biblioteca", param: "categoria", label: "Categoria" },
       ...GLOBAL_TAXONOMIES,
@@ -45,7 +45,7 @@ export const CONTENT_COLLECTIONS = {
   },
   eventos: {
     label: "Eventos",
-    type: "EVENTOS",
+    graphqlType: "Evento",
     taxonomies: [
       { taxonomy: "tipo_evento", param: "tipo", label: "Tipo de evento" },
       ...GLOBAL_TAXONOMIES,
@@ -53,7 +53,7 @@ export const CONTENT_COLLECTIONS = {
   },
   oportunidades: {
     label: "Oportunidades",
-    type: "OPORTUNIDADES",
+    graphqlType: "Oportunidade",
     taxonomies: [
       { taxonomy: "categoria_oportunidade", param: "categoria", label: "Categoria" },
       ...GLOBAL_TAXONOMIES,
@@ -61,31 +61,40 @@ export const CONTENT_COLLECTIONS = {
   },
   recursos_educativos: {
     label: "Recursos educativos",
-    type: "RECURSOS_EDUCATIVOS",
+    graphqlType: "RecursoEducativo",
     taxonomies: GLOBAL_TAXONOMIES,
   },
-  glossario: { label: "Glossário", type: "GLOSSARIO", taxonomies: GLOBAL_TAXONOMIES },
-  indicadores: { label: "Indicadores", type: "INDICADORES", taxonomies: GLOBAL_TAXONOMIES },
-  infografias: { label: "Infografias", type: "INFOGRAFIAS", taxonomies: GLOBAL_TAXONOMIES },
-  videos: { label: "Vídeos", type: "VIDEOS", taxonomies: GLOBAL_TAXONOMIES },
-  podcasts: { label: "Podcasts", type: "PODCASTS", taxonomies: GLOBAL_TAXONOMIES },
-  ferramentas: { label: "Ferramentas", type: "FERRAMENTAS", taxonomies: GLOBAL_TAXONOMIES },
-  plataformas: { label: "Plataformas", type: "PLATAFORMAS", taxonomies: GLOBAL_TAXONOMIES },
+  glossario: { label: "Glossário", graphqlType: "Glossario", taxonomies: GLOBAL_TAXONOMIES },
+  indicadores: { label: "Indicadores", graphqlType: "Indicador", taxonomies: GLOBAL_TAXONOMIES },
+  infografias: { label: "Infografias", graphqlType: "Infografia", taxonomies: GLOBAL_TAXONOMIES },
+  videos: { label: "Vídeos", graphqlType: "Video", taxonomies: GLOBAL_TAXONOMIES },
+  podcasts: { label: "Podcasts", graphqlType: "Podcast", taxonomies: GLOBAL_TAXONOMIES },
+  ferramentas: { label: "Ferramentas", graphqlType: "Ferramenta", taxonomies: GLOBAL_TAXONOMIES },
+  plataformas: { label: "Plataformas", graphqlType: "Plataforma", taxonomies: GLOBAL_TAXONOMIES },
   bases_de_dados: {
     label: "Bases de dados",
-    type: "BASES_DE_DADOS",
+    graphqlType: "BaseDeDados",
     taxonomies: GLOBAL_TAXONOMIES,
   },
 } as const satisfies Record<string, ContentCollection>;
 
 /**
- * The runtime's `collections` setting: which nomia-cpt types gq-content
- * stores, and the taxonomies their items keep (src/lib/content.ts).
+ * The runtime's `collections` setting (@getquick/content's `CollectionConfig`):
+ * which nomia-cpt types gq-content stores, and the taxonomies their items keep
+ * (src/lib/content.ts). Every taxonomy must be in WPGraphQL: nomia-cpt shows
+ * them all.
  */
-export const RUNTIME_COLLECTIONS = Object.fromEntries(
-  Object.entries(CONTENT_COLLECTIONS).map(([key, collection]) => [
-    key,
-    { type: collection.type, taxonomies: collection.taxonomies.map(({ taxonomy }) => taxonomy) },
+export const RUNTIME_COLLECTIONS: Record<
+  string,
+  { postType: string; graphqlType: string; taxonomies: readonly string[] }
+> = Object.fromEntries(
+  Object.entries(CONTENT_COLLECTIONS).map(([postType, collection]) => [
+    postType,
+    {
+      postType,
+      graphqlType: collection.graphqlType,
+      taxonomies: collection.taxonomies.map(({ taxonomy }) => taxonomy),
+    },
   ]),
 );
 

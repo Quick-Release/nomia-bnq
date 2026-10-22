@@ -18,7 +18,7 @@ const showSearch = attrs.showSearch !== false;
 const hidden = new Set(wpArray(attrs.hiddenTaxonomies).map(text));
 const params = Astro.url.searchParams;
 
-// Only the terms that have published items, from the publication store.
+// The terms the collection's published items have, from the publication store.
 const choices = collection
   ? (
       await Promise.all(
@@ -28,7 +28,7 @@ const choices = collection
             param,
             label,
             selected: params.get(param) ?? "",
-            options: (await collectionTerms(collection, taxonomy)).filter((term) => term.count > 0),
+            options: await collectionTerms(collection, taxonomy),
           })),
       )
     ).filter((choice) => choice.options.length > 0)

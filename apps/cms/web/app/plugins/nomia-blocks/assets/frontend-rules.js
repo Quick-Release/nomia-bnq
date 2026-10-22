@@ -98,7 +98,7 @@ var getquickNomiaFrontendRules = (function(exports) {
 	var CONTENT_COLLECTIONS = {
 		biblioteca: {
 			label: "Biblioteca",
-			type: "BIBLIOTECA",
+			graphqlType: "Biblioteca",
 			taxonomies: [{
 				taxonomy: "categoria_biblioteca",
 				param: "categoria",
@@ -107,7 +107,7 @@ var getquickNomiaFrontendRules = (function(exports) {
 		},
 		eventos: {
 			label: "Eventos",
-			type: "EVENTOS",
+			graphqlType: "Evento",
 			taxonomies: [{
 				taxonomy: "tipo_evento",
 				param: "tipo",
@@ -116,7 +116,7 @@ var getquickNomiaFrontendRules = (function(exports) {
 		},
 		oportunidades: {
 			label: "Oportunidades",
-			type: "OPORTUNIDADES",
+			graphqlType: "Oportunidade",
 			taxonomies: [{
 				taxonomy: "categoria_oportunidade",
 				param: "categoria",
@@ -125,56 +125,59 @@ var getquickNomiaFrontendRules = (function(exports) {
 		},
 		recursos_educativos: {
 			label: "Recursos educativos",
-			type: "RECURSOS_EDUCATIVOS",
+			graphqlType: "RecursoEducativo",
 			taxonomies: GLOBAL_TAXONOMIES
 		},
 		glossario: {
 			label: "Glossário",
-			type: "GLOSSARIO",
+			graphqlType: "Glossario",
 			taxonomies: GLOBAL_TAXONOMIES
 		},
 		indicadores: {
 			label: "Indicadores",
-			type: "INDICADORES",
+			graphqlType: "Indicador",
 			taxonomies: GLOBAL_TAXONOMIES
 		},
 		infografias: {
 			label: "Infografias",
-			type: "INFOGRAFIAS",
+			graphqlType: "Infografia",
 			taxonomies: GLOBAL_TAXONOMIES
 		},
 		videos: {
 			label: "Vídeos",
-			type: "VIDEOS",
+			graphqlType: "Video",
 			taxonomies: GLOBAL_TAXONOMIES
 		},
 		podcasts: {
 			label: "Podcasts",
-			type: "PODCASTS",
+			graphqlType: "Podcast",
 			taxonomies: GLOBAL_TAXONOMIES
 		},
 		ferramentas: {
 			label: "Ferramentas",
-			type: "FERRAMENTAS",
+			graphqlType: "Ferramenta",
 			taxonomies: GLOBAL_TAXONOMIES
 		},
 		plataformas: {
 			label: "Plataformas",
-			type: "PLATAFORMAS",
+			graphqlType: "Plataforma",
 			taxonomies: GLOBAL_TAXONOMIES
 		},
 		bases_de_dados: {
 			label: "Bases de dados",
-			type: "BASES_DE_DADOS",
+			graphqlType: "BaseDeDados",
 			taxonomies: GLOBAL_TAXONOMIES
 		}
 	};
 	/**
-	* The runtime's `collections` setting: which nomia-cpt types gq-content
-	* stores, and the taxonomies their items keep (src/lib/content.ts).
+	* The runtime's `collections` setting (@getquick/content's `CollectionConfig`):
+	* which nomia-cpt types gq-content stores, and the taxonomies their items keep
+	* (src/lib/content.ts). Every taxonomy must be in WPGraphQL: nomia-cpt shows
+	* them all.
 	*/
-	var RUNTIME_COLLECTIONS = Object.fromEntries(Object.entries(CONTENT_COLLECTIONS).map(([key, collection]) => [key, {
-		type: collection.type,
+	var RUNTIME_COLLECTIONS = Object.fromEntries(Object.entries(CONTENT_COLLECTIONS).map(([postType, collection]) => [postType, {
+		postType,
+		graphqlType: collection.graphqlType,
 		taxonomies: collection.taxonomies.map(({ taxonomy }) => taxonomy)
 	}]));
 	var COLLECTION_KEYS = Object.keys(CONTENT_COLLECTIONS);

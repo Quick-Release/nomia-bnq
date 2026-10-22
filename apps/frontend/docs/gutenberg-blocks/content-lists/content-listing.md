@@ -36,6 +36,8 @@ The listing reads the visit's query string on the server:
 
 A term fixed in the block always applies. A parameter for the taxonomy the block fixes is ignored, so a category Page can't be widened. All listings on a Page read the same parameters.
 
+The store answers the query (`content.list`, gq-content#38): items are newest first. Within a taxonomy an item matches any of the given slugs, and it must match every taxonomy given. Matching is on a term's own slug, so a parent category doesn't include its children's items. The search matches a substring of the title or the excerpt, ignoring case and accents.
+
 ## States
 
 - Items: the chosen presentation, and the page links when there's more than one page.

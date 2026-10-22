@@ -22,7 +22,7 @@ It's a plain GET form whose action is the Page itself. Submitting it reloads the
 | `showSearch` | whether the search box shows | `true` |
 | `hiddenTaxonomies` | the collection's taxonomies the block doesn't offer, e.g. the category on a category Page, whose listing fixes it | `[]` |
 
-A taxonomy shows only the terms with published items, with their counts, from the publication store (`content.terms`). A taxonomy without such terms doesn't show, and the block renders nothing when it has neither a search box nor a choice.
+A taxonomy shows the terms the collection's published items have, with their counts, from the publication store (`content.terms`). A taxonomy without such terms doesn't show, and the block renders nothing when it has neither a search box nor a choice.
 
 <!-- BEGIN GENERATED: structured-block-contract -->
 ## Astro contract attributes
