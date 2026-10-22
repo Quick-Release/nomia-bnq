@@ -267,17 +267,6 @@ function nomia_cpt_get_post_type_definitions() {
 				'hierarchical'        => false,
 				'menu_position'       => 25,
 				'menu_icon'           => 'dashicons-calendar-alt',
-				'template'            => array(
-					array(
-						'nomia/event-details',
-						array(
-							'lock' => array(
-								'move'   => true,
-								'remove' => true,
-							),
-						),
-					),
-				),
 				'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions', 'custom-fields' ),
 			),
 		),
@@ -643,18 +632,7 @@ function nomia_cpt_get_post_type_definitions() {
 				'has_archive'         => 'plataformas',
 				'hierarchical'        => false,
 				'menu_icon'           => 'dashicons-screenoptions',
-				'template'            => array(
-					array(
-						'nomia/platform-details',
-						array(
-							'lock' => array(
-								'move'   => true,
-								'remove' => true,
-							),
-						),
-					),
-				),
-				'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions' ),
+				'supports'            => array( 'title', 'editor', 'thumbnail', 'revisions', 'custom-fields' ),
 			),
 		),
 		'bases_de_dados'      => array(

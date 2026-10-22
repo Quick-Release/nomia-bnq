@@ -46,6 +46,7 @@ function nomia_cpt_get_plugin_owned_option_names() {
 		'nomia_cpt_footer_logo_ids',
 		'nomia_cpt_contact',
 		'nomia_cpt_plugin_version',
+		'nomia_cpt_details_migration_errors',
 		'nomia_cpt_default_library_terms_seeded',
 	);
 }
@@ -115,6 +116,12 @@ function nomia_cpt_run_upgrade_routines() {
 	nomia_cpt_sync_custom_capabilities();
 	nomia_cpt_remove_indicadores_featured_images();
 	nomia_cpt_migrate_library_details_blocks();
+	$details = nomia_cpt_migrate_details_blocks();
+	if ( ! empty( $details['errors'] ) ) {
+		update_option( 'nomia_cpt_details_migration_errors', $details['errors'], false );
+		return false;
+	}
+	delete_option( 'nomia_cpt_details_migration_errors' );
 	nomia_cpt_store_plugin_version();
 
 	return true;

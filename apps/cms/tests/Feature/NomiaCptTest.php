@@ -391,19 +391,7 @@ test('content types are registered with rest support and custom capabilities', f
         ->and($gallery['capabilities']['edit_posts'])->toBe('edit_nomia_cpt_galleries')
         ->and($events['show_in_rest'])->toBeTrue()
         ->and($events['has_archive'])->toBe('eventos')
-        ->and($events['template'])->toBe(
-            [
-                [
-                    'nomia/event-details',
-                    [
-                        'lock' => [
-                            'move' => true,
-                            'remove' => true,
-                        ],
-                    ],
-                ],
-            ],
-        )
+        ->and($events)->not->toHaveKey('template')
         ->and($events['supports'])->toBe([ 'title', 'editor', 'thumbnail', 'revisions', 'custom-fields' ])
         ->and($events['show_in_graphql'])->toBeTrue()
         ->and($educational_resources['show_in_rest'])->toBeTrue()
@@ -446,20 +434,8 @@ test('content types are registered with rest support and custom capabilities', f
         ->and($platforms['show_in_menu'])->toBe('edit.php?post_type=ferramentas')
         ->and($platforms['labels']['all_items'])->toBe('Plataformas')
         ->and($platforms['has_archive'])->toBe('plataformas')
-        ->and($platforms['template'])->toBe(
-            [
-                [
-                    'nomia/platform-details',
-                    [
-                        'lock' => [
-                            'move' => true,
-                            'remove' => true,
-                        ],
-                    ],
-                ],
-            ],
-        )
-        ->and($platforms['supports'])->toBe([ 'title', 'editor', 'thumbnail', 'revisions' ])
+        ->and($platforms)->not->toHaveKey('template')
+        ->and($platforms['supports'])->toBe([ 'title', 'editor', 'thumbnail', 'revisions', 'custom-fields' ])
         ->and($platforms['show_in_graphql'])->toBeTrue()
         ->and($platforms['graphql_single_name'])->toBe('Plataforma')
         ->and($databases['show_in_rest'])->toBeTrue()
