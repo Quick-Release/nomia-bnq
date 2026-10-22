@@ -30,7 +30,6 @@
     "plugins": [
       "gq-design",
       "gq-support",
-      "gravityforms",
       "wp-graphql",
       "wpgraphql-blocks",
       "s3-uploads",
