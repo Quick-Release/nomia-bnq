@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.7.2 - 2026-10-22
+
+Previous release: v0.7.1
+
+- e5b3385 Merge pull request #59 from Quick-Release/claude/gq-design-0.6.0
+- 29a2f14 chore(cms): adopt GQ Design 0.6.0
+
 ## v0.7.1 - 2026-10-22
 
 Previous release: v0.7.0
