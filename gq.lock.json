@@ -9,7 +9,7 @@
     ".vite-hooks/pre-push": "sha256:0b7c92de7a5c6ec6f3b15d2cd1eeffd28b5e2d7cf1d3ecd06efab1b93ae8f15d",
     "apps/cms/patches/wpgraphql-blocks/2.2.0-quiet-unsafe-access.patch": "sha256:28511dbf2c6700b08ac402f5c78da8a71c4aa319b69584f5bfeb0847a30ad721",
     "apps/cms/scripts/patch-dependencies.php": "sha256:80d042db7ead44126a160894c80a19df2cd2a4e56036efe76a93d1db5cc9ec25",
-    "deploy/ploi/admin.sh": "sha256:649b325beeb9ec9430209d6ed7b3eddabf97ec70765be3f62744a10be1ce60e3",
+    "deploy/ploi/admin.sh": "sha256:062dd97dbbf5984d3a8e40a8a7aefa2d2c4d6a5fabef384e198c0a7f79451312",
     "deploy/ploi/polylang.sh": "sha256:bd520605bef7355495cefbefa554a7c933e0df71df6a39d50c6ae2571e285fa2",
     "docs/adr/README.md": "sha256:7ceb57ced6c1c24592e17265bbebe9e9b8cfc4cc2c527a76972308a6c41950de",
     "docs/agents/README.md": "sha256:2a192cb2025d30c6da279fa2ed9dfeee2b6738af885e42df43dc0596793b6cc0",

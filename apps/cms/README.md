@@ -14,11 +14,12 @@ public WordPress frontend (`web/app/mu-plugins/content-api.php`).
   [WPGraphQL Blocks](https://wp-packages.org/packages/wp-plugin/wpgraphql-blocks),
   S3 Uploads (media on R2), Simple History, Cimo Image Optimizer and Safe SVG,
   from [WP Packages](https://wp-packages.org/)
+- Gravity Forms is paused: its Composer repository stopped serving the pinned
+  3.2.0, which broke every fresh install (CI). The commit "Pause Gravity Forms"
+  removed it from Composer, the activated plugins and the license hook; revert
+  that commit to bring it back. Its license stays in Sigillo
+  (`GRAVITY_FORMS_LICENSE_KEY` in staging).
 - PHP 8.3+, MariaDB
-- Gravity Forms, from its official Composer repository. Its license is kept in
-  Sigillo (`GRAVITY_FORMS_LICENSE_KEY` in staging) and included in `COMPOSER_AUTH`
-  for local installs, CI and deploys. The deploy activates the plugin and saves
-  its license through Gravity Forms' registration API, which stores a hash.
 
 Composer installs every plugin and theme, so none is committed. A plugin or
 child theme of the site's own goes in `web/app/plugins` or `web/app/themes`,
