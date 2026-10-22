@@ -8,7 +8,7 @@
 import { headerNavigationTree } from "../../../lib/header-navigation";
 import { HEADER_GUTTER_X } from "../../../lib/site-gutters";
 import type { WpParsedBlock } from "../../../lib/wp-blocks";
-import { internalOrigins } from "../../../lib/wordpress";
+import { content } from "../../../lib/content";
 import type { AttrsFor } from "../wp-block-attrs";
 
 interface Props {
@@ -18,7 +18,7 @@ interface Props {
 const { block } = Astro.props;
 const attrs = block.attrs as AttrsFor<"getquick/header-navigation">;
 
-const navItems = headerNavigationTree(attrs.menuItems, internalOrigins(Astro.site?.origin));
+const navItems = headerNavigationTree(attrs.menuItems, content().internalOrigins(Astro.site?.origin));
 // A page may hold more than one bar; each drawer needs its own id.
 const drawerId = `nomia-navigation-drawer-${Math.random().toString(36).slice(2, 10)}`;
 

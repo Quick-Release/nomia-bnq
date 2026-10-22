@@ -1,5 +1,5 @@
 import { safeHref } from "./safe-href";
-import { menuItemHref, type WordPressMenuItem } from "./wordpress";
+import { menuItemHref, type WordPressMenuItem } from "@getquick/content";
 
 /**
  * The navigation block's menu (`menuItems`, filled by nomia-blocks'

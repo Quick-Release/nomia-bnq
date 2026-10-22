@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3755db8ce170af8f2342430e6e22fdd6",
+    "content-hash": "5e70b306b27005e31c8001ab6c1b07eb",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -411,6 +411,35 @@
                 "issues": "https://github.com/Quick-Release/gq-config/issues"
             },
             "time": "2026-10-17T23:08:15+00:00"
+        },
+        {
+            "name": "getquick/gq-content",
+            "version": "0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Quick-Release/gq-content.git",
+                "reference": "v0.2.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-content/getquick-gq-content-0.2.0-81fa23.zip",
+                "reference": "v0.2.0",
+                "shasum": "6e0c6201072da93126b48ef3dfd7e6d62c23b4dd"
+            },
+            "require": {
+                "composer/installers": "^2.0",
+                "php": ">=8.4.1"
+            },
+            "type": "wordpress-muplugin",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "GETQUICK content publication events, delivery and diagnostics",
+            "homepage": "https://github.com/Quick-Release/gq-content/tree/v0.2.0",
+            "support": {
+                "source": "https://github.com/Quick-Release/gq-content/tree/v0.2.0",
+                "issues": "https://github.com/Quick-Release/gq-content/issues"
+            }
         },
         {
             "name": "getquick/gq-design",
