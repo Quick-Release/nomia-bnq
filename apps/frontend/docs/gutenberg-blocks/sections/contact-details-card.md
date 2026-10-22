@@ -4,7 +4,7 @@
 - Block ID: `contact-details-card`
 - WordPress block name: `getquick/contact-details-card`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/ContactDetailsCardBlock.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/blocks/contact-details-card/index.js`
+- Gutenberg editor: `apps/cms/web/app/plugins/gq-bioeconomia/blocks/contact-details-card/index.js`
 - Lifecycle: `active`
 <!-- END GENERATED: structured-block-metadata -->
 

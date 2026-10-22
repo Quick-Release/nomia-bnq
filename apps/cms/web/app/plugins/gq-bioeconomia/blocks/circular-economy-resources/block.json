@@ -1,0 +1,88 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/circular-economy-resources",
+	"title": "Economia circular: recursos",
+	"category": "getquick-design",
+	"icon": "portfolio",
+	"description": "Lista de recursos com cabeçalho e cartões de ligação, cada um com título e descrição.",
+	"textdomain": "gq-bioeconomia",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "circular-economy-resources"
+		},
+		"eyebrow": {
+			"type": "string",
+			"default": ""
+		},
+		"heading": {
+			"type": "string",
+			"default": ""
+		},
+		"cards": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object",
+				"required": [
+					"title",
+					"description",
+					"href"
+				],
+				"properties": {
+					"title": {
+						"type": "string",
+						"default": ""
+					},
+					"description": {
+						"type": "string",
+						"default": ""
+					},
+					"href": {
+						"type": "string",
+						"default": ""
+					}
+				}
+			}
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"eyebrow": "Recursos",
+			"heading": "Encontre documentos, guias e plataformas úteis",
+			"cards": [
+				{
+					"title": "Documentos estratégicos",
+					"description": "Planos, estratégias e documentos de enquadramento.",
+					"href": "/biblioteca/"
+				},
+				{
+					"title": "Guias práticos",
+					"description": "Ferramentas para apoiar a transição circular.",
+					"href": "/biblioteca/"
+				},
+				{
+					"title": "Casos de estudo",
+					"description": "Exemplos nacionais e internacionais de boas práticas.",
+					"href": "/biblioteca/"
+				}
+			]
+		}
+	},
+	"editorStyle": "gq-bioeconomia-editor"
+}

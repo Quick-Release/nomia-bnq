@@ -2,22 +2,22 @@
 
 Use this checklist in a real WordPress install after building the same revision with
 `pnpm cms:build` and deploying the tracked
-`apps/cms/web/app/plugins/nomia-blocks` source and its built assets. The build
-must provide `getquick-nomia-blocks.php`, `src/`, `assets/`, `blocks/` and
+`apps/cms/web/app/plugins/gq-bioeconomia` source and its built assets. The build
+must provide `gq-bioeconomia.php`, `src/`, `assets/`, `blocks/` and
 `languages/`: the editor scripts ship as written, with no build output. The optional
 deployment zip is equivalent; the plugin is no longer installed through Composer.
 
 ## Prerequisites
 
 - WordPress with the block editor enabled.
-- The first-party `nomia-blocks` plugin deployed and activated.
+- The first-party `gq-bioeconomia` plugin deployed and activated.
 - WPGraphQL installed for the headless Astro integration. Public Astro loaders are anonymous and prefer `wpBlocksJson`; they do not receive a source token.
 - `apps/web` running and reachable from WordPress for editor previews.
 
 Optional preview config in `wp-config.php` or environment-specific config:
 
 ```php
-define('GETQUICK_NOMIA_FE_URL', 'https://nomia.getquick.io');
+define('GQ_BIOECONOMIA_FRONTEND_URL', 'https://nomia.getquick.io');
 // Only if apps/web sets NOMIA_WP_BLOCK_PREVIEW_TOKEN.
 define('GETQUICK_NOMIA_BLOCK_PREVIEW_TOKEN', 'change-me');
 ```
@@ -25,8 +25,8 @@ define('GETQUICK_NOMIA_BLOCK_PREVIEW_TOKEN', 'change-me');
 ## 1. Activate plugin
 
 ```bash
-wp plugin activate nomia-blocks
-wp plugin status nomia-blocks
+wp plugin activate gq-bioeconomia
+wp plugin status gq-bioeconomia
 ```
 
 Expected: plugin is active and no PHP warnings are emitted.
@@ -53,14 +53,14 @@ foreach ($expected as $name) {
 '
 ```
 
-Expected: every listed block prints `OK`. For a full check, compare the registered `getquick/*` names against `apps/cms/web/app/plugins/nomia-blocks/src/Contracts.php`.
+Expected: every listed block prints `OK`. For a full check, compare the registered `getquick/*` names against `apps/cms/web/app/plugins/gq-bioeconomia/src/Contracts.php`.
 
 ## 3. Verify editor assets are enqueued
 
 Create or edit a post in wp-admin and open the inserter. Expected:
 
 - The blocks appear under GQ Design's `GETQUICK` category.
-- Blocks listed in `apps/cms/web/app/plugins/nomia-blocks/src/Contracts.php` are available.
+- Blocks listed in `apps/cms/web/app/plugins/gq-bioeconomia/src/Contracts.php` are available.
 - Inspector controls expose content-only fields.
 - Visual controls for color, typography, spacing, arbitrary classes, and alignment are absent.
 - The Astro iframe preview loads from `/wp-block-preview` and auto-resizes.

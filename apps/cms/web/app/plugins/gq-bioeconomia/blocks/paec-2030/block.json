@@ -1,0 +1,112 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/paec-2030",
+	"title": "PAEC 2030",
+	"category": "getquick-design",
+	"icon": "flag",
+	"description": "Secção do PAEC 2030 com título, duas imagens, introdução, objetivos com código e ligação.",
+	"textdomain": "gq-bioeconomia",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "paec-2030"
+		},
+		"eyebrow": {
+			"type": "string",
+			"default": ""
+		},
+		"heading": {
+			"type": "string",
+			"default": ""
+		},
+		"imageLeftId": {
+			"type": "number"
+		},
+		"imageLeftSrc": {
+			"type": "string",
+			"default": ""
+		},
+		"imageLeftAlt": {
+			"type": "string",
+			"default": ""
+		},
+		"imageRightId": {
+			"type": "number"
+		},
+		"imageRightSrc": {
+			"type": "string",
+			"default": ""
+		},
+		"imageRightAlt": {
+			"type": "string",
+			"default": ""
+		},
+		"intro": {
+			"type": "string",
+			"default": ""
+		},
+		"saberMaisHref": {
+			"type": "string",
+			"default": ""
+		},
+		"saberMaisLabel": {
+			"type": "string",
+			"default": ""
+		},
+		"objectives": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object",
+				"required": [
+					"code",
+					"description"
+				],
+				"properties": {
+					"code": {
+						"type": "string",
+						"default": ""
+					},
+					"description": {
+						"type": "string",
+						"default": ""
+					}
+				}
+			}
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"heading": "PAEC 2030 em teste",
+			"imageLeftSrc": "/images/economia-circular/paec-2030/split-left.jpg",
+			"imageLeftAlt": "Imagem esquerda",
+			"imageRightSrc": "/images/economia-circular/paec-2030/split-right.jpg",
+			"imageRightAlt": "Imagem direita",
+			"intro": "Introdução do WordPress.",
+			"saberMaisHref": "/biblioteca/",
+			"saberMaisLabel": "Saber mais",
+			"objectives": [
+				{
+					"code": "OE1",
+					"description": "Objetivo editável"
+				}
+			]
+		}
+	},
+	"editorStyle": "gq-bioeconomia-editor"
+}

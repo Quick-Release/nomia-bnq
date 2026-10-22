@@ -4,7 +4,7 @@
 - Block ID: `events-grid`
 - WordPress block name: `getquick/events-grid`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/EventsGridBlock.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/assets/editor.js`
+- Gutenberg editor: `apps/cms/web/app/plugins/gq-bioeconomia/assets/editor.js`
 - Lifecycle: `active`
 <!-- END GENERATED: structured-block-metadata -->
 

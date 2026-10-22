@@ -10,47 +10,47 @@
     <config name="installed_paths" value="../../phpcompatibility/php-compatibility,../../phpcompatibility/phpcompatibility-paragonie,../../phpcompatibility/phpcompatibility-wp,../../phpcsstandards/phpcsextra,../../phpcsstandards/phpcsutils,../../wp-coding-standards/wpcs" />
 
     <file>web/app/plugins/nomia-cpt</file>
-    <file>web/app/plugins/nomia-blocks</file>
+    <file>web/app/plugins/gq-bioeconomia</file>
 
     <!-- The translation catalogs aren't authored PHP. -->
     <exclude-pattern>*/languages/*</exclude-pattern>
     <!--
-        nomia-blocks' tests and their WordPress stubs, its local test
+        gq-bioeconomia's tests and their WordPress stubs, its local test
         dependencies, and what is generated: the block metadata and the
         contracts apps/frontend's structured-blocks:sync writes.
     -->
-    <exclude-pattern>*/nomia-blocks/tests/*</exclude-pattern>
-    <exclude-pattern>*/nomia-blocks/vendor/*</exclude-pattern>
-    <exclude-pattern>*/nomia-blocks/blocks/*</exclude-pattern>
-    <exclude-pattern>*/nomia-blocks/src/Contracts.php</exclude-pattern>
+    <exclude-pattern>*/gq-bioeconomia/tests/*</exclude-pattern>
+    <exclude-pattern>*/gq-bioeconomia/vendor/*</exclude-pattern>
+    <exclude-pattern>*/gq-bioeconomia/blocks/*</exclude-pattern>
+    <exclude-pattern>*/gq-bioeconomia/src/Contracts.php</exclude-pattern>
 
     <!-- WordPress is the complete WPCS ruleset (Core, Docs, and Extra). -->
     <rule ref="WordPress">
-        <!-- nomia-blocks follows GQ Design's PHP: short arrays. -->
+        <!-- gq-bioeconomia follows GQ Design's PHP: short arrays. -->
         <exclude name="Universal.Arrays.DisallowShortArraySyntax" />
     </rule>
     <rule ref="Universal.Arrays.DisallowShortArraySyntax">
-        <exclude-pattern>*/nomia-blocks/*</exclude-pattern>
+        <exclude-pattern>*/gq-bioeconomia/*</exclude-pattern>
     </rule>
     <rule ref="Generic.Arrays.DisallowLongArraySyntax">
-        <include-pattern>*/nomia-blocks/*</include-pattern>
+        <include-pattern>*/gq-bioeconomia/*</include-pattern>
     </rule>
 
     <!--
-        Like GQ Design's, nomia-blocks' namespaced PSR-4 classes in src/ keep
+        Like GQ Design's, gq-bioeconomia's namespaced PSR-4 classes in src/ keep
         camelCase APIs and PascalCase file names.
     -->
     <rule ref="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid">
-        <exclude-pattern>*/nomia-blocks/src/*</exclude-pattern>
+        <exclude-pattern>*/gq-bioeconomia/src/*</exclude-pattern>
     </rule>
     <rule ref="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase">
-        <exclude-pattern>*/nomia-blocks/src/*</exclude-pattern>
+        <exclude-pattern>*/gq-bioeconomia/src/*</exclude-pattern>
     </rule>
     <rule ref="WordPress.Files.FileName.NotHyphenatedLowercase">
-        <exclude-pattern>*/nomia-blocks/src/*</exclude-pattern>
+        <exclude-pattern>*/gq-bioeconomia/src/*</exclude-pattern>
     </rule>
     <rule ref="WordPress.Files.FileName.InvalidClassFileName">
-        <exclude-pattern>*/nomia-blocks/src/*</exclude-pattern>
+        <exclude-pattern>*/gq-bioeconomia/src/*</exclude-pattern>
     </rule>
     <rule ref="PHPCompatibilityWP" />
 

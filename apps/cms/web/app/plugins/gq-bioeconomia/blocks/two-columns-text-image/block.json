@@ -1,0 +1,97 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/two-columns-text-image",
+	"title": "Duas colunas com texto e imagem",
+	"category": "getquick-design",
+	"icon": "align-pull-left",
+	"description": "Texto com etiqueta, título e botão ao lado de uma imagem, à esquerda ou à direita.",
+	"textdomain": "gq-bioeconomia",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "two-columns-text-image"
+		},
+		"eyebrowLabel": {
+			"type": "string",
+			"default": ""
+		},
+		"eyebrow": {
+			"type": "string",
+			"default": ""
+		},
+		"accent": {
+			"type": "string",
+			"default": ""
+		},
+		"heading": {
+			"type": "string",
+			"default": ""
+		},
+		"body": {
+			"type": "string",
+			"default": ""
+		},
+		"ctaHref": {
+			"type": "string",
+			"default": ""
+		},
+		"ctaLabel": {
+			"type": "string",
+			"default": ""
+		},
+		"primaryId": {
+			"type": "number"
+		},
+		"primarySrc": {
+			"type": "string",
+			"default": ""
+		},
+		"primaryAlt": {
+			"type": "string",
+			"default": ""
+		},
+		"mediaPosition": {
+			"type": "string",
+			"default": ""
+		},
+		"hideCta": {
+			"type": "boolean",
+			"default": false
+		},
+		"hideTaxonomy": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"eyebrow": "NOMIA",
+			"heading": "Two columns text image WP",
+			"body": "Texto do WordPress.",
+			"ctaHref": "/biblioteca/",
+			"ctaLabel": "Saber mais",
+			"primarySrc": "/images/home/bioeconomia-intro/hero.jpg",
+			"primaryAlt": "Muda em mãos",
+			"mediaPosition": "left"
+		}
+	},
+	"editorStyle": [
+		"gq-bioeconomia-editor",
+		"file:./editor.css"
+	]
+}

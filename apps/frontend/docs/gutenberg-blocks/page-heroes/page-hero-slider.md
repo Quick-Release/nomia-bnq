@@ -4,7 +4,7 @@
 - Block ID: `page-hero-slider`
 - WordPress block name: `getquick/page-hero-slider`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/PageHeroSliderBlock.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/blocks/page-hero-slider/index.js`
+- Gutenberg editor: `apps/cms/web/app/plugins/gq-bioeconomia/blocks/page-hero-slider/index.js`
 - Lifecycle: `active`
 <!-- END GENERATED: structured-block-metadata -->
 

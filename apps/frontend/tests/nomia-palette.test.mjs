@@ -9,7 +9,7 @@ const palette = JSON.parse(
   readFileSync(new URL("../../cms/scripts/nomia-palette.json", import.meta.url), "utf8"),
 );
 const slugs = new Set([...Object.keys(palette.theme), ...palette.colors.map(({ slug }) => slug)]);
-const plugin = new URL("../../cms/web/app/plugins/nomia-blocks/", import.meta.url).pathname;
+const plugin = new URL("../../cms/web/app/plugins/gq-bioeconomia/", import.meta.url).pathname;
 const read = (path) => readFileSync(path, "utf8");
 
 test("the palette lists each color once, as a six-digit hex color", () => {

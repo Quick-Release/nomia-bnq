@@ -1,0 +1,114 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/resource-productivity-bars",
+	"title": "Barras de produtividade dos recursos",
+	"category": "getquick-design",
+	"icon": "chart-bar",
+	"description": "Gráfico de barras anual da produtividade dos recursos, com título, etiqueta, introdução e filtros.",
+	"textdomain": "gq-bioeconomia",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "resource-productivity-bars"
+		},
+		"title": {
+			"type": "string",
+			"default": ""
+		},
+		"badge": {
+			"type": "string",
+			"default": ""
+		},
+		"intro": {
+			"type": "string",
+			"default": ""
+		},
+		"points": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object",
+				"required": [
+					"year",
+					"value"
+				],
+				"properties": {
+					"year": {
+						"type": "number"
+					},
+					"label": {
+						"type": "string",
+						"default": ""
+					},
+					"value": {
+						"type": "number"
+					}
+				}
+			}
+		},
+		"yMax": {
+			"type": "number"
+		},
+		"metricLabel": {
+			"type": "string",
+			"default": ""
+		},
+		"periodLabel": {
+			"type": "string",
+			"default": ""
+		},
+		"scopeLabel": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"title": "Produtividade dos recursos",
+			"badge": "2020–2023",
+			"intro": "A evolução da produtividade dos recursos em Portugal.",
+			"metricLabel": "€/kg",
+			"periodLabel": "Anual",
+			"scopeLabel": "Portugal",
+			"yMax": 2,
+			"points": [
+				{
+					"year": 2020,
+					"label": "2020",
+					"value": 1.1
+				},
+				{
+					"year": 2021,
+					"label": "2021",
+					"value": 1.25
+				},
+				{
+					"year": 2022,
+					"label": "2022",
+					"value": 1.38
+				},
+				{
+					"year": 2023,
+					"label": "2023",
+					"value": 1.41
+				}
+			]
+		}
+	},
+	"editorStyle": "gq-bioeconomia-editor"
+}

@@ -38,7 +38,7 @@ ignored `blocks/` directory (ADR 0014). An abridged example of the output:
   "title": "Cabeçalho página com imagem",
   "category": "getquick-design",
   "icon": "cover-image",
-  "textdomain": "getquick-nomia-blocks",
+  "textdomain": "gq-bioeconomia",
   "supports": {
     "html": false,
     "className": false,
@@ -59,8 +59,8 @@ ignored `blocks/` directory (ADR 0014). An abridged example of the output:
     "ctaLabel": { "type": "string", "default": "" },
     "ctaHref": { "type": "string", "default": "" }
   },
-  "editorScript": "getquick-nomia-blocks-editor",
-  "editorStyle": "getquick-nomia-blocks-editor-style"
+  "editorScript": "gq-bioeconomia-editor",
+  "editorStyle": "gq-bioeconomia-editor-style"
 }
 ```
 
@@ -79,8 +79,8 @@ function base64UrlEncodeJson(value) {
   return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
 }
 
-export function buildNomiaPreviewUrl({ nomiaFeBaseUrl, blockName, attributes }) {
-  const url = new URL("/wp-block-preview", nomiaFeBaseUrl);
+export function buildNomiaPreviewUrl({ frontendBaseUrl, blockName, attributes }) {
+  const url = new URL("/wp-block-preview", frontendBaseUrl);
   url.searchParams.set("block", blockName);
   url.searchParams.set("attrs64", base64UrlEncodeJson(attributes));
   return url.toString();
@@ -100,11 +100,11 @@ import {
 import { Button, PanelBody, TextControl } from "@wordpress/components";
 import { buildNomiaPreviewUrl } from "./preview-url";
 
-const NOMIA_FE_BASE_URL = window.getquickNomia?.nomiaFeBaseUrl ?? "http://localhost:4321";
+const NOMIA_FE_BASE_URL = window.gqBioeconomia?.frontendBaseUrl ?? "http://localhost:4321";
 
 export default function Edit({ attributes, setAttributes }) {
   const previewUrl = buildNomiaPreviewUrl({
-    nomiaFeBaseUrl: NOMIA_FE_BASE_URL,
+    frontendBaseUrl: NOMIA_FE_BASE_URL,
     blockName: "getquick/page-hero-static",
     attributes,
   });

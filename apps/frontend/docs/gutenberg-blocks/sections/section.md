@@ -4,7 +4,7 @@
 - Block ID: `section`
 - WordPress block name: `getquick/section`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/SectionBlock.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/blocks/section/index.js`
+- Gutenberg editor: `apps/cms/web/app/plugins/gq-bioeconomia/blocks/section/index.js`
 - Lifecycle: `active`
 <!-- END GENERATED: structured-block-metadata -->
 

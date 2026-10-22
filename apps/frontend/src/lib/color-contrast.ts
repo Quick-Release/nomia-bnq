@@ -7,7 +7,7 @@
  * white default and is therefore light.
  *
  * The Gutenberg editor mirrors this in
- * `apps/cms/web/app/plugins/nomia-blocks/src/lib/colors.jsx` so the section
+ * `apps/cms/web/app/plugins/gq-bioeconomia/src/lib/colors.jsx` so the section
  * block previews the contrast the frontend will pick. Keep the two in step.
  */
 export function isLightHexColor(color: string | null | undefined): boolean {

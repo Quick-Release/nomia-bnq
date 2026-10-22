@@ -1,10 +1,10 @@
-// The nomia-blocks editor's pure helpers (`assets/editor-lib.js`). The plugin
-// ships them as a plain script that sets `window.getquickNomiaBlocksLib`, as
+// The gq-bioeconomia editor's pure helpers (`assets/editor-lib.js`). The plugin
+// ships them as a plain script that sets `window.gqBioeconomiaLib`, as
 // GQ Design ships its editor code, so tests run that script to read them.
 import { readFileSync } from "node:fs";
 
 const path = new URL(
-  "../../cms/web/app/plugins/nomia-blocks/assets/editor-lib.js",
+  "../../cms/web/app/plugins/gq-bioeconomia/assets/editor-lib.js",
   import.meta.url,
 );
 const window = {};
@@ -17,4 +17,4 @@ export const {
   pageHeroCanvasStyle,
   pageHeroHeightLabels,
   pageHeroLegacyAttributePatch,
-} = window.getquickNomiaBlocksLib;
+} = window.gqBioeconomiaLib;

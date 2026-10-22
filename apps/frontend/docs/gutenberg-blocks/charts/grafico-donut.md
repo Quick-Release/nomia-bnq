@@ -4,7 +4,7 @@
 - Block ID: `grafico-donut`
 - WordPress block name: `getquick/grafico-donut`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/GraficoDonutBlock.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/assets/editor.js`
+- Gutenberg editor: `apps/cms/web/app/plugins/gq-bioeconomia/assets/editor.js`
 - Lifecycle: `active`
 <!-- END GENERATED: structured-block-metadata -->
 
@@ -55,7 +55,7 @@ Do not expose controls for:
 ## Implementation notes for the coding agent
 
 - Register the block with catalog ID `grafico-donut` and block name `getquick/grafico-donut`.
-- Use inline `AttributeField` UI in Gutenberg (see `apps/cms/web/app/plugins/nomia-blocks/assets/editor.js`).
+- Use inline `AttributeField` UI in Gutenberg (see `apps/cms/web/app/plugins/gq-bioeconomia/assets/editor.js`).
 - Save structured content as block attributes in post content comments; Astro renders at build time.
 - Reuse slice shape from `PieChartDonutChart` (`PieChartDonutSlice` type).
 - The frontend does not render this block when `slices` is empty; the catalog demo supplies its own preview data.

@@ -84,7 +84,7 @@ export type StructuredBlockRegistration = {
     experience: "preview" | "inline-fields";
     /**
      * The block has a hand-written editor, `blocks/<catalogId>/index.js` in
-     * nomia-blocks. Every other block's script is generated and registers the
+     * gq-bioeconomia. Every other block's script is generated and registers the
      * generic contract editor.
      */
     bespoke?: true;

@@ -1,0 +1,117 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/circular-economy-indicators-spotlight",
+	"title": "Economia circular: indicadores em destaque",
+	"category": "getquick-design",
+	"icon": "star-filled",
+	"description": "Indicadores em cartões com imagem, título e texto, em disposição escalonada, com cabeçalho e botão.",
+	"textdomain": "gq-bioeconomia",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "circular-economy-indicators-spotlight"
+		},
+		"eyebrow": {
+			"type": "string",
+			"default": ""
+		},
+		"heading": {
+			"type": "string",
+			"default": ""
+		},
+		"ctaHref": {
+			"type": "string",
+			"default": ""
+		},
+		"ctaLabel": {
+			"type": "string",
+			"default": ""
+		},
+		"cards": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object",
+				"required": [
+					"title",
+					"description",
+					"imageSrc"
+				],
+				"properties": {
+					"title": {
+						"type": "string",
+						"default": ""
+					},
+					"description": {
+						"type": "string",
+						"default": ""
+					},
+					"imageId": {
+						"type": "number"
+					},
+					"imageSrc": {
+						"type": "string",
+						"default": ""
+					},
+					"imageAlt": {
+						"type": "string",
+						"default": ""
+					},
+					"href": {
+						"type": "string",
+						"default": ""
+					},
+					"layout": {
+						"type": "string",
+						"default": "start",
+						"enum": [
+							"start",
+							"stagger"
+						]
+					}
+				}
+			}
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"eyebrow": "Indicadores",
+			"heading": "Dados para compreender a economia circular",
+			"ctaHref": "/indicadores/",
+			"ctaLabel": "Ver todos",
+			"cards": [
+				{
+					"title": "Produtividade dos recursos",
+					"description": "Acompanhe a eficiência na utilização dos recursos.",
+					"imageSrc": "/images/economia-circular/indicadores-spotlight/produtividade-recursos.jpg",
+					"imageAlt": "Produtividade dos recursos",
+					"href": "/indicadores/"
+				},
+				{
+					"title": "Taxa de circularidade",
+					"description": "Observe a utilização de materiais circulares.",
+					"imageSrc": "/images/economia-circular/indicadores-spotlight/taxa-circular.jpg",
+					"imageAlt": "Taxa de circularidade",
+					"href": "/indicadores/",
+					"layout": "stagger"
+				}
+			]
+		}
+	},
+	"editorStyle": "gq-bioeconomia-editor"
+}

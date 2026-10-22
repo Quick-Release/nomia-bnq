@@ -1,0 +1,96 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/sustainable-bioeconomy-dual-cards",
+	"title": "Bioeconomia sustentável: cartões duplos",
+	"category": "getquick-design",
+	"icon": "columns",
+	"description": "Cabeçalho com dois cartões lado a lado, cada um com imagem, título e texto.",
+	"textdomain": "gq-bioeconomia",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "sustainable-bioeconomy-dual-cards"
+		},
+		"eyebrow": {
+			"type": "string",
+			"default": ""
+		},
+		"heading": {
+			"type": "string",
+			"default": ""
+		},
+		"cards": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object",
+				"required": [
+					"title",
+					"body",
+					"imageSrc"
+				],
+				"properties": {
+					"title": {
+						"type": "string",
+						"default": ""
+					},
+					"body": {
+						"type": "string",
+						"default": ""
+					},
+					"imageId": {
+						"type": "number"
+					},
+					"imageSrc": {
+						"type": "string",
+						"default": ""
+					},
+					"imageAlt": {
+						"type": "string",
+						"default": ""
+					},
+					"headingId": {
+						"type": "string",
+						"default": ""
+					}
+				}
+			}
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"eyebrow": "Bioeconomia sustentável",
+			"heading": "Uma bioeconomia que regenera recursos e territórios",
+			"cards": [
+				{
+					"title": "O que é",
+					"body": "Conheça os princípios de uma bioeconomia sustentável.",
+					"imageSrc": "/images/bioeconomia-sustentavel/card-o-que-e.jpg",
+					"imageAlt": "Planta em crescimento"
+				},
+				{
+					"title": "Porque importa",
+					"body": "Descubra como a inovação pode apoiar a regeneração.",
+					"imageSrc": "/images/bioeconomia-sustentavel/card-porque-importante.jpg",
+					"imageAlt": "Paisagem natural"
+				}
+			]
+		}
+	},
+	"editorStyle": "gq-bioeconomia-editor"
+}

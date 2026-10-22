@@ -4,7 +4,7 @@
 - Block ID: `map-list`
 - WordPress block name: `getquick/map-list`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/MapListExplorerBlock.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/blocks/map-list/index.js`
+- Gutenberg editor: `apps/cms/web/app/plugins/gq-bioeconomia/blocks/map-list/index.js`
 - Lifecycle: `active`
 <!-- END GENERATED: structured-block-metadata -->
 

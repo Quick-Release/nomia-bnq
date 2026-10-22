@@ -4,7 +4,7 @@
 - Block ID: `pabs-content-slider`
 - WordPress block name: `getquick/pabs-content-slider`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/BioeconomiaPabsContentSliderBlock.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/assets/editor.js`
+- Gutenberg editor: `apps/cms/web/app/plugins/gq-bioeconomia/assets/editor.js`
 - Lifecycle: `active`
 <!-- END GENERATED: structured-block-metadata -->
 
