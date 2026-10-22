@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.5.0 - 2026-10-22
+
+Previous release: v0.4.7
+
+- e297ae8 Merge pull request #53 from Quick-Release/claude/content-pair-migration
+- 0788c47 Adopt @getquick/site 0.20.0 for the content package pair
+- fdd05d5 Move onto the gq-content package pair at 0.2.0
+- 353b776 Merge pull request #50 from Quick-Release/claude/bypass-gravity-forms
+- 17dd8fc Pause Gravity Forms
+
 ## v0.4.7 - 2026-10-22
 
 Previous release: v0.4.6
