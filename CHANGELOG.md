@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.7.1 - 2026-10-22
+
+Previous release: v0.7.0
+
+- 67b96ab Merge pull request #58 from Quick-Release/claude/gq-bioeconomia-name
+- de9536d chore(cms): name the plugin GETQUICK Bio.Eco.Nomia at 0.65.0
+
 ## v0.7.0 - 2026-10-22
 
 Previous release: v0.6.1
