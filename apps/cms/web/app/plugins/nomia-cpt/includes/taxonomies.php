@@ -50,8 +50,8 @@ function nomia_cpt_get_taxonomy_definitions() {
 		'categoria_biblioteca'   => array(
 			'object_type' => array( 'biblioteca' ),
 			'args'        => array(
-				'hierarchical'      => true,
-				'labels'            => array(
+				'hierarchical'        => true,
+				'labels'              => array(
 					'name'              => __( 'Categorias da Biblioteca', 'nomia-cpt' ),
 					'singular_name'     => __( 'Categoria da Biblioteca', 'nomia-cpt' ),
 					'search_items'      => __( 'Pesquisar Categorias da Biblioteca', 'nomia-cpt' ),
@@ -66,12 +66,15 @@ function nomia_cpt_get_taxonomy_definitions() {
 					'menu_name'         => __( 'Categorias', 'nomia-cpt' ),
 					'not_found'         => __( 'Nenhuma categoria encontrada.', 'nomia-cpt' ),
 				),
-				'show_ui'           => true,
-				'show_admin_column' => true,
-				'query_var'         => true,
-				'show_in_rest'      => true,
-				'capabilities'      => nomia_cpt_get_library_category_capabilities(),
-				'rewrite'           => array(
+				'show_ui'             => true,
+				'show_admin_column'   => true,
+				'query_var'           => true,
+				'show_in_rest'        => true,
+				'show_in_graphql'     => true,
+				'graphql_single_name' => 'CategoriaBiblioteca',
+				'graphql_plural_name' => 'CategoriasBiblioteca',
+				'capabilities'        => nomia_cpt_get_library_category_capabilities(),
+				'rewrite'             => array(
 					'slug'       => 'categoria_biblioteca',
 					'with_front' => false,
 				),
@@ -80,8 +83,8 @@ function nomia_cpt_get_taxonomy_definitions() {
 		'tipo_evento'            => array(
 			'object_type' => array( 'eventos' ),
 			'args'        => array(
-				'hierarchical'      => true,
-				'labels'            => array(
+				'hierarchical'        => true,
+				'labels'              => array(
 					'name'              => __( 'Tipos de evento', 'nomia-cpt' ),
 					'singular_name'     => __( 'Tipo de evento', 'nomia-cpt' ),
 					'search_items'      => __( 'Pesquisar tipos de evento', 'nomia-cpt' ),
@@ -96,11 +99,14 @@ function nomia_cpt_get_taxonomy_definitions() {
 					'menu_name'         => __( 'Tipo de evento', 'nomia-cpt' ),
 					'not_found'         => __( 'Nenhum tipo de evento encontrado.', 'nomia-cpt' ),
 				),
-				'show_ui'           => true,
-				'show_admin_column' => true,
-				'query_var'         => true,
-				'show_in_rest'      => true,
-				'rewrite'           => array(
+				'show_ui'             => true,
+				'show_admin_column'   => true,
+				'query_var'           => true,
+				'show_in_rest'        => true,
+				'show_in_graphql'     => true,
+				'graphql_single_name' => 'TipoEvento',
+				'graphql_plural_name' => 'TiposEvento',
+				'rewrite'             => array(
 					'slug'       => 'tipo_evento',
 					'with_front' => false,
 				),
@@ -109,8 +115,8 @@ function nomia_cpt_get_taxonomy_definitions() {
 		'tematicas'              => array(
 			'object_type' => nomia_cpt_get_global_taxonomy_post_types(),
 			'args'        => array(
-				'hierarchical'      => true,
-				'labels'            => array(
+				'hierarchical'        => true,
+				'labels'              => array(
 					'name'              => __( 'Temáticas', 'nomia-cpt' ),
 					'singular_name'     => __( 'Temática', 'nomia-cpt' ),
 					'search_items'      => __( 'Pesquisar Temáticas', 'nomia-cpt' ),
@@ -125,11 +131,14 @@ function nomia_cpt_get_taxonomy_definitions() {
 					'menu_name'         => __( 'Temáticas', 'nomia-cpt' ),
 					'not_found'         => __( 'Nenhuma temática encontrada.', 'nomia-cpt' ),
 				),
-				'show_ui'           => true,
-				'show_admin_column' => true,
-				'query_var'         => true,
-				'show_in_rest'      => true,
-				'rewrite'           => array(
+				'show_ui'             => true,
+				'show_admin_column'   => true,
+				'query_var'           => true,
+				'show_in_rest'        => true,
+				'show_in_graphql'     => true,
+				'graphql_single_name' => 'Tematica',
+				'graphql_plural_name' => 'Tematicas',
+				'rewrite'             => array(
 					'slug'       => 'tematica-indicadores',
 					'with_front' => false,
 				),
@@ -170,8 +179,8 @@ function nomia_cpt_get_taxonomy_definitions() {
 		'categoria_oportunidade' => array(
 			'object_type' => array( 'oportunidades' ),
 			'args'        => array(
-				'hierarchical'      => true,
-				'labels'            => array(
+				'hierarchical'        => true,
+				'labels'              => array(
 					'name'              => __( 'Categorias de Oportunidades', 'nomia-cpt' ),
 					'singular_name'     => __( 'Categoria de Oportunidade', 'nomia-cpt' ),
 					'search_items'      => __( 'Pesquisar Categorias de Oportunidades', 'nomia-cpt' ),
@@ -186,11 +195,14 @@ function nomia_cpt_get_taxonomy_definitions() {
 					'menu_name'         => __( 'Categorias de Oportunidades', 'nomia-cpt' ),
 					'not_found'         => __( 'Nenhuma categoria encontrada.', 'nomia-cpt' ),
 				),
-				'show_ui'           => true,
-				'show_admin_column' => true,
-				'query_var'         => true,
-				'show_in_rest'      => true,
-				'rewrite'           => array(
+				'show_ui'             => true,
+				'show_admin_column'   => true,
+				'query_var'           => true,
+				'show_in_rest'        => true,
+				'show_in_graphql'     => true,
+				'graphql_single_name' => 'CategoriaOportunidade',
+				'graphql_plural_name' => 'CategoriasOportunidade',
+				'rewrite'             => array(
 					'slug'       => 'categoria_oportunidade',
 					'with_front' => false,
 				),
