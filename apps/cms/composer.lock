@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eae3a5924075ea6b5b4efe74151f6348",
+    "content-hash": "f3e75b5ccb2edc0c815b3019041505f6",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -446,17 +446,17 @@
         },
         {
             "name": "getquick/gq-design",
-            "version": "dev-main",
+            "version": "0.6.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:Quick-Release/gq-design.git",
-                "reference": "a6a8920cde3ecfad66651135689337d610237d68"
+                "reference": "18bdabd35011c07a1d1a75930fb705dc90123d12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-design/getquick-gq-design-a6a8920cde3ecfad66651135689337d610237d68-zip-6d9317.zip",
-                "reference": "a6a8920cde3ecfad66651135689337d610237d68",
-                "shasum": "ea10543ad8a2d3878e67e45d9b0cd5c864a636df"
+                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-design/getquick-gq-design-18bdabd35011c07a1d1a75930fb705dc90123d12-zip-491cdd.zip",
+                "reference": "18bdabd35011c07a1d1a75930fb705dc90123d12",
+                "shasum": "4e450b4e6f1135101ea523ec0f86d2c0d9201d8f"
             },
             "require": {
                 "php": ">=8.4.1"
@@ -467,7 +467,6 @@
                 "squizlabs/php_codesniffer": "^3.13",
                 "wp-coding-standards/wpcs": "^3.3"
             },
-            "default-branch": true,
             "type": "wordpress-plugin",
             "extra": {
                 "installer-name": "gq-design"
@@ -505,10 +504,10 @@
             ],
             "description": "Native Gutenberg templates and headless layout delivery for GETQUICK sites.",
             "support": {
-                "source": "https://github.com/Quick-Release/gq-design/tree/main",
+                "source": "https://github.com/Quick-Release/gq-design/tree/v0.6.0",
                 "issues": "https://github.com/Quick-Release/gq-design/issues"
             },
-            "time": "2026-10-21T19:54:03+00:00"
+            "time": "2026-10-22T23:12:33+00:00"
         },
         {
             "name": "getquick/gq-support",
@@ -7102,18 +7101,9 @@
             "time": "2026-07-27T11:53:23+00:00"
         }
     ],
-    "aliases": [
-        {
-            "package": "getquick/gq-design",
-            "version": "dev-main",
-            "alias": "0.5.99",
-            "alias_normalized": "0.5.99.0"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "getquick/gq-design": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
