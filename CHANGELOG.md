@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.6.0 - 2026-10-22
+
+Previous release: v0.5.0
+
+- 54797e0 Merge pull request #52 from Quick-Release/claude/consent-pilot
+- 9eb9330 docs: order the content-pair cutover in the consent enablement plan
+- 3d4a79e Adopt the consent and legal-pages foundations
+
 ## v0.5.0 - 2026-10-22
 
 Previous release: v0.4.7
