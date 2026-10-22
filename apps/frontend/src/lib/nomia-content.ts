@@ -4,7 +4,7 @@ import { z } from "astro/zod";
 import { parseWpBlocksJson, type WpParsedBlock } from "./wp-blocks";
 
 /**
- * A page or post built with Nomia's blocks (`getquick/*`, the nomia-blocks
+ * A page or post built with Nomia's blocks (`getquick/*`, the gq-bioeconomia
  * plugin), stored with it so it is rendered by the Nomia block components on
  * a visit, without reading WordPress.
  */
@@ -13,7 +13,7 @@ export interface NomiaContent {
   blocks: WpParsedBlock[];
   /** Temáticas colors, snapshotted with this publication. */
   thematicColors?: ThematicColor[];
-  /** The page's background colour (nomia-blocks' page setting), if it has one. */
+  /** The page's background colour (gq-bioeconomia's page setting), if it has one. */
   pageBackgroundColor: string | null;
 }
 
@@ -84,14 +84,14 @@ const text = (value: unknown) => (typeof value === "string" ? value : null);
  */
 export const nomiaExtension: ContentExtension<NomiaContent> = {
   fields: {
-    page: "wpBlocksJson nomiaPageBackgroundColor nomiaThematicColors { slug color }",
-    post: "wpBlocksJson nomiaThematicColors { slug color }",
+    page: "wpBlocksJson gqBioeconomiaPageBackgroundColor gqBioeconomiaThematicColors { slug color }",
+    post: "wpBlocksJson gqBioeconomiaThematicColors { slug color }",
   },
   read: ({ fields }) =>
     nomiaContent(
       text(fields.wpBlocksJson),
-      text(fields.nomiaPageBackgroundColor),
-      fields.nomiaThematicColors,
+      text(fields.gqBioeconomiaPageBackgroundColor),
+      fields.gqBioeconomiaThematicColors,
     ),
   // As it was stored, so reconciliation compares it with new reads as it is.
   parse: (stored) =>

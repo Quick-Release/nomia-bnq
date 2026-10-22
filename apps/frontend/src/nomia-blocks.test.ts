@@ -1,5 +1,5 @@
 /// <reference types="node" />
-// Pages built with Nomia's blocks (the nomia-blocks plugin): a refresh stores
+// Pages built with Nomia's blocks (the gq-bioeconomia plugin): a refresh stores
 // their parsed blocks (WordPress's `wpBlocksJson`) with them, and visitors are
 // served the Nomia block components' rendering from the store, through a CMS
 // outage. A page without Nomia's blocks is served as WordPress rendered it.
@@ -48,8 +48,8 @@ interface Entry {
   title: string;
   content: string;
   wpBlocksJson: string | null;
-  nomiaPageBackgroundColor?: string | null;
-  nomiaThematicColors?: Array<{ slug: string; color: string }>;
+  gqBioeconomiaPageBackgroundColor?: string | null;
+  gqBioeconomiaThematicColors?: Array<{ slug: string; color: string }>;
 }
 
 // GQ Design's palette, as WordPress gives it (designTokens).
@@ -85,7 +85,7 @@ function wordpress() {
           title: "Início",
           content: renderedComment,
           wpBlocksJson: JSON.stringify([titleWithLabel]),
-          nomiaPageBackgroundColor: null,
+          gqBioeconomiaPageBackgroundColor: null,
         },
         designTokens: palette,
       }),
@@ -116,7 +116,7 @@ beforeEach(() => {
         title: "Economia circular",
         content: `${renderedComment}<p>Texto corrido.</p>`,
         wpBlocksJson: JSON.stringify([titleWithLabel, paragraph]),
-        nomiaPageBackgroundColor: "#0b3d3a",
+        gqBioeconomiaPageBackgroundColor: "#0b3d3a",
       },
     ],
     [
@@ -192,7 +192,7 @@ test("the extension reads Nomia's fields from a page or post, and parses only wh
   const blocks = JSON.stringify([titleWithLabel]);
   const page = nomiaExtension.read({
     kind: "page",
-    fields: { wpBlocksJson: blocks, nomiaPageBackgroundColor: "#f4efe6" },
+    fields: { wpBlocksJson: blocks, gqBioeconomiaPageBackgroundColor: "#f4efe6" },
   });
   expect(page?.pageBackgroundColor).toBe("#f4efe6");
   expect(page?.blocks[0]!.blockName).toBe(titleWithLabel.blockName);
@@ -267,7 +267,7 @@ test("a page without Nomia's blocks is served as WordPress rendered it", async (
 
 test("a changed Temáticas color is stored with the page and survives a CMS outage", async () => {
   const entry = published.get("/economia-circular/")!;
-  entry.nomiaThematicColors = [{ slug: "economia-circular", color: "#123456" }];
+  entry.gqBioeconomiaThematicColors = [{ slug: "economia-circular", color: "#123456" }];
   wordpress();
   await refresh();
   cmsDown();
@@ -275,7 +275,7 @@ test("a changed Temáticas color is stored with the page and survives a CMS outa
   expect(before.html).toContain("--nomia-tematica-economia-circular-background: #123456");
   expect(before.html).toContain("--nomia-tematica-economia-circular-foreground: #ffffff");
 
-  entry.nomiaThematicColors = [{ slug: "economia-circular", color: "#ffeeaa" }];
+  entry.gqBioeconomiaThematicColors = [{ slug: "economia-circular", color: "#ffeeaa" }];
   wordpress();
   await refresh();
   const fetchMock = cmsDown();
@@ -288,7 +288,7 @@ test("a changed Temáticas color is stored with the page and survives a CMS outa
 
 test("untrusted or missing term colors cannot inject a stylesheet", async () => {
   const entry = published.get("/economia-circular/")!;
-  entry.nomiaThematicColors = [
+  entry.gqBioeconomiaThematicColors = [
     { slug: "economia-circular", color: "#123456; } body { display:none }" },
     { slug: "bad}</style><script>alert(1)</script>", color: "#123456" },
     { slug: "sem-cor", color: "" },

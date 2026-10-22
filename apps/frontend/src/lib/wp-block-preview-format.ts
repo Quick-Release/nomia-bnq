@@ -1,5 +1,5 @@
 export const PREVIEW_PATH = "/wp-block-preview";
-export const PREVIEW_RESIZE_MESSAGE_TYPE = "getquick-nomia-block-preview:resize";
+export const PREVIEW_RESIZE_MESSAGE_TYPE = "gq-bioeconomia-block-preview:resize";
 export const PREVIEW_DEFAULT_HEIGHT = 320;
 export const PREVIEW_MIN_HEIGHT = 160;
 export const PREVIEW_MAX_HEIGHT = 4000;

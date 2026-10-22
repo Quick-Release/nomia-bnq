@@ -1,0 +1,225 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/content-grid-filters",
+	"title": "Grelha de conteúdos com filtros",
+	"category": "getquick-design",
+	"icon": "filter",
+	"description": "Grelha de cartões com imagem, título e descrição, que os visitantes filtram por temáticas e setores.",
+	"textdomain": "gq-bioeconomia",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "content-grid-filters"
+		},
+		"heading": {
+			"type": "string",
+			"default": ""
+		},
+		"items": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object",
+				"required": [
+					"title",
+					"href"
+				],
+				"properties": {
+					"id": {
+						"type": "string",
+						"default": ""
+					},
+					"title": {
+						"type": "string",
+						"default": ""
+					},
+					"slug": {
+						"type": "string",
+						"default": ""
+					},
+					"href": {
+						"type": "string",
+						"default": ""
+					},
+					"date": {
+						"type": "string",
+						"default": ""
+					},
+					"dateLabel": {
+						"type": "string",
+						"default": ""
+					},
+					"description": {
+						"type": "string",
+						"default": ""
+					},
+					"subtitle": {
+						"type": "string",
+						"default": ""
+					},
+					"featured": {
+						"type": "boolean",
+						"default": false
+					},
+					"imageId": {
+						"type": "number"
+					},
+					"imageUrl": {
+						"type": "string",
+						"default": ""
+					},
+					"imageAlt": {
+						"type": "string",
+						"default": ""
+					},
+					"tematicas": {
+						"type": "array",
+						"default": [],
+						"items": {
+							"type": "object",
+							"required": [
+								"slug",
+								"name"
+							],
+							"properties": {
+								"slug": {
+									"type": "string",
+									"default": ""
+								},
+								"name": {
+									"type": "string",
+									"default": ""
+								}
+							}
+						}
+					},
+					"setores": {
+						"type": "array",
+						"default": [],
+						"items": {
+							"type": "object",
+							"required": [
+								"slug",
+								"name"
+							],
+							"properties": {
+								"slug": {
+									"type": "string",
+									"default": ""
+								},
+								"name": {
+									"type": "string",
+									"default": ""
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"tematicas": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object",
+				"required": [
+					"slug",
+					"name"
+				],
+				"properties": {
+					"slug": {
+						"type": "string",
+						"default": ""
+					},
+					"name": {
+						"type": "string",
+						"default": ""
+					}
+				}
+			}
+		},
+		"setores": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object",
+				"required": [
+					"slug",
+					"name"
+				],
+				"properties": {
+					"slug": {
+						"type": "string",
+						"default": ""
+					},
+					"name": {
+						"type": "string",
+						"default": ""
+					}
+				}
+			}
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"heading": "Plataformas",
+			"tematicas": [
+				{
+					"slug": "circular",
+					"name": "Circular"
+				}
+			],
+			"setores": [
+				{
+					"slug": "industria",
+					"name": "Indústria"
+				}
+			],
+			"items": [
+				{
+					"id": "fixture-platform",
+					"title": "Plataforma de teste",
+					"slug": "plataforma-de-teste",
+					"href": "#plataforma",
+					"dateLabel": "2026",
+					"description": "Descrição curta da plataforma.",
+					"subtitle": "Subtítulo",
+					"featured": true,
+					"imageUrl": "/images/hero-carousel/economia-circular.jpg",
+					"imageAlt": "Imagem de plataforma",
+					"tematicas": [
+						{
+							"slug": "circular",
+							"name": "Circular"
+						}
+					],
+					"setores": [
+						{
+							"slug": "industria",
+							"name": "Indústria"
+						}
+					]
+				}
+			]
+		}
+	},
+	"editorStyle": [
+		"gq-bioeconomia-editor",
+		"file:./editor.css"
+	]
+}

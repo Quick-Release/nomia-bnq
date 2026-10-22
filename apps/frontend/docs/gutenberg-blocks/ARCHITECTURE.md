@@ -204,9 +204,9 @@ WordPress — one `blocks/<catalogId>/block.json` per block plus `blocks/blocks-
   `wp_register_block_metadata_collection()`, then registers each block's own
   `blocks/<catalogId>/index.js` (with its translations) and
   `register_block_type( <dir>, [ 'editor_script' => …, 'render_callback' => … ] )`. Blocks use
-  GQ Design's `getquick-design` inserter category and share the `getquick-nomia-blocks-editor`
+  GQ Design's `getquick-design` inserter category and share the `gq-bioeconomia-editor`
   style.
-- **i18n follows core.** `block.json` declares the `getquick-nomia-blocks` text domain, so
+- **i18n follows core.** `block.json` declares the `gq-bioeconomia` text domain, so
   WordPress translates titles, descriptions, and keywords under its `block title` /
   `block description` / `block keyword` contexts.
 
@@ -399,7 +399,7 @@ Use that file when adding a new custom block renderer or changing a block contra
 
 ### WordPress side
 
-- One tracked first-party plugin at `apps/cms/web/app/plugins/nomia-blocks/` (`getquick-nomia-blocks`).
+- One tracked first-party plugin at `apps/cms/web/app/plugins/gq-bioeconomia/` (`gq-bioeconomia`).
 - Generated PHP/JSON contracts and per-block `block.json` metadata (ADR 0014).
 - Shared field components for:
   - image picker

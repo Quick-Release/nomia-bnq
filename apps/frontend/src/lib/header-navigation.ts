@@ -2,7 +2,7 @@ import { safeHref } from "./safe-href";
 import { menuItemHref, type WordPressMenuItem } from "@getquick/content";
 
 /**
- * The navigation block's menu (`menuItems`, filled by nomia-blocks'
+ * The navigation block's menu (`menuItems`, filled by gq-bioeconomia's
  * `wpBlocksJson` from the menu the editor picked) as a tree: WordPress lists
  * the items flat, in menu order, each pointing at its parent. An item whose
  * parent is missing from the list is shown at the top level, and links into

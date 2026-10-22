@@ -4,7 +4,7 @@
 - Block ID: `title-with-label`
 - WordPress block name: `getquick/title-with-label`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/TitleWithLabelBlock.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/blocks/title-with-label/index.js`
+- Gutenberg editor: `apps/cms/web/app/plugins/gq-bioeconomia/blocks/title-with-label/index.js`
 - Lifecycle: `active`
 <!-- END GENERATED: structured-block-metadata -->
 

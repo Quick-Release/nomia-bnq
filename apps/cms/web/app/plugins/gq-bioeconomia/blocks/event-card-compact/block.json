@@ -1,0 +1,78 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/event-card-compact",
+	"title": "Cartão compacto de evento",
+	"category": "getquick-design",
+	"icon": "calendar",
+	"description": "Cartão pequeno de um evento com imagem, título e datas, com ligação para a página do evento.",
+	"textdomain": "gq-bioeconomia",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "event-card-compact"
+		},
+		"event": {
+			"type": "object"
+		},
+		"title": {
+			"type": "string",
+			"default": ""
+		},
+		"slug": {
+			"type": "string",
+			"default": ""
+		},
+		"href": {
+			"type": "string",
+			"default": ""
+		},
+		"date": {
+			"type": "string",
+			"default": ""
+		},
+		"imageId": {
+			"type": "number"
+		},
+		"imageUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"imageAlt": {
+			"type": "string",
+			"default": ""
+		},
+		"startDate": {
+			"type": "string",
+			"default": ""
+		},
+		"endDate": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"title": "Evento compacto",
+			"slug": "evento-compacto",
+			"date": "2026-01-01",
+			"imageUrl": "/images/hero-carousel/economia-circular.jpg",
+			"imageAlt": "Evento"
+		}
+	},
+	"editorStyle": "gq-bioeconomia-editor"
+}

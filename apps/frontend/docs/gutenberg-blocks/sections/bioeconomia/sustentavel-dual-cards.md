@@ -4,7 +4,7 @@
 - Block ID: `sustainable-bioeconomy-dual-cards`
 - WordPress block name: `getquick/sustainable-bioeconomy-dual-cards`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/BioeconomiaSustentavelDualCardsBlock.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/assets/editor.js`
+- Gutenberg editor: `apps/cms/web/app/plugins/gq-bioeconomia/assets/editor.js`
 - Lifecycle: `active`
 <!-- END GENERATED: structured-block-metadata -->
 

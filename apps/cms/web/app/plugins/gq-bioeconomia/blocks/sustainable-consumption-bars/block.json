@@ -1,0 +1,105 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/sustainable-consumption-bars",
+	"title": "Barras de consumo sustentável",
+	"category": "getquick-design",
+	"icon": "chart-bar",
+	"description": "Gráfico de barras verticais com percentagens por grupo, com título, subtítulo e resumo.",
+	"textdomain": "gq-bioeconomia",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "sustainable-consumption-bars"
+		},
+		"bars": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object",
+				"required": [
+					"band",
+					"label",
+					"pct"
+				],
+				"properties": {
+					"band": {
+						"type": "string",
+						"default": ""
+					},
+					"label": {
+						"type": "string",
+						"default": ""
+					},
+					"pct": {
+						"type": "number"
+					}
+				}
+			}
+		},
+		"title": {
+			"type": "string",
+			"default": ""
+		},
+		"subtitle": {
+			"type": "string",
+			"default": ""
+		},
+		"summary": {
+			"type": "string",
+			"default": ""
+		},
+		"headingId": {
+			"type": "string",
+			"default": ""
+		},
+		"sectionId": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"title": "Participação em programas de reciclagem",
+			"subtitle": "Compare a participação por faixa etária.",
+			"summary": "Os valores apresentados são dados de demonstração do gráfico.",
+			"bars": [
+				{
+					"band": "18-25",
+					"label": "18–25 anos",
+					"pct": 20
+				},
+				{
+					"band": "26-40",
+					"label": "26–40 anos",
+					"pct": 40
+				},
+				{
+					"band": "41-60",
+					"label": "41–60 anos",
+					"pct": 27
+				},
+				{
+					"band": "60plus",
+					"label": "+60 anos",
+					"pct": 13
+				}
+			]
+		}
+	},
+	"editorStyle": "gq-bioeconomia-editor"
+}

@@ -4,7 +4,7 @@
 - Block ID: `header-navigation`
 - WordPress block name: `getquick/header-navigation`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/HeaderNavigationBlock.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/blocks/header-navigation/index.js`
+- Gutenberg editor: `apps/cms/web/app/plugins/gq-bioeconomia/blocks/header-navigation/index.js`
 - Lifecycle: `active`
 <!-- END GENERATED: structured-block-metadata -->
 
@@ -27,10 +27,10 @@ chooses the menu; its look is fixed.
 ## Editing behavior
 
 - The canvas and the **Menu** inspector panel list the site's menus
-  (Appearance → Menus, passed to the editor as `window.getquickNomiaMenus`);
+  (Appearance → Menus, passed to the editor as `window.gqBioeconomiaMenus`);
   picking one stores its ID as `menuId`. The canvas names the chosen menu and
   warns when it has been deleted, since the block then renders nothing.
-- `menuItems` is never saved by the editor. nomia-blocks' `wpBlocksJson`
+- `menuItems` is never saved by the editor. gq-bioeconomia's `wpBlocksJson`
   resolver fills it from the menu each time the page is read
   (`src/GraphQL/BlocksJson.php`): every item's `id`, `parentId`, `label`,
   `url` and `target`, in menu order.

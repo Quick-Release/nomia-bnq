@@ -27,11 +27,11 @@ test("structured block registration is the single generated source", async () =>
   );
   assert.ok(outputs.has("src/components/wp-blocks/WpCustomBlock.astro"));
   assert.ok(outputs.has("src/fixtures/wp-custom-block-fixtures.ts"));
-  assert.ok(outputs.has("../cms/web/app/plugins/nomia-blocks/src/Contracts.php"));
-  assert.ok(outputs.has("../cms/web/app/plugins/nomia-blocks/blocks/blocks-manifest.php"));
-  assert.ok(outputs.has("../cms/web/app/plugins/nomia-blocks/assets/frontend-rules.js"));
+  assert.ok(outputs.has("../cms/web/app/plugins/gq-bioeconomia/src/Contracts.php"));
+  assert.ok(outputs.has("../cms/web/app/plugins/gq-bioeconomia/blocks/blocks-manifest.php"));
+  assert.ok(outputs.has("../cms/web/app/plugins/gq-bioeconomia/assets/frontend-rules.js"));
   for (const registration of registrations) {
-    const block = `../cms/web/app/plugins/nomia-blocks/blocks/${registration.identity.catalogId}`;
+    const block = `../cms/web/app/plugins/gq-bioeconomia/blocks/${registration.identity.catalogId}`;
     assert.ok(outputs.has(`${block}/block.json`));
     // A bespoke editor's script is hand-written; every other block's is generated.
     assert.equal(outputs.has(`${block}/index.js`), !registration.editor.bespoke);
@@ -44,19 +44,19 @@ test("every block ships standard block.json metadata", async () => {
   for (const registration of registrations) {
     const metadata = JSON.parse(
       outputs.get(
-        `../cms/web/app/plugins/nomia-blocks/blocks/${registration.identity.catalogId}/block.json`,
+        `../cms/web/app/plugins/gq-bioeconomia/blocks/${registration.identity.catalogId}/block.json`,
       ),
     );
     assert.equal(metadata.$schema, "https://schemas.wp.org/trunk/block.json");
     assert.equal(metadata.apiVersion, 3);
     assert.equal(metadata.name, registration.identity.blockName);
     assert.equal(metadata.title, registration.editor.title);
-    assert.equal(metadata.textdomain, "getquick-nomia-blocks");
+    assert.equal(metadata.textdomain, "gq-bioeconomia");
     assert.equal(metadata.supports.inserter, registration.lifecycle.inserter);
     // GQ Design's category; PHP registers the block's own editor script.
     assert.equal(metadata.category, "getquick-design");
     assert.equal(metadata.editorScript, undefined);
-    assert.ok([metadata.editorStyle].flat().includes("getquick-nomia-blocks-editor"));
+    assert.ok([metadata.editorStyle].flat().includes("gq-bioeconomia-editor"));
     assert.deepEqual(Object.keys(metadata.attributes), Object.keys(registration.attributes));
     // Contract-only hints never reach WordPress's attribute schema.
     assert.doesNotMatch(JSON.stringify(metadata.attributes), /"(ui|legacyReads)":/);

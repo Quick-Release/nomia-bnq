@@ -4,7 +4,7 @@
 - Block ID: `horizontal-scroll-with-content`
 - WordPress block name: `getquick/horizontal-scroll-with-content`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/HorizontalScrollWithContentBlock.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/assets/editor.js`
+- Gutenberg editor: `apps/cms/web/app/plugins/gq-bioeconomia/assets/editor.js`
 - Lifecycle: `active`
 <!-- END GENERATED: structured-block-metadata -->
 

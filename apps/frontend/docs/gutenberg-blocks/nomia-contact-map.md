@@ -4,7 +4,7 @@
 - Block ID: `nomia-contact-map`
 - WordPress block name: `getquick/nomia-contact-map`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/NomiaContactMapBlock.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/blocks/nomia-contact-map/index.js`
+- Gutenberg editor: `apps/cms/web/app/plugins/gq-bioeconomia/blocks/nomia-contact-map/index.js`
 - Lifecycle: `active`
 <!-- END GENERATED: structured-block-metadata -->
 

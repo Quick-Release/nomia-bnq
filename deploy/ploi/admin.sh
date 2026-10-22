@@ -267,7 +267,7 @@ if wp core is-installed; then
   require_installed theme getquick-theme
   # gq.ops.json's wordpress.plugins: Composer installing a plugin doesn't
   # activate it.
-  for plugin in gq-design gq-support wp-graphql wpgraphql-blocks s3-uploads simple-history cimo-image-optimizer safe-svg nomia-cpt nomia-blocks; do
+  for plugin in gq-design gq-support wp-graphql wpgraphql-blocks s3-uploads simple-history cimo-image-optimizer safe-svg gq-bioeconomia; do
     require_installed plugin "$plugin"
     wp plugin activate "$plugin" --quiet
   done

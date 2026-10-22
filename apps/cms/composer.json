@@ -113,7 +113,7 @@
     ],
     "test": [
       "pest",
-      "pest --configuration=web/app/plugins/nomia-blocks/phpunit.xml.dist --test-directory=web/app/plugins/nomia-blocks/tests"
+      "pest --configuration=web/app/plugins/gq-bioeconomia/phpunit.xml.dist --test-directory=web/app/plugins/gq-bioeconomia/tests"
     ],
     "patch:dependencies": "@php scripts/patch-dependencies.php",
     "post-autoload-dump": [

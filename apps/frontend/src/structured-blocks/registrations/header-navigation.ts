@@ -8,7 +8,7 @@ import {
 /**
  * Navigation bar: a WordPress menu the editor picks, drawn as bioeconomia.pt's
  * header navigation (`NomiaHeader.astro`). The editor stores only `menuId`;
- * `menuItems` is never saved by the editor, nomia-blocks' `wpBlocksJson`
+ * `menuItems` is never saved by the editor, gq-bioeconomia's `wpBlocksJson`
  * fills it from the menu when the page is read, so the stored page carries the
  * menu as it was at its last refresh.
  */

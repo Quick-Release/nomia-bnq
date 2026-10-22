@@ -1,0 +1,89 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/opportunities-grid",
+	"title": "Grelha de oportunidades",
+	"category": "getquick-design",
+	"icon": "megaphone",
+	"description": "Cabeçalho com texto e mosaicos de ligação para oportunidades, como avisos e publicações.",
+	"textdomain": "gq-bioeconomia",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "opportunities-grid"
+		},
+		"eyebrow": {
+			"type": "string",
+			"default": ""
+		},
+		"heading": {
+			"type": "string",
+			"default": ""
+		},
+		"body": {
+			"type": "string",
+			"default": ""
+		},
+		"items": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object",
+				"required": [
+					"label",
+					"href"
+				],
+				"properties": {
+					"label": {
+						"type": "string",
+						"default": ""
+					},
+					"href": {
+						"type": "string",
+						"default": ""
+					}
+				}
+			}
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"eyebrow": "NOMIA",
+			"heading": "Encontre novas oportunidades",
+			"body": "Acompanhe avisos, publicações e iniciativas relevantes.",
+			"items": [
+				{
+					"label": "Avisos",
+					"href": "/oportunidades/avisos/"
+				},
+				{
+					"label": "Publicações",
+					"href": "/biblioteca/publicacoes/"
+				},
+				{
+					"label": "Boas práticas",
+					"href": "/biblioteca/boas-praticas/"
+				},
+				{
+					"label": "Newsletters",
+					"href": "/newsletters/"
+				}
+			]
+		}
+	},
+	"editorStyle": "gq-bioeconomia-editor"
+}

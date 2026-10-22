@@ -105,10 +105,10 @@ the token in Sigillo `staging`.
 ## Nomia's blocks
 
 Pages and posts built with Nomia's blocks (`getquick/*`, the CMS's
-`nomia-blocks` plugin) are rendered by the Nomia block components, migrated
+`gq-bioeconomia` plugin) are rendered by the Nomia block components, migrated
 from bioeconomia.pt's Astro renderer. They are the runtime's `extension`
 (`src/lib/content.ts`): a refresh reads the entry's parsed blocks
-(`wpBlocksJson`) and page background (`nomiaPageBackgroundColor`) and stores
+(`wpBlocksJson`) and page background (`gqBioeconomiaPageBackgroundColor`) and stores
 them with it (`src/lib/nomia-content.ts`), served as `entry.extension` and a
 front page's `home.page.extension`. A visit renders them with
 `src/components/NomiaBlocks.astro`, still without reading WordPress. An entry
@@ -148,7 +148,7 @@ term slugs. Clearing the field uses neutral gray. Before the first edit,
 Economia Circular retains green (`#a4d663`) and Bioeconomia Sustentável retains
 cyan (`#2ad2c9`). Hover/focus colors and black/white text contrast are automatic.
 
-`nomia-cpt` exposes the palette as `nomiaThematicColors { slug color }` on
+`gq-bioeconomia` exposes the palette as `gqBioeconomiaThematicColors { slug color }` on
 pages/posts. The Site's content extension stores it with each publication;
 rendering uses that snapshot and does not query WordPress. Color edits reach
 published pages through the runtime's existing reconciliation rereads, or

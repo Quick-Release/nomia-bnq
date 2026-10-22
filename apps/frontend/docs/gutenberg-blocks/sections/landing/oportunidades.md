@@ -4,7 +4,7 @@
 - Block ID: `opportunities-grid`
 - WordPress block name: `getquick/opportunities-grid`
 - Astro renderer: `apps/web/src/components/wp-blocks/blocks/OportunidadesBlock.astro`
-- Gutenberg editor: `apps/cms/web/app/plugins/nomia-blocks/assets/editor.js`
+- Gutenberg editor: `apps/cms/web/app/plugins/gq-bioeconomia/assets/editor.js`
 - Lifecycle: `active`
 <!-- END GENERATED: structured-block-metadata -->
 

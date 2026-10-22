@@ -1,0 +1,112 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/header-navigation",
+	"title": "nomia_navigation",
+	"category": "getquick-design",
+	"icon": "menu",
+	"description": "Barra de navegação com um menu do WordPress, no estilo do cabeçalho Nomia.",
+	"keywords": [
+		"nomia",
+		"navegação",
+		"menu",
+		"cabeçalho",
+		"navigation",
+		"header"
+	],
+	"textdomain": "gq-bioeconomia",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "header-navigation"
+		},
+		"menuId": {
+			"type": "number",
+			"default": 0
+		},
+		"menuItems": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "number"
+					},
+					"parentId": {
+						"type": "number"
+					},
+					"label": {
+						"type": "string",
+						"default": ""
+					},
+					"url": {
+						"type": "string",
+						"default": ""
+					},
+					"target": {
+						"type": "string",
+						"default": ""
+					}
+				}
+			}
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"menuId": 1,
+			"menuItems": [
+				{
+					"id": 1,
+					"parentId": 0,
+					"label": "Bioeconomia",
+					"url": "/bioeconomia/",
+					"target": ""
+				},
+				{
+					"id": 2,
+					"parentId": 0,
+					"label": "Economia circular",
+					"url": "/economia-circular/",
+					"target": ""
+				},
+				{
+					"id": 3,
+					"parentId": 0,
+					"label": "Indicadores",
+					"url": "/indicadores/",
+					"target": ""
+				},
+				{
+					"id": 4,
+					"parentId": 3,
+					"label": "Barómetro",
+					"url": "/indicadores/barometro/",
+					"target": ""
+				},
+				{
+					"id": 5,
+					"parentId": 0,
+					"label": "Notícias",
+					"url": "/noticias/",
+					"target": ""
+				}
+			]
+		}
+	},
+	"editorStyle": "gq-bioeconomia-editor"
+}
