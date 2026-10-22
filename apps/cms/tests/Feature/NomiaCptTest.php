@@ -206,30 +206,16 @@ test('tools admin menu removes default ferramenta and taxonomy submenu items', f
     );
 });
 
-test('global taxonomy menus are registered only under posts', function () {
-    nomia_cpt_register_content_types();
-    nomia_cpt_register_global_taxonomy_menu();
+test('global taxonomy menus come from core under posts only', function () {
+    $definitions = nomia_cpt_get_taxonomy_definitions();
 
-    expect($GLOBALS['lgm_test_state']['added_submenu_pages'])->toBe(
-        [
-            [
-                'parent_slug' => 'edit.php',
-                'page_title' => 'Temáticas',
-                'menu_title' => 'Temáticas',
-                'capability' => 'manage_categories',
-                'menu_slug' => 'edit-tags.php?taxonomy=tematicas',
-                'callback' => null,
-            ],
-            [
-                'parent_slug' => 'edit.php',
-                'page_title' => 'Setor de Atividade',
-                'menu_title' => 'Setor de Atividade',
-                'capability' => 'manage_categories',
-                'menu_slug' => 'edit-tags.php?taxonomy=setor_atividade',
-                'callback' => null,
-            ],
-        ],
-    );
+    foreach (nomia_cpt_get_global_taxonomy_names() as $taxonomy) {
+        expect($definitions[$taxonomy]['object_type'])->toContain('post');
+        expect($definitions[$taxonomy]['args']['show_ui'])->toBeTrue();
+        expect($definitions[$taxonomy]['args'])->not->toHaveKey('show_in_menu');
+    }
+
+    expect(function_exists('nomia_cpt_register_global_taxonomy_menu'))->toBeFalse();
 });
 
 test('gallery image meta is registered for REST and sanitized before saving', function () {

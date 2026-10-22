@@ -59,7 +59,6 @@ add_action( 'init', 'nomia_cpt_register_library_details_meta' );
 add_action( 'init', 'nomia_cpt_register_details_meta' );
 add_action( 'init', 'nomia_cpt_run_upgrade_routines_and_flush_rewrites', 20 );
 add_action( 'after_setup_theme', 'nomia_cpt_ensure_featured_image_support' );
-add_action( 'admin_menu', 'nomia_cpt_register_global_taxonomy_menu' );
 add_action( 'admin_notices', 'nomia_cpt_details_migration_notice' );
 add_action( 'admin_menu', 'nomia_cpt_register_footer_admin_page' );
 add_action( 'admin_menu', 'nomia_cpt_register_contact_admin_page' );

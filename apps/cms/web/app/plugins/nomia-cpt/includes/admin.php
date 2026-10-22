@@ -138,33 +138,6 @@ function nomia_cpt_remove_submenu_page_variants( $menu_slug, $submenu_slug ) {
 }
 
 /**
- * Regista entradas únicas sob Artigos para as taxonomias globais do plugin.
- *
- * @return void
- */
-function nomia_cpt_register_global_taxonomy_menu() {
-	$taxonomy_definitions = nomia_cpt_get_taxonomy_definitions();
-
-	foreach ( nomia_cpt_get_global_taxonomy_names() as $taxonomy ) {
-		$taxonomy_definition = $taxonomy_definitions[ $taxonomy ] ?? array();
-		$menu_name           = $taxonomy_definition['args']['labels']['menu_name'] ?? '';
-
-		if ( ! is_string( $menu_name ) || '' === $menu_name ) {
-			continue;
-		}
-
-		add_submenu_page(
-			'edit.php',
-			$menu_name,
-			$menu_name,
-			'manage_categories',
-			'edit-tags.php?taxonomy=' . $taxonomy,
-			null,
-		);
-	}
-}
-
-/**
  * Devolve as entradas de submenu da taxonomia global que devem ser removidas dos menus de CPT.
  *
  * @return array<int, array{menu_slug: string, submenu_slug: string}>
