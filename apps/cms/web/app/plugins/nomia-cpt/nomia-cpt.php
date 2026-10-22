@@ -2,7 +2,7 @@
 /**
  * Plugin Name: nomia-cpt
  * Description: Regista os tipos de conteúdo e taxonomias
- * Version: 0.3.6
+ * Version: 0.3.7
  * Author: GETQUICK
  * Author URI: https://getquick.io
  * Text Domain: nomia-cpt
@@ -24,7 +24,7 @@ if ( defined( 'NOMIA_CPT_PLUGIN_BOOTSTRAPPED' ) ) {
 }
 
 define( 'NOMIA_CPT_PLUGIN_BOOTSTRAPPED', true );
-define( 'NOMIA_CPT_PLUGIN_VERSION', '0.3.6' );
+define( 'NOMIA_CPT_PLUGIN_VERSION', '0.3.7' );
 define( 'NOMIA_CPT_PLUGIN_FILE', __FILE__ );
 define( 'NOMIA_CPT_PLUGIN_DIR', __DIR__ . '/' );
 

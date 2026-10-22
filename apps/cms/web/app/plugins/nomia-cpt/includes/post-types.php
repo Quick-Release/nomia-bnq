@@ -12,6 +12,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Devolve a configuracao declarativa dos tipos de conteudo do plugin.
  *
+ * Biblioteca, Eventos, Recursos Educativos, Oportunidades e Ferramentas sao
+ * servidos por Paginas com o mesmo caminho (/biblioteca/, /oportunidades/avisos/,
+ * ...). Estes tipos nao tem arquivo, e os que tem Paginas filhas colocam os
+ * seus conteudos num segmento proprio (/biblioteca/documento/<slug>/), para que
+ * nodeByUri resolva esses caminhos para a Pagina e nao para o tipo de conteudo.
+ *
  * @return array<string, array{labels: array<string, string>, policies?: array{global_taxonomies?: bool}, args: array<string, mixed>}>
  */
 function nomia_cpt_get_post_type_definitions() {
@@ -102,13 +108,13 @@ function nomia_cpt_get_post_type_definitions() {
 				'graphql_plural_name' => 'Bibliotecas',
 				'query_var'           => true,
 				'rewrite'             => array(
-					'slug'       => 'biblioteca',
+					'slug'       => 'biblioteca/documento',
 					'with_front' => false,
 				),
 				'capability_type'     => array( 'nomia_cpt_library', 'nomia_cpt_libraries' ),
 				'capabilities'        => nomia_cpt_get_library_capabilities(),
 				'map_meta_cap'        => true,
-				'has_archive'         => 'biblioteca',
+				'has_archive'         => false,
 				'hierarchical'        => false,
 				'menu_position'       => 20,
 				'menu_icon'           => 'dashicons-book-alt',
@@ -211,7 +217,7 @@ function nomia_cpt_get_post_type_definitions() {
 					'slug'       => 'recursos-educativos',
 					'with_front' => false,
 				),
-				'has_archive'         => 'recursos-educativos',
+				'has_archive'         => false,
 				'hierarchical'        => false,
 				'menu_position'       => 22,
 				'menu_icon'           => 'dashicons-welcome-learn-more',
@@ -263,7 +269,7 @@ function nomia_cpt_get_post_type_definitions() {
 					'slug'       => 'eventos',
 					'with_front' => false,
 				),
-				'has_archive'         => 'eventos',
+				'has_archive'         => false,
 				'hierarchical'        => false,
 				'menu_position'       => 25,
 				'menu_icon'           => 'dashicons-calendar-alt',
@@ -527,10 +533,10 @@ function nomia_cpt_get_post_type_definitions() {
 				'graphql_plural_name' => 'Oportunidades',
 				'query_var'           => true,
 				'rewrite'             => array(
-					'slug'       => 'oportunidades',
+					'slug'       => 'oportunidades/oportunidade',
 					'with_front' => false,
 				),
-				'has_archive'         => 'oportunidades',
+				'has_archive'         => false,
 				'hierarchical'        => false,
 				'menu_position'       => 22,
 				'menu_icon'           => 'dashicons-megaphone',
@@ -579,13 +585,13 @@ function nomia_cpt_get_post_type_definitions() {
 				'graphql_plural_name' => 'Ferramentas',
 				'query_var'           => true,
 				'rewrite'             => array(
-					'slug'       => 'ferramentas',
+					'slug'       => 'ferramentas/ferramenta',
 					'with_front' => false,
 				),
 				'capability_type'     => array( 'nomia_cpt_tool', 'nomia_cpt_tools' ),
 				'capabilities'        => nomia_cpt_get_tools_capabilities(),
 				'map_meta_cap'        => true,
-				'has_archive'         => 'ferramentas',
+				'has_archive'         => false,
 				'hierarchical'        => false,
 				'menu_position'       => 23,
 				'menu_icon'           => 'dashicons-admin-tools',
