@@ -27,7 +27,7 @@ const isVideoHeroPage = content?.page.hasVideoHero ?? false;
 
 <Layout title={siteTitle} description={content?.settings.description} chrome={chrome} language={language} alternates={alternates}>
   {content?.page.extension ? (
-    <NomiaBlocks nomia={content.page.extension} design={content} />
+    <NomiaBlocks nomia={content.page.extension} design={content} language={language} />
   ) : content?.page.content ? (
     <>
       <style is:global set:html={colorRules} />

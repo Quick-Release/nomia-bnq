@@ -32,7 +32,10 @@ configures it and composes the pages:
   Only `pnpm dev` reads the CMS live without a store.
 - `src/pages/gq/events.ts` and `src/pages/gq/refresh.ts` are managed by
   `gq sync`: they hand the CMS's signed events and the trusted refresh
-  (`pnpm frontend:refresh`) to the runtime. `/gq/` is reserved for them.
+  (`pnpm frontend:refresh`) to the runtime. `/gq/` is reserved for them and
+  for the Site's own: `/gq/consent` (the consent Runtime's records and the
+  CMS's reads) and `/gq/map/` (the map-list explorer's proxied tiles); see
+  [ADR 0001](../../docs/adr/0001-adopt-consent-and-legal-pages.md).
 - `src/pages/index.astro`, `src/pages/[...slug].astro`,
   `src/components/Home.astro` and `src/layouts/Layout.astro` render what the
   runtime delivers, with the status it answers: 200, 404 when WordPress
@@ -82,7 +85,11 @@ into the CSS saved block classes need; `src/styles/global.css` styles them.
 renders the pages through Astro's Container API against a stubbed CMS
 (`vitest.config.ts` gives Vitest Astro's Vite config): what this Site
 composes from what the runtime delivers. The runtime's own tests are
-`@getquick/content`'s.
+`@getquick/content`'s. `src/consent.test.ts`, `src/consent-records.test.ts`
+and `src/lib/map-tiles.test.ts` cover the consent and legal-pages adoption;
+`pnpm consent:acceptance` builds the app for Node and runs gq-content's
+shared consent acceptance suite on it in Chromium
+(`scripts/consent-acceptance/`).
 
 ## Deploys
 

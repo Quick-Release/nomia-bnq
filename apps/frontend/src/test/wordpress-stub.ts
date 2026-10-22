@@ -65,9 +65,12 @@ export function stubWordPress(handlers: {
   chrome?: Handler;
   design?: Handler;
   routes?: Handler;
+  consentSettings?: Handler;
 }) {
   const answer = {
     chrome: () => data(chrome),
+    // gq-config's consent settings: no Legal Contract assigned, GA4 off.
+    consentSettings: () => data({ getquickLegal: null, googleAnalytics: null }),
     design: () => data({ designTokens: tokens }),
     routes: () => routes("/"),
     ...handlers,
@@ -82,6 +85,7 @@ export function stubWordPress(handlers: {
       HomePage: answer.home,
       EntryByUri: answer.entry,
       SiteChrome: answer.chrome,
+      ConsentSettings: answer.consentSettings,
       DesignPresets: answer.design,
       PublishedRoutes: answer.routes,
     }[name ?? ""];

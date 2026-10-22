@@ -1,6 +1,7 @@
 /// <reference types="node" />
 // A stand-in for the Worker's D1 binding in tests: the same SQL, the
-// publication store's migrations (@getquick/content's), on Node's SQLite.
+// publication store's migrations (@getquick/content's), or another database's
+// (the consent Runtime's), on Node's SQLite.
 // Open it again on the same file to restart the Worker with its stored state.
 // `unavailable` makes every query fail, as an unreachable D1 would. `batch`
 // runs in one transaction, as D1's does.
@@ -8,7 +9,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import type { SqlDatabase, SqlStatement } from "@getquick/content";
-import { migrationsDirectory as migrations } from "@getquick/content/migrations";
+import { migrationsDirectory } from "@getquick/content/migrations";
 
 export interface TestD1 extends SqlDatabase {
   unavailable: boolean;
@@ -17,13 +18,12 @@ export interface TestD1 extends SqlDatabase {
   close(): void;
 }
 
-export function openTestD1(path = ":memory:"): TestD1 {
+export function openTestD1(path = ":memory:", migrations = migrationsDirectory): TestD1 {
   const db = new DatabaseSync(path);
   // Each statement's rows, for batch to run it inside its transaction.
   const rowsOf = new WeakMap<SqlStatement, () => unknown[]>();
-  const applied = db
-    .prepare("SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'publications'")
-    .get();
+  // A database opened again on its file keeps its tables: migrated once.
+  const applied = db.prepare("SELECT name FROM sqlite_master WHERE type = 'table'").get();
   if (!applied) {
     for (const file of readdirSync(migrations)
       .filter((name) => name.endsWith(".sql"))

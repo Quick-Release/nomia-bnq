@@ -13,7 +13,9 @@
     "test": "vp test --passWithNoTests && pnpm run test:blocks",
     "structured-blocks:sync": "node --experimental-strip-types ./scripts/sync-wp-plugin-contracts.mjs",
     "structured-blocks:check": "node --experimental-strip-types ./scripts/sync-wp-plugin-contracts.mjs --check",
-    "test:blocks": "node --experimental-strip-types --test tests/*.test.mjs"
+    "test:blocks": "node --experimental-strip-types --test tests/*.test.mjs",
+    "consent:acceptance": "node scripts/consent-acceptance/run.mjs",
+    "consent:captures": "node scripts/consent-acceptance/deployed.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.6",
@@ -38,6 +40,7 @@
     "@types/react-dom": "^19.3.0",
     "effect": "catalog:",
     "jsdom": "29.1.1",
+    "playwright": "1.64.1",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
     "vite-plus": "^0.3.0"

@@ -15,3 +15,6 @@ dist/
 .vite/
 
 worker-startup.cpuprofile
+
+# Consent acceptance evidence (pnpm consent:acceptance), summarised in docs/adr/0001.
+.proofs/

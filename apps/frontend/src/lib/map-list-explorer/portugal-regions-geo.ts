@@ -20,8 +20,6 @@ export const PORTUGAL_FULL_BOUNDS = {
   northeast: [-5.9, 42.25] as [number, number],
 };
 
-export const OPENFREEMAP_STYLE = "https://tiles.openfreemap.org/styles/positron";
-
 export const PORTUGAL_REGION_IDS = Object.keys(PORTUGAL_REGION_CENTERS) as NomiaMapRegionId[];
 
 export const PORTUGAL_REGION_LABELS: Record<NomiaMapRegionId, string> = {

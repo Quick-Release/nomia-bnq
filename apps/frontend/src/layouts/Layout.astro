@@ -1,5 +1,6 @@
 ---
 import type { Alternate, SiteChrome, SiteLanguage } from "@getquick/content";
+import { consentPage } from "@getquick/content/consent/astro";
 import { content } from "../lib/content";
 import { copyFor } from "../lib/copy";
 import "../styles/global.css";
@@ -50,6 +51,15 @@ const hreflang =
           : [];
       });
 const xDefault = hreflang.find((alternate) => alternate.language.isDefault);
+// CONSENT-1 and LEGAL-1 (docs/adr/0001): the Runtime's banner first in the
+// body, open only without a decision in force, and its legal links and Cookie
+// settings control in the footer, from the chrome the page was served with.
+const consent = consentPage({
+  configuration: runtime.consentConfiguration(chrome)!,
+  language: language.lang,
+  legal: chrome?.legal ?? null,
+  cookie: Astro.request.headers.get("cookie"),
+});
 ---
 
 <!doctype html>
@@ -63,8 +73,10 @@ const xDefault = hreflang.find((alternate) => alternate.language.isDefault);
     {hreflang.map((alternate) => <link rel="alternate" hreflang={alternate.language.lang} href={alternate.href} />)}
     {xDefault && <link rel="alternate" hreflang="x-default" href={xDefault.href} />}
     <title>{title === "Nomia" ? title : `${title} — Nomia`}</title>
+    <Fragment set:html={consent.head} />
   </head>
   <body>
+    <Fragment set:html={consent.body} />
     <header class="site-header">
       <a href={language.home} class="site-header__home">
         {siteLogo ? <img src={siteLogo.sourceUrl} alt={siteLogo.altText || "Nomia"} /> : "Nomia"}
@@ -95,5 +107,13 @@ const xDefault = hreflang.find((alternate) => alternate.language.isDefault);
       )}
     </header>
     <slot />
+    <footer class="site-footer">
+      <Fragment set:html={consent.footer} />
+    </footer>
+    <script>
+      import { startConsent } from "@getquick/content/consent/client";
+
+      startConsent();
+    </script>
   </body>
 </html>

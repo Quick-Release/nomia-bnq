@@ -51,7 +51,7 @@ const title =
 <Layout title={title} chrome={chrome} language={language} alternates={alternates}>
   {entry ? (
     entry.extension ? (
-      <NomiaBlocks nomia={entry.extension} design={entry} featuredImage={entry.featuredImage} />
+      <NomiaBlocks nomia={entry.extension} design={entry} featuredImage={entry.featuredImage} language={language} />
     ) : entry.hasVideoHero ? (
       <>
         <style is:global set:html={colorRules} />

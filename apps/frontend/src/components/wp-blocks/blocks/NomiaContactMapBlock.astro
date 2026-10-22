@@ -1,5 +1,8 @@
 ---
 import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { contactMapPlaceholder } from "../../../lib/consent";
+import { routeOf } from "@getquick/content";
+import { content } from "../../../lib/content";
 import { toGoogleMapsEmbedUrl } from "../../../lib/google-maps";
 import { readNomiaContactMapAlignment } from "../../../lib/nomia-contact-map";
 import { optionalText, wpText as text } from "../normalizers";
@@ -16,6 +19,15 @@ const blockTitle = text(attrs.title);
 const title = blockTitle || "Mapa";
 const embedUrl = toGoogleMapsEmbedUrl(mapUrl, blockTitle);
 const align = readNomiaContactMapAlignment(attrs.align);
+// Google Maps is an external_media service (CONSENT-1 CN-R13): the map loads
+// from a consent placeholder, never as a live iframe in the page's HTML.
+const map = embedUrl
+  ? contactMapPlaceholder({
+      src: embedUrl,
+      title,
+      language: content().routeLanguage(routeOf(Astro.url.pathname)).lang,
+    })
+  : "";
 ---
 
 {
@@ -25,13 +37,7 @@ const align = readNomiaContactMapAlignment(attrs.align);
       class:list={["nomia-contact-map", align !== "none" && `nomia-contact-map--align-${align}`]}
       aria-label={title}
     >
-      <iframe
-        src={embedUrl}
-        title={title}
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        allowfullscreen
-      />
+      <Fragment set:html={map} />
     </section>
     </div>
   ) : null
@@ -44,11 +50,10 @@ const align = readNomiaContactMapAlignment(attrs.align);
     width: 100%;
   }
 
-  .nomia-contact-map iframe {
+  /* The consent placeholder, and the map iframe inside it once loaded. */
+  .nomia-contact-map :global(.gq-consent-embed) {
     aspect-ratio: 16 / 9;
     background: var(--color-monochrome-light-100, #f3f3f3);
-    border: 0;
-    display: block;
     min-height: 320px;
     width: 100%;
   }
@@ -77,13 +82,13 @@ const align = readNomiaContactMapAlignment(attrs.align);
     width: 100vw;
   }
 
-  .nomia-contact-map--align-full iframe {
+  .nomia-contact-map--align-full :global(.gq-consent-embed) {
     aspect-ratio: auto;
     height: clamp(420px, 60vh, 720px);
   }
 
   @media (max-width: 640px) {
-    .nomia-contact-map iframe {
+    .nomia-contact-map :global(.gq-consent-embed) {
       aspect-ratio: 4 / 5;
       min-height: 420px;
     }
