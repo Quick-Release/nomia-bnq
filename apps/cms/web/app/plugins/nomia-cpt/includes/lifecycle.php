@@ -114,6 +114,7 @@ function nomia_cpt_run_upgrade_routines() {
 	nomia_cpt_remove_obsolete_custom_capabilities();
 	nomia_cpt_sync_custom_capabilities();
 	nomia_cpt_remove_indicadores_featured_images();
+	nomia_cpt_migrate_library_details_blocks();
 	nomia_cpt_store_plugin_version();
 
 	return true;

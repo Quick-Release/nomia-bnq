@@ -373,19 +373,7 @@ test('content types are registered with rest support and custom capabilities', f
 
     expect($library['show_in_rest'])->toBeTrue()
         ->and($library['has_archive'])->toBe('biblioteca')
-        ->and($library['template'])->toBe(
-            [
-                [
-                    'getquick/library-grid',
-                    [
-                        'lock' => [
-                            'move' => true,
-                            'remove' => true,
-                        ],
-                    ],
-                ],
-            ],
-        )
+        ->and($library)->not->toHaveKey('template')
         ->and($library['supports'])->toBe([ 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'custom-fields' ])
         ->and($library['show_in_graphql'])->toBeTrue()
         ->and($library['graphql_single_name'])->toBe('Biblioteca')
@@ -650,4 +638,36 @@ test('admin column renderers expose thumbnails, categories, excerpts, and slugs'
         ->and($categories)->toContain('Legislação')
         ->and($excerpt)->toContain('Resumo do documento')
         ->and($slug)->toBe('termo-glossario');
+});
+
+test('library documents keep their details in registered post meta', function () {
+    nomia_cpt_register_library_details_meta();
+
+    $meta = $GLOBALS['lgm_test_state']['registered_post_meta']['biblioteca'];
+
+    expect(array_keys($meta))->toBe([ 'nomia_cpt_library_year', 'nomia_cpt_library_author', 'nomia_cpt_library_file_url' ])
+        ->and($meta['nomia_cpt_library_year']['type'])->toBe('integer')
+        ->and($meta['nomia_cpt_library_author']['show_in_rest'])->toBeTrue()
+        ->and($meta['nomia_cpt_library_file_url']['sanitize_callback'])->toBe('esc_url_raw')
+        ->and(nomia_cpt_sanitize_library_year('2017'))->toBe(2017)
+        ->and(nomia_cpt_sanitize_library_year('-3'))->toBe(0)
+        ->and(nomia_cpt_sanitize_library_year('sem ano'))->toBe(0);
+});
+
+test('the imported library-details block is split from the document content', function () {
+    $content = '<!-- wp:nomia/library-details {"year":2017,"author":"Diário da República","fileUrl":"https://nomia-media.bnq.pt/2026/05/rcm190-2017.pdf","lock":{"move":true,"remove":true}} /-->'
+        . "\n\n<!-- wp:paragraph -->\n<p>Resolução</p>\n<!-- /wp:paragraph -->";
+
+    expect(nomia_cpt_extract_library_details_block($content))->toBe(
+        [
+            'details' => [
+                'year' => 2017,
+                'author' => 'Diário da República',
+                'fileUrl' => 'https://nomia-media.bnq.pt/2026/05/rcm190-2017.pdf',
+            ],
+            'content' => "<!-- wp:paragraph -->\n<p>Resolução</p>\n<!-- /wp:paragraph -->",
+        ],
+    )
+        ->and(nomia_cpt_extract_library_details_block('<!-- wp:nomia/library-details /-->'))->toBe([ 'details' => [], 'content' => '' ])
+        ->and(nomia_cpt_extract_library_details_block('<!-- wp:paragraph --><p>x</p><!-- /wp:paragraph -->'))->toBeNull();
 });

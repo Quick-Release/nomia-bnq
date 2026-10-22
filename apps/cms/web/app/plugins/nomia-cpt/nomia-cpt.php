@@ -2,7 +2,7 @@
 /**
  * Plugin Name: nomia-cpt
  * Description: Regista os tipos de conteúdo e taxonomias
- * Version: 0.3.5
+ * Version: 0.3.6
  * Author: GETQUICK
  * Author URI: https://getquick.io
  * Text Domain: nomia-cpt
@@ -24,7 +24,7 @@ if ( defined( 'NOMIA_CPT_PLUGIN_BOOTSTRAPPED' ) ) {
 }
 
 define( 'NOMIA_CPT_PLUGIN_BOOTSTRAPPED', true );
-define( 'NOMIA_CPT_PLUGIN_VERSION', '0.3.5' );
+define( 'NOMIA_CPT_PLUGIN_VERSION', '0.3.6' );
 define( 'NOMIA_CPT_PLUGIN_FILE', __FILE__ );
 define( 'NOMIA_CPT_PLUGIN_DIR', __DIR__ . '/' );
 
@@ -38,11 +38,13 @@ require_once NOMIA_CPT_PLUGIN_DIR . 'includes/admin.php';
 require_once NOMIA_CPT_PLUGIN_DIR . 'includes/gallery-admin.php';
 require_once NOMIA_CPT_PLUGIN_DIR . 'includes/footer-admin.php';
 require_once NOMIA_CPT_PLUGIN_DIR . 'includes/contact-admin.php';
+require_once NOMIA_CPT_PLUGIN_DIR . 'includes/library-details.php';
 require_once NOMIA_CPT_PLUGIN_DIR . 'includes/lifecycle.php';
 
 add_action( 'init', 'nomia_cpt_load_textdomain' );
 add_action( 'init', 'nomia_cpt_register_content_types' );
 add_action( 'init', 'nomia_cpt_register_gallery_meta' );
+add_action( 'init', 'nomia_cpt_register_library_details_meta' );
 add_action( 'init', 'nomia_cpt_run_upgrade_routines_and_flush_rewrites', 20 );
 add_action( 'after_setup_theme', 'nomia_cpt_ensure_featured_image_support' );
 add_action( 'admin_menu', 'nomia_cpt_register_global_taxonomy_menu' );
@@ -59,6 +61,8 @@ add_action( 'admin_enqueue_scripts', 'nomia_cpt_enqueue_footer_admin_assets' );
 add_action( 'rest_api_init', 'nomia_cpt_register_gallery_rest_routes' );
 add_action( 'rest_api_init', 'nomia_cpt_register_footer_rest_routes' );
 add_action( 'rest_api_init', 'nomia_cpt_register_contact_rest_routes' );
+add_action( 'graphql_register_types', 'nomia_cpt_register_library_details_graphql_fields' );
+add_action( 'enqueue_block_editor_assets', 'nomia_cpt_enqueue_library_details_editor_assets' );
 add_action( 'pre_get_posts', 'nomia_cpt_order_admin_content_lists' );
 add_action( 'restrict_manage_posts', 'nomia_cpt_render_library_category_filter' );
 add_filter( 'manage_biblioteca_posts_columns', 'nomia_cpt_get_library_admin_columns' );
