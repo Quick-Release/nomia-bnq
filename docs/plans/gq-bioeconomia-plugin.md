@@ -33,7 +33,7 @@ GETQUICK repository.
 
 | Before                                                                  | After                                                                            |
 | ----------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `nomia-cpt/nomia-cpt.php`, `nomia-blocks/getquick-nomia-blocks.php`     | `gq-bioeconomia/gq-bioeconomia.php` ("GETQUICK Bioeconomia")                     |
+| `nomia-cpt/nomia-cpt.php`, `nomia-blocks/getquick-nomia-blocks.php`     | `gq-bioeconomia/gq-bioeconomia.php` ("GETQUICK Bio.Eco.Nomia")                   |
 | text domains `nomia-cpt`, `getquick-nomia-blocks`                       | `gq-bioeconomia`                                                                 |
 | `GetQuick\NomiaBlocks\`, `nomia_cpt_*()` functions                      | `GetQuick\Bioeconomia\`                                                          |
 | options `nomia_cpt_*`                                                   | `gq_bioeconomia_*` (`nomia_cpt_plugin_version` → `gq_bioeconomia_version`)       |

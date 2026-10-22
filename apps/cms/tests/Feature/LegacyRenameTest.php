@@ -196,3 +196,11 @@ test('the upgrade renames legacy data first, then grants the renamed capabilitie
         ->and(array_keys(get_role('administrator')->caps))->toBe(Capabilities::all())
         ->and(Lifecycle::upgrade())->toBeFalse();
 });
+
+test('a stored version other than the current one, even a higher one, upgrades once', function () {
+    $GLOBALS['lgm_test_state']['options'][ Lifecycle::VERSION_OPTION ] = '1.0.0';
+
+    expect(Lifecycle::upgrade())->toBeTrue()
+        ->and(get_option(Lifecycle::VERSION_OPTION))->toBe(GQ_BIOECONOMIA_VERSION)
+        ->and(Lifecycle::upgrade())->toBeFalse();
+});

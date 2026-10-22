@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: GETQUICK Bioeconomia 1.0.0\n"
+"Project-Id-Version: GETQUICK Bio.Eco.Nomia 0.65.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/gq-bioeconomia\n"
 "Last-Translator: GETQUICK <hello@getquick.io>\n"
 "Language-Team: English (United States)\n"
@@ -816,7 +816,7 @@ msgstr "Nomia page background color."
 msgid "%1$s e %2$s"
 msgstr "%1$s and %2$s"
 
-#: src/Details/PostDetails.php:112
+#: src/Details/PostDetails.php:114
 #: blocks/page-hero-static/index.js:138
 #: blocks/title-with-label/index.js:44
 msgid "Subtítulo"
@@ -1643,11 +1643,6 @@ msgctxt "block keyword"
 msgid "nomia"
 msgstr "nomia"
 
-#. Plugin Name of the plugin
-#: gq-bioeconomia.php
-msgid "GETQUICK Bioeconomia"
-msgstr ""
-
 #. Description of the plugin
 #: gq-bioeconomia.php
 msgid "Nomia's content types, taxonomies and content-contract blocks, built on GQ Design. Astro renders the final frontend markup."
@@ -1689,7 +1684,7 @@ msgid "Categorias"
 msgstr ""
 
 #: src/Admin/ContentLists.php:130
-#: src/Details/PostDetails.php:238
+#: src/Details/PostDetails.php:240
 msgid "Resumo"
 msgstr ""
 
@@ -3008,134 +3003,134 @@ msgstr ""
 msgid "Cor"
 msgstr ""
 
-#: src/Details/LibraryDetails.php:57
-#: src/Details/LibraryDetails.php:116
+#: src/Details/LibraryDetails.php:59
+#: src/Details/LibraryDetails.php:118
 msgid "Ano do documento."
 msgstr ""
 
-#: src/Details/LibraryDetails.php:71
-#: src/Details/LibraryDetails.php:121
+#: src/Details/LibraryDetails.php:73
+#: src/Details/LibraryDetails.php:123
 msgid "Autor do documento."
 msgstr ""
 
-#: src/Details/LibraryDetails.php:85
-#: src/Details/LibraryDetails.php:126
+#: src/Details/LibraryDetails.php:87
+#: src/Details/LibraryDetails.php:128
 msgid "Ficheiro do documento."
 msgstr ""
 
-#: src/Details/PostDetails.php:38
+#: src/Details/PostDetails.php:40
 msgid "Detalhes do evento"
 msgstr ""
 
-#: src/Details/PostDetails.php:42
+#: src/Details/PostDetails.php:44
 msgid "Data de início"
 msgstr ""
 
-#: src/Details/PostDetails.php:49
+#: src/Details/PostDetails.php:51
 msgid "Data de fim"
 msgstr ""
 
-#: src/Details/PostDetails.php:56
+#: src/Details/PostDetails.php:58
 msgid "Local"
 msgstr ""
 
-#: src/Details/PostDetails.php:63
+#: src/Details/PostDetails.php:65
 msgid "Link Google Maps"
 msgstr ""
 
-#: src/Details/PostDetails.php:70
+#: src/Details/PostDetails.php:72
 msgid "Website do evento"
 msgstr ""
 
-#: src/Details/PostDetails.php:80
+#: src/Details/PostDetails.php:82
 msgid "Detalhes da plataforma"
 msgstr ""
 
-#: src/Details/PostDetails.php:84
+#: src/Details/PostDetails.php:86
 msgid "Localização"
 msgstr ""
 
-#: src/Details/PostDetails.php:91
+#: src/Details/PostDetails.php:93
 msgid "Setor de atividade"
 msgstr ""
 
-#: src/Details/PostDetails.php:98
+#: src/Details/PostDetails.php:100
 msgid "Setor importado"
 msgstr ""
 
-#: src/Details/PostDetails.php:105
+#: src/Details/PostDetails.php:107
 msgid "Tipo de estratégia"
 msgstr ""
 
-#: src/Details/PostDetails.php:122
+#: src/Details/PostDetails.php:124
 msgid "Metadados do gráfico"
 msgstr ""
 
-#: src/Details/PostDetails.php:126
+#: src/Details/PostDetails.php:128
 msgid "Nome interno"
 msgstr ""
 
-#: src/Details/PostDetails.php:133
+#: src/Details/PostDetails.php:135
 msgid "Fonte"
 msgstr ""
 
-#: src/Details/PostDetails.php:140
+#: src/Details/PostDetails.php:142
 msgid "URL da fonte"
 msgstr ""
 
-#: src/Details/PostDetails.php:147
+#: src/Details/PostDetails.php:149
 msgid "Área geográfica"
 msgstr ""
 
-#: src/Details/PostDetails.php:154
+#: src/Details/PostDetails.php:156
 msgid "Especialização"
 msgstr ""
 
-#: src/Details/PostDetails.php:161
+#: src/Details/PostDetails.php:163
 msgid "Representação"
 msgstr ""
 
-#: src/Details/PostDetails.php:168
+#: src/Details/PostDetails.php:170
 msgid "Legenda do eixo X"
 msgstr ""
 
-#: src/Details/PostDetails.php:175
+#: src/Details/PostDetails.php:177
 msgid "Tipo do eixo X"
 msgstr ""
 
-#: src/Details/PostDetails.php:182
+#: src/Details/PostDetails.php:184
 msgid "Unidade do eixo X"
 msgstr ""
 
-#: src/Details/PostDetails.php:189
+#: src/Details/PostDetails.php:191
 msgid "Legenda do eixo Y"
 msgstr ""
 
-#: src/Details/PostDetails.php:196
+#: src/Details/PostDetails.php:198
 msgid "Tipo do eixo Y"
 msgstr ""
 
-#: src/Details/PostDetails.php:203
+#: src/Details/PostDetails.php:205
 msgid "Unidade do eixo Y"
 msgstr ""
 
-#: src/Details/PostDetails.php:210
+#: src/Details/PostDetails.php:212
 msgid "Valores do gráfico"
 msgstr ""
 
-#: src/Details/PostDetails.php:220
+#: src/Details/PostDetails.php:222
 msgid "Detalhes do podcast"
 msgstr ""
 
-#: src/Details/PostDetails.php:224
+#: src/Details/PostDetails.php:226
 msgid "URL do podcast"
 msgstr ""
 
-#: src/Details/PostDetails.php:231
+#: src/Details/PostDetails.php:233
 msgid "Número do episódio"
 msgstr ""
 
-#: src/Details/PostDetails.php:348
+#: src/Details/PostDetails.php:350
 msgid "Um par de coordenadas do gráfico, conservadas como texto."
 msgstr ""
 
@@ -3201,4 +3196,14 @@ msgstr ""
 
 #: assets/library-details.js:83
 msgid "Remover ficheiro"
+msgstr ""
+
+#. Plugin Name of the plugin
+#: gq-bioeconomia.php
+msgid "GETQUICK Bio.Eco.Nomia"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: gq-bioeconomia.php
+msgid "https://getquick.io"
 msgstr ""

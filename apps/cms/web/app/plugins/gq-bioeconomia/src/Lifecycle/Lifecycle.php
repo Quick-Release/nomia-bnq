@@ -43,12 +43,16 @@ final class Lifecycle {
 	/**
 	 * Runs the upgrade routines unless this version already has.
 	 *
+	 * Any other stored version runs them, older or newer: the routines are
+	 * safe to repeat, and 1.0.0 was stored before the version followed
+	 * GETQUICK Nomia Blocks' numbering (0.65.0).
+	 *
 	 * @return bool Whether they ran.
 	 */
 	public static function upgrade(): bool {
 		$stored_version = get_option( self::VERSION_OPTION );
 
-		if ( is_string( $stored_version ) && '' !== $stored_version && version_compare( $stored_version, GQ_BIOECONOMIA_VERSION, '>=' ) ) {
+		if ( GQ_BIOECONOMIA_VERSION === $stored_version ) {
 			return false;
 		}
 
