@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.7.0 - 2026-10-22
+
+Previous release: v0.6.1
+
+- ad0b0bb Merge pull request #57 from Quick-Release/claude/gq-bioeconomia
+- b638828 refactor(cms): merge nomia-cpt into gq-bioeconomia and rename its data
+- f76b987 refactor(cms): move nomia-blocks into the gq-bioeconomia plugin
+
 ## v0.6.1 - 2026-10-22
 
 Previous release: v0.6.0
