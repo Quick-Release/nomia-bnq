@@ -1,7 +1,19 @@
 <?php
 
+use GetQuick\Bioeconomia\Admin\AdminMenu;
+use GetQuick\Bioeconomia\Admin\ContactSettings;
+use GetQuick\Bioeconomia\Admin\ContentLists;
+use GetQuick\Bioeconomia\Admin\FooterSettings;
+use GetQuick\Bioeconomia\Admin\Galleries;
+use GetQuick\Bioeconomia\Content\Capabilities;
+use GetQuick\Bioeconomia\Content\ContentModel;
+use GetQuick\Bioeconomia\Content\PostTypes;
+use GetQuick\Bioeconomia\Content\Taxonomies;
+use GetQuick\Bioeconomia\Details\LibraryDetails;
+use GetQuick\Bioeconomia\Media\OrderedMedia;
+
 require_once dirname(__DIR__) . '/Support/WordPressStubs.php';
-require_once dirname(__DIR__, 2) . '/web/app/plugins/nomia-cpt/nomia-cpt.php';
+require_once dirname(__DIR__, 2) . '/web/app/plugins/gq-bioeconomia/gq-bioeconomia.php';
 
 beforeEach(function () {
     $GLOBALS['lgm_test_state']['post_types'] = [];
@@ -11,7 +23,7 @@ beforeEach(function () {
     $GLOBALS['lgm_test_state']['roles'] = [];
     $GLOBALS['lgm_test_state']['posts'] = [];
     $GLOBALS['lgm_test_state']['get_posts_calls'] = [];
-    unset($GLOBALS['nomia_cpt_media_cache']);
+    unset($GLOBALS['gq_bioeconomia_media_cache']);
     $GLOBALS['lgm_test_state']['post_terms'] = [];
     $GLOBALS['lgm_test_state']['registered_post_meta'] = [];
     $GLOBALS['lgm_test_state']['registered_settings'] = [];
@@ -32,7 +44,7 @@ beforeEach(function () {
 });
 
 test('footer settings page is registered under appearance', function () {
-    nomia_cpt_register_footer_admin_page();
+    (new FooterSettings())->registerPage();
 
     expect($GLOBALS['lgm_test_state']['added_submenu_pages'])->toContain(
         [
@@ -40,14 +52,14 @@ test('footer settings page is registered under appearance', function () {
             'page_title' => 'Footer',
             'menu_title' => 'Footer',
             'capability' => 'edit_theme_options',
-            'menu_slug' => 'nomia-footer',
-            'callback' => 'nomia_cpt_render_footer_admin_page',
+            'menu_slug' => 'gq-bioeconomia-footer',
+            'callback' => [ FooterSettings::class, 'renderPage' ],
         ],
     );
 });
 
 test('contact settings page is registered under appearance', function () {
-    nomia_cpt_register_contact_admin_page();
+    (new ContactSettings())->registerPage();
 
     expect($GLOBALS['lgm_test_state']['added_submenu_pages'])->toContain(
         [
@@ -55,27 +67,27 @@ test('contact settings page is registered under appearance', function () {
             'page_title' => 'Contacto',
             'menu_title' => 'Contacto',
             'capability' => 'edit_theme_options',
-            'menu_slug' => 'nomia-contact',
-            'callback' => 'nomia_cpt_render_contact_admin_page',
+            'menu_slug' => 'gq-bioeconomia-contact',
+            'callback' => [ ContactSettings::class, 'renderPage' ],
         ],
     );
 });
 
 test('footer logo option is registered and sanitized', function () {
-    nomia_cpt_register_footer_settings();
+    (new FooterSettings())->registerSetting();
 
-    $setting = $GLOBALS['lgm_test_state']['registered_settings']['nomia_cpt_footer_logo_ids'];
+    $setting = $GLOBALS['lgm_test_state']['registered_settings']['gq_bioeconomia_footer_logo_ids'];
     $sanitized = $setting['args']['sanitize_callback']('12,0,18,12,abc,24');
 
-    expect($setting['group'])->toBe('nomia_cpt_footer_settings')
+    expect($setting['group'])->toBe('gq_bioeconomia_footer_settings')
         ->and($setting['args']['type'])->toBe('array')
         ->and($sanitized)->toBe([ 12, 18, 24 ]);
 });
 
 test('contact option is registered and sanitized', function () {
-    nomia_cpt_register_contact_settings();
+    (new ContactSettings())->registerSetting();
 
-    $setting = $GLOBALS['lgm_test_state']['registered_settings']['nomia_cpt_contact'];
+    $setting = $GLOBALS['lgm_test_state']['registered_settings']['gq_bioeconomia_contact'];
     $sanitized = $setting['args']['sanitize_callback'](
         [
             'address' => ' Rua <b>O Século</b>, 51 ',
@@ -85,7 +97,7 @@ test('contact option is registered and sanitized', function () {
         ],
     );
 
-    expect($setting['group'])->toBe('nomia_cpt_contact_settings')
+    expect($setting['group'])->toBe('gq_bioeconomia_contact_settings')
         ->and($setting['args']['type'])->toBe('array')
         ->and($sanitized)->toBe(
             [
@@ -99,7 +111,7 @@ test('contact option is registered and sanitized', function () {
 
 test('contact settings page renders saved fields', function () {
     update_option(
-        'nomia_cpt_contact',
+        'gq_bioeconomia_contact',
         [
             'address' => 'Rua O Século, 51',
             'phone' => '+351 210 000 000',
@@ -109,11 +121,11 @@ test('contact settings page renders saved fields', function () {
     );
 
     ob_start();
-    nomia_cpt_render_contact_admin_page();
+    ContactSettings::renderPage();
     $markup = ob_get_clean();
 
     expect($markup)->toContain('<h1>Contacto</h1>')
-        ->and($markup)->toContain('nomia_cpt_contact[address]')
+        ->and($markup)->toContain('gq_bioeconomia_contact[address]')
         ->and($markup)->toContain('Rua O Século, 51')
         ->and($markup)->toContain('contacto@example.test');
 });
@@ -131,29 +143,29 @@ test('footer settings page renders selected logos in saved order', function () {
         'image_src'   => 'https://example.com/logo-b.png',
         'thumbnail'   => '<img src="https://example.com/logo-b-thumb.png" alt="" />',
     ];
-    update_option('nomia_cpt_footer_logo_ids', [ 502, 501 ]);
+    update_option('gq_bioeconomia_footer_logo_ids', [ 502, 501 ]);
 
     ob_start();
-    nomia_cpt_render_footer_admin_page();
+    FooterSettings::renderPage();
     $markup = ob_get_clean();
 
     expect($markup)->toContain('<h1>Footer</h1>')
-        ->and($markup)->toContain('nomia_cpt_footer_logo_ids')
+        ->and($markup)->toContain('gq_bioeconomia_footer_logo_ids')
         ->and(strpos($markup, 'Logo B'))->toBeLessThan(strpos($markup, 'Logo A'))
         ->and($markup)->toContain('Adicionar logótipos');
 });
 
 test('footer admin assets are only enqueued on footer settings page', function () {
-    nomia_cpt_enqueue_footer_admin_assets('appearance_page_nomia-footer');
+    (new FooterSettings())->enqueueAssets('appearance_page_gq-bioeconomia-footer');
 
     expect($GLOBALS['lgm_test_state']['enqueued_media'])->toBeTrue()
-        ->and($GLOBALS['lgm_test_state']['registered_scripts'])->toHaveKey('nomia-cpt-media-picker')
-        ->and($GLOBALS['lgm_test_state']['registered_scripts']['nomia-cpt-media-picker']['src'])->toContain('assets/js/media-picker.js')
-        ->and($GLOBALS['lgm_test_state']['registered_scripts']['nomia-cpt-media-picker']['deps'])->toBe([ 'jquery', 'media-editor', 'media-models', 'media-views' ])
-        ->and($GLOBALS['lgm_test_state']['enqueued_scripts'])->toHaveKey('nomia-cpt-footer-admin')
-        ->and($GLOBALS['lgm_test_state']['enqueued_scripts']['nomia-cpt-footer-admin']['src'])->toContain('assets/js/footer-admin.js')
-        ->and($GLOBALS['lgm_test_state']['enqueued_scripts']['nomia-cpt-footer-admin']['deps'])->toBe([ 'nomia-cpt-media-picker' ])
-        ->and($GLOBALS['lgm_test_state']['inline_scripts']['nomia-cpt-footer-admin'][0]['data'])->toContain('"removeLabel":"Remover"');
+        ->and($GLOBALS['lgm_test_state']['registered_scripts'])->toHaveKey('gq-bioeconomia-media-picker')
+        ->and($GLOBALS['lgm_test_state']['registered_scripts']['gq-bioeconomia-media-picker']['src'])->toContain('assets/media-picker.js')
+        ->and($GLOBALS['lgm_test_state']['registered_scripts']['gq-bioeconomia-media-picker']['deps'])->toBe([ 'jquery', 'media-editor', 'media-models', 'media-views' ])
+        ->and($GLOBALS['lgm_test_state']['enqueued_scripts'])->toHaveKey('gq-bioeconomia-footer-admin')
+        ->and($GLOBALS['lgm_test_state']['enqueued_scripts']['gq-bioeconomia-footer-admin']['src'])->toContain('assets/footer-admin.js')
+        ->and($GLOBALS['lgm_test_state']['enqueued_scripts']['gq-bioeconomia-footer-admin']['deps'])->toBe([ 'gq-bioeconomia-media-picker' ])
+        ->and($GLOBALS['lgm_test_state']['inline_scripts']['gq-bioeconomia-footer-admin'][0]['data'])->toContain('"removeLabel":"Remover"');
 });
 
 test('ordered media projection memoizes valid and missing IDs for the request', function () {
@@ -166,8 +178,8 @@ test('ordered media projection memoizes valid and missing IDs for the request', 
         'image_height'   => 800,
     ];
 
-    nomia_cpt_get_ordered_media([ 904, 999 ]);
-    nomia_cpt_get_ordered_media([ 999, 904 ]);
+    OrderedMedia::forIds([ 904, 999 ]);
+    OrderedMedia::forIds([ 999, 904 ]);
 
     $attachment_queries = array_values(
         array_filter(
@@ -180,7 +192,7 @@ test('ordered media projection memoizes valid and missing IDs for the request', 
 });
 
 test('tools admin menu removes default ferramenta and taxonomy submenu items', function () {
-    nomia_cpt_cleanup_tools_admin_menu();
+    (new AdminMenu())->cleanup();
 
     $expected_removed_submenu_pages = [
         [
@@ -193,7 +205,7 @@ test('tools admin menu removes default ferramenta and taxonomy submenu items', f
         ],
     ];
 
-    foreach (nomia_cpt_get_taxonomy_menu_removals() as $removal) {
+    foreach (AdminMenu::taxonomyMenuRemovals() as $removal) {
         $expected_removed_submenu_pages[] = $removal;
         $expected_removed_submenu_pages[] = [
             'menu_slug' => $removal['menu_slug'],
@@ -207,21 +219,21 @@ test('tools admin menu removes default ferramenta and taxonomy submenu items', f
 });
 
 test('global taxonomy menus come from core under posts only', function () {
-    $definitions = nomia_cpt_get_taxonomy_definitions();
+    $definitions = Taxonomies::definitions();
 
-    foreach (nomia_cpt_get_global_taxonomy_names() as $taxonomy) {
+    foreach (Taxonomies::globalNames() as $taxonomy) {
         expect($definitions[$taxonomy]['object_type'])->toContain('post');
         expect($definitions[$taxonomy]['args']['show_ui'])->toBeTrue();
         expect($definitions[$taxonomy]['args'])->not->toHaveKey('show_in_menu');
     }
 
-    expect(function_exists('nomia_cpt_register_global_taxonomy_menu'))->toBeFalse();
+    expect(method_exists(AdminMenu::class, 'registerGlobalTaxonomyMenu'))->toBeFalse();
 });
 
 test('gallery image meta is registered for REST and sanitized before saving', function () {
-    nomia_cpt_register_gallery_meta();
+    (new Galleries())->registerMeta();
 
-    $meta = $GLOBALS['lgm_test_state']['registered_post_meta']['nomia_gallery']['nomia_cpt_gallery_image_ids'];
+    $meta = $GLOBALS['lgm_test_state']['registered_post_meta']['gq_bio_gallery']['gq_bioeconomia_gallery_image_ids'];
     $sanitized = $meta['sanitize_callback']([ '12', 0, '18', '12', 'abc', '24' ]);
 
     expect($meta['type'])->toBe('array')
@@ -231,28 +243,28 @@ test('gallery image meta is registered for REST and sanitized before saving', fu
 });
 
 test('gallery admin assets are only enqueued on gallery editor screens', function () {
-    $_GET['post_type'] = 'nomia_gallery';
+    $_GET['post_type'] = 'gq_bio_gallery';
 
-    nomia_cpt_enqueue_gallery_admin_assets('post.php');
+    (new Galleries())->enqueueAssets('post.php');
 
     expect($GLOBALS['lgm_test_state']['enqueued_media'])->toBeTrue()
-        ->and($GLOBALS['lgm_test_state']['registered_scripts'])->toHaveKey('nomia-cpt-media-picker')
-        ->and($GLOBALS['lgm_test_state']['registered_scripts']['nomia-cpt-media-picker']['src'])->toContain('assets/js/media-picker.js')
-        ->and($GLOBALS['lgm_test_state']['registered_scripts']['nomia-cpt-media-picker']['deps'])->toBe([ 'jquery', 'media-editor', 'media-models', 'media-views' ])
-        ->and($GLOBALS['lgm_test_state']['enqueued_scripts'])->toHaveKey('nomia-cpt-gallery-admin')
-        ->and($GLOBALS['lgm_test_state']['enqueued_scripts']['nomia-cpt-gallery-admin']['src'])->toContain('assets/js/gallery-admin.js')
-        ->and($GLOBALS['lgm_test_state']['enqueued_scripts']['nomia-cpt-gallery-admin']['deps'])->toBe([ 'nomia-cpt-media-picker' ])
-        ->and($GLOBALS['lgm_test_state']['inline_scripts']['nomia-cpt-gallery-admin'][0]['data'])->toContain('Nenhuma imagem selecionada.');
+        ->and($GLOBALS['lgm_test_state']['registered_scripts'])->toHaveKey('gq-bioeconomia-media-picker')
+        ->and($GLOBALS['lgm_test_state']['registered_scripts']['gq-bioeconomia-media-picker']['src'])->toContain('assets/media-picker.js')
+        ->and($GLOBALS['lgm_test_state']['registered_scripts']['gq-bioeconomia-media-picker']['deps'])->toBe([ 'jquery', 'media-editor', 'media-models', 'media-views' ])
+        ->and($GLOBALS['lgm_test_state']['enqueued_scripts'])->toHaveKey('gq-bioeconomia-gallery-admin')
+        ->and($GLOBALS['lgm_test_state']['enqueued_scripts']['gq-bioeconomia-gallery-admin']['src'])->toContain('assets/gallery-admin.js')
+        ->and($GLOBALS['lgm_test_state']['enqueued_scripts']['gq-bioeconomia-gallery-admin']['deps'])->toBe([ 'gq-bioeconomia-media-picker' ])
+        ->and($GLOBALS['lgm_test_state']['inline_scripts']['gq-bioeconomia-gallery-admin'][0]['data'])->toContain('Nenhuma imagem selecionada.');
 });
 
 test('content model registry declares derived policy membership', function () {
-    $definitions = nomia_cpt_get_post_type_definitions();
+    $definitions = PostTypes::definitions();
 
-    expect($definitions['nomia_gallery']['policies'] ?? [])->toBe([])
+    expect($definitions['gq_bio_gallery']['policies'] ?? [])->toBe([])
         ->and($definitions['biblioteca']['policies']['global_taxonomies'])->toBeTrue()
         ->and($definitions['plataformas']['policies']['global_taxonomies'])->toBeTrue()
         ->and($definitions['bases_de_dados']['policies']['global_taxonomies'])->toBeTrue()
-        ->and(nomia_cpt_get_global_taxonomy_post_types())->toBe(
+        ->and(Taxonomies::globalPostTypes())->toBe(
             [
                 'post',
                 'biblioteca',
@@ -269,7 +281,7 @@ test('content model registry declares derived policy membership', function () {
                 'bases_de_dados',
             ],
         )
-        ->and(nomia_cpt_get_post_types_with_featured_images())->toBe(
+        ->and(PostTypes::withFeaturedImages())->toBe(
             [
                 'biblioteca',
                 'recursos_educativos',
@@ -286,11 +298,11 @@ test('content model registry declares derived policy membership', function () {
 });
 
 test('content model registry passes invariant validation', function () {
-    expect(nomia_cpt_get_content_model_validation_errors())->toBe([]);
+    expect(ContentModel::validationErrors())->toBe([]);
 });
 
 test('content model validation reports malformed definitions and references', function () {
-    $errors = nomia_cpt_get_content_model_validation_errors(
+    $errors = ContentModel::validationErrors(
         [
             'invalid-post-type' => [
                 'labels' => [ 'name' => 'Invalid' ],
@@ -336,11 +348,11 @@ test('content model validation reports malformed definitions and references', fu
 });
 
 test('content types are registered with rest support and custom capabilities', function () {
-    nomia_cpt_register_content_types();
+    PostTypes::registerContentTypes();
 
     $library = $GLOBALS['lgm_test_state']['post_types']['biblioteca'];
     $glossary = $GLOBALS['lgm_test_state']['post_types']['glossario'];
-    $gallery = $GLOBALS['lgm_test_state']['post_types']['nomia_gallery'];
+    $gallery = $GLOBALS['lgm_test_state']['post_types']['gq_bio_gallery'];
     $events = $GLOBALS['lgm_test_state']['post_types']['eventos'];
     $educational_resources = $GLOBALS['lgm_test_state']['post_types']['recursos_educativos'];
     $indicadores = $GLOBALS['lgm_test_state']['post_types']['indicadores'];
@@ -355,7 +367,7 @@ test('content types are registered with rest support and custom capabilities', f
     $databases = $GLOBALS['lgm_test_state']['post_types']['bases_de_dados'];
     $taxonomy = $GLOBALS['lgm_test_state']['taxonomies']['categoria_biblioteca'];
     $opportunity_taxonomy = $GLOBALS['lgm_test_state']['taxonomies']['categoria_oportunidade'];
-    $global_taxonomy_post_types = nomia_cpt_get_global_taxonomy_post_types();
+    $global_taxonomy_post_types = Taxonomies::globalPostTypes();
 
     expect($library['show_in_rest'])->toBeTrue()
         ->and($library['has_archive'])->toBe('biblioteca')
@@ -363,7 +375,7 @@ test('content types are registered with rest support and custom capabilities', f
         ->and($library['supports'])->toBe([ 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'custom-fields' ])
         ->and($library['show_in_graphql'])->toBeTrue()
         ->and($library['graphql_single_name'])->toBe('Biblioteca')
-        ->and($library['capabilities']['edit_posts'])->toBe('edit_nomia_cpt_libraries')
+        ->and($library['capabilities']['edit_posts'])->toBe('edit_gq_bioeconomia_libraries')
         ->and($glossary['show_in_rest'])->toBeTrue()
         ->and($glossary['has_archive'])->toBe('glossario')
         ->and($glossary['supports'])->toBe([ 'title', 'editor', 'custom-fields' ])
@@ -374,7 +386,7 @@ test('content types are registered with rest support and custom capabilities', f
         ->and($gallery['public'])->toBeFalse()
         ->and($gallery['labels']['all_items'])->toBe('Galerias')
         ->and($gallery['supports'])->toBe([ 'title', 'revisions' ])
-        ->and($gallery['capabilities']['edit_posts'])->toBe('edit_nomia_cpt_galleries')
+        ->and($gallery['capabilities']['edit_posts'])->toBe('edit_gq_bioeconomia_galleries')
         ->and($events['show_in_rest'])->toBeTrue()
         ->and($events['has_archive'])->toBe('eventos')
         ->and($events)->not->toHaveKey('template')
@@ -434,7 +446,7 @@ test('content types are registered with rest support and custom capabilities', f
         ->and($taxonomy['args']['hierarchical'])->toBeTrue()
         ->and($taxonomy['args']['labels']['menu_name'])->toBe('Categorias')
         ->and($taxonomy['args']['show_in_rest'])->toBeTrue()
-        ->and($taxonomy['args']['capabilities']['manage_terms'])->toBe('manage_nomia_cpt_library_categories')
+        ->and($taxonomy['args']['capabilities']['manage_terms'])->toBe('manage_gq_bioeconomia_library_categories')
         ->and($opportunity_taxonomy['args']['hierarchical'])->toBeTrue()
         ->and($opportunity_taxonomy['args']['show_in_rest'])->toBeTrue()
         ->and($event_type_taxonomy['args']['hierarchical'])->toBeTrue()
@@ -453,14 +465,14 @@ test('content types are registered with rest support and custom capabilities', f
 });
 
 test('custom capabilities follow declared model and taxonomy maps', function () {
-    $capabilities = nomia_cpt_get_all_custom_capabilities();
+    $capabilities = Capabilities::all();
 
     expect($capabilities)->toHaveCount(60)
-        ->and($capabilities[0])->toBe('edit_nomia_cpt_gallery')
-        ->and($capabilities[14])->toBe('edit_nomia_cpt_library')
-        ->and($capabilities[28])->toBe('edit_nomia_cpt_glossary')
-        ->and($capabilities[42])->toBe('edit_nomia_cpt_tool')
-        ->and($capabilities[56])->toBe('manage_nomia_cpt_library_categories')
+        ->and($capabilities[0])->toBe('edit_gq_bioeconomia_gallery')
+        ->and($capabilities[14])->toBe('edit_gq_bioeconomia_library')
+        ->and($capabilities[28])->toBe('edit_gq_bioeconomia_glossary')
+        ->and($capabilities[42])->toBe('edit_gq_bioeconomia_tool')
+        ->and($capabilities[56])->toBe('manage_gq_bioeconomia_library_categories')
         ->and(array_unique($capabilities))->toHaveCount(count($capabilities));
 });
 
@@ -469,7 +481,7 @@ test('featured image theme support is extended to plataformas and other thumbnai
         [ 'post', 'page' ],
     ];
 
-    nomia_cpt_ensure_featured_image_support();
+    (new PostTypes())->ensureFeaturedImageSupport();
 
     $theme_support = get_theme_support('post-thumbnails');
 
@@ -501,14 +513,14 @@ test('admin ordering defaults to alphabetical titles for plugin content types', 
         }
     };
 
-    nomia_cpt_order_admin_content_lists($fake_query);
+    (new ContentLists())->orderLists($fake_query);
 
     expect($fake_query->vars['orderby'])->toBe('title')
         ->and($fake_query->vars['order'])->toBe('ASC');
 });
 
 test('admin columns add plugin-specific metadata for both content types', function () {
-    $library_columns = nomia_cpt_get_library_admin_columns(
+    $library_columns = (new ContentLists())->libraryColumns(
         [
             'cb'    => '<input type="checkbox" />',
             'title' => 'Título',
@@ -516,7 +528,7 @@ test('admin columns add plugin-specific metadata for both content types', functi
         ],
     );
 
-    $glossary_columns = nomia_cpt_get_glossary_admin_columns(
+    $glossary_columns = (new ContentLists())->glossaryColumns(
         [
             'title' => 'Título',
             'date'  => 'Data',
@@ -527,11 +539,11 @@ test('admin columns add plugin-specific metadata for both content types', functi
         [
             'cb',
             'title',
-            'nomia_cpt_library_categories',
-            'nomia_cpt_library_excerpt',
+            'gq_bioeconomia_library_categories',
+            'gq_bioeconomia_library_excerpt',
         ],
     )
-        ->and($glossary_columns['nomia_cpt_glossary_slug'])->toBe('Slug');
+        ->and($glossary_columns['gq_bioeconomia_glossary_slug'])->toBe('Slug');
 });
 
 test('library admin filter renders the taxonomy dropdown and applies the selected slug', function () {
@@ -561,8 +573,8 @@ test('library admin filter renders the taxonomy dropdown and applies the selecte
         }
     };
 
-    nomia_cpt_render_library_category_filter();
-    nomia_cpt_order_admin_content_lists($fake_query);
+    (new ContentLists())->renderLibraryCategoryFilter();
+    (new ContentLists())->orderLists($fake_query);
 
     expect($GLOBALS['lgm_test_state']['last_dropdown']['taxonomy'])->toBe('categoria_biblioteca')
         ->and($GLOBALS['lgm_test_state']['last_dropdown']['selected'])->toBe('newsletters')
@@ -581,19 +593,19 @@ test('admin column renderers expose thumbnails, categories, excerpts, and slugs'
     ];
 
     ob_start();
-    nomia_cpt_render_library_admin_column('nomia_cpt_thumbnail', 101);
+    (new ContentLists())->renderLibraryColumn('gq_bioeconomia_thumbnail', 101);
     $thumbnail = ob_get_clean();
 
     ob_start();
-    nomia_cpt_render_library_admin_column('nomia_cpt_library_categories', 101);
+    (new ContentLists())->renderLibraryColumn('gq_bioeconomia_library_categories', 101);
     $categories = ob_get_clean();
 
     ob_start();
-    nomia_cpt_render_library_admin_column('nomia_cpt_library_excerpt', 101);
+    (new ContentLists())->renderLibraryColumn('gq_bioeconomia_library_excerpt', 101);
     $excerpt = ob_get_clean();
 
     ob_start();
-    nomia_cpt_render_glossary_admin_column('nomia_cpt_glossary_slug', 101);
+    (new ContentLists())->renderGlossaryColumn('gq_bioeconomia_glossary_slug', 101);
     $slug = ob_get_clean();
 
     expect($thumbnail)->toContain('<img')
@@ -603,33 +615,15 @@ test('admin column renderers expose thumbnails, categories, excerpts, and slugs'
 });
 
 test('library documents keep their details in registered post meta', function () {
-    nomia_cpt_register_library_details_meta();
+    (new LibraryDetails())->registerMeta();
 
     $meta = $GLOBALS['lgm_test_state']['registered_post_meta']['biblioteca'];
 
-    expect(array_keys($meta))->toBe([ 'nomia_cpt_library_year', 'nomia_cpt_library_author', 'nomia_cpt_library_file_url' ])
-        ->and($meta['nomia_cpt_library_year']['type'])->toBe('integer')
-        ->and($meta['nomia_cpt_library_author']['show_in_rest'])->toBeTrue()
-        ->and($meta['nomia_cpt_library_file_url']['sanitize_callback'])->toBe('esc_url_raw')
-        ->and(nomia_cpt_sanitize_library_year('2017'))->toBe(2017)
-        ->and(nomia_cpt_sanitize_library_year('-3'))->toBe(0)
-        ->and(nomia_cpt_sanitize_library_year('sem ano'))->toBe(0);
-});
-
-test('the imported library-details block is split from the document content', function () {
-    $content = '<!-- wp:nomia/library-details {"year":2017,"author":"Diário da República","fileUrl":"https://nomia-media.bnq.pt/2026/05/rcm190-2017.pdf","lock":{"move":true,"remove":true}} /-->'
-        . "\n\n<!-- wp:paragraph -->\n<p>Resolução</p>\n<!-- /wp:paragraph -->";
-
-    expect(nomia_cpt_extract_library_details_block($content))->toBe(
-        [
-            'details' => [
-                'year' => 2017,
-                'author' => 'Diário da República',
-                'fileUrl' => 'https://nomia-media.bnq.pt/2026/05/rcm190-2017.pdf',
-            ],
-            'content' => "<!-- wp:paragraph -->\n<p>Resolução</p>\n<!-- /wp:paragraph -->",
-        ],
-    )
-        ->and(nomia_cpt_extract_library_details_block('<!-- wp:nomia/library-details /-->'))->toBe([ 'details' => [], 'content' => '' ])
-        ->and(nomia_cpt_extract_library_details_block('<!-- wp:paragraph --><p>x</p><!-- /wp:paragraph -->'))->toBeNull();
+    expect(array_keys($meta))->toBe([ 'gq_bioeconomia_library_year', 'gq_bioeconomia_library_author', 'gq_bioeconomia_library_file_url' ])
+        ->and($meta['gq_bioeconomia_library_year']['type'])->toBe('integer')
+        ->and($meta['gq_bioeconomia_library_author']['show_in_rest'])->toBeTrue()
+        ->and($meta['gq_bioeconomia_library_file_url']['sanitize_callback'])->toBe('esc_url_raw')
+        ->and(LibraryDetails::sanitizeYear('2017'))->toBe(2017)
+        ->and(LibraryDetails::sanitizeYear('-3'))->toBe(0)
+        ->and(LibraryDetails::sanitizeYear('sem ano'))->toBe(0);
 });

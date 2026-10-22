@@ -148,7 +148,7 @@ term slugs. Clearing the field uses neutral gray. Before the first edit,
 Economia Circular retains green (`#a4d663`) and Bioeconomia Sustentável retains
 cyan (`#2ad2c9`). Hover/focus colors and black/white text contrast are automatic.
 
-`nomia-cpt` exposes the palette as `gqBioeconomiaThematicColors { slug color }` on
+`gq-bioeconomia` exposes the palette as `gqBioeconomiaThematicColors { slug color }` on
 pages/posts. The Site's content extension stores it with each publication;
 rendering uses that snapshot and does not query WordPress. Color edits reach
 published pages through the runtime's existing reconciliation rereads, or

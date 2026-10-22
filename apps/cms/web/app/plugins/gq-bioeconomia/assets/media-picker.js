@@ -234,7 +234,7 @@
         return;
       }
 
-      const actionTarget = target.closest("[data-nomia-cpt-media-action]");
+      const actionTarget = target.closest("[data-gq-bioeconomia-media-action]");
       const item = actionTarget?.closest("[data-attachment-id]");
 
       if (!actionTarget || !item) {
@@ -246,7 +246,7 @@
       }
 
       if (typeof onItemAction === "function") {
-        onItemAction(actionTarget.getAttribute("data-nomia-cpt-media-action"), item);
+        onItemAction(actionTarget.getAttribute("data-gq-bioeconomia-media-action"), item);
       }
 
       if (container.querySelector("[data-attachment-id]")) {
@@ -258,5 +258,5 @@
     });
   };
 
-  window.nomiaCptMediaPicker = { create };
+  window.gqBioeconomiaMediaPicker = { create };
 })(window);

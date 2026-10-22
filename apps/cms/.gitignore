@@ -9,7 +9,6 @@
 #   !web/app/plugins/nomia-bnq-blocks/
 web/app/plugins/*
 !web/app/plugins/.gitkeep
-!web/app/plugins/nomia-cpt/
 !web/app/plugins/gq-bioeconomia/
 # Ignore Composer-installed mu-plugin directories; single-file mu-plugins are tracked intentionally
 web/app/mu-plugins/*/

@@ -8,7 +8,7 @@
   const { createElement: h, Fragment } = window.wp.element;
   const { __ } = window.wp.i18n;
   const { registerPlugin } = window.wp.plugins;
-  const { postType, definition } = window.nomiaCptDetails;
+  const { postType, definition } = window.gqBioeconomiaDetails;
   const choices = {
     geographicArea: ["NUTS 0", "NUTS 1", "NUTS 2", "NUTS 3", "Municipality"],
     graphicRepresentation: ["Columns", "Traffic Lights", "Speedometer", "Horizontal Bars"],
@@ -39,12 +39,12 @@
     const selected = terms.find((term) => term.id === id);
     const unresolved = hasResolved && ((id > 0 && !selected) || (!id && label));
     const options = [
-      { value: "0", label: __("Sem setor selecionado", "nomia-cpt"), disabled: true },
+      { value: "0", label: __("Sem setor selecionado", "gq-bioeconomia"), disabled: true },
     ];
     if (id && !selected) {
       options.push({
         value: String(id),
-        label: `${label || id} (${__("Referência importada", "nomia-cpt")})`,
+        label: `${label || id} (${__("Referência importada", "gq-bioeconomia")})`,
       });
     }
     options.push(...terms.map((term) => ({ value: String(term.id), label: term.name })));
@@ -69,7 +69,7 @@
           { status: "warning", isDismissible: false },
           __(
             "O setor importado não corresponde a um termo atual. Selecione um setor para atualizar a referência; as categorias atribuídas à plataforma são conservadas.",
-            "nomia-cpt",
+            "gq-bioeconomia",
           ),
         ),
     );
@@ -97,7 +97,7 @@
           h(
             Button,
             { variant: "tertiary", onClick: () => set(rows.filter((_, i) => i !== index)) },
-            __("Remover linha", "nomia-cpt"),
+            __("Remover linha", "gq-bioeconomia"),
           ),
           h(
             Button,
@@ -110,14 +110,14 @@
                 set(moved);
               },
             },
-            __("Mover para cima", "nomia-cpt"),
+            __("Mover para cima", "gq-bioeconomia"),
           ),
         ),
       ),
       h(
         Button,
         { variant: "secondary", onClick: () => set([...rows, { x: "", y: "" }]) },
-        __("Adicionar linha", "nomia-cpt"),
+        __("Adicionar linha", "gq-bioeconomia"),
       ),
     );
   }
@@ -162,7 +162,7 @@
         return h(SelectControl, {
           ...common,
           options: [...new Set([value, ...choices[name]])].map((option) => ({
-            label: option || __("Sem valor", "nomia-cpt"),
+            label: option || __("Sem valor", "gq-bioeconomia"),
             value: option,
           })),
         });
@@ -180,7 +180,7 @@
           h(
             Notice,
             { status: "warning", isDismissible: false },
-            __("Introduza um URL válido com http ou https.", "nomia-cpt"),
+            __("Introduza um URL válido com http ou https.", "gq-bioeconomia"),
           ),
       );
     });
@@ -188,7 +188,7 @@
     const end = meta[definition.fields.endDate?.key];
     return h(
       PluginDocumentSettingPanel,
-      { name: `nomia-${definition.prefix}-details`, title: definition.title },
+      { name: `gq-bioeconomia-${definition.prefix}-details`, title: definition.title },
       ...controls,
       start &&
         end &&
@@ -196,9 +196,9 @@
         h(
           Notice,
           { status: "warning", isDismissible: false },
-          __("A data de fim deve ser igual ou posterior à data de início.", "nomia-cpt"),
+          __("A data de fim deve ser igual ou posterior à data de início.", "gq-bioeconomia"),
         ),
     );
   }
-  registerPlugin("nomia-cpt-details", { render: DetailsPanel });
+  registerPlugin("gq-bioeconomia-details", { render: DetailsPanel });
 })();

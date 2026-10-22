@@ -15,6 +15,7 @@
 
 declare(strict_types=1);
 
+use GetQuick\Bioeconomia\Lifecycle\Lifecycle;
 use GetQuick\Bioeconomia\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -52,3 +53,6 @@ add_action(
 		( new Plugin() )->boot();
 	}
 );
+
+register_activation_hook( __FILE__, [ Lifecycle::class, 'activate' ] );
+register_deactivation_hook( __FILE__, [ Lifecycle::class, 'deactivate' ] );

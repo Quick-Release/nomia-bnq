@@ -65,10 +65,7 @@ function loadEditor() {
   run("assets/editor-lib.js");
   window.gqBioeconomiaLib = strict("gqBioeconomiaLib", window.gqBioeconomiaLib);
   run("assets/editor.js");
-  window.gqBioeconomiaEditor = strict(
-    "gqBioeconomiaEditor",
-    window.gqBioeconomiaEditor,
-  );
+  window.gqBioeconomiaEditor = strict("gqBioeconomiaEditor", window.gqBioeconomiaEditor);
   run("assets/document-settings.js");
   for (const { catalogId } of blocks) run(`blocks/${catalogId}/index.js`);
 
@@ -124,7 +121,7 @@ test("the plugin's scripts and styles pass GQ Design's lint and format rules", (
 });
 
 test("the scripts name nothing undefined: without a bundler, nothing else would catch it", () => {
-  const browserGlobals = new Set(["window", "setTimeout", "clearTimeout"]);
+  const browserGlobals = new Set(["window", "document", "URL", "setTimeout", "clearTimeout"]);
   const scripts = [
     ...globSync("assets/*.js", { cwd: plugin }).filter(
       (path) => !path.endsWith("frontend-rules.js"),

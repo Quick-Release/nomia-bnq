@@ -1,40 +1,69 @@
-# GETQUICK Nomia Blocks
+# GETQUICK Bioeconomia
 
-Nomia's Gutenberg blocks (`getquick/*`), owned by this site's CMS. WordPress
-loads the plugin from `apps/cms/web/app/plugins/gq-bioeconomia`; it is not a
-Composer package. Migrated from bioeconomia.pt (release 0.63.7).
+Nomia's CMS plugin, owned by this site. It holds the content model (post
+types, taxonomies, editorial details, admin screens) and the Gutenberg blocks
+(`getquick/*`). WordPress loads it from
+`apps/cms/web/app/plugins/gq-bioeconomia`; it is not a Composer package. The
+`gq-` prefix is only its name: it is not a shared GETQUICK plugin. It merges
+`nomia-cpt` and GETQUICK Nomia Blocks, both migrated from bioeconomia.pt
+([plan](../../../../../../docs/plans/gq-bioeconomia-plugin.md)).
 
-The plugin extends GQ Design (`Requires Plugins: gq-design`) and builds its
-blocks the way GQ Design builds its own. Each block has a
-`blocks/<id>/block.json` and an `index.js`, plus an `editor.css` when its
-editor is bespoke. The editor code is plain JavaScript on WordPress's
-`window.wp` globals, shipped as written with no build step. The PHP is
-namespaced PSR-4 classes under `src/` (`GetQuick\Bioeconomia\`). The blocks
-use GQ Design's `getquick-design` inserter category.
+The plugin extends GQ Design (`Requires Plugins: gq-design`) and is built the
+way GQ Design is. Each block has a `blocks/<id>/block.json` and an
+`index.js`, plus an `editor.css` when its editor is bespoke. The editor and
+admin code is plain JavaScript on WordPress's `window.wp` globals, shipped as
+written with no build step. The PHP is namespaced PSR-4 classes under `src/`
+(`GetQuick\Bioeconomia\`). The blocks use GQ Design's `getquick-design`
+inserter category.
 
-The plugin owns the blocks' WordPress side: their registration, editors and
-previews, and the `wpBlocksJson` GraphQL field. Blocks save only their
-attributes (`save` returns `null`), and the Astro Frontend renders them: a
-refresh stores a page's parsed blocks with it, and visitors are served the
-Nomia block components' rendering from the publication store
-(`apps/frontend/src/components/wp-blocks`, `apps/frontend/src/lib/nomia-content.ts`).
+Blocks save only their attributes (`save` returns `null`), and the Astro
+Frontend renders them: a refresh stores a page's parsed blocks with it, and
+visitors are served the Nomia block components' rendering from the
+publication store (`apps/frontend/src/components/wp-blocks`,
+`apps/frontend/src/lib/nomia-content.ts`).
+
+Everything the plugin stores and exposes is named after it: options, post
+meta and capabilities `gq_bioeconomia_*`, GraphQL fields `gqBioeconomia*`,
+REST routes under `gq-bioeconomia/v1`, the gallery post type
+`gq_bio_gallery`. The other post types and taxonomies keep their Portuguese
+names (`biblioteca`, `eventos`, `tematicas`, …).
 
 ## Layout
 
-| Path                            | What it is                                                                                                |
-| ------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `gq-bioeconomia.php`     | Plugin header, constants and the PSR-4 autoloader; boots `Plugin` on `plugins_loaded`.                    |
-| `src/Plugin.php`                | Wires the components below.                                                                               |
-| `src/Blocks/ContractBlocks.php` | Registers every block from its folder, with its own editor script and translations (`init`, priority 20). |
-| `src/Blocks/EditorAssets.php`   | The shared editor scripts and style, and the settings and contracts they read.                            |
-| `src/Blocks/BlockPolicy.php`    | The post editor's block allowlist.                                                                        |
-| `src/Editor/PageBackground.php` | The page background color meta and its GraphQL field.                                                     |
-| `src/GraphQL/BlocksJson.php`    | `wpBlocksJson` on pages and posts.                                                                        |
-| `assets/editor-lib.js`          | Pure helpers (`window.gqBioeconomiaLib`).                                                           |
-| `assets/editor.js`              | Fields, the Frontend preview, and the generic contract editor (`window.gqBioeconomiaEditor`).       |
-| `assets/document-settings.js`   | The page background panel and the Bioeconomia button variation.                                           |
-| `assets/frontend-rules.js`      | The Frontend rules the editor shares with Astro (`window.gqBioeconomiaFrontendRules`), generated.         |
-| `blocks/<id>/`                  | `block.json` (generated), `index.js`, and `editor.css` for bespoke editors.                               |
+| Path                                                                          | What it is                                                                                                   |
+| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `gq-bioeconomia.php`                                                          | Plugin header, constants, the PSR-4 autoloader and the activation hooks; boots `Plugin` on `plugins_loaded`. |
+| `uninstall.php`                                                               | Removes the capabilities and the plugin's options; content and its meta stay.                                |
+| `src/Plugin.php`                                                              | Wires the components below.                                                                                  |
+| `src/Content/PostTypes.php`                                                   | The post types, declared as data, and their featured-image support.                                          |
+| `src/Content/Taxonomies.php`                                                  | The taxonomies, the global ones (`tematicas`, `setor_atividade`) and their default terms.                    |
+| `src/Content/Capabilities.php`                                                | The post types' and taxonomies' capabilities, granted to administrators and editors.                         |
+| `src/Content/ContentModel.php`                                                | Validates the post type and taxonomy declarations.                                                           |
+| `src/Content/ThematicColors.php`                                              | The Temáticas colors: term meta, the term form field, GraphQL and the editor previews.                       |
+| `src/Details/PostDetails.php`                                                 | Typed details of eventos, plataformas, indicadores and podcasts: meta, REST, GraphQL, editor panel.          |
+| `src/Details/LibraryDetails.php`                                              | Biblioteca document details (year, author, file): meta, REST, GraphQL, editor panel.                         |
+| `src/Admin/Galleries.php`                                                     | Galleries' images, meta box, admin column and `gq-bioeconomia/v1/gallery-photos`.                            |
+| `src/Admin/FooterSettings.php`                                                | Appearance → Footer (the footer logos) and `gq-bioeconomia/v1/footer-logos`.                                 |
+| `src/Admin/ContactSettings.php`                                               | Appearance → Contacto and `gq-bioeconomia/v1/contact`.                                                       |
+| `src/Admin/ContentLists.php`                                                  | Ordering, filters and columns of the biblioteca and glossário lists.                                         |
+| `src/Admin/AdminMenu.php`                                                     | Keeps the tools post types and global taxonomies out of menus they don't belong in.                          |
+| `src/Admin/MediaPicker.php`                                                   | The media picker script the gallery and footer screens share.                                                |
+| `src/Media/OrderedMedia.php`                                                  | Attachments projected to image data, in the requested order, memoized per request.                           |
+| `src/Lifecycle/Lifecycle.php`                                                 | Activation, the once-per-version upgrade, uninstall.                                                         |
+| `src/Lifecycle/LegacyRename.php`                                              | Moves what `nomia-cpt` and `nomia-blocks` stored to this plugin's names, once.                               |
+| `src/Blocks/ContractBlocks.php`                                               | Registers every block from its folder, with its own editor script and translations (`init`, priority 20).    |
+| `src/Blocks/EditorAssets.php`                                                 | The shared editor scripts and style, and the settings and contracts they read.                               |
+| `src/Blocks/BlockPolicy.php`                                                  | The post editor's block allowlist.                                                                           |
+| `src/Blocks/HeaderNavigation.php`                                             | The site's menus for the navigation block.                                                                   |
+| `src/Editor/PageBackground.php`                                               | The page background color meta and its GraphQL field.                                                        |
+| `src/GraphQL/BlocksJson.php`                                                  | `wpBlocksJson` on pages and posts.                                                                           |
+| `assets/editor-lib.js`                                                        | Pure helpers (`window.gqBioeconomiaLib`).                                                                    |
+| `assets/editor.js`                                                            | Fields, the Frontend preview, and the generic contract editor (`window.gqBioeconomiaEditor`).                |
+| `assets/document-settings.js`                                                 | The page background panel and the Bioeconomia button variation.                                              |
+| `assets/frontend-rules.js`                                                    | The Frontend rules the editor shares with Astro (`window.gqBioeconomiaFrontendRules`), generated.            |
+| `assets/details.js`, `assets/library-details.js`                              | The details panels in the document settings.                                                                 |
+| `assets/gallery-admin.js`, `assets/footer-admin.js`, `assets/media-picker.js` | The gallery and footer screens' media selection.                                                             |
+| `blocks/<id>/`                                                                | `block.json` (generated), `index.js`, and `editor.css` for bespoke editors.                                  |
 
 ## Where the blocks are defined
 
@@ -69,7 +98,7 @@ Write them the way GQ Design writes its own. Each script is a self-invoking
 function. It reads what it needs from `window.wp.*` and from the plugin's
 `window.gqBioeconomia*` globals, builds elements with `createElement`, and
 uses no `import`s or JSX. After any change, run `vp fmt` on the plugin.
-`scripts/nomia-blocks-scripts.test.mjs` (run by `pnpm test:scripts`) loads every
+`scripts/gq-bioeconomia-scripts.test.mjs` (run by `pnpm test:scripts`) loads every
 script the way WordPress does, against stub packages. It also fails on
 undefined names, lint warnings and formatting drift.
 
@@ -124,7 +153,11 @@ docker run --rm --user "$(id -u):$(id -g)" -v "$PWD":/plugin -w /plugin wordpres
 ## Tests and standards
 
 `composer test` in `apps/cms` runs this plugin's suite (`tests/`, against
-WordPress stubs) with the CMS's Pest. `composer lint` applies the WordPress
+WordPress stubs) with the CMS's Pest, and the CMS suite (`apps/cms/tests`),
+which covers the content model, the admin screens and `LegacyRename`. In a
+local WordPress, `ddev wp eval-file tests/integration/gq-bioeconomia.php`
+(from `apps/cms`) checks the activation, capabilities, REST and GraphQL
+fields and the legacy rename against a real database. `composer lint` applies the WordPress
 Coding Standards to its PHP (`apps/cms/phpcs.xml.dist`), with GQ Design's
 exceptions: short arrays, and camelCase methods and PascalCase files in `src/`.
 Generated files are out of scope. The Frontend's block tests are in

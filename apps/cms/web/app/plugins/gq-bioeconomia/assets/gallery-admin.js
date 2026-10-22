@@ -1,15 +1,15 @@
 (function (window) {
-  const mediaPicker = window.nomiaCptMediaPicker;
+  const mediaPicker = window.gqBioeconomiaMediaPicker;
 
   if (!mediaPicker || typeof mediaPicker.create !== "function") {
     return;
   }
 
-  const selectButton = document.getElementById("nomia-cpt-gallery-select");
-  const clearButton = document.getElementById("nomia-cpt-gallery-clear");
-  const input = document.getElementById("nomia-cpt-gallery-image-ids");
-  const container = document.getElementById("nomia-cpt-gallery-selection");
-  const emptyLabel = window.nomiaCptGalleryAdmin?.emptyLabel || "Nenhuma imagem selecionada.";
+  const selectButton = document.getElementById("gq-bioeconomia-gallery-select");
+  const clearButton = document.getElementById("gq-bioeconomia-gallery-clear");
+  const input = document.getElementById("gq-bioeconomia-gallery-image-ids");
+  const container = document.getElementById("gq-bioeconomia-gallery-selection");
+  const emptyLabel = window.gqBioeconomiaGalleryAdmin?.emptyLabel || "Nenhuma imagem selecionada.";
 
   if (!selectButton || !clearButton || !input || !container) {
     return;
@@ -25,7 +25,7 @@
       buttonText: "Usar nesta galeria",
     },
     emptyLabel,
-    listClassName: "nomia-cpt-gallery-selection__list",
+    listClassName: "gq-bioeconomia-gallery-selection__list",
     renderItem: (media) => {
       const item = window.document.createElement("li");
       const label = media.title || media.filename || "Imagem";

@@ -31,30 +31,53 @@ GETQUICK repository.
 
 ## Renames
 
-| Before                                                        | After                                                                     |
-| ------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| `nomia-cpt/nomia-cpt.php`, `nomia-blocks/getquick-nomia-blocks.php` | `gq-bioeconomia/gq-bioeconomia.php` ("GETQUICK Bioeconomia")        |
-| text domains `nomia-cpt`, `getquick-nomia-blocks`             | `gq-bioeconomia`                                                          |
-| `GetQuick\NomiaBlocks\`, `nomia_cpt_*()` functions            | `GetQuick\Bioeconomia\`                                                   |
-| options `nomia_cpt_*`                                         | `gq_bioeconomia_*` (`nomia_cpt_plugin_version` → `gq_bioeconomia_version`) |
+| Before                                                                  | After                                                                            |
+| ----------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `nomia-cpt/nomia-cpt.php`, `nomia-blocks/getquick-nomia-blocks.php`     | `gq-bioeconomia/gq-bioeconomia.php` ("GETQUICK Bioeconomia")                     |
+| text domains `nomia-cpt`, `getquick-nomia-blocks`                       | `gq-bioeconomia`                                                                 |
+| `GetQuick\NomiaBlocks\`, `nomia_cpt_*()` functions                      | `GetQuick\Bioeconomia\`                                                          |
+| options `nomia_cpt_*`                                                   | `gq_bioeconomia_*` (`nomia_cpt_plugin_version` → `gq_bioeconomia_version`)       |
 | post meta `nomia_cpt_*`, `_nomia_cpt_*`, `_nomia_page_background_color` | `gq_bioeconomia_*`, `_gq_bioeconomia_*`, `_gq_bioeconomia_page_background_color` |
-| term meta `_nomia_tematica_color`                             | `_gq_bioeconomia_tematica_color`                                          |
-| capabilities `*_nomia_cpt_*`                                  | `*_gq_bioeconomia_*`                                                      |
-| post type `nomia_gallery`                                     | `gq_bio_gallery`                                                          |
-| GraphQL `nomia*` fields                                       | `gqBioeconomia*`                                                          |
-| REST `nomia-cpt/v1`                                           | `gq-bioeconomia/v1`                                                       |
-| editor globals `getquickNomia*`                               | `gqBioeconomia*`                                                          |
+| term meta `_nomia_tematica_color`                                       | `_gq_bioeconomia_tematica_color`                                                 |
+| capabilities `*_nomia_cpt_*`                                            | `*_gq_bioeconomia_*`                                                             |
+| post type `nomia_gallery`                                               | `gq_bio_gallery`                                                                 |
+| GraphQL `nomia*` fields                                                 | `gqBioeconomia*`                                                                 |
+| REST `nomia-cpt/v1`                                                     | `gq-bioeconomia/v1`                                                              |
+| editor globals `getquickNomia*`                                         | `gqBioeconomia*`                                                                 |
 
 ## Data migration
 
-An idempotent upgrade routine runs once when the stored
-`gq_bioeconomia_version` is missing and the legacy `nomia_cpt_plugin_version`
-exists. It renames option keys, post and term meta keys, and
-`nomia_gallery` posts to `gq_bio_gallery`. It removes the old capabilities
-from administrator and editor and adds the new ones. Only then does it store
-`gq_bioeconomia_version` and delete `nomia_cpt_plugin_version`.
+`Lifecycle\LegacyRename` runs inside the plugin's first upgrade (on
+activation, and on `init` while `gq_bioeconomia_version` is behind), and only
+while nomia-cpt's `nomia_cpt_plugin_version` exists. It:
 
-The deploy activates `gq-bioeconomia` (from `gq.ops.json`); WordPress drops
-the missing `nomia-cpt` and `nomia-blocks` from `active_plugins` on its own.
-Back up the database before the release. After it, refresh the published
-content so the publication store reads the renamed GraphQL fields.
+- renames every `nomia_cpt_*` option to `gq_bioeconomia_*`, keeping a value
+  already stored under the new name;
+- renames the post meta keys `nomia_cpt_*`, `_nomia_cpt_*` and
+  `_nomia_page_background_color`, and the term meta `_nomia_tematica_color`;
+- moves `nomia_gallery` posts, and menu items pointing at them, to
+  `gq_bio_gallery`;
+- removes the old capabilities from administrators and editors (the upgrade
+  then grants the new ones);
+- drops `nomia-cpt` and `nomia-blocks` from `active_plugins`: the deploy only
+  activates what `gq.ops.json` lists, and WordPress would otherwise keep the
+  missing plugins listed until someone opened the Plugins screen;
+- deletes `nomia_cpt_plugin_version` last, so an interrupted run repeats.
+
+It leaves alone what neither plugin reads: the empty `nomia_blocks_*_items`
+post meta the content import brought from the legacy admin.
+
+## Release
+
+1. `pnpm db:backup` before the release.
+2. `pnpm push minor`. CI deploys the CMS, whose deploy activates
+   `gq-bioeconomia` and so runs the rename, and then the Frontend.
+3. `pnpm frontend:refresh`: published pages were stored with the old GraphQL
+   fields (`nomiaPageBackgroundColor`, `nomiaThematicColors`), so until they
+   are refreshed they render without their background and thematic colors.
+4. Check the CMS: Posts, Galerias, Aparência → Footer and Contacto, and a
+   document's details panel.
+
+Rehearsed on 2026-10-22 against a copy of the local database (synced from
+production): the rename, `tests/integration/gq-bioeconomia.php` and the admin
+screens all passed.

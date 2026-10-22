@@ -1,14 +1,14 @@
 (function (window) {
-  const mediaPicker = window.nomiaCptMediaPicker;
+  const mediaPicker = window.gqBioeconomiaMediaPicker;
 
   if (!mediaPicker || typeof mediaPicker.create !== "function") {
     return;
   }
 
-  const selectButton = document.getElementById("nomia-cpt-footer-logos-select");
-  const input = document.getElementById("nomia-cpt-footer-logo-ids");
-  const container = document.getElementById("nomia-cpt-footer-logos");
-  const labels = window.nomiaCptFooterAdmin || {};
+  const selectButton = document.getElementById("gq-bioeconomia-footer-logos-select");
+  const input = document.getElementById("gq-bioeconomia-footer-logo-ids");
+  const container = document.getElementById("gq-bioeconomia-footer-logos");
+  const labels = window.gqBioeconomiaFooterAdmin || {};
   const emptyLabel = labels.emptyLabel || "Nenhum logótipo selecionado.";
   const imageLabel = labels.imageLabel || "Logótipo";
   const moveUpLabel = labels.moveUpLabel || "Subir";
@@ -24,7 +24,7 @@
 
     button.setAttribute("type", "button");
     button.className = className;
-    button.setAttribute("data-nomia-cpt-media-action", action);
+    button.setAttribute("data-gq-bioeconomia-media-action", action);
     button.textContent = label;
 
     return button;
@@ -39,21 +39,21 @@
       buttonText: "Usar no rodapé",
     },
     emptyLabel,
-    listClassName: "nomia-cpt-footer-logos__list",
+    listClassName: "gq-bioeconomia-footer-logos__list",
     renderItem: (media) => {
       const item = window.document.createElement("li");
       const thumb = window.document.createElement("span");
       const title = window.document.createElement("span");
       const imageUrl = media.fullUrl;
 
-      thumb.className = "nomia-cpt-footer-logos__thumb";
-      title.className = "nomia-cpt-footer-logos__title";
+      thumb.className = "gq-bioeconomia-footer-logos__thumb";
+      title.className = "gq-bioeconomia-footer-logos__title";
       title.textContent = media.title || media.filename || imageLabel;
 
       if (imageUrl) {
         const image = window.document.createElement("img");
 
-        image.className = "nomia-cpt-footer-logos__image";
+        image.className = "gq-bioeconomia-footer-logos__image";
         image.setAttribute("src", imageUrl);
         image.setAttribute("alt", "");
         image.setAttribute(
@@ -66,19 +66,23 @@
       item.appendChild(thumb);
       item.appendChild(title);
       item.appendChild(
-        createActionButton(moveUpLabel, "button-link nomia-cpt-footer-logos__move-up", "move-up"),
+        createActionButton(
+          moveUpLabel,
+          "button-link gq-bioeconomia-footer-logos__move-up",
+          "move-up",
+        ),
       );
       item.appendChild(
         createActionButton(
           moveDownLabel,
-          "button-link nomia-cpt-footer-logos__move-down",
+          "button-link gq-bioeconomia-footer-logos__move-down",
           "move-down",
         ),
       );
       item.appendChild(
         createActionButton(
           removeLabel,
-          "button-link-delete nomia-cpt-footer-logos__remove",
+          "button-link-delete gq-bioeconomia-footer-logos__remove",
           "remove",
         ),
       );

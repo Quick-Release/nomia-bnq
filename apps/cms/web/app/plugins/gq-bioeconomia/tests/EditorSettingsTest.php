@@ -16,10 +16,16 @@ use GetQuick\Bioeconomia\Contracts;
 */
 
 /**
- * The inline script added before the shared editor script.
+ * The settings script added before the shared editor script. The thematic
+ * colors (`Content\ThematicColors`) add another one there.
  */
 function gq_bioeconomia_settings_script(): string {
-	$inline = $GLOBALS['gq_bioeconomia_test_state']['inline_scripts'][ EditorAssets::HANDLE ] ?? [];
+	$inline = array_values(
+		array_filter(
+			$GLOBALS['gq_bioeconomia_test_state']['inline_scripts'][ EditorAssets::HANDLE ] ?? [],
+			static fn( array $script ): bool => str_contains( $script['data'], 'window.gqBioeconomiaSettings = ' ),
+		)
+	);
 
 	expect( $inline )->toHaveCount( 1 )
 		->and( $inline[0]['position'] )->toBe( 'before' );

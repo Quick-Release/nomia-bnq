@@ -4,6 +4,12 @@ Scripts for migrating the old Nomia site's WordPress content into this
 site's CMS. The plan and its context live in
 [`docs/plans/migrate-nomia-admin-content.md`](../../docs/plans/migrate-nomia-admin-content.md).
 
+These scripts ran once, on 2026-10-18, against the `nomia-cpt` plugin, and
+they still use its names (`nomia_gallery`, `nomia_cpt_*`). `gq-bioeconomia`
+has since replaced that plugin and renamed what it stored
+([plan](../../docs/plans/gq-bioeconomia-plugin.md)), so don't rerun them
+as they are.
+
 ## Files
 
 - `filter-wxr.py` — preps a WXR for `wp import`: strips `<item>` blocks

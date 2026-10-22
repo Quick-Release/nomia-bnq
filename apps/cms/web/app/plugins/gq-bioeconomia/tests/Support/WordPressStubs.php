@@ -34,6 +34,12 @@ if ( ! isset( $GLOBALS['gq_bioeconomia_test_state'] ) ) {
 		'script_translations'  => array(),
 		'registered_graphql_fields' => array(),
 		'post_meta'           => array(),
+		'post_types'           => array(),
+		'taxonomies'           => array(),
+		'registered_term_meta' => array(),
+		'registered_graphql_types' => array(),
+		'options'              => array(),
+		'roles'                => array(),
 		'home_url'             => 'https://example.com',
 	);
 }
@@ -372,6 +378,109 @@ function gq_bioeconomia_reset_test_state(): void {
 		'script_translations'  => array(),
 		'registered_graphql_fields' => array(),
 		'post_meta'           => array(),
+		'post_types'          => array(),
+		'taxonomies'          => array(),
+		'registered_term_meta' => array(),
+		'registered_graphql_types' => array(),
+		'options'             => array(),
+		'roles'               => array(),
 		'home_url'            => 'https://example.com',
 	);
+}
+
+/*
+ * The content model (post types, taxonomies, their meta and the upgrade
+ * routine) also runs on `init`; these record just enough of it for the boot.
+ */
+
+if ( ! function_exists( 'register_activation_hook' ) ) {
+	function register_activation_hook( $file, $callback ) {
+	}
+}
+
+if ( ! function_exists( 'register_deactivation_hook' ) ) {
+	function register_deactivation_hook( $file, $callback ) {
+	}
+}
+
+if ( ! function_exists( 'register_post_type' ) ) {
+	function register_post_type( $post_type, $args = array() ) {
+		$GLOBALS['gq_bioeconomia_test_state']['post_types'][ $post_type ] = $args;
+	}
+}
+
+if ( ! function_exists( 'register_taxonomy' ) ) {
+	function register_taxonomy( $taxonomy, $object_type, $args = array() ) {
+		$GLOBALS['gq_bioeconomia_test_state']['taxonomies'][ $taxonomy ] = array(
+			'object_type' => $object_type,
+			'args'        => $args,
+		);
+	}
+}
+
+if ( ! function_exists( 'taxonomy_exists' ) ) {
+	function taxonomy_exists( $taxonomy ) {
+		return isset( $GLOBALS['gq_bioeconomia_test_state']['taxonomies'][ $taxonomy ] );
+	}
+}
+
+if ( ! function_exists( 'term_exists' ) ) {
+	function term_exists( $term, $taxonomy = '' ) {
+		return true;
+	}
+}
+
+if ( ! function_exists( 'register_term_meta' ) ) {
+	function register_term_meta( $taxonomy, $meta_key, $args = array() ) {
+		$GLOBALS['gq_bioeconomia_test_state']['registered_term_meta'][ $taxonomy ][ $meta_key ] = $args;
+	}
+}
+
+if ( ! function_exists( 'register_graphql_object_type' ) ) {
+	function register_graphql_object_type( $type_name, $config = array() ) {
+		$GLOBALS['gq_bioeconomia_test_state']['registered_graphql_types'][ $type_name ] = $config;
+	}
+}
+
+if ( ! function_exists( 'get_option' ) ) {
+	function get_option( $name, $default_value = false ) {
+		return $GLOBALS['gq_bioeconomia_test_state']['options'][ $name ] ?? $default_value;
+	}
+}
+
+if ( ! function_exists( 'update_option' ) ) {
+	function update_option( $name, $value ) {
+		$GLOBALS['gq_bioeconomia_test_state']['options'][ $name ] = $value;
+
+		return true;
+	}
+}
+
+if ( ! function_exists( 'get_role' ) ) {
+	function get_role( $role ) {
+		return null;
+	}
+}
+
+if ( ! function_exists( 'flush_rewrite_rules' ) ) {
+	function flush_rewrite_rules() {
+	}
+}
+
+if ( ! function_exists( 'get_terms' ) ) {
+	function get_terms( $args = array() ) {
+		return array();
+	}
+}
+
+if ( ! function_exists( 'is_wp_error' ) ) {
+	function is_wp_error( $thing ) {
+		return false;
+	}
+}
+
+if ( ! function_exists( 'get_current_screen' ) ) {
+	function get_current_screen() {
+		return null;
+	}
 }

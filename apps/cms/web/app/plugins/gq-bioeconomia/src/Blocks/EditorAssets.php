@@ -109,7 +109,7 @@ final class EditorAssets {
 
 		$settings = [
 			'frontendBaseUrl' => (string) apply_filters( 'gq_bioeconomia_preview_base_url', $frontend_url ),
-			'previewToken'   => (string) apply_filters( 'gq_bioeconomia_preview_token', $preview_token ),
+			'previewToken'    => (string) apply_filters( 'gq_bioeconomia_preview_token', $preview_token ),
 		];
 
 		return sprintf(

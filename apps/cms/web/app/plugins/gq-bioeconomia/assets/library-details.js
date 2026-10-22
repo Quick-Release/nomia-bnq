@@ -11,7 +11,7 @@
   const { createElement, Fragment } = window.wp.element;
   const { __ } = window.wp.i18n;
   const { registerPlugin } = window.wp.plugins;
-  const { metaKeys } = window.nomiaCptLibraryDetails;
+  const { metaKeys } = window.gqBioeconomiaLibraryDetails;
 
   function NomiaLibraryDetailsPanel() {
     const postType = useSelect((select) => select("core/editor").getCurrentPostType(), []);
@@ -28,13 +28,13 @@
     return createElement(
       PluginDocumentSettingPanel,
       {
-        name: "nomia-library-details",
-        title: __("Detalhes do documento", "nomia-cpt"),
+        name: "gq-bioeconomia-library-details",
+        title: __("Detalhes do documento", "gq-bioeconomia"),
       },
       createElement(TextControl, {
         __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
-        label: __("Ano", "nomia-cpt"),
+        label: __("Ano", "gq-bioeconomia"),
         min: 0,
         type: "number",
         value: year ? String(year) : "",
@@ -43,14 +43,14 @@
       createElement(TextControl, {
         __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
-        label: __("Autor", "nomia-cpt"),
+        label: __("Autor", "gq-bioeconomia"),
         value: meta[metaKeys.author] || "",
         onChange: (value) => update(metaKeys.author, value),
       }),
       createElement(TextControl, {
         __next40pxDefaultSize: true,
         __nextHasNoMarginBottom: true,
-        label: __("Ficheiro", "nomia-cpt"),
+        label: __("Ficheiro", "gq-bioeconomia"),
         placeholder: "https://...",
         type: "url",
         value: fileUrl,
@@ -69,8 +69,8 @@
                 Button,
                 { variant: "secondary", onClick: open },
                 fileUrl
-                  ? __("Substituir ficheiro", "nomia-cpt")
-                  : __("Selecionar ficheiro", "nomia-cpt"),
+                  ? __("Substituir ficheiro", "gq-bioeconomia")
+                  : __("Selecionar ficheiro", "gq-bioeconomia"),
               ),
               fileUrl
                 ? createElement(
@@ -80,7 +80,7 @@
                       isDestructive: true,
                       onClick: () => update(metaKeys.fileUrl, ""),
                     },
-                    __("Remover ficheiro", "nomia-cpt"),
+                    __("Remover ficheiro", "gq-bioeconomia"),
                   )
                 : null,
             ),
@@ -89,5 +89,5 @@
     );
   }
 
-  registerPlugin("nomia-library-details", { render: NomiaLibraryDetailsPanel });
+  registerPlugin("gq-bioeconomia-library-details", { render: NomiaLibraryDetailsPanel });
 })();
