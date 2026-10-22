@@ -117,10 +117,22 @@ this Site has adopted it. Follow the Scope rule above for any handoff.
 
 ## Sessions and orchestration
 
-Sessions run inside T3 Code. A session started from this repository edits
-this repository only. Work for any other repository runs in a new T3 session
-on that repository, in a dedicated worktree of it; this session starts
-nothing in the other checkout itself. Claude and Codex can always act as
-orchestrators: launch that session with `t3_thread_launch` (a `worktree`
-`workspaceStrategy` on the other repository's project), then follow it with
-`t3_thread_wait` / `t3_thread_read` and report its outcome.
+Sessions run inside T3 Code. A session started from this repository executes
+work for this repository only. Any prompt targeting another repository must
+run in a new T3 session on that repository, in its own dedicated worktree.
+Do not execute that prompt from this session or switch this session into the
+other checkout.
+
+Claude and Codex can always act as orchestrators: launch the new session with
+`t3_thread_launch`, selecting the other repository's project and an explicit
+`worktree` `workspaceStrategy`, then follow it with `t3_thread_wait` /
+`t3_thread_read` and report its outcome. Implementation runs in the new
+session; coordination stays here.
+
+## Local agent notes
+
+Before working, read `AGENTS.local.md` in the repository root if it exists.
+It holds machine-local notes that must not be published, such as where
+credentials are stored. It is git-ignored: never commit it or copy its
+contents into tracked files, issues or PRs. Worktrees don't get a copy: read
+it from the main checkout, the first path `git worktree list` prints.

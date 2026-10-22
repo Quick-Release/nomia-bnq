@@ -39,3 +39,6 @@ apps/cms/web/app/languages/
 apps/cms/.ddev/
 apps/cms/migration/
 __pycache__/
+
+# Machine-local agent notes (see AGENTS.md)
+AGENTS.local.md
