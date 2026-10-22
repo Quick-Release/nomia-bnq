@@ -61,11 +61,11 @@ Background image, accessible section label, two CTA titles, two CTA body texts, 
 
 ## Locked controls
 
-The Astro renderer owns typography, spacing, column widths, borders/shadows, responsive behavior, animation, and interactions. Do not expose arbitrary CSS classes or custom HTML. Color values are selected from the editor palette and sanitized again at the Astro boundary.
+The Astro renderer owns typography, spacing, column widths, borders/shadows, responsive behavior, animation, and interactions. Do not expose arbitrary CSS classes or custom HTML. The Site fixes action colors by their internal destination: Economia Circular uses botanical green, Bioeconomia Sustentável (including the legacy `/bioeconomia/` path) uses cyan, and general destinations use gray. These colors, including hover/focus and readable text, match the navigation. Previously saved column colors remain in the content contract but no longer override this identity. Other layout and content options remain editable.
 
 ## Stored-content migration
 
-The visual attributes introduced by the previous migration are now registered canonical fields, so existing saved values are preserved and editable. Unknown style values are ignored by the renderer when they are not safe CSS colors or radii; re-saving a block through Gutenberg normalizes the registered fields.
+The visual attributes introduced by the previous migration are now registered canonical fields, so existing saved values are preserved. The Site's thematic identity takes precedence over saved column colors when rendering. Unknown style values are ignored by the renderer when they are not safe CSS colors or radii; re-saving a block through Gutenberg normalizes the registered fields.
 
 ## Implementation notes for the coding agent
 

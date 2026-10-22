@@ -15,3 +15,13 @@ main.nomia-blocks {
   max-width: none;
   padding: 0;
 }
+
+.nomia-area-link {
+  background-color: var(--nomia-area-background);
+  color: var(--nomia-area-foreground);
+}
+
+.nomia-area-link:hover,
+.nomia-area-link:focus-visible {
+  background-color: var(--nomia-area-hover-background);
+}

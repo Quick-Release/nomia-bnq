@@ -2,10 +2,11 @@
 /**
  * Navigation bar: the menu the editor picked, drawn as bioeconomia.pt's header
  * navigation (`NomiaHeader.astro`, Nomia Website 2 · node 40017025:6739): the
- * translucent teal bar, the first two links as pills, hover/focus submenus, and
+ * translucent teal bar, the links as thematic pills, hover/focus submenus, and
  * below the `nav` breakpoint a drawer opened from the menu button.
  */
 import { headerNavigationTree } from "../../../lib/header-navigation";
+import { thematicAreaStyle } from "../../../lib/thematic-area";
 import { HEADER_GUTTER_X } from "../../../lib/site-gutters";
 import type { WpParsedBlock } from "../../../lib/wp-blocks";
 import { content } from "../../../lib/content";
@@ -18,16 +19,13 @@ interface Props {
 const { block } = Astro.props;
 const attrs = block.attrs as AttrsFor<"getquick/header-navigation">;
 
-const navItems = headerNavigationTree(attrs.menuItems, content().internalOrigins(Astro.site?.origin));
+const internalOrigins = [...content().internalOrigins(Astro.site?.origin), Astro.url.origin];
+const navItems = headerNavigationTree(attrs.menuItems, internalOrigins);
 // A page may hold more than one bar; each drawer needs its own id.
 const drawerId = `nomia-navigation-drawer-${Math.random().toString(36).slice(2, 10)}`;
 
 const topNavLinkBaseClass =
-  "inline-flex items-center gap-1 rounded-lg px-1.5 py-2 whitespace-nowrap no-underline transition-opacity hover:opacity-85 focus-visible:ring-main-teal-400 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:outline-none";
-const topNavPillClasses = [
-  "bg-main-ciano-400 text-main-cinza-700 hover:opacity-90",
-  "bg-main-botnico-400 text-main-cinza-700 hover:opacity-90",
-];
+  "nomia-area-link inline-flex items-center gap-1 rounded-lg px-1.5 py-2 whitespace-nowrap no-underline transition-colors focus-visible:ring-main-teal-400 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:outline-none";
 const linkTarget = (target: string | null) =>
   target === "_blank" ? { target, rel: "noopener noreferrer" } : {};
 ---
@@ -46,12 +44,10 @@ const linkTarget = (target: string | null) =>
           aria-label="Navegação"
         >
           <ul class="font-secondary m-0 hidden min-w-0 list-none p-0 text-xs leading-snug font-medium nav:flex nav:flex-nowrap nav:gap-x-1 nav:gap-y-0">
-            {navItems.map(({ label, href, target, children }, index) => {
-              const topLinkClass = `${topNavLinkBaseClass} ${topNavPillClasses[index] ?? ""}`.trim();
-
+            {navItems.map(({ label, href, target, children }) => {
               return children.length ? (
                 <li class="group relative">
-                  <a href={href} class={topLinkClass} {...linkTarget(target)}>
+                  <a href={href} class={topNavLinkBaseClass} style={thematicAreaStyle(href, internalOrigins)} {...linkTarget(target)}>
                     {label}
                     <svg
                       class="size-4 shrink-0 transition-transform duration-150 group-hover:rotate-180"
@@ -81,7 +77,8 @@ const linkTarget = (target: string | null) =>
                         <li>
                           <a
                             href={sub.href}
-                            class="font-secondary text-neutral-bw-white hover:bg-neutral-bw-white hover:text-main-teal-400 focus-visible:ring-main-teal-600 block rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap no-underline transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-main-teal-400 focus-visible:outline-none"
+                            class="nomia-area-link font-secondary focus-visible:ring-main-teal-600 block rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap no-underline transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-main-teal-400 focus-visible:outline-none"
+                            style={thematicAreaStyle(sub.href, internalOrigins)}
                             {...linkTarget(sub.target)}
                           >
                             {sub.label}
@@ -93,7 +90,7 @@ const linkTarget = (target: string | null) =>
                 </li>
               ) : (
                 <li>
-                  <a href={href} class={topLinkClass} {...linkTarget(target)}>
+                  <a href={href} class={topNavLinkBaseClass} style={thematicAreaStyle(href, internalOrigins)} {...linkTarget(target)}>
                     {label}
                   </a>
                 </li>
@@ -164,7 +161,8 @@ const linkTarget = (target: string | null) =>
                 <li>
                   <a
                     href={href}
-                    class="block rounded-lg px-3 py-3 font-secondary text-base font-semibold text-main-cinza-700 no-underline transition-colors hover:bg-monochrome-light-100 focus-visible:ring-main-teal-400 focus-visible:ring-2 focus-visible:outline-none"
+                    class="nomia-area-link block rounded-lg px-3 py-3 font-secondary text-base font-semibold no-underline transition-colors focus-visible:ring-main-teal-400 focus-visible:ring-2 focus-visible:outline-none"
+                    style={thematicAreaStyle(href, internalOrigins)}
                     {...linkTarget(target)}
                   >
                     {label}
@@ -175,7 +173,8 @@ const linkTarget = (target: string | null) =>
                         <li>
                           <a
                             href={sub.href}
-                            class="block rounded-lg px-3 py-2 font-secondary text-sm font-medium text-main-cinza-600 no-underline transition-colors hover:bg-monochrome-light-100 focus-visible:ring-main-teal-400 focus-visible:ring-2 focus-visible:outline-none"
+                            class="nomia-area-link block rounded-lg px-3 py-2 font-secondary text-sm font-medium no-underline transition-colors focus-visible:ring-main-teal-400 focus-visible:ring-2 focus-visible:outline-none"
+                            style={thematicAreaStyle(sub.href, internalOrigins)}
                             {...linkTarget(sub.target)}
                           >
                             {sub.label}

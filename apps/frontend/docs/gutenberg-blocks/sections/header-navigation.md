@@ -42,10 +42,13 @@ chooses the menu; its look is fixed.
 - `headerNavigationTree` (`src/lib/header-navigation.ts`) nests the items under
   their parents. Links into this site become frontend paths, as the site
   menu's do, and links `safeHref` refuses become `#`.
-- From the `nav` breakpoint (1400px) the top-level items are a row, the first
-  two drawn as the cyan and botanical pills; an item with children opens its
+- From the `nav` breakpoint (1400px) the top-level items are a row, the links
+  drawn as pills: Economia Circular uses botanical green, Bioeconomia uses
+  cyan, and general links use gray. Identity follows the internal destination
+  path, including its subpages, rather than menu order. Hover and keyboard
+  focus keep the same color family as the homepage cards. An item with children opens its
   submenu on hover or focus. Below it the bar shows a menu button that opens a
-  drawer listing every item and its children; the drawer traps focus and
+  drawer listing every item and its children with the same thematic colors; the drawer traps focus and
   closes on Escape, its close button or a click outside it.
 - The bar is sticky at the top of the page, translucent teal (80%) under a
   blur, as the bioeconomia.pt header was (that header was fixed).

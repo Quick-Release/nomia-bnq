@@ -186,7 +186,7 @@ function buildTextStyle(textColor: string): string {
 							<a
 								href={safeShareHref}
 								{...externalLinkAttrs(safeShareHref)}
-								class="text-body absolute bottom-6 left-6 inline-flex min-h-12 items-center justify-center bg-neutral-bw-white px-6 font-semibold text-main-cinza-700 no-underline transition-colors hover:bg-main-laranja-400 focus-visible:ring-2 focus-visible:ring-main-ciano-400 focus-visible:ring-offset-2 focus-visible:ring-offset-main-ciano-700 focus-visible:outline-none"
+								class="text-body absolute bottom-6 left-6 inline-flex min-h-12 items-center justify-center bg-main-cinza-600 px-6 font-semibold text-neutral-bw-white no-underline transition-colors hover:bg-main-cinza-700 focus-visible:bg-main-cinza-700 focus-visible:ring-2 focus-visible:ring-main-ciano-400 focus-visible:ring-offset-2 focus-visible:ring-offset-main-ciano-700 focus-visible:outline-none"
 							>
 								{safeShareLabel}
 							</a>
@@ -200,7 +200,8 @@ function buildTextStyle(textColor: string): string {
 		.action {
 			background-color: var(--action-background);
 		}
-		.action:hover {
+		.action:hover,
+		.action:focus-visible {
 			background-color: var(--action-hover-background);
 		}
 		.action--text-top {
