@@ -59,7 +59,9 @@ the CI Worker deploys on the `v*` tag:
    - the `CONSENT_RATE_LIMITER` binding;
    - the `nomia-bnq-consent-purge` cron Worker, daily at 03:17 UTC.
 3. Run `pnpm frontend:refresh` for the whole Site, so every page and the
-   chrome are stored by the package runtime, with the Legal Contract.
+   chrome are stored by the package runtime, with the Legal Contract. Until
+   it finishes, Nomia-block pages render without their blocks: run it
+   straight after the deploy.
 
 ## 5. Assign the legal pages (production CMS, an administrator)
 
@@ -102,6 +104,7 @@ assignment wasn't rehearsed there. To rehearse it, install this branch's CMS
 
 ```sh
 pnpm doctor               # the consent database's jurisdiction is eu (CONSENT-1 evidence 5)
+pnpm frontend:events:check   # the CMS plugin's events reach the Frontend
 pnpm site:check           # legal-pages, consent-runtime, third-party-hosts (homepage)
 pnpm --filter @nomia-bnq/frontend consent:captures https://nomia.bnq.pt \
   / /contactos/ /economia-circular/paec-2030/ /politica-de-privacidade/ /teste-blocos/
