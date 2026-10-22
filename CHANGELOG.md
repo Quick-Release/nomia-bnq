@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.4.7 - 2026-10-22
+
+Previous release: v0.4.6
+
+- 66069c6 Merge pull request #47 from Quick-Release/claude/library-details
+- f359e35 fix(cms): keep biblioteca document details in post meta
+- 7d942ca docs: route other-repository work through orchestrated T3 sessions
+- 2e5e5cd Merge pull request #46 from Quick-Release/claude/gq-design-dev-main
+- 7379d73 Install gq-design from dev-main via the registry
+- ea24f99 docs: clarify shared content ownership routing
+
 ## v0.4.6 - 2026-10-21
 
 Previous release: v0.4.5
