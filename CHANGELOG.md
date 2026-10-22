@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.6.1 - 2026-10-22
+
+Previous release: v0.6.0
+
+- 5597ee6 fix(cms): stop duplicating global taxonomy entries under Posts
+- 1d161ee docs: point agents to git-ignored AGENTS.local.md
+- 67a8a9a feat: configure thematic colors on taxonomy terms (#9)
+- f9ea8a3 fix: align thematic colors in homepage cards and navigation (#9)
+- 7d740be fix(cms): migrate legacy Nomia details to post meta
+
 ## v0.6.0 - 2026-10-22
 
 Previous release: v0.5.0
