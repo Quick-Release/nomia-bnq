@@ -18,12 +18,22 @@ if (ops.offboarded) {
   process.exit(1);
 }
 
-// A Frontend with the publication store (apps/frontend/migrations) is
+// A Frontend with the publication store (its own apps/frontend/migrations,
+// or, on the content package pair, @getquick/content's `./migrations`,
+// installed in apps/frontend: frontend.run.ts's rule) is
 // refreshed with FRONTEND_REFRESH_TOKEN and receives the CMS's publication
 // events signed with PUBLICATION_EVENT_SECRET, both from Sigillo staging and
 // bound to the Worker as secrets. Deploying without one disables refresh or
 // events, not serving. Their values are never printed.
-if (existsSync(new URL("../../apps/frontend/migrations", import.meta.url))) {
+const frontendApp = new URL("../../apps/frontend/", import.meta.url);
+const contentPackage = new URL("node_modules/@getquick/content/package.json", frontendApp);
+if (
+  existsSync(new URL("migrations", frontendApp)) ||
+  (ops.contentRuntime === "package" &&
+    existsSync(contentPackage) &&
+    typeof JSON.parse(readFileSync(contentPackage, "utf8")).exports?.["./migrations"]?.import ===
+      "string")
+) {
   const secrets = {
     FRONTEND_REFRESH_TOKEN: "gq frontend refresh",
     PUBLICATION_EVENT_SECRET: "the CMS's publication events",
@@ -41,6 +51,33 @@ if (existsSync(new URL("../../apps/frontend/migrations", import.meta.url))) {
       );
     }
   }
+}
+
+// A Frontend with a consent Runtime (infra/consent.ts) serves its CMS consent
+// record reads with CONSENT_READ_TOKEN, from Sigillo staging and bound to the
+// Worker as a secret. Deploying without it disables those reads, not
+// recording. Its value is never printed.
+const consentToken = process.env.CONSENT_READ_TOKEN?.trim();
+if (consentToken && consentToken.length < 32) {
+  console.error(
+    "CONSENT_READ_TOKEN must be at least 32 characters; the Frontend refuses shorter ones.",
+  );
+  process.exit(1);
+}
+// Whether the deploy records consent, by infra/consent.ts's rule: the
+// Frontend's @getquick/content exports its consent migrations.
+const content = new URL(
+  "../../apps/frontend/node_modules/@getquick/content/package.json",
+  import.meta.url,
+);
+const consentRecords =
+  existsSync(content) &&
+  Boolean(JSON.parse(readFileSync(content, "utf8")).exports?.["./consent/migrations"]);
+if (!consentToken && consentRecords) {
+  console.warn(
+    "CONSENT_READ_TOKEN isn't set: this deploy disables the CMS's consent record reads. " +
+      "Visitors' decisions are still recorded. Run gq frontend secrets.",
+  );
 }
 
 const result = spawnSync(

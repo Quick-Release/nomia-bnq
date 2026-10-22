@@ -1,14 +1,14 @@
 /// <reference types="node" />
 // A stand-in for the Worker's D1 binding in tests: the same SQL, the
-// Frontend's own migrations, on Node's SQLite. Open it again on the same file
-// to restart the Worker with its stored state. `unavailable` makes every
-// query fail, as an unreachable D1 would. `batch` runs in one transaction, as
-// D1's does.
+// publication store's migrations (@getquick/content's), on Node's SQLite.
+// Open it again on the same file to restart the Worker with its stored state.
+// `unavailable` makes every query fail, as an unreachable D1 would. `batch`
+// runs in one transaction, as D1's does.
 import { readdirSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import { DatabaseSync } from "node:sqlite";
-import type { SqlDatabase, SqlStatement } from "../lib/publications";
-
-const migrations = new URL("../../migrations/", import.meta.url);
+import type { SqlDatabase, SqlStatement } from "@getquick/content";
+import { migrationsDirectory as migrations } from "@getquick/content/migrations";
 
 export interface TestD1 extends SqlDatabase {
   unavailable: boolean;
@@ -28,7 +28,7 @@ export function openTestD1(path = ":memory:"): TestD1 {
     for (const file of readdirSync(migrations)
       .filter((name) => name.endsWith(".sql"))
       .sort()) {
-      db.exec(readFileSync(new URL(file, migrations), "utf8"));
+      db.exec(readFileSync(join(migrations, file), "utf8"));
     }
   }
 

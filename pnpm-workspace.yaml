@@ -12,6 +12,7 @@ allowBuilds:
 # GETQUICK's own tooling may be installed the day it is released.
 minimumReleaseAgeExclude:
   - "@getquick/site"
+  - "@getquick/content"
 overrides:
   "@effect/platform-node-shared": 4.0.0-rc.115
   vite: npm:@voidzero-dev/vite-plus-core@0.3.0

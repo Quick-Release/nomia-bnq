@@ -8,7 +8,7 @@ import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
-import { nomiaContent } from "./lib/nomia-content";
+import { nomiaContent, nomiaExtension } from "./lib/nomia-content";
 import { openTestD1, type TestD1 } from "./test/sqlite-d1";
 import { data, routes, stubWordPress, type Answer } from "./test/wordpress-stub";
 
@@ -185,6 +185,29 @@ test("only content with Nomia's own blocks is Nomia content; PHP's empty attribu
   expect(content?.pageBackgroundColor).toBeNull();
   expect(content?.blocks[0]!.attrs).toEqual({});
   expect(content?.blocks[0]!.innerBlocks[0]!.attrs).toMatchObject({ label: "Visão geral" });
+});
+
+test("the extension reads Nomia's fields from a page or post, and parses only what it stored", () => {
+  const blocks = JSON.stringify([titleWithLabel]);
+  const page = nomiaExtension.read({
+    kind: "page",
+    fields: { wpBlocksJson: blocks, nomiaPageBackgroundColor: "#f4efe6" },
+  });
+  expect(page?.pageBackgroundColor).toBe("#f4efe6");
+  expect(page?.blocks[0]!.blockName).toBe(titleWithLabel.blockName);
+  const post = nomiaExtension.read({ kind: "post", fields: { wpBlocksJson: blocks } });
+  expect(post?.pageBackgroundColor).toBeNull();
+  expect(nomiaExtension.read({ kind: "page", fields: {} })).toBeUndefined();
+  expect(
+    nomiaExtension.read({ kind: "page", fields: { wpBlocksJson: JSON.stringify([paragraph]) } }),
+  ).toBeUndefined();
+
+  // Stored as JSON and read back as it was, so reconciliation compares it as it is.
+  const stored: unknown = JSON.parse(JSON.stringify(page));
+  expect(nomiaExtension.parse(stored)).toBe(stored);
+  expect(nomiaExtension.parse(undefined)).toBeUndefined();
+  expect(nomiaExtension.parse({ blocks: "not blocks", pageBackgroundColor: null })).toBeUndefined();
+  expect(nomiaExtension.parse({ blocks: [] })).toBeUndefined();
 });
 
 test("a page with Nomia's blocks is served from the store by their components, through a CMS outage", async () => {

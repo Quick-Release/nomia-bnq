@@ -3,6 +3,7 @@
   "schemaVersion": 1,
   "project": "nomia-bnq",
   "variant": "content",
+  "contentRuntime": "package",
   "sigillo": {
     "apiUrl": "https://secrets.getquick.io",
     "projectId": "01M4Y5YZ2BCBWX9GPBJKKB5CH1",

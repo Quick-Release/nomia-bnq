@@ -1,10 +1,14 @@
 ---
+import {
+  blockPresetStyles,
+  presetRootStyle,
+  type DesignPresets,
+  type WordPressImage,
+} from "@getquick/content";
 import WpBlockRenderer from "./wp-blocks/WpBlockRenderer.astro";
 import { isLightHexColor } from "../lib/color-contrast";
 import type { NomiaContent } from "../lib/nomia-content";
-import type { DesignPresets, WordPressImage } from "../lib/wordpress";
 import { normalizeSectionBackground } from "../lib/section-block";
-import { blockPresetStyles, presetRootStyle } from "../lib/wp-block-styles";
 import "../styles/nomia-blocks.css";
 
 // A page or post built with Nomia's blocks, rendered from its stored blocks by

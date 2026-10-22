@@ -1,22 +1,22 @@
 ---
+import { blockPresetStyles, type HomeDelivery, type SiteLanguage } from "@getquick/content";
 import Layout from "../layouts/Layout.astro";
 import NomiaBlocks from "./NomiaBlocks.astro";
+import { content as siteContent } from "../lib/content";
 import { copyFor } from "../lib/copy";
-import type { HomeDelivery } from "../lib/delivery";
-import type { SiteLanguage } from "../lib/site-language";
-import { blockPresetStyles } from "../lib/wp-block-styles";
+import type { NomiaContent } from "../lib/nomia-content";
 
 // A language's home (/, /en/), as its page served it: the page sets the
 // response's status and headers, this renders what it was served.
 interface Props {
-  home: HomeDelivery;
+  home: HomeDelivery<NomiaContent>;
   language: SiteLanguage;
   /** Local development without a CMS: a friendly placeholder instead of the 503. */
   placeholder: boolean;
 }
 
 const { home, language, placeholder } = Astro.props;
-const copy = copyFor(language);
+const copy = copyFor(language, siteContent().multilingual);
 const content = home.kind === "found" ? home.content.home : null;
 const chrome = home.kind === "found" ? home.content.chrome : home.kind === "missing" ? home.chrome : null;
 const alternates = home.kind === "found" ? home.content.alternates : [];
@@ -26,8 +26,8 @@ const isVideoHeroPage = content?.page.hasVideoHero ?? false;
 ---
 
 <Layout title={siteTitle} description={content?.settings.description} chrome={chrome} language={language} alternates={alternates}>
-  {content?.page.nomia ? (
-    <NomiaBlocks nomia={content.page.nomia} design={content} />
+  {content?.page.extension ? (
+    <NomiaBlocks nomia={content.page.extension} design={content} />
   ) : content?.page.content ? (
     <>
       <style is:global set:html={colorRules} />
