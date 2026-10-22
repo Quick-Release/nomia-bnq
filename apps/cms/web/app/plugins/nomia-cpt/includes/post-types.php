@@ -112,17 +112,6 @@ function nomia_cpt_get_post_type_definitions() {
 				'hierarchical'        => false,
 				'menu_position'       => 20,
 				'menu_icon'           => 'dashicons-book-alt',
-				'template'            => array(
-					array(
-						'getquick/library-grid',
-						array(
-							'lock' => array(
-								'move'   => true,
-								'remove' => true,
-							),
-						),
-					),
-				),
 				'supports'            => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'custom-fields' ),
 			),
 		),
