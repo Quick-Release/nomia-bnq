@@ -3,13 +3,9 @@
 // runtime (WPGraphQL reads, the publication store, events and refresh) is the
 // package's; this file only says which Site it serves. The pages and the
 // /gq/events and /gq/refresh routes (managed by gq sync) use it.
-import {
-  createContentRuntime,
-  type ContentBindings,
-  type ContentExtension,
-} from "@getquick/content/server";
+import { createContentRuntime, type ContentBindings } from "@getquick/content/server";
 import ops from "../../../../gq.ops.json";
-import { nomiaContent, storedNomiaContent, type NomiaContent } from "./nomia-content";
+import { nomiaExtension, type NomiaContent } from "./nomia-content";
 
 const manifest = ops as {
   project: string;
@@ -36,22 +32,6 @@ async function bindings(): Promise<ContentBindings> {
   return ((await workers)?.env ?? {}) as ContentBindings;
 }
 
-const text = (value: unknown) => (typeof value === "string" ? value : null);
-
-/**
- * Pages and posts built with Nomia's blocks (the nomia-blocks plugin): their
- * parsed blocks and the page's background colour, read with each of them,
- * stored with the publication and served as its `extension`.
- */
-const nomia: ContentExtension<NomiaContent> = {
-  fields: { page: "wpBlocksJson nomiaPageBackgroundColor", post: "wpBlocksJson" },
-  read: ({ fields }) =>
-    nomiaContent(text(fields.wpBlocksJson), text(fields.nomiaPageBackgroundColor)),
-  // As it was stored, so reconciliation compares it with new reads as it is.
-  parse: (stored) =>
-    storedNomiaContent.safeParse(stored).success ? (stored as NomiaContent) : undefined,
-};
-
 /**
  * This Site's content runtime, made for each request. Only local development
  * reads the CMS live without a publication store; a built Frontend without
@@ -70,7 +50,8 @@ export function content() {
     development: import.meta.env.DEV,
     isServer: () => import.meta.env.SSR,
     bindings,
-    extension: nomia,
+    // Nomia's blocks, stored with each page and post (src/lib/nomia-content.ts).
+    extension: nomiaExtension,
   });
 }
 

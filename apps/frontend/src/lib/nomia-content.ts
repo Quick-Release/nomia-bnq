@@ -1,3 +1,4 @@
+import type { ContentExtension } from "@getquick/content/server";
 import { z } from "astro/zod";
 import { parseWpBlocksJson, type WpParsedBlock } from "./wp-blocks";
 
@@ -63,3 +64,20 @@ export const storedNomiaContent = z.object({
   blocks: z.array(parsedBlock),
   pageBackgroundColor: z.string().nullable(),
 });
+
+const text = (value: unknown) => (typeof value === "string" ? value : null);
+
+/**
+ * Pages and posts built with Nomia's blocks, as the content runtime's
+ * extension (src/lib/content.ts): their parsed blocks and the page's
+ * background colour, read with each of them, stored with the publication and
+ * served as its `extension`.
+ */
+export const nomiaExtension: ContentExtension<NomiaContent> = {
+  fields: { page: "wpBlocksJson nomiaPageBackgroundColor", post: "wpBlocksJson" },
+  read: ({ fields }) =>
+    nomiaContent(text(fields.wpBlocksJson), text(fields.nomiaPageBackgroundColor)),
+  // As it was stored, so reconciliation compares it with new reads as it is.
+  parse: (stored) =>
+    storedNomiaContent.safeParse(stored).success ? (stored as NomiaContent) : undefined,
+};
