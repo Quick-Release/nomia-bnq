@@ -7,6 +7,7 @@ import {
   type WordPressImage,
 } from "@getquick/content";
 import WpBlockRenderer from "./wp-blocks/WpBlockRenderer.astro";
+import { thematicColorStyles } from "../lib/thematic-area";
 import { isLightHexColor } from "../lib/color-contrast";
 import { gatedNomiaContent } from "../lib/consent";
 import type { NomiaContent } from "../lib/nomia-content";
@@ -41,6 +42,7 @@ const surface = background
 
 {presets && <style is:global set:html={presets} />}
 <style is:global set:html={colorRules} />
+<style is:global set:html={thematicColorStyles(nomia.thematicColors)} />
 <main class:list={["nomia-blocks", surface?.class]} style={surface?.style}>
   <WpBlockRenderer blocks={nomia.blocks} bare wrapCoreBlocks pageFeaturedImage={featuredImage} />
 </main>

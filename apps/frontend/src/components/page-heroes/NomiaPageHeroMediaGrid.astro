@@ -41,6 +41,7 @@ interface Props {
 	secondBorderRadius?: string;
 	textVerticalAlign?: PageHeroMediaGridTextVerticalAlign;
 	videoBorderRadius?: string;
+	thematicStyles?: [string, string];
 	shareHref?: string;
 	shareLabel?: string;
 }
@@ -65,6 +66,7 @@ const {
 	secondBorderRadius = PAGE_HERO_MEDIA_GRID_DEFAULTS.secondBorderRadius,
 	textVerticalAlign = PAGE_HERO_MEDIA_GRID_DEFAULTS.textVerticalAlign,
 	videoBorderRadius = PAGE_HERO_MEDIA_GRID_DEFAULTS.videoBorderRadius,
+	thematicStyles,
 	shareHref = PAGE_HERO_MEDIA_GRID_DEFAULTS.shareHref,
 	shareLabel = PAGE_HERO_MEDIA_GRID_DEFAULTS.shareLabel,
 } = Astro.props;
@@ -124,9 +126,9 @@ function buildTextStyle(textColor: string): string {
 					const titleColor = isFirst ? firstTitleColor : secondTitleColor;
 					const textColor = isFirst ? firstTextColor : secondTextColor;
 					const borderRadius = isFirst ? firstBorderRadius : secondBorderRadius;
-					const actionStyle = buildActionStyle(baseColor, hoverColor, borderRadius);
-					const titleStyle = buildTitleStyle(titleColor);
-					const textStyle = buildTextStyle(textColor);
+					const actionStyle = `${buildActionStyle(baseColor, hoverColor, borderRadius)} ${thematicStyles?.[index] ?? ""}`;
+					const titleStyle = thematicStyles ? "color: var(--nomia-area-foreground)" : buildTitleStyle(titleColor);
+					const textStyle = thematicStyles ? "color: var(--nomia-area-foreground)" : buildTextStyle(textColor);
 
 					return action.href ? (
 						<a
@@ -198,11 +200,11 @@ function buildTextStyle(textColor: string): string {
 	</div>
 	<style>
 		.action {
-			background-color: var(--action-background);
+			background-color: var(--nomia-area-background, var(--action-background));
 		}
 		.action:hover,
 		.action:focus-visible {
-			background-color: var(--action-hover-background);
+			background-color: var(--nomia-area-hover-background, var(--action-hover-background));
 		}
 		.action--text-top {
 			justify-content: flex-start;

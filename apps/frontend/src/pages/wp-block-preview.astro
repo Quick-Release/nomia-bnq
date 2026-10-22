@@ -6,6 +6,7 @@
  * /wp-block-preview?block=getquick/page-hero-static&attrs=<urlencoded-json>
  * /wp-block-preview?block=getquick/page-hero-static&attrs64=<base64url-json>
  */
+import { thematicColorStyles } from "../lib/thematic-area";
 import WpBlock from "../components/wp-blocks/WpBlock.astro";
 import type { WpParsedBlock } from "../lib/wp-blocks";
 import { parsePreviewRequest } from "../lib/wp-block-preview-format";
@@ -37,12 +38,13 @@ const presets = design ? presetRootStyle(design.spacingSizes, design.colors) : "
 <html lang="pt">
   <head>
     {presets && <style is:global set:html={presets} />}
+    <style is:global set:html={thematicColorStyles(attributes.ok ? attributes.attributes.nomiaThematicColors : [])} />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="robots" content="noindex,nofollow" />
     <title>Nomia block preview</title>
   </head>
-  <body class="bg-neutral-bw-white text-main-cinza-700 min-h-dvh" data-nomia-wp-block-preview>
+  <body class="nomia-blocks bg-neutral-bw-white text-main-cinza-700 min-h-dvh" data-nomia-wp-block-preview>
     <script>
       import {
         buildPreviewResizeMessage,

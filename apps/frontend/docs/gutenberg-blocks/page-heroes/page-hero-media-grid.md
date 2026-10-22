@@ -61,7 +61,7 @@ Background image, accessible section label, two CTA titles, two CTA body texts, 
 
 ## Locked controls
 
-The Astro renderer owns typography, spacing, column widths, borders/shadows, responsive behavior, animation, and interactions. Do not expose arbitrary CSS classes or custom HTML. The Site fixes action colors by their internal destination: Economia Circular uses botanical green, Bioeconomia Sustentável (including the legacy `/bioeconomia/` path) uses cyan, and general destinations use gray. These colors, including hover/focus and readable text, match the navigation. Previously saved column colors remain in the content contract but no longer override this identity. Other layout and content options remain editable.
+The Astro renderer owns typography, spacing, column widths, borders/shadows, responsive behavior, animation, and interactions. Do not expose arbitrary CSS classes or custom HTML. The Site reads action colors from the **Cor** field on Temáticas terms. Internal destination paths identify their term by slug (including subpages and the legacy `/bioeconomia/` route). General destinations and terms without a color use gray. Hover/focus and readable text colors are derived automatically. These colors match the navigation. Previously saved column colors remain in the content contract but no longer override the term color. Other layout and content options remain editable.
 
 ## Stored-content migration
 

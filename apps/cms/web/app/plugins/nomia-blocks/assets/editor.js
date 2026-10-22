@@ -95,7 +95,7 @@
     return buildPreviewRequestUrl({
       baseUrl: NOMIA_FE_BASE_URL,
       blockName,
-      attributes,
+      attributes: { ...attributes, nomiaThematicColors: window.getquickNomiaThematicColors ?? [] },
       previewToken: PREVIEW_TOKEN,
     });
   }

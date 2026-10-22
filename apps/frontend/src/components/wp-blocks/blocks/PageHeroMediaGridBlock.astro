@@ -1,6 +1,6 @@
 ---
 import { content } from "../../../lib/content";
-import { thematicAreaColors } from "../../../lib/thematic-area";
+import { thematicAreaStyle } from "../../../lib/thematic-area";
 import { firstPartyMedia } from "../../../lib/consent";
 import NomiaPageHeroMediaGrid from "../../page-heroes/NomiaPageHeroMediaGrid.astro";
 import type { PageHeroMediaGridAction } from "../../page-heroes/NomiaPageHeroMediaGrid.astro";
@@ -45,8 +45,10 @@ const actions: [PageHeroMediaGridAction, PageHeroMediaGridAction] = [
 
 // The Site's thematic identity overrides legacy card colors stored in the CMS.
 const internalOrigins = [...content().internalOrigins(Astro.site?.origin), Astro.url.origin];
-const firstColors = thematicAreaColors(actions[0].href, internalOrigins);
-const secondColors = thematicAreaColors(actions[1].href, internalOrigins);
+const thematicStyles: [string, string] = [
+  thematicAreaStyle(actions[0].href, internalOrigins),
+  thematicAreaStyle(actions[1].href, internalOrigins),
+];
 const firstBorderRadius = optionalText(attrs.firstBorderRadius) || PAGE_HERO_MEDIA_GRID_DEFAULTS.firstBorderRadius;
 const secondBorderRadius = optionalText(attrs.secondBorderRadius) || PAGE_HERO_MEDIA_GRID_DEFAULTS.secondBorderRadius;
 
@@ -75,15 +77,8 @@ const canRender = Boolean(backgroundImageSrc || actions.some((item) => item.titl
 			textVerticalAlign={textVerticalAlign}
 			shareHref={shareHref}
 			shareLabel={shareLabel}
-			firstBackgroundColor={firstColors.background}
-			firstHoverBackgroundColor={firstColors.hoverBackground}
-			firstTitleColor={firstColors.foreground}
-			firstTextColor={firstColors.foreground}
+			thematicStyles={thematicStyles}
 			firstBorderRadius={firstBorderRadius}
-			secondBackgroundColor={secondColors.background}
-			secondHoverBackgroundColor={secondColors.hoverBackground}
-			secondTitleColor={secondColors.foreground}
-			secondTextColor={secondColors.foreground}
 			secondBorderRadius={secondBorderRadius}
 			videoBorderRadius={videoBorderRadius}
 		/>

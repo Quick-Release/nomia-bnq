@@ -1,4 +1,5 @@
 import type { ContentExtension } from "@getquick/content/server";
+import { readThematicColors, type ThematicColor } from "./thematic-area";
 import { z } from "astro/zod";
 import { parseWpBlocksJson, type WpParsedBlock } from "./wp-blocks";
 
@@ -10,6 +11,8 @@ import { parseWpBlocksJson, type WpParsedBlock } from "./wp-blocks";
 export interface NomiaContent {
   /** WordPress's parsed blocks (`parse_blocks()`), from the `wpBlocksJson` field. */
   blocks: WpParsedBlock[];
+  /** Temáticas colors, snapshotted with this publication. */
+  thematicColors?: ThematicColor[];
   /** The page's background colour (nomia-blocks' page setting), if it has one. */
   pageBackgroundColor: string | null;
 }
@@ -42,10 +45,15 @@ function containsNomiaBlock(blocks: WpParsedBlock[]): boolean {
 export function nomiaContent(
   wpBlocksJson: string | null | undefined,
   pageBackgroundColor: string | null | undefined,
+  thematicColors?: unknown,
 ): NomiaContent | undefined {
   const blocks = parseWpBlocksJson(wpBlocksJson).map(normalizeBlock);
   if (!containsNomiaBlock(blocks)) return undefined;
-  return { blocks, pageBackgroundColor: pageBackgroundColor || null };
+  return {
+    blocks,
+    pageBackgroundColor: pageBackgroundColor || null,
+    thematicColors: readThematicColors(thematicColors),
+  };
 }
 
 // The stored shape. A block is kept as WordPress parsed it; the renderers
@@ -62,6 +70,7 @@ const parsedBlock: z.ZodType<WpParsedBlock> = z.lazy(() =>
 
 export const storedNomiaContent = z.object({
   blocks: z.array(parsedBlock),
+  thematicColors: z.array(z.object({ slug: z.string(), color: z.string() })).optional(),
   pageBackgroundColor: z.string().nullable(),
 });
 
@@ -74,9 +83,16 @@ const text = (value: unknown) => (typeof value === "string" ? value : null);
  * served as its `extension`.
  */
 export const nomiaExtension: ContentExtension<NomiaContent> = {
-  fields: { page: "wpBlocksJson nomiaPageBackgroundColor", post: "wpBlocksJson" },
+  fields: {
+    page: "wpBlocksJson nomiaPageBackgroundColor nomiaThematicColors { slug color }",
+    post: "wpBlocksJson nomiaThematicColors { slug color }",
+  },
   read: ({ fields }) =>
-    nomiaContent(text(fields.wpBlocksJson), text(fields.nomiaPageBackgroundColor)),
+    nomiaContent(
+      text(fields.wpBlocksJson),
+      text(fields.nomiaPageBackgroundColor),
+      fields.nomiaThematicColors,
+    ),
   // As it was stored, so reconciliation compares it with new reads as it is.
   parse: (stored) =>
     storedNomiaContent.safeParse(stored).success ? (stored as NomiaContent) : undefined,

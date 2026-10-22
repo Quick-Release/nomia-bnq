@@ -603,7 +603,7 @@ if (! function_exists('is_admin')) {
 if (! function_exists('current_user_can')) {
     function current_user_can($capability, ...$args)
     {
-        return true;
+        return $GLOBALS['lgm_test_state']['capability_overrides'][$capability] ?? true;
     }
 }
 
@@ -1155,5 +1155,62 @@ class Nomia_Stub_Theme
     public function get(string $header): string
     {
         return $this->headers[$header] ?? '';
+    }
+}
+
+
+if (! function_exists('sanitize_hex_color')) {
+    function sanitize_hex_color($color)
+    {
+        return preg_match('/^#(?:[a-fA-F0-9]{3}|[a-fA-F0-9]{6})$/', $color) ? $color : null;
+    }
+}
+
+if (! function_exists('register_term_meta')) {
+    function register_term_meta($taxonomy, $key, $args)
+    {
+        $GLOBALS['lgm_test_state']['registered_term_meta'][$taxonomy][$key] = $args;
+    }
+}
+
+if (! function_exists('get_term_meta')) {
+    function get_term_meta($id, $key, $single = false)
+    {
+        return $GLOBALS['lgm_test_state']['term_meta'][$id][$key] ?? '';
+    }
+}
+
+if (! function_exists('update_term_meta')) {
+    function update_term_meta($id, $key, $value)
+    {
+        $GLOBALS['lgm_test_state']['term_meta'][$id][$key] = $value;
+        return true;
+    }
+}
+
+if (! function_exists('metadata_exists')) {
+    function metadata_exists($type, $id, $key)
+    {
+        return array_key_exists($key, $GLOBALS['lgm_test_state'][$type . '_meta'][$id] ?? []);
+    }
+}
+
+if (! function_exists('get_taxonomy')) {
+    function get_taxonomy($taxonomy)
+    {
+        return isset($GLOBALS['lgm_test_state']['taxonomies'][$taxonomy])
+            ? (object) ['cap' => (object) ['edit_terms' => 'manage_categories']]
+            : false;
+    }
+}
+
+if (! function_exists('get_terms')) {
+    function get_terms($args = [])
+    {
+        $taxonomy = $args['taxonomy'] ?? '';
+        return array_map(
+            fn($id) => get_term($id, $taxonomy),
+            array_keys($GLOBALS['lgm_test_state']['term_objects'][$taxonomy] ?? []),
+        );
     }
 }

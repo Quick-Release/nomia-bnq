@@ -49,6 +49,7 @@ interface Entry {
   content: string;
   wpBlocksJson: string | null;
   nomiaPageBackgroundColor?: string | null;
+  nomiaThematicColors?: Array<{ slug: string; color: string }>;
 }
 
 // GQ Design's palette, as WordPress gives it (designTokens).
@@ -262,4 +263,43 @@ test("a page without Nomia's blocks is served as WordPress rendered it", async (
   expect(page.html).not.toContain('class="nomia-blocks"');
   expect(page.html).toContain('<div class="prose-wp"');
   expect(page.html).toContain("Uma página sem blocos Nomia.");
+});
+
+test("a changed Temáticas color is stored with the page and survives a CMS outage", async () => {
+  const entry = published.get("/economia-circular/")!;
+  entry.nomiaThematicColors = [{ slug: "economia-circular", color: "#123456" }];
+  wordpress();
+  await refresh();
+  cmsDown();
+  const before = await visit("/economia-circular/");
+  expect(before.html).toContain("--nomia-tematica-economia-circular-background: #123456");
+  expect(before.html).toContain("--nomia-tematica-economia-circular-foreground: #ffffff");
+
+  entry.nomiaThematicColors = [{ slug: "economia-circular", color: "#ffeeaa" }];
+  wordpress();
+  await refresh();
+  const fetchMock = cmsDown();
+  const after = await visit("/economia-circular/");
+  expect(after.html).toContain("--nomia-tematica-economia-circular-background: #ffeeaa");
+  expect(after.html).toContain("--nomia-tematica-economia-circular-foreground: #000000");
+  expect(after.html).not.toContain("background: #123456");
+  expect(fetchMock).not.toHaveBeenCalled();
+});
+
+test("untrusted or missing term colors cannot inject a stylesheet", async () => {
+  const entry = published.get("/economia-circular/")!;
+  entry.nomiaThematicColors = [
+    { slug: "economia-circular", color: "#123456; } body { display:none }" },
+    { slug: "bad}</style><script>alert(1)</script>", color: "#123456" },
+    { slug: "sem-cor", color: "" },
+  ];
+  wordpress();
+  await refresh();
+  cmsDown();
+  const page = await visit("/economia-circular/");
+  expect(page.html).not.toContain("alert(1)");
+  expect(page.html).not.toContain("body { display:none }");
+  expect(page.html).toContain(
+    "--nomia-tematica-sem-cor-background: var(--wp--preset--color--cinza-600)",
+  );
 });

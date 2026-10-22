@@ -43,10 +43,13 @@ chooses the menu; its look is fixed.
   their parents. Links into this site become frontend paths, as the site
   menu's do, and links `safeHref` refuses become `#`.
 - From the `nav` breakpoint (1400px) the top-level items are a row, the links
-  drawn as pills: Economia Circular uses botanical green, Bioeconomia uses
-  cyan, and general links use gray. Identity follows the internal destination
-  path, including its subpages, rather than menu order. Hover and keyboard
-  focus keep the same color family as the homepage cards. An item with children opens its
+  drawn as pills using the **Cor** field of their Temáticas term. Identity
+  follows the internal destination’s first path segment (the term slug),
+  including subpages, rather than menu order. The legacy `/bioeconomia/`
+  route resolves to `bioeconomia-sustentavel`; taxonomy archive links are
+  recognized too. Links without a configured term color use gray. Hover and
+  keyboard focus derive from the same selected color as the homepage cards,
+  with automatic black/white text contrast. An item with children opens its
   submenu on hover or focus. Below it the bar shows a menu button that opens a
   drawer listing every item and its children with the same thematic colors; the drawer traps focus and
   closes on Escape, its close button or a click outside it.

@@ -139,3 +139,20 @@ structured-blocks:sync` writes the generated files here
   grid no longer read WordPress when their lists are empty.
 - `docs/gutenberg-blocks/` documents each block; `tests/` holds their tests
   (`pnpm test:blocks`, also run by `pnpm test`).
+
+## Temáticas colors
+
+Edit a term under **Posts → Temáticas** and select **Cor**. The homepage cards
+and navigation pills use that term's color, matching internal area paths to
+term slugs. Clearing the field uses neutral gray. Before the first edit,
+Economia Circular retains green (`#a4d663`) and Bioeconomia Sustentável retains
+cyan (`#2ad2c9`). Hover/focus colors and black/white text contrast are automatic.
+
+`nomia-cpt` exposes the palette as `nomiaThematicColors { slug color }` on
+pages/posts. The Site's content extension stores it with each publication;
+rendering uses that snapshot and does not query WordPress. Color edits reach
+published pages through the runtime's existing reconciliation rereads, or
+immediately after `pnpm frontend:refresh`. Deploy the CMS field before the
+Frontend that queries it, then refresh the publications. Gutenberg previews
+receive the same palette when the editor loads; reload an open editor after
+changing a term's color.
