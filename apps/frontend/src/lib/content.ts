@@ -7,6 +7,7 @@
 import type { ConsentBindings } from "@getquick/content/consent/server";
 import { createContentRuntime, type ContentBindings } from "@getquick/content/server";
 import ops from "../../../../gq.ops.json";
+import { RUNTIME_COLLECTIONS } from "./content-collections";
 import { nomiaExtension, type NomiaContent } from "./nomia-content";
 
 const manifest = ops as {
@@ -70,6 +71,10 @@ export function content() {
     // Published bodies' embeds become consent placeholders at delivery, and
     // gq-config's Legal Contract and GA4 toggle are read into each chrome.
     consent: { services: CONSENT_SERVICES, firstPartyHosts: MEDIA_HOSTS, cmsSettings: true },
+    // nomia-cpt's types, stored as collections so their items are served and
+    // listed from the store (src/lib/content-collections.ts). 0.2.0 doesn't
+    // declare the setting yet and ignores it: drop the cast on the bump.
+    ...({ collections: RUNTIME_COLLECTIONS } as object),
   });
 }
 

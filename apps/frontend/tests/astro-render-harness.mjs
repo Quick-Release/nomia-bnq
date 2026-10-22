@@ -47,6 +47,28 @@ export async function createAstroRenderHarness() {
 
       return { document, html };
     },
+    /** Renders one block for a visit to `url`, whose address a block may read. */
+    async renderAt(url, block) {
+      if (closed) throw new Error("Astro render harness is closed");
+
+      const html = await container.renderToString(WpBlock, {
+        props: { block },
+        request: new Request(url),
+      });
+      const document = new JSDOM(`<main>${html}</main>`).window.document;
+
+      return { document, html };
+    },
+    /** Renders any component of the app, by its path from the app's root. */
+    async renderComponent(path, props = {}) {
+      if (closed) throw new Error("Astro render harness is closed");
+
+      const { default: Component } = await viteServer.ssrLoadModule(path);
+      const html = await container.renderToString(Component, { props });
+      const document = new JSDOM(`<main>${html}</main>`).window.document;
+
+      return { document, html };
+    },
     async renderBlocks(blocks, props = {}) {
       if (closed) throw new Error("Astro render harness is closed");
 

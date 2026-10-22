@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-19T09:23:40+00:00\n"
+"POT-Creation-Date: 2026-10-22T17:34:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: getquick-nomia-blocks\n"
@@ -204,6 +204,29 @@ msgstr ""
 msgid "Adicionar link — sem link o botão não aparece"
 msgstr ""
 
+#: blocks/content-filters/index.js:26
+#: blocks/content-listing/index.js:57
+msgid "Tipo de conteúdo"
+msgstr ""
+
+#: blocks/content-filters/index.js:27
+msgid "O mesmo da listagem desta página."
+msgstr ""
+
+#: blocks/content-filters/index.js:33
+msgid "Mostrar a caixa de pesquisa"
+msgstr ""
+
+#. translators: %s: taxonomy name, e.g. "Temática".
+#: blocks/content-filters/index.js:42
+#, js-format
+msgid "Filtrar por %s"
+msgstr ""
+
+#: blocks/content-filters/index.js:58
+msgid "Pré-visualização dos filtros"
+msgstr ""
+
 #: blocks/content-grid-filters/index.js:102
 msgid "Name"
 msgstr ""
@@ -375,6 +398,54 @@ msgstr ""
 
 #: blocks/content-list/index.js:268
 msgid "Add an episode to start editing the podcast list."
+msgstr ""
+
+#: blocks/content-listing/index.js:16
+msgid "Lista de títulos"
+msgstr ""
+
+#: blocks/content-listing/index.js:17
+msgid "Grelha de miniaturas"
+msgstr ""
+
+#: blocks/content-listing/index.js:20
+msgid "Grelha de miniaturas com título por cima"
+msgstr ""
+
+#: blocks/content-listing/index.js:64
+msgid "Mostrar só uma categoria de"
+msgstr ""
+
+#: blocks/content-listing/index.js:67
+msgid "Todos os conteúdos"
+msgstr ""
+
+#: blocks/content-listing/index.js:74
+msgid "Categoria"
+msgstr ""
+
+#: blocks/content-listing/index.js:77
+msgid "Escolha uma"
+msgstr ""
+
+#: blocks/content-listing/index.js:77
+msgid "A carregar…"
+msgstr ""
+
+#: blocks/content-listing/index.js:84
+msgid "Apresentação"
+msgstr ""
+
+#: blocks/content-listing/index.js:90
+msgid "Conteúdos por página"
+msgstr ""
+
+#: blocks/content-listing/index.js:97
+msgid "Mostrar paginação"
+msgstr ""
+
+#: blocks/content-listing/index.js:105
+msgid "Pré-visualização da listagem"
 msgstr ""
 
 #: blocks/cta-results/index.js:94
@@ -1252,6 +1323,42 @@ msgctxt "block keyword"
 msgid "cartão"
 msgstr ""
 
+#: blocks/content-filters/block.json
+msgctxt "block title"
+msgid "Pesquisa e filtros"
+msgstr ""
+
+#: blocks/content-filters/block.json
+msgctxt "block description"
+msgid "Caixa de pesquisa e filtros por categoria, temática e setor para a listagem de conteúdos da mesma página."
+msgstr ""
+
+#: blocks/content-filters/block.json
+msgctxt "block keyword"
+msgid "pesquisa"
+msgstr ""
+
+#: blocks/content-filters/block.json
+msgctxt "block keyword"
+msgid "filtros"
+msgstr ""
+
+#: blocks/content-filters/block.json
+msgctxt "block keyword"
+msgid "search"
+msgstr ""
+
+#: blocks/content-filters/block.json
+msgctxt "block keyword"
+msgid "filters"
+msgstr ""
+
+#: blocks/content-filters/block.json
+#: blocks/content-listing/block.json
+msgctxt "block keyword"
+msgid "arquivo"
+msgstr ""
+
 #: blocks/content-grid-filters/block.json
 msgctxt "block title"
 msgid "Grelha de conteúdos com filtros"
@@ -1270,6 +1377,41 @@ msgstr ""
 #: blocks/content-list/block.json
 msgctxt "block description"
 msgid "Lista de episódios com imagem, número, data e botões para ouvir e partilhar."
+msgstr ""
+
+#: blocks/content-listing/block.json
+msgctxt "block title"
+msgid "Listagem de conteúdos"
+msgstr ""
+
+#: blocks/content-listing/block.json
+msgctxt "block description"
+msgid "Lista os conteúdos publicados de um tipo, como os documentos da Biblioteca ou os eventos, com paginação."
+msgstr ""
+
+#: blocks/content-listing/block.json
+msgctxt "block keyword"
+msgid "listagem"
+msgstr ""
+
+#: blocks/content-listing/block.json
+msgctxt "block keyword"
+msgid "archive"
+msgstr ""
+
+#: blocks/content-listing/block.json
+msgctxt "block keyword"
+msgid "listing"
+msgstr ""
+
+#: blocks/content-listing/block.json
+msgctxt "block keyword"
+msgid "biblioteca"
+msgstr ""
+
+#: blocks/content-listing/block.json
+msgctxt "block keyword"
+msgid "eventos"
 msgstr ""
 
 #: blocks/cta-results/block.json

@@ -85,6 +85,174 @@ var getquickNomiaFrontendRules = (function(exports) {
 		return lines;
 	}
 	//#endregion
+	//#region src/lib/content-collections.ts
+	var GLOBAL_TAXONOMIES = [{
+		taxonomy: "tematicas",
+		param: "tematica",
+		label: "Temática"
+	}, {
+		taxonomy: "setor_atividade",
+		param: "setor",
+		label: "Setor de atividade"
+	}];
+	var CONTENT_COLLECTIONS = {
+		biblioteca: {
+			label: "Biblioteca",
+			type: "BIBLIOTECA",
+			taxonomies: [{
+				taxonomy: "categoria_biblioteca",
+				param: "categoria",
+				label: "Categoria"
+			}, ...GLOBAL_TAXONOMIES]
+		},
+		eventos: {
+			label: "Eventos",
+			type: "EVENTOS",
+			taxonomies: [{
+				taxonomy: "tipo_evento",
+				param: "tipo",
+				label: "Tipo de evento"
+			}, ...GLOBAL_TAXONOMIES]
+		},
+		oportunidades: {
+			label: "Oportunidades",
+			type: "OPORTUNIDADES",
+			taxonomies: [{
+				taxonomy: "categoria_oportunidade",
+				param: "categoria",
+				label: "Categoria"
+			}, ...GLOBAL_TAXONOMIES]
+		},
+		recursos_educativos: {
+			label: "Recursos educativos",
+			type: "RECURSOS_EDUCATIVOS",
+			taxonomies: GLOBAL_TAXONOMIES
+		},
+		glossario: {
+			label: "Glossário",
+			type: "GLOSSARIO",
+			taxonomies: GLOBAL_TAXONOMIES
+		},
+		indicadores: {
+			label: "Indicadores",
+			type: "INDICADORES",
+			taxonomies: GLOBAL_TAXONOMIES
+		},
+		infografias: {
+			label: "Infografias",
+			type: "INFOGRAFIAS",
+			taxonomies: GLOBAL_TAXONOMIES
+		},
+		videos: {
+			label: "Vídeos",
+			type: "VIDEOS",
+			taxonomies: GLOBAL_TAXONOMIES
+		},
+		podcasts: {
+			label: "Podcasts",
+			type: "PODCASTS",
+			taxonomies: GLOBAL_TAXONOMIES
+		},
+		ferramentas: {
+			label: "Ferramentas",
+			type: "FERRAMENTAS",
+			taxonomies: GLOBAL_TAXONOMIES
+		},
+		plataformas: {
+			label: "Plataformas",
+			type: "PLATAFORMAS",
+			taxonomies: GLOBAL_TAXONOMIES
+		},
+		bases_de_dados: {
+			label: "Bases de dados",
+			type: "BASES_DE_DADOS",
+			taxonomies: GLOBAL_TAXONOMIES
+		}
+	};
+	/**
+	* The runtime's `collections` setting: which nomia-cpt types gq-content
+	* stores, and the taxonomies their items keep (src/lib/content.ts).
+	*/
+	var RUNTIME_COLLECTIONS = Object.fromEntries(Object.entries(CONTENT_COLLECTIONS).map(([key, collection]) => [key, {
+		type: collection.type,
+		taxonomies: collection.taxonomies.map(({ taxonomy }) => taxonomy)
+	}]));
+	var COLLECTION_KEYS = Object.keys(CONTENT_COLLECTIONS);
+	/** The Listing's presentations, ported from bioeconomia.pt's archive shells. */
+	var LISTING_DISPLAYS = [
+		"list",
+		"thumbnail-grid",
+		"titled-thumbnail-grid"
+	];
+	var LISTING_PER_PAGE_DEFAULT = 12;
+	var LISTING_PER_PAGE_MAX = 48;
+	/** The query parameters every Listing reads besides its collection's taxonomies. */
+	var LISTING_PARAMS = {
+		search: "q",
+		page: "pagina"
+	};
+	function readCollection(value) {
+		return typeof value === "string" && value in CONTENT_COLLECTIONS ? value : null;
+	}
+	function readListingDisplay(value) {
+		return LISTING_DISPLAYS.includes(value) ? value : "list";
+	}
+	function readPerPage(value) {
+		const count = typeof value === "number" ? value : Number(value);
+		if (!Number.isInteger(count) || count < 1) return 12;
+		return Math.min(count, 48);
+	}
+	/**
+	* The query for a visit. A term fixed in the block always applies; the
+	* Filters block's parameters narrow it further. A parameter for a taxonomy
+	* the editor already fixed is ignored, so a category Page can't be widened.
+	*/
+	function listingQuery(settings, params) {
+		const collection = CONTENT_COLLECTIONS[settings.collection];
+		const terms = {};
+		const fixed = settings.taxonomy && settings.term ? settings.taxonomy : null;
+		if (fixed) terms[fixed] = [settings.term];
+		for (const { taxonomy, param } of collection.taxonomies) {
+			if (taxonomy === fixed) continue;
+			const slugs = params.getAll(param).map((slug) => slug.trim()).filter(Boolean);
+			if (slugs.length > 0) terms[taxonomy] = [...new Set(slugs)];
+		}
+		const search = params.get(LISTING_PARAMS.search)?.trim();
+		const page = Number(params.get(LISTING_PARAMS.page));
+		return {
+			collection: settings.collection,
+			terms,
+			...search ? { search } : {},
+			page: Number.isInteger(page) && page > 1 ? page : 1,
+			perPage: settings.perPage
+		};
+	}
+	/** Whether the visitor narrowed the listing, beyond the term the editor fixed. */
+	function isFilteredByVisitor(settings, query) {
+		const fixed = settings.taxonomy && settings.term ? settings.taxonomy : null;
+		return Boolean(query.search) || Object.keys(query.terms).some((taxonomy) => taxonomy !== fixed);
+	}
+	/** The same address on another page of the listing, keeping its filters. */
+	function listingPageHref(url, page) {
+		const params = new URLSearchParams(url.search);
+		if (page > 1) params.set(LISTING_PARAMS.page, String(page));
+		else params.delete(LISTING_PARAMS.page);
+		const query = params.toString();
+		return query ? `${url.pathname}?${query}` : url.pathname;
+	}
+	/** The Listing's pagination links for a visit: every page, and the previous and next. */
+	function listingPagination(url, page, pages) {
+		return {
+			pages: Array.from({ length: pages }, (_, index) => ({
+				page: index + 1,
+				href: listingPageHref(url, index + 1),
+				current: index + 1 === page
+			})),
+			previous: page > 1 ? listingPageHref(url, page - 1) : null,
+			next: page < pages ? listingPageHref(url, page + 1) : null
+		};
+	}
+	//#endregion
 	//#region src/lib/google-maps.ts
 	var GOOGLE_MAPS_HOSTS = /(^|\.)google\.[a-z.]+$|^maps\.app\.goo\.gl$/i;
 	var GOOGLE_MAPS_SHORT_HOST = /^maps\.app\.goo\.gl$/i;
@@ -734,8 +902,14 @@ var getquickNomiaFrontendRules = (function(exports) {
 		return () => eventTarget.removeEventListener("message", onMessage);
 	}
 	//#endregion
+	exports.COLLECTION_KEYS = COLLECTION_KEYS;
+	exports.CONTENT_COLLECTIONS = CONTENT_COLLECTIONS;
 	exports.LINE_HEIGHT_SLUGS = LINE_HEIGHT_SLUGS;
 	exports.LINE_HEIGHT_TOKENS = LINE_HEIGHT_TOKENS;
+	exports.LISTING_DISPLAYS = LISTING_DISPLAYS;
+	exports.LISTING_PARAMS = LISTING_PARAMS;
+	exports.LISTING_PER_PAGE_DEFAULT = LISTING_PER_PAGE_DEFAULT;
+	exports.LISTING_PER_PAGE_MAX = LISTING_PER_PAGE_MAX;
 	exports.NOMIA_CONTACT_MAP_ALIGNMENTS = NOMIA_CONTACT_MAP_ALIGNMENTS;
 	exports.NOMIA_CONTACT_MAP_ALIGNMENT_DEFAULT = NOMIA_CONTACT_MAP_ALIGNMENT_DEFAULT;
 	exports.PAGE_HERO_FONT_SIZE_BOUNDS = PAGE_HERO_FONT_SIZE_BOUNDS;
@@ -752,6 +926,7 @@ var getquickNomiaFrontendRules = (function(exports) {
 	exports.PREVIEW_MIN_HEIGHT = PREVIEW_MIN_HEIGHT;
 	exports.PREVIEW_PATH = PREVIEW_PATH;
 	exports.PREVIEW_RESIZE_MESSAGE_TYPE = PREVIEW_RESIZE_MESSAGE_TYPE;
+	exports.RUNTIME_COLLECTIONS = RUNTIME_COLLECTIONS;
 	exports.TITLE_WITH_LABEL_BOLD_FONT_WEIGHT = TITLE_WITH_LABEL_BOLD_FONT_WEIGHT;
 	exports.TITLE_WITH_LABEL_DEFAULT_HEADING_LEVEL = TITLE_WITH_LABEL_DEFAULT_HEADING_LEVEL;
 	exports.TITLE_WITH_LABEL_FIELDS = TITLE_WITH_LABEL_FIELDS;
@@ -770,8 +945,12 @@ var getquickNomiaFrontendRules = (function(exports) {
 	exports.getPreviewOrigin = getPreviewOrigin;
 	exports.getPreviewParentOrigin = getPreviewParentOrigin;
 	exports.hasTitleWithLabelLegacyTypography = hasTitleWithLabelLegacyTypography;
+	exports.isFilteredByVisitor = isFilteredByVisitor;
 	exports.isLineHeightToken = isLineHeightToken;
 	exports.lineHeightTokenPx = lineHeightTokenPx;
+	exports.listingPageHref = listingPageHref;
+	exports.listingPagination = listingPagination;
+	exports.listingQuery = listingQuery;
 	exports.migrateTitleWithLabelLegacyTypography = migrateTitleWithLabelLegacyTypography;
 	exports.normalizePageHeroColor = normalizePageHeroColor;
 	exports.normalizePageHeroFontSize = normalizePageHeroFontSize;
@@ -787,10 +966,13 @@ var getquickNomiaFrontendRules = (function(exports) {
 	exports.parsePreviewRequest = parsePreviewRequest;
 	exports.parsePreviewResizeEvent = parsePreviewResizeEvent;
 	exports.parsePreviewResizeMessage = parsePreviewResizeMessage;
+	exports.readCollection = readCollection;
+	exports.readListingDisplay = readListingDisplay;
 	exports.readNomiaContactMapAlignment = readNomiaContactMapAlignment;
 	exports.readPageHeroTextAlign = readPageHeroTextAlign;
 	exports.readPageHeroTextTypographies = readPageHeroTextTypographies;
 	exports.readPageHeroTextTypography = readPageHeroTextTypography;
+	exports.readPerPage = readPerPage;
 	exports.readTitleWithLabelTypographies = readTitleWithLabelTypographies;
 	exports.registerPreviewResizeListener = registerPreviewResizeListener;
 	exports.resolvePageHeroTextAlign = resolvePageHeroTextAlign;

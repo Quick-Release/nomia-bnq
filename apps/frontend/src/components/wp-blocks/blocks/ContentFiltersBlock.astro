@@ -1,0 +1,48 @@
+---
+import NomiaContentFilters from "../../content-lists/listing/NomiaContentFilters.astro";
+import { CONTENT_COLLECTIONS, LISTING_PARAMS, readCollection } from "../../../lib/content-collections";
+import { collectionTerms } from "../../../lib/content-listing";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { wpArray, wpText as text } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props {
+  block: WpParsedBlock;
+}
+
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/content-filters">;
+// An attribute at its default isn't in the block comment.
+const collection = readCollection(attrs.collection ?? "biblioteca");
+const showSearch = attrs.showSearch !== false;
+const hidden = new Set(wpArray(attrs.hiddenTaxonomies).map(text));
+const params = Astro.url.searchParams;
+
+// Only the terms that have published items, from the publication store.
+const choices = collection
+  ? (
+      await Promise.all(
+        CONTENT_COLLECTIONS[collection].taxonomies
+          .filter(({ taxonomy }) => !hidden.has(taxonomy))
+          .map(async ({ taxonomy, param, label }) => ({
+            param,
+            label,
+            selected: params.get(param) ?? "",
+            options: (await collectionTerms(collection, taxonomy)).filter((term) => term.count > 0),
+          })),
+      )
+    ).filter((choice) => choice.options.length > 0)
+  : [];
+const filtering = [LISTING_PARAMS.search, ...choices.map((choice) => choice.param)].some((param) =>
+  params.get(param)?.trim(),
+);
+---
+
+{collection && (showSearch || choices.length > 0) && (
+  <NomiaContentFilters
+    action={Astro.url.pathname}
+    search={showSearch ? (params.get(LISTING_PARAMS.search) ?? "") : null}
+    choices={choices}
+    clearHref={filtering ? Astro.url.pathname : null}
+  />
+)}

@@ -1,0 +1,74 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/content-filters",
+	"title": "Pesquisa e filtros",
+	"category": "getquick-design",
+	"icon": "filter",
+	"description": "Caixa de pesquisa e filtros por categoria, temática e setor para a listagem de conteúdos da mesma página.",
+	"keywords": [
+		"pesquisa",
+		"filtros",
+		"search",
+		"filters",
+		"arquivo"
+	],
+	"textdomain": "getquick-nomia-blocks",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "content-filters"
+		},
+		"collection": {
+			"type": "string",
+			"default": "biblioteca",
+			"enum": [
+				"biblioteca",
+				"eventos",
+				"oportunidades",
+				"recursos_educativos",
+				"glossario",
+				"indicadores",
+				"infografias",
+				"videos",
+				"podcasts",
+				"ferramentas",
+				"plataformas",
+				"bases_de_dados"
+			]
+		},
+		"showSearch": {
+			"type": "boolean",
+			"default": true
+		},
+		"hiddenTaxonomies": {
+			"type": "array",
+			"default": [],
+			"items": {
+				"type": "string",
+				"default": ""
+			}
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"collection": "biblioteca",
+			"showSearch": true
+		}
+	},
+	"editorStyle": "getquick-nomia-blocks-editor"
+}

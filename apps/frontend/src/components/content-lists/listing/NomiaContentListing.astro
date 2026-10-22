@@ -1,0 +1,136 @@
+---
+/**
+ * A collection's items in one of three presentations, ported from
+ * bioeconomia.pt's archive shells (NomiaCptArchiveShell and the multimedia
+ * archive): a list of titles, a grid of thumbnails with the title over the
+ * image, or a two-column grid with the title above the image.
+ */
+import type { ListingDisplay } from "../../../lib/content-collections";
+import { PAGE_FRAME } from "../../../lib/site-gutters";
+
+export interface ListingRow {
+  href: string;
+  title: string;
+  imageSrc: string | null;
+  imageAlt: string;
+}
+
+export interface ListingPageLink {
+  page: number;
+  href: string;
+  current: boolean;
+}
+
+interface Props {
+  display: ListingDisplay;
+  rows: ListingRow[];
+  /** Why there are no rows: nothing published, nothing matches, or the store didn't answer. */
+  empty: "none" | "no-match" | "unavailable";
+  /** The pages' links, when there is more than one page and the block shows them. */
+  pages?: ListingPageLink[];
+  previous?: string | null;
+  next?: string | null;
+}
+
+const { display, rows, empty, pages = [], previous = null, next = null } = Astro.props;
+const emptyText = {
+  none: "Ainda não há entradas publicadas.",
+  "no-match": "Nenhum conteúdo corresponde à pesquisa.",
+  unavailable: "A lista não está disponível de momento.",
+}[empty];
+const listClass = {
+  list: "flex flex-col divide-y divide-current/20",
+  "thumbnail-grid": "grid gap-5 sm:grid-cols-2 lg:grid-cols-3",
+  "titled-thumbnail-grid": "grid gap-x-8 gap-y-12 md:grid-cols-2",
+}[display];
+const focusRing =
+  "focus-visible:ring-main-teal-400 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none";
+---
+
+<section class={`${PAGE_FRAME} font-secondary py-10 md:py-12`} data-nomia-content-listing={display}>
+  {rows.length === 0 ? (
+    <p class="text-base opacity-70">{emptyText}</p>
+  ) : (
+    <ul class={listClass}>
+      {rows.map((row) => (
+        <li class:list={["min-w-0", display === "list" && "py-4 first:pt-0"]}>
+          {display === "list" ? (
+            <a
+              href={row.href}
+              class:list={[
+                "hover:text-main-ciano-500 text-lg font-medium underline-offset-4 transition-colors hover:underline",
+                focusRing,
+              ]}
+            >
+              {row.title}
+            </a>
+          ) : display === "titled-thumbnail-grid" ? (
+            <a href={row.href} class:list={["group flex flex-col gap-4 rounded-sm", focusRing]}>
+              <h2 class="font-primary text-subtitle font-semibold tracking-[var(--tracking-typography-0)] underline-offset-4 group-hover:underline">
+                {row.title}
+              </h2>
+              <span class="bg-main-cinza-200 relative block aspect-video overflow-hidden rounded-sm">
+                {row.imageSrc && (
+                  <img
+                    src={row.imageSrc}
+                    alt={row.imageAlt}
+                    class="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+              </span>
+            </a>
+          ) : (
+            <a
+              href={row.href}
+              class:list={[
+                "group bg-main-ciano-700 relative flex aspect-video min-h-0 overflow-hidden rounded-sm",
+                focusRing,
+              ]}
+            >
+              {row.imageSrc && (
+                <img
+                  src={row.imageSrc}
+                  alt={row.imageAlt}
+                  class="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
+              <span class="from-monochrome-dark-600/90 via-monochrome-dark-600/35 to-monochrome-dark-600/10 absolute inset-0 bg-gradient-to-t transition-opacity group-hover:opacity-95" />
+              <span class="text-neutral-bw-white relative mt-auto block p-4 text-lg leading-tight font-semibold">
+                {row.title}
+              </span>
+            </a>
+          )}
+        </li>
+      ))}
+    </ul>
+  )}
+  {pages.length > 1 && (
+    <nav aria-label="Paginação" class="mt-10 flex flex-wrap items-center gap-2 text-base">
+      {previous && (
+        <a href={previous} rel="prev" class:list={["rounded-sm px-3 py-1 hover:underline", focusRing]}>
+          Anterior
+        </a>
+      )}
+      {pages.map((link) =>
+        link.current ? (
+          <span aria-current="page" class="bg-main-ciano-700 text-neutral-bw-white rounded-sm px-3 py-1 font-semibold">
+            {link.page}
+          </span>
+        ) : (
+          <a href={link.href} class:list={["rounded-sm px-3 py-1 hover:underline", focusRing]}>
+            {link.page}
+          </a>
+        ),
+      )}
+      {next && (
+        <a href={next} rel="next" class:list={["rounded-sm px-3 py-1 hover:underline", focusRing]}>
+          Seguinte
+        </a>
+      )}
+    </nav>
+  )}
+</section>

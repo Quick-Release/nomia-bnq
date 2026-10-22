@@ -1643,3 +1643,145 @@ msgstr "nomia_navigation"
 msgctxt "block keyword"
 msgid "nomia"
 msgstr "nomia"
+
+#: blocks/content-filters/index.js:26
+#: blocks/content-listing/index.js:57
+msgid "Tipo de conteúdo"
+msgstr "Content type"
+
+#: blocks/content-filters/index.js:27
+msgid "O mesmo da listagem desta página."
+msgstr "The same as this page's listing."
+
+#: blocks/content-filters/index.js:33
+msgid "Mostrar a caixa de pesquisa"
+msgstr "Show the search box"
+
+#. translators: %s: taxonomy name, e.g. "Temática".
+#: blocks/content-filters/index.js:42
+#, js-format
+msgid "Filtrar por %s"
+msgstr "Filter by %s"
+
+#: blocks/content-filters/index.js:58
+msgid "Pré-visualização dos filtros"
+msgstr "Filters preview"
+
+#: blocks/content-listing/index.js:16
+msgid "Lista de títulos"
+msgstr "List of titles"
+
+#: blocks/content-listing/index.js:17
+msgid "Grelha de miniaturas"
+msgstr "Thumbnail grid"
+
+#: blocks/content-listing/index.js:20
+msgid "Grelha de miniaturas com título por cima"
+msgstr "Thumbnail grid with the title above"
+
+#: blocks/content-listing/index.js:64
+msgid "Mostrar só uma categoria de"
+msgstr "Show only one category of"
+
+#: blocks/content-listing/index.js:67
+msgid "Todos os conteúdos"
+msgstr "All content"
+
+#: blocks/content-listing/index.js:74
+msgid "Categoria"
+msgstr "Category"
+
+#: blocks/content-listing/index.js:77
+msgid "Escolha uma"
+msgstr "Choose one"
+
+#: blocks/content-listing/index.js:77
+msgid "A carregar…"
+msgstr "Loading…"
+
+#: blocks/content-listing/index.js:84
+msgid "Apresentação"
+msgstr "Display"
+
+#: blocks/content-listing/index.js:90
+msgid "Conteúdos por página"
+msgstr "Items per page"
+
+#: blocks/content-listing/index.js:97
+msgid "Mostrar paginação"
+msgstr "Show pagination"
+
+#: blocks/content-listing/index.js:105
+msgid "Pré-visualização da listagem"
+msgstr "Listing preview"
+
+#: blocks/content-filters/block.json
+msgctxt "block title"
+msgid "Pesquisa e filtros"
+msgstr "Search and filters"
+
+#: blocks/content-filters/block.json
+msgctxt "block description"
+msgid "Caixa de pesquisa e filtros por categoria, temática e setor para a listagem de conteúdos da mesma página."
+msgstr "Search box and filters by category, theme and sector for the content listing on the same page."
+
+#: blocks/content-filters/block.json
+msgctxt "block keyword"
+msgid "pesquisa"
+msgstr "search"
+
+#: blocks/content-filters/block.json
+msgctxt "block keyword"
+msgid "filtros"
+msgstr "filters"
+
+#: blocks/content-filters/block.json
+msgctxt "block keyword"
+msgid "search"
+msgstr "search"
+
+#: blocks/content-filters/block.json
+msgctxt "block keyword"
+msgid "filters"
+msgstr "filters"
+
+#: blocks/content-filters/block.json
+#: blocks/content-listing/block.json
+msgctxt "block keyword"
+msgid "arquivo"
+msgstr "archive"
+
+#: blocks/content-listing/block.json
+msgctxt "block title"
+msgid "Listagem de conteúdos"
+msgstr "Content listing"
+
+#: blocks/content-listing/block.json
+msgctxt "block description"
+msgid "Lista os conteúdos publicados de um tipo, como os documentos da Biblioteca ou os eventos, com paginação."
+msgstr "Lists the published content of one type, such as the Library's documents or the events, with pagination."
+
+#: blocks/content-listing/block.json
+msgctxt "block keyword"
+msgid "listagem"
+msgstr "listing"
+
+#: blocks/content-listing/block.json
+msgctxt "block keyword"
+msgid "archive"
+msgstr "archive"
+
+#: blocks/content-listing/block.json
+msgctxt "block keyword"
+msgid "listing"
+msgstr "listing"
+
+#: blocks/content-listing/block.json
+msgctxt "block keyword"
+msgid "biblioteca"
+msgstr "library"
+
+#: blocks/content-listing/block.json
+msgctxt "block keyword"
+msgid "eventos"
+msgstr "events"
