@@ -1,4 +1,5 @@
 ---
+import { firstPartyMedia } from "../../../lib/consent";
 import NomiaPageHeroMediaGrid from "../../page-heroes/NomiaPageHeroMediaGrid.astro";
 import type { PageHeroMediaGridAction } from "../../page-heroes/NomiaPageHeroMediaGrid.astro";
 import type { WpParsedBlock } from "../../../lib/wp-blocks";
@@ -28,7 +29,9 @@ function action(title: unknown, body: unknown, href: unknown): PageHeroMediaGrid
 
 const backgroundImageSrc = optionalText(attrs.backgroundImageSrc);
 const backgroundImageAlt = text(attrs.backgroundImageAlt);
-const videoSrc = optionalText(attrs.videoSrc);
+// Only the Site's own video plays (lib/consent.ts): one from another host
+// would be a third-party request before consent. Without it the poster shows.
+const videoSrc = firstPartyMedia(optionalText(attrs.videoSrc));
 const videoPosterSrc = optionalText(attrs.videoPosterSrc);
 const heading = text(attrs.heading) || PAGE_HERO_MEDIA_GRID_DEFAULTS.heading;
 const videoTitle = text(attrs.videoTitle) || "Video";

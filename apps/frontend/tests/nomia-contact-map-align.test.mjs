@@ -31,7 +31,9 @@ test("contact map renders its alignment modifier", async () => {
     const { document } = await harness.render(contactMap({ align }));
     const section = document.querySelector("section.nomia-contact-map");
     assert.ok(section?.classList.contains(`nomia-contact-map--align-${align}`), align);
-    assert.ok(section.querySelector("iframe"));
+    // Google Maps loads from its consent placeholder, never as a live iframe.
+    assert.ok(section.querySelector("[data-gq-consent-embed='google_maps']"));
+    assert.equal(section.querySelector("iframe"), null);
   }
 });
 

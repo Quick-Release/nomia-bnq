@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5e70b306b27005e31c8001ab6c1b07eb",
+    "content-hash": "eae3a5924075ea6b5b4efe74151f6348",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -341,17 +341,17 @@
         },
         {
             "name": "getquick/gq-config",
-            "version": "0.4.1",
+            "version": "0.4.3",
             "source": {
                 "type": "git",
                 "url": "git@github.com:Quick-Release/gq-config.git",
-                "reference": "3671255258cb6200f3c6bc7fb6ccd291e640bd38"
+                "reference": "a1754ccad07109407917aeec1297e3f5d395cdcb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-config/getquick-gq-config-3671255258cb6200f3c6bc7fb6ccd291e640bd38-zip-eced4f.zip",
-                "reference": "3671255258cb6200f3c6bc7fb6ccd291e640bd38",
-                "shasum": "f475d03982ba429c4f6d1608f9b3e56ad8b3d706"
+                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-config/getquick-gq-config-a1754ccad07109407917aeec1297e3f5d395cdcb-zip-bdb201.zip",
+                "reference": "a1754ccad07109407917aeec1297e3f5d395cdcb",
+                "shasum": "c6cde7b09e7c835fe682b4697af14fbc6e499596"
             },
             "require": {
                 "ext-sodium": "*",
@@ -391,7 +391,10 @@
                     "/vite.config.ts",
                     "/vite.focal-point.config.ts",
                     "/phpcs.xml.dist",
-                    "/.gitignore"
+                    "/.gitignore",
+                    "/.agents",
+                    "/.claude",
+                    "/AGENTS.md"
                 ]
             },
             "scripts": {
@@ -407,10 +410,10 @@
             ],
             "description": "GQ Config WordPress must-use configuration plugin.",
             "support": {
-                "source": "https://github.com/Quick-Release/gq-config/tree/v0.4.1",
+                "source": "https://github.com/Quick-Release/gq-config/tree/v0.4.3",
                 "issues": "https://github.com/Quick-Release/gq-config/issues"
             },
-            "time": "2026-10-17T23:08:15+00:00"
+            "time": "2026-10-22T03:53:45+00:00"
         },
         {
             "name": "getquick/gq-content",

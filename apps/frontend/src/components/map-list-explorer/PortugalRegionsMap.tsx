@@ -1,8 +1,8 @@
 import maplibregl from "maplibre-gl";
 import { useEffect, useRef } from "react";
 
+import { MAP_STYLE_PATH } from "../../lib/map-tiles";
 import {
-  OPENFREEMAP_STYLE,
   PORTUGAL_FULL_BOUNDS,
   PORTUGAL_REGION_CENTERS,
   PORTUGAL_REGION_IDS,
@@ -55,7 +55,10 @@ export default function PortugalRegionsMap({ selectedRegionId, onSelectRegion }:
 
     const map = new maplibregl.Map({
       container,
-      style: OPENFREEMAP_STYLE,
+      // OpenFreeMap's style through the Site's own Worker, which proxies every
+      // tile, glyph and sprite it names: the browser never contacts a third
+      // party for the map (docs/adr/0001).
+      style: new URL(MAP_STYLE_PATH, window.location.origin).href,
       bounds: [PORTUGAL_FULL_BOUNDS.southwest, PORTUGAL_FULL_BOUNDS.northeast],
       fitBoundsOptions: { padding: 48, maxZoom: 5.8 },
       interactive: true,

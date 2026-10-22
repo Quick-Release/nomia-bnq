@@ -3,10 +3,12 @@ import {
   blockPresetStyles,
   presetRootStyle,
   type DesignPresets,
+  type SiteLanguage,
   type WordPressImage,
 } from "@getquick/content";
 import WpBlockRenderer from "./wp-blocks/WpBlockRenderer.astro";
 import { isLightHexColor } from "../lib/color-contrast";
+import { gatedNomiaContent } from "../lib/consent";
 import type { NomiaContent } from "../lib/nomia-content";
 import { normalizeSectionBackground } from "../lib/section-block";
 import "../styles/nomia-blocks.css";
@@ -19,9 +21,14 @@ interface Props {
   design: DesignPresets;
   /** The page's featured image: a page hero without its own image shows it. */
   featuredImage?: WordPressImage | null;
+  /** The page's language: consent placeholders follow it. */
+  language: SiteLanguage;
 }
 
-const { nomia, design, featuredImage = null } = Astro.props;
+const { design, featuredImage = null, language } = Astro.props;
+// Third-party embeds in the blocks' saved HTML become consent placeholders
+// (CONSENT-1 CN-R13): the runtime gates bodies, not the Site's extension.
+const nomia = gatedNomiaContent(Astro.props.nomia, language.lang);
 const { colorRules } = blockPresetStyles(design.spacingSizes, design.colors, ".nomia-blocks");
 // Nomia's tokens read GQ Design's palette from WordPress's preset variables.
 const presets = presetRootStyle(design.spacingSizes, design.colors);
