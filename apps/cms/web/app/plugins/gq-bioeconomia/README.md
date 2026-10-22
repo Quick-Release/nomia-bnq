@@ -1,4 +1,4 @@
-# GETQUICK Bioeconomia
+# GETQUICK Bio.Eco.Nomia
 
 Nomia's CMS plugin, owned by this site. It holds the content model (post
 types, taxonomies, editorial details, admin screens) and the Gutenberg blocks
