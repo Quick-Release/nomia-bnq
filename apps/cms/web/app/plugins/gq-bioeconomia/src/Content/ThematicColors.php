@@ -154,6 +154,8 @@ final class ThematicColors {
 			return;
 		}
 		update_term_meta( $term_id, self::META_KEY, $color );
+		// GQ Design caches the header with the palette its navigation carries.
+		do_action( 'getquick_design_flush_layout_cache' );
 	}
 
 	/**

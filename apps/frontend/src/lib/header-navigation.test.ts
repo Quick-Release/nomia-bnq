@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vite-plus/test";
-import { headerNavigationTree } from "./header-navigation";
+import { headerNavigationArea, headerNavigationTree } from "./header-navigation";
 
 const origins = ["https://cms.example.com", "https://example.com"];
 
@@ -71,10 +71,55 @@ describe("headerNavigationTree", () => {
       origins,
     );
 
-    expect(tree).toEqual([{ id: "2", label: "Script", href: "#", target: null, children: [] }]);
+    expect(tree).toEqual([{ id: "2", label: "Script", href: "", target: null, children: [] }]);
   });
 
   it("is empty without a menu", () => {
     expect(headerNavigationTree(undefined, origins)).toEqual([]);
+  });
+
+  it("keeps a placeholder item linkless, rather than linking it home", () => {
+    const [item] = headerNavigationTree(
+      [{ id: 1, parentId: 0, label: "Economia Circular", url: "#" }],
+      origins,
+    );
+
+    expect(item.href).toBe("");
+  });
+});
+
+describe("headerNavigationArea", () => {
+  const menu = (url: string, ...children: string[]) =>
+    headerNavigationTree(
+      [
+        { id: 1, parentId: 0, label: "Área", url },
+        ...children.map((child, index) => ({
+          id: index + 2,
+          parentId: 1,
+          label: child,
+          url: child,
+        })),
+      ],
+      origins,
+    )[0];
+
+  it("follows the item's own link", () => {
+    expect(headerNavigationArea(menu("/partilhar/"), origins)).toBe("partilhar");
+  });
+
+  it("gives a placeholder the area its subitems share", () => {
+    const item = menu(
+      "#",
+      "/economia-circular/visao-geral/",
+      "https://example.org/externo/",
+      "/economia-circular/paec-2030/",
+    );
+
+    expect(headerNavigationArea(item, origins)).toBe("economia-circular");
+  });
+
+  it("gives a placeholder no area when its subitems differ or have none", () => {
+    expect(headerNavigationArea(menu("#", "/barometro/", "/biblioteca/"), origins)).toBeNull();
+    expect(headerNavigationArea(menu("#"), origins)).toBeNull();
   });
 });

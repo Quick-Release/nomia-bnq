@@ -88,35 +88,54 @@ describe("entries read live in local development", () => {
   });
 
   test("the header GQ Design selects replaces the site's own, Nomia's navigation included", async () => {
-    // As GQ Design serves Nomia's header pattern: a container, and the
-    // menu-backed navigation with its menu's items.
+    // As GQ Design serves Nomia's header pattern: the bar (a container) with
+    // the Site Logo and the menu-backed navigation, its menu's items and the
+    // thematic palette.
     const header = {
       title: "Header navigation",
       blocksJson: JSON.stringify([
         {
           name: "getquick-design/container",
-          attributes: {},
-          content: '<div class="wp-block-getquick-design-container"></div>',
-          children: [],
-        },
-        {
-          name: "getquick/header-navigation",
-          attributes: {
-            menuId: 469,
-            menuItems: [
-              { id: 1, parentId: 0, label: "Economia Circular", url: "#", target: "" },
-              {
-                id: 2,
-                parentId: 1,
-                label: "Visão geral",
-                url: "/economia-circular/visao-geral/",
-                target: "",
-              },
-              { id: 3, parentId: 0, label: "Partilhar", url: "/partilhar/", target: "" },
-            ],
-          },
+          attributes: { className: "nomia-header-bar" },
           content: null,
-          children: [],
+          children: [
+            {
+              name: "core/site-logo",
+              attributes: {
+                logo: {
+                  url: "https://media.example/nomia.svg",
+                  alt: "Nomia",
+                  width: 160,
+                  height: 40,
+                },
+              },
+              content: null,
+              children: [],
+            },
+            {
+              name: "getquick/header-navigation",
+              attributes: {
+                menuId: 469,
+                menuItems: [
+                  { id: 1, parentId: 0, label: "Economia Circular", url: "#", target: "" },
+                  {
+                    id: 2,
+                    parentId: 1,
+                    label: "Visão geral",
+                    url: "/economia-circular/visao-geral/",
+                    target: "",
+                  },
+                  { id: 3, parentId: 0, label: "Partilhar", url: "/partilhar/", target: "" },
+                ],
+                thematicColors: [
+                  { slug: "economia-circular", color: "#4bc2bf" },
+                  { slug: "partilhar", color: "" },
+                ],
+              },
+              content: null,
+              children: [],
+            },
+          ],
         },
       ]),
     };
@@ -129,14 +148,25 @@ describe("entries read live in local development", () => {
 
     expect(status).toBe(200);
     expect(html).toContain("data-nomia-navigation");
-    expect(html).toMatch(/<a href="\/economia-circular\/visao-geral\/"[^>]*>\s*Visão geral/);
-    expect(html).toMatch(/<a href="\/partilhar\/"[^>]*>\s*Partilhar/);
+    expect(html).toMatch(/<a [^>]*href="\/economia-circular\/visao-geral\/"[^>]*>\s*Visão geral/);
+    expect(html).toMatch(/<a [^>]*href="\/partilhar\/"[^>]*>\s*Partilhar/);
+    // The logo and the navigation share the bar.
+    expect(html).toMatch(
+      /<div class="wp-block-getquick-design-container nomia-header-bar"><div class="wp-block-site-logo"><a href="\/"[^>]*><img class="custom-logo" src="https:\/\/media.example\/nomia.svg"[^>]*><\/a><\/div><div class="contents" data-nomia-navigation>/,
+    );
+    // The palette reaches the navigation; a placeholder item takes the area
+    // its subitems share, and toggles them instead of linking home.
+    expect(html).toContain(
+      "[data-nomia-navigation] { --nomia-tematica-economia-circular-background: #4bc2bf",
+    );
+    expect(html).toMatch(
+      /<button[^>]*style="--nomia-area-background: var\(--nomia-tematica-economia-circular-background, transparent\)[^"]*"[^>]*type="button"[^>]*>\s*Economia Circular/,
+    );
     // A link whose area has no published color draws no pill.
     expect(html).toContain(
       "--nomia-area-background: var(--nomia-tematica-partilhar-background, transparent)",
     );
-    expect(html).not.toContain("cinza-600");
-    expect(html).toContain('class="wp-block-getquick-design-container"');
+    expect(html).not.toContain("--nomia-tematica-partilhar-background:");
     expect(html).not.toContain('class="site-header"');
     expect(html).not.toContain("About us");
   });

@@ -4,8 +4,8 @@
  * chrome serves it (`chrome.header` / `chrome.footer`). The runtime renders
  * GQ Design's own blocks to HTML; Nomia's blocks (`getquick/*`, such as the
  * header navigation) have no saved HTML and render through the same Astro
- * renderers as in content. Only top-level Nomia blocks do: one nested in a
- * GQ Design container can't be, and is reported as unrendered.
+ * renderers as in content, wherever they sit in the pattern: the runtime
+ * leaves a marker in their place, and each marker becomes the Astro block.
  */
 import type { DesignBlock, DesignPattern, SiteLanguage } from "@getquick/content";
 import { content } from "../lib/content";
@@ -19,13 +19,29 @@ interface Props {
 
 const { pattern, language } = Astro.props;
 const runtime = content();
-const options = {
+
+const nomiaNames = new Set<string>();
+const collect = (blocks: DesignBlock[]) => {
+  for (const block of blocks) {
+    if (block.name.startsWith("getquick/")) nomiaNames.add(block.name);
+    collect(block.children);
+  }
+};
+collect(pattern.blocks);
+
+// The nonce keeps saved HTML from passing for a marker.
+const nonce = Math.random().toString(36).slice(2, 10);
+const nomiaBlocks: DesignBlock[] = [];
+const marker = (block: DesignBlock) => `<!--nomia-block:${nonce}:${nomiaBlocks.push(block) - 1}-->`;
+const html = runtime.renderDesignPattern(pattern.blocks, {
   siteOrigin: Astro.site?.origin,
   home: language.home,
+  blocks: Object.fromEntries([...nomiaNames].map((name) => [name, marker])),
   onUnrendered: (block: DesignBlock) => console.warn(`No renderer for ${block.name} in "${pattern.title}"`),
-};
+});
+// Odd parts are the marked blocks' indexes, even parts the HTML between them.
+const parts = html.split(new RegExp(`<!--nomia-block:${nonce}:(\\d+)-->`));
 
-const isNomiaBlock = (block: DesignBlock) => block.name.startsWith("getquick/");
 // GQ Design's attributes are the block's saved ones (menu-backed blocks with
 // their menu's items), as the content's renderers read them from `attrs`.
 const parsed = (block: DesignBlock): WpParsedBlock => ({
@@ -38,11 +54,7 @@ const parsed = (block: DesignBlock): WpParsedBlock => ({
 ---
 
 {
-  pattern.blocks.map((block) =>
-    isNomiaBlock(block) ? (
-      <WpCustomBlock block={parsed(block)} />
-    ) : (
-      <Fragment set:html={runtime.renderDesignPattern([block], options)} />
-    ),
+  parts.map((part, index) =>
+    index % 2 ? <WpCustomBlock block={parsed(nomiaBlocks[Number(part)])} /> : <Fragment set:html={part} />,
   )
 }

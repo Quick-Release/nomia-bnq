@@ -117,7 +117,7 @@ test('GQ Design gets the block as menu-backed, keeping its other blocks', functi
 	expect( $definitions['core/paragraph'] )->toBe( [ 'enabled' => true ] )
 		->and( $definitions[ HeaderNavigation::NAME ] )->toMatchArray( [
 			'source'     => 'site',
-			'attributes' => [ 'menuId' => 'integer', 'menuItems' => 'array' ],
+			'attributes' => [ 'menuId' => 'integer', 'menuItems' => 'array', 'thematicColors' => 'array' ],
 			'enabled'    => true,
 		] )
 		->and( array_keys( $definitions[ HeaderNavigation::NAME ] ) )->toEqualCanonicalizing( [
@@ -125,4 +125,18 @@ test('GQ Design gets the block as menu-backed, keeping its other blocks', functi
 			'allowed_children', 'renderer_fixture', 'enabled',
 		] )
 		->and( $definitions[ HeaderNavigation::NAME ]['regions'] )->toContain( 'header' );
+} );
+
+test('GQ Design serves the navigation block the thematic colors', function () {
+	$navigation = new HeaderNavigation();
+	$navigation->register();
+
+	$registered = array_filter( $GLOBALS['gq_bioeconomia_test_state']['filters'], static fn( array $filter ): bool => 'getquick_design_block_attributes' === $filter['hook'] );
+	expect( $registered )->not()->toBeEmpty()
+		->and( array_values( $registered )[0]['accepted_args'] )->toBe( 2 );
+
+	expect( $navigation->addThematicColors( [ 'menuId' => 469 ], HeaderNavigation::NAME ) )
+		->toBe( [ 'menuId' => 469, 'thematicColors' => [] ] )
+		->and( $navigation->addThematicColors( [ 'level' => 2 ], 'core/heading' ) )
+		->toBe( [ 'level' => 2 ] );
 } );
