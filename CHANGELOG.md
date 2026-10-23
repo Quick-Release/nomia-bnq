@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.9.0 - 2026-10-23
+
+Previous release: v0.8.1
+
+- ac8407d Merge pull request #62 from Quick-Release/claude/header-logo-colors
+- e8c37fd feat: header bar with the site logo, and thematic colors in the navigation
+
 ## v0.8.1 - 2026-10-23
 
 Previous release: v0.8.0
