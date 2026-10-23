@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.10.1 - 2026-10-23
+
+Previous release: v0.10.0
+
+- 97d731a fix: respect CMS background colors in header patterns
+- 1ce7beb chore: adopt gq-design 0.8.1
+- 219594d feat: use native color popovers for navigation hover settings
+- de567bc fix: invalidate cached editor assets when their content changes
+
 ## v0.10.0 - 2026-10-23
 
 Previous release: v0.9.1
