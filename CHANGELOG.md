@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.10.2 - 2026-10-23
+
+Previous release: v0.10.1
+
+- bd832bc fix: generate navigation responsive utilities in one stylesheet
+
 ## v0.10.1 - 2026-10-23
 
 Previous release: v0.10.0
