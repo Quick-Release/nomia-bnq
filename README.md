@@ -17,7 +17,7 @@ site's to change.
 ## Update gq-design
 
 The CMS installs `getquick/gq-design` from its tagged releases (a caret
-constraint in `apps/cms/composer.json`, `^0.6.0` today). To adopt a new
+constraint in `apps/cms/composer.json`, `^0.8.1` today). To adopt a new
 release, raise the constraint if the release falls outside it, then run
 `pnpm cms:composer:update getquick/gq-design --with-dependencies` and commit
 `composer.json` and `composer.lock`. The CMS gets it with the next site

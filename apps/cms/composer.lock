@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "31db8a35ccda1517e635704d27a50ff3",
+    "content-hash": "5d5a0b0c023cae49c3ac0bc7333b213f",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -446,17 +446,17 @@
         },
         {
             "name": "getquick/gq-design",
-            "version": "0.6.0",
+            "version": "0.8.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:Quick-Release/gq-design.git",
-                "reference": "18bdabd35011c07a1d1a75930fb705dc90123d12"
+                "reference": "77ea0a8c9a9cc22f50096e3007bc0bd9b15b0611"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-design/getquick-gq-design-18bdabd35011c07a1d1a75930fb705dc90123d12-zip-491cdd.zip",
-                "reference": "18bdabd35011c07a1d1a75930fb705dc90123d12",
-                "shasum": "4e450b4e6f1135101ea523ec0f86d2c0d9201d8f"
+                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-design/getquick-gq-design-77ea0a8c9a9cc22f50096e3007bc0bd9b15b0611-zip-05602d.zip",
+                "reference": "77ea0a8c9a9cc22f50096e3007bc0bd9b15b0611",
+                "shasum": "236876326a7793f8edfebf8c63928ed7c782b111"
             },
             "require": {
                 "php": ">=8.4.1"
@@ -504,10 +504,10 @@
             ],
             "description": "Native Gutenberg templates and headless layout delivery for GETQUICK sites.",
             "support": {
-                "source": "https://github.com/Quick-Release/gq-design/tree/v0.6.0",
+                "source": "https://github.com/Quick-Release/gq-design/tree/v0.8.1",
                 "issues": "https://github.com/Quick-Release/gq-design/issues"
             },
-            "time": "2026-10-22T23:12:33+00:00"
+            "time": "2026-10-23T12:37:01+00:00"
         },
         {
             "name": "getquick/gq-support",
