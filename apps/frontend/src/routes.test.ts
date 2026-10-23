@@ -171,6 +171,58 @@ describe("entries read live in local development", () => {
     expect(html).not.toContain("About us");
   });
 
+  test("header and footer patterns apply CMS palette colors outside the page body", async () => {
+    const pattern = {
+      title: "Orange region",
+      blocksJson: JSON.stringify([
+        {
+          name: "getquick-design/container",
+          attributes: { backgroundColor: "laranja-400" },
+          content: null,
+          children: [
+            {
+              name: "getquick/header-navigation",
+              attributes: {
+                menuId: 1,
+                menuItems: [{ id: 1, parentId: 0, label: "Home", url: "/", target: "" }],
+              },
+              content: null,
+              children: [],
+            },
+          ],
+        },
+      ]),
+    };
+    stubWordPress({
+      entry: () => data({ postBy: null, pageBy: about, designTokens: tokens }),
+      chrome: () => data({ ...chrome, header: pattern, footer: pattern }),
+      design: () =>
+        data({
+          designTokens: {
+            colors: [{ slug: "laranja-400", color: "#f7a600" }],
+            spacingSizes: [],
+          },
+        }),
+    });
+
+    const { status, html } = await render("/about/");
+    expect(status).toBe(200);
+    expect(html).not.toMatch(/<main[^>]*class="[^"]*nomia-blocks/);
+    for (const region of ["header", "footer"]) {
+      const regionHtml = html.match(new RegExp(`<${region}\\b[^>]*>(.*?)</${region}>`, "s"))?.[1];
+      expect(regionHtml).toContain(
+        '<div class="nomia-pattern contents"><div class="wp-block-getquick-design-container has-laranja-400-background-color has-background">',
+      );
+      const barClasses = regionHtml?.match(/class="(nomia-navigation-bar[^"]*)"/)?.[1].split(/\s+/);
+      expect(barClasses).toBeDefined();
+      expect(barClasses!.some((name) => name.startsWith("bg-"))).toBe(false);
+    }
+    expect(html).toContain(":root{--wp--preset--color--laranja-400:#f7a600}");
+    expect(html).toContain(
+      ".nomia-pattern .has-laranja-400-background-color{background-color:var(--wp--preset--color--laranja-400)}",
+    );
+  });
+
   test("an entry WordPress confirms isn't published is a 404", async () => {
     stubWordPress({ entry: () => data({ postBy: null, pageBy: null, designTokens: tokens }) });
 

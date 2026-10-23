@@ -7,10 +7,17 @@
  * renderers as in content, wherever they sit in the pattern: the runtime
  * leaves a marker in their place, and each marker becomes the Astro block.
  */
-import type { DesignBlock, DesignPattern, SiteLanguage } from "@getquick/content";
+import {
+  blockPresetStyles,
+  presetRootStyle,
+  type DesignBlock,
+  type DesignPattern,
+  type SiteLanguage,
+} from "@getquick/content";
 import { content } from "../lib/content";
 import type { WpParsedBlock } from "../lib/wp-blocks";
 import WpCustomBlock from "./wp-blocks/WpCustomBlock.astro";
+import "../styles/nomia-blocks.css";
 
 interface Props {
   pattern: DesignPattern;
@@ -19,6 +26,13 @@ interface Props {
 
 const { pattern, language } = Astro.props;
 const runtime = content();
+// Chrome lives outside NomiaBlocks, so it needs its own preset scope, even
+// on pages that contain no Nomia blocks. Read the runtime's published palette.
+const design = await runtime.designPresets();
+const presets = design ? presetRootStyle(design.spacingSizes, design.colors) : "";
+const colorRules = design
+  ? blockPresetStyles(design.spacingSizes, design.colors, ".nomia-pattern").colorRules
+  : "";
 
 const nomiaNames = new Set<string>();
 const collect = (blocks: DesignBlock[]) => {
@@ -53,8 +67,12 @@ const parsed = (block: DesignBlock): WpParsedBlock => ({
 });
 ---
 
-{
-  parts.map((part, index) =>
-    index % 2 ? <WpCustomBlock block={parsed(nomiaBlocks[Number(part)])} /> : <Fragment set:html={part} />,
-  )
-}
+{presets && <style is:global set:html={presets} />}
+{colorRules && <style is:global set:html={colorRules} />}
+<div class="nomia-pattern contents">
+  {
+    parts.map((part, index) =>
+      index % 2 ? <WpCustomBlock block={parsed(nomiaBlocks[Number(part)])} /> : <Fragment set:html={part} />,
+    )
+  }
+</div>

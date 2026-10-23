@@ -2,10 +2,11 @@
 /**
  * Navigation bar: the menu the editor picked, drawn as bioeconomia.pt's header
  * navigation (`NomiaHeader.astro`, Nomia Website 2 · node 40017025:6739): the
- * translucent teal bar, the links as thematic pills, hover/focus submenus, and
+ * links as thematic pills, hover/focus submenus, and
  * below the `nav` breakpoint a drawer opened from the menu button. Inside the
  * header pattern's bar (a Container with the `nomia-header-bar` class, beside
  * the Site Logo) it leaves the bar to that Container (`nomia-header.css`).
+ * Background colors belong to the CMS containers composing the header.
  */
 import type { WordPressMenuItem } from "@getquick/content";
 import { headerNavigationArea, headerNavigationTree } from "../../../lib/header-navigation";
@@ -63,9 +64,7 @@ const itemProps = (item: WordPressMenuItem) =>
   navItems.length > 0 ? (
     <div class="contents" data-nomia-navigation>
       {palette && <style is:global set:html={palette} />}
-      {/* The drawer sits outside the bar: its backdrop blur would make the bar the
-          drawer's containing block and pin the fixed drawer to it. */}
-      <div class="nomia-navigation-bar bg-main-teal-500/80 sticky top-0 z-50 w-full backdrop-blur-sm">
+      <div class="nomia-navigation-bar sticky top-0 z-50 w-full">
       <div
         class={`nomia-navigation-row mx-auto flex h-[72px] max-w-[1920px] items-center justify-between gap-3 md:h-auto md:min-h-[72px] md:py-4 2xl:gap-8 ${HEADER_GUTTER_X}`}
       >

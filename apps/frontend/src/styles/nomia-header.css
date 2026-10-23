@@ -1,8 +1,8 @@
 /*
  * The Nomia header bar, as the header pattern composes it: a GQ Design
  * Container with the `nomia-header-bar` class holding the Site Logo and the
- * header navigation. The Container is the translucent teal bar that sticks to
- * the page; the navigation inside it leaves its own bar out.
+ * header navigation. The Container sticks to the page and gets its background
+ * from the CMS; the navigation inside it leaves its own bar out.
  *
  * Unlayered, so these rules win over the Tailwind utilities (layered) that the
  * navigation draws its standalone bar with.
@@ -17,17 +17,6 @@
   gap: 1.5rem;
   min-height: 72px;
   padding-inline: 1rem;
-}
-
-/* The blur sits on a layer of its own: on the bar itself it would make the bar
-   the containing block of the navigation's fixed drawer. */
-.nomia-header-bar::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-color: color-mix(in srgb, var(--color-main-teal-500) 80%, transparent);
-  backdrop-filter: blur(8px);
 }
 
 /* The same gutters as the navigation's standalone bar (`HEADER_GUTTER_X`). */
