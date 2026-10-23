@@ -24,8 +24,12 @@ immediately below/at/above all default breakpoints. Native wide/full geometry
 retains Site alignment until an explicit neutral override applies upward.
 Nested native alignments fit their parent; viewport breakouts apply only to
 direct article children. HTML-only delivery preserves already saved variables.
-The generated document is a consumer fixture, not evidence of an editor save
-or public CMS round trip; that coordinated producer evidence remains upstream.
+The generated document remains a consumer fixture. A second test consumes the
+immutable real Gutenberg saved document, WordPress-rendered HTML and public
+serializer output from the same producer document; provenance and checksums
+are in `../fixtures/design-presentation/README.md`. This is serializer-boundary
+evidence, not an HTTP/GraphQL request; the public REST producer case remains
+in the coordinated upstream work.
 
 This is staged integration, not release acceptance. Resolved theme/reset and
 layout, media, Carousel and navigation families need their final public helper

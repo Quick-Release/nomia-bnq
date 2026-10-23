@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import {
   presentationStyleSheet,
@@ -12,9 +13,7 @@ import { build } from "vite";
 import { createAstroRenderHarness } from "../astro-render-harness.mjs";
 import { parse } from "@wordpress/block-serialization-default-parser";
 
-// Compile the actual Site CSS before authoring the document. The Layout adds
-// the same complete public stylesheet; no CMS values enter Tailwind's scanner.
-test("saved Containers render through Nomia Astro and chrome with production CSS", async (t) => {
+async function productionCss() {
   const result = await build({
     root: fileURLToPath(new URL("../..", import.meta.url)),
     configFile: false,
@@ -27,11 +26,18 @@ test("saved Containers render through Nomia Astro and chrome with production CSS
       },
     },
   });
-  const css =
+  return (
     result.output
       .filter((item) => item.type === "asset" && item.fileName.endsWith(".css"))
       .map((item) => String(item.source))
-      .join("\n") + presentationStyleSheet();
+      .join("\n") + presentationStyleSheet()
+  );
+}
+
+// Compile the actual Site CSS before authoring the document. The Layout adds
+// the same complete public stylesheet; no CMS values enter Tailwind's scanner.
+test("saved Containers render through Nomia Astro and chrome with production CSS", async (t) => {
+  const css = await productionCss();
   const saved = (id, presentation = {}, children = "", extra = {}) => {
     const attributes = { presentation, ...extra };
     return `<!-- wp:getquick-design/container ${JSON.stringify(attributes)} --><div id="${id}" class="wp-block-getquick-design-container${extra.align ? ` align${extra.align}` : ""}">${children || "<span>Content</span>"}</div><!-- /wp:getquick-design/container -->`;
@@ -181,4 +187,65 @@ test("saved Containers render through Nomia Astro and chrome with production CSS
   await page.setViewportSize({ width: 1920, height: 900 });
   close((await measure(".nomia-blocks", "bare")).left, 384, "bare starts at RTL edge");
   close((await measure(".nomia-blocks", "center")).left, 192, "logical margins center in RTL");
+});
+
+test("real Gutenberg Container document survives Nomia parsed, chrome and rendered HTML paths", async (t) => {
+  const css = await productionCss();
+  const fixture = (name) =>
+    readFileSync(new URL(`../fixtures/design-presentation/${name}`, import.meta.url), "utf8");
+  const blocks = parse(fixture("container-presentation.html"));
+  const harness = await createAstroRenderHarness();
+  t.after(() => harness.close());
+  const local = (await harness.renderBlocks(blocks, { bare: true })).html;
+  const chrome = renderDesignPattern([
+    JSON.parse(fixture("container-presentation.json")).blocks[0].node,
+  ]);
+  const bodyHtml = fixture("container-presentation-rendered.html");
+  const browser = await chromium.launch();
+  t.after(() => browser.close());
+  const page = await browser.newPage();
+  await page.setContent(
+    `<style>${css}</style><div data-fixture="local" class="nomia-blocks">${local}</div><div data-fixture="chrome" class="nomia-pattern">${chrome}</div><div data-fixture="html" class="prose-wp">${bodyHtml}</div>`,
+  );
+  const close = (actual, expected, label) =>
+    assert.ok(Math.abs(actual - expected) < 0.1, `${label}: ${actual} ≠ ${expected}`);
+  for (const width of [
+    639, 640, 641, 767, 768, 769, 1023, 1024, 1025, 1279, 1280, 1281, 1535, 1536, 1537,
+  ]) {
+    await page.setViewportSize({ width, height: 900 });
+    const cap = [640, 768, 1024, 1280, 1536].filter((size) => size <= width).at(-1) ?? width;
+    for (const scope of ["local", "chrome", "html"]) {
+      const containers = page.locator(
+        `[data-fixture="${scope}"] .wp-block-getquick-design-container`,
+      );
+      assert.equal(await containers.count(), 3);
+      const box = (index) =>
+        containers.nth(index).evaluate((node) => {
+          const rect = node.getBoundingClientRect();
+          const parent = node.parentElement.getBoundingClientRect();
+          return {
+            width: rect.width,
+            left: rect.left - parent.left,
+            padding: parseFloat(getComputedStyle(node).paddingInlineStart),
+          };
+        });
+      const outer = await box(0);
+      const bare = await box(1);
+      const authored = await box(2);
+      close(outer.width, width, `${scope}: outer maxWidth none`);
+      close(bare.width, cap, `${scope}: bare responsive cap`);
+      close(bare.left, 0, `${scope}: bare uncentered`);
+      close(bare.padding, 0, `${scope}: bare unpadded`);
+      const expected = width >= 1024 ? 512 : width >= 768 ? cap : width / 2;
+      close(authored.width, expected, `${scope}: editor-authored upward width/max width`);
+      close(authored.left, (width - expected) / 2, `${scope}: editor-authored center`);
+      close(authored.padding, 16, `${scope}: editor-authored padding4`);
+      assert.ok(
+        await containers.nth(1).getByText("Bare nested container", { exact: true }).count(),
+      );
+      assert.ok(
+        await containers.nth(2).getByText("Authored nested container", { exact: true }).count(),
+      );
+    }
+  }
 });
