@@ -59,3 +59,17 @@ Pending media acceptance: shared direct media/link fill structure, native Cover
 minimum-height neutralization on authored sizing, resolved-theme variations,
 and the immutable real producer fixture. The current test does not claim those
 cases. Other family acceptance remains pending its owning runtime artifacts.
+
+## Layout family readiness
+
+The Columns/Column Astro adapter attaches canonical variables to its rebuilt
+native wrapper while retaining native flex basis, vertical-alignment classes,
+ordered children and `isStackedOnMobile`. Existing semantic adapter tests pass.
+This wiring is not family geometry acceptance.
+
+The content preview3 model predates layout commit `50bcb31`. With that commit's
+real neutral fixture, current production Grid CSS still renders one/two/three
+tracks at 767/768/1280px instead of authored two/four/reset. Group display,
+Column alignSelf, Spacer height and Separator marginInline fail the preview3
+model's validation. An updated content artifact must adopt the family model
+and remove the old Grid resolver before the Site can validate layout geometry.
