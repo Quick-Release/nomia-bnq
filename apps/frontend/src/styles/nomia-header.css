@@ -85,3 +85,9 @@
   margin: 0;
   padding: 0;
 }
+
+/* Navigation overrides also apply to keyboard focus, within this block only. */
+[data-nomia-navigation] .nomia-area-link:hover,
+[data-nomia-navigation] .nomia-area-link:focus-visible {
+  color: var(--nomia-navigation-hover-text, var(--nomia-area-foreground));
+}
