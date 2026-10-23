@@ -231,7 +231,7 @@ describe("entries read live in local development", () => {
     );
   });
 
-  test("the header grid retains its CMS columns and loads shared layout CSS once in the head", async () => {
+  test("the header grid retains neutral CMS columns and loads presentation CSS once", async () => {
     const container = (children: unknown[]) => ({
       name: "getquick-design/container",
       attributes: {},
@@ -243,7 +243,13 @@ describe("entries read live in local development", () => {
       blocksJson: JSON.stringify([
         {
           name: "getquick-design/grid",
-          attributes: { columns: 3, tabletColumns: 2, mobileColumns: 1 },
+          attributes: {
+            presentation: {
+              base: { gridColumns: "3" },
+              md: { gridColumns: "2" },
+              xl: { gridColumns: "1" },
+            },
+          },
           content: null,
           children: [
             container([
@@ -283,13 +289,14 @@ describe("entries read live in local development", () => {
 
     const { status, html } = await render("/about/");
     expect(status).toBe(200);
-    expect(html).toContain(
-      'class="wp-block-getquick-design-grid gqd-grid--3 gqd-grid--tablet-2 gqd-grid--mobile-1"',
+    const document = new JSDOM(html).window.document;
+    const grid = document.querySelector("header .wp-block-getquick-design-grid");
+    expect(grid?.querySelector(".wp-block-site-logo")).not.toBeNull();
+    expect(grid?.querySelector("[data-nomia-navigation]")).not.toBeNull();
+    const sheets = [...document.head.querySelectorAll("style")].filter((sheet) =>
+      sheet.textContent.includes("--gqd-base-gridColumns"),
     );
-    const gridRule = ".wp-block-getquick-design-grid{display:grid;";
-    const head = html.match(/<head>(.*?)<\/head>/s)?.[1] ?? "";
-    expect(head).toContain(gridRule);
-    expect(html.split(gridRule).length - 1).toBe(1);
+    expect(sheets).toHaveLength(1);
   });
 
   test("an entry WordPress confirms isn't published is a 404", async () => {

@@ -1,6 +1,7 @@
 ---
-import { designGridStyle, presentationStyleSheet, type Alternate, type SiteChrome, type SiteLanguage } from "@getquick/content";
+import { type DesignTheme, type Alternate, type SiteChrome, type SiteLanguage } from "@getquick/content";
 import { consentPage } from "@getquick/content/consent/astro";
+import DesignPresentationStyles from "../components/DesignPresentationStyles.astro";
 import DesignPatternRegion from "../components/DesignPatternRegion.astro";
 import { content } from "../lib/content";
 import { copyFor } from "../lib/copy";
@@ -8,6 +9,7 @@ import "../styles/global.css";
 
 interface Props {
   title?: string;
+  theme?: DesignTheme;
   description?: string;
   /** The chrome the page was served with; left out, the layout looks it up. */
   chrome?: SiteChrome | null;
@@ -81,11 +83,10 @@ const consent = consentPage({
     {hreflang.map((alternate) => <link rel="alternate" hreflang={alternate.language.lang} href={alternate.href} />)}
     {xDefault && <link rel="alternate" hreflang="x-default" href={xDefault.href} />}
     <title>{title === "Nomia" ? title : `${title} — Nomia`}</title>
-    <style is:inline set:html={designGridStyle()} />
-    <style is:inline set:html={presentationStyleSheet()} />
+    <DesignPresentationStyles theme={Astro.props.theme} />
     <Fragment set:html={consent.head} />
   </head>
-  <body>
+  <body class="gqd-content">
     <Fragment set:html={consent.body} />
     {headerPattern ? (
       <header class="contents">

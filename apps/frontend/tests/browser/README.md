@@ -73,3 +73,21 @@ tracks at 767/768/1280px instead of authored two/four/reset. Group display,
 Column alignSelf, Spacer height and Separator marginInline fail the preview3
 model's validation. An updated content artifact must adopt the family model
 and remove the old Grid resolver before the Site can validate layout geometry.
+
+## Resolved theme
+
+Content preview4 (`getquick-content-50f884b-preview4.tgz`, SHA-256
+`3329b44947f2034499122f9c255aa3e1fb188ad7ff04c13c75f7a0b90a1cc8a9`)
+provides the typed theme facade. `DesignPresentationStyles.astro` resolves
+canonical defaults for older publications and generates both scoped reset/theme
+variables and actual responsive presentation rules from the delivered theme.
+Home and entry delivery pass that theme into Layout; preview pages do likewise.
+The body supplies `.gqd-content` without changing semantic palette identities.
+
+The browser test renders the actual Layout around the real Container snapshot
+composed with saved heading/list/media content. It verifies default md 768px,
+explicit md 832px, changed spacing and font family, and checks below/at/above
+resolved thresholds. Heading/list reset and media containment are measured in
+the actual Site CSS cascade. This is external consumer evidence; administration
+canvas/reset isolation and actual REST/GraphQL producer probes remain the
+owning package's separate evidence.

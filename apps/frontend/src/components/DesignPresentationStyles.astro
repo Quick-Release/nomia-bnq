@@ -1,0 +1,19 @@
+---
+import {
+  designThemeStyleSheet,
+  presentationStyleSheet,
+  resolveDesignTheme,
+  type DesignTheme,
+} from "@getquick/content";
+
+interface Props {
+  theme?: DesignTheme;
+}
+
+// Old publications lack theme data. Resolve the same canonical defaults;
+// every response regenerates media rules from its actual delivered theme.
+const theme = resolveDesignTheme(Astro.props.theme);
+---
+
+<style is:inline set:html={designThemeStyleSheet(theme)} />
+<style is:inline set:html={presentationStyleSheet(theme)} />
