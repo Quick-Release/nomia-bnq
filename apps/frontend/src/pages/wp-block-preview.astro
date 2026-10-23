@@ -12,7 +12,7 @@ import type { WpParsedBlock } from "../lib/wp-blocks";
 import { parsePreviewRequest } from "../lib/wp-block-preview-format";
 import "../styles/global.css";
 import "../styles/nomia-blocks.css";
-import { presetRootStyle } from "@getquick/content";
+import { presetRootStyle, presentationStyleSheet } from "@getquick/content";
 import { content } from "../lib/content";
 
 const { blockName, previewToken, attributes } = parsePreviewRequest(Astro.url.searchParams);
@@ -37,6 +37,7 @@ const presets = design ? presetRootStyle(design.spacingSizes, design.colors) : "
 
 <html lang="pt">
   <head>
+    <style is:inline set:html={presentationStyleSheet()} />
     {presets && <style is:global set:html={presets} />}
     <style is:global set:html={thematicColorStyles(attributes.ok ? attributes.attributes.gqBioeconomiaThematicColors : [])} />
     <meta charset="utf-8" />
