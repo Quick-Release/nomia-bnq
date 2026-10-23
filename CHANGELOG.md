@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.9.1 - 2026-10-23
+
+Previous release: v0.9.0
+
+- 5bd58af Merge pull request #63 from Quick-Release/claude/header-css-order
+- 8d6c5a6 fix: keep Tailwind's utilities in their order on pages with the header bar
+
 ## v0.9.0 - 2026-10-23
 
 Previous release: v0.8.1
