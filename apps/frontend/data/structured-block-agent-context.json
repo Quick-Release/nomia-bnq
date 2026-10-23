@@ -53,7 +53,7 @@
   },
   "designSystem": {
     "source": "src/styles/nomia-theme.css",
-    "sha256": "670dc1be4c5b22175db2e21b04ddc88cc88ce167e52dc2bf9e4e640bd9d12d19",
+    "sha256": "f65d1044b3ac5ccdfd913028182824acfce7f4c3a6a798064c6476b7bb21d44a",
     "colorVariables": [
       {
         "name": "--color-main-cinza-100",

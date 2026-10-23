@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./nomia-theme.css";
 
 @theme {
   --font-display: Georgia, "Times New Roman", serif;
