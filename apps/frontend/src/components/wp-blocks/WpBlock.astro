@@ -10,6 +10,7 @@ import {
   flattenInnerContent,
   splitWpContainerInnerContent,
 } from "../../lib/wp-blocks";
+import { presentationHtml } from "@getquick/content";
 import { WP_PDF_EMBED_PREVIEW } from "../../lib/wp-content-classes";
 import type { WpPagePayload } from "../../lib/wp-page-payload";
 import { addDefaultPdfEmbeds } from "../../lib/wp-pdf-embeds";
@@ -62,6 +63,19 @@ const columnsContent =
   block.blockName === "core/columns" || block.blockName === "core/column"
     ? splitWpContainerInnerContent(block, "div")
     : null;
+// Saved wrapper semantics stay intact; presentation validation and CSS variables
+// belong to the content runtime's public helper, including for nested Containers.
+const designContainer = block.blockName === "getquick-design/container"
+  ? splitWpContainerInnerContent(block, "div")
+  : null;
+const designShell = designContainer
+  ? presentationHtml(
+      "getquick-design/container",
+      `${designContainer.openingTag ?? '<div class="wp-block-getquick-design-container">'}${designContainer.closingTag ?? "</div>"}`,
+      block.attrs?.presentation,
+    )
+  : "";
+const designShellEnd = designShell.lastIndexOf("</div");
 ---
 
 {
@@ -72,6 +86,16 @@ const columnsContent =
         set:html={htmlWithPdfEmbeds}
       />
     ) : null
+  ) : designContainer ? (
+    <>
+      <Fragment set:html={designShell.slice(0, designShellEnd)} />
+      {designContainer.pieces.map((piece) => piece.type === "html" ? (
+        <Fragment set:html={addDefaultPdfEmbeds(piece.html)} />
+      ) : (
+        <WpBlock block={piece.block} pageFeaturedImage={pageFeaturedImage} unsupportedFallback={unsupportedFallback} />
+      ))}
+      <Fragment set:html={designShell.slice(designShellEnd)} />
+    </>
   ) : isGetquickBlock ? (
     <WpCustomBlock
       block={block}

@@ -5,6 +5,7 @@
 // tested there; these test what this Site composes from what it delivers:
 // the pages, their words, metadata and chrome.
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
+import { JSDOM } from "jsdom";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vite-plus/test";
 import Entry from "./pages/[...slug].astro";
 import Home from "./pages/index.astro";
@@ -151,9 +152,13 @@ describe("entries read live in local development", () => {
     expect(html).toMatch(/<a [^>]*href="\/economia-circular\/visao-geral\/"[^>]*>\s*Visão geral/);
     expect(html).toMatch(/<a [^>]*href="\/partilhar\/"[^>]*>\s*Partilhar/);
     // The logo and the navigation share the bar.
-    expect(html).toMatch(
-      /<div class="wp-block-getquick-design-container nomia-header-bar"><div class="wp-block-site-logo"><a href="\/"[^>]*><img class="custom-logo" src="https:\/\/media.example\/nomia.svg"[^>]*><\/a><\/div><div class="contents" data-nomia-navigation>/,
+    const headerDocument = new JSDOM(html).window.document;
+    const headerBar = headerDocument.querySelector("header .nomia-header-bar");
+    expect(headerBar?.querySelector(".wp-block-site-logo a")?.getAttribute("href")).toBe("/");
+    expect(headerBar?.querySelector(".custom-logo")?.getAttribute("src")).toBe(
+      "https://media.example/nomia.svg",
     );
+    expect(headerBar?.querySelector("[data-nomia-navigation]")).not.toBeNull();
     // The palette reaches the navigation; a placeholder item takes the area
     // its subitems share, and toggles them instead of linking home.
     expect(html).toContain(
@@ -210,9 +215,12 @@ describe("entries read live in local development", () => {
     expect(html).not.toMatch(/<main[^>]*class="[^"]*nomia-blocks/);
     for (const region of ["header", "footer"]) {
       const regionHtml = html.match(new RegExp(`<${region}\\b[^>]*>(.*?)</${region}>`, "s"))?.[1];
-      expect(regionHtml).toContain(
-        '<div class="nomia-pattern contents"><div class="wp-block-getquick-design-container has-laranja-400-background-color has-background">',
-      );
+      const regionDocument = new JSDOM(regionHtml).window.document;
+      expect(
+        regionDocument.querySelector(
+          ".nomia-pattern > .wp-block-getquick-design-container.has-laranja-400-background-color.has-background",
+        ),
+      ).not.toBeNull();
       const barClasses = regionHtml?.match(/class="(nomia-navigation-bar[^"]*)"/)?.[1].split(/\s+/);
       expect(barClasses).toBeDefined();
       expect(barClasses!.some((name) => name.startsWith("bg-"))).toBe(false);

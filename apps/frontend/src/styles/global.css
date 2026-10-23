@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "./nomia-theme.css";
-@import "./gqd-container-sizing.css";
 
 @theme {
   --font-display: Georgia, "Times New Roman", serif;
@@ -311,62 +310,4 @@ main > h1 {
 
 .prose-wp ol {
   list-style: decimal;
-}
-
-/* Nested aligned containers follow their immediate constrained parent, not
-   the viewport breakout above. Auto width lets full children expand by
-   the parent's negative padding margins; wide children use its wideSize limit. */
-.wp-block-getquick-design-container.gqd-container-layout--constrained
-  > .wp-block-getquick-design-container:is(.alignwide, .alignfull) {
-  width: auto;
-}
-
-/* Nested containers have their own outgoing variables. These incoming parent
-   snapshots prevent nested contentSize/gap/padding from changing their outer box. */
-.wp-block-getquick-design-container.gqd-container-layout > .wp-block-getquick-design-container {
-  margin-block-start: 0;
-  margin-block-end: 0;
-}
-.wp-block-getquick-design-container.gqd-container-layout > * + .wp-block-getquick-design-container {
-  margin-block-start: var(--gqd-parent-layout-gap, 0);
-}
-.wp-block-getquick-design-container.gqd-container-layout--constrained
-  > .wp-block-getquick-design-container:where(:not(.alignleft):not(.alignright):not(.alignfull)) {
-  max-width: var(--gqd-parent-layout-content, none);
-  margin-left: var(--gqd-parent-layout-left, auto) !important;
-  margin-right: var(--gqd-parent-layout-right, auto) !important;
-}
-.wp-block-getquick-design-container.gqd-container-layout--constrained
-  > .wp-block-getquick-design-container.alignwide {
-  max-width: var(--gqd-parent-layout-wide, none);
-}
-.wp-block-getquick-design-container.gqd-container-layout--constrained
-  > .wp-block-getquick-design-container.alignfull {
-  max-width: none;
-  margin-left: calc(var(--gqd-parent-layout-padding-left, 0px) * -1);
-  margin-right: calc(var(--gqd-parent-layout-padding-right, 0px) * -1);
-}
-
-/* Same opt-in layout contract as getquick-design/container's viewStyle.
-   Local variables reset on every container, so nested layouts do not leak. */
-.wp-block-getquick-design-container.gqd-container-layout > * {
-  margin-block-start: 0;
-  margin-block-end: 0;
-}
-.wp-block-getquick-design-container.gqd-container-layout > * + * {
-  margin-block-start: var(--gqd-layout-gap, 0);
-}
-.wp-block-getquick-design-container.gqd-container-layout--constrained
-  > :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
-  max-width: var(--gqd-layout-content, none);
-  margin-left: var(--gqd-layout-left, auto) !important;
-  margin-right: var(--gqd-layout-right, auto) !important;
-}
-.wp-block-getquick-design-container.gqd-container-layout--constrained > .alignwide {
-  max-width: var(--gqd-layout-wide, none);
-}
-.wp-block-getquick-design-container.gqd-container-layout--constrained > .alignfull {
-  max-width: none;
-  margin-left: calc(var(--gqd-layout-padding-left, 0px) * -1);
-  margin-right: calc(var(--gqd-layout-padding-right, 0px) * -1);
 }

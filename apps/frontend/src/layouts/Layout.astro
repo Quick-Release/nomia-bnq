@@ -1,5 +1,5 @@
 ---
-import { designGridStyle, type Alternate, type SiteChrome, type SiteLanguage } from "@getquick/content";
+import { designGridStyle, presentationStyleSheet, type Alternate, type SiteChrome, type SiteLanguage } from "@getquick/content";
 import { consentPage } from "@getquick/content/consent/astro";
 import DesignPatternRegion from "../components/DesignPatternRegion.astro";
 import { content } from "../lib/content";
@@ -82,6 +82,7 @@ const consent = consentPage({
     {xDefault && <link rel="alternate" hreflang="x-default" href={xDefault.href} />}
     <title>{title === "Nomia" ? title : `${title} — Nomia`}</title>
     <style is:inline set:html={designGridStyle()} />
+    <style is:inline set:html={presentationStyleSheet()} />
     <Fragment set:html={consent.head} />
   </head>
   <body>
