@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.10.4 - 2026-10-23
+
+Previous release: v0.10.3
+
+- 7d64e47 fix: adopt shared responsive grid rendering for the header
+
 ## v0.10.3 - 2026-10-23
 
 Previous release: v0.10.2
