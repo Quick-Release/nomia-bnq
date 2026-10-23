@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.10.5 - 2026-10-23
+
+Previous release: v0.10.4
+
+- e6c361b fix: restore responsive Container sizing on the frontend
+
 ## v0.10.4 - 2026-10-23
 
 Previous release: v0.10.3
