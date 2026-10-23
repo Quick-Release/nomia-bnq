@@ -1,5 +1,5 @@
 {
-  "gq": "0.20.0",
+  "gq": "0.22.0",
   "schemaVersion": 1,
   "files": {
     ".claude/skills": "sha256:e1ff59d80751d8af17631debcc3bc30ecdbec0b20dccded0bffb745fe5cea79c",
@@ -9,9 +9,11 @@
     ".vite-hooks/pre-push": "sha256:0b7c92de7a5c6ec6f3b15d2cd1eeffd28b5e2d7cf1d3ecd06efab1b93ae8f15d",
     "apps/cms/patches/wpgraphql-blocks/2.2.0-quiet-unsafe-access.patch": "sha256:28511dbf2c6700b08ac402f5c78da8a71c4aa319b69584f5bfeb0847a30ad721",
     "apps/cms/scripts/patch-dependencies.php": "sha256:80d042db7ead44126a160894c80a19df2cd2a4e56036efe76a93d1db5cc9ec25",
+    "apps/frontend/src/pages/gq/consent.ts": "sha256:7247ef8a4f767c9181bbb514aed4f7ffdcbff180a2dfb8c65b1eefbf37bdd043",
+    "apps/frontend/src/pages/gq/consent/[...rest].ts": "sha256:6e8dea27220fdba1759739a165df0cb624b207cafa18e29d290e6a078f1bac7c",
     "apps/frontend/src/pages/gq/events.ts": "sha256:ca927e5735003fcadf29f2311fb57289b3ca7d8f298a5255e2e1fd88219698b5",
     "apps/frontend/src/pages/gq/refresh.ts": "sha256:ef547e51e9042aabfd3f5e66afa672f93340f0d8c56690b45a3586217f19088c",
-    "apps/frontend/workers/consent-purge.ts": "sha256:186a3c68fc244c227a94e8ab67e28df1c9dbe04d73c065c1fe6931a1467def11",
+    "apps/frontend/workers/consent-purge.ts": "sha256:28fb360dc23fb4e39669576ad1affb20e3902e2659477da95704e9ea2c044def",
     "deploy/ploi/admin.sh": "sha256:3163c681cb23528296c9d55fad119472a1c40cf5bd35da8dd6f452cda06e32ba",
     "deploy/ploi/polylang.sh": "sha256:bd520605bef7355495cefbefa554a7c933e0df71df6a39d50c6ae2571e285fa2",
     "docs/adr/README.md": "sha256:7ceb57ced6c1c24592e17265bbebe9e9b8cfc4cc2c527a76972308a6c41950de",
@@ -31,8 +33,8 @@
     "infra/ci/src/index.ts": "sha256:f27458332b26025c64e05a16350ee1dc26ad07c832cdd94ee624f6b6722abe8e",
     "infra/ci/tsconfig.json": "sha256:784493453142b252218ea73bd96ea91ab941c6bd0b65bae15f7b4b6e50920cd5",
     "infra/ci/wrangler.jsonc": "sha256:4c48332bd874ed2a02e692fd8ebcbe546f8d7f623aa38d465893b190b1730aff",
-    "infra/consent.ts": "sha256:879b444c79739d3e7ab035c056b728ea459b50408c06b34ace2a4d7e3a0809f2",
-    "infra/frontend.run.ts": "sha256:520d04e52bfa16d6ab2755087995b3edda517042ce5503e6f7fd5c8f45a76438",
+    "infra/consent.ts": "sha256:a30c9fed9788d7693323d198846ac8a42f7b2abe9ede6099e7daf5e8a632d973",
+    "infra/frontend.run.ts": "sha256:13510faad8a6bbf0f796e0ae6b43bac4cd3c163109042e0181f2494a60f1998e",
     "infra/package.json": "sha256:915c9c3696469c4a188939cb6afe7d731c16d0cc7e953ba43bbcdc61064615ca",
     "infra/scripts/deploy-frontend.mjs": "sha256:c83ec1174f1da746b95c0446745a63a0698af4380ea229206f3c6d268f39ccfb",
     "infra/tsconfig.json": "sha256:a70d936717fda5cb6a8ece96c261cd9af404077b8dbb5486616b56af39a0d78e",
@@ -46,10 +48,10 @@
   },
   "keys": {
     "apps/cms/composer.json": {
-      "require.getquick/gq-content": "sha256:08b8b986de3e69ac65cb590acf0b2b9bd12a97da05bc3c0551c2be86917fee91"
+      "require.getquick/gq-content": "sha256:a09e2d94133d00d7d72ce4dcb988afb0adf5e34fc0dd8068f9fd582899d63034"
     },
     "apps/frontend/package.json": {
-      "dependencies.@getquick/content": "sha256:08b8b986de3e69ac65cb590acf0b2b9bd12a97da05bc3c0551c2be86917fee91"
+      "dependencies.@getquick/content": "sha256:a09e2d94133d00d7d72ce4dcb988afb0adf5e34fc0dd8068f9fd582899d63034"
     },
     "package.json": {
       "scripts.setup": "sha256:8502c453097e9d772f2749667d163263a92d4bad11168cc7e877d68b706ff691",

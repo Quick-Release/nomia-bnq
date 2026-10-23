@@ -190,8 +190,8 @@ importers:
   .:
     devDependencies:
       '@getquick/site':
-        specifier: 0.20.0
-        version: 0.20.0
+        specifier: 0.22.0
+        version: 0.22.0
       sigillo:
         specifier: 0.13.0
         version: 0.13.0
@@ -208,8 +208,8 @@ importers:
         specifier: ^6.0.6
         version: 6.0.6(@types/node@24.19.2)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(esbuild@0.28.2)(jiti@2.7.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(sass@1.105.1)(supports-color@10.2.2)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1)
       '@getquick/content':
-        specifier: 0.2.0
-        version: 0.2.0
+        specifier: 0.3.0
+        version: 0.3.0
       '@wordpress/block-serialization-default-parser':
         specifier: ^5.57.0
         version: 5.57.0
@@ -1249,12 +1249,12 @@ packages:
       '@noble/hashes':
         optional: true
 
-  '@getquick/content@0.2.0':
-    resolution: {integrity: sha512-zywnQvGpSmiOpuKqCJbt/mHokXQbe/gfvC80ZGtg0TEs7oJKAMjba9tSXZcsHiIogS+b7ez+fBb1OmkFHK6PaA==}
+  '@getquick/content@0.3.0':
+    resolution: {integrity: sha512-POYM4pGNmW+eVA5tMNnhPm57fP9NgVnD0zLYx7H0IEJ4YeATa9EK13uHXuMkkiKWRz20xotmFLULnG4xZ7JB9A==}
     engines: {node: '>=22'}
 
-  '@getquick/site@0.20.0':
-    resolution: {integrity: sha512-pT2ZqioJBe7kCLKU3/456x1KVE1HzzY/z3dulQwuHWjim5wTdebYCq3Aov6sjUrkRNqM+M13QCAqBW4HMOq1PA==}
+  '@getquick/site@0.22.0':
+    resolution: {integrity: sha512-ZKs6LGleVhTP+TJucIcpXMxhwg6BtvTkpLdAXDakUukgRUEeci1UKwiEdmvCbOa30vmjamg4QOu5Bpqq9p04BQ==}
     engines: {node: '>=22.12.0'}
     hasBin: true
 
@@ -6223,14 +6223,14 @@ snapshots:
 
   '@exodus/bytes@1.16.0': {}
 
-  '@getquick/content@0.2.0':
+  '@getquick/content@0.3.0':
     dependencies:
       zod: 3.25.76
 
-  '@getquick/site@0.20.0':
+  '@getquick/site@0.22.0':
     dependencies:
       '@clack/prompts': 1.8.1
-      '@getquick/content': 0.2.0
+      '@getquick/content': 0.3.0
       aws4fetch: 1.0.20
       zod: 4.6.7
 

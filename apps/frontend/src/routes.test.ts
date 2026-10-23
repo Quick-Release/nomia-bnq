@@ -8,7 +8,15 @@ import { experimental_AstroContainer as AstroContainer } from "astro/container";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vite-plus/test";
 import Entry from "./pages/[...slug].astro";
 import Home from "./pages/index.astro";
-import { data, httpError, queries, stubWordPress, timeout, tokens } from "./test/wordpress-stub";
+import {
+  chrome,
+  data,
+  httpError,
+  queries,
+  stubWordPress,
+  timeout,
+  tokens,
+} from "./test/wordpress-stub";
 
 // The monolingual Site this file describes: the site's gq.ops.json without
 // wordpress.languages.
@@ -77,6 +85,55 @@ describe("entries read live in local development", () => {
     expect(html).toContain("<p>We make things.</p>");
     expect(html).toMatch(/<a href="\/about\/"[^>]*>About us<\/a>/);
     expect(html).toContain('src="https://media.example/logo.svg"');
+  });
+
+  test("the header GQ Design selects replaces the site's own, Nomia's navigation included", async () => {
+    // As GQ Design serves Nomia's header pattern: a container, and the
+    // menu-backed navigation with its menu's items.
+    const header = {
+      title: "Header navigation",
+      blocksJson: JSON.stringify([
+        {
+          name: "getquick-design/container",
+          attributes: {},
+          content: '<div class="wp-block-getquick-design-container"></div>',
+          children: [],
+        },
+        {
+          name: "getquick/header-navigation",
+          attributes: {
+            menuId: 469,
+            menuItems: [
+              { id: 1, parentId: 0, label: "Economia Circular", url: "#", target: "" },
+              {
+                id: 2,
+                parentId: 1,
+                label: "Visão geral",
+                url: "/economia-circular/visao-geral/",
+                target: "",
+              },
+              { id: 3, parentId: 0, label: "Partilhar", url: "/partilhar/", target: "" },
+            ],
+          },
+          content: null,
+          children: [],
+        },
+      ]),
+    };
+    stubWordPress({
+      entry: () => data({ postBy: null, pageBy: about, designTokens: tokens }),
+      chrome: () => data({ ...chrome, header }),
+    });
+
+    const { status, html } = await render("/about/");
+
+    expect(status).toBe(200);
+    expect(html).toContain("data-nomia-navigation");
+    expect(html).toMatch(/<a href="\/economia-circular\/visao-geral\/"[^>]*>\s*Visão geral/);
+    expect(html).toMatch(/<a href="\/partilhar\/"[^>]*>\s*Partilhar/);
+    expect(html).toContain('class="wp-block-getquick-design-container"');
+    expect(html).not.toContain('class="site-header"');
+    expect(html).not.toContain("About us");
   });
 
   test("an entry WordPress confirms isn't published is a 404", async () => {

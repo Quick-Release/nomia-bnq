@@ -54,7 +54,7 @@ names (`biblioteca`, `eventos`, `tematicas`, …).
 | `src/Blocks/ContractBlocks.php`                                               | Registers every block from its folder, with its own editor script and translations (`init`, priority 20).    |
 | `src/Blocks/EditorAssets.php`                                                 | The shared editor scripts and style, and the settings and contracts they read.                               |
 | `src/Blocks/BlockPolicy.php`                                                  | The post editor's block allowlist.                                                                           |
-| `src/Blocks/HeaderNavigation.php`                                             | The site's menus for the navigation block.                                                                   |
+| `src/Blocks/HeaderNavigation.php`                                             | The site's menus for the navigation block, and its GQ Design declaration.                                    |
 | `src/Editor/PageBackground.php`                                               | The page background color meta and its GraphQL field.                                                        |
 | `src/GraphQL/BlocksJson.php`                                                  | `wpBlocksJson` on pages and posts.                                                                           |
 | `assets/editor-lib.js`                                                        | Pure helpers (`window.gqBioeconomiaLib`).                                                                    |

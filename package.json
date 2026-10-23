@@ -74,7 +74,7 @@
     "release:package": "gq sigillo run staging -- gq release package"
   },
   "devDependencies": {
-    "@getquick/site": "0.20.0",
+    "@getquick/site": "0.22.0",
     "sigillo": "0.13.0",
     "vite": "catalog:",
     "vite-plus": "catalog:"

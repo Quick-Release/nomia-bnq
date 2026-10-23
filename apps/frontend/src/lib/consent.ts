@@ -3,34 +3,14 @@
 // the runtime gates published bodies, reads the Legal Contract into the
 // chrome and gives each page its consent configuration; this file gates what
 // the runtime doesn't see (Nomia blocks' saved HTML, the contact map, block
-// media) and serves the Runtime's record endpoints. The Runtime owns the
-// categories, the catalog, the banner and its copy, the placeholders and the
-// endpoints; this file only chooses from them.
+// media). The Runtime owns the categories, the catalog, the banner and its
+// copy, the placeholders and the endpoints (the blueprint's pages/gq/consent.ts
+// serves them); this file only chooses from them.
 import { consentConfiguration, embedPlaceholder, rewriteEmbeds } from "@getquick/content/consent";
-import { createConsentServer } from "@getquick/content/consent/server";
 import ops from "../../../../gq.ops.json";
-import { bindings, CONSENT_SERVICES, MEDIA_HOSTS } from "./content";
+import { CONSENT_SERVICES, MEDIA_HOSTS } from "./content";
 import type { NomiaContent } from "./nomia-content";
 import type { WpParsedBlock } from "./wp-blocks";
-
-/**
- * The Runtime's consent endpoints on the Site's Worker: same-origin record
- * writes (`POST /gq/consent`) into the Site's own consent database, and the
- * CMS's bearer-authenticated reads (`/gq/consent/records|export|stats`).
- * The Blueprint provisions the bindings (infra/consent.ts).
- */
-const consentServer = createConsentServer({ siteId: ops.project, bindings });
-
-/** A consent endpoint's answer: the Runtime's, or a 404 for a path it doesn't serve. */
-export async function handleConsent(request: Request): Promise<Response> {
-  return (
-    (await consentServer.handle(request)) ??
-    Response.json(
-      { error: "Not found." },
-      { status: 404, headers: { "Cache-Control": "no-store" } },
-    )
-  );
-}
 
 /** The Site's own hosts besides the Frontend's: its CMS and its media domain. */
 const firstPartyHosts = [ops.domains?.admin, ...MEDIA_HOSTS].filter((host): host is string =>
