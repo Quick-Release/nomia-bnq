@@ -41,9 +41,12 @@ test('term form saves require both a valid nonce and permission', function () {
     $GLOBALS['lgm_test_state']['capability_overrides']['manage_categories'] = false;
     (new ThematicColors())->save(1);
     expect(get_term_meta(1, '_gq_bioeconomia_tematica_color', true))->toBe('');
+    expect($GLOBALS['lgm_test_state']['did_actions'] ?? [])->not->toContain('getquick_design_flush_layout_cache');
     $GLOBALS['lgm_test_state']['capability_overrides']['manage_categories'] = true;
     (new ThematicColors())->save(1);
     expect(get_term_meta(1, '_gq_bioeconomia_tematica_color', true))->toBe('#123456');
+    // GQ Design's cached header carries the palette, so a saved color flushes it.
+    expect($GLOBALS['lgm_test_state']['did_actions'])->toContain('getquick_design_flush_layout_cache');
     $_POST['gq_bioeconomia_tematica_color'] = '#123456; color:red';
     (new ThematicColors())->save(1);
     expect(get_term_meta(1, '_gq_bioeconomia_tematica_color', true))->toBe('#123456');

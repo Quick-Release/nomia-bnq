@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace GetQuick\Bioeconomia\Blocks;
 
+use GetQuick\Bioeconomia\Content\ThematicColors;
 use WP_Post;
 
 /**
@@ -24,7 +25,9 @@ use WP_Post;
  * serves it), the block is declared in GQ Design's catalog as menu-backed, so
  * GQ Design keeps its `menuId` and fills `menuItems` itself (`docs/site-blocks.md`
  * in gq-design, 0.4.2+). Undeclared, it would reach the Frontend with no
- * attributes at all.
+ * attributes at all. GQ Design also serves it the thematic term colors
+ * (`thematicColors`, as `gqBioeconomiaThematicColors` lists them), since the
+ * header sits outside the page whose content carries that palette.
  */
 final class HeaderNavigation {
 
@@ -36,6 +39,7 @@ final class HeaderNavigation {
 	public function register(): void {
 		add_action( 'enqueue_block_editor_assets', [ $this, 'exposeMenus' ] );
 		add_filter( 'getquick_design_block_definitions', [ $this, 'declareToDesign' ] );
+		add_filter( 'getquick_design_block_attributes', [ $this, 'addThematicColors' ], 10, 2 );
 	}
 
 	/**
@@ -54,8 +58,9 @@ final class HeaderNavigation {
 			'regions'           => [ 'header', 'footer', 'content' ],
 			'data_requirements' => [],
 			'attributes'        => [
-				'menuId'    => 'integer',
-				'menuItems' => 'array',
+				'menuId'         => 'integer',
+				'menuItems'      => 'array',
+				'thematicColors' => 'array',
 			],
 			'tokens'            => [],
 			'allowed_children'  => [],
@@ -64,6 +69,23 @@ final class HeaderNavigation {
 		];
 
 		return $definitions;
+	}
+
+	/**
+	 * Adds the thematic term colors to the block as GQ Design serves it.
+	 *
+	 * @param mixed  $attributes The block's public attributes.
+	 * @param string $name       The block's name.
+	 * @return mixed The attributes, with `thematicColors` on this block's.
+	 */
+	public function addThematicColors( $attributes, $name ) {
+		if ( self::NAME !== $name || ! is_array( $attributes ) ) {
+			return $attributes;
+		}
+
+		$attributes['thematicColors'] = ThematicColors::colors();
+
+		return $attributes;
 	}
 
 	/**

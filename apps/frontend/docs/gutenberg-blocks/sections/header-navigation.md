@@ -37,26 +37,39 @@ chooses the menu; its look is fixed.
 - In a header or footer pattern (GETQUICK → Design → Header & Footer), GQ
   Design serves the block instead: gq-bioeconomia declares it in GQ Design's
   catalog as menu-backed (`getquick_design_block_definitions`), so GQ Design
-  keeps `menuId` and fills `menuItems` with the same shape.
+  keeps `menuId` and fills `menuItems` with the same shape. There it also
+  adds `thematicColors` (`getquick_design_block_attributes`), the Temáticas
+  palette, since the header sits outside the page content that carries it;
+  saving a term's **Cor** flushes GQ Design's cached layouts.
 
 ## Frontend behavior
 
-- In page content it renders through `WpCustomBlock`; as a top-level block of
-  the chrome's header or footer pattern, through `DesignPatternRegion`
+- In page content it renders through `WpCustomBlock`; in the chrome's header
+  or footer pattern, at any depth, through `DesignPatternRegion`
   (`src/components/DesignPatternRegion.astro`), which replaces the layout's
   own header.
+- Nomia's header pattern composes the bar: a Container with the
+  `nomia-header-bar` class (Advanced → Additional CSS class) holding the
+  **Site Logo** (GETQUICK → Design → Branding) and this block. That Container
+  is the sticky translucent teal bar (`src/styles/nomia-header.css`), and the
+  block inside it leaves its own bar out. On its own, the block draws the bar
+  itself.
 
 - The bar renders only when its menu has items; a deleted or empty menu
   renders nothing.
 - `headerNavigationTree` (`src/lib/header-navigation.ts`) nests the items under
   their parents. Links into this site become frontend paths, as the site
-  menu's do, and links `safeHref` refuses become `#`.
+  menu's do. A placeholder item (a custom link to `#`) and a link `safeHref`
+  refuses have no link: one with children is the button that opens them, and
+  in the drawer just their label.
 - From the `nav` breakpoint (1400px) the top-level items are a row, the links
   drawn as pills using the **Cor** field of their Temáticas term. Identity
   follows the internal destination’s first path segment (the term slug),
   including subpages, rather than menu order. The legacy `/bioeconomia/`
   route resolves to `bioeconomia-sustentavel`; taxonomy archive links are
-  recognized too. Links without a configured term color use gray. Hover and
+  recognized too. An item without a link of its own takes the area its
+  subitems share (Economia Circular → its pages). Items without a configured
+  term color draw no pill: the bar's text on no background. Hover and
   keyboard focus derive from the same selected color as the homepage cards,
   with automatic black/white text contrast. An item with children opens its
   submenu on hover or focus. Below it the bar shows a menu button that opens a

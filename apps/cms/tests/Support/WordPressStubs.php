@@ -180,6 +180,13 @@ if (! function_exists('add_action')) {
     }
 }
 
+if (! function_exists('do_action')) {
+    function do_action($hook, ...$args)
+    {
+        $GLOBALS['lgm_test_state']['did_actions'][] = $hook;
+    }
+}
+
 if (! function_exists('add_filter')) {
     function add_filter($hook, $callback, $priority = 10, $accepted_args = 1)
     {

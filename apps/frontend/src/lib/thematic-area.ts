@@ -25,11 +25,12 @@ const neutral = {
 };
 
 /**
- * Published term colors and derived contrast/hover, inherited by all Nomia
- * blocks. A term without a color publishes nothing, so each consumer falls
- * back to its own uncolored style.
+ * Published term colors and derived contrast/hover, inherited by every Nomia
+ * block inside `scope` (the page's blocks, or the header navigation, which
+ * sits outside them). A term without a color publishes nothing, so each
+ * consumer falls back to its own uncolored style.
  */
-export function thematicColorStyles(value: unknown): string {
+export function thematicColorStyles(value: unknown, scope = ".nomia-blocks"): string {
   const declarations = readThematicColors(value).flatMap(({ slug, color }) => {
     if (!color) return [];
     const light = isLightHexColor(color);
@@ -49,7 +50,7 @@ export function thematicColorStyles(value: unknown): string {
       `--nomia-tematica-${slug}-foreground: ${light ? "#000000" : "#ffffff"}`,
     ];
   });
-  return declarations.length ? `.nomia-blocks { ${declarations.join("; ")}; }` : "";
+  return declarations.length ? `${scope} { ${declarations.join("; ")}; }` : "";
 }
 
 /**
@@ -64,20 +65,25 @@ const transparent = {
 
 type Uncolored = "neutral" | "transparent";
 
-/** Identity follows an internal area's term slug, never the link's position. */
-export function thematicAreaColors(
-  href: string,
-  internalOrigins: string[],
-  uncolored: Uncolored = "neutral",
-) {
-  const fallback = uncolored === "transparent" ? transparent : neutral;
+/**
+ * The thematic term an internal link belongs to, by its path: identity
+ * follows an internal area's term slug, never the link's position. Null for
+ * any other link.
+ */
+export function thematicAreaSlug(href: string, internalOrigins: string[]): string | null {
   const path = menuItemHref(href, internalOrigins).split(/[?#]/, 1)[0];
   const segments = path.split("/");
   let slug = path.startsWith("/") ? segments[1] : "";
   if (slug === "tematica-indicadores") slug = segments[2];
   // Existing editorial links still use this older route for the same term.
   if (slug === "bioeconomia") slug = "bioeconomia-sustentavel";
-  if (!/^[a-z0-9-]+$/.test(slug ?? "")) return fallback;
+  return slug && /^[a-z0-9-]+$/.test(slug) ? slug : null;
+}
+
+/** A thematic term's published colors, else the uncolored style. */
+export function thematicSlugColors(slug: string | null, uncolored: Uncolored = "neutral") {
+  const fallback = uncolored === "transparent" ? transparent : neutral;
+  if (!slug) return fallback;
   return {
     background: `var(--nomia-tematica-${slug}-background, ${fallback.background})`,
     hoverBackground: `var(--nomia-tematica-${slug}-hover-background, ${fallback.hoverBackground})`,
@@ -85,11 +91,24 @@ export function thematicAreaColors(
   };
 }
 
+export function thematicAreaColors(
+  href: string,
+  internalOrigins: string[],
+  uncolored: Uncolored = "neutral",
+) {
+  return thematicSlugColors(thematicAreaSlug(href, internalOrigins), uncolored);
+}
+
+/** The `--nomia-area-*` properties `.nomia-area-link` reads, for a term. */
+export function thematicSlugStyle(slug: string | null, uncolored: Uncolored = "neutral") {
+  const colors = thematicSlugColors(slug, uncolored);
+  return `--nomia-area-background: ${colors.background}; --nomia-area-hover-background: ${colors.hoverBackground}; --nomia-area-foreground: ${colors.foreground};`;
+}
+
 export function thematicAreaStyle(
   href: string,
   internalOrigins: string[],
   uncolored: Uncolored = "neutral",
 ) {
-  const colors = thematicAreaColors(href, internalOrigins, uncolored);
-  return `--nomia-area-background: ${colors.background}; --nomia-area-hover-background: ${colors.hoverBackground}; --nomia-area-foreground: ${colors.foreground};`;
+  return thematicSlugStyle(thematicAreaSlug(href, internalOrigins), uncolored);
 }
