@@ -19,6 +19,12 @@ use WP_Post;
  * through `withMenus()`, which sets each navigation block's `menuItems`.
  * WPGraphQL shows anonymous callers only the menus assigned to a theme
  * location, so the Frontend can't read a menu by ID itself.
+ *
+ * In GQ Design's layouts (a Header & Footer pattern, as `designPattern`
+ * serves it), the block is declared in GQ Design's catalog as menu-backed, so
+ * GQ Design keeps its `menuId` and fills `menuItems` itself (`docs/site-blocks.md`
+ * in gq-design, 0.4.2+). Undeclared, it would reach the Frontend with no
+ * attributes at all.
  */
 final class HeaderNavigation {
 
@@ -29,6 +35,35 @@ final class HeaderNavigation {
 	 */
 	public function register(): void {
 		add_action( 'enqueue_block_editor_assets', [ $this, 'exposeMenus' ] );
+		add_filter( 'getquick_design_block_definitions', [ $this, 'declareToDesign' ] );
+	}
+
+	/**
+	 * Adds the block to GQ Design's headless catalog as menu-backed.
+	 *
+	 * @param mixed $definitions GQ Design's block definitions, keyed by block name.
+	 * @return mixed The definitions, with this block's.
+	 */
+	public function declareToDesign( $definitions ) {
+		if ( ! is_array( $definitions ) ) {
+			return $definitions;
+		}
+
+		$definitions[ self::NAME ] = [
+			'source'            => 'site',
+			'regions'           => [ 'header', 'footer', 'content' ],
+			'data_requirements' => [],
+			'attributes'        => [
+				'menuId'    => 'integer',
+				'menuItems' => 'array',
+			],
+			'tokens'            => [],
+			'allowed_children'  => [],
+			'renderer_fixture'  => null,
+			'enabled'           => true,
+		];
+
+		return $definitions;
 	}
 
 	/**

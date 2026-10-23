@@ -1,6 +1,7 @@
 ---
 import type { Alternate, SiteChrome, SiteLanguage } from "@getquick/content";
 import { consentPage } from "@getquick/content/consent/astro";
+import DesignPatternRegion from "../components/DesignPatternRegion.astro";
 import { content } from "../lib/content";
 import { copyFor } from "../lib/copy";
 import "../styles/global.css";
@@ -34,6 +35,13 @@ const { menuItems, siteIcon, siteLogo } = chrome ?? {
   siteIcon: null,
   siteLogo: null,
 };
+// The header and footer editors select in GQ Design's Header & Footer, as the
+// chrome serves them; null when it serves none (a template part, nothing
+// published selected, or no chrome), and the layout keeps its own. A pattern
+// draws the whole bar (the Nomia navigation sticks to the page), so its
+// header box takes no layout of its own (`contents`).
+const headerPattern = chrome?.header ?? null;
+const footerPattern = chrome?.footer ?? null;
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : Astro.url;
 // The page and its published translations, in the site's language order,
 // each under its language's tag, then the default language's as x-default.
@@ -77,37 +85,57 @@ const consent = consentPage({
   </head>
   <body>
     <Fragment set:html={consent.body} />
-    <header class="site-header">
-      <a href={language.home} class="site-header__home">
-        {siteLogo ? <img src={siteLogo.sourceUrl} alt={siteLogo.altText || "Nomia"} /> : "Nomia"}
-      </a>
-      {menuItems.length > 0 && (
-        <nav aria-label="Primary">
-          <ul>
-            {menuItems.map((item) => (
-              <li>
-                <a href={item.href} target={item.target ?? undefined}>{item.label}</a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )}
-      {alternates.length > 0 && (
-        <nav class="language-switcher" aria-label={copyFor(language, runtime.multilingual).languages}>
-          <ul>
-            {alternates.map((alternate) => (
-              <li>
-                <a href={alternate.route} hreflang={alternate.language.lang} lang={alternate.language.lang}>
-                  {alternate.language.slug.toUpperCase()}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )}
-    </header>
+    {headerPattern ? (
+      <header class="contents">
+        <DesignPatternRegion pattern={headerPattern} language={language} />
+        {alternates.length > 0 && (
+          <nav class="language-switcher" aria-label={copyFor(language, runtime.multilingual).languages}>
+            <ul>
+              {alternates.map((alternate) => (
+                <li>
+                  <a href={alternate.route} hreflang={alternate.language.lang} lang={alternate.language.lang}>
+                    {alternate.language.slug.toUpperCase()}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
+      </header>
+    ) : (
+      <header class="site-header">
+        <a href={language.home} class="site-header__home">
+          {siteLogo ? <img src={siteLogo.sourceUrl} alt={siteLogo.altText || "Nomia"} /> : "Nomia"}
+        </a>
+        {menuItems.length > 0 && (
+          <nav aria-label="Primary">
+            <ul>
+              {menuItems.map((item) => (
+                <li>
+                  <a href={item.href} target={item.target ?? undefined}>{item.label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
+        {alternates.length > 0 && (
+          <nav class="language-switcher" aria-label={copyFor(language, runtime.multilingual).languages}>
+            <ul>
+              {alternates.map((alternate) => (
+                <li>
+                  <a href={alternate.route} hreflang={alternate.language.lang} lang={alternate.language.lang}>
+                    {alternate.language.slug.toUpperCase()}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
+      </header>
+    )}
     <slot />
     <footer class="site-footer">
+      {footerPattern && <DesignPatternRegion pattern={footerPattern} language={language} />}
       <Fragment set:html={consent.footer} />
     </footer>
     <script>

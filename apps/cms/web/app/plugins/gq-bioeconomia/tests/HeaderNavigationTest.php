@@ -101,3 +101,28 @@ test('a saved menuItems attribute is replaced by the menu', function () {
 
 	expect( $blocks[0]['attrs']['menuItems'] )->toBe( [] );
 } );
+
+test('GQ Design gets the block as menu-backed, keeping its other blocks', function () {
+	$navigation = new HeaderNavigation();
+	$navigation->register();
+
+	$registered = array_values( array_filter(
+		$GLOBALS['gq_bioeconomia_test_state']['filters'],
+		static fn( array $filter ): bool => 'getquick_design_block_definitions' === $filter['hook'],
+	) );
+	expect( $registered )->not()->toBeEmpty();
+
+	$definitions = $navigation->declareToDesign( [ 'core/paragraph' => [ 'enabled' => true ] ] );
+
+	expect( $definitions['core/paragraph'] )->toBe( [ 'enabled' => true ] )
+		->and( $definitions[ HeaderNavigation::NAME ] )->toMatchArray( [
+			'source'     => 'site',
+			'attributes' => [ 'menuId' => 'integer', 'menuItems' => 'array' ],
+			'enabled'    => true,
+		] )
+		->and( array_keys( $definitions[ HeaderNavigation::NAME ] ) )->toEqualCanonicalizing( [
+			'source', 'regions', 'data_requirements', 'attributes', 'tokens',
+			'allowed_children', 'renderer_fixture', 'enabled',
+		] )
+		->and( $definitions[ HeaderNavigation::NAME ]['regions'] )->toContain( 'header' );
+} );

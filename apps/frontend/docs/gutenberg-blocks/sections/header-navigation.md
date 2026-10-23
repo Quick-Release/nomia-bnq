@@ -34,8 +34,17 @@ chooses the menu; its look is fixed.
   resolver fills it from the menu each time the page is read
   (`src/GraphQL/BlocksJson.php`): every item's `id`, `parentId`, `label`,
   `url` and `target`, in menu order.
+- In a header or footer pattern (GETQUICK → Design → Header & Footer), GQ
+  Design serves the block instead: gq-bioeconomia declares it in GQ Design's
+  catalog as menu-backed (`getquick_design_block_definitions`), so GQ Design
+  keeps `menuId` and fills `menuItems` with the same shape.
 
 ## Frontend behavior
+
+- In page content it renders through `WpCustomBlock`; as a top-level block of
+  the chrome's header or footer pattern, through `DesignPatternRegion`
+  (`src/components/DesignPatternRegion.astro`), which replaces the layout's
+  own header.
 
 - The bar renders only when its menu has items; a deleted or empty menu
   renders nothing.

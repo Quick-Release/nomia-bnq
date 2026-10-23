@@ -1,0 +1,48 @@
+---
+/**
+ * A header or footer pattern GQ Design's Header & Footer selects, as the
+ * chrome serves it (`chrome.header` / `chrome.footer`). The runtime renders
+ * GQ Design's own blocks to HTML; Nomia's blocks (`getquick/*`, such as the
+ * header navigation) have no saved HTML and render through the same Astro
+ * renderers as in content. Only top-level Nomia blocks do: one nested in a
+ * GQ Design container can't be, and is reported as unrendered.
+ */
+import type { DesignBlock, DesignPattern, SiteLanguage } from "@getquick/content";
+import { content } from "../lib/content";
+import type { WpParsedBlock } from "../lib/wp-blocks";
+import WpCustomBlock from "./wp-blocks/WpCustomBlock.astro";
+
+interface Props {
+  pattern: DesignPattern;
+  language: SiteLanguage;
+}
+
+const { pattern, language } = Astro.props;
+const runtime = content();
+const options = {
+  siteOrigin: Astro.site?.origin,
+  home: language.home,
+  onUnrendered: (block: DesignBlock) => console.warn(`No renderer for ${block.name} in "${pattern.title}"`),
+};
+
+const isNomiaBlock = (block: DesignBlock) => block.name.startsWith("getquick/");
+// GQ Design's attributes are the block's saved ones (menu-backed blocks with
+// their menu's items), as the content's renderers read them from `attrs`.
+const parsed = (block: DesignBlock): WpParsedBlock => ({
+  blockName: block.name,
+  attrs: block.attributes,
+  innerBlocks: [],
+  innerHTML: block.content ?? "",
+  innerContent: block.content === null ? [] : [block.content],
+});
+---
+
+{
+  pattern.blocks.map((block) =>
+    isNomiaBlock(block) ? (
+      <WpCustomBlock block={parsed(block)} />
+    ) : (
+      <Fragment set:html={runtime.renderDesignPattern([block], options)} />
+    ),
+  )
+}
