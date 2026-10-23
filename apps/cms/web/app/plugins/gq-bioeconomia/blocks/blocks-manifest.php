@@ -4318,19 +4318,34 @@ return [
 		],
 		'textdomain'  => 'gq-bioeconomia',
 		'attributes'  => [
-			'schemaVersion' => [
+			'schemaVersion'        => [
 				'type'    => 'number',
 				'default' => 1,
 			],
-			'blockId'       => [
+			'blockId'              => [
 				'type'    => 'string',
 				'default' => 'header-navigation',
 			],
-			'menuId'        => [
+			'menuId'               => [
 				'type'    => 'number',
 				'default' => 0,
 			],
-			'menuItems'     => [
+			'hoverBackgroundColor' => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'hoverTextColor'       => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'submenuIconId'        => [
+				'type' => 'number',
+			],
+			'submenuIconUrl'       => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'menuItems'            => [
 				'type'    => 'array',
 				'default' => [],
 				'items'   => [

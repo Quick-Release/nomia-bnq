@@ -28,6 +28,21 @@
 			"type": "number",
 			"default": 0
 		},
+		"hoverBackgroundColor": {
+			"type": "string",
+			"default": ""
+		},
+		"hoverTextColor": {
+			"type": "string",
+			"default": ""
+		},
+		"submenuIconId": {
+			"type": "number"
+		},
+		"submenuIconUrl": {
+			"type": "string",
+			"default": ""
+		},
 		"menuItems": {
 			"type": "array",
 			"default": [],

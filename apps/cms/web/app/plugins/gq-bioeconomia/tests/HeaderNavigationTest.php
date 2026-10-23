@@ -117,7 +117,7 @@ test('GQ Design gets the block as menu-backed, keeping its other blocks', functi
 	expect( $definitions['core/paragraph'] )->toBe( [ 'enabled' => true ] )
 		->and( $definitions[ HeaderNavigation::NAME ] )->toMatchArray( [
 			'source'     => 'site',
-			'attributes' => [ 'menuId' => 'integer', 'menuItems' => 'array', 'thematicColors' => 'array' ],
+			'attributes' => [ 'menuId' => 'integer', 'menuItems' => 'array', 'thematicColors' => 'array', 'hoverBackgroundColor' => 'string', 'hoverTextColor' => 'string', 'submenuIconId' => 'integer', 'submenuIconUrl' => 'string' ],
 			'enabled'    => true,
 		] )
 		->and( array_keys( $definitions[ HeaderNavigation::NAME ] ) )->toEqualCanonicalizing( [
@@ -139,4 +139,21 @@ test('GQ Design serves the navigation block the thematic colors', function () {
 		->toBe( [ 'menuId' => 469, 'thematicColors' => [] ] )
 		->and( $navigation->addThematicColors( [ 'level' => 2 ], 'core/heading' ) )
 		->toBe( [ 'level' => 2 ] );
+} );
+
+
+test('navigation style attributes survive menu enrichment and design delivery', function () {
+	$styles = [
+		'hoverBackgroundColor' => '#123456',
+		'hoverTextColor'       => '#ffffff',
+		'submenuIconId'        => 42,
+		'submenuIconUrl'       => 'https://example.com/arrow.svg',
+	];
+	$blocks = HeaderNavigation::withMenus( [
+		[ 'blockName' => HeaderNavigation::NAME, 'attrs' => $styles + [ 'menuId' => 7 ] ],
+	] );
+	expect( $blocks[0]['attrs'] )->toMatchArray( $styles );
+	$navigation = new HeaderNavigation();
+	$public = array_intersect_key( $blocks[0]['attrs'], $navigation->declareToDesign( [] )[ HeaderNavigation::NAME ]['attributes'] );
+	expect( $navigation->addThematicColors( $public, HeaderNavigation::NAME ) )->toMatchArray( $styles );
 } );

@@ -3825,6 +3825,10 @@
         "schemaVersion",
         "blockId",
         "menuId",
+        "hoverBackgroundColor",
+        "hoverTextColor",
+        "submenuIconId",
+        "submenuIconUrl",
         "menuItems"
       ],
       "status": "active",
@@ -3841,6 +3845,24 @@
         "menuId": {
           "type": "number",
           "default": 0
+        },
+        "hoverBackgroundColor": {
+          "type": "string",
+          "default": ""
+        },
+        "hoverTextColor": {
+          "type": "string",
+          "default": ""
+        },
+        "submenuIconId": {
+          "type": "number"
+        },
+        "submenuIconUrl": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
         },
         "menuItems": {
           "type": "array",

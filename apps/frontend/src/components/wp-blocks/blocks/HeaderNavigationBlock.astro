@@ -10,6 +10,7 @@
 import type { WordPressMenuItem } from "@getquick/content";
 import { headerNavigationArea, headerNavigationTree } from "../../../lib/header-navigation";
 import { thematicColorStyles, thematicSlugStyle } from "../../../lib/thematic-area";
+import { safeHref } from "../../../lib/safe-href";
 import { HEADER_GUTTER_X } from "../../../lib/site-gutters";
 import type { WpParsedBlock } from "../../../lib/wp-blocks";
 import { content } from "../../../lib/content";
@@ -37,8 +38,15 @@ const palette = thematicColorStyles(
   "[data-nomia-navigation]",
 );
 // Only an area with a published color draws a pill; other items stay plain.
+const color = (value: unknown) =>
+  typeof value === "string" && /^#[0-9a-f]{6}$/i.test(value) ? value : "";
+const hoverBackground = color(attrs.hoverBackgroundColor);
+const hoverText = color(attrs.hoverTextColor);
+const submenuIconUrl = safeHref(attrs.submenuIconUrl);
 const navStyle = (item: WordPressMenuItem) =>
-  thematicSlugStyle(headerNavigationArea(item, internalOrigins), "transparent");
+  thematicSlugStyle(headerNavigationArea(item, internalOrigins), "transparent") +
+  (hoverBackground ? ` --nomia-area-hover-background: ${hoverBackground};` : "") +
+  (hoverText ? ` --nomia-navigation-hover-text: ${hoverText};` : "");
 const linkTarget = (target: string | null) =>
   target === "_blank" ? { target, rel: "noopener noreferrer" } : {};
 // A placeholder item (no link of its own) toggles its submenu, or is a label.
@@ -73,7 +81,16 @@ const itemProps = (item: WordPressMenuItem) =>
                 <li class="group relative">
                   <Item class={topNavLinkBaseClass} style={navStyle(item)} {...itemProps(item)}>
                     {label}
-                    <svg
+                    {submenuIconUrl ? (
+                      <img
+                        src={submenuIconUrl}
+                        alt=""
+                        aria-hidden="true"
+                        width="16"
+                        height="16"
+                        class="size-4 shrink-0 object-contain transition-transform duration-150 group-hover:rotate-180"
+                      />
+                    ) : <svg
                       class="size-4 shrink-0 transition-transform duration-150 group-hover:rotate-180"
                       width="16"
                       height="16"
@@ -86,7 +103,7 @@ const itemProps = (item: WordPressMenuItem) =>
                       aria-hidden="true"
                     >
                       <path d="M6 9l6 6 6-6" />
-                    </svg>
+                    </svg>}
                   </Item>
                   {/* pt-2 bridge keeps hover path from parent link to submenu */}
                   <div
@@ -284,3 +301,10 @@ const itemProps = (item: WordPressMenuItem) =>
     });
   }
 </script>
+
+<style>
+  .nomia-area-link:hover,
+  .nomia-area-link:focus-visible {
+    color: var(--nomia-navigation-hover-text, var(--nomia-area-foreground));
+  }
+</style>

@@ -12,8 +12,8 @@
 
 A navigation bar showing a WordPress menu, styled like bioeconomia.pt's header
 navigation (`apps/web/src/components/navigation/header/NomiaHeader.astro`
-there; Figma: Nomia — Website (2), node `40017025:6739`). The block only
-chooses the menu; its look is fixed.
+there; Figma: Nomia — Website (2), node `40017025:6739`). The block chooses the menu, hover colors and the icon for top-level items
+with submenus.
 
 <!-- BEGIN GENERATED: structured-block-contract -->
 ## Astro contract attributes
@@ -21,6 +21,10 @@ chooses the menu; its look is fixed.
 - `schemaVersion`
 - `blockId`
 - `menuId`
+- `hoverBackgroundColor`
+- `hoverTextColor`
+- `submenuIconId`
+- `submenuIconUrl`
 - `menuItems`
 <!-- END GENERATED: structured-block-contract -->
 
@@ -41,6 +45,18 @@ chooses the menu; its look is fixed.
   adds `thematicColors` (`getquick_design_block_attributes`), the Temáticas
   palette, since the header sits outside the page content that carries it;
   saving a term's **Cor** flushes GQ Design's cached layouts.
+
+- The **Estilo da navegação** inspector panel sets `hoverBackgroundColor`
+  and `hoverTextColor` using the site palette or a custom color. These apply
+  to all navigation items (desktop, submenu and mobile) on hover and keyboard
+  focus. Clearing a color restores that part of the thematic styling.
+- The same panel uploads or selects an image for the top-level submenu
+  indicator (`submenuIconId`, `submenuIconUrl`), previews it, and lets editors
+  replace or remove it. Removing it restores the built-in chevron. The icon
+  is decorative; the menu item's text supplies the accessible label.
+- These saved attributes are available in GraphQL's `wpBlocksJson` on pages
+  and posts, and in the navigation block attributes of GQ Design's header/footer
+  layouts. Existing blocks keep their thematic colors and default chevron.
 
 ## Frontend behavior
 

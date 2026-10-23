@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-22T23:05:44+00:00\n"
+"POT-Creation-Date: 2026-10-23T12:34:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: gq-bioeconomia\n"
@@ -1738,15 +1738,18 @@ msgstr ""
 
 #: blocks/contact-details-card/index.js:208
 #: blocks/contact-details-card/index.js:313
+#: blocks/header-navigation/index.js:120
 msgid "Carregar ícone"
 msgstr ""
 
 #: blocks/contact-details-card/index.js:209
 #: blocks/contact-details-card/index.js:312
+#: blocks/header-navigation/index.js:121
 msgid "Substituir ícone"
 msgstr ""
 
 #: blocks/contact-details-card/index.js:221
+#: blocks/header-navigation/index.js:135
 msgid "Remover ícone"
 msgstr ""
 
@@ -2002,7 +2005,7 @@ msgid "Add a result to start editing the CTA results section."
 msgstr ""
 
 #: blocks/header-navigation/index.js:16
-#: blocks/header-navigation/index.js:80
+#: blocks/header-navigation/index.js:81
 msgid "Menu"
 msgstr ""
 
@@ -2014,18 +2017,44 @@ msgstr ""
 msgid "Menu apagado"
 msgstr ""
 
-#: blocks/header-navigation/index.js:51
+#: blocks/header-navigation/index.js:52
 msgid "Escolha o menu a mostrar. Os menus editam-se em Aparência → Menus."
 msgstr ""
 
 #. translators: %s: the menu's name.
-#: blocks/header-navigation/index.js:58
+#: blocks/header-navigation/index.js:59
 #, js-format
 msgid "Mostra o menu “%s”, com o estilo do cabeçalho Nomia."
 msgstr ""
 
-#: blocks/header-navigation/index.js:62
+#: blocks/header-navigation/index.js:63
 msgid "O menu escolhido foi apagado: o bloco não aparece no site."
+msgstr ""
+
+#: blocks/header-navigation/index.js:88
+msgid "Estilo da navegação"
+msgstr ""
+
+#: blocks/header-navigation/index.js:89
+#: blocks/header-navigation/index.js:93
+msgid "Cor de fundo ao passar o rato"
+msgstr ""
+
+#: blocks/header-navigation/index.js:98
+#: blocks/header-navigation/index.js:102
+msgid "Cor do texto ao passar o rato"
+msgstr ""
+
+#: blocks/header-navigation/index.js:110
+msgid "Sem cores definidas, usa as cores temáticas. As cores também se aplicam ao foco do teclado."
+msgstr ""
+
+#: blocks/header-navigation/index.js:115
+msgid "Ícone dos itens com submenu"
+msgstr ""
+
+#: blocks/header-navigation/index.js:140
+msgid "Sem ícone escolhido, usa a seta predefinida."
 msgstr ""
 
 #: blocks/home-intro/index.js:62

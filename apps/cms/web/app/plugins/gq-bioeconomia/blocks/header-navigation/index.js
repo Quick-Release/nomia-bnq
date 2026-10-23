@@ -1,9 +1,9 @@
 (() => {
   const { InspectorControls, useBlockProps } = window.wp.blockEditor;
-  const { PanelBody, Placeholder, SelectControl } = window.wp.components;
+  const { Button, ColorPalette, PanelBody, Placeholder, SelectControl } = window.wp.components;
   const { createElement, Fragment } = window.wp.element;
   const { __, sprintf } = window.wp.i18n;
-  const { registerContractBlock } = window.gqBioeconomiaEditor;
+  const { MediaUploadButton, registerContractBlock, useSiteColors } = window.gqBioeconomiaEditor;
 
   // The site's menus (Appearance → Menus), from gq-bioeconomia's HeaderNavigation.
   const menus = window.gqBioeconomiaMenus || [];
@@ -46,6 +46,7 @@
     const blockProps = useBlockProps({
       className: "gq-bioeconomia-inline-editor",
     });
+    const siteColors = useSiteColors();
     const menuId = Number(attributes.menuId) || 0;
     const menu = menus.find((item) => item.id === menuId);
     let instructions = __(
@@ -81,6 +82,63 @@
             initialOpen: true,
           },
           select,
+        ),
+        createElement(
+          PanelBody,
+          { title: __("Estilo da navegação", "gq-bioeconomia"), initialOpen: true },
+          createElement("p", null, __("Cor de fundo ao passar o rato", "gq-bioeconomia")),
+          createElement(ColorPalette, {
+            colors: siteColors,
+            value: attributes.hoverBackgroundColor,
+            "aria-label": __("Cor de fundo ao passar o rato", "gq-bioeconomia"),
+            enableAlpha: false,
+            clearable: true,
+            onChange: (color) => setAttributes({ hoverBackgroundColor: color || "" }),
+          }),
+          createElement("p", null, __("Cor do texto ao passar o rato", "gq-bioeconomia")),
+          createElement(ColorPalette, {
+            colors: siteColors,
+            value: attributes.hoverTextColor,
+            "aria-label": __("Cor do texto ao passar o rato", "gq-bioeconomia"),
+            enableAlpha: false,
+            clearable: true,
+            onChange: (color) => setAttributes({ hoverTextColor: color || "" }),
+          }),
+          createElement(
+            "p",
+            null,
+            __(
+              "Sem cores definidas, usa as cores temáticas. As cores também se aplicam ao foco do teclado.",
+              "gq-bioeconomia",
+            ),
+          ),
+          createElement("p", null, __("Ícone dos itens com submenu", "gq-bioeconomia")),
+          createElement(MediaUploadButton, {
+            imageId: attributes.submenuIconId,
+            hasImage: Boolean(attributes.submenuIconUrl),
+            previewUrl: attributes.submenuIconUrl,
+            labelSelect: __("Carregar ícone", "gq-bioeconomia"),
+            labelReplace: __("Substituir ícone", "gq-bioeconomia"),
+            onSelect: (media) =>
+              setAttributes({
+                submenuIconId: media.id || 0,
+                submenuIconUrl: media.url || "",
+              }),
+          }),
+          attributes.submenuIconUrl &&
+            createElement(
+              Button,
+              {
+                variant: "tertiary",
+                onClick: () => setAttributes({ submenuIconId: 0, submenuIconUrl: "" }),
+              },
+              __("Remover ícone", "gq-bioeconomia"),
+            ),
+          createElement(
+            "p",
+            null,
+            __("Sem ícone escolhido, usa a seta predefinida.", "gq-bioeconomia"),
+          ),
         ),
       ),
       createElement(

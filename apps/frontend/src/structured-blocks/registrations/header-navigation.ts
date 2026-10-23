@@ -7,7 +7,7 @@ import {
 
 /**
  * Navigation bar: a WordPress menu the editor picks, drawn as bioeconomia.pt's
- * header navigation (`NomiaHeader.astro`). The editor stores only `menuId`;
+ * header navigation (`NomiaHeader.astro`). The editor stores the menu and styling options;
  * `menuItems` is never saved by the editor, gq-bioeconomia's `wpBlocksJson`
  * fills it from the menu when the page is read, so the stored page carries the
  * menu as it was at its last refresh.
@@ -27,6 +27,10 @@ export default defineStructuredBlock({
     schemaVersion: numberAttribute(1),
     blockId: stringAttribute("header-navigation"),
     menuId: numberAttribute(0),
+    hoverBackgroundColor: stringAttribute(),
+    hoverTextColor: stringAttribute(),
+    submenuIconId: numberAttribute(),
+    submenuIconUrl: stringAttribute("", { ui: { kind: "media" } }),
     menuItems: arrayAttribute({
       id: numberAttribute(),
       parentId: numberAttribute(),
