@@ -40,3 +40,23 @@ runtime adapter; its rendered HTML is separately available in `html[1]`.
 These immutable inputs are staged for the next media acceptance step. Their
 presence does not claim the still-pending shared structural CSS, contextual
 featured/branding rendering, or neutral Cover chrome adapter has passed.
+
+## Video Hero
+
+These two real Gutenberg saved documents are immutable snapshots from
+`Quick-Release/gq-design` commit `4e6f3ddcc157fb16388d97c5bc93f4154b6d401a`:
+
+| Snapshot                     | Upstream path                               | SHA-256                                                          |
+| ---------------------------- | ------------------------------------------- | ---------------------------------------------------------------- |
+| video-hero-presentation.html | tests/fixtures/video-hero-presentation.html | ceb2ddc6360274c5ab97e18836f3755df641fc720a5e2aefe931ff01b9c92239 |
+| video-hero-youtube.html      | tests/fixtures/video-hero-youtube.html      | dbdf5b59fb89f673f8f780fbedae4360e60a76a31a6cdfd5461fde2d7440b4f4 |
+
+The first document has a poster, nested accessible link, explicit contrast,
+half width, 256px height and independent foreground flex/text alignment. It
+does not contain a self-hosted video source and cannot prove video playback.
+The YouTube document has a poster, localized title, nested link and Base cover,
+md contain, lg reset. Deferred `data-src` must remain gated by the content
+runtime's consent facade before the canonical client initializer attaches it.
+
+Consumer runtime/style and reduced-motion acceptance are pending the next
+content artifact. These snapshots alone do not assert those behaviors pass.
