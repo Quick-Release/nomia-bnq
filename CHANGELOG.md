@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.10.3 - 2026-10-23
+
+Previous release: v0.10.2
+
+- 4bbff8d fix: use uniform submenu colors across thematic navigation items
+
 ## v0.10.2 - 2026-10-23
 
 Previous release: v0.10.1
