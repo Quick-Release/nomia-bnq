@@ -1,5 +1,6 @@
 ---
 import { wpAlignmentClass } from "../../../lib/wp-alignment";
+import { presentationHtml, presentationVariables } from "@getquick/content";
 import type { WpParsedBlock } from "../../../lib/wp-blocks";
 
 interface Props {
@@ -17,11 +18,19 @@ const cls = typeof attrs.className === "string" ? attrs.className : "";
  * on the inner `<figure>`, and repeating it on the wrapper would float twice.
  */
 const alignment = wpAlignmentClass(attrs.align);
+// Prefer the saved figure: links, picture sources, captions and dimensions are
+// authored semantics. Rebuilding from attrs.url would discard them.
+const saved = block.innerHTML.trim()
+  ? presentationHtml("core/image", block.innerHTML, attrs.presentation)
+  : null;
+const variables = saved ? undefined : presentationVariables("core/image", attrs.presentation);
 ---
 
 {
-  url ? (
-    <figure class:list={["wp-block-image", alignment, cls]}>
+  saved ? (
+    <Fragment set:html={saved} />
+  ) : url ? (
+    <figure class:list={["wp-block-image", "gqd-presentation", alignment, cls]} style={variables}>
       <img src={url} alt={alt} class="h-auto max-w-full" loading="lazy" decoding="async" />
     </figure>
   ) : (

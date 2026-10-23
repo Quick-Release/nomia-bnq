@@ -14,6 +14,7 @@
     "structured-blocks:sync": "node --experimental-strip-types ./scripts/sync-wp-plugin-contracts.mjs",
     "structured-blocks:check": "node --experimental-strip-types ./scripts/sync-wp-plugin-contracts.mjs --check",
     "test:container": "node --test tests/browser/container-sizing.test.mjs",
+    "test:presentation": "node --test tests/browser/*.test.mjs",
     "test:blocks": "node --experimental-strip-types --test tests/*.test.mjs",
     "consent:acceptance": "node scripts/consent-acceptance/run.mjs",
     "consent:captures": "node scripts/consent-acceptance/deployed.mjs"

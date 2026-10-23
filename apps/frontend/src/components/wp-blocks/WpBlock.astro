@@ -40,16 +40,19 @@ const {
   unsupportedFallback = "saved-content",
 } = Astro.props;
 const groupLayoutClasses = block.blockName === "core/group" ? wpGroupLayoutClasses(block.attrs) : [];
+const withPresentation = (html: string) => block.blockName
+  ? presentationHtml(block.blockName, html, block.attrs?.presentation)
+  : html;
 // A group's opening tag gets its render-time layout classes (see wp-group-layout.ts).
 const pieces = flattenInnerContent(block).map((piece, index) =>
   index === 0 && piece.type === "html"
-    ? { ...piece, html: withWpGroupLayoutClasses(piece.html, groupLayoutClasses) }
+    ? { ...piece, html: withPresentation(withWpGroupLayoutClasses(piece.html, groupLayoutClasses)) }
     : piece,
 );
 const hasChildPieces = pieces.some((p) => p.type === "block");
 const leaf = blockIsLeaf(block);
 const isGetquickBlock = block.blockName?.startsWith("getquick/") ?? false;
-const htmlWithPdfEmbeds = addDefaultPdfEmbeds(block.innerHTML);
+const htmlWithPdfEmbeds = addDefaultPdfEmbeds(withPresentation(block.innerHTML));
 const listTag = block.blockName === "core/list-item" ? "li" : block.attrs?.ordered === true ? "ol" : "ul";
 const listContent =
   (block.blockName === "core/list" || block.blockName === "core/list-item") && !leaf

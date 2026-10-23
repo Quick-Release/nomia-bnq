@@ -351,7 +351,11 @@ describe("entries read live in local development", () => {
 
     expect(status).toBe(200);
     expect(html).toContain("September 30, 2026");
-    expect(html).not.toContain("featured-image");
+    expect(
+      new JSDOM(html).window.document.querySelector(
+        "img.featured-image, .wp-block-post-featured-image",
+      ),
+    ).toBeNull();
   });
 });
 

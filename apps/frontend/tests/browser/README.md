@@ -36,3 +36,26 @@ layout, media, Carousel and navigation families need their final public helper
 artifacts and separate saved-composition browser coverage. In particular,
 Carousel interaction and null-saved navigation require the content runtime's
 supported rendering and mounting interface.
+
+## Media slice
+
+`pnpm --filter @nomia-bnq/frontend test:presentation` runs the Container and
+media consumer suites. Media integration uses content preview3,
+`getquick-content-e60e095-preview3.tgz`, SHA-256
+`055215e3ef45a983b397d86923c23188175304bddc0186731d029a2f3291fe47`.
+It bundles the canonical target metadata/compiler; there is no Site property
+parser or duplicated value grammar.
+
+The constructed saved composition exercises Image, Featured Image, Site Logo
+and Cover through the Astro dispatcher, chrome renderer and WordPress HTML
+renderer. It checks wrapper fractions, direct-media fit/focal point/height/
+radius, upward overrides, saved image links/picture sources/captions/alt, Cover
+overlay opacity and isolation from nested media. Cover's HTML input includes
+complete rendered foreground HTML, as the content runtime expects. This fixture
+is not an actual HTTP delivery capture or a substitute for the pending immutable
+real Gutenberg Image/public producer fixture.
+
+Pending media acceptance: shared direct media/link fill structure, native Cover
+minimum-height neutralization on authored sizing, resolved-theme variations,
+and the immutable real producer fixture. The current test does not claim those
+cases. Other family acceptance remains pending its owning runtime artifacts.
