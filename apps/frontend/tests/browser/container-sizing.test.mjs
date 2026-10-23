@@ -49,6 +49,11 @@ test("saved Containers render through Nomia Astro and chrome with production CSS
       lg: { width: "reset", marginInline: "reset" },
     }),
     saved("limited", { base: { width: "full", maxWidth: "3xs" } }),
+    saved("top-wide", {}, "", { align: "wide" }),
+    saved("top-full", {}, "", { align: "full" }),
+    saved("overridden-full", { lg: { width: "1/2" }, xl: { marginInline: "auto" } }, "", {
+      align: "full",
+    }),
     saved(
       "parent",
       { base: { maxWidth: "sm", paddingInline: 4, marginInline: "auto" } },
@@ -81,11 +86,19 @@ test("saved Containers render through Nomia Astro and chrome with production CSS
   const deliveredHtml = renderWordPressBlocks(
     blocks.filter((block) => block.blockName).map(wordpressNode),
   );
+  // Public delivery can retain rendered HTML without the original attributes.
+  // A second pass must retain the saved neutral variables in that case.
+  const savedHtmlOnly = renderWordPressBlocks([
+    {
+      name: "getquick-design/container",
+      htmlContent: renderWordPressBlocks([wordpressNode(blocks[1])]),
+    },
+  ]);
   const browser = await chromium.launch();
   t.after(() => browser.close());
   const page = await browser.newPage();
   await page.setContent(
-    `<style>${css}</style><div class="nomia-blocks">${html}</div><div class="nomia-pattern">${chrome}</div><div class="prose-wp">${deliveredHtml}</div>`,
+    `<style>${css}</style><div class="nomia-blocks">${html}</div><div class="nomia-pattern">${chrome}</div><div class="prose-wp">${deliveredHtml}</div><div class="saved-html-only">${savedHtmlOnly}</div>`,
   );
   const close = (actual, expected, label) =>
     assert.ok(Math.abs(actual - expected) < 0.1, `${label}: ${actual} ≠ ${expected}`);
@@ -130,7 +143,37 @@ test("saved Containers render through Nomia Astro and chrome with production CSS
       close((await measure(scope, "nested")).padding, 0, "parent spacing does not inherit");
       close((await measure(scope, "nested-full")).width, inner, "full is parent-relative");
       close((await measure(scope, "nested-half")).width, inner / 2, "fraction is parent-relative");
+      close(
+        (await measure(scope, "wide")).width,
+        inner,
+        "native wide fits nested containing layout",
+      );
+      close(
+        (await measure(scope, "full")).width,
+        inner,
+        "native full fits nested containing layout",
+      );
     }
+    close(
+      (await measure(".prose-wp", "top-wide")).width,
+      Math.min(1200, viewport - 48),
+      "top native wide uses Site wide measure",
+    );
+    close((await measure(".prose-wp", "top-full")).width, viewport, "top native full breaks out");
+    const overridden = await measure(".prose-wp", "overridden-full");
+    close(
+      overridden.width,
+      viewport >= 1024 ? viewport / 2 : viewport,
+      "neutral width overrides native upward only when authored",
+    );
+    close(
+      overridden.left,
+      viewport >= 1280 ? viewport / 4 : 0,
+      "native margin survives until explicit neutral center",
+    );
+    const savedCenter = await measure(".saved-html-only", "center");
+    close(savedCenter.padding, 16, "HTML-only delivery retains saved spacing");
+    close(savedCenter.left, (viewport - cap) / 2, "HTML-only delivery retains saved center");
   }
   await page.locator("body").evaluate((body) => {
     body.dir = "rtl";

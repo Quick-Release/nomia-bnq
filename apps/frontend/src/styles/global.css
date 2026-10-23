@@ -110,13 +110,13 @@ main > h1 {
 
 /* WordPress alignment classes arrive in rendered block content without the
    CMS theme's stylesheet, so preserve native wide/full alignment headlessly. */
-.prose-wp .wp-block-getquick-design-container.alignwide {
+.prose-wp > .wp-block-getquick-design-container.alignwide {
   width: min(75rem, calc(100vw - 3rem));
   max-width: none;
   margin-inline: calc(50% - min(37.5rem, calc(50vw - 1.5rem)));
 }
 
-.prose-wp .wp-block-getquick-design-container.alignfull {
+.prose-wp > .wp-block-getquick-design-container.alignfull {
   width: 100vw;
   max-width: none;
   margin-inline: calc(50% - 50vw);
