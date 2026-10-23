@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.8.1 - 2026-10-23
+
+Previous release: v0.8.0
+
+- 2c0f1e5 Merge pull request #61 from Quick-Release/claude/nav-uncolored-pills
+- 4b84847 fix: draw navigation pills only for areas with a color
+
 ## v0.8.0 - 2026-10-23
 
 Previous release: v0.7.2
