@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-23T12:34:31+00:00\n"
+"POT-Creation-Date: 2026-10-23T13:16:04+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: gq-bioeconomia\n"
@@ -1738,18 +1738,18 @@ msgstr ""
 
 #: blocks/contact-details-card/index.js:208
 #: blocks/contact-details-card/index.js:313
-#: blocks/header-navigation/index.js:120
+#: blocks/header-navigation/index.js:125
 msgid "Carregar ícone"
 msgstr ""
 
 #: blocks/contact-details-card/index.js:209
 #: blocks/contact-details-card/index.js:312
-#: blocks/header-navigation/index.js:121
+#: blocks/header-navigation/index.js:126
 msgid "Substituir ícone"
 msgstr ""
 
 #: blocks/contact-details-card/index.js:221
-#: blocks/header-navigation/index.js:135
+#: blocks/header-navigation/index.js:140
 msgid "Remover ícone"
 msgstr ""
 
@@ -2031,29 +2031,27 @@ msgstr ""
 msgid "O menu escolhido foi apagado: o bloco não aparece no site."
 msgstr ""
 
-#: blocks/header-navigation/index.js:88
+#: blocks/header-navigation/index.js:89
 msgid "Estilo da navegação"
 msgstr ""
 
-#: blocks/header-navigation/index.js:89
-#: blocks/header-navigation/index.js:93
-msgid "Cor de fundo ao passar o rato"
+#: blocks/header-navigation/index.js:96
+msgid "Item Hover Background"
 msgstr ""
 
-#: blocks/header-navigation/index.js:98
 #: blocks/header-navigation/index.js:102
-msgid "Cor do texto ao passar o rato"
+msgid "Item Hover Text Color"
 msgstr ""
 
-#: blocks/header-navigation/index.js:110
+#: blocks/header-navigation/index.js:112
 msgid "Sem cores definidas, usa as cores temáticas. As cores também se aplicam ao foco do teclado."
 msgstr ""
 
-#: blocks/header-navigation/index.js:115
+#: blocks/header-navigation/index.js:120
 msgid "Ícone dos itens com submenu"
 msgstr ""
 
-#: blocks/header-navigation/index.js:140
+#: blocks/header-navigation/index.js:145
 msgid "Sem ícone escolhido, usa a seta predefinida."
 msgstr ""
 

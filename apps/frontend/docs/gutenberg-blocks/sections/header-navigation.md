@@ -47,10 +47,12 @@ with submenus.
   saving a term's **Cor** flushes GQ Design's cached layouts.
 
 - The **Estilo da navegação** inspector panel sets `hoverBackgroundColor`
-  and `hoverTextColor` using the site palette or a custom color. These apply
+  and `hoverTextColor` through the native WordPress color popovers:
+  **Item Hover Background** and **Item Hover Text Color**. Each control opens
+  the site palette and custom color picker; its swatch shows the selected color. These apply
   to all navigation items (desktop, submenu and mobile) on hover and keyboard
   focus. Clearing a color restores that part of the thematic styling.
-- The same panel uploads or selects an image for the top-level submenu
+- The **Ícone dos itens com submenu** panel uploads or selects an image for the top-level submenu
   indicator (`submenuIconId`, `submenuIconUrl`), previews it, and lets editors
   replace or remove it. Removing it restores the built-in chevron. The icon
   is decorative; the menu item's text supplies the accessible label.

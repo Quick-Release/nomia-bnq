@@ -36,18 +36,18 @@ msgstr "Show icon"
 
 #: blocks/contact-details-card/index.js:208
 #: blocks/contact-details-card/index.js:313
-#: blocks/header-navigation/index.js:120
+#: blocks/header-navigation/index.js:125
 msgid "Carregar ícone"
 msgstr "Upload icon"
 
 #: blocks/contact-details-card/index.js:209
 #: blocks/contact-details-card/index.js:312
-#: blocks/header-navigation/index.js:121
+#: blocks/header-navigation/index.js:126
 msgid "Substituir ícone"
 msgstr "Replace icon"
 
 #: blocks/contact-details-card/index.js:221
-#: blocks/header-navigation/index.js:135
+#: blocks/header-navigation/index.js:140
 msgid "Remover ícone"
 msgstr "Remove icon"
 
@@ -3211,28 +3211,26 @@ msgstr ""
 msgid "https://getquick.io"
 msgstr ""
 
-#: blocks/header-navigation/index.js:88
+#: blocks/header-navigation/index.js:89
 msgid "Estilo da navegação"
 msgstr "Navigation style"
 
-#: blocks/header-navigation/index.js:89
-#: blocks/header-navigation/index.js:93
-msgid "Cor de fundo ao passar o rato"
-msgstr "Hover background color"
-
-#: blocks/header-navigation/index.js:98
-#: blocks/header-navigation/index.js:102
-msgid "Cor do texto ao passar o rato"
-msgstr "Hover text color"
-
-#: blocks/header-navigation/index.js:110
+#: blocks/header-navigation/index.js:112
 msgid "Sem cores definidas, usa as cores temáticas. As cores também se aplicam ao foco do teclado."
 msgstr "Without custom colors, uses the thematic colors. Colors also apply to keyboard focus."
 
-#: blocks/header-navigation/index.js:115
+#: blocks/header-navigation/index.js:120
 msgid "Ícone dos itens com submenu"
 msgstr "Submenu indicator icon"
 
-#: blocks/header-navigation/index.js:140
+#: blocks/header-navigation/index.js:145
 msgid "Sem ícone escolhido, usa a seta predefinida."
 msgstr "Without a custom icon, uses the default chevron."
+
+#: blocks/header-navigation/index.js:96
+msgid "Item Hover Background"
+msgstr "Item Hover Background"
+
+#: blocks/header-navigation/index.js:102
+msgid "Item Hover Text Color"
+msgstr "Item Hover Text Color"
