@@ -75,6 +75,40 @@
   padding: 0;
 }
 
+/* When the CMS places the logo and navigation in separate Grid children,
+   the navigation uses the remaining tracks beside the logo. A one-column
+   configuration still stacks them. Scope this to Nomia's header composition. */
+.nomia-pattern .wp-block-getquick-design-grid:has(.nomia-header-bar) {
+  align-items: center;
+}
+
+@media (48rem <= width < 64rem) {
+  .nomia-pattern
+    .wp-block-getquick-design-grid:not(.gqd-grid--tablet-1):has(.nomia-header-bar)
+    > :has([data-nomia-navigation]):not(:has(.wp-block-site-logo)) {
+    grid-column: 2 / -1;
+  }
+}
+
+@media (width >= 64rem) {
+  .nomia-pattern
+    .wp-block-getquick-design-grid:not(.gqd-grid--1):has(.nomia-header-bar)
+    > :has([data-nomia-navigation]):not(:has(.wp-block-site-logo)) {
+    grid-column: 2 / -1;
+  }
+}
+
+/* Keep every desktop link reachable when the grid gives the menu less room
+   than a full-width bar; mobile visibility still follows the nav breakpoint. */
+.nomia-pattern
+  .wp-block-getquick-design-grid:has(.nomia-header-bar)
+  [data-nomia-navigation]
+  .nomia-navigation-bar
+  nav
+  > ul {
+  flex-wrap: wrap;
+}
+
 /* Navigation overrides also apply to keyboard focus, within this block only. */
 [data-nomia-navigation] .nomia-area-link:hover,
 [data-nomia-navigation] .nomia-area-link:focus-visible {

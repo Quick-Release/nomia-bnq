@@ -223,6 +223,67 @@ describe("entries read live in local development", () => {
     );
   });
 
+  test("the header grid retains its CMS columns and loads shared layout CSS once in the head", async () => {
+    const container = (children: unknown[]) => ({
+      name: "getquick-design/container",
+      attributes: {},
+      content: null,
+      children,
+    });
+    const header = {
+      title: "Header grid",
+      blocksJson: JSON.stringify([
+        {
+          name: "getquick-design/grid",
+          attributes: { columns: 3, tabletColumns: 2, mobileColumns: 1 },
+          content: null,
+          children: [
+            container([
+              {
+                name: "core/site-logo",
+                attributes: {
+                  logo: {
+                    url: "https://media.example/nomia.svg",
+                    alt: "Nomia",
+                    width: 160,
+                    height: 40,
+                  },
+                },
+                content: null,
+                children: [],
+              },
+            ]),
+            container([
+              {
+                name: "getquick/header-navigation",
+                attributes: {
+                  menuId: 1,
+                  menuItems: [{ id: 1, parentId: 0, label: "Home", url: "/", target: "" }],
+                },
+                content: null,
+                children: [],
+              },
+            ]),
+          ],
+        },
+      ]),
+    };
+    stubWordPress({
+      entry: () => data({ postBy: null, pageBy: about, designTokens: tokens }),
+      chrome: () => data({ ...chrome, header }),
+    });
+
+    const { status, html } = await render("/about/");
+    expect(status).toBe(200);
+    expect(html).toContain(
+      'class="wp-block-getquick-design-grid gqd-grid--3 gqd-grid--tablet-2 gqd-grid--mobile-1"',
+    );
+    const gridRule = ".wp-block-getquick-design-grid{display:grid;";
+    const head = html.match(/<head>(.*?)<\/head>/s)?.[1] ?? "";
+    expect(head).toContain(gridRule);
+    expect(html.split(gridRule).length - 1).toBe(1);
+  });
+
   test("an entry WordPress confirms isn't published is a 404", async () => {
     stubWordPress({ entry: () => data({ postBy: null, pageBy: null, designTokens: tokens }) });
 

@@ -1,5 +1,5 @@
 {
-  "gq": "0.22.0",
+  "gq": "0.23.1",
   "schemaVersion": 1,
   "files": {
     ".claude/skills": "sha256:e1ff59d80751d8af17631debcc3bc30ecdbec0b20dccded0bffb745fe5cea79c",
@@ -24,8 +24,8 @@
     "docs/plans/README.md": "sha256:d9de303575af490445fcc63d5bfca191331eed78f6a16f4bb5426ed5215b96ad",
     "docs/research/README.md": "sha256:f2f60713391572d03e30f21e43878090d02b67e4f42b20c2178ddbde22e1f999",
     "infra/ci/Dockerfile": "sha256:7f6d3027ebf32a9fecf2016010a5e341146fa6073f12c0c20e68f3286fa25261",
-    "infra/ci/cloudflare.ci.ts": "sha256:c9d70a625a8c41021c3eeb5755321045e51b3cd3ae2a345a8011354c29a49c96",
-    "infra/ci/env.ts": "sha256:c8fadb2a42eb3e0f5a08e11b2a9106588039610083e30ea3b87577db2f96be2d",
+    "infra/ci/cloudflare.ci.ts": "sha256:b02d5679fe32410586a03bb0d1738fd1f5a510f71174280b9ca8c3e0966f217c",
+    "infra/ci/env.ts": "sha256:60d7174ea5b26e6d02459c941542f82bf00f329bd43c3fd7d9edb76696422d0e",
     "infra/ci/github.ts": "sha256:0826c4e300a38d4219d1cd34205c79258393b9c3bd6cc2c441828bb1e626a269",
     "infra/ci/mirror.ts": "sha256:d7a5968f2690a7bb0f06809610550e8142a46839bd19dfb03dc867a30f6433d0",
     "infra/ci/package.json": "sha256:a31cd4fef4858cb3fa743f71b8e60427a79af9e08960d777f08734f34df4f808",
@@ -34,11 +34,11 @@
     "infra/ci/tsconfig.json": "sha256:784493453142b252218ea73bd96ea91ab941c6bd0b65bae15f7b4b6e50920cd5",
     "infra/ci/wrangler.jsonc": "sha256:4c48332bd874ed2a02e692fd8ebcbe546f8d7f623aa38d465893b190b1730aff",
     "infra/consent.ts": "sha256:a30c9fed9788d7693323d198846ac8a42f7b2abe9ede6099e7daf5e8a632d973",
-    "infra/frontend.run.ts": "sha256:13510faad8a6bbf0f796e0ae6b43bac4cd3c163109042e0181f2494a60f1998e",
+    "infra/frontend.run.ts": "sha256:1ab840d6ea733c7a02841b670ba839011fd26f6cfbb2e49c74e803668610fbfe",
     "infra/package.json": "sha256:915c9c3696469c4a188939cb6afe7d731c16d0cc7e953ba43bbcdc61064615ca",
-    "infra/scripts/deploy-frontend.mjs": "sha256:c83ec1174f1da746b95c0446745a63a0698af4380ea229206f3c6d268f39ccfb",
+    "infra/scripts/deploy-frontend.mjs": "sha256:ced672e7c0bcaabf3702968025cc442e9cb48cd121cda2ff5b09fe1f6f3258dc",
     "infra/tsconfig.json": "sha256:a70d936717fda5cb6a8ece96c261cd9af404077b8dbb5486616b56af39a0d78e",
-    "scripts/ci-release.mjs": "sha256:e2fffd64db2b0c4fcb6fed7f52c315d2db1f990acf23d0dbf6977d9bfc8735b0",
+    "scripts/ci-release.mjs": "sha256:6b1b13e9224aab1d4d38ae2e11148e82831e71becedda1553c15b63f818d5c90",
     "scripts/ci.test.mjs": "sha256:ace82ff5c967318e3445b5a5696bf4742cb7e4c939ea6cad54324fa2596c9e68",
     "vite.config.ts": "sha256:bd158046aaa5bc0f25198b42dc241aaa1ad63fefa69f59ece5163f597e6d7e8e"
   },
@@ -48,10 +48,10 @@
   },
   "keys": {
     "apps/cms/composer.json": {
-      "require.getquick/gq-content": "sha256:a09e2d94133d00d7d72ce4dcb988afb0adf5e34fc0dd8068f9fd582899d63034"
+      "require.getquick/gq-content": "sha256:beb7795768ce14d3408406b11381cb9cea141cbd1f9c49b5ef99b4747fb0d5f9"
     },
     "apps/frontend/package.json": {
-      "dependencies.@getquick/content": "sha256:a09e2d94133d00d7d72ce4dcb988afb0adf5e34fc0dd8068f9fd582899d63034"
+      "dependencies.@getquick/content": "sha256:beb7795768ce14d3408406b11381cb9cea141cbd1f9c49b5ef99b4747fb0d5f9"
     },
     "package.json": {
       "scripts.setup": "sha256:8502c453097e9d772f2749667d163263a92d4bad11168cc7e877d68b706ff691",
