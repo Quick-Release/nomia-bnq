@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.8.0 - 2026-10-23
+
+Previous release: v0.7.2
+
+- e9eba7f Merge pull request #60 from Quick-Release/claude/header-pattern
+- 7632c2d feat: render the header GQ Design selects, with Nomia's navigation
+- ac32c37 chore: adopt @getquick/site 0.22.0 and the gq-content 0.3.0 pair
+
 ## v0.7.2 - 2026-10-22
 
 Previous release: v0.7.1
