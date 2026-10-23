@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./nomia-theme.css";
+@import "./gqd-container-sizing.css";
 
 @theme {
   --font-display: Georgia, "Times New Roman", serif;
@@ -97,7 +98,10 @@ main > h1 {
   line-height: 1.8;
 }
 
-.prose-wp > :not(.alignwide):not(.alignfull):not(.wp-block-getquick-design-video-hero) {
+.prose-wp
+  > :not(.alignwide):not(.alignfull):not(.wp-block-getquick-design-video-hero):not(
+    .wp-block-getquick-design-container
+  ) {
   max-width: 48rem;
 }
 
