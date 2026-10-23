@@ -85,7 +85,7 @@ final class EditorAssets {
 			self::HANDLE,
 			plugins_url( 'assets/editor.css', GQ_BIOECONOMIA_PLUGIN_FILE ),
 			[],
-			GQ_BIOECONOMIA_VERSION,
+			self::assetVersion( 'assets/editor.css' ),
 		);
 	}
 
@@ -131,9 +131,22 @@ final class EditorAssets {
 			$handle,
 			plugins_url( $path, GQ_BIOECONOMIA_PLUGIN_FILE ),
 			$dependencies,
-			GQ_BIOECONOMIA_VERSION,
+			self::assetVersion( $path ),
 			true,
 		);
 		wp_set_script_translations( $handle, Plugin::TEXT_DOMAIN, GQ_BIOECONOMIA_PLUGIN_DIR . '/languages' );
+	}
+
+	/**
+	 * Versions editor assets by content so deployed edits invalidate browser and
+	 * CDN caches independently of the plugin lifecycle version.
+	 *
+	 * @param string $path The plugin-relative asset path.
+	 * @return string The asset's content hash.
+	 */
+	private static function assetVersion( string $path ): string {
+		$hash = hash_file( 'sha256', GQ_BIOECONOMIA_PLUGIN_DIR . '/' . $path );
+
+		return false !== $hash ? $hash : GQ_BIOECONOMIA_VERSION;
 	}
 }

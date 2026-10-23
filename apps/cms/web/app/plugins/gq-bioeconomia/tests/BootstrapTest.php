@@ -91,3 +91,27 @@ test( 'booting again registers nothing new', function () {
 	expect( $GLOBALS['gq_bioeconomia_test_state']['actions'] )->toHaveCount( $actions_before )
 		->and( $GLOBALS['gq_bioeconomia_test_state']['filters'] )->toHaveCount( $filters_before );
 } );
+
+test( 'changing an editor script changes its cache version even without a plugin version bump', function () {
+	$relative = 'assets/cache-version-test-' . uniqid() . '.js';
+	$path = GQ_BIOECONOMIA_PLUGIN_DIR . '/' . $relative;
+	$handle = 'gq-bioeconomia-cache-version-test';
+
+	try {
+		file_put_contents( $path, '/* previous editor */' );
+		EditorAssets::registerScript( $handle, $relative, [] );
+		$before = $GLOBALS['gq_bioeconomia_test_state']['registered_scripts'][ $handle ]['ver'];
+
+		file_put_contents( $path, '/* editor with new sidebar controls */' );
+		EditorAssets::registerScript( $handle, $relative, [] );
+		$after = $GLOBALS['gq_bioeconomia_test_state']['registered_scripts'][ $handle ]['ver'];
+
+		expect( $after )->not->toBe( $before );
+
+		EditorAssets::registerScript( $handle, $relative, [] );
+		expect( $GLOBALS['gq_bioeconomia_test_state']['registered_scripts'][ $handle ]['ver'] )->toBe( $after );
+	} finally {
+		unlink( $path );
+		unset( $GLOBALS['gq_bioeconomia_test_state']['registered_scripts'][ $handle ] );
+	}
+} );
