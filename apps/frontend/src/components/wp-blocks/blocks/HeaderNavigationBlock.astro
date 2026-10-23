@@ -44,10 +44,13 @@ const color = (value: unknown) =>
 const hoverBackground = color(attrs.hoverBackgroundColor);
 const hoverText = color(attrs.hoverTextColor);
 const submenuIconUrl = safeHref(attrs.submenuIconUrl);
-const navStyle = (item: WordPressMenuItem) =>
-  thematicSlugStyle(headerNavigationArea(item, internalOrigins), "transparent") +
+const hoverStyle =
   (hoverBackground ? ` --nomia-area-hover-background: ${hoverBackground};` : "") +
   (hoverText ? ` --nomia-navigation-hover-text: ${hoverText};` : "");
+const navStyle = (item: WordPressMenuItem) =>
+  thematicSlugStyle(headerNavigationArea(item, internalOrigins), "transparent") + hoverStyle;
+// Submenus share the surrounding surface and text, regardless of their area.
+const submenuStyle = thematicSlugStyle(null, "transparent") + hoverStyle;
 const linkTarget = (target: string | null) =>
   target === "_blank" ? { target, rel: "noopener noreferrer" } : {};
 // A placeholder item (no link of its own) toggles its submenu, or is a label.
@@ -119,7 +122,7 @@ const itemProps = (item: WordPressMenuItem) =>
                           <li>
                             <Sub
                               class="nomia-area-link font-secondary focus-visible:ring-main-teal-600 block rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap no-underline transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-main-teal-400 focus-visible:outline-none"
-                              style={navStyle(sub)}
+                              style={submenuStyle}
                               {...itemProps(sub)}
                             >
                               {sub.label}
@@ -219,7 +222,7 @@ const itemProps = (item: WordPressMenuItem) =>
                             <li>
                               <Sub
                                 class="nomia-area-link block rounded-lg px-3 py-2 font-secondary text-sm font-medium no-underline transition-colors focus-visible:ring-main-teal-400 focus-visible:ring-2 focus-visible:outline-none"
-                                style={navStyle(sub)}
+                                style={submenuStyle}
                                 {...(sub.href ? itemProps(sub) : {})}
                               >
                                 {sub.label}
