@@ -131,6 +131,11 @@ describe("entries read live in local development", () => {
     expect(html).toContain("data-nomia-navigation");
     expect(html).toMatch(/<a href="\/economia-circular\/visao-geral\/"[^>]*>\s*Visão geral/);
     expect(html).toMatch(/<a href="\/partilhar\/"[^>]*>\s*Partilhar/);
+    // A link whose area has no published color draws no pill.
+    expect(html).toContain(
+      "--nomia-area-background: var(--nomia-tematica-partilhar-background, transparent)",
+    );
+    expect(html).not.toContain("cinza-600");
     expect(html).toContain('class="wp-block-getquick-design-container"');
     expect(html).not.toContain('class="site-header"');
     expect(html).not.toContain("About us");

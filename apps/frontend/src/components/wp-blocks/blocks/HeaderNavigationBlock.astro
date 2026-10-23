@@ -26,6 +26,8 @@ const drawerId = `nomia-navigation-drawer-${Math.random().toString(36).slice(2, 
 
 const topNavLinkBaseClass =
   "nomia-area-link inline-flex items-center gap-1 rounded-lg px-1.5 py-2 whitespace-nowrap no-underline transition-colors focus-visible:ring-main-teal-400 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:outline-none";
+// Only an area with a published color draws a pill; other links stay plain.
+const navStyle = (href: string) => thematicAreaStyle(href, internalOrigins, "transparent");
 const linkTarget = (target: string | null) =>
   target === "_blank" ? { target, rel: "noopener noreferrer" } : {};
 ---
@@ -47,7 +49,7 @@ const linkTarget = (target: string | null) =>
             {navItems.map(({ label, href, target, children }) => {
               return children.length ? (
                 <li class="group relative">
-                  <a href={href} class={topNavLinkBaseClass} style={thematicAreaStyle(href, internalOrigins)} {...linkTarget(target)}>
+                  <a href={href} class={topNavLinkBaseClass} style={navStyle(href)} {...linkTarget(target)}>
                     {label}
                     <svg
                       class="size-4 shrink-0 transition-transform duration-150 group-hover:rotate-180"
@@ -78,7 +80,7 @@ const linkTarget = (target: string | null) =>
                           <a
                             href={sub.href}
                             class="nomia-area-link font-secondary focus-visible:ring-main-teal-600 block rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap no-underline transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-main-teal-400 focus-visible:outline-none"
-                            style={thematicAreaStyle(sub.href, internalOrigins)}
+                            style={navStyle(sub.href)}
                             {...linkTarget(sub.target)}
                           >
                             {sub.label}
@@ -90,7 +92,7 @@ const linkTarget = (target: string | null) =>
                 </li>
               ) : (
                 <li>
-                  <a href={href} class={topNavLinkBaseClass} style={thematicAreaStyle(href, internalOrigins)} {...linkTarget(target)}>
+                  <a href={href} class={topNavLinkBaseClass} style={navStyle(href)} {...linkTarget(target)}>
                     {label}
                   </a>
                 </li>
@@ -162,7 +164,7 @@ const linkTarget = (target: string | null) =>
                   <a
                     href={href}
                     class="nomia-area-link block rounded-lg px-3 py-3 font-secondary text-base font-semibold no-underline transition-colors focus-visible:ring-main-teal-400 focus-visible:ring-2 focus-visible:outline-none"
-                    style={thematicAreaStyle(href, internalOrigins)}
+                    style={navStyle(href)}
                     {...linkTarget(target)}
                   >
                     {label}
@@ -174,7 +176,7 @@ const linkTarget = (target: string | null) =>
                           <a
                             href={sub.href}
                             class="nomia-area-link block rounded-lg px-3 py-2 font-secondary text-sm font-medium no-underline transition-colors focus-visible:ring-main-teal-400 focus-visible:ring-2 focus-visible:outline-none"
-                            style={thematicAreaStyle(sub.href, internalOrigins)}
+                            style={navStyle(sub.href)}
                             {...linkTarget(sub.target)}
                           >
                             {sub.label}

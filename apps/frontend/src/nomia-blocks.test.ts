@@ -299,7 +299,6 @@ test("untrusted or missing term colors cannot inject a stylesheet", async () => 
   const page = await visit("/economia-circular/");
   expect(page.html).not.toContain("alert(1)");
   expect(page.html).not.toContain("body { display:none }");
-  expect(page.html).toContain(
-    "--nomia-tematica-sem-cor-background: var(--wp--preset--color--cinza-600)",
-  );
+  // A term without a color publishes nothing; each block keeps its own fallback.
+  expect(page.html).not.toContain("--nomia-tematica-sem-cor-");
 });
