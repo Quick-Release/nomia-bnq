@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.10.0 - 2026-10-23
+
+Previous release: v0.9.1
+
+- adc1d27 fix: keep navigation hover styles in the site stylesheet
+- 0a821da feat: add navigation hover colors and submenu icon controls
+
 ## v0.9.1 - 2026-10-23
 
 Previous release: v0.9.0
