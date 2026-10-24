@@ -46,6 +46,15 @@ test("actual typography delivery retains rich text and authored styles in Nomia 
     const scopes = {
       local,
       chrome: renderDesignPattern(current.neutralNodes),
+      // Exercise the actual sanitized inline DTO without using its full saved
+      // wrapper. Producer attributes stay unchanged; no Site extraction parser.
+      source: renderDesignPattern(
+        current.neutralNodes.map((node) =>
+          ["core/heading", "core/paragraph"].includes(node.name)
+            ? { ...node, content: null }
+            : node,
+        ),
+      ),
       html: current.renderedHTML,
     };
     const html = await harness.renderLayout(

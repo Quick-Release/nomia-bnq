@@ -58,13 +58,13 @@ test("columns own their columns and each column owns its blocks", async () => {
   assert.equal(columns.children.length, 2);
   const [left, right] = columns.children;
   assert.ok(left.classList.contains("wp-block-column"));
-  assert.equal(left.getAttribute("style"), "flex-basis:66.66%");
+  assert.equal(left.style.flexBasis, "66.66%");
   assert.deepEqual(
     [...left.querySelectorAll("p, h2")].map((element) => element.textContent),
     ["Esquerda", "Título"],
   );
   assert.ok(right.classList.contains("wp-block-column"));
-  assert.equal(right.getAttribute("style"), null);
+  assert.equal(right.style.flexBasis, "");
   assert.equal(right.querySelector("p")?.textContent, "Morada");
 });
 
