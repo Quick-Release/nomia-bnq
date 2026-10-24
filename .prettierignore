@@ -14,3 +14,5 @@ apps/frontend/src/fixtures/wp-custom-block-fixtures.ts
 # Immutable producer snapshots: provenance/checksums live beside them.
 apps/frontend/tests/fixtures/design-presentation/**/*.html
 apps/frontend/tests/fixtures/design-presentation/**/*.json
+# Preserve complete captured language bundles, including upstream notices.
+apps/frontend/tests/fixtures/design-presentation/language-navigation*/

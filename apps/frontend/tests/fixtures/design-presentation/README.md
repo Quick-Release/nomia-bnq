@@ -1,6 +1,6 @@
 # Immutable producer snapshots
 
-Copied byte for byte from `Quick-Release/gq-design` commit `4db472b` for
+Container snapshots copied byte for byte from `Quick-Release/gq-design` commit `4db472b` for
 Nomia's production CSS consumer acceptance. These are fixtures, not copied
 runtime implementations. Keep the snapshots unformatted.
 
@@ -37,9 +37,8 @@ Consumers must supply and verify those actual contexts; empty output proves
 no rendering behavior. The neutral Cover node has null content and requires a
 runtime adapter; its rendered HTML is separately available in `html[1]`.
 
-These immutable inputs are staged for the next media acceptance step. Their
-presence does not claim the still-pending shared structural CSS, contextual
-featured/branding rendering, or neutral Cover chrome adapter has passed.
+These snapshots establish producer provenance. Current consumer coverage and
+provided-context limitations are documented in `../../browser/README.md`.
 
 ## Video Hero
 
@@ -58,8 +57,8 @@ The YouTube document has a poster, localized title, nested link and Base cover,
 md contain, lg reset. Deferred `data-src` must remain gated by the content
 runtime's consent facade before the canonical client initializer attaches it.
 
-Consumer runtime/style and reduced-motion acceptance are pending the next
-content artifact. These snapshots alone do not assert those behaviors pass.
+The current production browser suite separately verifies runtime/style, reduced
+motion and consent. The snapshots alone establish no consumer acceptance.
 
 ## Typography delivery
 
@@ -135,3 +134,47 @@ page-list descendants and Social Links are actual producer output. URLs are no
 longer live. This capture has no language switcher and proves no language-browser
 acceptance. Nomia chrome rendering and ordinary saved body HTML need separate
 interaction checks.
+
+## Final native Columns and Hero delivery
+
+`native-columns-structural-saved.json` is copied unchanged from upstream
+`tests/fixtures/native-columns-structural-saved.json` at `3a5d6be`, SHA-256
+`adf20a3ca0ffe09581e0544e61237a561121e9d52edb7bcb1e83e4029daab501`.
+It captures actual saved/reopened four-root native Columns, their public nodes
+and rendered HTML. It covers fixed native 782px stacking, unequal non-stacking
+widths, equal growth, native vertical alignment and explicit neutral overrides.
+
+`video-hero-saved-public.json` is the unchanged public fixture at
+`e696635af5fdb4f841debe78f9372ebbf07b6bf0`, upstream
+`packages/design-contract/fixtures/blocks/video-hero-saved.json`, SHA-256
+`0fc5b229f2e67658fb2844098bfa56eea3891b658747990d678a399b377a9cc2`.
+It uses the registered REST dispatcher, not an external HTTP request, and retains
+the actual saved nested links as sanitized paragraph attributes.content.
+Previously captured published HTML bytes are unchanged.
+
+## Conditional language captures
+
+`language-navigation/` is the complete immutable bundle at
+`e1984c714c6dc4887324ce2729f6aba2765eea77`; its SHA256SUMS verifies 14 payloads.
+`language-navigation-flags/` is the separate complete bundle at
+`ed0afd9c3f4e7307a3204aa9bf846c3db96429e7`; SHA256SUMS verifies 16 payloads/assets.
+Original README, notices, manifests and provenance are preserved in each bundle.
+These are actual Free Polylang 3.8.10 / WordPress 7 owned EN/FR inputs. Explicitly
+language-resolved public layout nodes and ordinary post nodes/rendered HTML are
+independent authorities; their current metadata is not asserted equal. Actual
+force_home URLs are retained even when noTranslation metadata is true. The
+original capture has null flag URLs; the separate flag capture includes the exact
+HTTP200 PNG assets and their original URLs. Tests may serve those captured bytes
+at the original URLs, never rewrite the DTO. No Pro capability is inferred.
+
+The tiny `../media/hero-test.webm` is a deterministic first-party browser playback
+fixture, not captured CMS content. It is one second of black 320×180 VP8 at 10fps,
+created with `ffmpeg -f lavfi -i color=black:s=320x180:r=10 -t 1 -an -c:v libvpx -b:v 50k hero-test.webm`.
+
+`language-navigation-a11y/` is the separate complete actual future capture at
+`2e7e447fb27dfc8d9b750d96b6aabed177363cc2`, after native producer filter
+`e2cc4dc10334952dd1ead10b6c2ffc622e2b2d88`. Its original SHA256SUMS verifies
+14 payloads. Only missing native flags-only/null-flag accessible names were
+repaired by the producer; URL/content/options/current authorities are unchanged.
+It is the native null-flag body accessibility input, while the old captures remain
+unchanged historical evidence and ed0afd9 remains the actual PNG authority.

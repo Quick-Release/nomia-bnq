@@ -1,13 +1,11 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { fileURLToPath } from "node:url";
 import { parse } from "@wordpress/block-serialization-default-parser";
 import { renderDesignPattern, renderWordPressBlocks } from "@getquick/content";
-import tailwindcss from "@tailwindcss/vite";
-import { build } from "vite";
 import { chromium } from "playwright";
 import { createAstroRenderHarness } from "../astro-render-harness.mjs";
+import { buildPresentationCss, buildPresentationClient } from "../presentation-build.mjs";
 
 const fixture = (name) =>
   JSON.parse(
@@ -15,36 +13,8 @@ const fixture = (name) =>
   );
 
 test("real saved Carousel keeps geometry and ordered content through Nomia adapters", async (t) => {
-  const root = fileURLToPath(new URL("../..", import.meta.url));
-  const output = await build({
-    root,
-    configFile: false,
-    logLevel: "error",
-    plugins: [tailwindcss()],
-    build: { write: false, rollupOptions: { input: `${root}/src/styles/global.css` } },
-  });
-  const css = output.output
-    .filter((asset) => asset.type === "asset" && asset.fileName.endsWith(".css"))
-    .map((asset) => String(asset.source))
-    .join("\n");
-  const client = await build({
-    root,
-    configFile: false,
-    logLevel: "error",
-    build: {
-      write: false,
-      lib: {
-        entry: `${root}/src/lib/design-presentation-client.ts`,
-        formats: ["iife"],
-        name: "NomiaPresentation",
-      },
-    },
-  });
-  const script = (Array.isArray(client) ? client : [client])
-    .flatMap((bundle) => bundle.output)
-    .filter((asset) => asset.type === "chunk")
-    .map((asset) => asset.code)
-    .join("\n");
+  const css = await buildPresentationCss();
+  const script = await buildPresentationClient();
   assert.doesNotMatch(
     script,
     /schemaEnv|validateSchema|ajv-formats/,
@@ -142,4 +112,92 @@ test("real saved Carousel keeps geometry and ordered content through Nomia adapt
   );
   await page.evaluate(() => document.dispatchEvent(new Event("astro:page-load")));
   assert.equal(await page.locator("[data-gqd-mounted]").count(), 3);
+});
+
+test("visible Carousel controls preserve colors, keyboard and autoplay pause rules", async (t) => {
+  const css = await buildPresentationCss();
+  const script = await buildPresentationClient();
+  const source = fixture("carousel-presentation-public.json").blocks[0].node;
+  // An explicit enabled-control variant reuses the actual captured slide
+  // identities/content. This is a consumer scenario, not another producer capture.
+  const node = {
+    ...source,
+    children: source.children.map((child) =>
+      child.name === "getquick-design/carousel-navigation"
+        ? {
+            ...child,
+            attributes: {
+              ...child.attributes,
+              visible: true,
+              slideDuration: 1,
+              arrowColor: "rgb(12, 34, 56)",
+            },
+          }
+        : child,
+    ),
+  };
+  const harness = await createAstroRenderHarness();
+  t.after(() => harness.close());
+  const html = await harness.renderLayout(
+    `${renderDesignPattern([node])}<button id="outside-carousel">Outside controls</button>`,
+  );
+  const browser = await chromium.launch();
+  t.after(() => browser.close());
+  const page = await browser.newPage();
+  page.setDefaultTimeout(5000);
+  await page.clock.install();
+  await page.route("https://example.test/*.svg", (route) =>
+    route.fulfill({
+      contentType: "image/svg+xml",
+      body: '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200"></svg>',
+    }),
+  );
+  await page.setViewportSize({ width: 767, height: 900 });
+  await page.setContent(html.replace("<head>", `<head><style>${css}</style>`));
+  await page.addScriptTag({ content: script });
+  await page.evaluate(() => globalThis.NomiaPresentation.startDesignPresentation());
+  const carousel = page.locator("[data-gqd-carousel]");
+  const nav = carousel.locator(".wp-block-getquick-design-carousel-navigation");
+  assert.equal(
+    await nav.evaluate((node) => getComputedStyle(node).backgroundColor),
+    "rgb(1, 2, 3)",
+  );
+  const next = nav.locator("[data-gqd-next]");
+  assert.equal(await next.evaluate((node) => getComputedStyle(node).color), "rgb(12, 34, 56)");
+  assert.equal(
+    await nav
+      .locator("[data-gqd-go] span")
+      .first()
+      .evaluate((node) => getComputedStyle(node).color),
+    "rgb(4, 5, 6)",
+  );
+  const active = () =>
+    carousel
+      .locator(":scope > .wp-block-getquick-design-slider:not([hidden])")
+      .getAttribute("aria-label");
+  assert.equal(await active(), "1 of 3");
+  await page.clock.fastForward(1100);
+  assert.equal(await active(), "2 of 3", "autoplay advances at the supplied interval");
+  await next.focus();
+  await page.clock.fastForward(1100);
+  assert.equal(await active(), "2 of 3", "focus pauses autoplay");
+  await next.press("ArrowRight");
+  assert.equal(await active(), "3 of 3");
+  await next.press("Home");
+  assert.equal(await active(), "1 of 3");
+  await next.press("Enter");
+  assert.equal(await active(), "2 of 3", "native keyboard activation works");
+  await nav.locator('[data-gqd-go="0"]').click();
+  assert.equal(await active(), "1 of 3");
+  const outside = page.locator("#outside-carousel");
+  await outside.focus();
+  await carousel.hover();
+  await page.clock.fastForward(1100);
+  assert.equal(await active(), "1 of 3", "hover pauses autoplay");
+  await outside.hover();
+  await page.clock.fastForward(1100);
+  assert.equal(await active(), "2 of 3", "leaving hover and focus resumes playback");
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.clock.fastForward(2200);
+  assert.equal(await active(), "2 of 3", "reduced motion stops autoplay");
 });

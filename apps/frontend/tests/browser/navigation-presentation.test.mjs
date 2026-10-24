@@ -1,15 +1,13 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { fileURLToPath } from "node:url";
+import { JSDOM } from "jsdom";
 import { renderDesignPattern, resolveDesignTheme } from "@getquick/content";
-import tailwindcss from "@tailwindcss/vite";
-import { build } from "vite";
 import { chromium } from "playwright";
 import { createAstroRenderHarness } from "../astro-render-harness.mjs";
+import { buildPresentationCss, buildPresentationClient } from "../presentation-build.mjs";
 
 test("actual saved navigation producer renders and mounts in Nomia chrome", async (t) => {
-  const root = fileURLToPath(new URL("../..", import.meta.url));
   const fixture = JSON.parse(
     readFileSync(
       new URL(
@@ -29,35 +27,8 @@ test("actual saved navigation producer renders and mounts in Nomia chrome", asyn
     ),
   );
   assert.deepEqual(fixture, response.getquickBlocks);
-  const output = await build({
-    root,
-    configFile: false,
-    logLevel: "error",
-    plugins: [tailwindcss()],
-    build: { write: false, rollupOptions: { input: `${root}/src/styles/global.css` } },
-  });
-  const css = output.output
-    .filter((asset) => asset.type === "asset" && asset.fileName.endsWith(".css"))
-    .map((asset) => String(asset.source))
-    .join("\n");
-  const client = await build({
-    root,
-    configFile: false,
-    logLevel: "error",
-    build: {
-      write: false,
-      lib: {
-        entry: `${root}/src/lib/design-presentation-client.ts`,
-        formats: ["iife"],
-        name: "NomiaPresentation",
-      },
-    },
-  });
-  const script = (Array.isArray(client) ? client : [client])
-    .flatMap((bundle) => bundle.output)
-    .filter((asset) => asset.type === "chunk")
-    .map((asset) => asset.code)
-    .join("\n");
+  const css = await buildPresentationCss();
+  const script = await buildPresentationClient();
   assert.doesNotMatch(script, /schemaEnv|validateSchema|ajv-formats/);
   const originalFetch = globalThis.fetch;
   globalThis.fetch = async (_url, init) => {
@@ -178,4 +149,104 @@ test("actual saved navigation producer renders and mounts in Nomia chrome", asyn
     assert.equal(await page.locator("[data-gqd-navigation-enhanced]").count(), 4);
     await page.evaluate(() => globalThis.stopPresentation());
   }
+});
+
+test("ordinary Site entry delivery enhances captured WordPress navigation without a Site parser", async (t) => {
+  const fixtureRoot = new URL(
+    "../fixtures/design-presentation/navigation-presentation/",
+    import.meta.url,
+  );
+  const captured = JSON.parse(readFileSync(new URL("public-rest.json", fixtureRoot), "utf8"));
+  const rendered = readFileSync(new URL("rendered.html", fixtureRoot), "utf8");
+  assert.equal(captured.content.rendered, rendered);
+  const sourceDocument = new JSDOM(rendered).window.document;
+  const sourceNews = [...sourceDocument.querySelectorAll("a")]
+    .find((link) => link.textContent.trim() === "News")
+    .getAttribute("href");
+  assert.match(rendered, /data-wp-interactive/);
+  assert.doesNotMatch(rendered, /data-gqd-navigation/);
+  const originalFetch = globalThis.fetch;
+  const calls = [];
+  globalThis.fetch = async (_url, init) => {
+    const request = JSON.parse(init.body);
+    const operation = /query (\w+)/.exec(request.query)?.[1];
+    calls.push(operation);
+    const data =
+      operation === "EntryByUri"
+        ? {
+            postBy: null,
+            pageBy: {
+              id: String(captured.id),
+              databaseId: captured.id,
+              title: captured.title.rendered,
+              content: rendered,
+              uri: "/captured-navigation/",
+              status: "publish",
+              isRestricted: false,
+              featuredImage: null,
+              language: { slug: "pt" },
+              translations: [],
+              getquickBlocksJson: JSON.stringify(captured.getquickBlocks),
+            },
+            designTokens: { colors: [], spacingSizes: [] },
+          }
+        : operation === "SiteChrome"
+          ? {
+              generalSettings: { siteIcon: null, siteLogo: null },
+              menuItems: { nodes: [] },
+              header: null,
+              footer: null,
+            }
+          : operation === "ConsentSettings"
+            ? { getquickLegal: null, googleAnalytics: null }
+            : operation === "DesignPresets"
+              ? { designTokens: { colors: [], spacingSizes: [] } }
+              : null;
+    assert.ok(data, `unexpected query ${operation}`);
+    return Response.json({ data });
+  };
+  t.after(() => {
+    globalThis.fetch = originalFetch;
+  });
+  const css = await buildPresentationCss();
+  const script = await buildPresentationClient();
+  const harness = await createAstroRenderHarness();
+  t.after(() => harness.close());
+  const response = await harness.renderEntry("/captured-navigation/");
+  assert.equal(response.status, 200);
+  assert.ok(calls.includes("EntryByUri"));
+  assert.match(response.html, /data-wp-interactive/);
+  assert.match(response.html, /data-gqd-navigation/);
+  const browser = await chromium.launch();
+  t.after(() => browser.close());
+  const page = await browser.newPage();
+  page.setDefaultTimeout(5000);
+  await page.setViewportSize({ width: 640, height: 900 });
+  await page.setContent(response.html.replace("<head>", `<head><style>${css}</style>`));
+  await page.addScriptTag({ content: script });
+  await page.evaluate(() => globalThis.NomiaPresentation.startDesignPresentation());
+  const navs = page.locator(".prose-wp [data-gqd-navigation]");
+  assert.equal(await navs.count(), 2);
+  for (const nav of await navs.all()) {
+    assert.equal(await nav.getAttribute("data-gqd-navigation-enhanced"), "");
+    const opener = nav.locator("[data-gqd-navigation-open]").first();
+    await opener.click();
+    assert.equal(await opener.getAttribute("aria-expanded"), "true");
+    const toggle = nav.locator("[data-gqd-submenu]").first();
+    await toggle.press("ArrowDown");
+    assert.equal(await toggle.getAttribute("aria-expanded"), "true");
+    await toggle.press("Escape");
+    assert.equal(await toggle.getAttribute("aria-expanded"), "false");
+    await nav.locator("[data-gqd-navigation-close]").first().click();
+    assert.equal(await opener.getAttribute("aria-expanded"), "false");
+  }
+  assert.equal(
+    await navs
+      .nth(1)
+      .getByRole("link", { name: "News", exact: true, includeHidden: true })
+      .getAttribute("href"),
+    sourceNews,
+    "saved HTML keeps its own source URL authority",
+  );
+  assert.equal(await page.locator('.prose-wp a[href="https://instagram.com/example"]').count(), 1);
 });
