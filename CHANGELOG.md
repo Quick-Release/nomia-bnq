@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.11.0 - 2026-10-24
+
+Previous release: v0.10.8
+
+- 7160304 Merge pull request #67 from Quick-Release/claude/archive-pages-v2
+- 010b91a feat: archive Pages with Listing and Filters blocks served from the store
+- 4129850 fix(cms): expose every gq-bioeconomia taxonomy to WPGraphQL
+
 ## v0.10.8 - 2026-10-24
 
 Previous release: v0.10.7
