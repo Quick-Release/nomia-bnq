@@ -5,6 +5,7 @@
  * script that exposes it as `window.gqBioeconomiaFrontendRules`.
  */
 export * from "./contact-details-card.ts";
+export * from "./content-collections.ts";
 export * from "./google-maps.ts";
 export * from "./nomia-contact-map.ts";
 export * from "./page-hero-typography.ts";

@@ -470,6 +470,27 @@ test('content types are registered with rest support and custom capabilities', f
         ->and($activity_sector_taxonomy['object_type'])->toContain('post');
 });
 
+test('every taxonomy is exposed to WPGraphQL for the archive listings', function () {
+    PostTypes::registerContentTypes();
+
+    $graphql_names = [];
+    foreach ($GLOBALS['lgm_test_state']['taxonomies'] as $name => $taxonomy) {
+        $graphql_names[ $name ] = [
+            $taxonomy['args']['show_in_graphql'] ?? false,
+            $taxonomy['args']['graphql_single_name'] ?? null,
+            $taxonomy['args']['graphql_plural_name'] ?? null,
+        ];
+    }
+
+    expect($graphql_names)->toBe([
+        'categoria_biblioteca' => [ true, 'CategoriaBiblioteca', 'CategoriasBiblioteca' ],
+        'tipo_evento' => [ true, 'TipoEvento', 'TiposEvento' ],
+        'tematicas' => [ true, 'Tematica', 'Tematicas' ],
+        'setor_atividade' => [ true, 'SetorAtividade', 'SetoresAtividade' ],
+        'categoria_oportunidade' => [ true, 'CategoriaOportunidade', 'CategoriasOportunidade' ],
+    ]);
+});
+
 test('custom capabilities follow declared model and taxonomy maps', function () {
     $capabilities = Capabilities::all();
 

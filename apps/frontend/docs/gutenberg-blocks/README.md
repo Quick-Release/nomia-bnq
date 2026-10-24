@@ -33,6 +33,13 @@ Design rule: editors may change content only. Visual styling, spacing, layout, m
 - [NomiaBarChartNegative](./charts/bar-chart-negative.md) — `bar-chart-negative`
 - [NomiaBarChartStacked](./charts/bar-chart-stacked.md) — `bar-chart-stacked`
 
+### content-lists/listing
+
+Archive Pages: the items are read from the publication store when the Page is visited.
+
+- [Content listing](./content-lists/content-listing.md) — `content-listing`
+- [Content filters](./content-lists/content-filters.md) — `content-filters`
+
 ### content-lists/plataformas
 
 - [NomiaPlataformasListSection](./content-lists/content-grid-filters.md) — `content-grid-filters`

@@ -1106,4 +1106,26 @@ export const WP_CUSTOM_BLOCK_FIXTURES: readonly WpCustomBlockFixture[] = [
       },
     ),
   },
+  {
+    label: "Content listing",
+    block: block(
+      "getquick/content-listing",
+      {
+        collection: "biblioteca",
+        display: "list",
+        perPage: 12,
+        showPagination: true,
+      },
+    ),
+  },
+  {
+    label: "Content filters",
+    block: block(
+      "getquick/content-filters",
+      {
+        collection: "biblioteca",
+        showSearch: true,
+      },
+    ),
+  },
 ];

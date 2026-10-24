@@ -684,6 +684,37 @@ export const WP_CUSTOM_BLOCK_CONTRACTS = [
     editorTitle: "nomia_navigation",
     editorDescription: "Barra de navegação com um menu do WordPress, no estilo do cabeçalho Nomia.",
   },
+  {
+    blockName: "getquick/content-listing",
+    catalogId: "content-listing",
+    schemaVersion: 1,
+    contentAttributes: [
+      "schemaVersion",
+      "blockId",
+      "collection",
+      "taxonomy",
+      "term",
+      "display",
+      "perPage",
+      "showPagination",
+    ],
+    editorTitle: "Listagem de conteúdos",
+    editorDescription: "Lista os conteúdos publicados de um tipo, como os documentos da Biblioteca ou os eventos, com paginação.",
+  },
+  {
+    blockName: "getquick/content-filters",
+    catalogId: "content-filters",
+    schemaVersion: 1,
+    contentAttributes: [
+      "schemaVersion",
+      "blockId",
+      "collection",
+      "showSearch",
+      "hiddenTaxonomies",
+    ],
+    editorTitle: "Pesquisa e filtros",
+    editorDescription: "Caixa de pesquisa e filtros por categoria, temática e setor para a listagem de conteúdos da mesma página.",
+  },
 ] as const satisfies readonly WpCustomBlockContract[];
 
 export const WP_CUSTOM_BLOCK_COMPATIBILITY_READS = {
