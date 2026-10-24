@@ -5951,6 +5951,186 @@
         "module": "apps/cms/web/app/plugins/gq-bioeconomia/blocks/header-navigation/index.js"
       },
       "documentation": "docs/gutenberg-blocks/sections/header-navigation.md"
+    },
+    {
+      "blockName": "getquick/content-listing",
+      "catalogId": "content-listing",
+      "schemaVersion": 1,
+      "order": 39,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/content-listing.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "content-listing"
+        },
+        "collection": {
+          "type": "string",
+          "default": "biblioteca",
+          "enum": [
+            "biblioteca",
+            "eventos",
+            "oportunidades",
+            "recursos_educativos",
+            "glossario",
+            "indicadores",
+            "infografias",
+            "videos",
+            "podcasts",
+            "ferramentas",
+            "plataformas",
+            "bases_de_dados"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        },
+        "taxonomy": {
+          "type": "string",
+          "default": ""
+        },
+        "term": {
+          "type": "string",
+          "default": ""
+        },
+        "display": {
+          "type": "string",
+          "default": "list",
+          "enum": [
+            "list",
+            "thumbnail-grid",
+            "titled-thumbnail-grid"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        },
+        "perPage": {
+          "type": "number",
+          "default": 12
+        },
+        "showPagination": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "compatibilityReads": {},
+      "editing": {
+        "mode": "bespoke",
+        "module": "apps/cms/web/app/plugins/gq-bioeconomia/blocks/content-listing/index.js",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": null,
+        "note": "The bespoke editor module owns the visible controls; inspect it before editing."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/ContentListingBlock.astro",
+        "previewLabel": "Content listing",
+        "previewAttributes": {
+          "collection": "biblioteca",
+          "display": "list",
+          "perPage": 12,
+          "showPagination": true
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Listagem de conteúdos",
+        "description": "Lista os conteúdos publicados de um tipo, como os documentos da Biblioteca ou os eventos, com paginação.",
+        "icon": "list-view",
+        "experience": "preview",
+        "module": "apps/cms/web/app/plugins/gq-bioeconomia/blocks/content-listing/index.js"
+      },
+      "documentation": "docs/gutenberg-blocks/content-lists/content-listing.md"
+    },
+    {
+      "blockName": "getquick/content-filters",
+      "catalogId": "content-filters",
+      "schemaVersion": 1,
+      "order": 40,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/content-filters.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "content-filters"
+        },
+        "collection": {
+          "type": "string",
+          "default": "biblioteca",
+          "enum": [
+            "biblioteca",
+            "eventos",
+            "oportunidades",
+            "recursos_educativos",
+            "glossario",
+            "indicadores",
+            "infografias",
+            "videos",
+            "podcasts",
+            "ferramentas",
+            "plataformas",
+            "bases_de_dados"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        },
+        "showSearch": {
+          "type": "boolean",
+          "default": true
+        },
+        "hiddenTaxonomies": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string",
+            "default": ""
+          }
+        }
+      },
+      "compatibilityReads": {},
+      "editing": {
+        "mode": "bespoke",
+        "module": "apps/cms/web/app/plugins/gq-bioeconomia/blocks/content-filters/index.js",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": null,
+        "note": "The bespoke editor module owns the visible controls; inspect it before editing."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/ContentFiltersBlock.astro",
+        "previewLabel": "Content filters",
+        "previewAttributes": {
+          "collection": "biblioteca",
+          "showSearch": true
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Pesquisa e filtros",
+        "description": "Caixa de pesquisa e filtros por categoria, temática e setor para a listagem de conteúdos da mesma página.",
+        "icon": "filter",
+        "experience": "preview",
+        "module": "apps/cms/web/app/plugins/gq-bioeconomia/blocks/content-filters/index.js"
+      },
+      "documentation": "docs/gutenberg-blocks/content-lists/content-filters.md"
     }
   ]
 }

@@ -1,0 +1,66 @@
+---
+import NomiaContentListing from "../../content-lists/listing/NomiaContentListing.astro";
+import {
+  isFilteredByVisitor,
+  listingPagination,
+  listingQuery,
+  readCollection,
+  readListingDisplay,
+  readPerPage,
+} from "../../../lib/content-collections";
+import { listCollection } from "../../../lib/content-listing";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { wpText as text } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props {
+  block: WpParsedBlock;
+}
+
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/content-listing">;
+// Gutenberg leaves an attribute at its default out of the block comment, so
+// a missing value is the registration's default.
+const collection = readCollection(attrs.collection ?? "biblioteca");
+const display = readListingDisplay(attrs.display);
+const showPagination = attrs.showPagination !== false;
+
+// Read when the page is visited, from the publication store: the Page lists
+// what is published now, filtered by the address the Filters block wrote.
+const settings = collection
+  ? {
+      collection,
+      taxonomy: text(attrs.taxonomy) || null,
+      term: text(attrs.term) || null,
+      perPage: readPerPage(attrs.perPage),
+    }
+  : null;
+const query = settings ? listingQuery(settings, Astro.url.searchParams) : null;
+const result = query ? await listCollection(query) : ({ kind: "unavailable" } as const);
+const rows =
+  result.kind === "found"
+    ? result.items.map((item) => ({
+        href: item.uri,
+        title: item.title.trim() || "Sem título",
+        imageSrc: item.featuredImage?.sourceUrl || null,
+        imageAlt: item.featuredImage?.altText || "",
+      }))
+    : [];
+const filtered = Boolean(settings && query && isFilteredByVisitor(settings, query));
+const empty = result.kind === "unavailable" ? "unavailable" : filtered ? "no-match" : "none";
+const pagination =
+  showPagination && result.kind === "found" && result.pages > 1
+    ? listingPagination(Astro.url, result.page, result.pages)
+    : null;
+---
+
+{collection && (
+  <NomiaContentListing
+    display={display}
+    rows={rows}
+    empty={empty}
+    pages={pagination?.pages}
+    previous={pagination?.previous}
+    next={pagination?.next}
+  />
+)}

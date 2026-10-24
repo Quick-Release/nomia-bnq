@@ -4183,6 +4183,151 @@ final class Contracts {
 					],
 				],
 			],
+			[
+				'blockName'   => 'getquick/content-listing',
+				'catalogId'   => 'content-listing',
+				'title'       => 'Listagem de conteúdos',
+				'description' => 'Lista os conteúdos publicados de um tipo, como os documentos da Biblioteca ou os eventos, com paginação.',
+				'icon'        => 'list-view',
+				'keywords'    => [
+					'arquivo',
+					'listagem',
+					'archive',
+					'listing',
+					'biblioteca',
+					'eventos',
+				],
+				'status'      => 'active',
+				'inserter'    => true,
+				'attributes'  => [
+					'schemaVersion'  => [
+						'type'    => 'number',
+						'default' => 1,
+					],
+					'blockId'        => [
+						'type'    => 'string',
+						'default' => 'content-listing',
+					],
+					'collection'     => [
+						'type'    => 'string',
+						'default' => 'biblioteca',
+						'enum'    => [
+							'biblioteca',
+							'eventos',
+							'oportunidades',
+							'recursos_educativos',
+							'glossario',
+							'indicadores',
+							'infografias',
+							'videos',
+							'podcasts',
+							'ferramentas',
+							'plataformas',
+							'bases_de_dados',
+						],
+						'ui'      => [
+							'kind' => 'select',
+						],
+					],
+					'taxonomy'       => [
+						'type'    => 'string',
+						'default' => '',
+					],
+					'term'           => [
+						'type'    => 'string',
+						'default' => '',
+					],
+					'display'        => [
+						'type'    => 'string',
+						'default' => 'list',
+						'enum'    => [
+							'list',
+							'thumbnail-grid',
+							'titled-thumbnail-grid',
+						],
+						'ui'      => [
+							'kind' => 'select',
+						],
+					],
+					'perPage'        => [
+						'type'    => 'number',
+						'default' => 12,
+					],
+					'showPagination' => [
+						'type'    => 'boolean',
+						'default' => true,
+					],
+				],
+				'example'     => [
+					'collection'     => 'biblioteca',
+					'display'        => 'list',
+					'perPage'        => 12,
+					'showPagination' => true,
+				],
+			],
+			[
+				'blockName'   => 'getquick/content-filters',
+				'catalogId'   => 'content-filters',
+				'title'       => 'Pesquisa e filtros',
+				'description' => 'Caixa de pesquisa e filtros por categoria, temática e setor para a listagem de conteúdos da mesma página.',
+				'icon'        => 'filter',
+				'keywords'    => [
+					'pesquisa',
+					'filtros',
+					'search',
+					'filters',
+					'arquivo',
+				],
+				'status'      => 'active',
+				'inserter'    => true,
+				'attributes'  => [
+					'schemaVersion'    => [
+						'type'    => 'number',
+						'default' => 1,
+					],
+					'blockId'          => [
+						'type'    => 'string',
+						'default' => 'content-filters',
+					],
+					'collection'       => [
+						'type'    => 'string',
+						'default' => 'biblioteca',
+						'enum'    => [
+							'biblioteca',
+							'eventos',
+							'oportunidades',
+							'recursos_educativos',
+							'glossario',
+							'indicadores',
+							'infografias',
+							'videos',
+							'podcasts',
+							'ferramentas',
+							'plataformas',
+							'bases_de_dados',
+						],
+						'ui'      => [
+							'kind' => 'select',
+						],
+					],
+					'showSearch'       => [
+						'type'    => 'boolean',
+						'default' => true,
+					],
+					'hiddenTaxonomies' => [
+						'type'    => 'array',
+						'default' => [],
+						'items'   => [
+							'type'    => 'string',
+							'default' => '',
+						],
+					],
+				],
+				'example'     => [
+					'collection' => 'biblioteca',
+					'showSearch' => true,
+				],
+			],
 		];
 	}
 }
