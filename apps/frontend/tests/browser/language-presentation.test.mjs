@@ -121,6 +121,7 @@ test("actual Polylang layout inputs retain home URLs, flags, current labels and 
 
 test("actual language body HTML keeps accessible null-flag names and native selected options", async (t) => {
   const css = await buildPresentationCss();
+  const script = await buildPresentationClient();
   const originalFetch = globalThis.fetch;
   t.after(() => {
     globalThis.fetch = originalFetch;
@@ -227,8 +228,39 @@ test("actual language body HTML keeps accessible null-flag names and native sele
       );
       await select.focus();
       assert.equal(await select.evaluate((node) => node === document.activeElement), true);
-      // This checks native selected-option accessibility. It deliberately makes
-      // no arbitrary inline-script navigation or neutral/body metadata parity claim.
+      if (capture === "language-navigation-flags" && language === "fr") {
+        assert.equal(await body.locator("script").count(), 0, "delivery is scriptless");
+        await page.addScriptTag({ content: script });
+        await page.evaluate(() => {
+          globalThis.stopPresentation = globalThis.NomiaPresentation.startDesignPresentation();
+        });
+        const target = [...sourceSelect.options].find((option) => !option.selected).value;
+        const navigations = [];
+        await page.route(target, (route) => {
+          navigations.push(route.request().url());
+          return route.fulfill({ contentType: "text/html", body: "Language destination" });
+        });
+        await page.evaluate(() => globalThis.stopPresentation());
+        await select.selectOption(target);
+        assert.deepEqual(navigations, [], "cleanup removes the select controller");
+        await page.evaluate(() => {
+          globalThis.stopPresentation = globalThis.NomiaPresentation.startDesignPresentation();
+          const select = document.querySelector("select.pll-switcher-select");
+          select.add(new Option("Unsafe test option", "javascript:globalThis.unsafeLanguage=true"));
+        });
+        await select.selectOption("javascript:globalThis.unsafeLanguage=true");
+        assert.equal(await page.evaluate(() => globalThis.unsafeLanguage), undefined);
+        await select.evaluate((node, current) => {
+          node.options[node.options.length - 1].remove();
+          node.value = current;
+        }, sourceSelect.value);
+        await select.focus();
+        await Promise.all([
+          page.waitForURL(target),
+          select.press(sourceSelect.options[0].value === target ? "Home" : "End"),
+        ]);
+        assert.deepEqual(navigations, [target], "owning controller uses exact captured option URL");
+      }
     }
   }
 });

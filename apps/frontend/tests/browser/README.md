@@ -7,11 +7,11 @@ render its Astro dispatcher or actual Layout. Client tests bundle the production
 Site lifecycle entry and mount the owning content helpers.
 
 The current local verification artifact is content
-`getquick-content-634f58c-preview9.tgz`, SHA-256
-`1d19116a4de625771cd4d378f241433d12b4d92616e2c4a6fa0cfe6f69be4b25`.
+`getquick-content-634f58c-preview10.tgz`, SHA-256
+`14d1f7675af9d7e8e4102de529a286e913be442501d8f634bca111ab7d845edd`.
 It bundles the exact canonical Design `634f58c8e42c8a1e7f8334e937126b472387d405`
 pair (Design 0.9 / wire 2), with committed content runtime
-`1d78e9c23a3449fcf001c2327a562332b94c9b59`. Only the content facade is installed under ignored
+`52bbd6db056adc99915eaa18525a85f9c231d42a`. Only the content facade is installed under ignored
 `node_modules`; no renderer dependency, parser or mutable runtime source is copied.
 Managed `@getquick/content` remains pinned at 0.3.1. A fresh install still requires
 the coordinated content release and blueprint adoption before these consumers run.
@@ -35,6 +35,12 @@ claim new upstream HTTP requests or live publication-store verification.
   wrapper owns authored height; a captioned Image reserves its visible caption row
   inside that height. Direct media fills the remaining space. Cover foreground,
   background/overlay geometry, stacking, opacity and nested-media isolation pass.
+- Cover motion: provided neutral, saved, parsed, local and ordinary Entry compositions use the
+  existing first-party WebM fixture in actual Layout/CSS. Shared SSR strips only
+  direct decorative video autoplay, preserving source/poster and foreground video
+  controls. The owning client plays, pauses and resumes with motion preferences,
+  pauses on Astro cleanup and remounts without a Site playback policy. This is
+  supporting browser context, not a newly captured CMS Cover video.
 - Typography: actual saved/public default and override captures, null-content List
   and rich list items, nested markers/start/reversed, native Button URL/target/rel,
   rich links/strong/span and quoted titles, authored font/line-height/colors/radius,
@@ -78,7 +84,9 @@ claim new upstream HTTP requests or live publication-store verification.
   keyboard/Escape focus and RTL logical placement. Separate ordinary body entry
   delivery uses the new native accessible-name capture, preserving source HTML
   current state and selected options. Layout nodes and ordinary post metadata
-  are independent authorities; no arbitrary inline-script navigation is claimed.
+  are independent authorities. Scriptless published Entry selects use the owning
+  client controller with exact captured option URLs and native Home/End keys; unsafe values are blocked,
+  cleanup removes the handler and remount restores it. No inline scripts execute.
 - Query: refreshed `6b5f746` standard Post fixture, authoritative Beta/Gamma order
   with no reslice, synchronous callbacks and the actual DesignPatternRegion
   preload through the existing EntryByUri reader against stubbed responses holding

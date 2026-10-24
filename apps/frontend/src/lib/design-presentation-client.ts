@@ -1,5 +1,6 @@
 import {
   mountDesignCarousels,
+  mountDesignCoverVideos,
   mountDesignNavigation,
   mountVideoHero,
 } from "@getquick/content/design/client";
@@ -11,6 +12,7 @@ export function startDesignPresentation() {
     cleanup();
     const stops = [
       mountDesignCarousels(document),
+      mountDesignCoverVideos(document),
       mountDesignNavigation(document),
       ...[...document.querySelectorAll<HTMLElement>(".wp-block-getquick-design-video-hero")].map(
         mountVideoHero,
