@@ -3,7 +3,7 @@
  * Plugin Name: GETQUICK Bio.Eco.Nomia
  * Plugin URI: https://getquick.io
  * Description: Nomia's content types, taxonomies and content-contract blocks, built on GQ Design. Astro renders the final frontend markup.
- * Version: 0.65.0
+ * Version: 0.65.1
  * Requires at least: 7.0
  * Requires PHP: 8.4
  * Requires Plugins: gq-design
@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	return;
 }
 
-define( 'GQ_BIOECONOMIA_VERSION', '0.65.0' );
+define( 'GQ_BIOECONOMIA_VERSION', '0.65.1' );
 define( 'GQ_BIOECONOMIA_PLUGIN_FILE', __FILE__ );
 define( 'GQ_BIOECONOMIA_PLUGIN_DIR', __DIR__ );
 

@@ -363,6 +363,7 @@ test('content types are registered with rest support and custom capabilities', f
     $thematic_taxonomy = $GLOBALS['lgm_test_state']['taxonomies']['tematicas'];
     $activity_sector_taxonomy = $GLOBALS['lgm_test_state']['taxonomies']['setor_atividade'];
     $opportunities = $GLOBALS['lgm_test_state']['post_types']['oportunidades'];
+    $tools = $GLOBALS['lgm_test_state']['post_types']['ferramentas'];
     $platforms = $GLOBALS['lgm_test_state']['post_types']['plataformas'];
     $databases = $GLOBALS['lgm_test_state']['post_types']['bases_de_dados'];
     $taxonomy = $GLOBALS['lgm_test_state']['taxonomies']['categoria_biblioteca'];
@@ -370,7 +371,8 @@ test('content types are registered with rest support and custom capabilities', f
     $global_taxonomy_post_types = Taxonomies::globalPostTypes();
 
     expect($library['show_in_rest'])->toBeTrue()
-        ->and($library['has_archive'])->toBe('biblioteca')
+        ->and($library['has_archive'])->toBeFalse()
+        ->and($library['rewrite']['slug'])->toBe('biblioteca/documento')
         ->and($library)->not->toHaveKey('template')
         ->and($library['supports'])->toBe([ 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'custom-fields' ])
         ->and($library['show_in_graphql'])->toBeTrue()
@@ -388,12 +390,13 @@ test('content types are registered with rest support and custom capabilities', f
         ->and($gallery['supports'])->toBe([ 'title', 'revisions' ])
         ->and($gallery['capabilities']['edit_posts'])->toBe('edit_gq_bioeconomia_galleries')
         ->and($events['show_in_rest'])->toBeTrue()
-        ->and($events['has_archive'])->toBe('eventos')
+        ->and($events['has_archive'])->toBeFalse()
+        ->and($events['rewrite']['slug'])->toBe('eventos')
         ->and($events)->not->toHaveKey('template')
         ->and($events['supports'])->toBe([ 'title', 'editor', 'thumbnail', 'revisions', 'custom-fields' ])
         ->and($events['show_in_graphql'])->toBeTrue()
         ->and($educational_resources['show_in_rest'])->toBeTrue()
-        ->and($educational_resources['has_archive'])->toBe('recursos-educativos')
+        ->and($educational_resources['has_archive'])->toBeFalse()
         ->and($educational_resources['rewrite']['slug'])->toBe('recursos-educativos')
         ->and($educational_resources['supports'])->toBe([ 'title', 'editor', 'thumbnail', 'revisions', 'custom-fields' ])
         ->and($educational_resources['show_in_graphql'])->toBeTrue()
@@ -424,7 +427,10 @@ test('content types are registered with rest support and custom capabilities', f
         ->and($infografias['show_in_graphql'])->toBeTrue()
         ->and($infografias['graphql_single_name'])->toBe('Infografia')
         ->and($opportunities['show_in_rest'])->toBeTrue()
-        ->and($opportunities['has_archive'])->toBe('oportunidades')
+        ->and($opportunities['has_archive'])->toBeFalse()
+        ->and($opportunities['rewrite']['slug'])->toBe('oportunidades/oportunidade')
+        ->and($tools['has_archive'])->toBeFalse()
+        ->and($tools['rewrite']['slug'])->toBe('ferramentas/ferramenta')
         ->and($opportunities['supports'])->toBe([ 'title', 'editor', 'thumbnail', 'revisions', 'custom-fields' ])
         ->and($opportunities['show_in_graphql'])->toBeTrue()
         ->and($opportunities['graphql_single_name'])->toBe('Oportunidade')
