@@ -7,15 +7,21 @@ render its Astro dispatcher or actual Layout. Client tests bundle the production
 Site lifecycle entry and mount the owning content helpers.
 
 The current local verification artifact is content
-`getquick-content-634f58c-preview10.tgz`, SHA-256
-`14d1f7675af9d7e8e4102de529a286e913be442501d8f634bca111ab7d845edd`.
-It bundles the exact canonical Design `634f58c8e42c8a1e7f8334e937126b472387d405`
+`getquick-content-c4bcc5a-final-candidate.tgz`, SHA-256
+`d9977fe89e6e76eead1761fa9591f5dc95322d15aa6cb557d3dec6ff164a2af2`.
+It bundles the exact canonical Design `c4bcc5a`
 pair (Design 0.9 / wire 2), with committed content runtime
-`52bbd6db056adc99915eaa18525a85f9c231d42a`. Only the content facade is installed under ignored
+`cbb447f27174c12b01f4f4ec0848debda4609f6c`. Only the content facade is installed under ignored
 `node_modules`; no renderer dependency, parser or mutable runtime source is copied.
 Managed `@getquick/content` remains pinned at 0.3.1. A fresh install still requires
 the coordinated content release and blueprint adoption before these consumers run.
-A preview artifact is integration evidence, not release acceptance.
+A local candidate artifact is integration evidence, not release acceptance.
+The final compiler candidate is verified separately from preview10, against which
+the 207-test suite and final two-axis implementation reviews passed. The public
+facade API and Site implementation are unchanged by this dependency verification.
+On 2026-10-24, `pnpm --filter @nomia-bnq/frontend test:presentation` passed
+19/19 against the installed final candidate, including production CSS, native
+Columns, typography, Carousel, Hero/consent, Cover motion and language controls.
 
 Immutable producer snapshots and their hashes/provenance are documented in
 `../fixtures/design-presentation/README.md`. Local stub delivery tests do not
