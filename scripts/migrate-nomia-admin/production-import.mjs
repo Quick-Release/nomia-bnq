@@ -155,7 +155,7 @@ wp option delete nomia_cpt_migration_attachment_remap >/dev/null 2>&1 || true
 wp eval-file "$dir/remap.php" wxr="$wxr"
 
 count() { printf '%s' "$1" | grep -oE '[0-9]+ replacement' | head -1 | grep -oE '^[0-9]+' || echo 0; }
-r1="$(wp search-replace 'https://${oldMediaHost}/uploads/' 'https://${ops.media.domain}/' --all-tables-with-prefix --precise --report-changed-only)"
+r1="$(wp search-replace 'https://${oldMediaHost}/uploads/' 'https://${ops.media.domain}/uploads/' --all-tables-with-prefix --precise --report-changed-only)"
 r2="$(wp search-replace 'https://${oldAdminHost}' 'https://${ops.domains.admin}' --all-tables-with-prefix --precise --report-changed-only)"
 r3="$(wp search-replace 'https://${oldFrontHost}' 'https://${ops.domains.frontend}' --all-tables-with-prefix --precise --report-changed-only)"
 echo "rewritten: media=$(count "$r1") admin=$(count "$r2") frontend=$(count "$r3")"

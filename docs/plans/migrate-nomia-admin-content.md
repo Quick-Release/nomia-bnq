@@ -115,14 +115,37 @@ attachments already imported):
 - The remap marker from the posts import has to be cleared: each import is
   another WXR.
 
+### Production import (2026-10-18, full export)
+
+Ran once as `getquick`. Ploi's wrapper job timed out (its limit), but the
+script kept running on the server: the import, SVG sanitizing, block refs,
+remap and rewrites completed; the importer's removal and the cache flushes
+were finished by hand. Counts match the rehearsal.
+
+A link check of every media URL in content and meta found 23 that 404'd
+(26 references):
+
+- The media rewrite used to drop `/uploads/` (fixed above); this hit links
+  from the earlier pages import as well as this one. Links the importer
+  rewrote itself were right.
+- WordPress renames a file whose name ends in `-scaled` or a size suffix
+  (`X-scaled.jpg` is stored as `X-scaled-1.jpg`, with sizes
+  `X-scaled-1-1024x578.jpg`), so links to the source's names need the stored
+  name. The importer fixes the links it knows; links in other places don't
+  follow.
+
+Each was pointed at its stored file (`wp search-replace` per URL, after a
+fresh backup); afterwards all 61 distinct media URLs answered 200.
+
 ## URL rewrites (after import, `wp search-replace`)
 
 Post content and meta contain source-domain URLs. Attachment files are
 re-hosted, so full URLs redirect to the new media host; links to the
 old frontend point at the new frontend. Applied in this order:
 
-- `https://nomia-media.getquick.io/uploads/` → `https://nomia-media.bnq.pt/`
-  (s3-uploads maps bucket root to the uploads base, subpath preserved)
+- `https://nomia-media.getquick.io/uploads/` → `https://nomia-media.bnq.pt/uploads/`
+  (s3-uploads stores under `uploads/` in the bucket, and the media host
+  serves that path; the subpath is preserved)
 - `https://nomia-admin.getquick.io` → `https://nomia-cms.bnq.pt`
 - `https://nomia.getquick.io` → `https://nomia.bnq.pt`
   (frontend links and imported GUIDs)
