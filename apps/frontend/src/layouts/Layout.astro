@@ -143,8 +143,10 @@ const consent = consentPage({
     </footer>
     <script>
       import { startConsent } from "@getquick/content/consent/client";
+      import { startDesignPresentation } from "../lib/design-presentation-client";
 
       startConsent();
+      startDesignPresentation();
     </script>
   </body>
 </html>

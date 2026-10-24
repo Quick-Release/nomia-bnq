@@ -1,105 +1,81 @@
 # Design presentation acceptance
 
-`pnpm --filter @nomia-bnq/frontend test:container` compiles the Site's actual
-`global.css` with Vite/Tailwind before constructing a saved block document.
-It measures Chromium geometry through the local Astro `WpBlockRenderer`,
-`renderDesignPattern` (chrome), and `renderWordPressBlocks` (HTML delivery).
-The Layout supplies the same complete `presentationStyleSheet()` at runtime.
-Install Chromium with `pnpm --filter @nomia-bnq/frontend exec playwright install chromium`.
+Run `pnpm --filter @nomia-bnq/frontend test:presentation` after installing Chromium
+with `pnpm --filter @nomia-bnq/frontend exec playwright install chromium`.
+The tests compile this Site's production `global.css` through Vite/Tailwind and
+render its Astro dispatcher or actual Layout. Client tests bundle the production
+Site lifecycle entry and mount the owning content helpers.
 
-The first Container integration was verified using the immutable
-`getquick-content-8f18a4a-preview2.tgz` artifact supplied by the content owner,
-SHA-256 `86081fa39782e25b61f301b7cc9d55236871dd8afd1e4d4b06679d5b321a79e9`.
-It bundles the canonical Design renderer at `8f18a4a` and contract at `f3292fe`; no shared source is
-copied into this repository. The preview was installed only under ignored
-`node_modules`, without changing managed dependency pins or the lockfile.
-The pinned `@getquick/content` 0.3.1 does not provide these helpers: a normal
-fresh install requires the coordinated content release and blueprint adoption
-before this staged consumer implementation can run.
+The current local verification artifact is content
+`getquick-content-6695e02-preview6.tgz`, SHA-256
+`65c6c0db764bf1556854a2aa41c0fc634103ef02fa7e7d0710e8c4f01b636fed`.
+It bundles the exact canonical Design `6695e0245ae7d7a883276d7cac88152346a35191`
+pair (Design 0.9 / wire 2). Only the content facade is installed under ignored
+`node_modules`; no renderer dependency, parser or mutable runtime source is copied.
+Managed `@getquick/content` remains pinned at 0.3.1. A fresh install still requires
+the coordinated content release and blueprint adoption before these consumers run.
+A preview artifact is integration evidence, not release acceptance.
 
-Covered geometry: bare responsive caps without centering or padding, explicit
-centering and logical spacing, fractions, independent max width, upward omitted
-overrides, explicit resets, narrow parents, isolated child variables, RTL, and
-immediately below/at/above all default breakpoints. Native wide/full geometry
-retains Site alignment until an explicit neutral override applies upward.
-Nested native alignments fit their parent; viewport breakouts apply only to
-direct article children. HTML-only delivery preserves already saved variables.
-The generated document remains a consumer fixture. A second test consumes the
-immutable real Gutenberg saved document, WordPress-rendered HTML and public
-serializer output from the same producer document; provenance and checksums
-are in `../fixtures/design-presentation/README.md`. This is serializer-boundary
-evidence, not an HTTP/GraphQL request; the public REST producer case remains
-in the coordinated upstream work.
+Immutable producer snapshots and their hashes/provenance are documented in
+`../fixtures/design-presentation/README.md`. Local stub delivery tests do not
+claim new upstream HTTP requests or live publication-store verification.
 
-This is staged integration, not release acceptance. Resolved theme/reset and
-layout, media, Carousel and navigation families need their final public helper
-artifacts and separate saved-composition browser coverage. In particular,
-Carousel interaction and null-saved navigation require the content runtime's
-supported rendering and mounting interface.
+## Covered slices
 
-## Media slice
+- Container: parsed Astro, neutral chrome and WordPress HTML; bare responsive caps,
+  fractions, centering only when explicit, logical spacing, omission/reset,
+  nested/narrow parents, RTL, native wide/full preservation and every breakpoint
+  edge. Includes the real Gutenberg saved/sidebar document and public serializer.
+- Theme: actual Layout with default and overridden responsive thresholds, spacing,
+  font family, scoped reset and media containment. Complete CSS is generated from
+  the delivered theme on each render.
+- Media: constructed responsive Image/Featured Image/Logo/Cover composition plus
+  actual saved/public Image and Cover snapshots through all three adapters. The
+  wrapper owns authored height; a captioned Image reserves its visible caption row
+  inside that height. Direct media fills the remaining space. Cover foreground,
+  background/overlay geometry, stacking, opacity and nested-media isolation pass.
+- Typography: actual saved/public default and override captures, null-content List
+  and rich list items, nested markers/start/reversed, native Button URL/target/rel,
+  rich links/strong/span and quoted titles, authored font/line-height/colors/radius,
+  logical spacing and keyboard focus. The newer inline capture retains full saved
+  wrappers; source-only inline DTO delivery is a separate additive package gate.
+- Layout: final six-root actual saved/UI/REST fixture, parsed/chrome/body HTML,
+  responsive tracks, gap/rowGap chronology/reset, Group mode, unequal non-stacking
+  Columns, Column alignSelf, Spacer height, Separator opacity and narrow nesting.
+  This does not substitute for the forthcoming canonical equal-column growth,
+  default mobile stacking and vertical-alignment baseline matrix.
+- Carousel: actual saved document and public HTTP node through three adapters;
+  ordered slides/link/foreground, hidden navigation, responsive explicit/Auto
+  height, linked-image fill and display removal/restoration. The Site lifecycle
+  cleans up and remounts the canonical browser initializer. Visible arrows,
+  indicators and autoplay focus/hover behavior need their own Site case.
+- Hero: actual saved poster and localized YouTube documents through parsed,
+  reconstructed chrome and HTML helpers; actual Layout/CSS, late scoped media
+  reset, box/foreground geometry, keyboard links, reduced motion and responsive
+  iframe cover/contain based on the actual media box. The first snapshot is
+  poster-only; it proves no self-hosted playback. These direct adapter tests do
+  not exercise the consent controller's grant/revoke flow.
+- Navigation: immutable actual saved/public `802c9a1` composition through the
+  actual DesignPatternRegion and neutral helper in production Layout/CSS; custom
+  and referenced native trees, resolved page lists, Instagram identity, source
+  child spacing/color, current route, keyboard submenu/Escape/focus, mobile
+  overlay open/close, default 64rem and override 70rem edges, cleanup/remount.
+  Ordinary untouched WordPress body HTML and language switchers remain separate
+  integration gates.
+- Query: refreshed `6b5f746` standard Post fixture, authoritative Beta/Gamma order
+  with no reslice, synchronous callbacks and the actual DesignPatternRegion
+  preload through the existing EntryByUri reader against stubbed responses holding
+  untouched captured GraphQL records. Recursive matching PostContent, transparent
+  references, responsive Grid/Heading and real Button `#details`/text/tag/style/
+  focus are measured at 767/768/1000px. No custom-post-type fetch or raw parsed
+  saved Query selection engine is inferred.
 
-`pnpm --filter @nomia-bnq/frontend test:presentation` runs the Container and
-media consumer suites. Media integration uses content preview3,
-`getquick-content-e60e095-preview3.tgz`, SHA-256
-`055215e3ef45a983b397d86923c23188175304bddc0186731d029a2f3291fe47`.
-It bundles the canonical target metadata/compiler; there is no Site property
-parser or duplicated value grammar.
+## Remaining frontend gates
 
-The constructed saved composition exercises Image, Featured Image, Site Logo
-and Cover through the Astro dispatcher, chrome renderer and WordPress HTML
-renderer. It checks wrapper fractions, direct-media fit/focal point/height/
-radius, upward overrides, saved image links/picture sources/captions/alt, Cover
-overlay opacity and isolation from nested media. Cover's HTML input includes
-complete rendered foreground HTML, as the content runtime expects. This fixture
-is not an actual HTTP delivery capture or a substitute for the pending immutable
-real Gutenberg Image/public producer fixture.
-
-Pending media acceptance: shared direct media/link fill structure, native Cover
-minimum-height neutralization on authored sizing, resolved-theme variations,
-and the immutable real producer fixture. The current test does not claim those
-cases. Other family acceptance remains pending its owning runtime artifacts.
-
-## Layout family readiness
-
-The Columns/Column Astro adapter attaches canonical variables to its rebuilt
-native wrapper while retaining native flex basis, vertical-alignment classes,
-ordered children and `isStackedOnMobile`. Existing semantic adapter tests pass.
-This wiring is not family geometry acceptance.
-
-The content preview3 model predates layout commit `50bcb31`. With that commit's
-real neutral fixture, current production Grid CSS still renders one/two/three
-tracks at 767/768/1280px instead of authored two/four/reset. Group display,
-Column alignSelf, Spacer height and Separator marginInline fail the preview3
-model's validation. An updated content artifact must adopt the family model
-and remove the old Grid resolver before the Site can validate layout geometry.
-
-## Resolved theme
-
-Content preview4 (`getquick-content-50f884b-preview4.tgz`, SHA-256
-`3329b44947f2034499122f9c255aa3e1fb188ad7ff04c13c75f7a0b90a1cc8a9`)
-provides the typed theme facade. `DesignPresentationStyles.astro` resolves
-canonical defaults for older publications and generates both scoped reset/theme
-variables and actual responsive presentation rules from the delivered theme.
-Home and entry delivery pass that theme into Layout; preview pages do likewise.
-The body supplies `.gqd-content` without changing semantic palette identities.
-
-The browser test renders the actual Layout around the real Container snapshot
-composed with saved heading/list/media content. It verifies default md 768px,
-explicit md 832px, changed spacing and font family, and checks below/at/above
-resolved thresholds. Heading/list reset and media containment are measured in
-the actual Site CSS cascade. This is external consumer evidence; administration
-canvas/reset isolation and actual REST/GraphQL producer probes remain the
-owning package's separate evidence.
-
-The immutable media producer fixture is now checked through the actual Layout
-on content preview5 (`getquick-content-991e399-preview5.tgz`, SHA-256
-`cc797fc651052fee61cad2236d5d0ff30af19702e4b0a0a2cc5c658a72dbbf10`).
-`node --test tests/browser/media-presentation.test.mjs` passes two tests: the
-constructed responsive matrix plus real saved/native producer Image and Cover
-through parsed Astro, chrome neutral nodes and WordPress HTML. Loaded direct
-images fill a 600×192px box, image semantics survive, and Cover background,
-overlay and readable foreground have correct geometry, opacity and stacking.
-This resolves the earlier media structural/min-height/Cover chrome prerequisites.
-Actual contextual Featured Image and primary/dark/title branding fallback remain
-separate integration gaps; the fixture's empty context is not counted as success.
+Actual contextual Featured Image and primary/dark/title branding fallback are
+not covered by the producer's empty contexts. Native navigation chrome uses the actual saved producer capture; language
+switcher browser coverage remains absent. The ordinary body HTML delivery path must also
+be distinguished from chrome's neutral renderer: saved native WordPress lifecycle
+attributes alone do not establish that this Site has mounted their interaction.
+Administration isolation, producer HTTP/GraphQL probes and editor authoring are
+their owners' evidence, separate from these Site checks.

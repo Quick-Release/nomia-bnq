@@ -120,3 +120,18 @@ retains the separate full native wrapper. The production typography test uses
 this refreshed capture to verify nested links, strong/span markup and quoted
 `>` titles without a Site wrapper parser. The earlier b11b763 snapshot remains
 unchanged. Both captures retain the explicit rejected dynamic layout limitation.
+
+## Navigation
+
+`navigation-presentation/` contains byte-for-byte upstream files at
+`802c9a198471497760328e585aadbd5726d8c660` from
+`tests/fixtures/producer/navigation-presentation/`. Its original `SHA256SUMS`
+verifies all six payloads. `nodes.json` is the exact anonymous HTTP200
+getquickBlocks array after real Gutenberg save/reload; `public-rest.json` retains
+the response, with actual saved page/reference markup and rendered HTML separate.
+Provenance records disposable identities and source commit `4db8b85ea01d3a690322f02bf9c07b5f39f0c1cd`.
+Resolved published destinations, omitted draft, custom/native navigation,
+page-list descendants and Social Links are actual producer output. URLs are no
+longer live. This capture has no language switcher and proves no language-browser
+acceptance. Nomia chrome rendering and ordinary saved body HTML need separate
+interaction checks.
