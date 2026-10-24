@@ -1,4 +1,5 @@
 ---
+import { presentationHtml } from "@getquick/content";
 import type { WpParsedBlock } from "../../../lib/wp-blocks";
 
 interface Props {
@@ -8,4 +9,4 @@ interface Props {
 const { block } = Astro.props;
 ---
 
-<div class="leading-relaxed [&_p]:m-0 [&_p]:pb-6" set:html={block.innerHTML} />
+<Fragment set:html={presentationHtml("core/paragraph", block.innerHTML, block.attrs?.presentation, { attributes: block.attrs ?? {} })} />

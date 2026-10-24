@@ -110,3 +110,13 @@ Producer-selected standard Post items retain order and untouched published
 GraphQL records. The Site must preload those records through its existing
 content reader and pass synchronous contexts to the renderer. No query
 selection engine or published custom-post-type support is inferred.
+
+The additional `typography-inline-delivery.json` preserves the newer actual
+producer capture at `57f5ba68b1bee247fc453389699d39fa6ab79e33`, after required
+producer/security changes `8204e858` and `57f5ba68`. Its SHA-256 is
+`de1acd7589c1ef52d95bf212f21e20e18be4cb243d45d5f6dbd49d80593b7921`.
+Heading/Paragraph attributes.content is sanitized inline HTML; their node.content
+retains the separate full native wrapper. The production typography test uses
+this refreshed capture to verify nested links, strong/span markup and quoted
+`>` titles without a Site wrapper parser. The earlier b11b763 snapshot remains
+unchanged. Both captures retain the explicit rejected dynamic layout limitation.

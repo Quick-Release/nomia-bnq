@@ -1,4 +1,5 @@
 ---
+import { designPresentationStyle } from "../../../lib/design-presentation-style";
 import type { WpParsedBlock } from "../../../lib/wp-blocks";
 import { readWpButtonsLayout, wpButtonsClass } from "../../../lib/wp-buttons";
 
@@ -16,6 +17,6 @@ const layout = readWpButtonsLayout(block.attrs);
 const id = /<div\b[^>]*\bid="([^"]+)"/i.exec(block.innerHTML ?? "")?.[1];
 ---
 
-<div class:list={["wp-block-buttons my-6", wpButtonsClass(layout)]} id={id}>
+<div class:list={["wp-block-buttons gqd-presentation", wpButtonsClass(layout)]} id={id} style={designPresentationStyle("core/buttons", block.attrs)}>
   <slot />
 </div>

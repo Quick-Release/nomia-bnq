@@ -2,7 +2,7 @@
 import { WP_PDF_EMBED_PREVIEW } from "../../../lib/wp-content-classes";
 import type { WpParsedBlock } from "../../../lib/wp-blocks";
 import { wpColumnWrapper, wpColumnsWrapper } from "../../../lib/wp-columns";
-import { presentationVariables } from "@getquick/content";
+import { designPresentationStyle } from "../../../lib/design-presentation-style";
 
 interface Props {
   block: WpParsedBlock;
@@ -14,12 +14,11 @@ const wrapper =
   block.blockName === "core/column"
     ? wpColumnWrapper(block.attrs)
     : { ...wpColumnsWrapper(block.attrs), style: undefined };
-const variables = presentationVariables(
+const style = designPresentationStyle(
   block.blockName === "core/column" ? "core/column" : "core/columns",
-  block.attrs?.presentation,
+  block.attrs,
+  wrapper.style,
 );
-const style = [wrapper.style, ...Object.entries(variables).map(([name, value]) => `${name}:${value}`)]
-  .filter(Boolean).join(";") || undefined;
 ---
 
 {wrapped ? (

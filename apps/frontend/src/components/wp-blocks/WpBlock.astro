@@ -41,7 +41,7 @@ const {
 } = Astro.props;
 const groupLayoutClasses = block.blockName === "core/group" ? wpGroupLayoutClasses(block.attrs) : [];
 const withPresentation = (html: string) => block.blockName
-  ? presentationHtml(block.blockName, html, block.attrs?.presentation)
+  ? presentationHtml(block.blockName, html, block.attrs?.presentation, { attributes: block.attrs ?? {} })
   : html;
 // A group's opening tag gets its render-time layout classes (see wp-group-layout.ts).
 const pieces = flattenInnerContent(block).map((piece, index) =>
@@ -76,6 +76,7 @@ const designShell = designContainer
       "getquick-design/container",
       `${designContainer.openingTag ?? '<div class="wp-block-getquick-design-container">'}${designContainer.closingTag ?? "</div>"}`,
       block.attrs?.presentation,
+      { attributes: block.attrs ?? {} },
     )
   : "";
 const designShellEnd = designShell.lastIndexOf("</div");

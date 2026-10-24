@@ -21,9 +21,9 @@ const alignment = wpAlignmentClass(attrs.align);
 // Prefer the saved figure: links, picture sources, captions and dimensions are
 // authored semantics. Rebuilding from attrs.url would discard them.
 const saved = block.innerHTML.trim()
-  ? presentationHtml("core/image", block.innerHTML, attrs.presentation)
+  ? presentationHtml("core/image", block.innerHTML, attrs.presentation, { attributes: attrs })
   : null;
-const variables = saved ? undefined : presentationVariables("core/image", attrs.presentation);
+const variables = saved ? undefined : presentationVariables("core/image", attrs.presentation, { attributes: attrs });
 ---
 
 {
