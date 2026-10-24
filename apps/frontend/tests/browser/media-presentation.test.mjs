@@ -52,7 +52,10 @@ test("media presentation reaches actual Nomia wrappers and direct media only", a
     saved(
       "core/post-featured-image",
       { presentation },
-      figure("wp-block-post-featured-image", "featured"),
+      figure("wp-block-post-featured-image", "featured").replace(
+        "<figcaption>Saved caption</figcaption>",
+        "",
+      ),
     ),
     saved(
       "core/site-logo",
@@ -155,10 +158,18 @@ test("media presentation reaches actual Nomia wrappers and direct media only", a
           width < 768 ? "25% 75%" : "100% 50%",
           `${scope}/${id}: focal point`,
         );
+        const authoredHeight = width < 768 ? 150 : 240;
         assert.equal(
-          computed.height,
-          width < 768 ? 150 : 240,
-          `${scope}/${id}: explicit media height`,
+          (await figure.boundingBox()).height,
+          authoredHeight,
+          `${scope}/${id}: wrapper owns authored height`,
+        );
+        const caption = figure.locator(":scope > figcaption");
+        const captionHeight = (await caption.count()) ? (await caption.boundingBox()).height : 0;
+        assert.equal(
+          computed.height + captionHeight,
+          authoredHeight,
+          `${scope}/${id}: media fills box while caption stays inside authored height`,
         );
         assert.equal(computed.radius, "8px");
       }
@@ -265,7 +276,13 @@ test("real native media producer snapshot survives actual Nomia layout and CSS",
       height: node.getBoundingClientRect().height,
       fit: getComputedStyle(node).objectFit,
     }));
-    assert.deepEqual(media, { width: 600, height: 192, fit: "cover" });
+    const captionHeight = (await image.locator("figcaption").boundingBox()).height;
+    assert.equal(
+      (await image.boundingBox()).height,
+      192,
+      "authored wrapper includes visible caption",
+    );
+    assert.deepEqual(media, { width: 600, height: 192 - captionHeight, fit: "cover" });
     assert.equal(await image.locator("a").getAttribute("href"), "https://example.test/route");
     assert.equal(await image.locator("img").getAttribute("alt"), "Mountain");
     assert.equal(await image.locator("figcaption").textContent(), "Caption");
