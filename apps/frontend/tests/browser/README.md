@@ -43,7 +43,10 @@ claim new upstream HTTP requests or live publication-store verification.
 - Site utility cascade: actual Layout/body scope and Nomia header rendering verify
   utility padding and typography survive the canonical reset in `@layer base`,
   while bare headings still reset and neutral authored controls remain authoritative.
-  The production-shaped regression fails before this integration fix.
+  The production-shaped regression fails before this integration fix. The same
+  test compiles the actual header CSS and verifies its existing 180px branding cap
+  on the owning Site Logo wrapper, with canonical image fill unchanged. Explicit
+  responsive max-width values and the shared model reset override the Site default.
 - Media: constructed responsive Image/Featured Image/Logo/Cover composition plus
   actual saved/public Image and Cover snapshots through all three adapters. The
   wrapper owns authored height; a captioned Image reserves its visible caption row

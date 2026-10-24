@@ -5,7 +5,8 @@
 Previous release: v0.10.6
 
 - Emit the unchanged canonical scoped reset in Tailwind base so Site utility spacing and typography retain their authored values.
-- Add actual Layout/header cascade coverage and retain caption margins in media geometry evidence.
+- Transfer the existing 180px header branding cap to the Site Logo wrapper so canonical image fill preserves the Site policy.
+- Add actual Layout/header cascade and authorable logo sizing coverage; retain caption margins in media geometry evidence.
 
 ## v0.10.6 - 2026-10-24
 
