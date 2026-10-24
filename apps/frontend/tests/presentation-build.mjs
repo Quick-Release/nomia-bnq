@@ -7,13 +7,16 @@ const outputs = (result) =>
   (Array.isArray(result) ? result : [result]).flatMap((bundle) => bundle.output);
 
 /** Compile the Site's actual production CSS for browser geometry tests. */
-export async function buildPresentationCss() {
+export async function buildPresentationCss(additionalInputs = []) {
   const result = await build({
     root,
     configFile: false,
     logLevel: "error",
     plugins: [tailwindcss()],
-    build: { write: false, rollupOptions: { input: `${root}/src/styles/global.css` } },
+    build: {
+      write: false,
+      rollupOptions: { input: [`${root}/src/styles/global.css`, ...additionalInputs] },
+    },
   });
   return outputs(result)
     .filter((asset) => asset.type === "asset" && asset.fileName.endsWith(".css"))

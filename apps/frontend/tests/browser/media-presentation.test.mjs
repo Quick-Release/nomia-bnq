@@ -276,7 +276,15 @@ test("real native media producer snapshot survives actual Nomia layout and CSS",
       height: node.getBoundingClientRect().height,
       fit: getComputedStyle(node).objectFit,
     }));
-    const captionHeight = (await image.locator("figcaption").boundingBox()).height;
+    const captionHeight = await image.locator("figcaption").evaluate((node) => {
+      const style = getComputedStyle(node);
+      // The reset must not erase the Site's caption margin utility.
+      return (
+        node.getBoundingClientRect().height +
+        parseFloat(style.marginBlockStart) +
+        parseFloat(style.marginBlockEnd)
+      );
+    });
     assert.equal(
       (await image.boundingBox()).height,
       192,
