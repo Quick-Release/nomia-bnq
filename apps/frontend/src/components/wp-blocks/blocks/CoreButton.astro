@@ -1,4 +1,6 @@
 ---
+import { presentationHtml } from "@getquick/content";
+import { designPresentationStyle } from "../../../lib/design-presentation-style";
 import type { WpParsedBlock } from "../../../lib/wp-blocks";
 import { readWpButton, wpButtonWidthStyle } from "../../../lib/wp-buttons";
 
@@ -43,16 +45,18 @@ const linkClass = isBioeconomia
 ---
 
 {
-  button.labelHtml ? (
+  block.attrs?.presentation && block.innerHTML.trim() ? (
+    <Fragment set:html={presentationHtml("core/button", block.innerHTML, block.attrs.presentation, { attributes: block.attrs })} />
+  ) : button.labelHtml ? (
     <div
-      class:list={wrapperClass}
+      class:list={[wrapperClass, "gqd-presentation"]}
       id={button.id}
-      style={wpButtonWidthStyle(button.width)}
+      style={designPresentationStyle("core/button", block.attrs, wpButtonWidthStyle(button.width))}
       data-button-variant={button.variant}
     >
       {button.href ? (
         <a
-          class:list={linkClass}
+          class:list={["wp-block-button__link", linkClass]}
           href={button.href}
           target={button.target}
           rel={button.rel}
@@ -62,14 +66,14 @@ const linkClass = isBioeconomia
         />
       ) : isBioeconomia ? (
         <button
-          class:list={linkClass}
+          class:list={["wp-block-button__link", linkClass]}
           type="button"
           title={button.title}
           style={button.style}
           set:html={button.labelHtml}
         />
       ) : (
-        <span class:list={linkClass} title={button.title} style={button.style} set:html={button.labelHtml} />
+        <span class:list={["wp-block-button__link", linkClass]} title={button.title} style={button.style} set:html={button.labelHtml} />
       )}
     </div>
   ) : null

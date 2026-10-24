@@ -1,6 +1,7 @@
 ---
 import type { WpParsedBlock } from "../../../lib/wp-blocks";
 import { addDefaultPdfEmbeds } from "../../../lib/wp-pdf-embeds";
+import { presentationHtml } from "@getquick/content";
 
 interface Props {
   block: WpParsedBlock;
@@ -10,18 +11,17 @@ interface Props {
 }
 
 const { block, wrapped, openingTag, closingTag } = Astro.props;
+const shell = wrapped ? presentationHtml(block.blockName ?? "core/list", `${openingTag ?? ""}${closingTag ?? ""}`, block.attrs?.presentation, { attributes: block.attrs ?? {} }) : "";
+const end = shell.lastIndexOf("</");
 ---
 
 {wrapped === undefined ? (
-  <div
-    class="leading-relaxed [&_li]:list-inside [&_ol]:list-decimal [&_ul]:list-disc"
-    set:html={addDefaultPdfEmbeds(block.innerHTML)}
-  />
+  <Fragment set:html={addDefaultPdfEmbeds(presentationHtml(block.blockName ?? "core/list", block.innerHTML, block.attrs?.presentation, { attributes: block.attrs ?? {} }))} />
 ) : wrapped ? (
   <>
-    {openingTag && <Fragment set:html={openingTag} />}
+    <Fragment set:html={shell.slice(0, end)} />
     <slot />
-    {closingTag && <Fragment set:html={closingTag} />}
+    <Fragment set:html={shell.slice(end)} />
   </>
 ) : (
   <slot />

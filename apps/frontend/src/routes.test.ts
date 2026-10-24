@@ -5,6 +5,7 @@
 // tested there; these test what this Site composes from what it delivers:
 // the pages, their words, metadata and chrome.
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
+import { JSDOM } from "jsdom";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vite-plus/test";
 import Entry from "./pages/[...slug].astro";
 import Home from "./pages/index.astro";
@@ -151,9 +152,13 @@ describe("entries read live in local development", () => {
     expect(html).toMatch(/<a [^>]*href="\/economia-circular\/visao-geral\/"[^>]*>\s*Visão geral/);
     expect(html).toMatch(/<a [^>]*href="\/partilhar\/"[^>]*>\s*Partilhar/);
     // The logo and the navigation share the bar.
-    expect(html).toMatch(
-      /<div class="wp-block-getquick-design-container nomia-header-bar"><div class="wp-block-site-logo"><a href="\/"[^>]*><img class="custom-logo" src="https:\/\/media.example\/nomia.svg"[^>]*><\/a><\/div><div class="contents" data-nomia-navigation>/,
+    const headerDocument = new JSDOM(html).window.document;
+    const headerBar = headerDocument.querySelector("header .nomia-header-bar");
+    expect(headerBar?.querySelector(".wp-block-site-logo a")?.getAttribute("href")).toBe("/");
+    expect(headerBar?.querySelector(".custom-logo")?.getAttribute("src")).toBe(
+      "https://media.example/nomia.svg",
     );
+    expect(headerBar?.querySelector("[data-nomia-navigation]")).not.toBeNull();
     // The palette reaches the navigation; a placeholder item takes the area
     // its subitems share, and toggles them instead of linking home.
     expect(html).toContain(
@@ -210,9 +215,12 @@ describe("entries read live in local development", () => {
     expect(html).not.toMatch(/<main[^>]*class="[^"]*nomia-blocks/);
     for (const region of ["header", "footer"]) {
       const regionHtml = html.match(new RegExp(`<${region}\\b[^>]*>(.*?)</${region}>`, "s"))?.[1];
-      expect(regionHtml).toContain(
-        '<div class="nomia-pattern contents"><div class="wp-block-getquick-design-container has-laranja-400-background-color has-background">',
-      );
+      const regionDocument = new JSDOM(regionHtml).window.document;
+      expect(
+        regionDocument.querySelector(
+          ".nomia-pattern > .wp-block-getquick-design-container.has-laranja-400-background-color.has-background",
+        ),
+      ).not.toBeNull();
       const barClasses = regionHtml?.match(/class="(nomia-navigation-bar[^"]*)"/)?.[1].split(/\s+/);
       expect(barClasses).toBeDefined();
       expect(barClasses!.some((name) => name.startsWith("bg-"))).toBe(false);
@@ -223,7 +231,7 @@ describe("entries read live in local development", () => {
     );
   });
 
-  test("the header grid retains its CMS columns and loads shared layout CSS once in the head", async () => {
+  test("the header grid retains neutral CMS columns and loads presentation CSS once", async () => {
     const container = (children: unknown[]) => ({
       name: "getquick-design/container",
       attributes: {},
@@ -235,7 +243,13 @@ describe("entries read live in local development", () => {
       blocksJson: JSON.stringify([
         {
           name: "getquick-design/grid",
-          attributes: { columns: 3, tabletColumns: 2, mobileColumns: 1 },
+          attributes: {
+            presentation: {
+              base: { gridColumns: "3" },
+              md: { gridColumns: "2" },
+              xl: { gridColumns: "1" },
+            },
+          },
           content: null,
           children: [
             container([
@@ -275,13 +289,14 @@ describe("entries read live in local development", () => {
 
     const { status, html } = await render("/about/");
     expect(status).toBe(200);
-    expect(html).toContain(
-      'class="wp-block-getquick-design-grid gqd-grid--3 gqd-grid--tablet-2 gqd-grid--mobile-1"',
+    const document = new JSDOM(html).window.document;
+    const grid = document.querySelector("header .wp-block-getquick-design-grid");
+    expect(grid?.querySelector(".wp-block-site-logo")).not.toBeNull();
+    expect(grid?.querySelector("[data-nomia-navigation]")).not.toBeNull();
+    const sheets = [...document.head.querySelectorAll("style")].filter((sheet) =>
+      sheet.textContent.includes("--gqd-base-gridColumns"),
     );
-    const gridRule = ".wp-block-getquick-design-grid{display:grid;";
-    const head = html.match(/<head>(.*?)<\/head>/s)?.[1] ?? "";
-    expect(head).toContain(gridRule);
-    expect(html.split(gridRule).length - 1).toBe(1);
+    expect(sheets).toHaveLength(1);
   });
 
   test("an entry WordPress confirms isn't published is a 404", async () => {
@@ -343,7 +358,11 @@ describe("entries read live in local development", () => {
 
     expect(status).toBe(200);
     expect(html).toContain("September 30, 2026");
-    expect(html).not.toContain("featured-image");
+    expect(
+      new JSDOM(html).window.document.querySelector(
+        "img.featured-image, .wp-block-post-featured-image",
+      ),
+    ).toBeNull();
   });
 });
 

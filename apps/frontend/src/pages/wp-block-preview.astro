@@ -12,6 +12,7 @@ import type { WpParsedBlock } from "../lib/wp-blocks";
 import { parsePreviewRequest } from "../lib/wp-block-preview-format";
 import "../styles/global.css";
 import "../styles/nomia-blocks.css";
+import DesignPresentationStyles from "../components/DesignPresentationStyles.astro";
 import { presetRootStyle } from "@getquick/content";
 import { content } from "../lib/content";
 
@@ -37,6 +38,7 @@ const presets = design ? presetRootStyle(design.spacingSizes, design.colors) : "
 
 <html lang="pt">
   <head>
+    <DesignPresentationStyles theme={design?.theme} />
     {presets && <style is:global set:html={presets} />}
     <style is:global set:html={thematicColorStyles(attributes.ok ? attributes.attributes.gqBioeconomiaThematicColors : [])} />
     <meta charset="utf-8" />
@@ -44,7 +46,7 @@ const presets = design ? presetRootStyle(design.spacingSizes, design.colors) : "
     <meta name="robots" content="noindex,nofollow" />
     <title>Nomia block preview</title>
   </head>
-  <body class="nomia-blocks bg-neutral-bw-white text-main-cinza-700 min-h-dvh" data-nomia-wp-block-preview>
+  <body class="gqd-content nomia-blocks bg-neutral-bw-white text-main-cinza-700 min-h-dvh" data-nomia-wp-block-preview>
     <script>
       import {
         buildPreviewResizeMessage,

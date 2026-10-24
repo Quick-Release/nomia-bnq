@@ -1,5 +1,5 @@
 {
-  "gq": "0.23.1",
+  "gq": "0.23.2",
   "schemaVersion": 1,
   "files": {
     ".claude/skills": "sha256:e1ff59d80751d8af17631debcc3bc30ecdbec0b20dccded0bffb745fe5cea79c",
@@ -48,10 +48,10 @@
   },
   "keys": {
     "apps/cms/composer.json": {
-      "require.getquick/gq-content": "sha256:beb7795768ce14d3408406b11381cb9cea141cbd1f9c49b5ef99b4747fb0d5f9"
+      "require.getquick/gq-content": "sha256:a5779d09c5892f067257f6e01683b487ac944b3d0c475f285c969b8a3c5314d0"
     },
     "apps/frontend/package.json": {
-      "dependencies.@getquick/content": "sha256:beb7795768ce14d3408406b11381cb9cea141cbd1f9c49b5ef99b4747fb0d5f9"
+      "dependencies.@getquick/content": "sha256:a5779d09c5892f067257f6e01683b487ac944b3d0c475f285c969b8a3c5314d0"
     },
     "package.json": {
       "scripts.setup": "sha256:8502c453097e9d772f2749667d163263a92d4bad11168cc7e877d68b706ff691",

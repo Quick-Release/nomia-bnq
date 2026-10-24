@@ -2,6 +2,7 @@
 import { WP_PDF_EMBED_PREVIEW } from "../../../lib/wp-content-classes";
 import type { WpParsedBlock } from "../../../lib/wp-blocks";
 import { wpColumnWrapper, wpColumnsWrapper } from "../../../lib/wp-columns";
+import { designPresentationStyle } from "../../../lib/design-presentation-style";
 
 interface Props {
   block: WpParsedBlock;
@@ -13,10 +14,15 @@ const wrapper =
   block.blockName === "core/column"
     ? wpColumnWrapper(block.attrs)
     : { ...wpColumnsWrapper(block.attrs), style: undefined };
+const style = designPresentationStyle(
+  block.blockName === "core/column" ? "core/column" : "core/columns",
+  block.attrs,
+  wrapper.style,
+);
 ---
 
 {wrapped ? (
-  <div class:list={wrapper.classNames} id={wrapper.id} style={wrapper.style}>
+  <div class:list={[...wrapper.classNames, "gqd-presentation"]} id={wrapper.id} style={style}>
     <slot />
   </div>
 ) : (

@@ -344,14 +344,14 @@
   }
 
   /**
-   * Gutenberg columns.
+   * Legacy Gutenberg columns without canonical presentation.
    *
-   * `CoreColumns.astro` rebuilds the wrappers from block attributes, so only
-   * the classes below and a validated `flex-basis` width reach the page.
+   * Adopted wrappers use the canonical stylesheet. These fallbacks serve
+   * older HTML without `.gqd-presentation`.
    * Columns stack below `md` unless the editor turned stacking off; from `md`
    * they sit side by side, sharing the row equally unless a width was set.
    */
-  .wp-block-columns {
+  .wp-block-columns:not(.gqd-presentation) {
     display: flex;
     flex-wrap: wrap;
     align-items: stretch;
@@ -359,7 +359,7 @@
     margin-block: 1.5rem;
   }
 
-  .wp-block-column {
+  .wp-block-column:not(.gqd-presentation) {
     flex-basis: 100%;
     flex-grow: 1;
     min-width: 0;
@@ -368,71 +368,75 @@
 
   /* A stored width is an inline `flex-basis`; stacking has to override it. */
   @media (width < 48rem) {
-    .wp-block-columns:not(.is-not-stacked-on-mobile) > .wp-block-column {
+    .wp-block-columns:not(.gqd-presentation):not(.is-not-stacked-on-mobile)
+      > .wp-block-column:not(.gqd-presentation) {
       flex-basis: 100% !important;
     }
   }
 
-  .wp-block-column > :first-child {
+  .wp-block-column:not(.gqd-presentation) > :first-child {
     margin-top: 0;
   }
 
-  .wp-block-column > :last-child {
+  .wp-block-column:not(.gqd-presentation) > :last-child {
     margin-bottom: 0;
   }
 
-  .wp-block-columns.is-not-stacked-on-mobile {
+  .wp-block-columns:not(.gqd-presentation).is-not-stacked-on-mobile {
     flex-wrap: nowrap;
   }
 
-  .wp-block-columns.is-not-stacked-on-mobile > .wp-block-column {
+  .wp-block-columns:not(.gqd-presentation).is-not-stacked-on-mobile
+    > .wp-block-column:not(.gqd-presentation) {
     flex-basis: 0;
   }
 
-  .wp-block-columns.is-not-stacked-on-mobile > .wp-block-column[style*="flex-basis"] {
+  .wp-block-columns:not(.gqd-presentation).is-not-stacked-on-mobile
+    > .wp-block-column:not(.gqd-presentation)[style*="flex-basis"] {
     flex-grow: 0;
   }
 
   @media (width >= 48rem) {
-    .wp-block-columns {
+    .wp-block-columns:not(.gqd-presentation) {
       flex-wrap: nowrap;
       gap: 3rem;
     }
 
-    .wp-block-columns > .wp-block-column {
+    .wp-block-columns:not(.gqd-presentation) > .wp-block-column:not(.gqd-presentation) {
       flex-basis: 0;
     }
 
-    .wp-block-columns > .wp-block-column[style*="flex-basis"] {
+    .wp-block-columns:not(.gqd-presentation)
+      > .wp-block-column:not(.gqd-presentation)[style*="flex-basis"] {
       flex-grow: 0;
     }
   }
 
-  .wp-block-columns.are-vertically-aligned-top {
+  .wp-block-columns:not(.gqd-presentation).are-vertically-aligned-top {
     align-items: flex-start;
   }
 
-  .wp-block-columns.are-vertically-aligned-center {
+  .wp-block-columns:not(.gqd-presentation).are-vertically-aligned-center {
     align-items: center;
   }
 
-  .wp-block-columns.are-vertically-aligned-bottom {
+  .wp-block-columns:not(.gqd-presentation).are-vertically-aligned-bottom {
     align-items: flex-end;
   }
 
-  .wp-block-column.is-vertically-aligned-top {
+  .wp-block-column:not(.gqd-presentation).is-vertically-aligned-top {
     align-self: flex-start;
   }
 
-  .wp-block-column.is-vertically-aligned-center {
+  .wp-block-column:not(.gqd-presentation).is-vertically-aligned-center {
     align-self: center;
   }
 
-  .wp-block-column.is-vertically-aligned-bottom {
+  .wp-block-column:not(.gqd-presentation).is-vertically-aligned-bottom {
     align-self: flex-end;
   }
 
-  .wp-block-column.is-vertically-aligned-stretch {
+  .wp-block-column:not(.gqd-presentation).is-vertically-aligned-stretch {
     align-self: stretch;
   }
 }

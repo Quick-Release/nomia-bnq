@@ -4,6 +4,7 @@ import WpBlock from "../../components/wp-blocks/WpBlock.astro";
 import { WP_CUSTOM_BLOCK_FIXTURES } from "../../fixtures/wp-custom-block-fixtures";
 import "../../styles/global.css";
 import "../../styles/nomia-blocks.css";
+import DesignPresentationStyles from "../../components/DesignPresentationStyles.astro";
 import { presetRootStyle } from "@getquick/content";
 import { content } from "../../lib/content";
 
@@ -15,13 +16,14 @@ const presets = design ? presetRootStyle(design.spacingSizes, design.colors) : "
 
 <html lang="pt">
   <head>
+    <DesignPresentationStyles theme={design?.theme} />
     {presets && <style is:global set:html={presets} />}
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="robots" content="noindex,nofollow" />
     <title>{docTitle}</title>
   </head>
-  <body class="bg-main-ciano-700 text-main-cinza-100 min-h-dvh">
+  <body class="gqd-content bg-main-ciano-700 text-main-cinza-100 min-h-dvh">
     <main class="mx-auto w-full max-w-[1920px]">
       <header class="px-4 py-8 md:px-16">
         <h1 class="font-primary text-h4 font-semibold">WordPress custom block preview catalog</h1>

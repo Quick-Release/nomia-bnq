@@ -4,6 +4,7 @@
 // served the Nomia block components' rendering from the store, through a CMS
 // outage. A page without Nomia's blocks is served as WordPress rendered it.
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
+import { JSDOM } from "jsdom";
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -235,7 +236,7 @@ test("a page with Nomia's blocks is served from the store by their components, t
   expect(page.html).toContain(
     '<main class="nomia-blocks text-neutral-bw-white" style="background-color: #0b3d3a">',
   );
-  expect(page.html).toContain("<body>");
+  expect(new JSDOM(page.html).window.document.body.classList.contains("gqd-content")).toBe(true);
   expect(fetchMock).not.toHaveBeenCalled();
 });
 

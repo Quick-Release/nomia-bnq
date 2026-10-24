@@ -1,6 +1,7 @@
 ---
-import { designGridStyle, type Alternate, type SiteChrome, type SiteLanguage } from "@getquick/content";
+import { type DesignTheme, type DesignPostContext, type Alternate, type SiteChrome, type SiteLanguage } from "@getquick/content";
 import { consentPage } from "@getquick/content/consent/astro";
+import DesignPresentationStyles from "../components/DesignPresentationStyles.astro";
 import DesignPatternRegion from "../components/DesignPatternRegion.astro";
 import { content } from "../lib/content";
 import { copyFor } from "../lib/copy";
@@ -8,6 +9,10 @@ import "../styles/global.css";
 
 interface Props {
   title?: string;
+  theme?: DesignTheme;
+  post?: DesignPostContext;
+  siteTitle?: string;
+  colorScheme?: "light" | "dark";
   description?: string;
   /** The chrome the page was served with; left out, the layout looks it up. */
   chrome?: SiteChrome | null;
@@ -18,6 +23,11 @@ interface Props {
 }
 
 const runtime = content();
+const patternContext = {
+  post: Astro.props.post,
+  colorScheme: Astro.props.colorScheme,
+  textContext: { site: { title: Astro.props.siteTitle ?? "Nomia" } },
+};
 const {
   title = "Nomia",
   description = "",
@@ -81,14 +91,14 @@ const consent = consentPage({
     {hreflang.map((alternate) => <link rel="alternate" hreflang={alternate.language.lang} href={alternate.href} />)}
     {xDefault && <link rel="alternate" hreflang="x-default" href={xDefault.href} />}
     <title>{title === "Nomia" ? title : `${title} — Nomia`}</title>
-    <style is:inline set:html={designGridStyle()} />
+    <DesignPresentationStyles theme={Astro.props.theme} />
     <Fragment set:html={consent.head} />
   </head>
-  <body>
+  <body class="gqd-content">
     <Fragment set:html={consent.body} />
     {headerPattern ? (
       <header class="contents">
-        <DesignPatternRegion pattern={headerPattern} language={language} />
+        <DesignPatternRegion pattern={headerPattern} language={language} {...patternContext} />
         {alternates.length > 0 && (
           <nav class="language-switcher" aria-label={copyFor(language, runtime.multilingual).languages}>
             <ul>
@@ -136,13 +146,15 @@ const consent = consentPage({
     )}
     <slot />
     <footer class="site-footer">
-      {footerPattern && <DesignPatternRegion pattern={footerPattern} language={language} />}
+      {footerPattern && <DesignPatternRegion pattern={footerPattern} language={language} {...patternContext} />}
       <Fragment set:html={consent.footer} />
     </footer>
     <script>
       import { startConsent } from "@getquick/content/consent/client";
+      import { startDesignPresentation } from "../lib/design-presentation-client";
 
       startConsent();
+      startDesignPresentation();
     </script>
   </body>
 </html>

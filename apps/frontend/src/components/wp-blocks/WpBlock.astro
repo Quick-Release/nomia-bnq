@@ -10,6 +10,7 @@ import {
   flattenInnerContent,
   splitWpContainerInnerContent,
 } from "../../lib/wp-blocks";
+import { presentationHtml } from "@getquick/content";
 import { WP_PDF_EMBED_PREVIEW } from "../../lib/wp-content-classes";
 import type { WpPagePayload } from "../../lib/wp-page-payload";
 import { addDefaultPdfEmbeds } from "../../lib/wp-pdf-embeds";
@@ -24,6 +25,7 @@ import CoreImage from "./blocks/CoreImage.astro";
 import CoreList from "./blocks/CoreList.astro";
 import CoreParagraph from "./blocks/CoreParagraph.astro";
 import CoreQuote from "./blocks/CoreQuote.astro";
+import DesignCarousel from "./DesignCarousel.astro";
 import WpBlock from "./WpBlock.astro";
 import WpCustomBlock from "./WpCustomBlock.astro";
 
@@ -39,16 +41,19 @@ const {
   unsupportedFallback = "saved-content",
 } = Astro.props;
 const groupLayoutClasses = block.blockName === "core/group" ? wpGroupLayoutClasses(block.attrs) : [];
+const withPresentation = (html: string) => block.blockName
+  ? presentationHtml(block.blockName, html, block.attrs?.presentation, { attributes: block.attrs ?? {} })
+  : html;
 // A group's opening tag gets its render-time layout classes (see wp-group-layout.ts).
 const pieces = flattenInnerContent(block).map((piece, index) =>
   index === 0 && piece.type === "html"
-    ? { ...piece, html: withWpGroupLayoutClasses(piece.html, groupLayoutClasses) }
+    ? { ...piece, html: withPresentation(withWpGroupLayoutClasses(piece.html, groupLayoutClasses)) }
     : piece,
 );
 const hasChildPieces = pieces.some((p) => p.type === "block");
 const leaf = blockIsLeaf(block);
 const isGetquickBlock = block.blockName?.startsWith("getquick/") ?? false;
-const htmlWithPdfEmbeds = addDefaultPdfEmbeds(block.innerHTML);
+const htmlWithPdfEmbeds = addDefaultPdfEmbeds(withPresentation(block.innerHTML));
 const listTag = block.blockName === "core/list-item" ? "li" : block.attrs?.ordered === true ? "ol" : "ul";
 const listContent =
   (block.blockName === "core/list" || block.blockName === "core/list-item") && !leaf
@@ -62,6 +67,20 @@ const columnsContent =
   block.blockName === "core/columns" || block.blockName === "core/column"
     ? splitWpContainerInnerContent(block, "div")
     : null;
+// Saved wrapper semantics stay intact; presentation validation and CSS variables
+// belong to the content runtime's public helper, including for nested Containers.
+const designContainer = block.blockName === "getquick-design/container"
+  ? splitWpContainerInnerContent(block, "div")
+  : null;
+const designShell = designContainer
+  ? presentationHtml(
+      "getquick-design/container",
+      `${designContainer.openingTag ?? '<div class="wp-block-getquick-design-container">'}${designContainer.closingTag ?? "</div>"}`,
+      block.attrs?.presentation,
+      { attributes: block.attrs ?? {} },
+    )
+  : "";
+const designShellEnd = designShell.lastIndexOf("</div");
 ---
 
 {
@@ -72,6 +91,18 @@ const columnsContent =
         set:html={htmlWithPdfEmbeds}
       />
     ) : null
+  ) : block.blockName === "getquick-design/sliders" ? (
+    <DesignCarousel block={block} pageFeaturedImage={pageFeaturedImage} unsupportedFallback={unsupportedFallback} />
+  ) : designContainer ? (
+    <>
+      <Fragment set:html={designShell.slice(0, designShellEnd)} />
+      {designContainer.pieces.map((piece) => piece.type === "html" ? (
+        <Fragment set:html={addDefaultPdfEmbeds(piece.html)} />
+      ) : (
+        <WpBlock block={piece.block} pageFeaturedImage={pageFeaturedImage} unsupportedFallback={unsupportedFallback} />
+      ))}
+      <Fragment set:html={designShell.slice(designShellEnd)} />
+    </>
   ) : isGetquickBlock ? (
     <WpCustomBlock
       block={block}

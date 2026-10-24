@@ -18,6 +18,9 @@ export async function createAstroRenderHarness() {
     {
       root: webRoot,
       logLevel: "error",
+      // Route acceptance explicitly exercises the existing development reader
+      // against stubbed WordPress, not a bound production publication store.
+      define: { "import.meta.env.DEV": "true" },
       server: { middlewareMode: true, hmr: false, ws: false },
       appType: "custom",
     },
@@ -30,6 +33,11 @@ export async function createAstroRenderHarness() {
   const { default: WpBlockRenderer } = await viteServer.ssrLoadModule(
     "/src/components/wp-blocks/WpBlockRenderer.astro",
   );
+  const { default: Layout } = await viteServer.ssrLoadModule("/src/layouts/Layout.astro");
+  const { default: DesignPatternRegion } = await viteServer.ssrLoadModule(
+    "/src/components/DesignPatternRegion.astro",
+  );
+  const { content } = await viteServer.ssrLoadModule("/src/lib/content.ts");
   const container = await AstroContainer.create();
   // React islands render through the same Vite module graph as the components,
   // so their serialized props are part of what callers can inspect.
@@ -39,6 +47,29 @@ export async function createAstroRenderHarness() {
   let closed = false;
 
   return {
+    async renderEntry(path) {
+      if (closed) throw new Error("Astro render harness is closed");
+      const { default: Entry } = await viteServer.ssrLoadModule("/src/pages/[...slug].astro");
+      const response = await container.renderToResponse(Entry, {
+        request: new Request(new URL(path, "https://nomia.test")),
+        params: { slug: path.replace(/^\/|\/$/g, "") },
+        partial: false,
+      });
+      return { status: response.status, html: await response.text() };
+    },
+    async renderPattern(pattern, context = {}) {
+      if (closed) throw new Error("Astro render harness is closed");
+      return container.renderToString(DesignPatternRegion, {
+        props: { pattern, language: content().defaultLanguage, ...context },
+      });
+    },
+    async renderLayout(html, theme, props = {}) {
+      if (closed) throw new Error("Astro render harness is closed");
+      return container.renderToString(Layout, {
+        props: { chrome: null, theme, ...props },
+        slots: { default: html },
+      });
+    },
     async render(block) {
       if (closed) throw new Error("Astro render harness is closed");
 

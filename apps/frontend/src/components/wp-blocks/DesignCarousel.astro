@@ -1,0 +1,35 @@
+---
+import { renderDesignCarousel, renderDesignCarouselItem } from "@getquick/content";
+import type { WpParsedBlock } from "../../lib/wp-blocks";
+import type { WpPagePayload } from "../../lib/wp-page-payload";
+import type { WpUnsupportedFallbackMode } from "../../lib/wp-block-fallback";
+import WpBlock from "./WpBlock.astro";
+
+interface Props {
+  block: WpParsedBlock;
+  pageFeaturedImage?: WpPagePayload["featuredImage"];
+  unsupportedFallback?: WpUnsupportedFallbackMode;
+}
+
+const { block, pageFeaturedImage, unsupportedFallback } = Astro.props;
+// The content runtime owns media, navigation and wrapper semantics. Markers
+// let Astro render nested Site components inside that canonical markup.
+const nonce = Math.random().toString(36).slice(2, 10);
+const children = block.innerBlocks;
+const marker = (index: number) => `<!--nomia-carousel:${nonce}:${index}-->`;
+const html = renderDesignCarousel(block.attrs ?? {}, children.map((child, index) => ({
+  name: child.blockName ?? "",
+  attributes: child.attrs ?? {},
+  html: child.blockName === "getquick-design/carousel-navigation" ? ""
+    : child.blockName === "getquick-design/slider"
+      ? renderDesignCarouselItem(child.attrs ?? {}, marker(index), child.innerHTML.trim() || undefined)
+      : marker(index),
+})), block.innerHTML.trim() || undefined);
+const parts = html.split(new RegExp(`<!--nomia-carousel:${nonce}:(\\d+)-->`));
+---
+
+{parts.map((part, index) => index % 2 ? (
+  children[Number(part)].blockName === "getquick-design/slider"
+    ? children[Number(part)].innerBlocks.map((child) => <WpBlock block={child} pageFeaturedImage={pageFeaturedImage} unsupportedFallback={unsupportedFallback} />)
+    : <WpBlock block={children[Number(part)]} pageFeaturedImage={pageFeaturedImage} unsupportedFallback={unsupportedFallback} />
+) : <Fragment set:html={part} />)}

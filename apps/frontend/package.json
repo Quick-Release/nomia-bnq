@@ -1,6 +1,6 @@
 {
   "name": "@nomia-bnq/frontend",
-  "version": "0.10.5",
+  "version": "0.10.6",
   "private": true,
   "type": "module",
   "scripts": {
@@ -14,13 +14,14 @@
     "structured-blocks:sync": "node --experimental-strip-types ./scripts/sync-wp-plugin-contracts.mjs",
     "structured-blocks:check": "node --experimental-strip-types ./scripts/sync-wp-plugin-contracts.mjs --check",
     "test:container": "node --test tests/browser/container-sizing.test.mjs",
+    "test:presentation": "node --test tests/browser/*.test.mjs",
     "test:blocks": "node --experimental-strip-types --test tests/*.test.mjs",
     "consent:acceptance": "node scripts/consent-acceptance/run.mjs",
     "consent:captures": "node scripts/consent-acceptance/deployed.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.6",
-    "@getquick/content": "0.3.1",
+    "@getquick/content": "0.3.2",
     "@wordpress/block-serialization-default-parser": "^5.57.0",
     "astro": "^7.2.9",
     "clsx": "^2.1.1",
@@ -36,6 +37,7 @@
     "@astrojs/check": "^0.9.10",
     "@effect/platform-node": "catalog:",
     "@tailwindcss/vite": "^4.3.3",
+    "@types/jsdom": "^30.0.0",
     "@types/node": "^24.0.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
