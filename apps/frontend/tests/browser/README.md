@@ -91,3 +91,15 @@ resolved thresholds. Heading/list reset and media containment are measured in
 the actual Site CSS cascade. This is external consumer evidence; administration
 canvas/reset isolation and actual REST/GraphQL producer probes remain the
 owning package's separate evidence.
+
+The immutable media producer fixture is now checked through the actual Layout
+on content preview5 (`getquick-content-991e399-preview5.tgz`, SHA-256
+`cc797fc651052fee61cad2236d5d0ff30af19702e4b0a0a2cc5c658a72dbbf10`).
+`node --test tests/browser/media-presentation.test.mjs` passes two tests: the
+constructed responsive matrix plus real saved/native producer Image and Cover
+through parsed Astro, chrome neutral nodes and WordPress HTML. Loaded direct
+images fill a 600×192px box, image semantics survive, and Cover background,
+overlay and readable foreground have correct geometry, opacity and stacking.
+This resolves the earlier media structural/min-height/Cover chrome prerequisites.
+Actual contextual Featured Image and primary/dark/title branding fallback remain
+separate integration gaps; the fixture's empty context is not counted as success.

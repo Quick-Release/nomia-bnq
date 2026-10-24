@@ -197,3 +197,97 @@ test("media presentation reaches actual Nomia wrappers and direct media only", a
     }
   }
 });
+
+test("real native media producer snapshot survives actual Nomia layout and CSS", async (t) => {
+  const { readFileSync } = await import("node:fs");
+  const fixture = JSON.parse(
+    readFileSync(
+      new URL("../fixtures/design-presentation/media-presentation-public.json", import.meta.url),
+      "utf8",
+    ),
+  );
+  const saved = readFileSync(
+    new URL("../fixtures/design-presentation/media-presentation-saved.html", import.meta.url),
+    "utf8",
+  );
+  const root = fileURLToPath(new URL("../..", import.meta.url));
+  const output = await build({
+    root,
+    configFile: false,
+    logLevel: "error",
+    plugins: [tailwindcss()],
+    build: { write: false, rollupOptions: { input: `${root}/src/styles/global.css` } },
+  });
+  const css = output.output
+    .filter((asset) => asset.type === "asset" && asset.fileName.endsWith(".css"))
+    .map((asset) => String(asset.source))
+    .join("\n");
+  const harness = await createAstroRenderHarness();
+  t.after(() => harness.close());
+  // Post/site-context nodes are intentionally excluded here, not treated as
+  // rendering successes because their producer request returned empty data.
+  const local = (
+    await harness.renderBlocks(
+      parse(saved).filter((block) => ["core/image", "core/cover"].includes(block.blockName)),
+      { bare: true },
+    )
+  ).html;
+  const scopes = {
+    local,
+    chrome: renderDesignPattern(fixture.nodes.slice(0, 2)),
+    html: fixture.html.slice(0, 2).join(""),
+  };
+  const html = await harness.renderLayout(
+    Object.entries(scopes)
+      .map(
+        ([name, html]) =>
+          `<div data-media-fixture="${name}" style="width:600px;max-width:100%">${html}</div>`,
+      )
+      .join(""),
+  );
+  const browser = await chromium.launch();
+  t.after(() => browser.close());
+  const page = await browser.newPage();
+  page.setDefaultTimeout(5000);
+  await page.route("https://gqd-media.test/photo.svg", (route) =>
+    route.fulfill({
+      contentType: "image/svg+xml",
+      body: '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200"></svg>',
+    }),
+  );
+  await page.setViewportSize({ width: 1000, height: 900 });
+  await page.setContent(html.replace("<head>", `<head><style>${css}</style>`));
+  for (const scope of Object.keys(scopes)) {
+    const root = page.locator(`[data-media-fixture="${scope}"]`);
+    const image = root.locator(".wp-block-image").first();
+    const media = await image.locator("img").evaluate((node) => ({
+      width: node.getBoundingClientRect().width,
+      height: node.getBoundingClientRect().height,
+      fit: getComputedStyle(node).objectFit,
+    }));
+    assert.deepEqual(media, { width: 600, height: 192, fit: "cover" });
+    assert.equal(await image.locator("a").getAttribute("href"), "https://example.test/route");
+    assert.equal(await image.locator("img").getAttribute("alt"), "Mountain");
+    assert.equal(await image.locator("figcaption").textContent(), "Caption");
+    const cover = root.locator(".wp-block-cover");
+    assert.equal((await cover.boundingBox()).height, 192);
+    for (const selector of [
+      ":scope > .wp-block-cover__image-background",
+      ":scope > .wp-block-cover__background",
+    ]) {
+      const box = await cover.locator(selector).boundingBox();
+      assert.equal(box.width, 600);
+      assert.equal(box.height, 192);
+    }
+    assert.equal(
+      await cover
+        .locator(":scope > .wp-block-cover__background")
+        .evaluate((node) => getComputedStyle(node).opacity),
+      "0.5",
+    );
+    const foreground = cover.locator(":scope > .wp-block-cover__inner-container");
+    assert.equal(await foreground.evaluate((node) => getComputedStyle(node).opacity), "1");
+    assert.equal(await foreground.evaluate((node) => getComputedStyle(node).zIndex), "1");
+    assert.ok(await foreground.getByText("Readable foreground", { exact: true }).isVisible());
+  }
+});
