@@ -18,6 +18,9 @@ export async function createAstroRenderHarness() {
     {
       root: webRoot,
       logLevel: "error",
+      // Route acceptance explicitly exercises the existing development reader
+      // against stubbed WordPress, not a bound production publication store.
+      define: { "import.meta.env.DEV": "true" },
       server: { middlewareMode: true, hmr: false, ws: false },
       appType: "custom",
     },
@@ -44,16 +47,26 @@ export async function createAstroRenderHarness() {
   let closed = false;
 
   return {
-    async renderPattern(pattern) {
+    async renderEntry(path) {
+      if (closed) throw new Error("Astro render harness is closed");
+      const { default: Entry } = await viteServer.ssrLoadModule("/src/pages/[...slug].astro");
+      const response = await container.renderToResponse(Entry, {
+        request: new Request(new URL(path, "https://nomia.test")),
+        params: { slug: path.replace(/^\/|\/$/g, "") },
+        partial: false,
+      });
+      return { status: response.status, html: await response.text() };
+    },
+    async renderPattern(pattern, context = {}) {
       if (closed) throw new Error("Astro render harness is closed");
       return container.renderToString(DesignPatternRegion, {
-        props: { pattern, language: content().defaultLanguage },
+        props: { pattern, language: content().defaultLanguage, ...context },
       });
     },
-    async renderLayout(html, theme) {
+    async renderLayout(html, theme, props = {}) {
       if (closed) throw new Error("Astro render harness is closed");
       return container.renderToString(Layout, {
-        props: { chrome: null, theme },
+        props: { chrome: null, theme, ...props },
         slots: { default: html },
       });
     },

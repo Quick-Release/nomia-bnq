@@ -12,6 +12,10 @@ import {
   presetRootStyle,
   type DesignBlock,
   type DesignPattern,
+  type DesignPostContext,
+  type DesignTextContext,
+  type DesignRenderContext,
+  type WordPressImage,
   type SiteLanguage,
 } from "@getquick/content";
 import { content } from "../lib/content";
@@ -22,6 +26,9 @@ import "../styles/nomia-blocks.css";
 interface Props {
   pattern: DesignPattern;
   language: SiteLanguage;
+  post?: DesignPostContext;
+  textContext?: DesignTextContext;
+  colorScheme?: "light" | "dark";
 }
 
 const { pattern, language } = Astro.props;
@@ -49,12 +56,15 @@ for (const post of query.posts.values()) collect(post.blocks);
 
 // The nonce keeps saved HTML from passing for a marker.
 const nonce = Math.random().toString(36).slice(2, 10);
-const nomiaBlocks: DesignBlock[] = [];
-const marker = (block: DesignBlock) => `<!--nomia-block:${nonce}:${nomiaBlocks.push(block) - 1}-->`;
+const nomiaBlocks: Array<{ block: DesignBlock; featuredImage?: WordPressImage | null }> = [];
+const marker = (block: DesignBlock, context: DesignRenderContext) => `<!--nomia-block:${nonce}:${nomiaBlocks.push({ block, featuredImage: context.post?.featuredImage }) - 1}-->`;
 const html = runtime.renderDesignPattern(pattern.blocks, {
   siteOrigin: Astro.site?.origin,
   home: language.home,
   resolvePost: query.resolvePost,
+  post: Astro.props.post,
+  textContext: Astro.props.textContext,
+  colorScheme: Astro.props.colorScheme,
   blocks: Object.fromEntries([...nomiaNames].map((name) => [name, marker])),
   onUnrendered: (block: DesignBlock) => console.warn(`No renderer for ${block.name} in "${pattern.title}"`),
 });
@@ -77,7 +87,7 @@ const parsed = (block: DesignBlock): WpParsedBlock => ({
 <div class="nomia-pattern contents">
   {
     parts.map((part, index) =>
-      index % 2 ? <WpCustomBlock block={parsed(nomiaBlocks[Number(part)])} /> : <Fragment set:html={part} />,
+      index % 2 ? <WpCustomBlock block={parsed(nomiaBlocks[Number(part)].block)} pageFeaturedImage={nomiaBlocks[Number(part)].featuredImage} /> : <Fragment set:html={part} />,
     )
   }
 </div>

@@ -25,7 +25,7 @@ const siteTitle = content?.page.title || content?.settings.title || "Nomia";
 const isVideoHeroPage = content?.page.hasVideoHero ?? false;
 ---
 
-<Layout theme={content?.theme} title={siteTitle} description={content?.settings.description} chrome={chrome} language={language} alternates={alternates}>
+<Layout siteTitle={content?.settings.title} theme={content?.theme} title={siteTitle} description={content?.settings.description} chrome={chrome} language={language} alternates={alternates}>
   {content?.page.extension ? (
     <NomiaBlocks nomia={content.page.extension} design={content} language={language} />
   ) : content?.page.content ? (
