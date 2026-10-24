@@ -55,8 +55,8 @@ final class Taxonomies {
 			'categoria_biblioteca'   => [
 				'object_type' => [ 'biblioteca' ],
 				'args'        => [
-					'hierarchical'      => true,
-					'labels'            => [
+					'hierarchical'        => true,
+					'labels'              => [
 						'name'              => __( 'Categorias da Biblioteca', 'gq-bioeconomia' ),
 						'singular_name'     => __( 'Categoria da Biblioteca', 'gq-bioeconomia' ),
 						'search_items'      => __( 'Pesquisar Categorias da Biblioteca', 'gq-bioeconomia' ),
@@ -71,12 +71,15 @@ final class Taxonomies {
 						'menu_name'         => __( 'Categorias', 'gq-bioeconomia' ),
 						'not_found'         => __( 'Nenhuma categoria encontrada.', 'gq-bioeconomia' ),
 					],
-					'show_ui'           => true,
-					'show_admin_column' => true,
-					'query_var'         => true,
-					'show_in_rest'      => true,
-					'capabilities'      => Capabilities::libraryCategories(),
-					'rewrite'           => [
+					'show_ui'             => true,
+					'show_admin_column'   => true,
+					'query_var'           => true,
+					'show_in_rest'        => true,
+					'show_in_graphql'     => true,
+					'graphql_single_name' => 'CategoriaBiblioteca',
+					'graphql_plural_name' => 'CategoriasBiblioteca',
+					'capabilities'        => Capabilities::libraryCategories(),
+					'rewrite'             => [
 						'slug'       => 'categoria_biblioteca',
 						'with_front' => false,
 					],
@@ -85,8 +88,8 @@ final class Taxonomies {
 			'tipo_evento'            => [
 				'object_type' => [ 'eventos' ],
 				'args'        => [
-					'hierarchical'      => true,
-					'labels'            => [
+					'hierarchical'        => true,
+					'labels'              => [
 						'name'              => __( 'Tipos de evento', 'gq-bioeconomia' ),
 						'singular_name'     => __( 'Tipo de evento', 'gq-bioeconomia' ),
 						'search_items'      => __( 'Pesquisar tipos de evento', 'gq-bioeconomia' ),
@@ -101,11 +104,14 @@ final class Taxonomies {
 						'menu_name'         => __( 'Tipo de evento', 'gq-bioeconomia' ),
 						'not_found'         => __( 'Nenhum tipo de evento encontrado.', 'gq-bioeconomia' ),
 					],
-					'show_ui'           => true,
-					'show_admin_column' => true,
-					'query_var'         => true,
-					'show_in_rest'      => true,
-					'rewrite'           => [
+					'show_ui'             => true,
+					'show_admin_column'   => true,
+					'query_var'           => true,
+					'show_in_rest'        => true,
+					'show_in_graphql'     => true,
+					'graphql_single_name' => 'TipoEvento',
+					'graphql_plural_name' => 'TiposEvento',
+					'rewrite'             => [
 						'slug'       => 'tipo_evento',
 						'with_front' => false,
 					],
@@ -114,8 +120,8 @@ final class Taxonomies {
 			'tematicas'              => [
 				'object_type' => self::globalPostTypes(),
 				'args'        => [
-					'hierarchical'      => true,
-					'labels'            => [
+					'hierarchical'        => true,
+					'labels'              => [
 						'name'              => __( 'Temáticas', 'gq-bioeconomia' ),
 						'singular_name'     => __( 'Temática', 'gq-bioeconomia' ),
 						'search_items'      => __( 'Pesquisar Temáticas', 'gq-bioeconomia' ),
@@ -130,11 +136,14 @@ final class Taxonomies {
 						'menu_name'         => __( 'Temáticas', 'gq-bioeconomia' ),
 						'not_found'         => __( 'Nenhuma temática encontrada.', 'gq-bioeconomia' ),
 					],
-					'show_ui'           => true,
-					'show_admin_column' => true,
-					'query_var'         => true,
-					'show_in_rest'      => true,
-					'rewrite'           => [
+					'show_ui'             => true,
+					'show_admin_column'   => true,
+					'query_var'           => true,
+					'show_in_rest'        => true,
+					'show_in_graphql'     => true,
+					'graphql_single_name' => 'Tematica',
+					'graphql_plural_name' => 'Tematicas',
+					'rewrite'             => [
 						'slug'       => 'tematica-indicadores',
 						'with_front' => false,
 					],
@@ -175,8 +184,8 @@ final class Taxonomies {
 			'categoria_oportunidade' => [
 				'object_type' => [ 'oportunidades' ],
 				'args'        => [
-					'hierarchical'      => true,
-					'labels'            => [
+					'hierarchical'        => true,
+					'labels'              => [
 						'name'              => __( 'Categorias de Oportunidades', 'gq-bioeconomia' ),
 						'singular_name'     => __( 'Categoria de Oportunidade', 'gq-bioeconomia' ),
 						'search_items'      => __( 'Pesquisar Categorias de Oportunidades', 'gq-bioeconomia' ),
@@ -191,11 +200,14 @@ final class Taxonomies {
 						'menu_name'         => __( 'Categorias de Oportunidades', 'gq-bioeconomia' ),
 						'not_found'         => __( 'Nenhuma categoria encontrada.', 'gq-bioeconomia' ),
 					],
-					'show_ui'           => true,
-					'show_admin_column' => true,
-					'query_var'         => true,
-					'show_in_rest'      => true,
-					'rewrite'           => [
+					'show_ui'             => true,
+					'show_admin_column'   => true,
+					'query_var'           => true,
+					'show_in_rest'        => true,
+					'show_in_graphql'     => true,
+					'graphql_single_name' => 'CategoriaOportunidade',
+					'graphql_plural_name' => 'CategoriasOportunidade',
+					'rewrite'             => [
 						'slug'       => 'categoria_oportunidade',
 						'with_front' => false,
 					],
