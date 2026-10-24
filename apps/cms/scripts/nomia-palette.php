@@ -6,8 +6,8 @@
  * where the Branding screen saves them. Run once per site, then the palette
  * is the editors' to change there:
  *
- *   wp eval-file scripts/nomia-palette.php            # from apps/cms
- *   wp eval-file scripts/nomia-palette.php dry-run    # report only
+ *   wp --user=<admin> eval-file scripts/nomia-palette.php            # from apps/cms
+ *   wp --user=<admin> eval-file scripts/nomia-palette.php dry-run    # report only
  *
  * It only adds what is missing: a Nomia color whose slug the palette lacks is
  * appended, and a theme color (background, foreground, accent, muted) still
@@ -19,6 +19,13 @@
 
 if (! defined('WP_CLI') || ! WP_CLI) {
     return;
+}
+
+// Without a user, WordPress creates the Global Styles record without linking it
+// to the theme (assigning the wp_theme term needs a capability), so the site
+// never reads it and every run makes another.
+if (! current_user_can('edit_theme_options')) {
+    WP_CLI::error('Run as an administrator: wp --user=<admin> eval-file scripts/nomia-palette.php');
 }
 
 $dry_run = in_array('dry-run', $args ?? [], true);

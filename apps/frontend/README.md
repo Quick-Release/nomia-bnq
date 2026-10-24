@@ -132,7 +132,7 @@ structured-blocks:sync` writes the generated files here
   blocks' preset slugs resolve to the same variables. No color is copied
   here; `tests/nomia-palette.test.mjs` fails on a slug the palette lacks.
   `apps/cms/scripts/nomia-palette.php` applies Nomia's palette to a CMS once
-  (`wp eval-file scripts/nomia-palette.php`).
+  (`wp --user=<admin> eval-file scripts/nomia-palette.php`).
 - `/wp-block-preview` renders one block for the editor's preview iframe;
   `/wp-block-preview/catalog` renders every block's fixture.
 - Blocks render only what they store: the podcast list and the platforms
