@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8c43ddd43e0b866e91593fced9b58f74",
+    "content-hash": "16681b656649e64d4d68bc1cf96d48df",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -417,17 +417,17 @@
         },
         {
             "name": "getquick/gq-content",
-            "version": "0.3.1",
+            "version": "0.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Quick-Release/gq-content.git",
-                "reference": "v0.3.1"
+                "reference": "v0.3.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-content/getquick-gq-content-0.3.1-6c8e74.zip",
-                "reference": "v0.3.1",
-                "shasum": "a315c4e14c1e1a93fe7cf97efa431748135cd70f"
+                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-content/getquick-gq-content-0.3.2-51938d.zip",
+                "reference": "v0.3.2",
+                "shasum": "c047b40c263ca1dfef1d2c73e5bc84ab5d5c0e35"
             },
             "require": {
                 "composer/installers": "^2.0",
@@ -438,25 +438,25 @@
                 "GPL-2.0-or-later"
             ],
             "description": "GETQUICK content publication events, delivery and diagnostics",
-            "homepage": "https://github.com/Quick-Release/gq-content/tree/v0.3.1",
+            "homepage": "https://github.com/Quick-Release/gq-content/tree/v0.3.2",
             "support": {
-                "source": "https://github.com/Quick-Release/gq-content/tree/v0.3.1",
+                "source": "https://github.com/Quick-Release/gq-content/tree/v0.3.2",
                 "issues": "https://github.com/Quick-Release/gq-content/issues"
             }
         },
         {
             "name": "getquick/gq-design",
-            "version": "0.8.1",
+            "version": "0.9.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:Quick-Release/gq-design.git",
-                "reference": "77ea0a8c9a9cc22f50096e3007bc0bd9b15b0611"
+                "reference": "0852b6c306edaf219edf4aa8d3fd98b0676b843f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-design/getquick-gq-design-77ea0a8c9a9cc22f50096e3007bc0bd9b15b0611-zip-05602d.zip",
-                "reference": "77ea0a8c9a9cc22f50096e3007bc0bd9b15b0611",
-                "shasum": "236876326a7793f8edfebf8c63928ed7c782b111"
+                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-design/getquick-gq-design-0852b6c306edaf219edf4aa8d3fd98b0676b843f-zip-4266ff.zip",
+                "reference": "0852b6c306edaf219edf4aa8d3fd98b0676b843f",
+                "shasum": "7cbdd44d0447ad8eec3546e359b9c62ea5354901"
             },
             "require": {
                 "php": ">=8.4.1"
@@ -504,10 +504,10 @@
             ],
             "description": "Native Gutenberg templates and headless layout delivery for GETQUICK sites.",
             "support": {
-                "source": "https://github.com/Quick-Release/gq-design/tree/v0.8.1",
+                "source": "https://github.com/Quick-Release/gq-design/tree/v0.9.0",
                 "issues": "https://github.com/Quick-Release/gq-design/issues"
             },
-            "time": "2026-10-23T12:37:01+00:00"
+            "time": "2026-10-24T06:29:43+00:00"
         },
         {
             "name": "getquick/gq-support",

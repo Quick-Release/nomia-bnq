@@ -6,22 +6,26 @@ The tests compile this Site's production `global.css` through Vite/Tailwind and
 render its Astro dispatcher or actual Layout. Client tests bundle the production
 Site lifecycle entry and mount the owning content helpers.
 
-The current local verification artifact is content
-`getquick-content-c4bcc5a-final-candidate.tgz`, SHA-256
-`d9977fe89e6e76eead1761fa9591f5dc95322d15aa6cb557d3dec6ff164a2af2`.
-It bundles the exact canonical Design `c4bcc5a`
-pair (Design 0.9 / wire 2), with committed content runtime
-`cbb447f27174c12b01f4f4ec0848debda4609f6c`. Only the content facade is installed under ignored
-`node_modules`; no renderer dependency, parser or mutable runtime source is copied.
-Managed `@getquick/content` remains pinned at 0.3.1. A fresh install still requires
-the coordinated content release and blueprint adoption before these consumers run.
-A local candidate artifact is integration evidence, not release acceptance.
-The final compiler candidate is verified separately from preview10, against which
-the 207-test suite and final two-axis implementation reviews passed. The public
-facade API and Site implementation are unchanged by this dependency verification.
+The supported registry install now uses `@getquick/site` 0.23.2 and the paired
+`@getquick/content` / `getquick/gq-content` 0.3.2, with Composer Design 0.9.0.
+The blueprint owns both content pins through `gq sync`; both lockfiles record
+actual published packages. No local archive override remains in the install.
+The content npm archive integrity is
+`sha512-1EErw67A+On/M1AZDlk0DOMcBsRkJU6wK7t4b93BHayBn9y32s2IZKxsCf/jfxe/DfBlnhRYk66z4msarOsdCA==`;
+the source release is `698b98965b8138d25e273d9cdafe84f8397ca66d`.
+
 On 2026-10-24, `pnpm --filter @nomia-bnq/frontend test:presentation` passed
-19/19 against the installed final candidate, including production CSS, native
-Columns, typography, Carousel, Hero/consent, Cover motion and language controls.
+19/19 against this registry install. `pnpm verify --ci` passed all nine checks,
+including 207 Frontend tests, 12 script tests and the CMS validation/lint/tests.
+`pnpm exec gq sync --check` is clean. This closes the local install/adoption gap;
+production deployment and after-deploy browser smoke are separate gates.
+
+Earlier local candidate evidence used
+`getquick-content-c4bcc5a-final-candidate.tgz` (SHA-256
+`d9977fe89e6e76eead1761fa9591f5dc95322d15aa6cb557d3dec6ff164a2af2`),
+content `cbb447f27174c12b01f4f4ec0848debda4609f6c` / canonical `c4bcc5a`.
+The final implementation reviews at `be11d07` passed against preview10. These
+historical local artifacts are provenance, not deployment dependencies.
 
 Immutable producer snapshots and their hashes/provenance are documented in
 `../fixtures/design-presentation/README.md`. Local stub delivery tests do not

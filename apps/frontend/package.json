@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@astrojs/react": "^6.0.6",
-    "@getquick/content": "0.3.1",
+    "@getquick/content": "0.3.2",
     "@wordpress/block-serialization-default-parser": "^5.57.0",
     "astro": "^7.2.9",
     "clsx": "^2.1.1",
