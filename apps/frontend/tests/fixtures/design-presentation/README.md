@@ -60,3 +60,53 @@ runtime's consent facade before the canonical client initializer attaches it.
 
 Consumer runtime/style and reduced-motion acceptance are pending the next
 content artifact. These snapshots alone do not assert those behaviors pass.
+
+## Typography delivery
+
+`typography-presentation-delivery.json` is an unchanged snapshot of
+`tests/fixtures/typography-presentation-delivery.json` at gq-design
+`b11b763dba06ddd2006b1f406c516c3d8e22ef1c`, SHA-256
+`55916b46bbfed0bb4ee64bd89a0ff9c39ab5f4e8fe8039db0099dc3a94a32d77`.
+Its default/override cases contain the real WordPress 7.0 inspector-edited,
+saved/reopened document, public neutral nodes, rendered HTML, tokens and
+captured post/site context. List root content is null; list-item rich text
+lives in attributes.content. Saved documents and neutral nodes match across
+theme changes. The preview template was fixture setup: the actual layout
+endpoint rejected it with 422 for missing region references. This snapshot
+provides no saved dynamic layout delivery proof. Nomia's production CSS test
+checks parsed, chrome and body paths separately; snapshot presence alone does
+not establish passing consumer acceptance.
+
+## Layout and Carousel
+
+`layout-presentation-saved.json` is the unchanged five-root snapshot at
+`720b84a23f6bc6dae17901d749d204344781f2ae`, SHA-256
+`682377d90e6d87554d31dd80062733a00a7054594fbca23fe7ec05131aec51f4`.
+`layout-presentation-final.json` comes from the same upstream path at
+`893ea2d4aba9ceaf8de4e83e71c679b34bb9c098`, SHA-256
+`13bec5f6a2b8a427f919c35ca90d0ec192b5b876e4dcf184608a696f6c7d5630`.
+The latter adds the sixth narrow nested Container/Grid root and gap shorthand
+chronology. Both contain actual saved markup, WordPress rendered HTML and REST
+nodes with provenance. The final snapshot is the production geometry input.
+
+`carousel-presentation-saved.json` comes from upstream
+`tests/fixtures/carousel-presentation.json` at `0be23e8f4b80f11ad59a4cf2c87256ba6f526308`,
+SHA-256 `c6a4a538e525ca0e6764c244a7ffdc5ddaa7f731bff2acd48e28ff93d0b16c6b`.
+`carousel-presentation-public.json` comes from
+`packages/design-contract/fixtures/blocks/carousel-presentation.json` at
+`3232d3c22e5f50162e5a5761bb9e8345ce32b46a`, SHA-256
+`ddb58fb636e28b3da412575775b22a0f73aae30f3afbb5d1728a007a4a7cc6f2`.
+The public snapshot is actual HTTP REST producer output from the same saved
+three-slide document; upstream also verified GraphQL tree equality. Nomia's
+local test does not make a new upstream HTTP request.
+
+## Query composition
+
+`query-composition/` snapshots upstream paths of the same names at `6b5f746`.
+The upstream README is retained unchanged. `post-public.json` SHA-256 is
+`74af8206e68cddc5a2488f7a460ccf5f99ac435bbd8608a28729f17205af782b`;
+`post-saved.html` is `b353c7430aa9a2edcb9cabacc46581b015f23fa3cc3b4eb65e4028335a8e158f`.
+Producer-selected standard Post items retain order and untouched published
+GraphQL records. The Site must preload those records through its existing
+content reader and pass synchronous contexts to the renderer. No query
+selection engine or published custom-post-type support is inferred.
