@@ -31,6 +31,10 @@ export async function createAstroRenderHarness() {
     "/src/components/wp-blocks/WpBlockRenderer.astro",
   );
   const { default: Layout } = await viteServer.ssrLoadModule("/src/layouts/Layout.astro");
+  const { default: DesignPatternRegion } = await viteServer.ssrLoadModule(
+    "/src/components/DesignPatternRegion.astro",
+  );
+  const { content } = await viteServer.ssrLoadModule("/src/lib/content.ts");
   const container = await AstroContainer.create();
   // React islands render through the same Vite module graph as the components,
   // so their serialized props are part of what callers can inspect.
@@ -40,6 +44,12 @@ export async function createAstroRenderHarness() {
   let closed = false;
 
   return {
+    async renderPattern(pattern) {
+      if (closed) throw new Error("Astro render harness is closed");
+      return container.renderToString(DesignPatternRegion, {
+        props: { pattern, language: content().defaultLanguage },
+      });
+    },
     async renderLayout(html, theme) {
       if (closed) throw new Error("Astro render harness is closed");
       return container.renderToString(Layout, {

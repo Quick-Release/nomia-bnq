@@ -26,6 +26,9 @@ interface Props {
 
 const { pattern, language } = Astro.props;
 const runtime = content();
+// Query identities are producer-selected. Load their published records before
+// synchronous rendering through the runtime’s existing publication reader.
+const query = await runtime.preloadDesignQueryPosts(pattern, Astro.site?.origin);
 // Chrome lives outside NomiaBlocks, so it needs its own preset scope, even
 // on pages that contain no Nomia blocks. Read the runtime's published palette.
 const design = await runtime.designPresets();
@@ -42,6 +45,7 @@ const collect = (blocks: DesignBlock[]) => {
   }
 };
 collect(pattern.blocks);
+for (const post of query.posts.values()) collect(post.blocks);
 
 // The nonce keeps saved HTML from passing for a marker.
 const nonce = Math.random().toString(36).slice(2, 10);
@@ -50,6 +54,7 @@ const marker = (block: DesignBlock) => `<!--nomia-block:${nonce}:${nomiaBlocks.p
 const html = runtime.renderDesignPattern(pattern.blocks, {
   siteOrigin: Astro.site?.origin,
   home: language.home,
+  resolvePost: query.resolvePost,
   blocks: Object.fromEntries([...nomiaNames].map((name) => [name, marker])),
   onUnrendered: (block: DesignBlock) => console.warn(`No renderer for ${block.name} in "${pattern.title}"`),
 });
