@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.10.6 - 2026-10-24
+
+Previous release: v0.10.5
+
+- Adopt published content 0.3.2 and Design 0.9.0 through blueprint 0.23.2.
+- Render shared neutral presentation, resolved themes and selected Query context in the actual Site paths.
+- Mount owning Carousel, navigation, Video Hero and Cover motion lifecycles; preserve source semantics and consent.
+- Verify saved producer fixtures and production CSS across responsive, native layout, media and language cases.
+
 ## v0.10.5 - 2026-10-23
 
 Previous release: v0.10.4
