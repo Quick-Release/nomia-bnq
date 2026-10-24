@@ -119,10 +119,11 @@ test("visible Carousel controls preserve colors, keyboard and autoplay pause rul
   const script = await buildPresentationClient();
   const source = fixture("carousel-presentation-public.json").blocks[0].node;
   // An explicit enabled-control variant reuses the actual captured slide
-  // identities/content. This is a consumer scenario, not another producer capture.
+  // identities/content and adds an explicit foreground button for focus safety.
+  // This is a consumer scenario, not another producer capture.
   const node = {
     ...source,
-    children: source.children.map((child) =>
+    children: source.children.map((child, index) =>
       child.name === "getquick-design/carousel-navigation"
         ? {
             ...child,
@@ -133,7 +134,20 @@ test("visible Carousel controls preserve colors, keyboard and autoplay pause rul
               arrowColor: "rgb(12, 34, 56)",
             },
           }
-        : child,
+        : index === 0
+          ? {
+              ...child,
+              children: [
+                ...child.children,
+                {
+                  name: "core/button",
+                  attributes: { tagName: "button", type: "button", text: "Foreground action" },
+                  content: null,
+                  children: [],
+                },
+              ],
+            }
+          : child,
     ),
   };
   const harness = await createAstroRenderHarness();
@@ -200,4 +214,22 @@ test("visible Carousel controls preserve colors, keyboard and autoplay pause rul
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.clock.fastForward(2200);
   assert.equal(await active(), "2 of 3", "reduced motion stops autoplay");
+  await nav.locator('[data-gqd-go="0"]').click();
+  const foreground = [
+    carousel.getByRole("link"),
+    carousel.getByRole("button", { name: "Foreground action", exact: true }),
+  ];
+  for (const control of foreground) {
+    await control.focus();
+    for (const key of ["ArrowRight", "ArrowLeft", "Home", "End"]) {
+      await control.press(key);
+      assert.equal(
+        await active(),
+        "1 of 3",
+        "foreground shortcut keys cannot hide the focused slide",
+      );
+      assert.equal(await control.evaluate((node) => node === document.activeElement), true);
+      assert.equal(await control.isVisible(), true);
+    }
+  }
 });

@@ -7,10 +7,11 @@ render its Astro dispatcher or actual Layout. Client tests bundle the production
 Site lifecycle entry and mount the owning content helpers.
 
 The current local verification artifact is content
-`getquick-content-634f58c-preview8.tgz`, SHA-256
-`b6b4db473c00f6ade0d7c379ea83d4bb9e76a2360e0ee8ebbc6cfd32b627bebf`.
+`getquick-content-634f58c-preview9.tgz`, SHA-256
+`1d19116a4de625771cd4d378f241433d12b4d92616e2c4a6fa0cfe6f69be4b25`.
 It bundles the exact canonical Design `634f58c8e42c8a1e7f8334e937126b472387d405`
-pair (Design 0.9 / wire 2). Only the content facade is installed under ignored
+pair (Design 0.9 / wire 2), with committed content runtime
+`1d78e9c23a3449fcf001c2327a562332b94c9b59`. Only the content facade is installed under ignored
 `node_modules`; no renderer dependency, parser or mutable runtime source is copied.
 Managed `@getquick/content` remains pinned at 0.3.1. A fresh install still requires
 the coordinated content release and blueprint adoption before these consumers run.
@@ -51,7 +52,10 @@ claim new upstream HTTP requests or live publication-store verification.
   height, linked-image fill and display removal/restoration. The Site lifecycle
   cleans up and remounts the canonical browser initializer. A separate enabled-control variant of the captured slides verifies visible
   arrows/indicators/colors, keyboard navigation and autoplay focus/hover/reduced
-  motion pause rules with the actual browser clock.
+  motion pause rules with the actual browser clock. Foreground link/button
+  Arrow/Home/End keys cannot hide the focused slide; persistent navigation
+  control shortcuts remain active. This regression fails on preview8 and passes
+  on preview9 without any Site runtime handler change.
 - Hero: actual saved poster and localized YouTube documents through parsed,
   reconstructed chrome and HTML helpers; actual Layout/CSS, late scoped media
   reset, box/foreground geometry, keyboard links, reduced motion and responsive
