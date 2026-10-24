@@ -71,6 +71,14 @@ test("saved Hero box, foreground and deferred player work in Nomia production CS
       assert.equal((await hero.locator(".gqd-video-hero__media").boundingBox()).height, 256);
       assert.equal((await hero.locator(".gqd-video-hero__poster").boundingBox()).height, 256);
     }
+    assert.deepEqual(
+      await heroes.first().evaluate((node) => ({
+        color: getComputedStyle(node).color,
+        background: getComputedStyle(node).backgroundColor,
+      })),
+      { color: "rgb(255, 255, 255)", background: "rgb(0, 0, 0)" },
+      "saved native contrast survives each actual adapter",
+    );
     const content = heroes.first().locator(".gqd-video-hero__content");
     assert.equal(await content.evaluate((node) => getComputedStyle(node).alignItems), "flex-end");
     assert.equal(
@@ -147,6 +155,8 @@ test("Site consent grant/revoke and reduced motion govern actual Hero media moun
     content: null,
     attributes: {
       ...poster.attributes,
+      anchor: "provided-hosted-hero",
+      className: "provided-hosted-media",
       videoType: "self-hosted",
       videoUrl: "/hero-test.webm",
       posterUrl: "/poster.svg",
@@ -209,6 +219,11 @@ test("Site consent grant/revoke and reduced motion govern actual Hero media moun
   });
   const media = page.locator(".gqd-video-hero__media");
   const video = page.locator("video");
+  assert.equal(
+    await page.locator("#provided-hosted-hero.provided-hosted-media").count(),
+    1,
+    "reconstructed native shell preserves authored identity",
+  );
   assert.equal(await video.getAttribute("autoplay"), null);
   assert.equal(await video.evaluate((node) => node.muted && node.loop && node.playsInline), true);
   assert.equal(await video.evaluate((node) => node.paused), true);
