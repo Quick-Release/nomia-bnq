@@ -18,7 +18,8 @@ interface Props {
 const theme = resolveDesignTheme(Astro.props.theme);
 ---
 
-<style is:inline set:html={designThemeStyleSheet(theme)} />
+<!-- Keep the canonical reset below this Site's Tailwind utilities. -->
+<style is:inline set:html={`@layer base {${designThemeStyleSheet(theme)}}`} />
 <style is:inline set:html={presentationStyleSheet(theme)} />
 <style is:inline set:html={designCarouselStyle()} />
 

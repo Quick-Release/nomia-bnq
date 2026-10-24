@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.10.7 - 2026-10-24
+
+Previous release: v0.10.6
+
+- Emit the unchanged canonical scoped reset in Tailwind base so Site utility spacing and typography retain their authored values.
+- Add actual Layout/header cascade coverage and retain caption margins in media geometry evidence.
+
 ## v0.10.6 - 2026-10-24
 
 Previous release: v0.10.5

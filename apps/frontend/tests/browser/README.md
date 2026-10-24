@@ -40,10 +40,14 @@ claim new upstream HTTP requests or live publication-store verification.
 - Theme: actual Layout with default and overridden responsive thresholds, spacing,
   font family, scoped reset and media containment. Complete CSS is generated from
   the delivered theme on each render.
+- Site utility cascade: actual Layout/body scope and Nomia header rendering verify
+  utility padding and typography survive the canonical reset in `@layer base`,
+  while bare headings still reset and neutral authored controls remain authoritative.
+  The production-shaped regression fails before this integration fix.
 - Media: constructed responsive Image/Featured Image/Logo/Cover composition plus
   actual saved/public Image and Cover snapshots through all three adapters. The
   wrapper owns authored height; a captioned Image reserves its visible caption row
-  inside that height. Direct media fills the remaining space. Cover foreground,
+  and retained caption margins inside that height. Direct media fills the remaining space. Cover foreground,
   background/overlay geometry, stacking, opacity and nested-media isolation pass.
 - Cover motion: provided neutral, saved, parsed, local and ordinary Entry compositions use the
   existing first-party WebM fixture in actual Layout/CSS. Shared SSR strips only
