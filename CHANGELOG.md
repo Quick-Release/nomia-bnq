@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.10.8 - 2026-10-24
+
+Previous release: v0.10.7
+
+- 29b316a Merge pull request #66 from Quick-Release/claude/page-owned-archive-urls
+- 66a6fbb fix(cms): let the section Pages own their URLs over the CPT archives
+- 1888feb Merge pull request #7 from Quick-Release/claude/media-uploads-path
+- 3e6a638 Merge pull request #5 from Quick-Release/claude/palette-script-user
+- 425f34f fix(cms): keep /uploads/ in the migration's media rewrite
+- 9be489e fix(cms): run the palette script as an administrator
+
 ## v0.10.7 - 2026-10-24
 
 Previous release: v0.10.6
