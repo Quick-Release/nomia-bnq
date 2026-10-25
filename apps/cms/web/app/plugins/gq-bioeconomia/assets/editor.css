@@ -196,17 +196,6 @@
 }
 
 /*
- * A block that is full-bleed on the site fills the editor canvas too, rather
- * than the content column `theme.json`'s `layout.contentSize` sets up. The
- * `alignfull` class alongside this one is Gutenberg's own mechanism; this rule
- * keeps the block full width if the constrained-layout styles are absent.
- */
-.gq-bioeconomia-full-width {
-  max-width: none;
-  width: 100%;
-}
-
-/*
  * Temática eyebrow — shared editor control.
  *
  * Used by HomeIntro and TwoColumnsTextImage (and any future editor that
