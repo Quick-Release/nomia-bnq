@@ -2,6 +2,7 @@ import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 import { activationDecision, compareNightlies } from "./model.mjs";
 import { api, latest, currentActionsJob } from "./github.mjs";
+import { completeDeployment } from "./completion.mjs";
 
 const site = process.env.GITHUB_REPOSITORY;
 const environment = "nomia-design-nightly";
@@ -85,12 +86,7 @@ try {
   record.state = "success";
   record.completedAt = new Date().toISOString();
   save();
-  await api(`${site}/deployments/${deployment.id}/statuses`, {
-    state: "success",
-    log_url: record.runUrl,
-    environment_url: "https://nomia-cms.bnq.pt",
-    auto_inactive: true,
-  });
+  await completeDeployment(record);
 } catch (error) {
   // A timeout or runner loss does not prove the remote deployment stopped.
   // Keep its durable in_progress fence until an operator reconciles it.
