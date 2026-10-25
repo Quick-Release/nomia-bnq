@@ -57,10 +57,20 @@ final class ContractBlocks {
 				],
 			);
 
+			$style_path = 'blocks/' . $catalog_id . '/editor.css';
+			$styles     = [ EditorAssets::HANDLE ];
+			if ( is_file( GQ_BIOECONOMIA_PLUGIN_DIR . '/' . $style_path ) ) {
+				$style_handle = $handle . '-style';
+				EditorAssets::registerStyle( $style_handle, $style_path );
+				$styles[] = $style_handle;
+			}
+
 			register_block_type(
 				$blocks_root . '/' . $catalog_id,
 				[
 					'editor_script'   => $handle,
+					// Override file: metadata's WordPress-version cache key.
+					'editorStyle'     => $styles,
 					'render_callback' => static fn( array $attributes, string $content = '' ): string => self::render( $catalog_id, $attributes, $content ),
 				],
 			);

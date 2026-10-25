@@ -11,25 +11,6 @@
   width: 100%;
 }
 
-.editor-styles-wrapper
-  :where(.block-editor-block-list__block[data-type="getquick/page-hero-slider"]) {
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  max-width: none !important;
-  width: 100% !important;
-}
-
-.editor-styles-wrapper
-  :where(
-    .block-editor-block-list__block[data-type="getquick/page-hero-slider"]
-      > .wp-block-getquick-page-hero-slider
-  ) {
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  max-width: none !important;
-  width: 100% !important;
-}
-
 .page-hero-slider-editor *,
 .page-hero-slider-editor *::before,
 .page-hero-slider-editor *::after {
