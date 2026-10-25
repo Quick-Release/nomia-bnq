@@ -67,3 +67,37 @@ export async function latest() {
   if (!m) throw new Error("No complete nightly releases");
   return manifest(m.release);
 }
+
+export async function currentActionsJob({
+  site,
+  runId,
+  attempt,
+  jobName,
+  headSha,
+  refName,
+  runnerName,
+}) {
+  if (
+    !/^\d+$/.test(runId ?? "") ||
+    !/^\d+$/.test(attempt ?? "") ||
+    !/^[a-f0-9]{40}$/.test(headSha ?? "") ||
+    !jobName ||
+    !refName ||
+    !runnerName
+  )
+    throw new Error("Missing current Actions job identity");
+  const result = await api(`${site}/actions/runs/${runId}/attempts/${attempt}/jobs?per_page=100`);
+  const matches = result.jobs.filter(
+    (job) =>
+      job.name === jobName &&
+      job.head_sha === headSha &&
+      String(job.run_id) === runId &&
+      job.runner_name === runnerName &&
+      job.status === "in_progress",
+  );
+  if (result.total_count > 100 || matches.length !== 1)
+    throw new Error("Current Actions job is not uniquely authenticated");
+  const jobUrl = `https://github.com/${site}/actions/runs/${runId}/job/${matches[0].id}`;
+  if (matches[0].html_url !== jobUrl) throw new Error("Unexpected current Actions job URL");
+  return { jobUrl, headSha, refName, environment: "nomia-design-nightly" };
+}

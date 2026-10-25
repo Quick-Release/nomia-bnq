@@ -11,6 +11,7 @@ on:
         description: Exact Nomia commit for manual selection (empty uses main)
         type: string
 permissions:
+  actions: read
   contents: read
   deployments: write
 concurrency:

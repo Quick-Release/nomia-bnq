@@ -1,7 +1,7 @@
 import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 import { activationDecision, compareNightlies } from "./model.mjs";
-import { api, latest } from "./github.mjs";
+import { api, latest, currentActionsJob } from "./github.mjs";
 
 const site = process.env.GITHUB_REPOSITORY;
 const environment = "nomia-design-nightly";
@@ -13,6 +13,15 @@ if (site !== "Quick-Release/nomia-bnq" || !/^[a-f0-9]{40}$/.test(record.snapshot
   throw new Error("Invalid Nomia snapshot");
 // One workflow concurrency group covers preparation, activation, refresh and
 // manual selection. Never cancel an active Ploi deployment.
+const currentJob = await currentActionsJob({
+  site,
+  runId: process.env.GITHUB_RUN_ID,
+  attempt: process.env.GITHUB_RUN_ATTEMPT,
+  jobName: process.env.GITHUB_JOB,
+  headSha: process.env.GITHUB_SHA,
+  refName: process.env.GITHUB_REF_NAME,
+  runnerName: process.env.RUNNER_NAME,
+});
 const history = [];
 for (let page = 1; ; page++) {
   const deployments = await api(
@@ -24,11 +33,17 @@ for (let page = 1; ; page++) {
       id: deployment.id,
       state: statuses[0]?.state,
       manifest: deployment.payload?.manifest,
+      payload: deployment.payload,
+      ref: deployment.ref,
+      sha: deployment.sha,
+      environment: deployment.environment,
+      task: deployment.task,
+      logUrl: statuses[0]?.log_url,
     });
   }
   if (deployments.length < 100) break;
 }
-if (activationDecision(m, history, record.selectedManually) === "superseded") {
+if (activationDecision(m, history, record.selectedManually, currentJob) === "superseded") {
   record.state = "superseded";
   save();
   process.exit(0);

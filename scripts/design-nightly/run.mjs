@@ -87,6 +87,7 @@ if (
 const siteSha = git("rev-parse", "HEAD");
 const record = {
   schemaVersion: 1,
+  deploymentKind: "nomia-design-nightly",
   siteSha,
   manifest: m,
   composerLockSha256: hash(readFileSync(`${cms}/composer.lock`)),

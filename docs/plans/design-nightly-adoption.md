@@ -77,7 +77,12 @@ patch/stable full-suite policy are retained.
 One non-cancelling Actions concurrency group serializes nightly preparation,
 activation, refresh and manual selection. Before activation it checks the latest
 ready producer build again, skips superseded or already-successful builds, and
-consults GitHub Deployments history. An unresolved deployment fences all further
+consults GitHub Deployments history. Actions itself creates an environment
+record before the job starts; the consumer excludes only the empty platform
+record whose exact job URL, run attempt, runner, ref and commit are established
+through the authenticated Actions API. Snapshot deployment records carry
+`deploymentKind: nomia-design-nightly` and a manifest; those and all unrelated
+unresolved records remain fenced. An unresolved deployment fences all further
 nightly activation, including manual rollback. Each activation records Site SHA,
 producer SHA/version/sequence, lock hash, snapshot SHA and workflow URL.
 GitHub deployment success means both CMS deployment and publication refresh
