@@ -138,6 +138,21 @@ final class EditorAssets {
 	}
 
 	/**
+	 * Registers a colocated editor style with the same cache policy as scripts.
+	 *
+	 * @param string $handle The style handle.
+	 * @param string $path   The plugin-relative asset path.
+	 */
+	public static function registerStyle( string $handle, string $path ): void {
+		wp_register_style(
+			$handle,
+			plugins_url( $path, GQ_BIOECONOMIA_PLUGIN_FILE ),
+			[],
+			self::assetVersion( $path ),
+		);
+	}
+
+	/**
 	 * Versions editor assets by content so deployed edits invalidate browser and
 	 * CDN caches independently of the plugin lifecycle version.
 	 *
