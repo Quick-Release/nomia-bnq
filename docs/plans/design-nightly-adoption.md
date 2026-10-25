@@ -19,6 +19,18 @@ The historical setup audit below describes the earlier disabled state, not the
 current opt-in. Full-site deployment completion is recorded separately in each
 run's deployment artifact, including CMS and frontend completion timestamps.
 
+## Release validation
+
+Authenticated live editor acceptance checks against a deployed CMS are reserved
+for deliberate stable patch (fix), minor and major releases. Run them against
+the stable release candidate before publishing.
+
+Nightly publication, adoption, deployment and post-deploy verification exclude
+these checks, whether automated or performed manually by an agent. Nightly
+completion uses artifact integrity, successful builds, deployment status and
+publication refresh. Local fixture and regression tests retain their existing
+PR and stable-release policy.
+
 ## Released and installed baseline
 
 GQ Design `v0.9.1` is already a published stable release (2026-10-25), not

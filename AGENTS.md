@@ -115,6 +115,12 @@ Verify current implementation and release/adoption status before proposing new
 work: an accepted decision or code in another checkout does not establish that
 this Site has adopted it. Follow the Scope rule above for any handoff.
 
+## Release validation
+
+For nightly publication, adoption and post-deploy verification, and for stable
+patch, minor or major releases, follow
+[release validation](docs/plans/design-nightly-adoption.md#release-validation).
+
 ## Sessions and orchestration
 
 Sessions run inside T3 Code. A session started from this repository executes
