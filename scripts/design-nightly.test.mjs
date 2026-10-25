@@ -14,6 +14,7 @@ import {
 
 const fixture = () => ({
   schemaVersion: 1,
+  migrations: { destructive: false },
   channel: "nightly",
   version: "0.9.2-nightly.20261025.42.1",
   tag: "v0.9.2-nightly.20261025.42.1",
@@ -43,6 +44,21 @@ test("binds staged metadata to immutable tag source and complete release", () =>
   const m = fixture();
   assert.equal(validateManifest(m, m.tag, m.sourceSha), m);
   assert.throws(() => validateManifest(m, m.tag, "d".repeat(40)), /identity/);
+  const undeclared = structuredClone(m);
+  delete undeclared.migrations;
+  assert.throws(
+    () => validateManifest(undeclared, undeclared.tag, undeclared.sourceSha),
+    /migration declaration/,
+  );
+  const nonBoolean = structuredClone(m);
+  nonBoolean.migrations.destructive = "false";
+  assert.throws(
+    () => validateManifest(nonBoolean, nonBoolean.tag, nonBoolean.sourceSha),
+    /migration declaration/,
+  );
+  const destructive = structuredClone(m);
+  destructive.migrations.destructive = true;
+  assert.equal(validateManifest(destructive, destructive.tag, destructive.sourceSha), destructive);
   const wrong = structuredClone(m);
   wrong.plugin.composer.version = wrong.version;
   assert.throws(() => validateManifest(wrong, wrong.tag, wrong.sourceSha), /metadata/);

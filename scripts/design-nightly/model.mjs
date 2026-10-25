@@ -19,6 +19,8 @@ export function validateManifest(m, tag, sourceSha) {
     Number(match[4]) !== m.attempt
   )
     throw new Error("Invalid nightly identity or tag source");
+  if (typeof m.migrations?.destructive !== "boolean")
+    throw new Error("Missing boolean destructive migration declaration");
   const p = m.plugin;
   if (
     p?.name !== "getquick/gq-design" ||

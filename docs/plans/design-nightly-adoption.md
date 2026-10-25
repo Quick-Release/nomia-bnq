@@ -18,7 +18,7 @@ selects an older build over a newer ready build.
 The authenticated prerelease must contain `design-release.json` and
 `gq-design-VERSION.zip`. Manifest schema 1 carries `channel: nightly`, `version`,
 `tag`, `sourceSha`, `sequence`, `attempt`, `plugin: {name, asset, sha256, composer}`
-and both matching npm `packages: [{name, version, asset, integrity, sha256}]`.
+`migrations: {destructive: boolean}`, and both matching npm `packages: [{name, version, asset, integrity, sha256}]`.
 The manifest is the producer's completion marker after all artifacts exist.
 The consumer resolves annotated or lightweight Git tags to confirm `sourceSha`,
 checks the plugin SHA256 and preserves the producer manifest. It installs only
@@ -91,7 +91,17 @@ A single Site provides no minimum testing window for intermediate versions.
    cannot serialize external deploy callers. A shared cross-pipeline activation
    lock would belong to `Quick-Release/gq-site` (`/data/code/getquick/gq-site`);
    this consumer does not change that blueprint or invent such an API.
-5. Pilot manual selection, newest-ready bursts, interrupted activation recovery,
+5. Confirm the Ploi target PHP version satisfies the artifact’s runtime Composer
+   requirement. The real producer proof requires PHP `>=8.4.1`; preparation uses
+   PHP 8.4, but the live target’s runtime version remains unverified. Do not
+   override platform requirements to force installation.
+6. Before enabling the cross-repository release flow, complete the separate
+   registry-owned release-channel gate and stable-discovery changes. The staged
+   nightly ZIP bypasses registry lookup for this plugin; that does not establish
+   that the registry excludes untested nightlies or discovers tested stable
+   releases correctly. Registry readiness must be confirmed by its owning
+   session, without changing that repository from this worktree.
+7. Pilot manual selection, newest-ready bursts, interrupted activation recovery,
    refresh and rollback before relying on dispatches. Record observed latency.
 
 Read-only setup inspection found no repository Actions secrets or variables and
@@ -131,8 +141,22 @@ workflow never reached refresh.
 Routine code deployments take no database snapshot. Before introducing a
 **destructive** migration, disable automatic adoption and obtain a recoverable
 DB/content snapshot with an inspected restore path. Code rollback does not
-reverse database/content changes. A manifest with optional
-`migrations.destructive: true` fails closed and requires that separate reviewed
-rollout; the current producer contract has no mandatory migration declaration,
-so migration classification remains a release-author responsibility. Never push
+reverse database/content changes. Every manifest must declare a boolean
+`migrations.destructive`; missing or non-boolean declarations are rejected.
+`true` fails closed and requires that separate reviewed rollout. The producer’s
+tracked `nightly-release-policy.json` supplies this declaration; authors must
+set `destructiveMigrations: true` before merging destructive changes.
+Classification remains a release-author responsibility. Never push
 a local database to Ploi or add an import to the export-only db-sync path.
+
+## Local producer proof
+
+The producer's staged `0.9.2-nightly.20261025.900001.1` proof for source
+`9d6b80de27b2c38429a38ac5bf4d596c3473fcad` passed the consumer model,
+ZIP SHA256 validation and comparison of embedded runtime Composer metadata.
+An isolated Composer install of that real ZIP also passed with the exact alias,
+ZIP checksum, runtime PHP requirement and existing theme's Design version range.
+The regenerated proof includes the mandatory boolean migration declaration.
+These were local artifact checks; live GitHub tag resolution, Ploi PHP/runtime,
+activation, refresh and rollback remain unverified. This does not establish
+that the proof source has been deployed or manually tested on Nomia.
