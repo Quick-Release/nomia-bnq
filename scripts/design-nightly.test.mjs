@@ -516,3 +516,28 @@ test("retained Content tarball installs offline and reinstalls from its frozen s
     rmSync(root, { recursive: true, force: true });
   }
 });
+
+test("batched ledger status reads retain unresolved records and fail closed on partial results", async () => {
+  const { deploymentStatuses } = await import("./design-nightly/github.mjs");
+  const original = globalThis.fetch;
+  let nodes = [
+    { id: "one", latestStatus: { state: "IN_PROGRESS", logUrl: "https://example.test/job" } },
+    { id: "two", latestStatus: null },
+  ];
+  globalThis.fetch = async () => new Response(JSON.stringify({ data: { nodes } }));
+  try {
+    assert.deepEqual(await deploymentStatuses([{ node_id: "one" }, { node_id: "two" }]), [
+      { state: "in_progress", log_url: "https://example.test/job" },
+      { state: undefined, log_url: undefined },
+    ]);
+    nodes = [nodes[0]];
+    await assert.rejects(
+      deploymentStatuses([{ node_id: "one" }, { node_id: "two" }]),
+      /Incomplete/,
+    );
+    nodes = [null];
+    await assert.rejects(deploymentStatuses([{ node_id: "one" }]), /identity/);
+  } finally {
+    globalThis.fetch = original;
+  }
+});

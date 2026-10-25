@@ -101,3 +101,33 @@ export async function currentActionsJob({
   if (matches[0].html_url !== jobUrl) throw new Error("Unexpected current Actions job URL");
   return { jobUrl, headSha, refName, environment: "nomia-design-nightly" };
 }
+
+// One GraphQL batch per REST deployment page retains every historical fence
+// without one status request per record on the five-minute admission check.
+export async function deploymentStatuses(deployments) {
+  if (!deployments.length) return [];
+  if (deployments.some((d) => typeof d.node_id !== "string"))
+    throw new Error("Missing deployment node identity");
+  const response = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers: { ...headers, Authorization: `Bearer ${process.env.SITE_GH_TOKEN}` },
+    body: JSON.stringify({
+      query:
+        "query($ids:[ID!]!){nodes(ids:$ids){... on Deployment{id latestStatus{state logUrl}}}}",
+      variables: { ids: deployments.map((d) => d.node_id) },
+    }),
+  });
+  if (!response.ok) throw new Error(`Deployment status batch HTTP ${response.status}`);
+  const result = await response.json();
+  if (
+    result.errors?.length ||
+    !Array.isArray(result.data?.nodes) ||
+    result.data.nodes.length !== deployments.length
+  )
+    throw new Error("Incomplete deployment status batch");
+  return result.data.nodes.map((node, index) => {
+    if (node?.id !== deployments[index].node_id)
+      throw new Error("Deployment status identity mismatch");
+    return { state: node.latestStatus?.state?.toLowerCase(), log_url: node.latestStatus?.logUrl };
+  });
+}
