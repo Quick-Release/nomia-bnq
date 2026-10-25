@@ -44,7 +44,7 @@ for (let page = 1; ; page++) {
   }
   if (deployments.length < 100) break;
 }
-if (activationDecision(m, history, record.selectedManually, currentJob) === "superseded") {
+if (activationDecision(m, history, record.selectedManually, currentJob, record) === "superseded") {
   record.state = "superseded";
   save();
   process.exit(0);
@@ -80,8 +80,11 @@ try {
   );
   record.cmsCompletedAt = new Date().toISOString();
   save();
-  // Refresh publication output using the existing operation, no frontend build
-  // or acceptance suite is required for this plugin-only adoption.
+  // Alchemy builds and deploys the frontend from this same snapshot. Keep both
+  // targets under the existing lock and fence until publication refresh ends.
+  execFileSync("pnpm", ["run", "deploy:frontend:raw"], { stdio: "inherit" });
+  record.frontendCompletedAt = new Date().toISOString();
+  save();
   execFileSync("pnpm", ["exec", "gq", "frontend", "refresh"], { stdio: "inherit" });
   record.state = "success";
   record.completedAt = new Date().toISOString();

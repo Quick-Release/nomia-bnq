@@ -1,12 +1,23 @@
-# Nomia GQ Design nightly adoption
+# Nomia development nightlies
 
-This is Nomia's opt-in consumer for the release design approved in
-[GQ Design](t3-thread://v1/21e1a3cf-296b-4f5e-8fc4-e7fe4e5b1a44).
-Nomia is the initial development Site: no traffic, breaking changes expected.
-The reviewed config opt-in is prepared; delivery remains off while repository
-variable `DESIGN_NIGHTLY_ENABLED` is unset/false and producer dispatch is off.
-Do not merge this opt-in until credentials are verified and the controlled pilot
-plan is ready. There is no 60-second deadline. No live nightly pilot has run.
+Nomia is an opted-in development Site with no traffic; breaking changes are
+expected. Merges to this Site's `main` and completed GQ Design nightlies both
+start **Nomia nightly**. Each run selects current Site main and the newest ready
+immutable Design build, then deploys the CMS, builds/deploys the frontend, and
+refreshes published content. Manual inputs select exact Design and Site sources
+for investigation or rollback. There is no clock-based nightly schedule.
+
+No test suite or acceptance suite gates this development delivery path. Locked
+installs, artifact verification, successful builds and deployment completion are
+required. The workflow retains the non-cancelling `nomia-cms-deployment` lock and
+GitHub deployment fence through both deployments and publication refresh. The
+existing `DESIGN_NIGHTLY_ENABLED` variable controls the whole path.
+
+The initial plugin-only pilot succeeded on 2026-10-25 in
+[run 40215540844](https://github.com/Quick-Release/nomia-bnq/actions/runs/40215540844).
+The historical setup audit below describes the earlier disabled state, not the
+current opt-in. Full-site deployment completion is recorded separately in each
+run's deployment artifact, including CMS and frontend completion timestamps.
 
 ## Released and installed baseline
 
@@ -69,14 +80,17 @@ The snapshot Git bundle and deployment record are uploaded before activation.
 through the existing R2/Ploi path and verifies the reported deployed commit.
 No new gq flags or managed-file changes are needed. The normal CMS deploy
 installs the locked artifact, activates plugins and runs existing deploy steps.
-`gq frontend refresh` then refreshes stored publication output. No frontend
-rebuild, automated test suite or smoke test runs in this nightly workflow.
+After both deployments, `gq frontend refresh` refreshes stored publication output.
+The existing `pnpm run deploy:frontend:raw` command builds and deploys the
+frontend from the same snapshot before refresh. No automated test suite or smoke
+test runs in this nightly workflow.
 Ordinary Site checks and the producer's PR formatting/lint/type checks and
 patch/stable full-suite policy are retained.
 
 One non-cancelling Actions concurrency group serializes nightly preparation,
 activation, refresh and manual selection. Before activation it checks the latest
-ready producer build again, skips superseded or already-successful builds, and
+ready producer build again, skips superseded builds or an already-successful identical Site/Design pair
+whose frontend was also deployed, and
 consults GitHub Deployments history. Actions itself creates an environment
 record before the job starts; the consumer excludes only the empty platform
 record whose exact job URL, run attempt, runner, ref and commit are established
@@ -85,8 +99,8 @@ through the authenticated Actions API. Snapshot deployment records carry
 unresolved records remain fenced. An unresolved deployment fences all further
 nightly activation, including manual rollback. Each activation records Site SHA,
 producer SHA/version/sequence, lock hash, snapshot SHA and workflow URL.
-GitHub deployment success means both CMS deployment and publication refresh
-completed; it is not evidence of automated behavioral testing. Producer stable
+GitHub deployment success means CMS deployment, frontend build/deployment and
+publication refresh completed; it is not evidence of automated behavioral testing. Producer stable
 promotion must select exactly the recorded `manifest.sourceSha` previously
 manually tested on Nomia, then pass its deliberate release suites.
 
@@ -104,7 +118,10 @@ A single Site provides no minimum testing window for intermediate versions.
    `DESIGN_NIGHTLY_READ_TOKEN` (fine-grained contents read for private
    `Quick-Release/gq-design`), `COMPOSER_AUTH`, `PLOI_API_TOKEN`,
    `RELEASES_R2_ACCESS_KEY_ID`, `RELEASES_R2_SECRET_ACCESS_KEY`, and
-   `FRONTEND_REFRESH_TOKEN` from the protected secret store. Never commit or
+   `FRONTEND_REFRESH_TOKEN`, `CLOUDFLARE_API_TOKEN`,
+   `PUBLICATION_EVENT_SECRET` and `CONSENT_READ_TOKEN` from the protected secret
+   store. If the Site uses the GraphQL Access identity, also supply the paired
+   `GQ_AUTH_GRAPHQL_CLIENT_ID` and `GQ_AUTH_GRAPHQL_CLIENT_SECRET`. Never commit or
    export whole Sigillo environments. The destination `github.token` receives
    `deployments: write`; the producer reader does not need Site write access.
 3. Set repository variable `DESIGN_NIGHTLY_ENABLED=true`. In GQ Design, separately
@@ -167,7 +184,7 @@ While nightly delivery is enabled:
 - Do not trigger Ploi deployments from its UI/API, local `gq ploi release`,
   `pnpm ploi:release`, or an independent recovery bundle. All operators and
   sessions must honor the reservation.
-- Select or roll back a nightly through **Nomia Design nightly** manual workflow
+- Select or roll back a nightly through **Nomia nightly** manual workflow
   inputs when possible: it shares the non-cancelling nightly concurrency group.
 
 Before any exceptional stable-tag, manual Ploi or out-of-band bundle recovery:
@@ -191,7 +208,7 @@ this opt-in.
 
 ## Selection, rollback and recovery
 
-Run **Nomia Design nightly** manually with an exact producer `tag` to select an
+Run **Nomia nightly** manually with an exact producer `tag` to select an
 older artifact. Supply the recorded full `site_ref` to use the same Site code
 and dependency baseline as that earlier deployment. Empty `tag` selects the
 newest completed release. Later automatic runs resume newest-ready selection;
@@ -205,7 +222,10 @@ its HEAD equals the recorded `snapshotSha`, and inspect its Composer lock hash
 and bundled ZIP SHA256 against the record. After resolving any in-progress
 fence and excluding other deploy callers, use the existing protected-secret
 invocation of `gq ploi release --ref SNAPSHOT_SHA --git-dir SNAPSHOT_CHECKOUT`,
-followed by `gq frontend refresh`. This is an operator recovery procedure, not
+followed by `pnpm run deploy:frontend:raw` with the protected frontend secrets
+and `gq frontend refresh`. This restores the frontend code from that checkout
+as well as its CMS. The managed deployment applies forward-only D1 migrations;
+code rollback does not reverse them. This is an operator recovery procedure, not
 an automatic retry. The original exact R2 release archive is retained by the
 existing release machinery. Actions artifacts expire after 90 days; archive a
 needed bundle before expiry. No snapshot commit/tag is pushed to the Site repo.

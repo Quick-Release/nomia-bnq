@@ -212,6 +212,30 @@ test("automatic selection resumes latest after manual rollback", () => {
   );
 });
 
+test("site changes deploy with the same Design nightly; only a complete matching pair deduplicates", () => {
+  const candidate = fixture();
+  const snapshot = { siteSha: "d".repeat(40), frontendDeployment: true };
+  const deployed = {
+    id: 1,
+    state: "success",
+    manifest: candidate,
+    payload: { ...snapshot },
+  };
+  const decide = (entry) => activationDecision(candidate, [entry], false, undefined, snapshot);
+  assert.equal(decide(deployed), "superseded");
+  assert.equal(
+    decide({ ...deployed, payload: { ...snapshot, siteSha: "e".repeat(40) } }),
+    "activate",
+  );
+  assert.equal(decide({ ...deployed, payload: { siteSha: snapshot.siteSha } }), "activate");
+  assert.equal(decide({ ...deployed, state: "error" }), "activate");
+  assert.throws(() => decide({ ...deployed, state: "in_progress" }), /reconcile Ploi/);
+  assert.equal(
+    decide({ ...deployed, manifest: { ...candidate, sequence: candidate.sequence + 1 } }),
+    "superseded",
+  );
+});
+
 test("GitHub manifest acceptance requires all uploaded lockstep assets", async () => {
   const { manifest } = await import("./design-nightly/github.mjs");
   const m = fixture();
