@@ -4591,4 +4591,132 @@ return [
 		],
 		'editorStyle' => 'gq-bioeconomia-editor',
 	],
+	'header-contact'                        => [
+		'$schema'     => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion'  => 3,
+		'name'        => 'getquick/header-contact',
+		'title'       => 'Contacto do cabeçalho',
+		'category'    => 'getquick-design',
+		'icon'        => 'phone',
+		'description' => 'Ícone de telefone com ligação à página de contactos ou a um número de telefone.',
+		'keywords'    => [
+			'nomia',
+			'contacto',
+			'telefone',
+			'phone',
+			'header',
+		],
+		'textdomain'  => 'gq-bioeconomia',
+		'attributes'  => [
+			'schemaVersion' => [
+				'type'    => 'number',
+				'default' => 1,
+			],
+			'blockId'       => [
+				'type'    => 'string',
+				'default' => 'header-contact',
+			],
+			'label'         => [
+				'type'    => 'string',
+				'default' => 'Contactos',
+			],
+			'href'          => [
+				'type'    => 'string',
+				'default' => '/contactos/',
+			],
+			'iconId'        => [
+				'type' => 'number',
+			],
+			'iconUrl'       => [
+				'type'    => 'string',
+				'default' => '',
+			],
+		],
+		'supports'    => [
+			'html'            => false,
+			'className'       => false,
+			'customClassName' => false,
+			'color'           => false,
+			'spacing'         => false,
+			'typography'      => false,
+			'align'           => false,
+			'inserter'        => true,
+		],
+		'example'     => [
+			'attributes' => [
+				'label' => 'Contactos',
+				'href'  => '/contactos/',
+			],
+		],
+		'editorStyle' => 'gq-bioeconomia-editor',
+	],
+	'header-search'                         => [
+		'$schema'     => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion'  => 3,
+		'name'        => 'getquick/header-search',
+		'title'       => 'Pesquisa do cabeçalho',
+		'category'    => 'getquick-design',
+		'icon'        => 'search',
+		'description' => 'Ícone de pesquisa que abre um formulário para pesquisar numa página de resultados.',
+		'keywords'    => [
+			'nomia',
+			'pesquisa',
+			'search',
+			'header',
+		],
+		'textdomain'  => 'gq-bioeconomia',
+		'attributes'  => [
+			'schemaVersion' => [
+				'type'    => 'number',
+				'default' => 1,
+			],
+			'blockId'       => [
+				'type'    => 'string',
+				'default' => 'header-search',
+			],
+			'label'         => [
+				'type'    => 'string',
+				'default' => 'Pesquisar',
+			],
+			'placeholder'   => [
+				'type'    => 'string',
+				'default' => 'Palavra-chave…',
+			],
+			'submitLabel'   => [
+				'type'    => 'string',
+				'default' => 'Pesquisar',
+			],
+			'closeLabel'    => [
+				'type'    => 'string',
+				'default' => 'Fechar pesquisa',
+			],
+			'resultsHref'   => [
+				'type'    => 'string',
+				'default' => '/pesquisa/',
+			],
+			'iconId'        => [
+				'type' => 'number',
+			],
+			'iconUrl'       => [
+				'type'    => 'string',
+				'default' => '',
+			],
+		],
+		'supports'    => [
+			'html'            => false,
+			'className'       => false,
+			'customClassName' => false,
+			'color'           => false,
+			'spacing'         => false,
+			'typography'      => false,
+			'align'           => false,
+			'inserter'        => true,
+		],
+		'example'     => [
+			'attributes' => [
+				'resultsHref' => '/pesquisa/',
+			],
+		],
+		'editorStyle' => 'gq-bioeconomia-editor',
+	],
 ];

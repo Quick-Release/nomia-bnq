@@ -44,6 +44,8 @@ import ContactDetailsCardBlock from "./blocks/ContactDetailsCardBlock.astro";
 import HeaderNavigationBlock from "./blocks/HeaderNavigationBlock.astro";
 import ContentListingBlock from "./blocks/ContentListingBlock.astro";
 import ContentFiltersBlock from "./blocks/ContentFiltersBlock.astro";
+import HeaderContactBlock from "./blocks/HeaderContactBlock.astro";
+import HeaderSearchBlock from "./blocks/HeaderSearchBlock.astro";
 
 /** children carries nested blocks to container renderers; leaf renderers ignore it. */
 type BlockRenderer = (props: {
@@ -93,6 +95,8 @@ const RENDERERS: Record<string, BlockRenderer> = {
   "getquick/header-navigation": HeaderNavigationBlock,
   "getquick/content-listing": ContentListingBlock,
   "getquick/content-filters": ContentFiltersBlock,
+  "getquick/header-contact": HeaderContactBlock,
+  "getquick/header-search": HeaderSearchBlock,
 };
 
 interface Props {

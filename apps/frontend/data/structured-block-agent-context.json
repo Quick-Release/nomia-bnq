@@ -6131,6 +6131,155 @@
         "module": "apps/cms/web/app/plugins/gq-bioeconomia/blocks/content-filters/index.js"
       },
       "documentation": "docs/gutenberg-blocks/content-lists/content-filters.md"
+    },
+    {
+      "blockName": "getquick/header-contact",
+      "catalogId": "header-contact",
+      "schemaVersion": 1,
+      "order": 41,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/header-contact.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "header-contact"
+        },
+        "label": {
+          "type": "string",
+          "default": "Contactos"
+        },
+        "href": {
+          "type": "string",
+          "default": "/contactos/",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "iconId": {
+          "type": "number"
+        },
+        "iconUrl": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        }
+      },
+      "compatibilityReads": {},
+      "editing": {
+        "mode": "bespoke",
+        "module": "apps/cms/web/app/plugins/gq-bioeconomia/blocks/header-contact/index.js",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": null,
+        "note": "The bespoke editor module owns the visible controls; inspect it before editing."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/HeaderContactBlock.astro",
+        "previewLabel": "Header contact",
+        "previewAttributes": {
+          "label": "Contactos",
+          "href": "/contactos/"
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Contacto do cabeçalho",
+        "description": "Ícone de telefone com ligação à página de contactos ou a um número de telefone.",
+        "icon": "phone",
+        "experience": "inline-fields",
+        "module": "apps/cms/web/app/plugins/gq-bioeconomia/blocks/header-contact/index.js"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/header-contact.md"
+    },
+    {
+      "blockName": "getquick/header-search",
+      "catalogId": "header-search",
+      "schemaVersion": 1,
+      "order": 42,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/header-search.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "header-search"
+        },
+        "label": {
+          "type": "string",
+          "default": "Pesquisar"
+        },
+        "placeholder": {
+          "type": "string",
+          "default": "Palavra-chave…"
+        },
+        "submitLabel": {
+          "type": "string",
+          "default": "Pesquisar"
+        },
+        "closeLabel": {
+          "type": "string",
+          "default": "Fechar pesquisa"
+        },
+        "resultsHref": {
+          "type": "string",
+          "default": "/pesquisa/",
+          "ui": {
+            "kind": "url"
+          }
+        },
+        "iconId": {
+          "type": "number"
+        },
+        "iconUrl": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        }
+      },
+      "compatibilityReads": {},
+      "editing": {
+        "mode": "bespoke",
+        "module": "apps/cms/web/app/plugins/gq-bioeconomia/blocks/header-search/index.js",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": null,
+        "note": "The bespoke editor module owns the visible controls; inspect it before editing."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/HeaderSearchBlock.astro",
+        "previewLabel": "Header search",
+        "previewAttributes": {
+          "resultsHref": "/pesquisa/"
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Pesquisa do cabeçalho",
+        "description": "Ícone de pesquisa que abre um formulário para pesquisar numa página de resultados.",
+        "icon": "search",
+        "experience": "inline-fields",
+        "module": "apps/cms/web/app/plugins/gq-bioeconomia/blocks/header-search/index.js"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/header-search.md"
     }
   ]
 }

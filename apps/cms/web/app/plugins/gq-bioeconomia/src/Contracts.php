@@ -4328,6 +4328,120 @@ final class Contracts {
 					'showSearch' => true,
 				],
 			],
+			[
+				'blockName'        => 'getquick/header-contact',
+				'catalogId'        => 'header-contact',
+				'title'            => 'Contacto do cabeçalho',
+				'description'      => 'Ícone de telefone com ligação à página de contactos ou a um número de telefone.',
+				'icon'             => 'phone',
+				'keywords'         => [
+					'nomia',
+					'contacto',
+					'telefone',
+					'phone',
+					'header',
+				],
+				'status'           => 'active',
+				'inserter'         => true,
+				'editorExperience' => 'inline-fields',
+				'attributes'       => [
+					'schemaVersion' => [
+						'type'    => 'number',
+						'default' => 1,
+					],
+					'blockId'       => [
+						'type'    => 'string',
+						'default' => 'header-contact',
+					],
+					'label'         => [
+						'type'    => 'string',
+						'default' => 'Contactos',
+					],
+					'href'          => [
+						'type'    => 'string',
+						'default' => '/contactos/',
+						'ui'      => [
+							'kind' => 'url',
+						],
+					],
+					'iconId'        => [
+						'type' => 'number',
+					],
+					'iconUrl'       => [
+						'type'    => 'string',
+						'default' => '',
+						'ui'      => [
+							'kind' => 'media',
+						],
+					],
+				],
+				'example'          => [
+					'label' => 'Contactos',
+					'href'  => '/contactos/',
+				],
+			],
+			[
+				'blockName'        => 'getquick/header-search',
+				'catalogId'        => 'header-search',
+				'title'            => 'Pesquisa do cabeçalho',
+				'description'      => 'Ícone de pesquisa que abre um formulário para pesquisar numa página de resultados.',
+				'icon'             => 'search',
+				'keywords'         => [
+					'nomia',
+					'pesquisa',
+					'search',
+					'header',
+				],
+				'status'           => 'active',
+				'inserter'         => true,
+				'editorExperience' => 'inline-fields',
+				'attributes'       => [
+					'schemaVersion' => [
+						'type'    => 'number',
+						'default' => 1,
+					],
+					'blockId'       => [
+						'type'    => 'string',
+						'default' => 'header-search',
+					],
+					'label'         => [
+						'type'    => 'string',
+						'default' => 'Pesquisar',
+					],
+					'placeholder'   => [
+						'type'    => 'string',
+						'default' => 'Palavra-chave…',
+					],
+					'submitLabel'   => [
+						'type'    => 'string',
+						'default' => 'Pesquisar',
+					],
+					'closeLabel'    => [
+						'type'    => 'string',
+						'default' => 'Fechar pesquisa',
+					],
+					'resultsHref'   => [
+						'type'    => 'string',
+						'default' => '/pesquisa/',
+						'ui'      => [
+							'kind' => 'url',
+						],
+					],
+					'iconId'        => [
+						'type' => 'number',
+					],
+					'iconUrl'       => [
+						'type'    => 'string',
+						'default' => '',
+						'ui'      => [
+							'kind' => 'media',
+						],
+					],
+				],
+				'example'          => [
+					'resultsHref' => '/pesquisa/',
+				],
+			],
 		];
 	}
 }

@@ -1128,4 +1128,23 @@ export const WP_CUSTOM_BLOCK_FIXTURES: readonly WpCustomBlockFixture[] = [
       },
     ),
   },
+  {
+    label: "Header contact",
+    block: block(
+      "getquick/header-contact",
+      {
+        label: "Contactos",
+        href: "/contactos/",
+      },
+    ),
+  },
+  {
+    label: "Header search",
+    block: block(
+      "getquick/header-search",
+      {
+        resultsHref: "/pesquisa/",
+      },
+    ),
+  },
 ];

@@ -1,0 +1,59 @@
+---
+import type { SearchResult } from "../../lib/site-search";
+import { listingPagination } from "../../lib/content-collections";
+import { safeHref } from "../../lib/safe-href";
+
+interface Props { query: string; result: SearchResult | null; url: URL }
+const { query, result, url } = Astro.props;
+const found = result?.kind === "found" ? result.content : null;
+const pagination = found && found.totalPages > 1
+  ? listingPagination(url, found.page, found.totalPages) : null;
+---
+
+  <main class="nomia-search-results">
+    <h1>Pesquisa</h1>
+    <form method="get" action="/pesquisa/" role="search" aria-label="Pesquisar no site">
+      <label for="nomia-results-query">Pesquisar no site</label>
+      <div>
+        <input id="nomia-results-query" type="search" name="q" value={query} placeholder="Palavra-chave…" required maxlength="200" />
+        <button type="submit">Pesquisar</button>
+      </div>
+    </form>
+    {!result ? <p>Introduza uma palavra-chave para pesquisar no site.</p> : result.kind === "unavailable" ? (
+      <p role="status">A pesquisa está temporariamente indisponível. Tente novamente mais tarde.</p>
+    ) : found && (
+      <>
+        <p role="status">{found.total} {found.total === 1 ? "resultado" : "resultados"} para “{query}”</p>
+        {found.items.length ? (
+          <ul class="nomia-search-items">
+            {found.items.map((item) => (
+              <li>
+                <h2><a href={safeHref(item.uri)}>{item.title || "Sem título"}</a></h2>
+                {item.excerpt && <p>{item.excerpt}</p>}
+              </li>
+            ))}
+          </ul>
+        ) : <p>Não foram encontrados resultados.</p>}
+        {pagination && <nav aria-label="Páginas de resultados">
+          {pagination.previous && <a href={pagination.previous}>Anterior</a>}
+          {pagination.pages.map((page) => <a href={page.href} aria-current={page.current ? "page" : undefined}>{page.page}</a>)}
+          {pagination.next && <a href={pagination.next}>Seguinte</a>}
+        </nav>}
+      </>
+    )}
+  </main>
+<style>
+  .nomia-search-results { max-width: 72rem; margin: 0 auto; padding: 3rem 1rem; }
+  h1 { font-size: 2.5rem; margin-bottom: 1.5rem; }
+  form { margin-bottom: 2rem; }
+  label { display: block; margin-bottom: 0.5rem; }
+  form > div { display: flex; gap: 0.5rem; }
+  input { flex: 1; min-width: 0; padding: 0.75rem; border: 1px solid currentColor; border-radius: 0.5rem; }
+  button { padding: 0.75rem 1rem; border: 1px solid currentColor; border-radius: 0.5rem; cursor: pointer; }
+  .nomia-search-items { list-style: none; padding: 0; }
+  li { margin: 1.5rem 0; }
+  h2 { font-size: 1.25rem; }
+  a { text-decoration: underline; text-underline-offset: 0.2em; }
+  nav { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+  [aria-current="page"] { font-weight: bold; }
+</style>

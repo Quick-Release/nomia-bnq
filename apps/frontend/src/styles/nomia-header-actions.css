@@ -1,0 +1,83 @@
+/* Site-owned controls inherit the surrounding Gutenberg container's colors. */
+.nomia-header-action {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  border: 0;
+  border-radius: 0.5rem;
+  color: inherit;
+  background: transparent;
+  text-decoration: none;
+  cursor: pointer;
+}
+.nomia-header-action img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+.nomia-header-action:hover {
+  background: color-mix(in srgb, currentColor 12%, transparent);
+}
+.nomia-header-action:focus-visible,
+.nomia-header-search-submit:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+nomia-header-search {
+  display: block;
+  flex: none;
+  min-width: 0;
+}
+nomia-header-search[data-expanded] {
+  flex: 1 1 auto;
+}
+nomia-header-search form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+nomia-header-search input[type="search"] {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid currentColor;
+  border-radius: 0.5rem;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+}
+nomia-header-search input::placeholder {
+  color: inherit;
+  opacity: 0.7;
+}
+.nomia-header-search-submit {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid currentColor;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+nomia-header-search [hidden] {
+  display: none !important;
+}
+/* Hide the surrounding menu and contact while the inline form uses their space. */
+.nomia-header-search-open [data-nomia-navigation],
+.nomia-header-search-open .nomia-header-contact {
+  display: none !important;
+}
+@media (width < 48rem) {
+  .nomia-header-bar.nomia-header-search-open {
+    flex-wrap: wrap;
+  }
+  .nomia-header-bar nomia-header-search[data-expanded] {
+    flex-basis: 100%;
+  }
+}

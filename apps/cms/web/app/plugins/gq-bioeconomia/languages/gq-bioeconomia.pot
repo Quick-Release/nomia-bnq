@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-24T09:31:24+00:00\n"
+"POT-Creation-Date: 2026-10-25T23:24:12+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: gq-bioeconomia\n"
@@ -1738,18 +1738,24 @@ msgstr ""
 
 #: blocks/contact-details-card/index.js:208
 #: blocks/contact-details-card/index.js:313
+#: blocks/header-contact/index.js:37
 #: blocks/header-navigation/index.js:125
+#: blocks/header-search/index.js:58
 msgid "Carregar ícone"
 msgstr ""
 
 #: blocks/contact-details-card/index.js:209
 #: blocks/contact-details-card/index.js:312
+#: blocks/header-contact/index.js:38
 #: blocks/header-navigation/index.js:126
+#: blocks/header-search/index.js:59
 msgid "Substituir ícone"
 msgstr ""
 
 #: blocks/contact-details-card/index.js:221
+#: blocks/header-contact/index.js:48
 #: blocks/header-navigation/index.js:140
+#: blocks/header-search/index.js:69
 msgid "Remover ícone"
 msgstr ""
 
@@ -2075,6 +2081,32 @@ msgstr ""
 msgid "Add a result to start editing the CTA results section."
 msgstr ""
 
+#: blocks/header-contact/index.js:18
+msgid "Contacto do cabeçalho"
+msgstr ""
+
+#: blocks/header-contact/index.js:22
+#: blocks/header-search/index.js:22
+msgid "Texto acessível"
+msgstr ""
+
+#: blocks/header-contact/index.js:29
+msgid "Ligação"
+msgstr ""
+
+#: blocks/header-contact/index.js:53
+#: blocks/header-search/index.js:74
+msgid "Sem ícone escolhido, usa o ícone predefinido."
+msgstr ""
+
+#: blocks/header-contact/index.js:58
+msgid "Use /contactos/ para abrir a página de contactos, ou tel:+351 seguido do número para telefonar."
+msgstr ""
+
+#: blocks/header-contact/index.js:85
+msgid "Contactos"
+msgstr ""
+
 #: blocks/header-navigation/index.js:16
 #: blocks/header-navigation/index.js:81
 msgid "Menu"
@@ -2124,6 +2156,34 @@ msgstr ""
 
 #: blocks/header-navigation/index.js:145
 msgid "Sem ícone escolhido, usa a seta predefinida."
+msgstr ""
+
+#: blocks/header-search/index.js:18
+msgid "Pesquisa do cabeçalho"
+msgstr ""
+
+#: blocks/header-search/index.js:29
+msgid "Página de resultados"
+msgstr ""
+
+#: blocks/header-search/index.js:36
+msgid "Texto do campo de pesquisa"
+msgstr ""
+
+#: blocks/header-search/index.js:43
+msgid "Texto do botão de pesquisa"
+msgstr ""
+
+#: blocks/header-search/index.js:50
+msgid "Texto do botão de fechar"
+msgstr ""
+
+#: blocks/header-search/index.js:79
+msgid "O formulário envia o termo no parâmetro q. Escolha uma página com pesquisa, como /pesquisa/, ou um arquivo com filtros de conteúdo."
+msgstr ""
+
+#: blocks/header-search/index.js:104
+msgid "Pesquisar"
 msgstr ""
 
 #: blocks/home-intro/index.js:62
@@ -2890,6 +2950,7 @@ msgid "Cartão com ícone, título, detalhes de contacto e botão opcional."
 msgstr ""
 
 #: blocks/contact-details-card/block.json
+#: blocks/header-contact/block.json
 msgctxt "block keyword"
 msgid "contacto"
 msgstr ""
@@ -2900,6 +2961,7 @@ msgid "morada"
 msgstr ""
 
 #: blocks/contact-details-card/block.json
+#: blocks/header-contact/block.json
 msgctxt "block keyword"
 msgid "telefone"
 msgstr ""
@@ -2925,6 +2987,7 @@ msgid "Caixa de pesquisa e filtros por categoria, temática e setor para a lista
 msgstr ""
 
 #: blocks/content-filters/block.json
+#: blocks/header-search/block.json
 msgctxt "block keyword"
 msgid "pesquisa"
 msgstr ""
@@ -2935,6 +2998,7 @@ msgid "filtros"
 msgstr ""
 
 #: blocks/content-filters/block.json
+#: blocks/header-search/block.json
 msgctxt "block keyword"
 msgid "search"
 msgstr ""
@@ -3055,6 +3119,35 @@ msgctxt "block description"
 msgid "Só o gráfico donut com legenda, sem título nem texto, para usar dentro de outros blocos."
 msgstr ""
 
+#: blocks/header-contact/block.json
+msgctxt "block title"
+msgid "Contacto do cabeçalho"
+msgstr ""
+
+#: blocks/header-contact/block.json
+msgctxt "block description"
+msgid "Ícone de telefone com ligação à página de contactos ou a um número de telefone."
+msgstr ""
+
+#: blocks/header-contact/block.json
+#: blocks/header-navigation/block.json
+#: blocks/header-search/block.json
+msgctxt "block keyword"
+msgid "nomia"
+msgstr ""
+
+#: blocks/header-contact/block.json
+msgctxt "block keyword"
+msgid "phone"
+msgstr ""
+
+#: blocks/header-contact/block.json
+#: blocks/header-navigation/block.json
+#: blocks/header-search/block.json
+msgctxt "block keyword"
+msgid "header"
+msgstr ""
+
 #: blocks/header-navigation/block.json
 msgctxt "block title"
 msgid "nomia_navigation"
@@ -3063,11 +3156,6 @@ msgstr ""
 #: blocks/header-navigation/block.json
 msgctxt "block description"
 msgid "Barra de navegação com um menu do WordPress, no estilo do cabeçalho Nomia."
-msgstr ""
-
-#: blocks/header-navigation/block.json
-msgctxt "block keyword"
-msgid "nomia"
 msgstr ""
 
 #: blocks/header-navigation/block.json
@@ -3092,9 +3180,14 @@ msgctxt "block keyword"
 msgid "navigation"
 msgstr ""
 
-#: blocks/header-navigation/block.json
-msgctxt "block keyword"
-msgid "header"
+#: blocks/header-search/block.json
+msgctxt "block title"
+msgid "Pesquisa do cabeçalho"
+msgstr ""
+
+#: blocks/header-search/block.json
+msgctxt "block description"
+msgid "Ícone de pesquisa que abre um formulário para pesquisar numa página de resultados."
 msgstr ""
 
 #: blocks/home-intro/block.json

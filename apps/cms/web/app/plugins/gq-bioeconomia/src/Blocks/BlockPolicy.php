@@ -34,12 +34,15 @@ final class BlockPolicy {
 	 * the server (query, navigation, latest posts, embeds, social icons) or need
 	 * WordPress's interactivity scripts (accordion, tabs) stay out, as do the
 	 * raw-HTML blocks (custom HTML, classic).
+	 * Site Logo is dynamic, but GQ Design resolves and renders it in the header
+	 * and footer patterns edited through the post editor.
 	 */
 	private const CORE_BLOCKS = [
 		'core/paragraph',
 		'core/heading',
 		'core/file',
 		'core/image',
+		'core/site-logo',
 		'core/list',
 		'core/list-item',
 		'core/quote',

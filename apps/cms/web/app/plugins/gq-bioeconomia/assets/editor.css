@@ -257,3 +257,15 @@
   box-shadow: 0 0 0 1px currentColor;
   outline: 2px solid transparent;
 }
+
+.gq-bioeconomia-header-action-editor {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+}
+.gq-bioeconomia-header-action-editor img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}

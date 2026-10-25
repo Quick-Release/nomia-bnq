@@ -95,6 +95,26 @@ test('allowed block types keep the editor focused on supported Nomia content', f
 		->and( $allowed )->not->toContain( 'core/embed' );
 } );
 
+test('the pattern editor allows the site logo without widening an existing allowlist', function () {
+	$context = (object) [ 'post' => new WP_Post( [ 'post_type' => 'wp_block' ] ) ];
+
+	expect( apply_filters( 'allowed_block_types_all', true, $context ) )->toContain( 'core/site-logo' )
+		->and( apply_filters( 'allowed_block_types_all', [ 'core/paragraph' ], $context ) )->toBe( [ 'core/paragraph' ] );
+} );
+
+test('header actions retain their saved settings in Design layouts through the site extension', function () {
+	$definitions = apply_filters( 'getquick_design_block_definitions', [ 'other/block' => [ 'enabled' => true ] ] );
+
+	expect( $definitions['other/block'] )->toBe( [ 'enabled' => true ] );
+	foreach ( [ 'getquick/header-contact' => 'href', 'getquick/header-search' => 'resultsHref' ] as $name => $link ) {
+		expect( $definitions )->toHaveKey( $name )
+			->and( $definitions[ $name ]['source'] )->toBe( 'site' )
+			->and( $definitions[ $name ]['enabled'] )->toBeTrue()
+			->and( $definitions[ $name ]['regions'] )->toContain( 'header' )
+			->and( $definitions[ $name ]['attributes'] )->toMatchArray( [ $link => 'string', 'label' => 'string', 'iconUrl' => 'string' ] );
+	}
+} );
+
 test('every contract is registered from its generated block.json metadata', function () {
 	$registered  = $GLOBALS['gq_bioeconomia_test_state']['registered_blocks'];
 	$blocks_root = dirname( __DIR__ ) . '/blocks';

@@ -715,6 +715,41 @@ export const WP_CUSTOM_BLOCK_CONTRACTS = [
     editorTitle: "Pesquisa e filtros",
     editorDescription: "Caixa de pesquisa e filtros por categoria, temática e setor para a listagem de conteúdos da mesma página.",
   },
+  {
+    blockName: "getquick/header-contact",
+    catalogId: "header-contact",
+    schemaVersion: 1,
+    contentAttributes: [
+      "schemaVersion",
+      "blockId",
+      "label",
+      "href",
+      "iconId",
+      "iconUrl",
+    ],
+    editorExperience: "inline-fields",
+    editorTitle: "Contacto do cabeçalho",
+    editorDescription: "Ícone de telefone com ligação à página de contactos ou a um número de telefone.",
+  },
+  {
+    blockName: "getquick/header-search",
+    catalogId: "header-search",
+    schemaVersion: 1,
+    contentAttributes: [
+      "schemaVersion",
+      "blockId",
+      "label",
+      "placeholder",
+      "submitLabel",
+      "closeLabel",
+      "resultsHref",
+      "iconId",
+      "iconUrl",
+    ],
+    editorExperience: "inline-fields",
+    editorTitle: "Pesquisa do cabeçalho",
+    editorDescription: "Ícone de pesquisa que abre um formulário para pesquisar numa página de resultados.",
+  },
 ] as const satisfies readonly WpCustomBlockContract[];
 
 export const WP_CUSTOM_BLOCK_COMPATIBILITY_READS = {
@@ -781,6 +816,8 @@ export const WP_CUSTOM_BLOCK_LINK_KEYS: Readonly<Record<string, readonly string[
   "getquick/nomia-contact-map": ["mapUrl","url"],
   "getquick/contact-details-card": ["buttonHref"],
   "getquick/header-navigation": ["url"],
+  "getquick/header-contact": ["href"],
+  "getquick/header-search": ["resultsHref"],
 };
 
 export type WpCustomBlockName = (typeof WP_CUSTOM_BLOCK_CONTRACTS)[number]["blockName"];

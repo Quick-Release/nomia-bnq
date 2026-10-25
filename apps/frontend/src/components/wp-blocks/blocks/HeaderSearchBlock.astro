@@ -1,0 +1,49 @@
+---
+import { menuItemHref } from "@getquick/content";
+import { content } from "../../../lib/content";
+import { safeHref } from "../../../lib/safe-href";
+import { searchFormTarget } from "../../../lib/header-search";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { wpText as text } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+import "../../../styles/nomia-header-actions.css";
+
+interface Props { block: WpParsedBlock }
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/header-search">;
+const label = text(attrs.label).trim() || "Pesquisar";
+const closeLabel = text(attrs.closeLabel).trim() || "Fechar pesquisa";
+const safeDestination = safeHref(attrs.resultsHref ?? "/pesquisa/");
+const destination = safeDestination ? menuItemHref(safeDestination, [
+  ...content().internalOrigins(Astro.site?.origin), Astro.url.origin,
+]) : "";
+const target = searchFormTarget(destination, Astro.url.origin);
+const icon = safeHref(attrs.iconUrl);
+const formId = `nomia-search-${crypto.randomUUID()}`;
+---
+
+{target && (
+  <nomia-header-search>
+    <button class="nomia-header-action" type="button" aria-label={label} aria-expanded="false" aria-controls={formId} data-search-open hidden>
+      {icon ? <img src={icon} alt="" width="24" height="24" /> : (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
+        </svg>
+      )}
+    </button>
+    <form id={formId} method="get" action={target.action} role="search" aria-label={label}>
+      <button class="nomia-header-action" type="button" aria-label={closeLabel} data-search-close hidden>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg>
+      </button>
+      {target.fields.map(([name, value]) => <input type="hidden" name={name} value={value} />)}
+      <label class="sr-only" for={`${formId}-input`}>{label}</label>
+      <input id={`${formId}-input`} name="q" type="search" placeholder={text(attrs.placeholder).trim() || "Palavra-chave…"} autocomplete="off" maxlength="200" required />
+      <button class="nomia-header-search-submit" type="submit">{text(attrs.submitLabel).trim() || "Pesquisar"}</button>
+    </form>
+  </nomia-header-search>
+)}
+
+<script>
+  import { defineHeaderSearch } from "../../../lib/header-search-client";
+  defineHeaderSearch();
+</script>

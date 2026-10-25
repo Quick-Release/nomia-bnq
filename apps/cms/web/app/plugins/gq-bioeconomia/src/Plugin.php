@@ -17,6 +17,7 @@ use GetQuick\Bioeconomia\Admin\Galleries;
 use GetQuick\Bioeconomia\Blocks\BlockPolicy;
 use GetQuick\Bioeconomia\Blocks\ContractBlocks;
 use GetQuick\Bioeconomia\Blocks\EditorAssets;
+use GetQuick\Bioeconomia\Blocks\HeaderActions;
 use GetQuick\Bioeconomia\Blocks\HeaderNavigation;
 use GetQuick\Bioeconomia\Content\PostTypes;
 use GetQuick\Bioeconomia\Content\ThematicColors;
@@ -61,6 +62,7 @@ final class Plugin {
 		( new ContractBlocks() )->register();
 		( new BlockPolicy() )->register();
 		( new HeaderNavigation() )->register();
+		( new HeaderActions() )->register();
 		( new BlocksJson() )->register();
 	}
 

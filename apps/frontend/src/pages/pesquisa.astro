@@ -1,0 +1,17 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { content } from "../lib/content";
+import { siteSearch, siteSearchQuery } from "../lib/site-search";
+import SearchResults from "../components/search/SearchResults.astro";
+
+const runtime = content();
+const language = runtime.routeLanguage(Astro.url.pathname);
+const query = { ...siteSearchQuery(Astro.url.searchParams), language: language.slug };
+const result = query.search ? await siteSearch(runtime, query) : null;
+if (result?.kind === "unavailable") Astro.response.status = 503;
+Astro.response.headers.set("Cache-Control", "no-store");
+---
+
+<Layout title="Pesquisa" language={language}>
+  <SearchResults query={query.search} result={result} url={Astro.url} />
+</Layout>

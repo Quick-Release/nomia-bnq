@@ -36,18 +36,24 @@ msgstr "Show icon"
 
 #: blocks/contact-details-card/index.js:208
 #: blocks/contact-details-card/index.js:313
+#: blocks/header-contact/index.js:37
 #: blocks/header-navigation/index.js:125
+#: blocks/header-search/index.js:58
 msgid "Carregar ícone"
 msgstr "Upload icon"
 
 #: blocks/contact-details-card/index.js:209
 #: blocks/contact-details-card/index.js:312
+#: blocks/header-contact/index.js:38
 #: blocks/header-navigation/index.js:126
+#: blocks/header-search/index.js:59
 msgid "Substituir ícone"
 msgstr "Replace icon"
 
 #: blocks/contact-details-card/index.js:221
+#: blocks/header-contact/index.js:48
 #: blocks/header-navigation/index.js:140
+#: blocks/header-search/index.js:69
 msgid "Remover ícone"
 msgstr "Remove icon"
 
@@ -1447,6 +1453,7 @@ msgid "Detalhes"
 msgstr "Details"
 
 #: blocks/contact-details-card/block.json
+#: blocks/header-contact/block.json
 msgctxt "block keyword"
 msgid "contacto"
 msgstr "contact"
@@ -1457,6 +1464,7 @@ msgid "morada"
 msgstr "address"
 
 #: blocks/contact-details-card/block.json
+#: blocks/header-contact/block.json
 msgctxt "block keyword"
 msgid "telefone"
 msgstr "phone"
@@ -1631,7 +1639,9 @@ msgctxt "block keyword"
 msgid "navigation"
 msgstr "navigation"
 
+#: blocks/header-contact/block.json
 #: blocks/header-navigation/block.json
+#: blocks/header-search/block.json
 msgctxt "block keyword"
 msgid "header"
 msgstr "header"
@@ -1641,7 +1651,9 @@ msgctxt "block title"
 msgid "nomia_navigation"
 msgstr "nomia_navigation"
 
+#: blocks/header-contact/block.json
 #: blocks/header-navigation/block.json
+#: blocks/header-search/block.json
 msgctxt "block keyword"
 msgid "nomia"
 msgstr "nomia"
@@ -3317,6 +3329,7 @@ msgid "Caixa de pesquisa e filtros por categoria, temática e setor para a lista
 msgstr "Search box and filters by category, theme and sector for the content listing on the same page."
 
 #: blocks/content-filters/block.json
+#: blocks/header-search/block.json
 msgctxt "block keyword"
 msgid "pesquisa"
 msgstr "search"
@@ -3327,6 +3340,7 @@ msgid "filtros"
 msgstr "filters"
 
 #: blocks/content-filters/block.json
+#: blocks/header-search/block.json
 msgctxt "block keyword"
 msgid "search"
 msgstr "search"
@@ -3376,3 +3390,82 @@ msgstr "library"
 msgctxt "block keyword"
 msgid "eventos"
 msgstr "events"
+
+#: blocks/header-contact/index.js:18
+msgid "Contacto do cabeçalho"
+msgstr "Header contact"
+
+#: blocks/header-contact/index.js:22
+#: blocks/header-search/index.js:22
+msgid "Texto acessível"
+msgstr "Accessible label"
+
+#: blocks/header-contact/index.js:29
+msgid "Ligação"
+msgstr "Link"
+
+#: blocks/header-contact/index.js:53
+#: blocks/header-search/index.js:74
+msgid "Sem ícone escolhido, usa o ícone predefinido."
+msgstr "Uses the default icon when no image is selected."
+
+#: blocks/header-contact/index.js:58
+msgid "Use /contactos/ para abrir a página de contactos, ou tel:+351 seguido do número para telefonar."
+msgstr "Use /contactos/ to open the contact page, or tel:+351 followed by the number to make a call."
+
+#: blocks/header-contact/index.js:85
+msgid "Contactos"
+msgstr "Contact"
+
+#: blocks/header-search/index.js:18
+msgid "Pesquisa do cabeçalho"
+msgstr "Header search"
+
+#: blocks/header-search/index.js:29
+msgid "Página de resultados"
+msgstr "Results page"
+
+#: blocks/header-search/index.js:36
+msgid "Texto do campo de pesquisa"
+msgstr "Search placeholder"
+
+#: blocks/header-search/index.js:43
+msgid "Texto do botão de pesquisa"
+msgstr "Search button text"
+
+#: blocks/header-search/index.js:50
+msgid "Texto do botão de fechar"
+msgstr "Close button label"
+
+#: blocks/header-search/index.js:79
+msgid "O formulário envia o termo no parâmetro q. Escolha uma página com pesquisa, como /pesquisa/, ou um arquivo com filtros de conteúdo."
+msgstr "The form sends the keyword in the q parameter. Choose a search page such as /pesquisa/, or an archive with content filters."
+
+#: blocks/header-search/index.js:104
+msgid "Pesquisar"
+msgstr "Search"
+
+#: blocks/header-contact/block.json
+msgctxt "block title"
+msgid "Contacto do cabeçalho"
+msgstr "Header contact"
+
+#: blocks/header-contact/block.json
+msgctxt "block description"
+msgid "Ícone de telefone com ligação à página de contactos ou a um número de telefone."
+msgstr "Phone icon linking to the contact page or a telephone number."
+
+#: blocks/header-contact/block.json
+msgctxt "block keyword"
+msgid "phone"
+msgstr "phone"
+
+#: blocks/header-search/block.json
+msgctxt "block title"
+msgid "Pesquisa do cabeçalho"
+msgstr "Header search"
+
+#: blocks/header-search/block.json
+msgctxt "block description"
+msgid "Ícone de pesquisa que abre um formulário para pesquisar numa página de resultados."
+msgstr "Search icon opening a form that submits to a results page."
