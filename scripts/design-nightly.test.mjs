@@ -541,3 +541,43 @@ test("batched ledger status reads retain unresolved records and fail closed on p
     globalThis.fetch = original;
   }
 });
+
+test("frontend graph guard expands pnpm's deduplicated Content subtree", async () => {
+  const { dependencyGraph } = await import("./design-nightly/model.mjs");
+  const stable = {
+    version: "0.3.2",
+    resolved: "registry",
+    path: "/stable",
+    dependencies: {
+      zod: { version: "3.25.76", resolved: "zod-registry", path: "/zod" },
+    },
+  };
+  const before = [
+    { name: "tooling", dependencies: { "@getquick/content": stable } },
+    {
+      name: "@nomia-bnq/frontend",
+      dependencies: {
+        "@getquick/content": {
+          version: stable.version,
+          resolved: stable.resolved,
+          path: stable.path,
+          deduped: true,
+          dedupedDependenciesCount: 1,
+        },
+      },
+    },
+  ];
+  const after = structuredClone(before);
+  after[1].dependencies["@getquick/content"] = {
+    ...stable,
+    version: "nightly",
+    resolved: "file:exact.tgz",
+    path: "/nightly",
+  };
+  assert.deepEqual(dependencyGraph(before), dependencyGraph(after));
+  after[1].dependencies["@getquick/content"] = {
+    ...after[1].dependencies["@getquick/content"],
+    dependencies: { zod: { version: "4", resolved: "changed", path: "/changed" } },
+  };
+  assert.notDeepEqual(dependencyGraph(before), dependencyGraph(after));
+});

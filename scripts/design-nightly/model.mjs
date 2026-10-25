@@ -194,19 +194,33 @@ export function activationDecision(
 // Compare installed dependency graphs, allowing only the frontend Content root
 // identity to change. Tooling's stable Content dependency remains untouched.
 export function dependencyGraph(projects) {
-  const walk = (node, contentRoot = false) => ({
-    ...(!contentRoot ? { version: node.version, resolved: node.resolved } : {}),
-    ...Object.fromEntries(
-      ["dependencies", "devDependencies", "optionalDependencies"].map((kind) => [
-        kind,
-        Object.fromEntries(
-          Object.entries(node[kind] ?? {})
-            .sort()
-            .map(([name, child]) => [name, walk(child)]),
-        ),
-      ]),
-    ),
-  });
+  const kinds = ["dependencies", "devDependencies", "optionalDependencies"];
+  const expanded = new Map();
+  const index = (node) => {
+    if (node.path && !node.deduped) expanded.set(node.path, node);
+    for (const kind of kinds) for (const child of Object.values(node[kind] ?? {})) index(child);
+  };
+  projects.forEach(index);
+  const walk = (input, contentRoot = false, ancestors = new Set()) => {
+    const node = input.deduped ? expanded.get(input.path) : input;
+    if (!node) throw new Error("Missing expanded pnpm dependency reference");
+    const cycle = node.path && ancestors.has(node.path);
+    const next = new Set(ancestors);
+    if (node.path) next.add(node.path);
+    return {
+      ...(!contentRoot ? { version: node.version, resolved: node.resolved } : {}),
+      ...Object.fromEntries(
+        kinds.map((kind) => [
+          kind,
+          Object.fromEntries(
+            Object.entries(cycle ? {} : (node[kind] ?? {}))
+              .sort()
+              .map(([name, child]) => [name, walk(child, false, next)]),
+          ),
+        ]),
+      ),
+    };
+  };
   return projects
     .map((project) => {
       const tree = walk(project);
