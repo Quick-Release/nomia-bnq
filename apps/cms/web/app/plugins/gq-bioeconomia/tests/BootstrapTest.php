@@ -115,3 +115,42 @@ test( 'changing an editor script changes its cache version even without a plugin
 		unset( $GLOBALS['gq_bioeconomia_test_state']['registered_scripts'][ $handle ] );
 	}
 } );
+
+
+test( 'colocated editor styles use content versions in the effective block registration', function () {
+	$blocks = $GLOBALS['gq_bioeconomia_test_state']['registered_blocks'];
+	$styles = $GLOBALS['gq_bioeconomia_test_state']['registered_styles'];
+
+	foreach ( $blocks as $block ) {
+		$path = ( $block['path'] ?? '' ) . '/editor.css';
+		if ( ! is_file( $path ) ) {
+			continue;
+		}
+		$handles = $block['args']['editorStyle'];
+		expect( $handles )->toHaveCount( 2 )->toContain( EditorAssets::HANDLE );
+		$style = $styles[ $handles[1] ];
+		expect( $style['src'] )->toEndWith( basename( dirname( $path ) ) . '/editor.css' )
+			->and( $style['ver'] )->toBe( hash_file( 'sha256', $path ) );
+	}
+} );
+
+test( 'changing editor CSS invalidates its cache version without a plugin version bump', function () {
+	$relative = 'assets/cache-style-test-' . uniqid() . '.css';
+	$path     = GQ_BIOECONOMIA_PLUGIN_DIR . '/' . $relative;
+	$handle   = 'gq-bioeconomia-cache-style-test';
+
+	try {
+		file_put_contents( $path, '.hero { margin: 0 !important; }' );
+		EditorAssets::registerStyle( $handle, $relative );
+		$before = $GLOBALS['gq_bioeconomia_test_state']['registered_styles'][ $handle ]['ver'];
+		file_put_contents( $path, '.hero { color: inherit; }' );
+		EditorAssets::registerStyle( $handle, $relative );
+		$after = $GLOBALS['gq_bioeconomia_test_state']['registered_styles'][ $handle ]['ver'];
+		expect( $after )->not->toBe( $before );
+		EditorAssets::registerStyle( $handle, $relative );
+		expect( $GLOBALS['gq_bioeconomia_test_state']['registered_styles'][ $handle ]['ver'] )->toBe( $after );
+	} finally {
+		unlink( $path );
+		unset( $GLOBALS['gq_bioeconomia_test_state']['registered_styles'][ $handle ] );
+	}
+} );
