@@ -3,8 +3,10 @@
 This is Nomia's opt-in consumer for the release design approved in
 [GQ Design](t3-thread://v1/21e1a3cf-296b-4f5e-8fc4-e7fe4e5b1a44).
 Nomia is the initial development Site: no traffic, breaking changes expected.
-The implementation is disabled pending code review and setup. There is no
-60-second deadline. No live deployment was performed during implementation.
+The reviewed config opt-in is prepared; delivery remains off while repository
+variable `DESIGN_NIGHTLY_ENABLED` is unset/false and producer dispatch is off.
+Do not merge this opt-in until credentials are verified and the controlled pilot
+plan is ready. There is no 60-second deadline. No live nightly pilot has run.
 
 ## Released and installed baseline
 
@@ -104,14 +106,14 @@ A single Site provides no minimum testing window for intermediate versions.
    configure `NIGHTLY_DEPLOY_REPOSITORY=Quick-Release/nomia-bnq` and
    `NIGHTLY_DISPATCH_TOKEN` with destination contents write. Producer setup is
    owned by its separate session.
-4. Confirm this deployment does not overlap the existing Cloudflare stable Site
-   release pipeline or any operator-triggered Ploi release. Actions concurrency
-   cannot serialize external deploy callers. A shared cross-pipeline activation
-   lock would belong to `Quick-Release/gq-site` (`/data/code/getquick/gq-site`);
-   this consumer does not change that blueprint or invent such an API.
+4. Apply the explicit operating reservation below: no Site stable-tag releases
+   or out-of-band manual Ploi deployments while nightly delivery is enabled.
+   Actions concurrency serializes the nightly path through `gq frontend refresh`;
+   the reservation excludes other callers for that entire interval. No shared
+   server wrapper or new deployment API is needed for this accepted mode.
 5. Confirm the Ploi target PHP version satisfies the artifact’s runtime Composer
    requirement. The real producer proof requires PHP `>=8.4.1`; preparation uses
-   PHP 8.4, but the live target’s runtime version remains unverified. Do not
+   PHP 8.4. A bounded read-only SSH probe confirmed live PHP `8.4.27`; do not
    override platform requirements to force installation.
 6. Before enabling the cross-repository release flow, complete the separate
    registry-owned release-channel gate and stable-discovery changes. The staged
@@ -122,10 +124,65 @@ A single Site provides no minimum testing window for intermediate versions.
 7. Pilot manual selection, newest-ready bursts, interrupted activation recovery,
    refresh and rollback before relying on dispatches. Record observed latency.
 
-Read-only setup inspection found no repository Actions secrets or variables and
-no `nomia-design-nightly` environment (only `copilot`). Environment secrets have
-not been provisioned or copied from existing Cloudflare CI. Actual credentials,
-remote Composer installation and live activation remain unverified.
+Setup audit (2026-10-25): environment `nomia-design-nightly` exists with a
+main-only deployment branch policy. Five scoped secrets were copied from the
+existing protected Nomia staging store without values in argv, files or logs:
+`COMPOSER_AUTH`, `PLOI_API_TOKEN`, `RELEASES_R2_ACCESS_KEY_ID`,
+`RELEASES_R2_SECRET_ACCESS_KEY`, and `FRONTEND_REFRESH_TOKEN`.
+`DESIGN_NIGHTLY_READ_TOKEN` is still absent in environment metadata; the user’s
+private browser wizard provisions it and the producer’s separate dispatch token.
+No local user/admin credential is reused as a CI secret. Secret existence is not
+a successful permissions or installation test; the pilot must verify actual
+asset reads, remote Composer installation, refresh and recovery.
+
+The existing local SSH identity works without new credential/known-host writes.
+The target reports Site release `0.11.0`, commit
+`19f1d4632ae66078bbdccfbf0b4654547f42dcc8`, and PHP `8.4.27`; the CMS responds
+with `X-Robots-Tag: noindex, nofollow`. Its no-traffic development eligibility is
+the user’s explicit designation. Ploi site reads work; one-off script execution
+returns HTTP 403 for the existing token, so read-only verification used SSH.
+The repository opt-in variable remains unset/false and producer dispatch stays
+off. The first available pilot candidate is
+`v0.9.2-nightly.20261025.1.1`, source
+`8cb64b8b1fda138810d8456237a26579b4122ee1`; availability is not deployment or
+manual-test evidence.
+
+## Operating reservation
+
+The user explicitly reserved Nomia: **“Reserve Nomia for nightlies; no stable-tag
+or manual Ploi deployments while enabled.”** This operational exclusion is the
+accepted alternative to a shared lock across deployment systems. It applies
+from the start of nightly activation through completion of the supported
+`gq frontend refresh`, including retries/reconciliation until resolved.
+
+While nightly delivery is enabled:
+
+- Do not create or push Site `v*` release tags: those trigger the managed
+  Cloudflare stable deployment pipeline. Ordinary branch/main checks continue.
+- Do not trigger Ploi deployments from its UI/API, local `gq ploi release`,
+  `pnpm ploi:release`, or an independent recovery bundle. All operators and
+  sessions must honor the reservation.
+- Select or roll back a nightly through **Nomia Design nightly** manual workflow
+  inputs when possible: it shares the non-cancelling nightly concurrency group.
+
+Before any exceptional stable-tag, manual Ploi or out-of-band bundle recovery:
+
+1. Keep/turn producer dispatch off first and set `DESIGN_NIGHTLY_ENABLED=false`
+   in Nomia. These stop admission of new work; they do not stop an active deploy.
+2. Drain queued work and allow active nightly preparation, Ploi activation and
+   frontend refresh to finish. Do not cancel an in-flight deployment. Reconcile
+   all unresolved GitHub deployment records with Ploi and the served `RELEASE`;
+   no remote deploy or refresh may still be running.
+3. Run the exceptional operation alone, using `gq frontend refresh` where needed,
+   and verify its result before ending the reservation exception.
+4. Re-establish the reservation and verify the Site is still eligible. Resume
+   consumer admission only after the pilot/recovery evidence passes; enable
+   producer dispatch last.
+
+Do not proceed if exclusion cannot be maintained: leave delivery paused. The
+installed blueprint has no deployment-only CI-disable switch; disabling all CI,
+editing managed paths or substituting another refresh mechanism is not part of
+this opt-in.
 
 ## Selection, rollback and recovery
 
