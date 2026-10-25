@@ -113,3 +113,25 @@ test("completion transport rejects HTTP failures without leaking response bodies
     (error) => error.retryable && error.message === "GitHub completion HTTP 503",
   );
 });
+
+test("malformed success responses never leak response text through parse errors", async (t) => {
+  t.mock.method(https, "request", (_url, _options, onResponse) => {
+    const request = new EventEmitter();
+    request.end = () => {
+      const response = new EventEmitter();
+      response.statusCode = 200;
+      response.setEncoding = () => {};
+      onResponse(response);
+      response.emit("data", "private response content");
+      response.emit("end");
+    };
+    return request;
+  });
+  for (const method of ["POST", "GET"]) {
+    await assert.rejects(
+      statusRequest(method, "unused", {}),
+      (error) =>
+        error.message === "Invalid GitHub completion JSON response" && error.cause === undefined,
+    );
+  }
+});

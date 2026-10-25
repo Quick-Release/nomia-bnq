@@ -40,8 +40,8 @@ export function statusRequest(method, path, body) {
           }
           try {
             resolve(JSON.parse(text));
-          } catch (error) {
-            reject(error);
+          } catch {
+            reject(new Error("Invalid GitHub completion JSON response"));
           }
         });
       },
