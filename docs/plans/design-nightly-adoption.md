@@ -210,6 +210,15 @@ an automatic retry. The original exact R2 release archive is retained by the
 existing release machinery. Actions artifacts expire after 90 days; archive a
 needed bundle before expiry. No snapshot commit/tag is pushed to the Site repo.
 
+Completion uses a fresh HTTPS connection after the synchronous deployment and
+refresh commands. Only the final success-status operation has bounded transient
+transport retries (three POST attempts, each request limited to 15 seconds).
+After an uncertain POST, it first reads that deployment’s latest status: matching
+success completes reconciliation; only this run’s existing `in_progress` status
+allows another identical success POST. Other states, denied access or exhausted
+transport attempts fail closed. Deployment and frontend refresh are never retried
+by this completion handler.
+
 A failed/timed-out/cancelled activation deliberately leaves its GitHub deployment
 `in_progress`. Inspect Ploi's status/log and the served `RELEASE` commit first.
 Do not clear the fence while the remote process could still be running. After
