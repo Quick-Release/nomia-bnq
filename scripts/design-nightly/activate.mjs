@@ -1,6 +1,6 @@
 import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
-import { activationDecision } from "./model.mjs";
+import { activationDecision, compareNightlies } from "./model.mjs";
 import { api, latest } from "./github.mjs";
 
 const site = process.env.GITHUB_REPOSITORY;
@@ -9,7 +9,6 @@ const recordPath = "nightly-result/deployment.json";
 const record = JSON.parse(readFileSync(recordPath, "utf8"));
 const m = record.manifest;
 const save = () => writeFileSync(recordPath, `${JSON.stringify(record, null, 2)}\n`);
-const compare = (a, b) => a.sequence - b.sequence || a.attempt - b.attempt;
 if (site !== "Quick-Release/nomia-bnq" || !/^[a-f0-9]{40}$/.test(record.snapshotSha))
   throw new Error("Invalid Nomia snapshot");
 // One workflow concurrency group covers preparation, activation, refresh and
@@ -34,7 +33,7 @@ if (activationDecision(m, history, record.selectedManually) === "superseded") {
   save();
   process.exit(0);
 }
-if (!record.selectedManually && compare(await latest(), m) > 0) {
+if (!record.selectedManually && compareNightlies(await latest(), m) > 0) {
   record.state = "superseded";
   save();
   process.exit(0);

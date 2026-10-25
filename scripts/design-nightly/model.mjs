@@ -35,14 +35,17 @@ export function validateManifest(m, tag, sourceSha) {
     !Array.isArray(m.packages) ||
     m.packages.length !== 2 ||
     new Set(m.packages.map((p) => p.name)).size !== 2 ||
+    new Set(m.packages.map((p) => p.asset)).size !== 2 ||
     m.packages.some(
       (p) => !["@quick-release/design-contract", "@quick-release/design-renderer"].includes(p.name),
     ) ||
     m.packages.some(
       (p) =>
         p.version !== m.version ||
+        !/^[A-Za-z0-9][A-Za-z0-9._-]*\.tgz$/.test(p.asset ?? "") ||
         !/^[a-f0-9]{64}$/.test(p.sha256 ?? "") ||
-        typeof p.integrity !== "string",
+        typeof p.integrity !== "string" ||
+        !p.integrity,
     )
   )
     throw new Error("Incomplete lockstep release");
@@ -51,8 +54,11 @@ export function validateManifest(m, tag, sourceSha) {
 export function hash(bytes) {
   return createHash("sha256").update(bytes).digest("hex");
 }
+export function compareNightlies(a, b) {
+  return a.sequence - b.sequence || a.attempt - b.attempt;
+}
 export function newest(manifests) {
-  return manifests.sort((a, b) => b.sequence - a.sequence || b.attempt - a.attempt)[0];
+  return manifests.sort((a, b) => compareNightlies(b, a))[0];
 }
 export function snapshotComposer(original, m, zipSha1) {
   const result = structuredClone(original);
@@ -111,17 +117,20 @@ export function assertUnchangedDependencies(before, after) {
 }
 
 export function activationDecision(candidate, history, manual = false) {
-  const compare = (a, b) => a.sequence - b.sequence || a.attempt - b.attempt;
   for (const { id, state } of history) {
     if (!state || ["queued", "pending", "in_progress"].includes(state))
       throw new Error(`Unresolved deployment ${id}; reconcile Ploi before another activation`);
   }
-  for (const { state, manifest } of history) {
+  // History arrives newest first from the deployment ledger. A manual rollback
+  // changes the effective successful deployment, even if an older record still
+  // has a success status. Historical inactive successes do not pin selection.
+  const effective = history.find(({ state }) => state === "success");
+  for (const { manifest } of history) {
     if (
       !manual &&
       manifest &&
-      (compare(manifest, candidate) > 0 ||
-        (compare(manifest, candidate) === 0 && ["success", "inactive"].includes(state)))
+      (compareNightlies(manifest, candidate) > 0 ||
+        (compareNightlies(manifest, candidate) === 0 && manifest === effective?.manifest))
     )
       return "superseded";
   }

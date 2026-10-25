@@ -35,7 +35,15 @@ export async function manifest(release) {
     object = (await api(`${producer}/git/tags/${object.sha}`)).object;
   if (object.type !== "commit" || release.draft || !release.prerelease)
     throw new Error("Expected published nightly tag at commit");
-  return validateManifest(m, release.tag_name, object.sha);
+  validateManifest(m, release.tag_name, object.sha);
+  const requiredAssets = [m.plugin.asset, ...m.packages.map((p) => p.asset)];
+  if (
+    requiredAssets.some(
+      (name) => !release.assets.some((asset) => asset.name === name && asset.state === "uploaded"),
+    )
+  )
+    throw new Error("Incomplete lockstep release assets");
+  return m;
 }
 export async function latest() {
   const ready = [];

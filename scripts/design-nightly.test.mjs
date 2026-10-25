@@ -35,6 +35,7 @@ const fixture = () => ({
   packages: ["@quick-release/design-contract", "@quick-release/design-renderer"].map((name) => ({
     name,
     version: "0.9.2-nightly.20261025.42.1",
+    asset: `${name.split("/")[1]}.tgz`,
     sha256: "c".repeat(64),
     integrity: "sha512-abc",
   })),
@@ -62,6 +63,9 @@ test("binds staged metadata to immutable tag source and complete release", () =>
   const wrong = structuredClone(m);
   wrong.plugin.composer.version = wrong.version;
   assert.throws(() => validateManifest(wrong, wrong.tag, wrong.sourceSha), /metadata/);
+  const undeclaredAsset = structuredClone(m);
+  delete undeclaredAsset.packages[0].asset;
+  assert.throws(() => validateManifest(undeclaredAsset, m.tag, m.sourceSha), /lockstep/);
   const incomplete = structuredClone(m);
   incomplete.packages.pop();
   assert.throws(
@@ -187,4 +191,60 @@ test("serial activation fences ambiguity, deduplicates and allows explicit rollb
     () => activationDecision(candidate, [{ id: 2, state: "in_progress" }], true),
     /reconcile Ploi/,
   );
+});
+
+test("automatic selection resumes latest after manual rollback", () => {
+  const candidate = fixture();
+  const rolledBack = { ...candidate, sequence: 41 };
+  assert.equal(
+    activationDecision(candidate, [
+      { id: 2, state: "success", manifest: rolledBack },
+      { id: 1, state: "inactive", manifest: candidate },
+    ]),
+    "activate",
+  );
+  assert.equal(
+    activationDecision(candidate, [
+      { id: 2, state: "success", manifest: rolledBack },
+      { id: 1, state: "success", manifest: candidate },
+    ]),
+    "activate",
+  );
+});
+
+test("GitHub manifest acceptance requires all uploaded lockstep assets", async () => {
+  const { manifest } = await import("./design-nightly/github.mjs");
+  const m = fixture();
+  const release = {
+    tag_name: m.tag,
+    draft: false,
+    prerelease: true,
+    assets: [
+      { name: "design-release.json", state: "uploaded", url: "https://example.test/manifest" },
+      ...[m.plugin.asset, ...m.packages.map((p) => p.asset)].map((name) => ({
+        name,
+        state: "uploaded",
+      })),
+    ],
+  };
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (url) =>
+    new Response(
+      JSON.stringify(
+        String(url).includes("/git/ref/") ? { object: { type: "commit", sha: m.sourceSha } } : m,
+      ),
+    );
+  try {
+    assert.deepEqual(await manifest(release), m);
+    for (const name of [m.plugin.asset, ...m.packages.map((p) => p.asset)]) {
+      const missing = structuredClone(release);
+      missing.assets = missing.assets.filter((a) => a.name !== name);
+      await assert.rejects(manifest(missing), /Incomplete lockstep release assets/);
+    }
+    const pending = structuredClone(release);
+    pending.assets.at(-1).state = "new";
+    await assert.rejects(manifest(pending), /Incomplete lockstep release assets/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
 });
