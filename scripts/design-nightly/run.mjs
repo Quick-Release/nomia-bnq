@@ -1,4 +1,4 @@
-// Nomia development CMS only. No automated suites run on this delivery path.
+// Nomia development CMS and frontend. No automated suites run on this path.
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
@@ -22,6 +22,9 @@ const required = [
   "RELEASES_R2_ACCESS_KEY_ID",
   "RELEASES_R2_SECRET_ACCESS_KEY",
   "FRONTEND_REFRESH_TOKEN",
+  "CLOUDFLARE_API_TOKEN",
+  "PUBLICATION_EVENT_SECRET",
+  "CONSENT_READ_TOKEN",
 ];
 const missing = required.filter((name) => !process.env[name]);
 if (missing.length) throw new Error(`Missing deployment credentials: ${missing.join(", ")}`);
@@ -32,13 +35,16 @@ if (
   config.siteState !== "development-no-traffic" ||
   ops.offboarded ||
   config.adminDomain !== ops.domains.admin ||
+  config.frontendDomain !== ops.domains.frontend ||
   config.ploiSiteId !== ops.ploi.siteId
 )
   throw new Error("Nightly development target is not enabled or does not match");
 const manual = process.env.GITHUB_EVENT_NAME === "workflow_dispatch";
 const event = json(process.env.GITHUB_EVENT_PATH);
+const sitePush = process.env.GITHUB_EVENT_NAME === "push" && event.ref === "refs/heads/main";
 if (
   !manual &&
+  !sitePush &&
   (event.action !== "gq_design_nightly" ||
     event.client_payload?.repository !== producer ||
     event.client_payload?.manifestAsset !== "design-release.json")
@@ -88,6 +94,7 @@ const siteSha = git("rev-parse", "HEAD");
 const record = {
   schemaVersion: 1,
   deploymentKind: "nomia-design-nightly",
+  frontendDeployment: true,
   siteSha,
   manifest: m,
   composerLockSha256: hash(readFileSync(`${cms}/composer.lock`)),

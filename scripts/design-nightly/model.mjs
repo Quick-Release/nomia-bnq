@@ -116,7 +116,13 @@ export function assertUnchangedDependencies(before, after) {
     );
 }
 
-export function activationDecision(candidate, history, manual = false, currentActionsJob) {
+export function activationDecision(
+  candidate,
+  history,
+  manual = false,
+  currentActionsJob,
+  snapshot,
+) {
   // The Actions environment creates its own deployment before this script runs.
   // Ignore only that authenticated job's empty platform record. Our durable
   // records always carry ownership/manifest payloads and must retain the fence.
@@ -148,7 +154,11 @@ export function activationDecision(candidate, history, manual = false, currentAc
       !manual &&
       manifest &&
       (compareNightlies(manifest, candidate) > 0 ||
-        (compareNightlies(manifest, candidate) === 0 && manifest === effective?.manifest))
+        (compareNightlies(manifest, candidate) === 0 &&
+          manifest === effective?.manifest &&
+          (!snapshot ||
+            (effective.payload?.siteSha === snapshot.siteSha &&
+              effective.payload?.frontendDeployment === true))))
     )
       return "superseded";
   }
