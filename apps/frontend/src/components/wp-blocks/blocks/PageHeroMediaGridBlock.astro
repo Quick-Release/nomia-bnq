@@ -43,7 +43,7 @@ const actions: [PageHeroMediaGridAction, PageHeroMediaGridAction] = [
 	action(attrs.secondTitle, attrs.secondText, attrs.secondHref),
 ];
 
-// The Site's thematic identity overrides legacy card colors stored in the CMS.
+// Thematic identity supplies panel backgrounds; title and text colors remain editorial.
 const internalOrigins = [...content().internalOrigins(Astro.site?.origin), Astro.url.origin];
 const thematicStyles: [string, string] = [
   thematicAreaStyle(actions[0].href, internalOrigins),
@@ -71,6 +71,10 @@ const canRender = Boolean(backgroundImageSrc || actions.some((item) => item.titl
 			backgroundImageAlt={backgroundImageAlt}
 			heading={heading}
 			actions={actions}
+			firstTitleColor={optionalText(attrs.firstTitleColor)}
+			firstTextColor={optionalText(attrs.firstTextColor)}
+			secondTitleColor={optionalText(attrs.secondTitleColor)}
+			secondTextColor={optionalText(attrs.secondTextColor)}
 			videoSrc={videoSrc}
 			videoPosterSrc={videoPosterSrc}
 			videoTitle={videoTitle}

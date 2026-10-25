@@ -127,8 +127,8 @@ function buildTextStyle(textColor: string): string {
 					const textColor = isFirst ? firstTextColor : secondTextColor;
 					const borderRadius = isFirst ? firstBorderRadius : secondBorderRadius;
 					const actionStyle = `${buildActionStyle(baseColor, hoverColor, borderRadius)} ${thematicStyles?.[index] ?? ""}`;
-					const titleStyle = thematicStyles ? "color: var(--nomia-area-foreground)" : buildTitleStyle(titleColor);
-					const textStyle = thematicStyles ? "color: var(--nomia-area-foreground)" : buildTextStyle(textColor);
+					const titleStyle = buildTitleStyle(titleColor);
+					const textStyle = buildTextStyle(textColor);
 
 					return action.href ? (
 						<a
