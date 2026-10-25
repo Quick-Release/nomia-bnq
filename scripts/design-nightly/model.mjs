@@ -116,9 +116,27 @@ export function assertUnchangedDependencies(before, after) {
     );
 }
 
-export function activationDecision(candidate, history, manual = false) {
+export function activationDecision(candidate, history, manual = false, currentActionsJob) {
+  // The Actions environment creates its own deployment before this script runs.
+  // Ignore only that authenticated job's empty platform record. Our durable
+  // records always carry ownership/manifest payloads and must retain the fence.
+  history = history.filter(
+    (entry) =>
+      !(
+        currentActionsJob &&
+        entry.payload &&
+        typeof entry.payload === "object" &&
+        !Array.isArray(entry.payload) &&
+        Object.keys(entry.payload).length === 0 &&
+        entry.task === "deploy" &&
+        entry.environment === currentActionsJob.environment &&
+        entry.ref === currentActionsJob.refName &&
+        entry.sha === currentActionsJob.headSha &&
+        entry.logUrl === currentActionsJob.jobUrl
+      ),
+  );
   for (const { id, state } of history) {
-    if (!state || ["queued", "pending", "in_progress"].includes(state))
+    if (!["success", "inactive", "failure", "error"].includes(state))
       throw new Error(`Unresolved deployment ${id}; reconcile Ploi before another activation`);
   }
   // History arrives newest first from the deployment ledger. A manual rollback

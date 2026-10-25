@@ -248,3 +248,94 @@ test("GitHub manifest acceptance requires all uploaded lockstep assets", async (
     globalThis.fetch = originalFetch;
   }
 });
+
+test("current authenticated Actions job does not fence itself; every other unresolved record does", () => {
+  const candidate = fixture();
+  const currentJob = {
+    jobUrl: "https://github.com/Quick-Release/nomia-bnq/actions/runs/40210286283/job/121219859253",
+    headSha: "d".repeat(40),
+    refName: "main",
+    environment: "nomia-design-nightly",
+  };
+  const platform = {
+    id: 7315646026,
+    state: "in_progress",
+    payload: {},
+    ref: "main",
+    sha: currentJob.headSha,
+    environment: currentJob.environment,
+    task: "deploy",
+    logUrl: currentJob.jobUrl,
+  };
+  assert.equal(activationDecision(candidate, [platform], false, currentJob), "activate");
+  for (const changed of [
+    { logUrl: currentJob.jobUrl.replace("121219859253", "121219859254") },
+    { logUrl: currentJob.jobUrl.replace("40210286283", "40210286282") },
+    { sha: "e".repeat(40) },
+    { ref: "feature/other" },
+    { environment: "other" },
+    { payload: { deploymentKind: "nomia-design-nightly" } },
+    { payload: { manifest: candidate }, manifest: candidate },
+  ])
+    assert.throws(
+      () => activationDecision(candidate, [{ ...platform, ...changed }], false, currentJob),
+      /Unresolved deployment/,
+    );
+  assert.throws(() => activationDecision(candidate, [platform]), /Unresolved deployment/);
+  assert.throws(
+    () =>
+      activationDecision(
+        candidate,
+        [{ ...platform, state: "waiting", logUrl: "https://example.test/other" }],
+        false,
+        currentJob,
+      ),
+    /Unresolved deployment/,
+  );
+});
+
+test("current job identity comes from authenticated Actions API and exact run attempt", async () => {
+  const { currentActionsJob } = await import("./design-nightly/github.mjs");
+  const input = {
+    site: "Quick-Release/nomia-bnq",
+    runId: "40210286283",
+    attempt: "2",
+    jobName: "adopt",
+    headSha: "d".repeat(40),
+    refName: "main",
+    runnerName: "GitHub Actions 1",
+  };
+  const job = {
+    id: 123,
+    name: input.jobName,
+    run_id: Number(input.runId),
+    head_sha: input.headSha,
+    runner_name: input.runnerName,
+    status: "in_progress",
+    html_url: `https://github.com/${input.site}/actions/runs/${input.runId}/job/123`,
+  };
+  const originalFetch = globalThis.fetch;
+  let jobs = [job];
+  globalThis.fetch = async (url) => {
+    assert.match(String(url), /\/runs\/40210286283\/attempts\/2\/jobs\?per_page=100$/);
+    return new Response(JSON.stringify({ total_count: jobs.length, jobs }));
+  };
+  try {
+    assert.equal((await currentActionsJob(input)).jobUrl, job.html_url);
+    for (const change of [
+      { status: "completed" },
+      { head_sha: "e".repeat(40) },
+      { runner_name: "other" },
+      { run_id: 1 },
+    ]) {
+      jobs = [{ ...job, ...change }];
+      await assert.rejects(currentActionsJob(input), /not uniquely authenticated/);
+    }
+    jobs = [job, job];
+    await assert.rejects(currentActionsJob(input), /not uniquely authenticated/);
+    jobs = [{ ...job, html_url: "https://example.test/spoof" }];
+    await assert.rejects(currentActionsJob(input), /Unexpected current Actions job URL/);
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+});
