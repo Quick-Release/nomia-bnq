@@ -6,6 +6,24 @@ Nomia is the initial development Site: no traffic, breaking changes expected.
 The implementation is disabled pending code review and setup. There is no
 60-second deadline. No live deployment was performed during implementation.
 
+## Released and installed baseline
+
+GQ Design `v0.9.1` is already a published stable release (2026-10-25), not
+an adopted nightly. At the audit, Nomia `origin/main` is
+`19f1d4632ae66078bbdccfbf0b4654547f42dcc8`; its requirement remains `^0.9.0`
+and its exact Composer lock still selects stable `0.9.0`. This PR preserves
+both checked-in Composer files. Neither a published release nor a local
+producer proof establishes what is deployed or manually tested on Nomia.
+
+The producer root version `0.9.1` yields the next nightly base `0.9.2`;
+there is no prerequisite to publish or deploy a `0.9.1` nightly. Selecting
+latest stable `0.9.1` for Nomia would be a separate explicit stable adoption,
+with verified registry discovery and its reviewed lock update. The nightly
+consumer instead starts from the selected Site commit's existing lock, replaces
+only Design with the chosen immutable nightly, and rejects changes to other
+locked dependencies. Manual selection of an older artifact is an explicit
+rollback; automatic delivery never rewrites the checked-in stable baseline.
+
 ## Delivery contract
 
 GQ Design sends `repository_dispatch` type `gq_design_nightly` with

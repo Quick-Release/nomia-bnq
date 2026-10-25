@@ -131,8 +131,8 @@ test("Composer installs the bundled staged ZIP from a portable locked snapshot",
         stdio: "pipe",
       });
     const baseline = structuredClone(config);
-    baseline.require[m.plugin.name] = "0.9.1";
-    baseline.repositories[0].package.version = "0.9.1";
+    baseline.require[m.plugin.name] = "0.9.0";
+    baseline.repositories[0].package.version = "0.9.0";
     delete baseline.repositories[0].package.extra;
     writeFileSync(join(root, "composer.json"), JSON.stringify(baseline));
     composer("update", "--no-install");
