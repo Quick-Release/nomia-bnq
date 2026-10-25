@@ -1,0 +1,78 @@
+name: Nomia Design nightly
+on:
+  repository_dispatch:
+    types: [gq_design_nightly]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Exact producer nightly tag (empty selects newest ready)
+        type: string
+      site_ref:
+        description: Exact Nomia commit for manual selection (empty uses main)
+        type: string
+permissions:
+  contents: read
+  deployments: write
+concurrency:
+  group: nomia-cms-deployment
+  cancel-in-progress: false
+jobs:
+  adopt:
+    if: vars.DESIGN_NIGHTLY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    environment: nomia-design-nightly
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ secrets.DESIGN_NIGHTLY_READ_TOKEN }}
+      COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+      PLOI_API_TOKEN: ${{ secrets.PLOI_API_TOKEN }}
+      RELEASES_R2_ACCESS_KEY_ID: ${{ secrets.RELEASES_R2_ACCESS_KEY_ID }}
+      RELEASES_R2_SECRET_ACCESS_KEY: ${{ secrets.RELEASES_R2_SECRET_ACCESS_KEY }}
+      FRONTEND_REFRESH_TOKEN: ${{ secrets.FRONTEND_REFRESH_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Select recorded Site source
+        env:
+          SITE_REF: ${{ inputs.site_ref }}
+        run: |
+          if [ -n "$SITE_REF" ]; then
+            [[ "$SITE_REF" =~ ^[a-f0-9]{40}$ ]] || exit 1
+            git merge-base --is-ancestor "$SITE_REF" origin/main
+            git checkout --detach "$SITE_REF"
+          fi
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          tools: composer:v2
+          coverage: none
+      - name: Install deployment tooling
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Prepare exact snapshot
+        id: prepare
+        run: node scripts/design-nightly/run.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: design-nightly-snapshot-${{ github.run_id }}-${{ github.run_attempt }}
+          path: nightly-result/
+          retention-days: 90
+      - name: Activate and refresh
+        env:
+          # Deployment ledger uses the destination's short-lived token.
+          # Reader token remains separate for private producer assets.
+          SITE_GH_TOKEN: ${{ github.token }}
+        run: node scripts/design-nightly/activate.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: design-nightly-result-${{ github.run_id }}-${{ github.run_attempt }}
+          path: nightly-result/deployment.json
+          if-no-files-found: ignore
+          retention-days: 90
