@@ -1,7 +1,7 @@
 import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 import { activationDecision, compareNightlies, producers } from "./model.mjs";
-import { api, latest, currentActionsJob, deploymentStatuses } from "./github.mjs";
+import { api, latest, currentActionsJob, deploymentHistory } from "./github.mjs";
 import { completeDeployment } from "./completion.mjs";
 
 const site = process.env.GITHUB_REPOSITORY;
@@ -23,27 +23,7 @@ const currentJob = await currentActionsJob({
   refName: process.env.GITHUB_REF_NAME,
   runnerName: process.env.RUNNER_NAME,
 });
-const history = [];
-for (let page = 1; ; page++) {
-  const deployments = await api(
-    `${site}/deployments?environment=${environment}&per_page=100&page=${page}`,
-  );
-  const statuses = await deploymentStatuses(deployments);
-  for (const [index, deployment] of deployments.entries()) {
-    history.push({
-      id: deployment.id,
-      state: statuses[index]?.state,
-      manifest: deployment.payload?.manifest,
-      payload: deployment.payload,
-      ref: deployment.ref,
-      sha: deployment.sha,
-      environment: deployment.environment,
-      task: deployment.task,
-      logUrl: statuses[index]?.log_url,
-    });
-  }
-  if (deployments.length < 100) break;
-}
+const history = await deploymentHistory(site);
 if (activationDecision(m, history, record.selectedManually, currentJob, record) === "superseded") {
   record.state = "superseded";
   save();

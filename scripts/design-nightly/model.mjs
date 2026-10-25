@@ -162,7 +162,23 @@ export function activationDecision(
   // History arrives newest first from the deployment ledger. A manual rollback
   // changes the effective successful deployment, even if an older record still
   // has a success status. Historical inactive successes do not pin selection.
-  const effective = history.find(({ state }) => state === "success");
+  const completedPlatform = (entry) =>
+    entry.githubApp === "github-actions" &&
+    entry.task === "deploy" &&
+    entry.environment === "nomia-design-nightly" &&
+    entry.ref === "main" &&
+    /^[a-f0-9]{40}$/.test(entry.sha ?? "") &&
+    /^https:\/\/github\.com\/Quick-Release\/nomia-bnq\/actions\/runs\/\d+\/job\/\d+$/.test(
+      entry.logUrl ?? "",
+    ) &&
+    entry.payload &&
+    typeof entry.payload === "object" &&
+    !Array.isArray(entry.payload) &&
+    Object.keys(entry.payload).length === 0;
+  // Completed no-op Actions environment records are bookkeeping, not deployed
+  // snapshots. Unknown successful callers still prevent deduplication. The
+  // unresolved fence above applies to every historical platform record.
+  const effective = history.find((entry) => entry.state === "success" && !completedPlatform(entry));
   const candidates = snapshot?.manifests ?? { design: candidate };
   const manifestsOf = (entry) =>
     entry?.payload?.manifests ?? (entry?.manifest ? { design: entry.manifest } : {});

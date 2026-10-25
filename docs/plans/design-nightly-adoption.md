@@ -76,7 +76,11 @@ the newest complete releases. Supply both exact tags and `site_ref` from a prior
 record for rollback. Existing snapshot bundle retention and reconciliation rules
 below apply to both halves. Code rollback does not reverse migrations.
 
-The five-minute schedule polls complete releases under the same lock. Producer
+The five-minute schedule polls complete releases under the same lock. A read-only
+admission check compares complete manifests and Site SHA against the shared
+ledger before installing tooling or downloading runtime artifacts. Unchanged
+automatic runs skip snapshot preparation, bundling, artifact uploads and deploy;
+all unresolved deployment fences still apply. Activation repeats the checks. Producer
 dispatch remains optional and requires a separately provisioned destination write
 token; the operator's GitHub OAuth token must never be installed as a CI secret.
 The existing protected producer reader is reused for public Content release reads;

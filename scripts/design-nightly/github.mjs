@@ -131,3 +131,28 @@ export async function deploymentStatuses(deployments) {
     return { state: node.latestStatus?.state?.toLowerCase(), log_url: node.latestStatus?.logUrl };
   });
 }
+
+export async function deploymentHistory(site) {
+  const history = [];
+  for (let page = 1; ; page++) {
+    const deployments = await api(
+      `${site}/deployments?environment=nomia-design-nightly&per_page=100&page=${page}`,
+    );
+    const statuses = await deploymentStatuses(deployments);
+    for (const [index, deployment] of deployments.entries())
+      history.push({
+        githubApp: deployment.performed_via_github_app?.slug,
+        id: deployment.id,
+        state: statuses[index]?.state,
+        manifest: deployment.payload?.manifest,
+        payload: deployment.payload,
+        ref: deployment.ref,
+        sha: deployment.sha,
+        environment: deployment.environment,
+        task: deployment.task,
+        logUrl: statuses[index]?.log_url,
+      });
+    if (deployments.length < 100) break;
+  }
+  return history;
+}

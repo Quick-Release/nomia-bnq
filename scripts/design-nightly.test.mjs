@@ -581,3 +581,129 @@ test("frontend graph guard expands pnpm's deduplicated Content subtree", async (
   };
   assert.notDeepEqual(dependencyGraph(before), dependencyGraph(after));
 });
+
+test("automatic admission skips unchanged snapshots and preserves the unresolved fence", async () => {
+  const { producers } = await import("./design-nightly/model.mjs");
+  const root = mkdtempSync(join(tmpdir(), "nomia-admission-"));
+  const output = join(root, "output");
+  const sha = execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
+  const manifests = { design: fixture(), content: contentFixture() };
+  const values = {
+    GITHUB_REPOSITORY: "Quick-Release/nomia-bnq",
+    GITHUB_RUN_ID: "123",
+    GITHUB_RUN_ATTEMPT: "1",
+    GITHUB_JOB: "adopt",
+    GITHUB_SHA: sha,
+    GITHUB_REF_NAME: "main",
+    RUNNER_NAME: "runner",
+    GITHUB_OUTPUT: output,
+  };
+  const saved = Object.fromEntries(Object.keys(values).map((name) => [name, process.env[name]]));
+  Object.assign(process.env, values);
+  const original = globalThis.fetch;
+  let deployedSha = sha;
+  let state = "SUCCESS";
+  globalThis.fetch = async (url, options) => {
+    url = String(url);
+    if (url.endsWith("/graphql"))
+      return new Response(
+        JSON.stringify({ data: { nodes: [{ id: "record", latestStatus: { state } }] } }),
+      );
+    if (url.includes("/jobs?"))
+      return new Response(
+        JSON.stringify({
+          total_count: 1,
+          jobs: [
+            {
+              id: 456,
+              name: "adopt",
+              head_sha: sha,
+              run_id: 123,
+              runner_name: "runner",
+              status: "in_progress",
+              html_url: "https://github.com/Quick-Release/nomia-bnq/actions/runs/123/job/456",
+            },
+          ],
+        }),
+      );
+    if (url.includes("/deployments?"))
+      return new Response(
+        JSON.stringify([
+          {
+            id: 1,
+            node_id: "record",
+            payload: { manifests, siteSha: deployedSha, frontendDeployment: true },
+          },
+        ]),
+      );
+    const name = url.includes("gq-content") || url.includes("/content/") ? "content" : "design";
+    const m = manifests[name];
+    if (url.includes("/git/ref/"))
+      return new Response(JSON.stringify({ object: { type: "commit", sha: m.sourceSha } }));
+    if (url.includes("/releases?"))
+      return new Response(
+        JSON.stringify([
+          {
+            tag_name: m.tag,
+            prerelease: true,
+            assets: [
+              {
+                name: producers[name].manifestAsset,
+                url: `https://example.test/${name}/manifest`,
+                state: "uploaded",
+              },
+              ...[m.plugin.asset, ...m.packages.map((p) => p.asset)].map((name) => ({
+                name,
+                state: "uploaded",
+              })),
+            ],
+          },
+        ]),
+      );
+    if (url.endsWith("/manifest")) return new Response(JSON.stringify(m));
+    throw new Error(`Unexpected admission request: ${url} ${options?.method}`);
+  };
+  try {
+    await import("./design-nightly/admission.mjs?unchanged");
+    assert.equal(readFileSync(output, "utf8"), "needed=false\n");
+    writeFileSync(output, "");
+    deployedSha = "f".repeat(40);
+    await import("./design-nightly/admission.mjs?site-change");
+    assert.equal(readFileSync(output, "utf8"), "needed=true\n");
+    state = "IN_PROGRESS";
+    await assert.rejects(import("./design-nightly/admission.mjs?fenced"), /Unresolved deployment/);
+  } finally {
+    globalThis.fetch = original;
+    for (const [name, value] of Object.entries(saved)) {
+      if (value === undefined) delete process.env[name];
+      else process.env[name] = value;
+    }
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("completed no-op environment records do not obscure the deployed snapshot", () => {
+  const candidate = fixture();
+  const snapshot = {
+    siteSha: "a".repeat(40),
+    frontendDeployment: true,
+    manifests: { design: candidate, content: contentFixture() },
+  };
+  const deployed = { id: 1, state: "success", payload: snapshot };
+  const platform = {
+    id: 2,
+    state: "success",
+    payload: {},
+    githubApp: "github-actions",
+    task: "deploy",
+    environment: "nomia-design-nightly",
+    ref: "main",
+    sha: snapshot.siteSha,
+    logUrl: "https://github.com/Quick-Release/nomia-bnq/actions/runs/123/job/456",
+  };
+  const decide = (entry) =>
+    activationDecision(candidate, [entry, deployed], false, undefined, snapshot);
+  assert.equal(decide(platform), "superseded");
+  assert.equal(decide({ ...platform, githubApp: "unknown" }), "activate");
+  assert.throws(() => decide({ ...platform, state: "in_progress" }), /Unresolved/);
+});
