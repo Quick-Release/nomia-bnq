@@ -367,7 +367,7 @@ test("current job identity comes from authenticated Actions API and exact run at
 const contentFixture = () => {
   const m = fixture();
   m.plugin.name = "getquick/gq-content";
-  m.plugin.asset = `gq-content-${m.version}.zip`;
+  m.plugin.asset = `content-nightly-${m.version}.zip`;
   m.plugin.composer.name = m.plugin.name;
   m.plugin.composer.type = "wordpress-muplugin";
   m.packages = [

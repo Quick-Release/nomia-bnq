@@ -6,6 +6,7 @@ export const producers = {
     repository: producer,
     manifestAsset: "design-release.json",
     plugin: "getquick/gq-design",
+    assetPrefix: "gq-design",
     type: "wordpress-plugin",
     packages: ["@quick-release/design-contract", "@quick-release/design-renderer"],
   },
@@ -13,6 +14,7 @@ export const producers = {
     repository: "Quick-Release/gq-content",
     manifestAsset: "content-release.json",
     plugin: "getquick/gq-content",
+    assetPrefix: "content-nightly",
     type: "wordpress-muplugin",
     packages: ["@getquick/content"],
   },
@@ -40,7 +42,7 @@ export function validateManifest(m, tag, sourceSha, owner = producers.design) {
   const p = m.plugin;
   if (
     p?.name !== owner.plugin ||
-    p.asset !== `${owner.plugin.split("/")[1]}-${m.version}.zip` ||
+    p.asset !== `${owner.assetPrefix}-${m.version}.zip` ||
     !/^[a-f0-9]{64}$/.test(p.sha256 ?? "") ||
     p.composer?.name !== p.name ||
     p.composer.version !== `dev-nightly-${match[2]}.${m.sequence}.${m.attempt}` ||

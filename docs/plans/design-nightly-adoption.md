@@ -49,13 +49,14 @@ npm package (`@getquick/content`) with the same nightly version and source. The
 completion marker requires both uploaded artifacts. Each producer's sequence and
 attempt are compared independently; a Content counter never orders a Design build.
 
-Content prereleases retain `gq-content-VERSION.zip` and
+Content prereleases retain `content-nightly-VERSION.zip` and
 `getquick-content-VERSION.tgz`. Preparation verifies ZIP SHA256, tarball SHA256
 and SHA512 integrity, and the tarball's embedded name/version. The frontend
 requires the bundled `file:nightly/getquick-content-VERSION.tgz`, installs offline,
 and records its regenerated pnpm lock. No npm dist-tag, npm credential, registry
 publication or raw tag archive is used for nightly Content. Stable public npm
-publishing is unchanged.
+publishing is unchanged. The distinct nightly ZIP prefix prevents the stable
+Composer registry from discovering the development-only artifacts.
 
 The ephemeral snapshot bundles both producer manifests and ZIPs, Content's tgz,
 both resolved locks and a deployment record with `manifests.design` and
