@@ -1,4 +1,4 @@
-import { producer, validateManifest, newest } from "./model.mjs";
+import { producers, validateManifest, newest } from "./model.mjs";
 const token = process.env.GH_TOKEN;
 const headers = {
   Authorization: `Bearer ${token}`,
@@ -27,15 +27,15 @@ export async function asset(release, name) {
   if (!response.ok) throw new Error(`Asset download ${response.status}`);
   return Buffer.from(await response.arrayBuffer());
 }
-export async function manifest(release) {
-  const m = JSON.parse(await asset(release, "design-release.json"));
-  const ref = await api(`${producer}/git/ref/tags/${encodeURIComponent(release.tag_name)}`);
+export async function manifest(release, owner = producers.design) {
+  const m = JSON.parse(await asset(release, owner.manifestAsset));
+  const ref = await api(`${owner.repository}/git/ref/tags/${encodeURIComponent(release.tag_name)}`);
   let object = ref.object;
   for (let i = 0; object.type === "tag" && i < 5; i++)
-    object = (await api(`${producer}/git/tags/${object.sha}`)).object;
+    object = (await api(`${owner.repository}/git/tags/${object.sha}`)).object;
   if (object.type !== "commit" || release.draft || !release.prerelease)
     throw new Error("Expected published nightly tag at commit");
-  validateManifest(m, release.tag_name, object.sha);
+  validateManifest(m, release.tag_name, object.sha, owner);
   const requiredAssets = [m.plugin.asset, ...m.packages.map((p) => p.asset)];
   if (
     requiredAssets.some(
@@ -45,16 +45,16 @@ export async function manifest(release) {
     throw new Error("Incomplete lockstep release assets");
   return m;
 }
-export async function latest() {
+export async function latest(owner = producers.design) {
   const ready = [];
   for (let page = 1; ; page++) {
-    const releases = await api(`${producer}/releases?per_page=100&page=${page}`);
+    const releases = await api(`${owner.repository}/releases?per_page=100&page=${page}`);
     for (const release of releases.filter(
       (r) =>
         !r.draft &&
         r.prerelease &&
         /^v\d+\.\d+\.\d+-nightly\./.test(r.tag_name) &&
-        r.assets.some((a) => a.name === "design-release.json"),
+        r.assets.some((a) => a.name === owner.manifestAsset),
     )) {
       // A published completion manifest with invalid metadata must fail closed.
       const parts = /-nightly\.\d{8}\.(\d+)\.(\d+)$/.exec(release.tag_name);
@@ -65,7 +65,7 @@ export async function latest() {
   }
   const m = newest(ready);
   if (!m) throw new Error("No complete nightly releases");
-  return manifest(m.release);
+  return manifest(m.release, owner);
 }
 
 export async function currentActionsJob({

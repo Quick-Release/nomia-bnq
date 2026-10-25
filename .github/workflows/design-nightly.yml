@@ -1,13 +1,18 @@
 name: Nomia nightly
 on:
+  schedule:
+    - cron: "*/5 * * * *"
   push:
     branches: [main]
   repository_dispatch:
-    types: [gq_design_nightly]
+    types: [gq_design_nightly, gq_content_nightly]
   workflow_dispatch:
     inputs:
       tag:
-        description: Exact producer nightly tag (empty selects newest ready)
+        description: Exact Design nightly tag (empty selects newest ready)
+        type: string
+      content_tag:
+        description: Exact Content nightly tag (empty selects newest ready)
         type: string
       site_ref:
         description: Exact Nomia commit for manual selection (empty uses main)

@@ -3,7 +3,14 @@ import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { resolve } from "node:path";
-import { producer, hash, snapshotComposer, assertUnchangedDependencies } from "./model.mjs";
+import {
+  producers,
+  hash,
+  snapshotComposer,
+  assertUnchangedDependencies,
+  dependencyGraph,
+  verifyPackage,
+} from "./model.mjs";
 
 const root = process.cwd();
 const token = process.env.GH_TOKEN;
@@ -42,38 +49,72 @@ if (
 const manual = process.env.GITHUB_EVENT_NAME === "workflow_dispatch";
 const event = json(process.env.GITHUB_EVENT_PATH);
 const sitePush = process.env.GITHUB_EVENT_NAME === "push" && event.ref === "refs/heads/main";
-if (
-  !manual &&
-  !sitePush &&
-  (event.action !== "gq_design_nightly" ||
-    event.client_payload?.repository !== producer ||
-    event.client_payload?.manifestAsset !== "design-release.json")
-)
-  throw new Error("Unexpected dispatch");
-const tag = manual ? event.inputs?.tag : null;
-const release = tag ? await api(`${producer}/releases/tags/${encodeURIComponent(tag)}`) : null;
-const m = release ? await manifest(release) : await latest();
-const selected = release ?? (await api(`${producer}/releases/tags/${encodeURIComponent(m.tag)}`));
-if (m.migrations?.destructive)
-  throw new Error(
-    "Destructive migration requires a reviewed recoverable DB/content snapshot and separate rollout",
-  );
-const zip = await asset(selected, m.plugin.asset);
-if (hash(zip) !== m.plugin.sha256) throw new Error("Plugin SHA256 mismatch");
-const cms = resolve("apps/cms");
-mkdirSync(`${cms}/nightly`, { recursive: true });
-writeFileSync(`${cms}/nightly/${m.plugin.asset}`, zip);
-save(`${cms}/nightly/design-release.json`, m);
-const before = json(`${cms}/composer.lock`);
-save(
-  `${cms}/composer.json`,
-  snapshotComposer(json(`${cms}/composer.json`), m, createHash("sha1").update(zip).digest("hex")),
+const dispatched = Object.entries(producers).find(
+  ([name, owner]) =>
+    event.action === `gq_${name}_nightly` &&
+    event.client_payload?.repository === owner.repository &&
+    event.client_payload?.manifestAsset === owner.manifestAsset,
 );
+if (!manual && !sitePush && process.env.GITHUB_EVENT_NAME !== "schedule" && !dispatched)
+  throw new Error("Unexpected dispatch");
+const manifests = {};
+const cms = resolve("apps/cms");
+const before = json(`${cms}/composer.lock`);
+let composer = json(`${cms}/composer.json`);
+mkdirSync(`${cms}/nightly`, { recursive: true });
+const graph = () =>
+  dependencyGraph(
+    JSON.parse(
+      execFileSync("pnpm", ["list", "--recursive", "--depth", "Infinity", "--json"], {
+        encoding: "utf8",
+        maxBuffer: 32 * 1024 * 1024,
+      }),
+    ),
+  );
+const graphBefore = graph();
+for (const [name, owner] of Object.entries(producers)) {
+  const tag = manual ? event.inputs?.[name === "design" ? "tag" : "content_tag"] : null;
+  const release = tag
+    ? await api(`${owner.repository}/releases/tags/${encodeURIComponent(tag)}`)
+    : null;
+  const m = release ? await manifest(release, owner) : await latest(owner);
+  const selected =
+    release ?? (await api(`${owner.repository}/releases/tags/${encodeURIComponent(m.tag)}`));
+  if (m.migrations.destructive)
+    throw new Error(
+      "Destructive migration requires a reviewed recoverable DB/content snapshot and separate rollout",
+    );
+  const zip = await asset(selected, m.plugin.asset);
+  if (hash(zip) !== m.plugin.sha256) throw new Error("Plugin SHA256 mismatch");
+  writeFileSync(`${cms}/nightly/${m.plugin.asset}`, zip);
+  save(`${cms}/nightly/${owner.manifestAsset}`, m);
+  composer = snapshotComposer(composer, m, createHash("sha1").update(zip).digest("hex"));
+  manifests[name] = m;
+  if (name === "content") {
+    const p = m.packages[0];
+    const tgz = await asset(selected, p.asset);
+    verifyPackage(tgz, p);
+    mkdirSync("apps/frontend/nightly", { recursive: true });
+    writeFileSync(`apps/frontend/nightly/${p.asset}`, tgz);
+    // Inspect the archive's own identity before installing its verified bytes.
+    const packed = JSON.parse(
+      execFileSync("tar", ["-xOf", `apps/frontend/nightly/${p.asset}`, "package/package.json"], {
+        encoding: "utf8",
+      }),
+    );
+    if (packed.name !== p.name || packed.version !== m.version)
+      throw new Error("Content tarball identity mismatch");
+    const frontend = json("apps/frontend/package.json");
+    frontend.dependencies[p.name] = `file:nightly/${p.asset}`;
+    save("apps/frontend/package.json", frontend);
+  }
+}
+save(`${cms}/composer.json`, composer);
 run(
   "composer",
   [
     "update",
-    "getquick/gq-design",
+    ...Object.values(producers).map((p) => p.plugin),
     "--no-install",
     "--no-scripts",
     "--no-interaction",
@@ -82,28 +123,54 @@ run(
   cms,
 );
 const after = json(`${cms}/composer.lock`);
-assertUnchangedDependencies(before, after);
-const locked = after.packages.find((p) => p.name === m.plugin.name);
-if (
-  locked?.version !== m.plugin.composer.version ||
-  locked.dist?.reference !== m.sourceSha ||
-  locked.dist?.url !== `./nightly/${m.plugin.asset}`
-)
-  throw new Error("Incorrect Composer lock");
+assertUnchangedDependencies(
+  before,
+  after,
+  Object.values(producers).map((p) => p.plugin),
+);
+for (const m of Object.values(manifests)) {
+  const locked = after.packages.find((p) => p.name === m.plugin.name);
+  if (
+    locked?.version !== m.plugin.composer.version ||
+    locked.dist?.reference !== m.sourceSha ||
+    locked.dist?.url !== `./nightly/${m.plugin.asset}`
+  )
+    throw new Error("Incorrect Composer lock");
+}
+// Offline resolution preserves already locked transitive dependencies; new
+// requirements need deliberate Site adoption. Scripts do not run on this path.
+run("pnpm", ["install", "--offline", "--no-frozen-lockfile", "--ignore-scripts"]);
+if (JSON.stringify(graphBefore) !== JSON.stringify(graph()))
+  throw new Error("Nightly changed frontend/tooling dependencies; explicit Site adoption required");
+const installed = json("apps/frontend/node_modules/@getquick/content/package.json");
+if (installed.name !== "@getquick/content" || installed.version !== manifests.content.version)
+  throw new Error("Incorrect installed Content package");
+const m = manifests.design;
 const siteSha = git("rev-parse", "HEAD");
 const record = {
   schemaVersion: 1,
   deploymentKind: "nomia-design-nightly",
   frontendDeployment: true,
   siteSha,
-  manifest: m,
+  manifest: m, // Keep the historical Design ledger field readable.
+  manifests,
+  pnpmLockSha256: hash(readFileSync("pnpm-lock.yaml")),
   composerLockSha256: hash(readFileSync(`${cms}/composer.lock`)),
   runUrl: `https://github.com/${site}/actions/runs/${process.env.GITHUB_RUN_ID}`,
   selectedManually: manual,
 };
 save(`${cms}/nightly/deployment.json`, record);
 // Commit only in this ephemeral checkout, never push or tag the snapshot.
-run("git", ["add", "-f", "apps/cms/composer.json", "apps/cms/composer.lock", "apps/cms/nightly"]);
+run("git", [
+  "add",
+  "-f",
+  "apps/cms/composer.json",
+  "apps/cms/composer.lock",
+  "apps/cms/nightly",
+  "apps/frontend/package.json",
+  "apps/frontend/nightly",
+  "pnpm-lock.yaml",
+]);
 run("git", [
   "-c",
   "user.name=Nomia nightly",
@@ -113,7 +180,7 @@ run("git", [
   "core.hooksPath=/dev/null",
   "commit",
   "-m",
-  `Nomia snapshot ${m.tag}`,
+  `Nomia snapshot ${m.tag} ${manifests.content.tag}`,
 ]);
 const snapshotSha = git("rev-parse", "HEAD");
 mkdirSync("nightly-result", { recursive: true });

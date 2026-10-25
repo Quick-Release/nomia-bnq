@@ -1,6 +1,6 @@
 import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
-import { activationDecision, compareNightlies } from "./model.mjs";
+import { activationDecision, compareNightlies, producers } from "./model.mjs";
 import { api, latest, currentActionsJob } from "./github.mjs";
 import { completeDeployment } from "./completion.mjs";
 
@@ -49,7 +49,16 @@ if (activationDecision(m, history, record.selectedManually, currentJob, record) 
   save();
   process.exit(0);
 }
-if (!record.selectedManually && compareNightlies(await latest(), m) > 0) {
+if (
+  !record.selectedManually &&
+  (
+    await Promise.all(
+      Object.entries(producers).map(
+        async ([name, owner]) => compareNightlies(await latest(owner), record.manifests[name]) > 0,
+      ),
+    )
+  ).some(Boolean)
+) {
   record.state = "superseded";
   save();
   process.exit(0);
@@ -59,7 +68,7 @@ const deployment = await api(`${site}/deployments`, {
   environment,
   auto_merge: false,
   required_contexts: [],
-  description: m.tag,
+  description: `Design ${m.version}; Content ${record.manifests.content.version}`,
   transient_environment: true,
   production_environment: false,
   payload: record,

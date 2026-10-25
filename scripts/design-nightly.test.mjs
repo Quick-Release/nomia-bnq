@@ -363,3 +363,156 @@ test("current job identity comes from authenticated Actions API and exact run at
     globalThis.fetch = originalFetch;
   }
 });
+
+const contentFixture = () => {
+  const m = fixture();
+  m.plugin.name = "getquick/gq-content";
+  m.plugin.asset = `gq-content-${m.version}.zip`;
+  m.plugin.composer.name = m.plugin.name;
+  m.plugin.composer.type = "wordpress-muplugin";
+  m.packages = [
+    { ...m.packages[0], name: "@getquick/content", asset: `getquick-content-${m.version}.tgz` },
+  ];
+  return m;
+};
+
+test("Content contract binds MU plugin and one frontend artifact to the same release", async () => {
+  const { producers, verifyPackage, hash } = await import("./design-nightly/model.mjs");
+  const { createHash } = await import("node:crypto");
+  const m = contentFixture();
+  assert.equal(validateManifest(m, m.tag, m.sourceSha, producers.content), m);
+  assert.throws(() => validateManifest(m, m.tag, m.sourceSha), /metadata/);
+  assert.throws(
+    () => validateManifest({ ...m, packages: [] }, m.tag, m.sourceSha, producers.content),
+    /lockstep/,
+  );
+  const bytes = Buffer.from("retained tarball");
+  const p = {
+    sha256: hash(bytes),
+    integrity: `sha512-${createHash("sha512").update(bytes).digest("base64")}`,
+  };
+  verifyPackage(bytes, p);
+  assert.throws(() => verifyPackage(Buffer.from("corrupted"), p), /SHA256/);
+  assert.throws(() => verifyPackage(bytes, { ...p, integrity: "sha512-wrong" }), /integrity/);
+});
+
+test("Content release acceptance reads its own repository and completion marker", async () => {
+  const { producers } = await import("./design-nightly/model.mjs");
+  const { manifest } = await import("./design-nightly/github.mjs");
+  const m = contentFixture();
+  const release = {
+    tag_name: m.tag,
+    prerelease: true,
+    assets: [
+      { name: "content-release.json", state: "uploaded", url: "https://example.test/manifest" },
+      ...[m.plugin.asset, m.packages[0].asset].map((name) => ({ name, state: "uploaded" })),
+    ],
+  };
+  const original = globalThis.fetch;
+  globalThis.fetch = async (url) => {
+    if (String(url).includes("/git/ref/")) {
+      assert.match(String(url), /repos\/Quick-Release\/gq-content\//);
+      return new Response(JSON.stringify({ object: { type: "commit", sha: m.sourceSha } }));
+    }
+    return new Response(JSON.stringify(m));
+  };
+  try {
+    assert.deepEqual(await manifest(release, producers.content), m);
+    await assert.rejects(
+      manifest({ ...release, assets: release.assets.slice(0, -1) }, producers.content),
+      /Incomplete/,
+    );
+  } finally {
+    globalThis.fetch = original;
+  }
+});
+
+test("shared snapshot compares producer sequences independently and deduplicates complete triples", () => {
+  const design = fixture();
+  const content = contentFixture();
+  // Design and Content counters cannot be ordered against each other.
+  content.sequence = 9000;
+  const snapshot = {
+    siteSha: "e".repeat(40),
+    frontendDeployment: true,
+    manifests: { design, content },
+  };
+  const entry = { id: 1, state: "success", manifest: design, payload: snapshot };
+  const decide = (history, manual = false) =>
+    activationDecision(design, history, manual, undefined, snapshot);
+  assert.equal(decide([entry]), "superseded");
+  assert.equal(decide([{ ...entry, payload: { ...snapshot, manifests: { design } } }]), "activate");
+  const newer = { ...content, sequence: 9001 };
+  assert.equal(
+    decide([{ ...entry, payload: { ...snapshot, manifests: { design, content: newer } } }]),
+    "superseded",
+  );
+  assert.equal(
+    decide([{ ...entry, payload: { ...snapshot, manifests: { design, content: newer } } }], true),
+    "activate",
+  );
+  assert.throws(() => decide([{ ...entry, state: "in_progress" }], true), /Unresolved/);
+  assert.equal(
+    decide([{ ...entry, payload: { ...snapshot, siteSha: "f".repeat(40) } }]),
+    "activate",
+  );
+});
+
+test("frontend graph guard permits only Content root version and artifact changes", async () => {
+  const { dependencyGraph } = await import("./design-nightly/model.mjs");
+  const before = [
+    {
+      name: "@nomia-bnq/frontend",
+      dependencies: {
+        "@getquick/content": {
+          version: "0.3.2",
+          resolved: "registry",
+          dependencies: { dep: { version: "1", resolved: "exact" } },
+        },
+        other: { version: "1", resolved: "exact" },
+      },
+    },
+  ];
+  const after = structuredClone(before);
+  after[0].dependencies["@getquick/content"].version = "0.3.3-nightly.20261025.42.1";
+  after[0].dependencies["@getquick/content"].resolved = "file:nightly/exact.tgz";
+  assert.deepEqual(dependencyGraph(before), dependencyGraph(after));
+  after[0].dependencies["@getquick/content"].dependencies.dep.version = "2";
+  assert.notDeepEqual(dependencyGraph(before), dependencyGraph(after));
+});
+
+test("retained Content tarball installs offline and reinstalls from its frozen snapshot lock", async () => {
+  const { mkdirSync } = await import("node:fs");
+  const root = mkdtempSync(join(tmpdir(), "nomia-content-tgz-"));
+  try {
+    mkdirSync(join(root, "package"));
+    mkdirSync(join(root, "nightly"));
+    const version = "0.3.3-nightly.20261025.42.1";
+    writeFileSync(
+      join(root, "package/package.json"),
+      JSON.stringify({ name: "@getquick/content", version }),
+    );
+    execFileSync("tar", ["-czf", join(root, "nightly/content.tgz"), "package"], { cwd: root });
+    writeFileSync(
+      join(root, "package.json"),
+      JSON.stringify({
+        name: "proof",
+        dependencies: { "@getquick/content": "file:nightly/content.tgz" },
+      }),
+    );
+    const pnpm = (...args) =>
+      execFileSync("pnpm", args, { cwd: root, stdio: "pipe", env: { ...process.env, CI: "true" } });
+    pnpm("install", "--offline", "--no-frozen-lockfile", "--ignore-scripts");
+    const lock = readFileSync(join(root, "pnpm-lock.yaml"), "utf8");
+    assert.match(lock, /integrity: sha512-/);
+    rmSync(join(root, "node_modules"), { recursive: true });
+    pnpm("install", "--offline", "--frozen-lockfile", "--ignore-scripts");
+    assert.equal(
+      JSON.parse(readFileSync(join(root, "node_modules/@getquick/content/package.json"))).version,
+      version,
+    );
+    assert.equal(readFileSync(join(root, "pnpm-lock.yaml"), "utf8"), lock);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
