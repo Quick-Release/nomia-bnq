@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.14.0 - 2026-10-26
+
+Previous release: v0.13.0
+
+- b75ff89 Merge pull request #88 from Quick-Release/claude/gq-email-test
+- 4341378 Merge remote-tracking branch 'origin/main' into claude/gq-email-test
+- 04021b8 feat: add a Test column to the Email tab
+- 089f734 Merge pull request #87 from Quick-Release/fix/gravity-forms
+- 40b6f32 fix: restore Composer-managed Gravity Forms
+- 125b659 Merge pull request #86 from Quick-Release/claude/gq-email-activation
+- 113ad8d fix: activate gq-email on deploy
+
 ## v0.13.0 - 2026-10-26
 
 Previous release: v0.12.0
