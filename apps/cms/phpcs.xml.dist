@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="Nomia First-Party CMS Plugins">
-    <description>WordPress Coding Standards and PHP compatibility for nomia-bnq's own CMS plugin.</description>
+    <description>WordPress Coding Standards and PHP compatibility for nomia-bnq's own CMS plugins.</description>
 
     <!--
         The Composer plugin that registers these standards doesn't run in CI
@@ -10,6 +10,7 @@
     <config name="installed_paths" value="../../phpcompatibility/php-compatibility,../../phpcompatibility/phpcompatibility-paragonie,../../phpcompatibility/phpcompatibility-wp,../../phpcsstandards/phpcsextra,../../phpcsstandards/phpcsutils,../../wp-coding-standards/wpcs" />
 
     <file>web/app/plugins/gq-bioeconomia</file>
+    <file>web/app/plugins/gq-email</file>
 
     <!-- The translation catalogs aren't authored PHP. -->
     <exclude-pattern>*/languages/*</exclude-pattern>
@@ -22,34 +23,43 @@
     <exclude-pattern>*/gq-bioeconomia/vendor/*</exclude-pattern>
     <exclude-pattern>*/gq-bioeconomia/blocks/*</exclude-pattern>
     <exclude-pattern>*/gq-bioeconomia/src/Contracts.php</exclude-pattern>
+    <!-- gq-email's tests, their WordPress stubs and its local test dependencies. -->
+    <exclude-pattern>*/gq-email/tests/*</exclude-pattern>
+    <exclude-pattern>*/gq-email/vendor/*</exclude-pattern>
 
     <!-- WordPress is the complete WPCS ruleset (Core, Docs, and Extra). -->
     <rule ref="WordPress">
-        <!-- gq-bioeconomia follows GQ Design's PHP: short arrays. -->
+        <!-- gq-bioeconomia and gq-email follow GQ Design's PHP: short arrays. -->
         <exclude name="Universal.Arrays.DisallowShortArraySyntax" />
     </rule>
     <rule ref="Universal.Arrays.DisallowShortArraySyntax">
         <exclude-pattern>*/gq-bioeconomia/*</exclude-pattern>
+        <exclude-pattern>*/gq-email/*</exclude-pattern>
     </rule>
     <rule ref="Generic.Arrays.DisallowLongArraySyntax">
         <include-pattern>*/gq-bioeconomia/*</include-pattern>
+        <include-pattern>*/gq-email/*</include-pattern>
     </rule>
 
     <!--
-        Like GQ Design's, gq-bioeconomia's namespaced PSR-4 classes in src/ keep
+        Like GQ Design's, gq-bioeconomia's and gq-email's namespaced PSR-4 classes in src/ keep
         camelCase APIs and PascalCase file names.
     -->
     <rule ref="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid">
         <exclude-pattern>*/gq-bioeconomia/src/*</exclude-pattern>
+        <exclude-pattern>*/gq-email/src/*</exclude-pattern>
     </rule>
     <rule ref="WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase">
         <exclude-pattern>*/gq-bioeconomia/src/*</exclude-pattern>
+        <exclude-pattern>*/gq-email/src/*</exclude-pattern>
     </rule>
     <rule ref="WordPress.Files.FileName.NotHyphenatedLowercase">
         <exclude-pattern>*/gq-bioeconomia/src/*</exclude-pattern>
+        <exclude-pattern>*/gq-email/src/*</exclude-pattern>
     </rule>
     <rule ref="WordPress.Files.FileName.InvalidClassFileName">
         <exclude-pattern>*/gq-bioeconomia/src/*</exclude-pattern>
+        <exclude-pattern>*/gq-email/src/*</exclude-pattern>
     </rule>
     <rule ref="PHPCompatibilityWP" />
 
@@ -63,7 +73,7 @@
         </properties>
     </rule>
 
-    <!-- gq-bioeconomia requires PHP 8.4. -->
+    <!-- gq-bioeconomia and gq-email require PHP 8.4. -->
     <config name="testVersion" value="8.4-" />
 
     <arg name="basepath" value="." />
