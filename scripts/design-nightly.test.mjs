@@ -586,7 +586,28 @@ test("automatic admission skips unchanged snapshots and preserves the unresolved
   const { producers } = await import("./design-nightly/model.mjs");
   const root = mkdtempSync(join(tmpdir(), "nomia-admission-"));
   const output = join(root, "output");
-  const sha = execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
+  // CI restores a source archive without .git. Own the Git fixture used by
+  // admission rather than depending on the test runner's checkout.
+  execFileSync("git", ["init", "--quiet", "--template=", root]);
+  execFileSync("git", [
+    "-C",
+    root,
+    "-c",
+    "user.name=Fixture",
+    "-c",
+    "user.email=fixture@example.test",
+    "-c",
+    "commit.gpgsign=false",
+    "-c",
+    "core.hooksPath=/dev/null",
+    "commit",
+    "--quiet",
+    "--allow-empty",
+    "-m",
+    "fixture",
+  ]);
+  const sha = execFileSync("git", ["-C", root, "rev-parse", "HEAD"], { encoding: "utf8" }).trim();
+  const previousCwd = process.cwd();
   const manifests = { design: fixture(), content: contentFixture() };
   const values = {
     GITHUB_REPOSITORY: "Quick-Release/nomia-bnq",
@@ -664,6 +685,7 @@ test("automatic admission skips unchanged snapshots and preserves the unresolved
     throw new Error(`Unexpected admission request: ${url} ${options?.method}`);
   };
   try {
+    process.chdir(root);
     await import("./design-nightly/admission.mjs?unchanged");
     assert.equal(readFileSync(output, "utf8"), "needed=false\n");
     writeFileSync(output, "");
@@ -673,6 +695,7 @@ test("automatic admission skips unchanged snapshots and preserves the unresolved
     state = "IN_PROGRESS";
     await assert.rejects(import("./design-nightly/admission.mjs?fenced"), /Unresolved deployment/);
   } finally {
+    process.chdir(previousCwd);
     globalThis.fetch = original;
     for (const [name, value] of Object.entries(saved)) {
       if (value === undefined) delete process.env[name];
