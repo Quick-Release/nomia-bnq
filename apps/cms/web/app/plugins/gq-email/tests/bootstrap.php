@@ -20,3 +20,4 @@ require_once __DIR__ . '/Support/WordPressStubs.php';
 require_once __DIR__ . '/../gq-email.php';
 
 gq_email_run_hook( 'actions', 'plugins_loaded' );
+gq_email_run_hook( 'actions', 'rest_api_init' );

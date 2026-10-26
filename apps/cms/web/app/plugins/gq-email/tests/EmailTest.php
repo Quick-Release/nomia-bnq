@@ -114,7 +114,8 @@ test( 'the plugin adds an Email tab to the GETQUICK options page', function () {
 
 	expect( $areas )->toHaveKeys( [ 'wp', 'email' ] )
 		->and( $areas['email']['label'] )->toBe( 'Email' )
-		->and( array_keys( $areas['email']['fields'] ) )->toBe( [ 'enabled', 'account_id', 'from_address', 'from_name', 'reply_to' ] )
+		->and( array_keys( $areas['email']['columns'] ) )->toBe( [ 'delivery', 'sender', 'test' ] )
+		->and( array_keys( $areas['email']['fields'] ) )->toBe( [ 'enabled', 'account_id', 'from_address', 'from_name', 'reply_to', 'send_test' ] )
 		->and( $areas['email']['fields']['enabled']['default'] )->toBeFalse()
 		->and( $areas['email']['fields']['account_id']['override'] )->toBe( Settings::ACCOUNT_ID_NAME )
 		->and( $areas['email']['fields']['from_address']['visible_when'] )->toBe( [ 'key' => 'enabled', 'value' => true ] );
