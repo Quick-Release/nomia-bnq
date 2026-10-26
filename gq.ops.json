@@ -37,7 +37,8 @@
       "simple-history",
       "cimo-image-optimizer",
       "safe-svg",
-      "gq-bioeconomia"
+      "gq-bioeconomia",
+      "gq-email"
     ],
     "locale": "pt_PT_ao90"
   },

@@ -113,7 +113,8 @@
     ],
     "test": [
       "pest",
-      "pest --configuration=web/app/plugins/gq-bioeconomia/phpunit.xml.dist --test-directory=web/app/plugins/gq-bioeconomia/tests"
+      "pest --configuration=web/app/plugins/gq-bioeconomia/phpunit.xml.dist --test-directory=web/app/plugins/gq-bioeconomia/tests",
+      "pest --configuration=web/app/plugins/gq-email/phpunit.xml.dist --test-directory=web/app/plugins/gq-email/tests"
     ],
     "patch:dependencies": "@php scripts/patch-dependencies.php",
     "post-autoload-dump": [
