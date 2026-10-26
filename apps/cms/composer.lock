@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fd781df1cabe2afba46641ec53815f87",
+    "content-hash": "6a77b027ad75f484f22bd58cdb43a7d7",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -305,21 +305,21 @@
         },
         {
             "name": "getquick/getquick-theme",
-            "version": "0.5.2",
+            "version": "0.6.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:Quick-Release/getquick-theme.git",
-                "reference": "dcc916ddf21d8fa1d627373a6bae48aa0c6e4ce5"
+                "reference": "f4a2d998790604d5656d2f2926a49bf74da5dda6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://proxy.composer.getquick.io/dist/getquick/getquick-theme/getquick-getquick-theme-dcc916ddf21d8fa1d627373a6bae48aa0c6e4ce5-zip-b714f6.zip",
-                "reference": "dcc916ddf21d8fa1d627373a6bae48aa0c6e4ce5",
-                "shasum": "b294b60155ce509bbe8926cf3a67d9bf08fe1e75"
+                "url": "https://proxy.composer.getquick.io/dist/getquick/getquick-theme/getquick-getquick-theme-f4a2d998790604d5656d2f2926a49bf74da5dda6-zip-2af53d.zip",
+                "reference": "f4a2d998790604d5656d2f2926a49bf74da5dda6",
+                "shasum": "c96c48b43f287d147a46a37abc61cfc59ce55d59"
             },
             "require": {
                 "getquick/gq-config": ">=0.4.0 <1.0",
-                "getquick/gq-design": ">=0.3.19 <1.0",
+                "getquick/gq-design": "^0.9.0",
                 "getquick/gq-support": ">=0.1.0 <1.0",
                 "php": ">=8.4.1"
             },
@@ -334,10 +334,10 @@
             ],
             "description": "Minimal block theme for GETQUICK-powered headless WordPress sites.",
             "support": {
-                "source": "https://github.com/Quick-Release/getquick-theme/tree/v0.5.2",
+                "source": "https://github.com/Quick-Release/getquick-theme/tree/v0.6.1",
                 "issues": "https://github.com/Quick-Release/getquick-theme/issues"
             },
-            "time": "2026-10-18T11:52:24+00:00"
+            "time": "2026-10-26T05:07:24+00:00"
         },
         {
             "name": "getquick/gq-config",
