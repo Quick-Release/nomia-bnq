@@ -1,5 +1,37 @@
 # Changelog
 
+## v0.12.0 - 2026-10-26
+
+Previous release: v0.11.0
+
+- b4e28fc Merge pull request #80 from Quick-Release/fix/paragraph-spacing
+- 17b713a Merge pull request #79 from Quick-Release/claude/indicator-chart-block
+- 15783c8 fix: space consecutive paragraphs in core content bands
+- e47c43f feat: add Indicador chart block
+- 8078c32 feat: add site-owned header contact and search blocks
+- bcaabc7 Merge remote-tracking branch 'origin/main' into fix/71-hero-editorial-colors
+- 063a932 fix: respect editorial colors in media grid hero (#71)
+- e629599 Merge pull request #77 from Quick-Release/docs/stable-only-live-editor-checks
+- 0e9e6ee docs: reserve authenticated live editor checks for stable releases
+- 7627b3b Merge pull request #76 from Quick-Release/fix/72-editor-style-cache-version
+- 2f10511 fix: invalidate cached Nomia block editor styles by content
+- 191f226 Merge pull request #75 from Quick-Release/fix/72-gutenberg-editor-spacing
+- 0909c08 fix: preserve native Gutenberg spacing in Nomia hero editors
+- 23b792d Merge pull request #74 from Quick-Release/feat/nomia-full-nightlies
+- b206c27 feat: ship Nomia CMS and frontend together as development nightlies
+- a85a2d9 Merge pull request #73 from Quick-Release/fix/nightly-status-transport
+- 07845d4 fix: redact malformed completion response errors
+- c6ddd5e fix: complete nightly deployment status over fresh HTTPS
+- 7f15fd9 Merge pull request #70 from Quick-Release/fix/nightly-actions-environment-fence
+- 0e1b54c fix: distinguish current Actions deployment from activation fences
+- 53938d7 Merge pull request #69 from Quick-Release/feat/gq-design-nightly-opt-in
+- cc568ba feat: prepare reserved Nomia nightly opt-in
+- d98071c Merge pull request #68 from Quick-Release/feat/gq-design-nightly-adoption
+- bd5c69a fix: validate complete assets and resume newest build after rollback
+- c55ba99 docs: distinguish released Design 0.9.1 from Nomia locked baseline
+- fc5524a fix: require nightly migration declaration and PHP 8.4
+- af10f0b feat: prepare Nomia development Design nightly adoption
+
 ## v0.11.0 - 2026-10-24
 
 Previous release: v0.10.8
