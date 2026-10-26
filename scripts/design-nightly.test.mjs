@@ -588,25 +588,38 @@ test("automatic admission skips unchanged snapshots and preserves the unresolved
   const output = join(root, "output");
   // CI restores a source archive without .git. Own the Git fixture used by
   // admission rather than depending on the test runner's checkout.
-  execFileSync("git", ["init", "--quiet", "--template=", root]);
-  execFileSync("git", [
-    "-C",
-    root,
-    "-c",
-    "user.name=Fixture",
-    "-c",
-    "user.email=fixture@example.test",
-    "-c",
-    "commit.gpgsign=false",
-    "-c",
-    "core.hooksPath=/dev/null",
-    "commit",
-    "--quiet",
-    "--allow-empty",
-    "-m",
-    "fixture",
-  ]);
-  const sha = execFileSync("git", ["-C", root, "rev-parse", "HEAD"], { encoding: "utf8" }).trim();
+  const inheritedGit = Object.fromEntries(
+    Object.entries(process.env).filter(([name]) => name.startsWith("GIT_")),
+  );
+  const fixtureEnv = Object.fromEntries(
+    Object.entries(process.env).filter(([name]) => !name.startsWith("GIT_")),
+  );
+  execFileSync("git", ["init", "--quiet", "--template=", root], { env: fixtureEnv });
+  execFileSync(
+    "git",
+    [
+      "-C",
+      root,
+      "-c",
+      "user.name=Fixture",
+      "-c",
+      "user.email=fixture@example.test",
+      "-c",
+      "commit.gpgsign=false",
+      "-c",
+      "core.hooksPath=/dev/null",
+      "commit",
+      "--quiet",
+      "--allow-empty",
+      "-m",
+      "fixture",
+    ],
+    { env: fixtureEnv },
+  );
+  const sha = execFileSync("git", ["-C", root, "rev-parse", "HEAD"], {
+    encoding: "utf8",
+    env: fixtureEnv,
+  }).trim();
   const previousCwd = process.cwd();
   const manifests = { design: fixture(), content: contentFixture() };
   const values = {
@@ -685,6 +698,7 @@ test("automatic admission skips unchanged snapshots and preserves the unresolved
     throw new Error(`Unexpected admission request: ${url} ${options?.method}`);
   };
   try {
+    for (const name of Object.keys(inheritedGit)) delete process.env[name];
     process.chdir(root);
     await import("./design-nightly/admission.mjs?unchanged");
     assert.equal(readFileSync(output, "utf8"), "needed=false\n");
@@ -696,6 +710,7 @@ test("automatic admission skips unchanged snapshots and preserves the unresolved
     await assert.rejects(import("./design-nightly/admission.mjs?fenced"), /Unresolved deployment/);
   } finally {
     process.chdir(previousCwd);
+    Object.assign(process.env, inheritedGit);
     globalThis.fetch = original;
     for (const [name, value] of Object.entries(saved)) {
       if (value === undefined) delete process.env[name];
