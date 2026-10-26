@@ -7,7 +7,7 @@ import { build } from "vite";
 import { chromium } from "playwright";
 import { createAstroRenderHarness } from "../astro-render-harness.mjs";
 
-test("gallery lightbox stays centered, contains focus and includes infinitely appended images", async (t) => {
+test("gallery lightbox centers the image, places captions below and arrows at screen edges", async (t) => {
   const root = fileURLToPath(new URL("../..", import.meta.url));
   const built = await build({
     root,
@@ -95,7 +95,30 @@ ${componentCss}
       Math.abs(bounds.y + bounds.height / 2 - viewport.height / 2) <= 1,
       `lightbox must be vertically centered at ${viewport.width}px; got ${JSON.stringify(bounds)}`,
     );
+    const image = await page.locator("[data-listing-image]").boundingBox();
+    const caption = await page.locator("[data-listing-caption]").boundingBox();
+    assert.ok(caption.y >= image.y + image.height, "caption must appear below the photograph");
+    const previous = await page.locator('[data-listing-step="-1"]').boundingBox();
+    const next = await page.locator('[data-listing-step="1"]').boundingBox();
+    assert.ok(
+      previous.x >= 0 && previous.x <= 24,
+      "previous arrow must sit at the left screen edge",
+    );
+    assert.ok(
+      viewport.width - next.x - next.width >= 0 && viewport.width - next.x - next.width <= 24,
+      "next arrow must sit at the right screen edge",
+    );
+    for (const arrow of [previous, next]) {
+      assert.ok(
+        Math.abs(arrow.y + arrow.height / 2 - viewport.height / 2) <= 1,
+        "arrows must be vertically centered in the screen",
+      );
+    }
   }
+  await page.locator('[data-listing-step="1"]').click();
+  assert.equal(await page.locator("[data-listing-image]").getAttribute("alt"), "Photo 2");
+  await page.locator('[data-listing-step="-1"]').click();
+  assert.equal(await page.locator("[data-listing-image]").getAttribute("alt"), "Photo 1");
   await page.keyboard.press("ArrowRight");
   assert.equal(await page.locator("[data-listing-image]").getAttribute("alt"), "Photo 2");
   for (let index = 0; index < 5; index++) {

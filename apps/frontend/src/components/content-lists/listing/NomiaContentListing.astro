@@ -182,12 +182,22 @@ const focusRing =
   {lightbox && (
     <dialog data-listing-dialog aria-label="Fotografias da galeria" class="listing-dialog">
       <div class="listing-dialog__toolbar">
-        <button type="button" data-listing-step="-1" aria-label="Fotografia anterior">←</button>
-        <p data-listing-caption aria-live="polite"></p>
-        <button type="button" data-listing-step="1" aria-label="Fotografia seguinte">→</button>
         <button type="button" data-listing-close aria-label="Fechar fotografia">×</button>
       </div>
-      <img data-listing-image alt="" />
+      <figure class="listing-dialog__figure">
+        <img data-listing-image alt="" />
+        <figcaption data-listing-caption aria-live="polite"></figcaption>
+      </figure>
+      <button type="button" class="listing-dialog__nav" data-listing-step="-1" aria-label="Fotografia anterior">
+        <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+          <path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+      <button type="button" class="listing-dialog__nav" data-listing-step="1" aria-label="Fotografia seguinte">
+        <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+          <path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
     </dialog>
   )}
 </section>
@@ -198,8 +208,12 @@ const focusRing =
 <style>
   .listing-dialog { margin: auto; background: #111; color: #fff; border: 0; padding: 1rem; width: min(96vw, 1200px); max-height: 94dvh; }
   .listing-dialog::backdrop { background: rgb(0 0 0 / 85%); }
-  .listing-dialog__toolbar { display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; }
-  .listing-dialog__toolbar p { flex: 1; }
+  .listing-dialog__toolbar { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+  .listing-dialog__figure { display: grid; gap: 0.75rem; margin: 0; }
+  .listing-dialog__figure figcaption { text-align: center; overflow-wrap: anywhere; }
+  .listing-dialog__nav { position: fixed; top: 50%; transform: translateY(-50%); display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border: 0; border-radius: 50%; background: rgb(255 255 255 / 92%); color: #111; }
+  .listing-dialog__nav[data-listing-step="-1"] { left: clamp(8px, 2vw, 24px); }
+  .listing-dialog__nav[data-listing-step="1"] { right: clamp(8px, 2vw, 24px); }
   .listing-dialog button { cursor: pointer; min-width: 44px; min-height: 44px; font-size: 1.5rem; }
   .listing-dialog button:focus-visible { outline: 3px solid #00a9ce; outline-offset: 2px; }
   .listing-dialog img { display: block; margin: auto; max-width: 100%; max-height: 75dvh; object-fit: contain; }
