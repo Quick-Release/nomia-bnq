@@ -6,7 +6,16 @@ import NomiaBlocks from "../components/NomiaBlocks.astro";
 import Layout from "../layouts/Layout.astro";
 import { content } from "../lib/content";
 import { copyFor } from "../lib/copy";
+import { legacyRedirect } from "../lib/legacy-redirects";
 import { nomiaPage } from "../lib/nomia-content";
+
+// An old frontend URL whose content moved (src/lib/legacy-redirects.ts) is
+// answered before delivery: it's never an entry here, and a confirmed miss
+// costs a CMS lookup.
+const legacy = legacyRedirect(Astro.url.pathname);
+if (legacy) {
+  return new Response(null, { status: 301, headers: { Location: legacy } });
+}
 
 const runtime = content();
 const route = routeOf(Astro.url.pathname);
