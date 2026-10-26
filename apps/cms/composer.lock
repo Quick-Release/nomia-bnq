@@ -305,17 +305,17 @@
         },
         {
             "name": "getquick/getquick-theme",
-            "version": "0.5.2",
+            "version": "0.5.3",
             "source": {
                 "type": "git",
                 "url": "git@github.com:Quick-Release/getquick-theme.git",
-                "reference": "dcc916ddf21d8fa1d627373a6bae48aa0c6e4ce5"
+                "reference": "c66f77b47a7b8233f8f6c3c074b42bb4b1a5dbd7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://proxy.composer.getquick.io/dist/getquick/getquick-theme/getquick-getquick-theme-dcc916ddf21d8fa1d627373a6bae48aa0c6e4ce5-zip-b714f6.zip",
-                "reference": "dcc916ddf21d8fa1d627373a6bae48aa0c6e4ce5",
-                "shasum": "b294b60155ce509bbe8926cf3a67d9bf08fe1e75"
+                "url": "https://proxy.composer.getquick.io/dist/getquick/getquick-theme/getquick-getquick-theme-c66f77b47a7b8233f8f6c3c074b42bb4b1a5dbd7-zip-0e1560.zip",
+                "reference": "c66f77b47a7b8233f8f6c3c074b42bb4b1a5dbd7",
+                "shasum": "8b44c8c58634df0e5358e5eff0a1cc85e8177757"
             },
             "require": {
                 "getquick/gq-config": ">=0.4.0 <1.0",
@@ -334,10 +334,10 @@
             ],
             "description": "Minimal block theme for GETQUICK-powered headless WordPress sites.",
             "support": {
-                "source": "https://github.com/Quick-Release/getquick-theme/tree/v0.5.2",
+                "source": "https://github.com/Quick-Release/getquick-theme/tree/v0.5.3",
                 "issues": "https://github.com/Quick-Release/getquick-theme/issues"
             },
-            "time": "2026-10-18T11:52:24+00:00"
+            "time": "2026-10-26T05:09:11+00:00"
         },
         {
             "name": "getquick/gq-config",
