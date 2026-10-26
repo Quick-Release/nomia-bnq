@@ -1,5 +1,6 @@
 ---
 import { renderDesignCarousel, renderDesignCarouselItem } from "@getquick/content";
+import type { PageForms } from "../../lib/forms";
 import type { WpParsedBlock } from "../../lib/wp-blocks";
 import type { WpPagePayload } from "../../lib/wp-page-payload";
 import type { WpUnsupportedFallbackMode } from "../../lib/wp-block-fallback";
@@ -9,9 +10,10 @@ interface Props {
   block: WpParsedBlock;
   pageFeaturedImage?: WpPagePayload["featuredImage"];
   unsupportedFallback?: WpUnsupportedFallbackMode;
+  forms?: PageForms | null;
 }
 
-const { block, pageFeaturedImage, unsupportedFallback } = Astro.props;
+const { block, pageFeaturedImage, unsupportedFallback, forms } = Astro.props;
 // The content runtime owns media, navigation and wrapper semantics. Markers
 // let Astro render nested Site components inside that canonical markup.
 const nonce = Math.random().toString(36).slice(2, 10);
@@ -30,6 +32,6 @@ const parts = html.split(new RegExp(`<!--nomia-carousel:${nonce}:(\\d+)-->`));
 
 {parts.map((part, index) => index % 2 ? (
   children[Number(part)].blockName === "getquick-design/slider"
-    ? children[Number(part)].innerBlocks.map((child) => <WpBlock block={child} pageFeaturedImage={pageFeaturedImage} unsupportedFallback={unsupportedFallback} />)
-    : <WpBlock block={children[Number(part)]} pageFeaturedImage={pageFeaturedImage} unsupportedFallback={unsupportedFallback} />
+    ? children[Number(part)].innerBlocks.map((child) => <WpBlock block={child} pageFeaturedImage={pageFeaturedImage} unsupportedFallback={unsupportedFallback} forms={forms} />)
+    : <WpBlock block={children[Number(part)]} pageFeaturedImage={pageFeaturedImage} unsupportedFallback={unsupportedFallback} forms={forms} />
 ) : <Fragment set:html={part} />)}

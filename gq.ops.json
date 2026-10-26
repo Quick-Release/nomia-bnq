@@ -43,6 +43,10 @@
     ],
     "locale": "pt_PT_ao90"
   },
+  "forms": {
+    "provider": "gravityforms",
+    "spam": ["honeypot"]
+  },
   "releases": {
     "bucket": "nomia-bnq-releases",
     "prefix": "admin/"

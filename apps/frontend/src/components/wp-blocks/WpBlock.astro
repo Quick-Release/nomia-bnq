@@ -2,6 +2,7 @@
 /**
  * Dispatches parsed WordPress blocks.
  * Core blocks render locally; custom Getquick blocks are delegated to `WpCustomBlock.astro`.
+ * Gravity Forms' `gravityforms/form` renders the page's form from its published descriptor.
  * Unsupported custom blocks preserve nested `innerContent` / `innerHTML`; previews can request a visible diagnostic.
  */
 import {
@@ -11,7 +12,9 @@ import {
   splitWpContainerInnerContent,
 } from "../../lib/wp-blocks";
 import { presentationHtml } from "@getquick/content";
+import { GRAVITY_FORMS_BLOCK } from "@getquick/content/forms/astro";
 import { WP_PDF_EMBED_PREVIEW } from "../../lib/wp-content-classes";
+import { gravityFormHtml, type PageForms } from "../../lib/forms";
 import type { WpPagePayload } from "../../lib/wp-page-payload";
 import { addDefaultPdfEmbeds } from "../../lib/wp-pdf-embeds";
 import { wpGroupLayoutClasses, withWpGroupLayoutClasses } from "../../lib/wp-group-layout";
@@ -33,12 +36,15 @@ interface Props {
   block: WpParsedBlock;
   pageFeaturedImage?: WpPagePayload["featuredImage"];
   unsupportedFallback?: WpUnsupportedFallbackMode;
+  /** The page's forms (src/lib/forms.ts): passed down to every nested block. */
+  forms?: PageForms | null;
 }
 
 const {
   block,
   pageFeaturedImage = null,
   unsupportedFallback = "saved-content",
+  forms = null,
 } = Astro.props;
 const groupLayoutClasses = block.blockName === "core/group" ? wpGroupLayoutClasses(block.attrs) : [];
 const withPresentation = (html: string) => block.blockName
@@ -91,15 +97,17 @@ const designShellEnd = designShell.lastIndexOf("</div");
         set:html={htmlWithPdfEmbeds}
       />
     ) : null
+  ) : block.blockName === GRAVITY_FORMS_BLOCK ? (
+    <div class="nomia-form" set:html={gravityFormHtml(block.attrs, forms)} />
   ) : block.blockName === "getquick-design/sliders" ? (
-    <DesignCarousel block={block} pageFeaturedImage={pageFeaturedImage} unsupportedFallback={unsupportedFallback} />
+    <DesignCarousel block={block} pageFeaturedImage={pageFeaturedImage} unsupportedFallback={unsupportedFallback} forms={forms} />
   ) : designContainer ? (
     <>
       <Fragment set:html={designShell.slice(0, designShellEnd)} />
       {designContainer.pieces.map((piece) => piece.type === "html" ? (
         <Fragment set:html={addDefaultPdfEmbeds(piece.html)} />
       ) : (
-        <WpBlock block={piece.block} pageFeaturedImage={pageFeaturedImage} unsupportedFallback={unsupportedFallback} />
+        <WpBlock block={piece.block} pageFeaturedImage={pageFeaturedImage} unsupportedFallback={unsupportedFallback} forms={forms} />
       ))}
       <Fragment set:html={designShell.slice(designShellEnd)} />
     </>
@@ -119,6 +127,7 @@ const designShellEnd = designShell.lastIndexOf("</div");
                 block={piece.block}
                 pageFeaturedImage={pageFeaturedImage}
                 unsupportedFallback={unsupportedFallback}
+                forms={forms}
               />
             ),
           )
@@ -142,6 +151,7 @@ const designShellEnd = designShell.lastIndexOf("</div");
             block={piece.block}
             pageFeaturedImage={pageFeaturedImage}
             unsupportedFallback={unsupportedFallback}
+            forms={forms}
           />
         ),
       )}
@@ -156,6 +166,7 @@ const designShellEnd = designShell.lastIndexOf("</div");
             block={piece.block}
             pageFeaturedImage={pageFeaturedImage}
             unsupportedFallback={unsupportedFallback}
+            forms={forms}
           />
         ),
       )}
@@ -167,6 +178,7 @@ const designShellEnd = designShell.lastIndexOf("</div");
           block={child}
           pageFeaturedImage={pageFeaturedImage}
           unsupportedFallback={unsupportedFallback}
+          forms={forms}
         />
       ))}
     </CoreButtons>
@@ -191,6 +203,7 @@ const designShellEnd = designShell.lastIndexOf("</div");
             block={piece.block}
             pageFeaturedImage={pageFeaturedImage}
             unsupportedFallback={unsupportedFallback}
+            forms={forms}
           />
         ),
       )}
@@ -212,6 +225,7 @@ const designShellEnd = designShell.lastIndexOf("</div");
           block={piece.block}
           pageFeaturedImage={pageFeaturedImage}
           unsupportedFallback={unsupportedFallback}
+          forms={forms}
         />
       ),
     )
