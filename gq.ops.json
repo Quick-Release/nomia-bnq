@@ -73,5 +73,9 @@
   },
   "github": {
     "repository": "Quick-Release/nomia-bnq"
+  },
+  "forms": {
+    "provider": "gravityforms",
+    "spam": ["honeypot"]
   }
 }

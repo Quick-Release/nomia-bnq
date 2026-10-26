@@ -25,6 +25,7 @@ import CoreImage from "./blocks/CoreImage.astro";
 import CoreList from "./blocks/CoreList.astro";
 import CoreParagraph from "./blocks/CoreParagraph.astro";
 import CoreQuote from "./blocks/CoreQuote.astro";
+import GravityFormBlock from "./blocks/GravityFormBlock.astro";
 import DesignCarousel from "./DesignCarousel.astro";
 import WpBlock from "./WpBlock.astro";
 import WpCustomBlock from "./WpCustomBlock.astro";
@@ -91,6 +92,8 @@ const designShellEnd = designShell.lastIndexOf("</div");
         set:html={htmlWithPdfEmbeds}
       />
     ) : null
+  ) : block.blockName === "gravityforms/form" ? (
+    <GravityFormBlock block={block} />
   ) : block.blockName === "getquick-design/sliders" ? (
     <DesignCarousel block={block} pageFeaturedImage={pageFeaturedImage} unsupportedFallback={unsupportedFallback} />
   ) : designContainer ? (

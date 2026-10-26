@@ -41,6 +41,8 @@ const entry = found && "entry" in found ? found.entry : null;
 const chrome =
   delivery.kind === "found" ? delivery.content.chrome : delivery.kind === "missing" ? delivery.chrome : null;
 const alternates = found?.alternates ?? [];
+// What a gravityforms/form block in the page needs (GravityFormBlock.astro).
+Astro.locals.forms = { forms: entry?.forms, language: language.lang, legal: chrome?.legal };
 // An Indicador's chart is its extension too, but its page is WordPress's.
 const nomia = nomiaPage(entry?.extension);
 const gallery = entry?.extension && "kind" in entry.extension && entry.extension.kind === "gallery" ? entry.extension : null;

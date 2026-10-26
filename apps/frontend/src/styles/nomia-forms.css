@@ -1,0 +1,163 @@
+/*
+ * Gravity Forms forms rendered by @getquick/content (GravityFormBlock.astro),
+ * in Nomia's tokens: the contact cards' surface, typography and pill button.
+ */
+.gq-form {
+  font-family: var(--font-primary);
+  color: var(--main-cinza-700);
+  letter-spacing: var(--tracking-typography-0);
+}
+
+.gq-form__visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.gq-form__title,
+.gq-form__section-title {
+  margin: 0 0 1rem;
+  font-size: var(--text-body-large);
+  line-height: var(--text-body-large--line-height);
+  font-weight: 600;
+}
+
+.gq-form__intro,
+.gq-form__legend,
+.gq-form__description {
+  margin: 0;
+  font-size: var(--text-notes);
+  line-height: var(--text-notes--line-height);
+}
+
+.gq-form__form {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.gq-form__field {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.gq-form__label {
+  padding: 0;
+  font-size: var(--text-notes);
+  font-weight: 600;
+}
+
+.gq-form__field--name {
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  column-gap: 1rem;
+}
+
+.gq-form__field--name > .gq-form__label {
+  grid-column: 1 / -1;
+}
+
+.gq-form__name-part {
+  display: grid;
+  gap: 0.25rem;
+  font-size: var(--text-notes);
+}
+
+.gq-form__field input:not([type="checkbox"]):not([type="radio"]),
+.gq-form__field textarea,
+.gq-form__field select {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  font: inherit;
+  font-size: var(--text-notes);
+  color: inherit;
+  background-color: var(--neutral-bw-white);
+  border: 2px solid var(--main-cinza-200);
+  border-radius: 1rem;
+}
+
+.gq-form__field textarea {
+  min-height: 10rem;
+  resize: vertical;
+}
+
+.gq-form__choice {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  font-size: var(--text-notes);
+}
+
+.gq-form__choice input {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.125rem;
+  accent-color: var(--main-cinza-700);
+}
+
+.gq-form__policy,
+.gq-form__html a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.gq-form__field--invalid input,
+.gq-form__field--invalid textarea,
+.gq-form__field--invalid select {
+  border-color: #b00020;
+}
+
+.gq-form__error,
+.gq-form__errors {
+  font-size: var(--text-notes);
+  color: #b00020;
+}
+
+.gq-form__errors,
+.gq-form__status {
+  padding: 1rem 1.5rem;
+  border: 2px solid currentColor;
+  border-radius: 1rem;
+}
+
+.gq-form__actions {
+  display: flex;
+}
+
+.gq-form__submit {
+  display: inline-flex;
+  align-items: center;
+  height: 3.5rem;
+  padding: 0.5rem 2rem;
+  font: inherit;
+  font-size: var(--text-notes);
+  font-weight: 500;
+  color: var(--main-cinza-700);
+  background: transparent;
+  border: 1px solid var(--main-cinza-700);
+  border-radius: 40px;
+  cursor: pointer;
+  transition:
+    background-color 150ms,
+    color 150ms;
+}
+
+.gq-form__submit:hover {
+  color: var(--neutral-bw-white);
+  background-color: var(--main-cinza-700);
+}
+
+.gq-form :focus-visible {
+  outline: 2px solid var(--main-teal-400);
+  outline-offset: 2px;
+}

@@ -1,0 +1,48 @@
+---
+/**
+ * A `gravityforms/form` block (gq-platform ADR 0009): @getquick/content renders
+ * the form from the descriptor published with the page, and it posts to the
+ * Site's managed /gq/forms/<id> route. The page puts its forms, language and
+ * Legal Contract in `Astro.locals.forms` ([...slug].astro); without them, or
+ * without the form's descriptor, the renderer shows a status message instead.
+ */
+import {
+  blockFormId,
+  clearFormStateCookie,
+  findForm,
+  readFormState,
+  renderGravityForm,
+} from "@getquick/content/forms/astro";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import "../../../styles/nomia-forms.css";
+
+interface Props {
+  block: WpParsedBlock;
+}
+
+const { block } = Astro.props;
+const page = Astro.locals.forms;
+const descriptor = findForm(page?.forms, blockFormId(block.attrs) ?? 0);
+const state = descriptor
+  ? readFormState({ url: Astro.url, cookie: Astro.request.headers.get("Cookie") }, descriptor.id)
+  : null;
+if (state) {
+  Astro.response.headers.append(
+    "Set-Cookie",
+    clearFormStateCookie(state.formId, { secure: Astro.url.protocol === "https:" }),
+  );
+}
+const html = renderGravityForm({
+  descriptor,
+  source: Astro.url.pathname,
+  language: page?.language ?? "pt-PT",
+  legal: page?.legal,
+  state,
+  // Gravity Forms' block shows the form's title and description unless the
+  // editor turned them off.
+  showTitle: block.attrs?.title !== false,
+  showDescription: block.attrs?.description !== false,
+});
+---
+
+<Fragment set:html={html} />
