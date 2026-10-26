@@ -4486,6 +4486,7 @@ return [
 					'list',
 					'thumbnail-grid',
 					'titled-thumbnail-grid',
+					'document-grid',
 				],
 			],
 			'perPage'        => [

@@ -12,7 +12,7 @@ namespace GetQuick\Bioeconomia\Details;
 use GetQuick\Bioeconomia\Plugin;
 
 /**
- * Biblioteca document details (year, author and file) as post meta, edited
+ * Biblioteca document details (year, publisher and links) as post meta, edited
  * in the "Detalhes do documento" panel (`assets/library-details.js`) and
  * exposed through REST and GraphQL.
  */
@@ -37,6 +37,7 @@ final class LibraryDetails {
 			'year'    => 'gq_bioeconomia_library_year',
 			'author'  => 'gq_bioeconomia_library_author',
 			'fileUrl' => 'gq_bioeconomia_library_file_url',
+			'pageUrl' => 'gq_bioeconomia_library_page_url',
 		];
 	}
 
@@ -70,7 +71,7 @@ final class LibraryDetails {
 			$meta_keys['author'],
 			[
 				'type'              => 'string',
-				'description'       => __( 'Autor do documento.', 'gq-bioeconomia' ),
+				'description'       => __( 'Publicado por.', 'gq-bioeconomia' ),
 				'single'            => true,
 				'default'           => '',
 				'sanitize_callback' => 'sanitize_text_field',
@@ -79,31 +80,40 @@ final class LibraryDetails {
 			],
 		);
 
-		register_post_meta(
-			'biblioteca',
-			$meta_keys['fileUrl'],
-			[
-				'type'              => 'string',
-				'description'       => __( 'Ficheiro do documento.', 'gq-bioeconomia' ),
-				'single'            => true,
-				'default'           => '',
-				'sanitize_callback' => 'esc_url_raw',
-				'auth_callback'     => $auth_callback,
-				'show_in_rest'      => true,
-			],
-		);
+		foreach ( [
+			'fileUrl' => __( 'Ficheiro PDF.', 'gq-bioeconomia' ),
+			'pageUrl' => __( 'Ligação para a página.', 'gq-bioeconomia' ),
+		] as $field => $description ) {
+			register_post_meta(
+				'biblioteca',
+				$meta_keys[ $field ],
+				[
+					'type'              => 'string',
+					'description'       => $description,
+					'single'            => true,
+					'default'           => '',
+					'sanitize_callback' => 'esc_url_raw',
+					'auth_callback'     => $auth_callback,
+					'show_in_rest'      => true,
+				],
+			);
+		}
 	}
 
 	/**
-	 * Normaliza o ano do documento: um inteiro positivo, ou 0 quando não há ano.
+	 * Normaliza o ano do documento: um ano de quatro algarismos, ou 0 quando não há ano.
 	 *
 	 * @param mixed $value Valor bruto.
 	 * @return int
 	 */
 	public static function sanitizeYear( $value ) {
-		$year = is_numeric( $value ) ? (int) $value : 0;
+		if ( ! is_scalar( $value ) || ! preg_match( '/^[0-9]{4}$/D', (string) $value ) ) {
+			return 0;
+		}
 
-		return $year > 0 ? $year : 0;
+		$year = (int) $value;
+
+		return $year >= 1000 && $year <= (int) gmdate( 'Y' ) + 1 ? $year : 0;
 	}
 
 	/**
@@ -113,17 +123,28 @@ final class LibraryDetails {
 	 */
 	public function registerGraphQLFields() {
 		$fields = [
-			'gqBioeconomiaLibraryYear'    => [
+			// Keep the original Author field and storage key for existing documents/clients.
+			'gqBioeconomiaLibraryPublisher' => [
+				'type'        => 'String',
+				'description' => __( 'Publicado por.', 'gq-bioeconomia' ),
+				'field'       => 'author',
+			],
+			'gqBioeconomiaLibraryPageUrl'   => [
+				'type'        => 'String',
+				'description' => __( 'Ligação para a página.', 'gq-bioeconomia' ),
+				'field'       => 'pageUrl',
+			],
+			'gqBioeconomiaLibraryYear'      => [
 				'type'        => 'Int',
 				'description' => __( 'Ano do documento.', 'gq-bioeconomia' ),
 				'field'       => 'year',
 			],
-			'gqBioeconomiaLibraryAuthor'  => [
+			'gqBioeconomiaLibraryAuthor'    => [
 				'type'        => 'String',
-				'description' => __( 'Autor do documento.', 'gq-bioeconomia' ),
+				'description' => __( 'Publicado por.', 'gq-bioeconomia' ),
 				'field'       => 'author',
 			],
-			'gqBioeconomiaLibraryFileUrl' => [
+			'gqBioeconomiaLibraryFileUrl'   => [
 				'type'        => 'String',
 				'description' => __( 'Ficheiro do documento.', 'gq-bioeconomia' ),
 				'field'       => 'fileUrl',
@@ -151,18 +172,20 @@ final class LibraryDetails {
 	 * Devolve os detalhes de um documento, com `null` nos campos vazios.
 	 *
 	 * @param int $post_id ID do documento.
-	 * @return array{year: int|null, author: string|null, fileUrl: string|null}
+	 * @return array{year: int|null, author: string|null, fileUrl: string|null, pageUrl: string|null}
 	 */
 	public static function forPost( $post_id ) {
 		$meta_keys = self::metaKeys();
 		$year      = self::sanitizeYear( get_post_meta( $post_id, $meta_keys['year'], true ) );
 		$author    = trim( (string) get_post_meta( $post_id, $meta_keys['author'], true ) );
+		$page_url  = trim( (string) get_post_meta( $post_id, $meta_keys['pageUrl'], true ) );
 		$file_url  = trim( (string) get_post_meta( $post_id, $meta_keys['fileUrl'], true ) );
 
 		return [
 			'year'    => $year > 0 ? $year : null,
 			'author'  => '' !== $author ? $author : null,
 			'fileUrl' => '' !== $file_url ? $file_url : null,
+			'pageUrl' => '' !== $page_url ? $page_url : null,
 		];
 	}
 
@@ -188,7 +211,13 @@ final class LibraryDetails {
 		wp_set_script_translations( 'gq-bioeconomia-library-details', Plugin::TEXT_DOMAIN, GQ_BIOECONOMIA_PLUGIN_DIR . '/languages' );
 		wp_add_inline_script(
 			'gq-bioeconomia-library-details',
-			'window.gqBioeconomiaLibraryDetails = ' . wp_json_encode( [ 'metaKeys' => self::metaKeys() ] ) . ';',
+			'window.gqBioeconomiaLibraryDetails = ' . wp_json_encode(
+				[
+					'metaKeys' => self::metaKeys(),
+					'yearMin'  => 1000,
+					'yearMax'  => (int) gmdate( 'Y' ) + 1,
+				]
+			) . ';',
 			'before',
 		);
 	}
