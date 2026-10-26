@@ -70,8 +70,8 @@ const hreflang =
       });
 const xDefault = hreflang.find((alternate) => alternate.language.isDefault);
 // CONSENT-1 and LEGAL-1 (docs/adr/0001): the Runtime's banner first in the
-// body, open only without a decision in force, and its legal links and Cookie
-// settings control in the footer, from the chrome the page was served with.
+// body, open only without a decision in force, from the chrome the page was
+// served with. Footer content is maintained in the CMS-selected pattern.
 const consent = consentPage({
   configuration: runtime.consentConfiguration(chrome)!,
   language: language.lang,
@@ -147,7 +147,6 @@ const consent = consentPage({
     <slot />
     <footer class="site-footer">
       {footerPattern && <DesignPatternRegion pattern={footerPattern} language={language} {...patternContext} />}
-      <Fragment set:html={consent.footer} />
     </footer>
     <script>
       import { startConsent } from "@getquick/content/consent/client";
