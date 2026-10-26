@@ -1,13 +1,18 @@
 name: Nomia nightly
 on:
+  schedule:
+    - cron: "*/5 * * * *"
   push:
     branches: [main]
   repository_dispatch:
-    types: [gq_design_nightly]
+    types: [gq_design_nightly, gq_content_nightly]
   workflow_dispatch:
     inputs:
       tag:
-        description: Exact producer nightly tag (empty selects newest ready)
+        description: Exact Design nightly tag (empty selects newest ready)
+        type: string
+      content_tag:
+        description: Exact Content nightly tag (empty selects newest ready)
         type: string
       site_ref:
         description: Exact Nomia commit for manual selection (empty uses main)
@@ -52,35 +57,47 @@ jobs:
             git merge-base --is-ancestor "$SITE_REF" origin/main
             git checkout --detach "$SITE_REF"
           fi
-      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 24
+      - name: Check automatic admission before preparing artifacts
+        id: admission
+        if: github.event_name != 'workflow_dispatch'
+        env:
+          SITE_GH_TOKEN: ${{ github.token }}
+        run: node scripts/design-nightly/admission.mjs
+      - uses: pnpm/action-setup@v4
+        if: github.event_name == 'workflow_dispatch' || steps.admission.outputs.needed == 'true'
       - uses: shivammathur/setup-php@v2
+        if: github.event_name == 'workflow_dispatch' || steps.admission.outputs.needed == 'true'
         with:
           php-version: "8.4"
           tools: composer:v2
           coverage: none
       - name: Install deployment tooling
+        if: github.event_name == 'workflow_dispatch' || steps.admission.outputs.needed == 'true'
         env:
           VP_GIT_HOOKS: "0"
         run: pnpm install --frozen-lockfile
       - name: Prepare exact snapshot
+        if: github.event_name == 'workflow_dispatch' || steps.admission.outputs.needed == 'true'
         id: prepare
         run: node scripts/design-nightly/run.mjs
       - uses: actions/upload-artifact@v4
+        if: github.event_name == 'workflow_dispatch' || steps.admission.outputs.needed == 'true'
         with:
           name: design-nightly-snapshot-${{ github.run_id }}-${{ github.run_attempt }}
           path: nightly-result/
           retention-days: 90
       - name: Deploy CMS and frontend, then refresh
+        if: github.event_name == 'workflow_dispatch' || steps.admission.outputs.needed == 'true'
         env:
           # Deployment ledger uses the destination's short-lived token.
           # Reader token remains separate for private producer assets.
           SITE_GH_TOKEN: ${{ github.token }}
         run: node scripts/design-nightly/activate.mjs
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: always() && (github.event_name == 'workflow_dispatch' || steps.admission.outputs.needed == 'true')
         with:
           name: design-nightly-result-${{ github.run_id }}-${{ github.run_attempt }}
           path: nightly-result/deployment.json

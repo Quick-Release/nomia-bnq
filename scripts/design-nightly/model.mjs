@@ -1,7 +1,25 @@
 import { createHash } from "node:crypto";
 
 export const producer = "Quick-Release/gq-design";
-export function validateManifest(m, tag, sourceSha) {
+export const producers = {
+  design: {
+    repository: producer,
+    manifestAsset: "design-release.json",
+    plugin: "getquick/gq-design",
+    assetPrefix: "gq-design",
+    type: "wordpress-plugin",
+    packages: ["@quick-release/design-contract", "@quick-release/design-renderer"],
+  },
+  content: {
+    repository: "Quick-Release/gq-content",
+    manifestAsset: "content-release.json",
+    plugin: "getquick/gq-content",
+    assetPrefix: "content-nightly",
+    type: "wordpress-muplugin",
+    packages: ["@getquick/content"],
+  },
+};
+export function validateManifest(m, tag, sourceSha, owner = producers.design) {
   const match = /^(\d+\.\d+\.\d+)-nightly\.(\d{8})\.(\d+)\.(\d+)$/.exec(m.version ?? "");
   if (
     !match ||
@@ -23,22 +41,20 @@ export function validateManifest(m, tag, sourceSha) {
     throw new Error("Missing boolean destructive migration declaration");
   const p = m.plugin;
   if (
-    p?.name !== "getquick/gq-design" ||
-    p.asset !== `gq-design-${m.version}.zip` ||
+    p?.name !== owner.plugin ||
+    p.asset !== `${owner.assetPrefix}-${m.version}.zip` ||
     !/^[a-f0-9]{64}$/.test(p.sha256 ?? "") ||
     p.composer?.name !== p.name ||
     p.composer.version !== `dev-nightly-${match[2]}.${m.sequence}.${m.attempt}` ||
-    p.composer.type !== "wordpress-plugin"
+    p.composer.type !== owner.type
   )
     throw new Error("Invalid plugin metadata");
   if (
     !Array.isArray(m.packages) ||
-    m.packages.length !== 2 ||
-    new Set(m.packages.map((p) => p.name)).size !== 2 ||
-    new Set(m.packages.map((p) => p.asset)).size !== 2 ||
-    m.packages.some(
-      (p) => !["@quick-release/design-contract", "@quick-release/design-renderer"].includes(p.name),
-    ) ||
+    m.packages.length !== owner.packages.length ||
+    new Set(m.packages.map((p) => p.name)).size !== owner.packages.length ||
+    new Set(m.packages.map((p) => p.asset)).size !== owner.packages.length ||
+    m.packages.some((p) => !owner.packages.includes(p.name)) ||
     m.packages.some(
       (p) =>
         p.version !== m.version ||
@@ -101,18 +117,16 @@ export function snapshotComposer(original, m, zipSha1) {
   });
   return result;
 }
-export function assertUnchangedDependencies(before, after) {
+export function assertUnchangedDependencies(before, after, allowed = ["getquick/gq-design"]) {
   const other = (lock) =>
     ["packages", "packages-dev"]
       .flatMap((key) =>
-        (lock[key] ?? [])
-          .filter((p) => p.name !== "getquick/gq-design")
-          .map((p) => JSON.stringify(p)),
+        (lock[key] ?? []).filter((p) => !allowed.includes(p.name)).map((p) => JSON.stringify(p)),
       )
       .sort();
   if (JSON.stringify(other(before)) !== JSON.stringify(other(after)))
     throw new Error(
-      "Nightly changed dependencies other than gq-design; explicit Site adoption required",
+      "Nightly changed dependencies other than selected nightlies; explicit Site adoption required",
     );
 }
 
@@ -148,19 +162,95 @@ export function activationDecision(
   // History arrives newest first from the deployment ledger. A manual rollback
   // changes the effective successful deployment, even if an older record still
   // has a success status. Historical inactive successes do not pin selection.
-  const effective = history.find(({ state }) => state === "success");
-  for (const { manifest } of history) {
+  const completedPlatform = (entry) =>
+    entry.githubApp === "github-actions" &&
+    entry.task === "deploy" &&
+    entry.environment === "nomia-design-nightly" &&
+    entry.ref === "main" &&
+    /^[a-f0-9]{40}$/.test(entry.sha ?? "") &&
+    /^https:\/\/github\.com\/Quick-Release\/nomia-bnq\/actions\/runs\/\d+\/job\/\d+$/.test(
+      entry.logUrl ?? "",
+    ) &&
+    entry.payload &&
+    typeof entry.payload === "object" &&
+    !Array.isArray(entry.payload) &&
+    Object.keys(entry.payload).length === 0;
+  // Completed no-op Actions environment records are bookkeeping, not deployed
+  // snapshots. Unknown successful callers still prevent deduplication. The
+  // unresolved fence above applies to every historical platform record.
+  const effective = history.find((entry) => entry.state === "success" && !completedPlatform(entry));
+  const candidates = snapshot?.manifests ?? { design: candidate };
+  const manifestsOf = (entry) =>
+    entry?.payload?.manifests ?? (entry?.manifest ? { design: entry.manifest } : {});
+  if (!manual) {
+    for (const entry of history) {
+      for (const [name, previous] of Object.entries(manifestsOf(entry))) {
+        if (candidates[name] && compareNightlies(previous, candidates[name]) > 0)
+          return "superseded";
+      }
+    }
+    const deployed = manifestsOf(effective);
     if (
-      !manual &&
-      manifest &&
-      (compareNightlies(manifest, candidate) > 0 ||
-        (compareNightlies(manifest, candidate) === 0 &&
-          manifest === effective?.manifest &&
-          (!snapshot ||
-            (effective.payload?.siteSha === snapshot.siteSha &&
-              effective.payload?.frontendDeployment === true))))
+      effective &&
+      Object.entries(candidates).every(
+        ([name, m]) =>
+          deployed[name]?.tag === m.tag &&
+          deployed[name]?.sourceSha === m.sourceSha &&
+          compareNightlies(deployed[name], m) === 0,
+      ) &&
+      (!snapshot ||
+        (effective.payload?.siteSha === snapshot.siteSha &&
+          effective.payload?.frontendDeployment === true))
     )
       return "superseded";
   }
   return "activate";
+}
+
+// Compare installed dependency graphs, allowing only the frontend Content root
+// identity to change. Tooling's stable Content dependency remains untouched.
+export function dependencyGraph(projects) {
+  const kinds = ["dependencies", "devDependencies", "optionalDependencies"];
+  const expanded = new Map();
+  const index = (node) => {
+    if (node.path && !node.deduped) expanded.set(node.path, node);
+    for (const kind of kinds) for (const child of Object.values(node[kind] ?? {})) index(child);
+  };
+  projects.forEach(index);
+  const walk = (input, contentRoot = false, ancestors = new Set()) => {
+    const node = input.deduped ? expanded.get(input.path) : input;
+    if (!node) throw new Error("Missing expanded pnpm dependency reference");
+    const cycle = node.path && ancestors.has(node.path);
+    const next = new Set(ancestors);
+    if (node.path) next.add(node.path);
+    return {
+      ...(!contentRoot ? { version: node.version, resolved: node.resolved } : {}),
+      ...Object.fromEntries(
+        kinds.map((kind) => [
+          kind,
+          Object.fromEntries(
+            Object.entries(cycle ? {} : (node[kind] ?? {}))
+              .sort()
+              .map(([name, child]) => [name, walk(child, false, next)]),
+          ),
+        ]),
+      ),
+    };
+  };
+  return projects
+    .map((project) => {
+      const tree = walk(project);
+      if (project.name === "@nomia-bnq/frontend" && project.dependencies?.["@getquick/content"])
+        tree.dependencies["@getquick/content"] = walk(
+          project.dependencies["@getquick/content"],
+          true,
+        );
+      return { name: project.name, ...tree };
+    })
+    .sort((a, b) => a.name.localeCompare(b.name));
+}
+export function verifyPackage(bytes, p) {
+  if (hash(bytes) !== p.sha256) throw new Error("Package SHA256 mismatch");
+  if (p.integrity !== `sha512-${createHash("sha512").update(bytes).digest("base64")}`)
+    throw new Error("Package integrity mismatch");
 }

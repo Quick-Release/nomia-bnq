@@ -1,7 +1,7 @@
 import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
-import { activationDecision, compareNightlies } from "./model.mjs";
-import { api, latest, currentActionsJob } from "./github.mjs";
+import { activationDecision, compareNightlies, producers } from "./model.mjs";
+import { api, latest, currentActionsJob, deploymentHistory } from "./github.mjs";
 import { completeDeployment } from "./completion.mjs";
 
 const site = process.env.GITHUB_REPOSITORY;
@@ -23,33 +23,22 @@ const currentJob = await currentActionsJob({
   refName: process.env.GITHUB_REF_NAME,
   runnerName: process.env.RUNNER_NAME,
 });
-const history = [];
-for (let page = 1; ; page++) {
-  const deployments = await api(
-    `${site}/deployments?environment=${environment}&per_page=100&page=${page}`,
-  );
-  for (const deployment of deployments) {
-    const statuses = await api(`${site}/deployments/${deployment.id}/statuses?per_page=1`);
-    history.push({
-      id: deployment.id,
-      state: statuses[0]?.state,
-      manifest: deployment.payload?.manifest,
-      payload: deployment.payload,
-      ref: deployment.ref,
-      sha: deployment.sha,
-      environment: deployment.environment,
-      task: deployment.task,
-      logUrl: statuses[0]?.log_url,
-    });
-  }
-  if (deployments.length < 100) break;
-}
+const history = await deploymentHistory(site);
 if (activationDecision(m, history, record.selectedManually, currentJob, record) === "superseded") {
   record.state = "superseded";
   save();
   process.exit(0);
 }
-if (!record.selectedManually && compareNightlies(await latest(), m) > 0) {
+if (
+  !record.selectedManually &&
+  (
+    await Promise.all(
+      Object.entries(producers).map(
+        async ([name, owner]) => compareNightlies(await latest(owner), record.manifests[name]) > 0,
+      ),
+    )
+  ).some(Boolean)
+) {
   record.state = "superseded";
   save();
   process.exit(0);
@@ -59,7 +48,7 @@ const deployment = await api(`${site}/deployments`, {
   environment,
   auto_merge: false,
   required_contexts: [],
-  description: m.tag,
+  description: `Design ${m.version}; Content ${record.manifests.content.version}`,
   transient_environment: true,
   production_environment: false,
   payload: record,

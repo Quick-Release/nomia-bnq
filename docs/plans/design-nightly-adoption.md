@@ -2,10 +2,12 @@
 
 Nomia is an opted-in development Site with no traffic; breaking changes are
 expected. Merges to this Site's `main` and completed GQ Design nightlies both
-start **Nomia nightly**. Each run selects current Site main and the newest ready
-immutable Design build, then deploys the CMS, builds/deploys the frontend, and
-refreshes published content. Manual inputs select exact Design and Site sources
-for investigation or rollback. There is no clock-based nightly schedule.
+start **Nomia nightly**. Content completion events and a five-minute Actions
+schedule use this same path. Each run selects current Site main and the newest ready
+immutable Design and Content builds, then deploys the CMS, builds/deploys the frontend, and
+refreshes published content. Manual inputs select exact Design, Content and Site sources
+for investigation or rollback. The schedule is a latest-ready fallback while producer dispatch is opt-in;
+GitHub may delay scheduled runs.
 
 No test suite or acceptance suite gates this development delivery path. Locked
 installs, artifact verification, successful builds and deployment completion are
@@ -30,6 +32,60 @@ these checks, whether automated or performed manually by an agent. Nightly
 completion uses artifact integrity, successful builds, deployment status and
 publication refresh. Local fixture and regression tests retain their existing
 PR and stable-release policy.
+
+## Content adoption
+
+Content uses the same workflow, `nomia-cms-deployment` concurrency group,
+`nomia-design-nightly` protected environment, existing credentials and deployment
+ledger as Design. No independent activator is enabled. `DESIGN_NIGHTLY_ENABLED`
+still controls the whole path; `design-nightly.json` retains the development-only
+hostname and Ploi target guard.
+
+`gq_content_nightly` accepts `repository: Quick-Release/gq-content`, `tag`,
+`version`, `sourceSha`, `manifestAsset: content-release.json`. Schema 1 matches
+Design's identity, source-tag verification and mandatory boolean migration guard.
+Content declares one `wordpress-muplugin` package (`getquick/gq-content`) and one
+npm package (`@getquick/content`) with the same nightly version and source. The
+completion marker requires both uploaded artifacts. Each producer's sequence and
+attempt are compared independently; a Content counter never orders a Design build.
+
+Content prereleases retain `content-nightly-VERSION.zip` and
+`getquick-content-VERSION.tgz`. Preparation verifies ZIP SHA256, tarball SHA256
+and SHA512 integrity, and the tarball's embedded name/version. The frontend
+requires the bundled `file:nightly/getquick-content-VERSION.tgz`, installs offline,
+and records its regenerated pnpm lock. No npm dist-tag, npm credential, registry
+publication or raw tag archive is used for nightly Content. Stable public npm
+publishing is unchanged. The distinct nightly ZIP prefix prevents the stable
+Composer registry from discovering the development-only artifacts.
+
+The ephemeral snapshot bundles both producer manifests and ZIPs, Content's tgz,
+both resolved locks and a deployment record with `manifests.design` and
+`manifests.content`, Site SHA, snapshot SHA and lock hashes. The historical
+`manifest` field and `deploymentKind: nomia-design-nightly` stay readable for
+existing Design ledger records. Only Design and Content Composer packages may
+change. The installed frontend/tooling dependency graph may change only the
+frontend Content root's version/artifact; changed transitive dependencies require
+explicit Site adoption. Checked-in stable pins and managed output remain unchanged.
+
+The activation fence covers CMS deployment, frontend build/deploy and publication
+refresh from that exact snapshot. Automatic activation rejects superseded builds
+for either producer and deduplicates only a successful matching Site/Design/Content
+triple. Old Design-only records do not suppress the first Content adoption.
+Manual `tag` chooses Design; `content_tag` chooses Content; empty inputs select
+the newest complete releases. Supply both exact tags and `site_ref` from a prior
+record for rollback. Existing snapshot bundle retention and reconciliation rules
+below apply to both halves. Code rollback does not reverse migrations.
+
+The five-minute schedule polls complete releases under the same lock. A read-only
+admission check compares complete manifests and Site SHA against the shared
+ledger before installing tooling or downloading runtime artifacts. Unchanged
+automatic runs skip snapshot preparation, bundling, artifact uploads and deploy;
+all unresolved deployment fences still apply. Activation repeats the checks. Producer
+dispatch remains optional and requires a separately provisioned destination write
+token; the operator's GitHub OAuth token must never be installed as a CI secret.
+The existing protected producer reader is reused for public Content release reads;
+actual permission is verified by preparation before any activation. No automated
+suites or live editor acceptance checks run on the nightly deployment path.
 
 ## Released and installed baseline
 

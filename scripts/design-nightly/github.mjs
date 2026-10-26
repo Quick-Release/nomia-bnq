@@ -1,4 +1,4 @@
-import { producer, validateManifest, newest } from "./model.mjs";
+import { producers, validateManifest, newest } from "./model.mjs";
 const token = process.env.GH_TOKEN;
 const headers = {
   Authorization: `Bearer ${token}`,
@@ -27,15 +27,15 @@ export async function asset(release, name) {
   if (!response.ok) throw new Error(`Asset download ${response.status}`);
   return Buffer.from(await response.arrayBuffer());
 }
-export async function manifest(release) {
-  const m = JSON.parse(await asset(release, "design-release.json"));
-  const ref = await api(`${producer}/git/ref/tags/${encodeURIComponent(release.tag_name)}`);
+export async function manifest(release, owner = producers.design) {
+  const m = JSON.parse(await asset(release, owner.manifestAsset));
+  const ref = await api(`${owner.repository}/git/ref/tags/${encodeURIComponent(release.tag_name)}`);
   let object = ref.object;
   for (let i = 0; object.type === "tag" && i < 5; i++)
-    object = (await api(`${producer}/git/tags/${object.sha}`)).object;
+    object = (await api(`${owner.repository}/git/tags/${object.sha}`)).object;
   if (object.type !== "commit" || release.draft || !release.prerelease)
     throw new Error("Expected published nightly tag at commit");
-  validateManifest(m, release.tag_name, object.sha);
+  validateManifest(m, release.tag_name, object.sha, owner);
   const requiredAssets = [m.plugin.asset, ...m.packages.map((p) => p.asset)];
   if (
     requiredAssets.some(
@@ -45,16 +45,16 @@ export async function manifest(release) {
     throw new Error("Incomplete lockstep release assets");
   return m;
 }
-export async function latest() {
+export async function latest(owner = producers.design) {
   const ready = [];
   for (let page = 1; ; page++) {
-    const releases = await api(`${producer}/releases?per_page=100&page=${page}`);
+    const releases = await api(`${owner.repository}/releases?per_page=100&page=${page}`);
     for (const release of releases.filter(
       (r) =>
         !r.draft &&
         r.prerelease &&
         /^v\d+\.\d+\.\d+-nightly\./.test(r.tag_name) &&
-        r.assets.some((a) => a.name === "design-release.json"),
+        r.assets.some((a) => a.name === owner.manifestAsset),
     )) {
       // A published completion manifest with invalid metadata must fail closed.
       const parts = /-nightly\.\d{8}\.(\d+)\.(\d+)$/.exec(release.tag_name);
@@ -65,7 +65,7 @@ export async function latest() {
   }
   const m = newest(ready);
   if (!m) throw new Error("No complete nightly releases");
-  return manifest(m.release);
+  return manifest(m.release, owner);
 }
 
 export async function currentActionsJob({
@@ -100,4 +100,59 @@ export async function currentActionsJob({
   const jobUrl = `https://github.com/${site}/actions/runs/${runId}/job/${matches[0].id}`;
   if (matches[0].html_url !== jobUrl) throw new Error("Unexpected current Actions job URL");
   return { jobUrl, headSha, refName, environment: "nomia-design-nightly" };
+}
+
+// One GraphQL batch per REST deployment page retains every historical fence
+// without one status request per record on the five-minute admission check.
+export async function deploymentStatuses(deployments) {
+  if (!deployments.length) return [];
+  if (deployments.some((d) => typeof d.node_id !== "string"))
+    throw new Error("Missing deployment node identity");
+  const response = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers: { ...headers, Authorization: `Bearer ${process.env.SITE_GH_TOKEN}` },
+    body: JSON.stringify({
+      query:
+        "query($ids:[ID!]!){nodes(ids:$ids){... on Deployment{id latestStatus{state logUrl}}}}",
+      variables: { ids: deployments.map((d) => d.node_id) },
+    }),
+  });
+  if (!response.ok) throw new Error(`Deployment status batch HTTP ${response.status}`);
+  const result = await response.json();
+  if (
+    result.errors?.length ||
+    !Array.isArray(result.data?.nodes) ||
+    result.data.nodes.length !== deployments.length
+  )
+    throw new Error("Incomplete deployment status batch");
+  return result.data.nodes.map((node, index) => {
+    if (node?.id !== deployments[index].node_id)
+      throw new Error("Deployment status identity mismatch");
+    return { state: node.latestStatus?.state?.toLowerCase(), log_url: node.latestStatus?.logUrl };
+  });
+}
+
+export async function deploymentHistory(site) {
+  const history = [];
+  for (let page = 1; ; page++) {
+    const deployments = await api(
+      `${site}/deployments?environment=nomia-design-nightly&per_page=100&page=${page}`,
+    );
+    const statuses = await deploymentStatuses(deployments);
+    for (const [index, deployment] of deployments.entries())
+      history.push({
+        githubApp: deployment.performed_via_github_app?.slug,
+        id: deployment.id,
+        state: statuses[index]?.state,
+        manifest: deployment.payload?.manifest,
+        payload: deployment.payload,
+        ref: deployment.ref,
+        sha: deployment.sha,
+        environment: deployment.environment,
+        task: deployment.task,
+        logUrl: statuses[index]?.log_url,
+      });
+    if (deployments.length < 100) break;
+  }
+  return history;
 }
