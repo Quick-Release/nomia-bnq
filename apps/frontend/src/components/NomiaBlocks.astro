@@ -10,6 +10,7 @@ import WpBlockRenderer from "./wp-blocks/WpBlockRenderer.astro";
 import { thematicColorStyles } from "../lib/thematic-area";
 import { isLightHexColor } from "../lib/color-contrast";
 import { gatedNomiaContent } from "../lib/consent";
+import type { PageForms } from "../lib/forms";
 import type { NomiaContent } from "../lib/nomia-content";
 import { normalizeSectionBackground } from "../lib/section-block";
 import "../styles/nomia-blocks.css";
@@ -24,9 +25,11 @@ interface Props {
   featuredImage?: WordPressImage | null;
   /** The page's language: consent placeholders follow it. */
   language: SiteLanguage;
+  /** The page's forms: its gravityforms/form blocks render them. */
+  forms?: PageForms | null;
 }
 
-const { design, featuredImage = null, language } = Astro.props;
+const { design, featuredImage = null, language, forms = null } = Astro.props;
 // Third-party embeds in the blocks' saved HTML become consent placeholders
 // (CONSENT-1 CN-R13): the runtime gates bodies, not the Site's extension.
 const nomia = gatedNomiaContent(Astro.props.nomia, language.lang);
@@ -44,5 +47,5 @@ const surface = background
 <style is:global set:html={colorRules} />
 <style is:global set:html={thematicColorStyles(nomia.thematicColors)} />
 <main class:list={["nomia-blocks", surface?.class]} style={surface?.style}>
-  <WpBlockRenderer blocks={nomia.blocks} bare wrapCoreBlocks pageFeaturedImage={featuredImage} />
+  <WpBlockRenderer blocks={nomia.blocks} bare wrapCoreBlocks pageFeaturedImage={featuredImage} forms={forms} />
 </main>

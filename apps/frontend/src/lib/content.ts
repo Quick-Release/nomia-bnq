@@ -15,6 +15,7 @@ const manifest = ops as {
   domains?: { admin: string };
   media?: { domain?: string };
   wordpress?: { locale?: string; languages?: Array<{ locale: string; slug: string }> };
+  forms?: { provider: string; spam?: string[] };
 };
 
 /** The CMS's GraphQL endpoint: the deploy sets it; local development reads DDEV's. */
@@ -75,6 +76,10 @@ export function content() {
     // gq-bioeconomia's types, stored as collections so their items are served and
     // listed from the store (src/lib/content-collections.ts).
     collections: RUNTIME_COLLECTIONS,
+    // Each page is stored with its Gravity Forms forms' descriptors (gq-platform
+    // ADR 0009): its gravityforms/form blocks render them (src/lib/forms.ts), and
+    // the managed /gq/forms/ route checks posts against them.
+    forms: Boolean(manifest.forms),
   });
 }
 

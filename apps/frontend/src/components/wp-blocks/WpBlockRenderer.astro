@@ -1,5 +1,6 @@
 ---
 import { WP_CONTENT_PROSE } from "../../lib/wp-content-classes";
+import type { PageForms } from "../../lib/forms";
 import type { WpParsedBlock } from "../../lib/wp-blocks";
 import type { WpPagePayload } from "../../lib/wp-page-payload";
 import WpBlock from "./WpBlock.astro";
@@ -9,9 +10,10 @@ interface Props {
   bare?: boolean;
   wrapCoreBlocks?: boolean;
   pageFeaturedImage?: WpPagePayload["featuredImage"];
+  forms?: PageForms | null;
 }
 
-const { blocks, bare = false, wrapCoreBlocks = false, pageFeaturedImage = null } = Astro.props;
+const { blocks, bare = false, wrapCoreBlocks = false, pageFeaturedImage = null, forms = null } = Astro.props;
 /** Core Gutenberg body copy sits on the page's white surface, in black. */
 const coreBlockTemplate =
   "bg-neutral-bw-white text-neutral-bw-black [&_a]:text-main-ciano-500 [&_a]:underline [&_a]:decoration-main-ciano-500/70 [&_a]:underline-offset-4 [&_strong]:text-neutral-bw-black";
@@ -65,12 +67,12 @@ const groupedBlocks = blocks.reduce<BlockGroup[]>((groups, block) => {
           ]}
         >
           {group.blocks.map((block) => (
-            <WpBlock block={block} pageFeaturedImage={pageFeaturedImage} />
+            <WpBlock block={block} pageFeaturedImage={pageFeaturedImage} forms={forms} />
           ))}
         </div>
       </section>
     ) : (
-      <WpBlock block={group.block} pageFeaturedImage={pageFeaturedImage} />
+      <WpBlock block={group.block} pageFeaturedImage={pageFeaturedImage} forms={forms} />
     )
   ))}
 </div>

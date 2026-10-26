@@ -90,6 +90,11 @@ export async function createAstroRenderHarness() {
 
       return { document, html };
     },
+    /** Loads any module of the app through Vite, by its path from the app's root. */
+    async loadModule(path) {
+      if (closed) throw new Error("Astro render harness is closed");
+      return viteServer.ssrLoadModule(path);
+    },
     /** Renders any component of the app, by its path from the app's root. */
     async renderComponent(path, props = {}) {
       if (closed) throw new Error("Astro render harness is closed");

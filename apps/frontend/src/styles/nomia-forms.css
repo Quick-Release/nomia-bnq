@@ -1,0 +1,206 @@
+/*
+ * Gravity Forms forms as @getquick/content renders them (gq-platform ADR 0009;
+ * src/lib/forms.ts): its `gq-form*` classes in Nomia's tokens, as a card
+ * beside the contact details cards (ContactDetailsCardBlock.astro). Gravity
+ * Forms' own CSS and JS never load. Imported by global.css, so the tokens are
+ * Tailwind's theme variables.
+ */
+
+.nomia-form {
+  width: 100%;
+}
+
+.gq-form {
+  display: grid;
+  gap: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 2rem clamp(1.5rem, 6%, 4rem);
+  border: 2px solid var(--color-main-cinza-200);
+  border-radius: 1rem;
+  background-color: var(--color-main-cinza-100);
+  color: var(--color-main-cinza-700);
+  font-family: var(--font-primary);
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+  letter-spacing: var(--tracking-typography-0);
+}
+
+.gq-form__title {
+  margin: 0;
+  font-size: var(--text-subtitle);
+  line-height: var(--text-subtitle--line-height);
+  font-weight: 600;
+}
+
+.gq-form__intro,
+.gq-form__legend,
+.gq-form__description {
+  margin: 0;
+  font-size: var(--text-notes);
+  line-height: var(--text-notes--line-height);
+}
+
+.gq-form__form {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.gq-form__field {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.gq-form__label {
+  padding: 0;
+  font-size: var(--text-notes);
+  line-height: var(--text-notes--line-height);
+  font-weight: 600;
+}
+
+.gq-form__field input:not([type="checkbox"], [type="radio"]),
+.gq-form__field textarea,
+.gq-form__field select {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-main-cinza-400);
+  border-radius: 0.5rem;
+  background-color: var(--color-neutral-bw-white);
+  color: var(--color-main-cinza-700);
+  font: inherit;
+}
+
+.gq-form__field textarea {
+  resize: vertical;
+}
+
+.gq-form__field--invalid input:not([type="checkbox"], [type="radio"]),
+.gq-form__field--invalid textarea,
+.gq-form__field--invalid select {
+  border-color: var(--color-main-laranja-700);
+}
+
+.gq-form__name-part {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.gq-form__choice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: var(--text-notes);
+  line-height: var(--text-notes--line-height);
+}
+
+.gq-form__choice input {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin: 0;
+  accent-color: var(--color-main-cinza-700);
+  translate: 0 0.2em;
+}
+
+.gq-form__policy {
+  color: var(--color-main-ciano-500);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.gq-form__required,
+.gq-form__error,
+.gq-form__errors {
+  color: var(--color-main-laranja-700);
+}
+
+.gq-form__error {
+  margin: 0;
+  font-size: var(--text-notes);
+  line-height: var(--text-notes--line-height);
+}
+
+.gq-form__errors,
+.gq-form__status {
+  margin: 0;
+  padding: 1rem 1.25rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-neutral-bw-white);
+}
+
+.gq-form__errors {
+  border: 2px solid currentColor;
+}
+
+.gq-form__errors p,
+.gq-form__errors ul,
+.gq-form__status p {
+  margin: 0;
+}
+
+.gq-form__errors ul {
+  margin-top: 0.5rem;
+  padding-left: 1.25rem;
+}
+
+.gq-form__errors a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.gq-form__status--sent {
+  border: 2px solid var(--color-main-teal-500);
+}
+
+.gq-form__actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* The contact cards' outline pill button. */
+.gq-form__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 3.5rem;
+  padding: 0.5rem 2rem;
+  border: 1px solid var(--color-main-cinza-700);
+  border-radius: 40px;
+  background-color: transparent;
+  color: var(--color-main-cinza-700);
+  font: inherit;
+  font-size: var(--text-notes);
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 150ms,
+    color 150ms;
+}
+
+.gq-form__submit:hover {
+  background-color: var(--color-main-cinza-700);
+  color: var(--color-neutral-bw-white);
+}
+
+.gq-form :focus-visible {
+  outline: 2px solid var(--color-main-teal-400);
+  outline-offset: 2px;
+}
+
+.gq-form__visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
