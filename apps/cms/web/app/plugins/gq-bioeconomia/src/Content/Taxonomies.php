@@ -213,6 +213,39 @@ final class Taxonomies {
 					],
 				],
 			],
+			'entidades'              => [
+				'object_type' => [ 'oportunidades' ],
+				'args'        => [
+					'hierarchical'        => false,
+					'labels'              => [
+						'name'                       => __( 'Entidades', 'gq-bioeconomia' ),
+						'singular_name'              => __( 'Entidade', 'gq-bioeconomia' ),
+						'search_items'               => __( 'Pesquisar Entidades', 'gq-bioeconomia' ),
+						'all_items'                  => __( 'Todas as Entidades', 'gq-bioeconomia' ),
+						'edit_item'                  => __( 'Editar Entidade', 'gq-bioeconomia' ),
+						'view_item'                  => __( 'Ver Entidade', 'gq-bioeconomia' ),
+						'update_item'                => __( 'Atualizar Entidade', 'gq-bioeconomia' ),
+						'add_new_item'               => __( 'Adicionar Nova Entidade', 'gq-bioeconomia' ),
+						'new_item_name'              => __( 'Nome da Nova Entidade', 'gq-bioeconomia' ),
+						'separate_items_with_commas' => __( 'Separe as entidades por vírgulas', 'gq-bioeconomia' ),
+						'add_or_remove_items'        => __( 'Adicionar ou remover entidades', 'gq-bioeconomia' ),
+						'choose_from_most_used'      => __( 'Escolher entre as entidades mais utilizadas', 'gq-bioeconomia' ),
+						'menu_name'                  => __( 'Entidades', 'gq-bioeconomia' ),
+						'not_found'                  => __( 'Nenhuma entidade encontrada.', 'gq-bioeconomia' ),
+					],
+					'show_ui'             => true,
+					'show_admin_column'   => true,
+					'query_var'           => true,
+					'show_in_rest'        => true,
+					'show_in_graphql'     => true,
+					'graphql_single_name' => 'Entidade',
+					'graphql_plural_name' => 'Entidades',
+					'rewrite'             => [
+						'slug'       => 'entidades',
+						'with_front' => false,
+					],
+				],
+			],
 		];
 	}
 
