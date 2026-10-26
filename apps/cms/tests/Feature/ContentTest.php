@@ -368,7 +368,14 @@ test('content types are registered with rest support and custom capabilities', f
     $databases = $GLOBALS['lgm_test_state']['post_types']['bases_de_dados'];
     $taxonomy = $GLOBALS['lgm_test_state']['taxonomies']['categoria_biblioteca'];
     $opportunity_taxonomy = $GLOBALS['lgm_test_state']['taxonomies']['categoria_oportunidade'];
+    $entities = $GLOBALS['lgm_test_state']['taxonomies']['entidades'];
     $global_taxonomy_post_types = Taxonomies::globalPostTypes();
+
+    expect($entities['object_type'])->toBe([ 'oportunidades' ])
+        ->and($entities['args']['hierarchical'])->toBeFalse()
+        ->and($entities['args']['labels']['name'])->toBe('Entidades')
+        ->and($entities['args']['show_ui'])->toBeTrue()
+        ->and($entities['args']['show_in_rest'])->toBeTrue();
 
     expect($library['show_in_rest'])->toBeTrue()
         ->and($library['has_archive'])->toBeFalse()
@@ -488,6 +495,7 @@ test('every taxonomy is exposed to WPGraphQL for the archive listings', function
         'tematicas' => [ true, 'Tematica', 'Tematicas' ],
         'setor_atividade' => [ true, 'SetorAtividade', 'SetoresAtividade' ],
         'categoria_oportunidade' => [ true, 'CategoriaOportunidade', 'CategoriasOportunidade' ],
+        'entidades' => [ true, 'Entidade', 'Entidades' ],
     ]);
 });
 
