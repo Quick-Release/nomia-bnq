@@ -41,6 +41,8 @@ export default defineStructuredBlock({
     display: stringAttribute("list", { enum: LISTING_DISPLAYS, ui: { kind: "select" } }),
     perPage: numberAttribute(LISTING_PER_PAGE_DEFAULT),
     showPagination: booleanAttribute(true),
+    infiniteLoading: booleanAttribute(false),
+    lightbox: booleanAttribute(true),
   },
   renderer: {
     module: "ContentListingBlock.astro",

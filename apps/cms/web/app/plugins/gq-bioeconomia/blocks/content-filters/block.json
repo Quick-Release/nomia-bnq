@@ -27,6 +27,7 @@
 			"type": "string",
 			"default": "biblioteca",
 			"enum": [
+				"gq_bio_gallery",
 				"biblioteca",
 				"eventos",
 				"oportunidades",

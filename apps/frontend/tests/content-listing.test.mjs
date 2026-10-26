@@ -226,3 +226,38 @@ test("a Filters block with nothing to offer renders nothing", async () => {
   });
   assert.equal(document.querySelector("form"), null);
 });
+
+test("gallery thumbnails offer an accessible lightbox with image-link fallback", async () => {
+  const { document } = await (
+    await harnessPromise
+  ).renderComponent(listing, {
+    display: "thumbnail-grid",
+    rows: items,
+    empty: "none",
+    lightbox: true,
+  });
+  assert.equal(document.querySelectorAll("li a[aria-haspopup='dialog']").length, 2);
+  assert.ok(document.querySelector("dialog[data-listing-dialog]"));
+  assert.ok(document.querySelector("button[aria-label='Fotografia anterior']"));
+  assert.ok(document.querySelector("button[aria-label='Fotografia seguinte']"));
+});
+
+test("infinite loading uses the next filtered URL and hides numbered pagination", async () => {
+  const pagination = listingPagination(new URL("https://nomia.bnq.pt/eventos/?q=agua"), 1, 3);
+  const { document } = await (
+    await harnessPromise
+  ).renderComponent(listing, {
+    display: "thumbnail-grid",
+    rows: items,
+    empty: "none",
+    infiniteLoading: true,
+    ...pagination,
+  });
+  assert.equal(
+    document.querySelector("[data-listing-more]").getAttribute("href"),
+    "/eventos/?q=agua&pagina=2",
+  );
+  assert.equal(document.querySelector("nav"), null);
+  assert.ok(document.querySelector("[data-listing-status][role='status']"));
+  assert.equal(document.querySelector("dialog"), null);
+});

@@ -96,6 +96,11 @@ var gqBioeconomiaFrontendRules = (function(exports) {
 		label: "Setor de atividade"
 	}];
 	var CONTENT_COLLECTIONS = {
+		gq_bio_gallery: {
+			label: "Galerias",
+			graphqlType: "Galeria",
+			taxonomies: []
+		},
 		biblioteca: {
 			label: "Biblioteca",
 			graphqlType: "Biblioteca",

@@ -5,6 +5,7 @@
  * archive): a list of titles, a grid of thumbnails with the title over the
  * image, a two-column grid with the title above the image, or Biblioteca document cards.
  */
+import ListingEnhancements from "./ListingEnhancements.astro";
 import { safeHref } from "../../../lib/safe-href";
 import type { ListingDisplay } from "../../../lib/content-collections";
 import { PAGE_FRAME } from "../../../lib/site-gutters";
@@ -28,6 +29,8 @@ export interface ListingPageLink {
 }
 
 interface Props {
+  infiniteLoading?: boolean;
+  lightbox?: boolean;
   display: ListingDisplay;
   rows: ListingRow[];
   /** Why there are no rows: nothing published, nothing matches, or the store didn't answer. */
@@ -38,7 +41,7 @@ interface Props {
   next?: string | null;
 }
 
-const { display, rows, empty, pages = [], previous = null, next = null } = Astro.props;
+const { display, rows, empty, pages = [], previous = null, next = null, infiniteLoading = false, lightbox = false } = Astro.props;
 const emptyText = {
   none: "Ainda não há entradas publicadas.",
   "no-match": "Nenhum conteúdo corresponde à pesquisa.",
@@ -54,16 +57,16 @@ const focusRing =
   "focus-visible:ring-main-teal-400 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none";
 ---
 
-<section class={`${PAGE_FRAME} font-secondary py-10 md:py-12`} data-nomia-content-listing={display}>
+<section class={`${PAGE_FRAME} font-secondary py-10 md:py-12`} data-nomia-content-listing={display} data-infinite={infiniteLoading || undefined} data-lightbox={lightbox || undefined}>
   {rows.length === 0 ? (
     <p class="text-base opacity-70">{emptyText}</p>
   ) : (
-    <ul class={listClass}>
+    <ul class={listClass} data-listing-rows>
       {rows.map((row) => (
-        <li class:list={["min-w-0", display === "list" && "py-4 first:pt-0"]}>
+        <li data-listing-item class:list={["min-w-0", display === "list" && "py-4 first:pt-0"]}>
           {display === "document-grid" ? (
             <article class="flex h-full flex-col gap-4">
-              <a href={row.href} class:list={["group block rounded-sm", focusRing]}>
+              <a href={row.href} aria-haspopup={lightbox ? "dialog" : undefined} class:list={["group block rounded-sm", focusRing]}>
                 <span class="bg-main-cinza-200 relative flex aspect-video items-center justify-center overflow-hidden rounded-sm">
                   {row.imageSrc ? (
                     <img src={row.imageSrc} alt={row.imageAlt}
@@ -93,7 +96,7 @@ const focusRing =
             </article>
           ) : display === "list" ? (
             <a
-              href={row.href}
+              href={row.href} aria-haspopup={lightbox ? "dialog" : undefined}
               class:list={[
                 "hover:text-main-ciano-500 text-lg font-medium underline-offset-4 transition-colors hover:underline",
                 focusRing,
@@ -102,7 +105,7 @@ const focusRing =
               {row.title}
             </a>
           ) : display === "titled-thumbnail-grid" ? (
-            <a href={row.href} class:list={["group flex flex-col gap-4 rounded-sm", focusRing]}>
+            <a href={row.href} aria-haspopup={lightbox ? "dialog" : undefined} class:list={["group flex flex-col gap-4 rounded-sm", focusRing]}>
               <h2 class="font-primary text-subtitle font-semibold tracking-[var(--tracking-typography-0)] underline-offset-4 group-hover:underline">
                 {row.title}
               </h2>
@@ -120,7 +123,7 @@ const focusRing =
             </a>
           ) : (
             <a
-              href={row.href}
+              href={row.href} aria-haspopup={lightbox ? "dialog" : undefined}
               class:list={[
                 "group bg-main-ciano-700 relative flex aspect-video min-h-0 overflow-hidden rounded-sm",
                 focusRing,
@@ -145,7 +148,13 @@ const focusRing =
       ))}
     </ul>
   )}
-  {pages.length > 1 && (
+  {infiniteLoading && next && (
+    <div class="mt-10" data-listing-loader>
+      <a href={next} rel="next" data-listing-more class:list={["inline-block rounded-sm border border-current px-5 py-3", focusRing]}>Carregar mais</a>
+      <p role="status" class="mt-3 text-sm" data-listing-status></p>
+    </div>
+  )}
+  {!infiniteLoading && pages.length > 1 && (
     <nav aria-label="Paginação" class="mt-10 flex flex-wrap items-center gap-2 text-base">
       {previous && (
         <a href={previous} rel="prev" class:list={["rounded-sm px-3 py-1 hover:underline", focusRing]}>
@@ -170,4 +179,28 @@ const focusRing =
       )}
     </nav>
   )}
+  {lightbox && (
+    <dialog data-listing-dialog aria-label="Fotografias da galeria" class="listing-dialog">
+      <div class="listing-dialog__toolbar">
+        <button type="button" data-listing-step="-1" aria-label="Fotografia anterior">←</button>
+        <p data-listing-caption aria-live="polite"></p>
+        <button type="button" data-listing-step="1" aria-label="Fotografia seguinte">→</button>
+        <button type="button" data-listing-close aria-label="Fechar fotografia">×</button>
+      </div>
+      <img data-listing-image alt="" />
+    </dialog>
+  )}
 </section>
+
+{(lightbox || infiniteLoading) && <ListingEnhancements />}
+
+
+<style>
+  .listing-dialog { background: #111; color: #fff; border: 0; padding: 1rem; width: min(96vw, 1200px); max-height: 94dvh; }
+  .listing-dialog::backdrop { background: rgb(0 0 0 / 85%); }
+  .listing-dialog__toolbar { display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; }
+  .listing-dialog__toolbar p { flex: 1; }
+  .listing-dialog button { cursor: pointer; min-width: 44px; min-height: 44px; font-size: 1.5rem; }
+  .listing-dialog button:focus-visible { outline: 3px solid #00a9ce; outline-offset: 2px; }
+  .listing-dialog img { display: block; margin: auto; max-width: 100%; max-height: 75dvh; object-fit: contain; }
+</style>

@@ -3914,7 +3914,9 @@
         "term",
         "display",
         "perPage",
-        "showPagination"
+        "showPagination",
+        "infiniteLoading",
+        "lightbox"
       ],
       "status": "active",
       "inserter": true,
@@ -3931,6 +3933,7 @@
           "type": "string",
           "default": "biblioteca",
           "enum": [
+            "gq_bio_gallery",
             "biblioteca",
             "eventos",
             "oportunidades",
@@ -3976,6 +3979,14 @@
         "showPagination": {
           "type": "boolean",
           "default": true
+        },
+        "infiniteLoading": {
+          "type": "boolean",
+          "default": false
+        },
+        "lightbox": {
+          "type": "boolean",
+          "default": true
         }
       },
       "compatibilityReads": {},
@@ -4011,6 +4022,7 @@
           "type": "string",
           "default": "biblioteca",
           "enum": [
+            "gq_bio_gallery",
             "biblioteca",
             "eventos",
             "oportunidades",

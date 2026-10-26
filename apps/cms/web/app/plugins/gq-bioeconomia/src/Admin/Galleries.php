@@ -26,12 +26,44 @@ final class Galleries {
 	 */
 	public function register(): void {
 		add_action( 'init', [ $this, 'registerMeta' ] );
+		add_action( 'graphql_register_types', [ $this, 'registerGraphQLFields' ] );
 		add_action( 'add_meta_boxes_' . self::POST_TYPE, [ $this, 'registerMetaBox' ] );
 		add_action( 'save_post_' . self::POST_TYPE, [ $this, 'save' ], 10, 2 );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueueAssets' ] );
 		add_action( 'rest_api_init', [ $this, 'registerRestRoutes' ] );
 		add_filter( 'manage_' . self::POST_TYPE . '_posts_columns', [ $this, 'columns' ] );
 		add_action( 'manage_' . self::POST_TYPE . '_posts_custom_column', [ $this, 'renderColumn' ], 10, 2 );
+	}
+
+	/**
+	 * Exposes ordered images for the Site's publication extension.
+	 *
+	 * @return void
+	 */
+	public function registerGraphQLFields() {
+		register_graphql_object_type(
+			'GqBioeconomiaGalleryImage',
+			[
+				'fields' => [
+					'id'     => [ 'type' => 'Int' ],
+					'url'    => [ 'type' => 'String' ],
+					'alt'    => [ 'type' => 'String' ],
+					'width'  => [ 'type' => 'Int' ],
+					'height' => [ 'type' => 'Int' ],
+				],
+			]
+		);
+		register_graphql_field(
+			'Galeria',
+			'gqBioeconomiaGalleryImages',
+			[
+				'type'    => [ 'list_of' => 'GqBioeconomiaGalleryImage' ],
+				'resolve' => static function ( $post ) {
+					$post_id = isset( $post->ID ) ? (int) $post->ID : 0;
+					return OrderedMedia::forIds( self::sanitizeImageIds( get_post_meta( $post_id, self::META_KEY, true ) ) );
+				},
+			]
+		);
 	}
 
 	/**

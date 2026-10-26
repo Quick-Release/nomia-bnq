@@ -55,6 +55,8 @@ The store answers the query (`content.list`, gq-content#38): items are newest fi
 - `display`
 - `perPage`
 - `showPagination`
+- `infiniteLoading`
+- `lightbox`
 <!-- END GENERATED: structured-block-contract -->
 
 ## Locked controls
@@ -95,3 +97,34 @@ refresh/reconciliation so existing Biblioteca snapshots acquire the new fields.
 Older snapshots without metadata still render title, excerpt and image; their
 missing year/source does not appear in the filter options. This change does not
 populate metadata for imported documents or modify production Page content.
+
+
+## Galerias and infinite loading
+
+Choose **Galerias** in **Tipo de conteúdo** to list the photographs from every
+published album, newest album first and in its saved image order. The editor
+selects the thumbnail grid when switching to Galerias. **Abrir imagens em
+lightbox** enables a modal with previous/next buttons, arrow-key navigation,
+Escape to close, focus containment and return to the triggering photograph.
+With it disabled, the image links open the original image.
+
+**Carregamento infinito**, beside **Conteúdos por página**, works with every
+collection. The slider sets the batch size (photographs for Galerias). Scrolling
+near **Carregar mais** appends the next batch; the link also supports manual
+loading, browsers without IntersectionObserver, and ordinary navigation without
+JavaScript. A failed batch leaves a retry link and status message. Infinite
+loading takes precedence over **Mostrar paginação**; existing blocks retain
+their numbered pagination until explicitly changed.
+
+Gallery images are stored through the Site's collection extension, using
+`gqBioeconomiaGalleryImages` on `Galeria`. Published albums now have public URLs
+at `/multimedia/galeria/album/<slug>/` so the content runtime can publish and
+withdraw them using its existing collection lifecycle. They remain under
+**Multimédia → Galerias** in the CMS and excluded from search. The frontend
+renders an album's images on its URL. Draft/private albums are not listed.
+
+Deploy the CMS before the frontend, flush rewrite rules (the standard deployment
+does this), and refresh/reconcile published albums into the publication store.
+No production Page is edited automatically: insert/configure this block on the
+gallery Page. Gallery listing reads all matching album snapshots before slicing
+photographs into batches, so store-read cost grows with the number of albums.

@@ -1,0 +1,5 @@
+<script>
+  import { initializeListings } from "../../../lib/listing-browser";
+  initializeListings();
+  document.addEventListener("astro:page-load", () => initializeListings());
+</script>
