@@ -29,7 +29,7 @@ const CONTACTOS = parse(
     `<!-- wp:column --><div class="wp-block-column"><!-- wp:gravityforms/form {"formId":"1","title":false,"description":false} /--></div><!-- /wp:column --></div><!-- /wp:columns -->`,
 );
 
-async function pageForms(url, cookie = null, descriptors = [CONTACT_FORM]) {
+async function loadPageForms(url, cookie = null, descriptors = [CONTACT_FORM]) {
   const harness = await harnessPromise;
   const { pageForms } = await harness.loadModule("/src/lib/forms.ts");
   return pageForms({ descriptors, url: new URL(url), cookie, language: "pt-PT", legal: LEGAL });
@@ -43,7 +43,7 @@ async function renderContactos(forms) {
 }
 
 test("form 1 renders beside the contact cards as a plain form posting to the Site", async () => {
-  const { forms, setCookies } = await pageForms("https://nomia.test/contactos/");
+  const { forms, setCookies } = await loadPageForms("https://nomia.test/contactos/");
   assert.deepEqual(setCookies, []);
   const { document, html } = await renderContactos(forms);
 
@@ -83,7 +83,10 @@ test("the redirect back after a post shows the outcome once and clears it", asyn
     values: { input_2: "nope" },
   };
   const cookie = formStateCookie(state, { secure: true }).split(";")[0];
-  const { forms, setCookies } = await pageForms("https://nomia.test/contactos/?gq-form=1", cookie);
+  const { forms, setCookies } = await loadPageForms(
+    "https://nomia.test/contactos/?gq-form=1",
+    cookie,
+  );
   assert.equal(setCookies.length, 1);
   assert.match(setCookies[0], /Max-Age=0/i);
 
@@ -96,7 +99,7 @@ test("the redirect back after a post shows the outcome once and clears it", asyn
 
 test("without the form's descriptor the block shows a status, not a form that can't be sent", async () => {
   for (const descriptors of [[], [{ ...UNAVAILABLE_FORM, id: 1 }]]) {
-    const { forms } = await pageForms("https://nomia.test/contactos/", null, descriptors);
+    const { forms } = await loadPageForms("https://nomia.test/contactos/", null, descriptors);
     const { document } = await renderContactos(forms);
     assert.equal(document.querySelector("form"), null);
     assert.ok(document.querySelector('.gq-form--unavailable [role="status"]'));
