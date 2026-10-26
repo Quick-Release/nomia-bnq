@@ -4200,18 +4200,19 @@ final class Contracts {
 				'status'      => 'active',
 				'inserter'    => true,
 				'attributes'  => [
-					'schemaVersion'  => [
+					'schemaVersion'   => [
 						'type'    => 'number',
 						'default' => 1,
 					],
-					'blockId'        => [
+					'blockId'         => [
 						'type'    => 'string',
 						'default' => 'content-listing',
 					],
-					'collection'     => [
+					'collection'      => [
 						'type'    => 'string',
 						'default' => 'biblioteca',
 						'enum'    => [
+							'gq_bio_gallery',
 							'biblioteca',
 							'eventos',
 							'oportunidades',
@@ -4229,15 +4230,15 @@ final class Contracts {
 							'kind' => 'select',
 						],
 					],
-					'taxonomy'       => [
+					'taxonomy'        => [
 						'type'    => 'string',
 						'default' => '',
 					],
-					'term'           => [
+					'term'            => [
 						'type'    => 'string',
 						'default' => '',
 					],
-					'display'        => [
+					'display'         => [
 						'type'    => 'string',
 						'default' => 'list',
 						'enum'    => [
@@ -4250,11 +4251,19 @@ final class Contracts {
 							'kind' => 'select',
 						],
 					],
-					'perPage'        => [
+					'perPage'         => [
 						'type'    => 'number',
 						'default' => 12,
 					],
-					'showPagination' => [
+					'showPagination'  => [
+						'type'    => 'boolean',
+						'default' => true,
+					],
+					'infiniteLoading' => [
+						'type'    => 'boolean',
+						'default' => false,
+					],
+					'lightbox'        => [
 						'type'    => 'boolean',
 						'default' => true,
 					],
@@ -4294,6 +4303,7 @@ final class Contracts {
 						'type'    => 'string',
 						'default' => 'biblioteca',
 						'enum'    => [
+							'gq_bio_gallery',
 							'biblioteca',
 							'eventos',
 							'oportunidades',

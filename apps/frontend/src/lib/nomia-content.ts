@@ -1,3 +1,4 @@
+import { GALLERY_FIELDS, readGallery, storedGallery, type Gallery } from "./gallery";
 import type { ContentExtension } from "@getquick/content/server";
 import { readThematicColors, type ThematicColor } from "./thematic-area";
 import {
@@ -33,7 +34,7 @@ export interface NomiaContent {
  * What Nomia stores with an entry: a page or post's blocks, or an Indicador's
  * chart (src/lib/indicador-chart.ts), or a Biblioteca document's metadata.
  */
-export type NomiaExtension = NomiaContent | NomiaIndicador | LibraryDocument;
+export type NomiaExtension = NomiaContent | NomiaIndicador | LibraryDocument | Gallery;
 
 /** The page or post's Nomia blocks, never an Indicador's chart. */
 export function nomiaPage(extension: NomiaExtension | undefined): NomiaContent | undefined {
@@ -109,7 +110,11 @@ export const nomiaExtension: ContentExtension<NomiaExtension> = {
   fields: {
     page: "wpBlocksJson gqBioeconomiaPageBackgroundColor gqBioeconomiaThematicColors { slug color }",
     post: "wpBlocksJson gqBioeconomiaThematicColors { slug color }",
-    collections: { indicadores: INDICADOR_FIELDS, biblioteca: LIBRARY_FIELDS },
+    collections: {
+      indicadores: INDICADOR_FIELDS,
+      biblioteca: LIBRARY_FIELDS,
+      gq_bio_gallery: GALLERY_FIELDS,
+    },
   },
   read: ({ kind, collection, fields }) =>
     kind === "item"
@@ -117,7 +122,9 @@ export const nomiaExtension: ContentExtension<NomiaExtension> = {
         ? readIndicador(fields)
         : collection === "biblioteca"
           ? readLibraryDocument(fields)
-          : undefined
+          : collection === "gq_bio_gallery"
+            ? readGallery(fields)
+            : undefined
       : nomiaContent(
           text(fields.wpBlocksJson),
           text(fields.gqBioeconomiaPageBackgroundColor),
@@ -127,7 +134,8 @@ export const nomiaExtension: ContentExtension<NomiaExtension> = {
   parse: (stored) =>
     storedNomiaContent.safeParse(stored).success ||
     storedNomiaIndicador.safeParse(stored).success ||
-    storedLibraryDocument.safeParse(stored).success
+    storedLibraryDocument.safeParse(stored).success ||
+    storedGallery.safeParse(stored).success
       ? (stored as NomiaExtension)
       : undefined,
 };

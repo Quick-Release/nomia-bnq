@@ -37,6 +37,7 @@ const SETORES: CollectionTaxonomy = {
 const GLOBAL_TAXONOMIES = [TEMATICAS, SETORES] as const;
 
 export const CONTENT_COLLECTIONS = {
+  gq_bio_gallery: { label: "Galerias", graphqlType: "Galeria", taxonomies: [] },
   biblioteca: {
     label: "Biblioteca",
     graphqlType: "Biblioteca",

@@ -5974,6 +5974,7 @@
           "type": "string",
           "default": "biblioteca",
           "enum": [
+            "gq_bio_gallery",
             "biblioteca",
             "eventos",
             "oportunidades",
@@ -6017,6 +6018,14 @@
           "default": 12
         },
         "showPagination": {
+          "type": "boolean",
+          "default": true
+        },
+        "infiniteLoading": {
+          "type": "boolean",
+          "default": false
+        },
+        "lightbox": {
           "type": "boolean",
           "default": true
         }
@@ -6074,6 +6083,7 @@
           "type": "string",
           "default": "biblioteca",
           "enum": [
+            "gq_bio_gallery",
             "biblioteca",
             "eventos",
             "oportunidades",

@@ -70,7 +70,13 @@
           label: item.label,
         })),
         // A term belongs to one collection's taxonomy: changing the collection clears it.
-        onChange: (next) => setAttributes({ collection: next, taxonomy: "", term: "" }),
+        onChange: (next) =>
+          setAttributes({
+            collection: next,
+            taxonomy: "",
+            term: "",
+            ...(next === "gq_bio_gallery" ? { display: "thumbnail-grid" } : {}),
+          }),
       }),
       createElement(SelectControl, {
         label: __("Mostrar só uma categoria de", "gq-bioeconomia"),
@@ -113,6 +119,13 @@
         options: displayOptions(),
         onChange: (next) => setAttributes({ display: next }),
       }),
+      collectionKey === "gq_bio_gallery"
+        ? createElement(ToggleControl, {
+            label: __("Abrir imagens em lightbox", "gq-bioeconomia"),
+            checked: attributes.lightbox !== false,
+            onChange: (next) => setAttributes({ lightbox: next }),
+          })
+        : null,
       createElement(RangeControl, {
         label: __("Conteúdos por página", "gq-bioeconomia"),
         value: attributes.perPage ?? LISTING_PER_PAGE_DEFAULT,
@@ -121,6 +134,13 @@
         onChange: (next) => setAttributes({ perPage: next ?? LISTING_PER_PAGE_DEFAULT }),
       }),
       createElement(ToggleControl, {
+        label: __("Carregamento infinito", "gq-bioeconomia"),
+        help: __("Carrega o próximo grupo de conteúdos ao deslocar a página.", "gq-bioeconomia"),
+        checked: attributes.infiniteLoading === true,
+        onChange: (next) => setAttributes({ infiniteLoading: next }),
+      }),
+      createElement(ToggleControl, {
+        disabled: attributes.infiniteLoading === true,
         label: __("Mostrar paginação", "gq-bioeconomia"),
         checked: attributes.showPagination !== false,
         onChange: (next) => setAttributes({ showPagination: next }),

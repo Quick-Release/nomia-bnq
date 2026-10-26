@@ -9,6 +9,7 @@ import {
   readListingDisplay,
   readPerPage,
 } from "../../../lib/content-collections";
+import { galleryListing } from "../../../lib/gallery";
 import { listCollection } from "../../../lib/content-listing";
 import type { WpParsedBlock } from "../../../lib/wp-blocks";
 import { wpText as text } from "../normalizers";
@@ -24,7 +25,8 @@ const attrs = block.attrs as AttrsFor<"getquick/content-listing">;
 // a missing value is the registration's default.
 const collection = readCollection(attrs.collection ?? "biblioteca");
 const configuredDisplay = readListingDisplay(attrs.display);
-const showPagination = attrs.showPagination !== false;
+const infiniteLoading = attrs.infiniteLoading === true;
+const showPagination = infiniteLoading || attrs.showPagination !== false;
 
 // Read when the page is visited, from the publication store: the Page lists
 // what is published now, filtered by the address the Filters block wrote.
@@ -43,9 +45,10 @@ const display = documents ? "document-grid" : configuredDisplay;
 const allDocuments = documents && query ? await libraryRows(Astro.request, query) : null;
 const documentResult = allDocuments && query
   ? libraryPage(allDocuments, query, Astro.url.searchParams) : null;
-const genericResult = !documents && query ? await listCollection(query) : null;
-const result = documentResult ?? genericResult ?? ({ kind: "unavailable" } as const);
-const rows = documentResult?.items ?? (genericResult?.kind === "found"
+const galleryResult = collection === "gq_bio_gallery" && query ? await galleryListing(query) : null;
+const genericResult = !documents && !galleryResult && query ? await listCollection(query) : null;
+const result = galleryResult ?? documentResult ?? genericResult ?? ({ kind: "unavailable" } as const);
+const rows = (galleryResult?.kind === "found" ? galleryResult.items : null) ?? documentResult?.items ?? (genericResult?.kind === "found"
   ? genericResult.items.map((item) => ({
       href: item.uri,
       title: item.title.trim() || "Sem título",
@@ -63,7 +66,9 @@ const pagination =
 
 {collection && (
   <NomiaContentListing
-    display={display}
+    display={collection === "gq_bio_gallery" && display === "document-grid" ? "thumbnail-grid" : display}
+    infiniteLoading={infiniteLoading}
+    lightbox={collection === "gq_bio_gallery" && attrs.lightbox !== false}
     rows={rows}
     empty={empty}
     pages={pagination?.pages}

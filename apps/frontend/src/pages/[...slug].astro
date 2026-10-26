@@ -1,5 +1,6 @@
 ---
 import { blockPresetStyles, designPostContext, formatDate, responseStatus, routeOf } from "@getquick/content";
+import NomiaContentListing from "../components/content-lists/listing/NomiaContentListing.astro";
 import Home from "../components/Home.astro";
 import NomiaBlocks from "../components/NomiaBlocks.astro";
 import Layout from "../layouts/Layout.astro";
@@ -42,6 +43,7 @@ const chrome =
 const alternates = found?.alternates ?? [];
 // An Indicador's chart is its extension too, but its page is WordPress's.
 const nomia = nomiaPage(entry?.extension);
+const gallery = entry?.extension && "kind" in entry.extension && entry.extension.kind === "gallery" ? entry.extension : null;
 const { vars, colorRules } = blockPresetStyles(entry?.spacingSizes ?? [], entry?.colors ?? []);
 const isPost = Boolean(entry?.date);
 const title =
@@ -53,7 +55,12 @@ const title =
 ) : (
 <Layout post={entry ? designPostContext(entry) ?? undefined : undefined} theme={entry?.theme} title={title} chrome={chrome} language={language} alternates={alternates}>
   {entry ? (
-    nomia ? (
+    gallery ? (
+      <main>
+        <h1 class="font-primary px-6 pt-12 text-3xl">{entry.title}</h1>
+        <NomiaContentListing display="thumbnail-grid" empty="none" lightbox rows={gallery.images.map((image) => ({ href: image.url, title: entry.title, imageSrc: image.url, imageAlt: image.alt || entry.title }))} />
+      </main>
+    ) : nomia ? (
       <NomiaBlocks nomia={nomia} design={entry} featuredImage={entry.featuredImage} language={language} />
     ) : entry.hasVideoHero ? (
       <>

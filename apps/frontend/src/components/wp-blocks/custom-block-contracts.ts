@@ -697,6 +697,8 @@ export const WP_CUSTOM_BLOCK_CONTRACTS = [
       "display",
       "perPage",
       "showPagination",
+      "infiniteLoading",
+      "lightbox",
     ],
     editorTitle: "Listagem de conteúdos",
     editorDescription: "Lista os conteúdos publicados de um tipo, como os documentos da Biblioteca ou os eventos, com paginação.",
