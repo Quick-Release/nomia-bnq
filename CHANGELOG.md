@@ -1,5 +1,28 @@
 # Changelog
 
+## v0.13.0 - 2026-10-26
+
+Previous release: v0.12.0
+
+- 0bf6774 Merge pull request #85 from Quick-Release/claude/gq-email
+- 001bd5e feat: add gq-email plugin sending wp_mail through Cloudflare Email Service
+- 32f6e66 Merge pull request #84 from Quick-Release/feat/oportunidades-entidades
+- 2e94272 feat: add tag-style entities taxonomy to opportunities
+- ccb7d23 Merge pull request #83 from Quick-Release/feat/legislacao-library
+- 905f36b Merge pull request #82 from Quick-Release/claude/revert-paragraph-spacing
+- 6e09318 feat: add legislation document fields and filtered library grid
+- 6b94a17 revert: drop ineffective Site paragraph spacing
+- ed4582e Merge pull request #81 from Quick-Release/fix/content-nightly-cold-cache
+- 43f2fac fix: resolve nightly locks on cold runner metadata caches
+- 054ae7d Merge pull request #78 from Quick-Release/feat/content-nightly-adoption
+- d47af8a test: isolate fixture from inherited Git hook environment
+- ee22f05 test: own admission Git fixture for archived CI workspaces
+- 7a8ee61 fix: skip unchanged nightly snapshots before expensive preparation
+- b5dd2f9 fix: expand deduplicated pnpm references in nightly graph guard
+- 2472e03 fix: accept Content nightly-only plugin asset prefix
+- cff22de fix: batch deployment fence reads for scheduled admission
+- aa1be9a feat: adopt Content artifacts through shared Nomia nightlies
+
 ## v0.12.0 - 2026-10-26
 
 Previous release: v0.11.0
