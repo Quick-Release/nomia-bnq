@@ -2,6 +2,12 @@ import type { ContentExtension } from "@getquick/content/server";
 import { readThematicColors, type ThematicColor } from "./thematic-area";
 import { z } from "astro/zod";
 import { parseWpBlocksJson, type WpParsedBlock } from "./wp-blocks";
+import {
+  INDICADOR_FIELDS,
+  readIndicador,
+  storedNomiaIndicador,
+  type NomiaIndicador,
+} from "./indicador-chart";
 
 /**
  * A page or post built with Nomia's blocks (`getquick/*`, the gq-bioeconomia
@@ -15,6 +21,17 @@ export interface NomiaContent {
   thematicColors?: ThematicColor[];
   /** The page's background colour (gq-bioeconomia's page setting), if it has one. */
   pageBackgroundColor: string | null;
+}
+
+/**
+ * What Nomia stores with an entry: a page or post's blocks, or an Indicador's
+ * chart (src/lib/indicador-chart.ts), which the Indicador chart block draws.
+ */
+export type NomiaExtension = NomiaContent | NomiaIndicador;
+
+/** The page or post's Nomia blocks, never an Indicador's chart. */
+export function nomiaPage(extension: NomiaExtension | undefined): NomiaContent | undefined {
+  return extension && "blocks" in extension ? extension : undefined;
 }
 
 /** Nomia's own blocks; GETQUICK Design's are `getquick-design/*`. */
@@ -77,23 +94,30 @@ export const storedNomiaContent = z.object({
 const text = (value: unknown) => (typeof value === "string" ? value : null);
 
 /**
- * Pages and posts built with Nomia's blocks, as the content runtime's
- * extension (src/lib/content.ts): their parsed blocks and the page's
- * background colour, read with each of them, stored with the publication and
- * served as its `extension`.
+ * Pages and posts built with Nomia's blocks, and Indicadores' charts, as the
+ * content runtime's extension (src/lib/content.ts): their parsed blocks and
+ * the page's background colour, or the chart, read with each of them, stored
+ * with the publication and served as its `extension`.
  */
-export const nomiaExtension: ContentExtension<NomiaContent> = {
+export const nomiaExtension: ContentExtension<NomiaExtension> = {
   fields: {
     page: "wpBlocksJson gqBioeconomiaPageBackgroundColor gqBioeconomiaThematicColors { slug color }",
     post: "wpBlocksJson gqBioeconomiaThematicColors { slug color }",
+    collections: { indicadores: INDICADOR_FIELDS },
   },
-  read: ({ fields }) =>
-    nomiaContent(
-      text(fields.wpBlocksJson),
-      text(fields.gqBioeconomiaPageBackgroundColor),
-      fields.gqBioeconomiaThematicColors,
-    ),
+  read: ({ kind, collection, fields }) =>
+    kind === "item"
+      ? collection === "indicadores"
+        ? readIndicador(fields)
+        : undefined
+      : nomiaContent(
+          text(fields.wpBlocksJson),
+          text(fields.gqBioeconomiaPageBackgroundColor),
+          fields.gqBioeconomiaThematicColors,
+        ),
   // As it was stored, so reconciliation compares it with new reads as it is.
   parse: (stored) =>
-    storedNomiaContent.safeParse(stored).success ? (stored as NomiaContent) : undefined,
+    storedNomiaContent.safeParse(stored).success || storedNomiaIndicador.safeParse(stored).success
+      ? (stored as NomiaExtension)
+      : undefined,
 };

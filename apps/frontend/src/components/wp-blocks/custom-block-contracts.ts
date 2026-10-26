@@ -750,6 +750,19 @@ export const WP_CUSTOM_BLOCK_CONTRACTS = [
     editorTitle: "Pesquisa do cabeçalho",
     editorDescription: "Ícone de pesquisa que abre um formulário para pesquisar numa página de resultados.",
   },
+  {
+    blockName: "getquick/indicador-chart",
+    catalogId: "indicador-chart",
+    schemaVersion: 1,
+    contentAttributes: [
+      "schemaVersion",
+      "blockId",
+      "indicadorId",
+      "tematica",
+    ],
+    editorTitle: "Gráfico de indicador",
+    editorDescription: "Mostra o gráfico de um indicador publicado, com os valores e a fonte atuais.",
+  },
 ] as const satisfies readonly WpCustomBlockContract[];
 
 export const WP_CUSTOM_BLOCK_COMPATIBILITY_READS = {

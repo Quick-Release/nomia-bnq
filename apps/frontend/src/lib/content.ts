@@ -8,7 +8,7 @@ import type { ConsentBindings } from "@getquick/content/consent/server";
 import { createContentRuntime, type ContentBindings } from "@getquick/content/server";
 import ops from "../../../../gq.ops.json";
 import { RUNTIME_COLLECTIONS } from "./content-collections";
-import { nomiaExtension, type NomiaContent } from "./nomia-content";
+import { nomiaExtension, type NomiaExtension } from "./nomia-content";
 
 const manifest = ops as {
   project: string;
@@ -54,7 +54,7 @@ export async function bindings(): Promise<ContentBindings & ConsentBindings> {
  * one is a 503.
  */
 export function content() {
-  return createContentRuntime<NomiaContent>({
+  return createContentRuntime<NomiaExtension>({
     // The Site's identity: the CMS signs its events with the same one
     // (GQ_CONTENT_SITE_ID in apps/cms/config/application.php).
     site: manifest.project,
@@ -66,7 +66,8 @@ export function content() {
     development: import.meta.env.DEV,
     isServer: () => import.meta.env.SSR,
     bindings,
-    // Nomia's blocks, stored with each page and post (src/lib/nomia-content.ts).
+    // Nomia's blocks, stored with each page and post, and each Indicador's
+    // chart (src/lib/nomia-content.ts).
     extension: nomiaExtension,
     // Published bodies' embeds become consent placeholders at delivery, and
     // gq-config's Legal Contract and GA4 toggle are read into each chrome.

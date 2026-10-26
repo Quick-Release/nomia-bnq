@@ -5,6 +5,7 @@ import NomiaBlocks from "../components/NomiaBlocks.astro";
 import Layout from "../layouts/Layout.astro";
 import { content } from "../lib/content";
 import { copyFor } from "../lib/copy";
+import { nomiaPage } from "../lib/nomia-content";
 
 const runtime = content();
 const route = routeOf(Astro.url.pathname);
@@ -39,6 +40,8 @@ const entry = found && "entry" in found ? found.entry : null;
 const chrome =
   delivery.kind === "found" ? delivery.content.chrome : delivery.kind === "missing" ? delivery.chrome : null;
 const alternates = found?.alternates ?? [];
+// An Indicador's chart is its extension too, but its page is WordPress's.
+const nomia = nomiaPage(entry?.extension);
 const { vars, colorRules } = blockPresetStyles(entry?.spacingSizes ?? [], entry?.colors ?? []);
 const isPost = Boolean(entry?.date);
 const title =
@@ -50,8 +53,8 @@ const title =
 ) : (
 <Layout post={entry ? designPostContext(entry) ?? undefined : undefined} theme={entry?.theme} title={title} chrome={chrome} language={language} alternates={alternates}>
   {entry ? (
-    entry.extension ? (
-      <NomiaBlocks nomia={entry.extension} design={entry} featuredImage={entry.featuredImage} language={language} />
+    nomia ? (
+      <NomiaBlocks nomia={nomia} design={entry} featuredImage={entry.featuredImage} language={language} />
     ) : entry.hasVideoHero ? (
       <>
         <style is:global set:html={colorRules} />
