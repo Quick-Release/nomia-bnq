@@ -52,8 +52,10 @@ attempt are compared independently; a Content counter never orders a Design buil
 Content prereleases retain `content-nightly-VERSION.zip` and
 `getquick-content-VERSION.tgz`. Preparation verifies ZIP SHA256, tarball SHA256
 and SHA512 integrity, and the tarball's embedded name/version. The frontend
-requires the bundled `file:nightly/getquick-content-VERSION.tgz`, installs offline,
-and records its regenerated pnpm lock. No npm dist-tag, npm credential, registry
+requires the bundled `file:nightly/getquick-content-VERSION.tgz`, installs that retained local file,
+and records its regenerated pnpm lock. Cold runners may fetch registry metadata
+for existing workspace dependencies during lock resolution; the dependency graph
+guard still rejects unrelated version, source or dependency-edge changes. No npm dist-tag, npm credential, registry
 publication or raw tag archive is used for nightly Content. Stable public npm
 publishing is unchanged. The distinct nightly ZIP prefix prevents the stable
 Composer registry from discovering the development-only artifacts.

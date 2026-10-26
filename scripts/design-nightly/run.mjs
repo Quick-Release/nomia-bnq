@@ -137,9 +137,10 @@ for (const m of Object.values(manifests)) {
   )
     throw new Error("Incorrect Composer lock");
 }
-// Offline resolution preserves already locked transitive dependencies; new
-// requirements need deliberate Site adoption. Scripts do not run on this path.
-run("pnpm", ["install", "--offline", "--no-frozen-lockfile", "--ignore-scripts"]);
+// Cold runners may need registry metadata even after a frozen install. Content
+// remains a verified local tarball; the graph guard rejects collateral changes.
+// Scripts do not run on this path.
+run("pnpm", ["install", "--prefer-offline", "--no-frozen-lockfile", "--ignore-scripts"]);
 if (JSON.stringify(graphBefore) !== JSON.stringify(graph()))
   throw new Error("Nightly changed frontend/tooling dependencies; explicit Site adoption required");
 const installed = json("apps/frontend/node_modules/@getquick/content/package.json");
