@@ -5,7 +5,7 @@
 // embed WordPress renders (`core/embed`), the video hero's youtube-nocookie
 // iframe and the contact map's Google Maps iframe become consent
 // placeholders; an iframe from a host outside the catalog is blocked. Every
-// page carries the banner, the legal links and the Cookie settings control.
+// page carries the banner; footer content belongs to the CMS-selected pattern.
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
 import { scanConsentHtml } from "@getquick/content/consent/testing";
 import { mkdtempSync, rmSync } from "node:fs";
@@ -272,7 +272,7 @@ test("the contact map is a Google Maps placeholder; Nomia-block pages block unkn
   expect(html).toMatch(/aria-label="Google Maps: Nomia, Lisboa"/);
 });
 
-test("every page has the banner, the privacy policy link and the Cookie settings control", async () => {
+test("every page has the banner without an automatically appended legal footer", async () => {
   wordpress();
   await refresh();
 
@@ -280,11 +280,7 @@ test("every page has the banner, the privacy policy link and the Cookie settings
     const { html } = await visit(path);
     expect(html, path).toContain('id="gq-consent-config"');
     expect(html, path).toMatch(/<section id="gq-consent-banner"(?![^>]*hidden)[^>]*>/);
-    expect(html, path).toContain(
-      '<a href="/politica-de-privacidade/" data-gq-legal-role="privacy_policy">',
-    );
-    expect(html, path).toContain("data-gq-consent-open");
-    expect(html, path).toContain("Definições de cookies");
+    expect(html, path).not.toContain('class="gq-legal"');
   }
 });
 
