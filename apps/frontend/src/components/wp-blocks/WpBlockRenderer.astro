@@ -61,6 +61,8 @@ const groupedBlocks = blocks.reduce<BlockGroup[]>((groups, block) => {
           class:list={[
             // `flow-root` keeps a floated `alignleft`/`alignright` image inside the band.
             "mx-auto w-full max-w-[1792px] flow-root px-4 pb-16 md:px-16 md:pb-24",
+            // Preflight zeroes paragraph margins; space them like the blueprint's `.prose-wp` rhythm.
+            "[&_p:not(:last-child)]:mb-6",
             index === 0 ? "pt-28 md:pt-32" : "pt-16 md:pt-24",
           ]}
         >
