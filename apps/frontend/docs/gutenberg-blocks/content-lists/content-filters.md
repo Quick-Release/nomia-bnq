@@ -37,3 +37,14 @@ A taxonomy shows the terms the collection's published items have, with their cou
 ## Locked controls
 
 The editor chooses the collection, whether to search and which taxonomies to offer. The form's design stays with the Astro component (`src/components/content-lists/listing/NomiaContentFilters.astro`).
+
+
+## Legislação
+
+On `/biblioteca/legislacao/`, the Biblioteca Filters block offers **Ano** (`ano`)
+and **Publicado por** (`fonte`) instead of the generic taxonomy choices. Options
+and counts come only from published Legislação documents in the store, including
+entries beyond its first page. Years sort newest first and sources alphabetically.
+The source option uses its exact text as its value. Search, selection and clearing
+work through the same GET form; submitting drops pagination and preserves both
+selected filters. The category remains fixed by the Listing block.

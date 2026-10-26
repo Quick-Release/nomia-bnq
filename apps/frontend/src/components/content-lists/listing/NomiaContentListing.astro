@@ -1,10 +1,11 @@
 ---
 /**
- * A collection's items in one of three presentations, ported from
+ * A collection's items in Nomia's presentations, ported from
  * bioeconomia.pt's archive shells (NomiaCptArchiveShell and the multimedia
  * archive): a list of titles, a grid of thumbnails with the title over the
- * image, or a two-column grid with the title above the image.
+ * image, a two-column grid with the title above the image, or Biblioteca document cards.
  */
+import { safeHref } from "../../../lib/safe-href";
 import type { ListingDisplay } from "../../../lib/content-collections";
 import { PAGE_FRAME } from "../../../lib/site-gutters";
 
@@ -13,6 +14,11 @@ export interface ListingRow {
   title: string;
   imageSrc: string | null;
   imageAlt: string;
+  year?: number | null;
+  publisher?: string;
+  description?: string;
+  fileUrl?: string;
+  pageUrl?: string;
 }
 
 export interface ListingPageLink {
@@ -39,6 +45,7 @@ const emptyText = {
   unavailable: "A lista não está disponível de momento.",
 }[empty];
 const listClass = {
+  "document-grid": "grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3",
   list: "flex flex-col divide-y divide-current/20",
   "thumbnail-grid": "grid gap-5 sm:grid-cols-2 lg:grid-cols-3",
   "titled-thumbnail-grid": "grid gap-x-8 gap-y-12 md:grid-cols-2",
@@ -54,7 +61,37 @@ const focusRing =
     <ul class={listClass}>
       {rows.map((row) => (
         <li class:list={["min-w-0", display === "list" && "py-4 first:pt-0"]}>
-          {display === "list" ? (
+          {display === "document-grid" ? (
+            <article class="flex h-full flex-col gap-4">
+              <a href={row.href} class:list={["group block rounded-sm", focusRing]}>
+                <span class="bg-main-cinza-200 relative flex aspect-video items-center justify-center overflow-hidden rounded-sm">
+                  {row.imageSrc ? (
+                    <img src={row.imageSrc} alt={row.imageAlt}
+                      class="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      loading="lazy" decoding="async" />
+                  ) : (
+                    <span class="px-4 text-center text-sm">image not available</span>
+                  )}
+                </span>
+                <h2 class="font-primary mt-4 text-xl leading-snug font-semibold group-hover:underline">
+                  {row.title}
+                </h2>
+              </a>
+              {(row.year || row.publisher) && (
+                <div class="flex flex-col gap-1 text-sm">
+                  {row.year && <p><span class="sr-only">Ano: </span><span>{row.year}</span></p>}
+                  {row.publisher && <p><span class="font-medium">Publicado por: </span>{row.publisher}</p>}
+                </div>
+              )}
+              {row.description && <p class="text-base leading-relaxed">{row.description}</p>}
+              {(safeHref(row.fileUrl) || safeHref(row.pageUrl)) && (
+                <div class="mt-auto flex flex-wrap gap-x-5 gap-y-2 pt-2 font-semibold">
+                  {safeHref(row.fileUrl) && <a href={safeHref(row.fileUrl)} class:list={["underline underline-offset-4", focusRing]} target="_blank" rel="noopener noreferrer">Consultar PDF<span class="sr-only"> (abre numa nova janela)</span></a>}
+                  {safeHref(row.pageUrl) && <a href={safeHref(row.pageUrl)} class:list={["underline underline-offset-4", focusRing]} target="_blank" rel="noopener noreferrer">Visitar página<span class="sr-only"> (abre numa nova janela)</span></a>}
+                </div>
+              )}
+            </article>
+          ) : display === "list" ? (
             <a
               href={row.href}
               class:list={[

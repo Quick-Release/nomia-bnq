@@ -150,7 +150,7 @@ describe("the Indicador extension", () => {
     gqBioeconomiaGraphicDataPoints: [{ x: "2024", y: "1.59" }, null],
   };
 
-  it("reads an Indicador's chart, and nothing for other collections", () => {
+  it("reads an Indicador's chart, and nothing for collections without an extension", () => {
     const read = nomiaExtension.read({ kind: "item", collection: "indicadores", fields });
     expect(read).toEqual(readIndicador(fields));
     expect(read).toMatchObject({
@@ -162,7 +162,7 @@ describe("the Indicador extension", () => {
     expect(
       nomiaExtension.read({ kind: "item", collection: "indicadores", fields: {} }),
     ).toBeUndefined();
-    expect(nomiaExtension.read({ kind: "item", collection: "biblioteca", fields })).toBeUndefined();
+    expect(nomiaExtension.read({ kind: "item", collection: "eventos", fields })).toBeUndefined();
   });
 
   it("parses what it stored, and an Indicador is never a page's blocks", () => {

@@ -20,7 +20,7 @@ The block stores which items to list, never the items. When the Page is visited,
 |---|---|---|
 | `collection` | a key of `CONTENT_COLLECTIONS` (`src/lib/content-collections.ts`), the post type's name | `biblioteca` |
 | `taxonomy`, `term` | one of the collection's taxonomies and a term slug: the listing shows only that term (a category Page such as `/biblioteca/legislacao/`) | none |
-| `display` | `list` (titles), `thumbnail-grid` (three columns, title over the image), `titled-thumbnail-grid` (two columns, title above the image) | `list` |
+| `display` | `list` (titles), `thumbnail-grid` (three columns, title over the image), `titled-thumbnail-grid` (two columns, title above the image), `document-grid` (Biblioteca cards) | `list` |
 | `perPage` | 1–48 | 12 |
 | `showPagination` | whether the page links show when there's more than one page | `true` |
 
@@ -59,4 +59,39 @@ The store answers the query (`content.list`, gq-content#38): items are newest fi
 
 ## Locked controls
 
-The editor chooses what to list and how many, and one of the three presentations. Colours, spacing, typography and card design stay with the Astro component (`src/components/content-lists/listing/NomiaContentListing.astro`).
+The editor chooses what to list and how many, and a presentation. The Legislação category always uses document cards. Colours, spacing, typography and card design stay with the Astro component (`src/components/content-lists/listing/NomiaContentListing.astro`).
+
+
+## Legislação documents
+
+A Biblioteca listing fixed to `categoria_biblioteca=legislacao` uses `document-grid`
+automatically, including existing saved Pages. Cards show the native title and
+excerpt, year, publisher, featured image and independent PDF/page actions. A card
+without a featured image says exactly `image not available`. The grid has one
+column on mobile, two from `sm`, and three from `lg`.
+
+Editors add Biblioteca documents, select the Legislação category, and fill in
+**Detalhes do documento**: a year-only selector (1000 through next year),
+**Publicado por**, **Descrição**, **Ficheiro PDF**, and **Ligação para a página**.
+Descrição edits the native excerpt; the featured image uses WordPress's native
+image panel. The publisher reuses the existing author meta key so older data and
+GraphQL consumers remain compatible.
+
+GraphQL on `Biblioteca` exposes `title`, `excerpt`, `featuredImage`,
+`gqBioeconomiaLibraryYear`, `gqBioeconomiaLibraryPublisher`,
+`gqBioeconomiaLibraryFileUrl`, and `gqBioeconomiaLibraryPageUrl`. The original
+`gqBioeconomiaLibraryAuthor` remains an alias of the publisher.
+
+The Site's collection extension stores these fields with each Biblioteca item.
+The document listing reads all matching store pages (100 entries per read), then
+applies `?ano=`, `?fonte=` and search before visitor pagination. This keeps counts
+and matches correct beyond the first page. Search also includes the publisher.
+Reads are shared by both blocks within a request; a failed store page produces
+an unavailable listing rather than partial results. This approach is intended
+for the Biblioteca catalogue; its cost grows with the category's document count.
+
+Deploy the CMS additions before the Frontend, then run the normal publication
+refresh/reconciliation so existing Biblioteca snapshots acquire the new fields.
+Older snapshots without metadata still render title, excerpt and image; their
+missing year/source does not appear in the filter options. This change does not
+populate metadata for imported documents or modify production Page content.

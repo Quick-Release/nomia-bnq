@@ -185,7 +185,8 @@ var gqBioeconomiaFrontendRules = (function(exports) {
 	var LISTING_DISPLAYS = [
 		"list",
 		"thumbnail-grid",
-		"titled-thumbnail-grid"
+		"titled-thumbnail-grid",
+		"document-grid"
 	];
 	var LISTING_PER_PAGE_DEFAULT = 12;
 	var LISTING_PER_PAGE_MAX = 48;

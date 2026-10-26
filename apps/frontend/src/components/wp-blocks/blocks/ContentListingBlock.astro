@@ -1,4 +1,5 @@
 ---
+import { isLegislationListing, libraryRows, libraryPage, LIBRARY_PARAMS } from "../../../lib/library-listing";
 import NomiaContentListing from "../../content-lists/listing/NomiaContentListing.astro";
 import {
   isFilteredByVisitor,
@@ -22,7 +23,7 @@ const attrs = block.attrs as AttrsFor<"getquick/content-listing">;
 // Gutenberg leaves an attribute at its default out of the block comment, so
 // a missing value is the registration's default.
 const collection = readCollection(attrs.collection ?? "biblioteca");
-const display = readListingDisplay(attrs.display);
+const configuredDisplay = readListingDisplay(attrs.display);
 const showPagination = attrs.showPagination !== false;
 
 // Read when the page is visited, from the publication store: the Page lists
@@ -36,17 +37,23 @@ const settings = collection
     }
   : null;
 const query = settings ? listingQuery(settings, Astro.url.searchParams) : null;
-const result = query ? await listCollection(query) : ({ kind: "unavailable" } as const);
-const rows =
-  result.kind === "found"
-    ? result.items.map((item) => ({
-        href: item.uri,
-        title: item.title.trim() || "Sem título",
-        imageSrc: item.featuredImage?.sourceUrl || null,
-        imageAlt: item.featuredImage?.altText || "",
-      }))
-    : [];
-const filtered = Boolean(settings && query && isFilteredByVisitor(settings, query));
+const documents = collection === "biblioteca" &&
+  (configuredDisplay === "document-grid" || isLegislationListing(settings));
+const display = documents ? "document-grid" : configuredDisplay;
+const allDocuments = documents && query ? await libraryRows(Astro.request, query) : null;
+const documentResult = allDocuments && query
+  ? libraryPage(allDocuments, query, Astro.url.searchParams) : null;
+const genericResult = !documents && query ? await listCollection(query) : null;
+const result = documentResult ?? genericResult ?? ({ kind: "unavailable" } as const);
+const rows = documentResult?.items ?? (genericResult?.kind === "found"
+  ? genericResult.items.map((item) => ({
+      href: item.uri,
+      title: item.title.trim() || "Sem título",
+      imageSrc: item.featuredImage?.sourceUrl || null,
+      imageAlt: item.featuredImage?.altText || "",
+    })) : []);
+const filtered = Boolean(settings && query && isFilteredByVisitor(settings, query)) ||
+  Boolean(documents && Object.values(LIBRARY_PARAMS).some((param) => Astro.url.searchParams.get(param)?.trim()));
 const empty = result.kind === "unavailable" ? "unavailable" : filtered ? "no-match" : "none";
 const pagination =
   showPagination && result.kind === "found" && result.pages > 1

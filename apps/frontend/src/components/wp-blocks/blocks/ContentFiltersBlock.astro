@@ -1,4 +1,6 @@
 ---
+import { BIBLIOTECA_ARCHIVE_PATHS } from "../../../config/biblioteca-archives";
+import { libraryRows, libraryChoices } from "../../../lib/library-listing";
 import NomiaContentFilters from "../../content-lists/listing/NomiaContentFilters.astro";
 import { CONTENT_COLLECTIONS, LISTING_PARAMS, readCollection } from "../../../lib/content-collections";
 import { collectionTerms } from "../../../lib/content-listing";
@@ -19,7 +21,12 @@ const hidden = new Set(wpArray(attrs.hiddenTaxonomies).map(text));
 const params = Astro.url.searchParams;
 
 // The terms the collection's published items have, from the publication store.
-const choices = collection
+const legislation = collection === "biblioteca" &&
+  Astro.url.pathname.replace(/\/?$/, "/") === BIBLIOTECA_ARCHIVE_PATHS.legislacao;
+const documents = legislation ? await libraryRows(Astro.request, {
+  collection: "biblioteca", terms: { categoria_biblioteca: ["legislacao"] }, page: 1, perPage: 100,
+}) : null;
+const choices = legislation ? libraryChoices(documents ?? [], params) : collection
   ? (
       await Promise.all(
         CONTENT_COLLECTIONS[collection].taxonomies

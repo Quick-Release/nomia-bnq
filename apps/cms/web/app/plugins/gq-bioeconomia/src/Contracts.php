@@ -4244,6 +4244,7 @@ final class Contracts {
 							'list',
 							'thumbnail-grid',
 							'titled-thumbnail-grid',
+							'document-grid',
 						],
 						'ui'      => [
 							'kind' => 'select',

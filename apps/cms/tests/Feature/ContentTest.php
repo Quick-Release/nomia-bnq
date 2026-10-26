@@ -646,11 +646,16 @@ test('library documents keep their details in registered post meta', function ()
 
     $meta = $GLOBALS['lgm_test_state']['registered_post_meta']['biblioteca'];
 
-    expect(array_keys($meta))->toBe([ 'gq_bioeconomia_library_year', 'gq_bioeconomia_library_author', 'gq_bioeconomia_library_file_url' ])
+    expect(array_keys($meta))->toBe([ 'gq_bioeconomia_library_year', 'gq_bioeconomia_library_author', 'gq_bioeconomia_library_file_url', 'gq_bioeconomia_library_page_url' ])
         ->and($meta['gq_bioeconomia_library_year']['type'])->toBe('integer')
         ->and($meta['gq_bioeconomia_library_author']['show_in_rest'])->toBeTrue()
         ->and($meta['gq_bioeconomia_library_file_url']['sanitize_callback'])->toBe('esc_url_raw')
         ->and(LibraryDetails::sanitizeYear('2017'))->toBe(2017)
         ->and(LibraryDetails::sanitizeYear('-3'))->toBe(0)
-        ->and(LibraryDetails::sanitizeYear('sem ano'))->toBe(0);
+        ->and(LibraryDetails::sanitizeYear('sem ano'))->toBe(0)
+        ->and(LibraryDetails::sanitizeYear('2018.5'))->toBe(0)
+        ->and(LibraryDetails::sanitizeYear('2018e0'))->toBe(0)
+        ->and(LibraryDetails::sanitizeYear('9999'))->toBe(0)
+        ->and(LibraryDetails::sanitizeYear([]))->toBe(0)
+        ->and($meta['gq_bioeconomia_library_page_url']['show_in_rest'])->toBeTrue();
 });

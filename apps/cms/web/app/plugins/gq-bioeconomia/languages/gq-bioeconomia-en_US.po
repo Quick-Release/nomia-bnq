@@ -2212,7 +2212,7 @@ msgstr ""
 
 #: src/Content/PostTypes.php:295
 #: src/Content/PostTypes.php:297
-#: blocks/indicador-chart/index.js:106
+#: blocks/indicador-chart/index.js:109
 msgid "Indicador"
 msgstr "Indicator"
 
@@ -3021,18 +3021,12 @@ msgstr ""
 msgid "Cor"
 msgstr ""
 
-#: src/Details/LibraryDetails.php:59
-#: src/Details/LibraryDetails.php:118
+#: src/Details/LibraryDetails.php:60
+#: src/Details/LibraryDetails.php:139
 msgid "Ano do documento."
-msgstr ""
+msgstr "Document year."
 
-#: src/Details/LibraryDetails.php:73
-#: src/Details/LibraryDetails.php:123
-msgid "Autor do documento."
-msgstr ""
-
-#: src/Details/LibraryDetails.php:87
-#: src/Details/LibraryDetails.php:128
+#: src/Details/LibraryDetails.php:149
 msgid "Ficheiro do documento."
 msgstr ""
 
@@ -3188,33 +3182,25 @@ msgstr ""
 msgid "A data de fim deve ser igual ou posterior à data de início."
 msgstr ""
 
-#: assets/library-details.js:32
+#: assets/library-details.js:34
 msgid "Detalhes do documento"
-msgstr ""
+msgstr "Document details"
 
-#: assets/library-details.js:37
+#: assets/library-details.js:39
 msgid "Ano"
-msgstr ""
+msgstr "Year"
 
-#: assets/library-details.js:46
-msgid "Autor"
-msgstr ""
-
-#: assets/library-details.js:53
-msgid "Ficheiro"
-msgstr ""
-
-#: assets/library-details.js:72
+#: assets/library-details.js:96
 msgid "Substituir ficheiro"
-msgstr ""
+msgstr "Replace file"
 
-#: assets/library-details.js:73
+#: assets/library-details.js:97
 msgid "Selecionar ficheiro"
-msgstr ""
+msgstr "Select file"
 
-#: assets/library-details.js:83
+#: assets/library-details.js:107
 msgid "Remover ficheiro"
-msgstr ""
+msgstr "Remove file"
 
 #. Plugin Name of the plugin
 #: gq-bioeconomia.php
@@ -3251,7 +3237,7 @@ msgid "Item Hover Text Color"
 msgstr "Item Hover Text Color"
 
 #: blocks/content-filters/index.js:30
-#: blocks/content-listing/index.js:61
+#: blocks/content-listing/index.js:66
 msgid "Tipo de conteúdo"
 msgstr "Content type"
 
@@ -3273,53 +3259,53 @@ msgstr "Filter by %s"
 msgid "Pré-visualização dos filtros"
 msgstr "Filters preview"
 
-#: blocks/content-listing/index.js:16
+#: blocks/content-listing/index.js:17
 msgid "Lista de títulos"
 msgstr "List of titles"
 
-#: blocks/content-listing/index.js:17
+#: blocks/content-listing/index.js:18
 msgid "Grelha de miniaturas"
 msgstr "Thumbnail grid"
 
-#: blocks/content-listing/index.js:20
+#: blocks/content-listing/index.js:21
 msgid "Grelha de miniaturas com título por cima"
 msgstr "Thumbnail grid with the title above"
 
-#: blocks/content-listing/index.js:71
+#: blocks/content-listing/index.js:76
 msgid "Mostrar só uma categoria de"
 msgstr "Show only one category of"
 
-#: blocks/content-listing/index.js:74
+#: blocks/content-listing/index.js:79
 msgid "Todos os conteúdos"
 msgstr "All content"
 
-#: blocks/content-listing/index.js:84
+#: blocks/content-listing/index.js:89
 msgid "Categoria"
 msgstr "Category"
 
-#: blocks/content-listing/index.js:90
+#: blocks/content-listing/index.js:95
 msgid "Escolha uma"
 msgstr "Choose one"
 
-#: blocks/content-listing/index.js:91
+#: blocks/content-listing/index.js:96
 #: blocks/indicador-chart/index.js:70
 #: blocks/indicador-chart/index.js:97
 msgid "A carregar…"
 msgstr "Loading…"
 
-#: blocks/content-listing/index.js:99
+#: blocks/content-listing/index.js:104
 msgid "Apresentação"
 msgstr "Display"
 
-#: blocks/content-listing/index.js:105
+#: blocks/content-listing/index.js:117
 msgid "Conteúdos por página"
 msgstr "Items per page"
 
-#: blocks/content-listing/index.js:112
+#: blocks/content-listing/index.js:124
 msgid "Mostrar paginação"
 msgstr "Show pagination"
 
-#: blocks/content-listing/index.js:120
+#: blocks/content-listing/index.js:132
 msgid "Pré-visualização da listagem"
 msgstr "Listing preview"
 
@@ -3491,15 +3477,15 @@ msgstr "Filters the list of indicators; it doesn't change the chart."
 msgid "Todas as temáticas"
 msgstr "All themes"
 
-#: blocks/indicador-chart/index.js:115
+#: blocks/indicador-chart/index.js:118
 msgid "Este indicador não está publicado: o gráfico não aparece no site."
 msgstr "This indicator isn't published: the chart doesn't appear on the site."
 
-#: blocks/indicador-chart/index.js:123
+#: blocks/indicador-chart/index.js:129
 msgid "Pré-visualização do gráfico"
 msgstr "Chart preview"
 
-#: blocks/indicador-chart/index.js:130
+#: blocks/indicador-chart/index.js:136
 msgid "Escolha um indicador para ver o gráfico."
 msgstr "Choose an indicator to see the chart."
 
@@ -3532,3 +3518,50 @@ msgstr ""
 msgctxt "block keyword"
 msgid "chart"
 msgstr ""
+
+#: src/Details/LibraryDetails.php:74
+#: src/Details/LibraryDetails.php:129
+#: src/Details/LibraryDetails.php:144
+msgid "Publicado por."
+msgstr "Published by."
+
+#: src/Details/LibraryDetails.php:84
+msgid "Ficheiro PDF."
+msgstr "PDF file."
+
+#: src/Details/LibraryDetails.php:85
+#: src/Details/LibraryDetails.php:134
+msgid "Ligação para a página."
+msgstr "Page link."
+
+#: assets/library-details.js:41
+msgid "Selecione o ano"
+msgstr "Select a year"
+
+#: assets/library-details.js:53
+msgid "Publicado por"
+msgstr "Published by"
+
+#: assets/library-details.js:59
+msgid "Descrição"
+msgstr "Description"
+
+#: assets/library-details.js:60
+msgid "Resumo apresentado nos cartões da Biblioteca."
+msgstr "Summary shown on Library cards."
+
+#: assets/library-details.js:67
+msgid "Ligação para a página"
+msgstr "Page link"
+
+#: assets/library-details.js:76
+msgid "Ficheiro PDF"
+msgstr "PDF file"
+
+#: blocks/content-listing/index.js:16
+msgid "Grelha de documentos"
+msgstr "Document grid"
+
+#: blocks/content-listing/index.js:108
+msgid "A Legislação usa a grelha de documentos com ano, fonte e descrição."
+msgstr "Legislation uses the document grid with year, publisher and description."

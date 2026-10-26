@@ -102,7 +102,12 @@ export type CollectionKey = keyof typeof CONTENT_COLLECTIONS;
 export const COLLECTION_KEYS = Object.keys(CONTENT_COLLECTIONS) as CollectionKey[];
 
 /** The Listing's presentations, ported from bioeconomia.pt's archive shells. */
-export const LISTING_DISPLAYS = ["list", "thumbnail-grid", "titled-thumbnail-grid"] as const;
+export const LISTING_DISPLAYS = [
+  "list",
+  "thumbnail-grid",
+  "titled-thumbnail-grid",
+  "document-grid",
+] as const;
 export type ListingDisplay = (typeof LISTING_DISPLAYS)[number];
 
 export const LISTING_PER_PAGE_DEFAULT = 12;

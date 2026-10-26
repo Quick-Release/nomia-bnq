@@ -13,6 +13,7 @@
 
   function displayOptions() {
     return [
+      { value: "document-grid", label: __("Grelha de documentos", "gq-bioeconomia") },
       { value: "list", label: __("Lista de títulos", "gq-bioeconomia") },
       { value: "thumbnail-grid", label: __("Grelha de miniaturas", "gq-bioeconomia") },
       {
@@ -46,6 +47,10 @@
     const taxonomy = collection?.taxonomies.some((item) => item.taxonomy === attributes.taxonomy)
       ? attributes.taxonomy
       : "";
+    const legislation =
+      collectionKey === "biblioteca" &&
+      taxonomy === "categoria_biblioteca" &&
+      attributes.term === "legislacao";
     const terms = useTerms(taxonomy);
     const previewUrl = useMemo(() => buildPreviewUrl(BLOCK_NAME, attributes), [attributes]);
 
@@ -97,7 +102,14 @@
         : null,
       createElement(SelectControl, {
         label: __("Apresentação", "gq-bioeconomia"),
-        value: attributes.display || "list",
+        value: legislation ? "document-grid" : attributes.display || "list",
+        disabled: legislation,
+        help: legislation
+          ? __(
+              "A Legislação usa a grelha de documentos com ano, fonte e descrição.",
+              "gq-bioeconomia",
+            )
+          : undefined,
         options: displayOptions(),
         onChange: (next) => setAttributes({ display: next }),
       }),
