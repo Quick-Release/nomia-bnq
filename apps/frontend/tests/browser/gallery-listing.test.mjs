@@ -1,11 +1,13 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { buildPresentationCss } from "../presentation-build.mjs";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { build } from "vite";
 import { chromium } from "playwright";
 import { createAstroRenderHarness } from "../astro-render-harness.mjs";
 
-test("gallery lightbox contains focus, handles Escape and includes infinitely appended images", async (t) => {
+test("gallery lightbox stays centered, contains focus and includes infinitely appended images", async (t) => {
   const root = fileURLToPath(new URL("../..", import.meta.url));
   const built = await build({
     root,
@@ -16,6 +18,14 @@ test("gallery lightbox contains focus, handles Escape and includes infinitely ap
       lib: { entry: `${root}/src/lib/listing-browser.ts`, name: "NomiaListing", formats: ["iife"] },
     },
   });
+  const css = await buildPresentationCss();
+  const componentCss = readFileSync(
+    new URL(
+      "../../src/components/content-lists/listing/NomiaContentListing.astro",
+      import.meta.url,
+    ),
+    "utf8",
+  ).match(/<style>([\s\S]*?)<\/style>/)[1];
   const script = (Array.isArray(built) ? built[0] : built).output.find(
     (item) => item.type === "chunk",
   ).code;
@@ -61,13 +71,31 @@ test("gallery lightbox contains focus, handles Escape and includes infinitely ap
     route.fulfill({ contentType: "text/html", body: next }),
   );
   await page.setContent(
-    `<!doctype html><base href="https://gallery.test/galeria/"><style>[data-listing-item] { height: 900px; } [data-listing-item] img { width: 200px; }</style>${initial.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, "")}`,
+    `<!doctype html><base href="https://gallery.test/galeria/"><style>${css}
+${componentCss}
+[data-listing-item] { height: 1800px; } [data-listing-item] img { width: 200px; }</style>${initial.replace(/<script\b[^>]*>[\s\S]*?<\/script>/g, "")}`,
   );
   await page.addScriptTag({ content: script });
   await page.evaluate(() => globalThis.NomiaListing.initializeListings());
   const first = page.locator("[data-listing-item] > a").first();
   await first.click();
   assert.equal(await page.locator("dialog").evaluate((dialog) => dialog.open), true);
+  for (const viewport of [
+    { width: 390, height: 800 },
+    { width: 1440, height: 1000 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.locator("[data-listing-image]").evaluate((image) => image.decode());
+    const bounds = await page.locator("dialog").boundingBox();
+    assert.ok(
+      Math.abs(bounds.x + bounds.width / 2 - viewport.width / 2) <= 1,
+      `lightbox must be horizontally centered at ${viewport.width}px; got ${JSON.stringify(bounds)}`,
+    );
+    assert.ok(
+      Math.abs(bounds.y + bounds.height / 2 - viewport.height / 2) <= 1,
+      `lightbox must be vertically centered at ${viewport.width}px; got ${JSON.stringify(bounds)}`,
+    );
+  }
   await page.keyboard.press("ArrowRight");
   assert.equal(await page.locator("[data-listing-image]").getAttribute("alt"), "Photo 2");
   for (let index = 0; index < 5; index++) {
