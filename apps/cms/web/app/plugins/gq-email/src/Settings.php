@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace GetQuick\Email;
 
+use GetQuick\Email\Testing\TestController;
 use WP_Error;
 
 /**
@@ -43,6 +44,12 @@ final class Settings {
 	 * A Cloudflare account ID: 32 hexadecimal characters.
 	 */
 	private const ACCOUNT_ID_PATTERN = '/^[0-9a-f]{32}$/';
+
+	/**
+	 * The GQ Config version whose options page has the `action` control the
+	 * Test column needs.
+	 */
+	public const ACTION_CONTROL_SINCE = '0.5.0';
 
 	/**
 	 * Hooks the area into GQ Config.
@@ -120,7 +127,49 @@ final class Settings {
 			],
 		];
 
+		if ( self::hasActionControl() ) {
+			$areas[ self::AREA ]['columns']['test']     = [ 'label' => __( 'Test', 'gq-email' ) ];
+			$areas[ self::AREA ]['fields']['send_test'] = [
+				'control'      => 'action',
+				'column'       => 'test',
+				'visible_when' => [
+					'key'   => 'enabled',
+					'value' => true,
+				],
+				'label'        => __( 'Test email', 'gq-email' ),
+				'help'         => __( 'Sends one message through Cloudflare with the saved settings, and shows what Cloudflare did with it. Send it to an address you control: bounces hurt the domain\'s sending reputation.', 'gq-email' ),
+				'action'       => [
+					'path'   => TestController::NAMESPACE . TestController::ROUTE,
+					'method' => 'POST',
+					'button' => __( 'Send test email', 'gq-email' ),
+					'input'  => [
+						'name'        => 'to',
+						'type'        => 'email',
+						'label'       => __( 'Recipient', 'gq-email' ),
+						'placeholder' => 'name@example.com',
+						'default'     => static fn(): string => (string) wp_get_current_user()->user_email,
+					],
+				],
+			];
+		}
+
 		return $areas;
+	}
+
+	/**
+	 * Whether GQ Config's options page has the `action` control.
+	 */
+	public static function hasActionControl(): bool {
+		return defined( 'GETQUICK_CONFIG_VERSION' ) && self::supportsActionControl( (string) constant( 'GETQUICK_CONFIG_VERSION' ) );
+	}
+
+	/**
+	 * Whether a GQ Config version has the `action` control.
+	 *
+	 * @param string $version GQ Config's version.
+	 */
+	public static function supportsActionControl( string $version ): bool {
+		return version_compare( $version, self::ACTION_CONTROL_SINCE, '>=' );
 	}
 
 	/**

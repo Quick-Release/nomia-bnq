@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "16681b656649e64d4d68bc1cf96d48df",
+    "content-hash": "7160bf27b9bf754943821a5091a669f3",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -341,17 +341,17 @@
         },
         {
             "name": "getquick/gq-config",
-            "version": "0.4.3",
+            "version": "0.5.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:Quick-Release/gq-config.git",
-                "reference": "a1754ccad07109407917aeec1297e3f5d395cdcb"
+                "reference": "11f2b178ed3e6e4aaff47ea01904dbac1f64b987"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-config/getquick-gq-config-a1754ccad07109407917aeec1297e3f5d395cdcb-zip-bdb201.zip",
-                "reference": "a1754ccad07109407917aeec1297e3f5d395cdcb",
-                "shasum": "c6cde7b09e7c835fe682b4697af14fbc6e499596"
+                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-config/getquick-gq-config-11f2b178ed3e6e4aaff47ea01904dbac1f64b987-zip-4d0c95.zip",
+                "reference": "11f2b178ed3e6e4aaff47ea01904dbac1f64b987",
+                "shasum": "7f6b7db3249284648ee562d77a8d22679b845605"
             },
             "require": {
                 "ext-sodium": "*",
@@ -410,10 +410,10 @@
             ],
             "description": "GQ Config WordPress must-use configuration plugin.",
             "support": {
-                "source": "https://github.com/Quick-Release/gq-config/tree/v0.4.3",
+                "source": "https://github.com/Quick-Release/gq-config/tree/v0.5.0",
                 "issues": "https://github.com/Quick-Release/gq-config/issues"
             },
-            "time": "2026-10-22T03:53:45+00:00"
+            "time": "2026-10-26T04:27:29+00:00"
         },
         {
             "name": "getquick/gq-content",

@@ -70,6 +70,23 @@ serves it at `getquick-config/v1/options/email`.
 | `from_name`    | Optional. Defaults to the message's own name, or else the site title.                                                                              |
 | `reply_to`     | Optional. See above.                                                                                                                               |
 
+### The Test column
+
+With GQ Config 0.5.0 or later, the tab has a third column, **Test**
+(`#/email/test`). It uses GQ Config's `action` control: a recipient field,
+filled with your own address, and a **Send test email** button. The button
+calls `POST gq-email/v1/test` with `{ "to": "<address>" }`. The route is
+limited to users who can `manage_options`.
+
+The test message goes through `wp_mail()` with the saved settings, so unsaved
+edits in the tab are not used. The column shows Cloudflare's verdict, its
+Message-ID, and who the message was delivered or queued to, or who bounced or
+was suppressed. A failure shows why nothing was sent. `wp gq-email test`
+sends the same message from the command line.
+
+On an older GQ Config, the column is left out and only the command line can
+send a test.
+
 ### The API token
 
 The token is not a field. GQ Config sends saved values back to the admin page,
@@ -101,6 +118,7 @@ can't send real mail through the production account by accident.
    ```
 
    `test` prints Cloudflare's Message-ID and what it did with the recipient.
+   The Email tab's **Test** column sends the same message.
    Send tests to an address you control: bounces hurt the domain's sending
    reputation.
 
@@ -116,5 +134,8 @@ can't send real mail through the production account by accident.
 | `src/Cloudflare/EmailSendingApi.php` | The `send_raw` request and its response.                                               |
 | `src/Cloudflare/SendResult.php`      | What Cloudflare did with each recipient.                                               |
 | `src/Cloudflare/SendFailed.php`      | Cloudflare refused, couldn't be reached, or reached no one.                            |
+| `src/Testing/TestEmail.php`          | Sends the test message and describes what Cloudflare did; shared by the CLI and REST.  |
+| `src/Testing/TestController.php`     | `POST gq-email/v1/test`, called by the Test column.                                    |
+| `src/Testing/TestFailed.php`         | Why a test message wasn't sent.                                                        |
 | `src/Cli/EmailCommand.php`           | `wp gq-email status` and `wp gq-email test <to>`.                                      |
 | `tests/`                             | The Pest suite, run by `composer test` in `apps/cms`.                                  |

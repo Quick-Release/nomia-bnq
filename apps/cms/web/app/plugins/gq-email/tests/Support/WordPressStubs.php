@@ -16,6 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', __DIR__ . '/../../../../' );
 }
 
+// The GQ Config the Site runs: the one with the options page's `action` control.
+define( 'GETQUICK_CONFIG_VERSION', '0.5.0' );
+
 if ( ! defined( 'WPINC' ) ) {
 	define( 'WPINC', 'wp-includes' );
 }
@@ -25,6 +28,8 @@ $GLOBALS['gq_email_test_state'] = array(
 	'filters'  => array(),
 	'options'  => array(),
 	'requests' => array(),
+	'routes'   => array(),
+	'can'      => true,
 	'response' => null,
 	'blogname' => 'Nomia',
 	'home_url' => 'https://www.cms.example.com',
@@ -137,6 +142,88 @@ function wp_remote_retrieve_response_code( $response ) {
 
 function wp_remote_retrieve_body( $response ) {
 	return $response['body'] ?? '';
+}
+
+function remove_action( $hook, $callback ) {
+	$GLOBALS['gq_email_test_state']['actions'] = array_values(
+		array_filter(
+			$GLOBALS['gq_email_test_state']['actions'],
+			static fn( $entry ) => ! ( $entry['hook'] === $hook && $entry['callback'] === $callback )
+		)
+	);
+
+	return true;
+}
+
+function current_user_can( $capability ) {
+	return $GLOBALS['gq_email_test_state']['can'];
+}
+
+function wp_get_current_user() {
+	return (object) array( 'user_email' => 'admin@example.com' );
+}
+
+function home_url( $path = '' ) {
+	return 'https://cms.example.com' . $path;
+}
+
+function esc_html__( $text ) {
+	return htmlspecialchars( (string) $text, ENT_QUOTES, 'UTF-8' );
+}
+
+function register_rest_route( $namespace, $route, $args ) {
+	$GLOBALS['gq_email_test_state']['routes'][ $namespace . $route ] = $args;
+
+	return true;
+}
+
+class WP_REST_Request {
+	public function __construct( private array $params = array() ) {}
+
+	public function get_param( $key ) {
+		return $this->params[ $key ] ?? null;
+	}
+}
+
+class WP_REST_Response {
+	public function __construct( public mixed $data = null ) {}
+
+	public function get_data() {
+		return $this->data;
+	}
+}
+
+/**
+ * wp_mail() as WordPress runs it: `pre_wp_mail`, the global mailer reset to
+ * mail() and filled, `phpmailer_init`, send(), `wp_mail_failed` on a PHPMailer
+ * exception.
+ */
+function wp_mail( $to, $subject, $message ) {
+	global $phpmailer;
+
+	gq_email_run_hook( 'filters', 'pre_wp_mail', null, compact( 'to', 'subject', 'message' ) );
+
+	if ( ! $phpmailer instanceof PHPMailer\PHPMailer\PHPMailer ) {
+		$phpmailer = new WP_PHPMailer( true );
+	}
+
+	$phpmailer->clearAllRecipients();
+	$phpmailer->clearReplyTos();
+	$phpmailer->Sender = '';
+	$phpmailer->setFrom( 'wordpress@cms.example.com', 'WordPress', false );
+	$phpmailer->addAddress( $to );
+	$phpmailer->Subject = $subject;
+	$phpmailer->Body    = $message;
+	$phpmailer->isMail();
+	gq_email_run_hook( 'actions', 'phpmailer_init', $phpmailer );
+
+	try {
+		return $phpmailer->send();
+	} catch ( PHPMailer\PHPMailer\Exception $e ) {
+		gq_email_run_hook( 'actions', 'wp_mail_failed', new WP_Error( 'wp_mail_failed', $e->getMessage() ) );
+
+		return false;
+	}
 }
 
 require_once __DIR__ . '/../../../../../wp/wp-includes/PHPMailer/PHPMailer.php';

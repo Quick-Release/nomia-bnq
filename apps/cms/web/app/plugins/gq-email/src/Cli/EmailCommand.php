@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace GetQuick\Email\Cli;
 
 use GetQuick\Email\Cloudflare\EmailSendingApi;
-use GetQuick\Email\CloudflareMailer;
 use GetQuick\Email\Settings;
+use GetQuick\Email\Testing\TestEmail;
+use GetQuick\Email\Testing\TestFailed;
 use WP_CLI;
-use WP_Error;
 
 /**
  * Checks and tests the Cloudflare email transport.
@@ -98,60 +98,24 @@ final class EmailCommand {
 	public function test( array $args, array $assoc_args ): void {
 		unset( $assoc_args );
 
-		$to = trim( $args[0] ?? '' );
+		$to = (string) ( $args[0] ?? '' );
 
-		if ( false === is_email( $to ) ) {
-			WP_CLI::error( 'Give a valid recipient address.' );
+		try {
+			$result = ( new TestEmail( $this->settings ) )->send( $to );
+		} catch ( TestFailed $failure ) {
+			WP_CLI::error( $failure->getMessage() );
 		}
 
-		if ( ! $this->settings->ready() ) {
-			WP_CLI::error( 'Cloudflare is not the transport yet: ' . implode( ' ', $this->settings->problems() ) );
-		}
-
-		$failure = null;
-		$capture = static function ( WP_Error $error ) use ( &$failure ): void {
-			$failure = $error;
-		};
-
-		add_action( 'wp_mail_failed', $capture );
-		$site = (string) get_bloginfo( 'name' );
-		$sent = wp_mail(
-			$to,
-			sprintf( '[%s] Cloudflare Email Service test', $site ),
-			sprintf( "This test email from %s (%s) was sent through Cloudflare Email Service.\n", $site, home_url() ),
-		);
-		remove_action( 'wp_mail_failed', $capture );
-
-		if ( ! $sent ) {
-			WP_CLI::error( 'Cloudflare did not accept the message: ' . ( $failure instanceof WP_Error ? $failure->get_error_message() : 'unknown error' ) );
-		}
-
-		global $phpmailer;
-		$result = $phpmailer instanceof CloudflareMailer ? $phpmailer->lastResult() : null;
-
-		if ( null === $result ) {
-			WP_CLI::error( 'WordPress sent the message, but not through Cloudflare: another plugin replaced the mailer.' );
-		}
-
-		WP_CLI::log( sprintf( 'Message-ID: %s', '' !== $result->message_id ? $result->message_id : '(none)' ) );
-
-		foreach ( [
-			'delivered'  => $result->delivered,
-			'queued'     => $result->queued,
-			'bounced'    => $result->bounced,
-			'suppressed' => $result->suppressed,
-		] as $outcome => $addresses ) {
-			if ( [] !== $addresses ) {
-				WP_CLI::log( sprintf( '%s: %s', ucfirst( $outcome ), implode( ', ', $addresses ) ) );
-			}
+		foreach ( TestEmail::describe( $result ) as $line ) {
+			WP_CLI::log( $line );
 		}
 
 		if ( $result->lostSome() ) {
-			WP_CLI::warning( 'Cloudflare accepted the message, but did not deliver it to every recipient.' );
+			WP_CLI::warning( TestEmail::verdict( $result, trim( $to ) ) );
 
 			return;
 		}
 
-		WP_CLI::success( sprintf( 'Cloudflare accepted the message for %s.', $to ) );
+		WP_CLI::success( TestEmail::verdict( $result, trim( $to ) ) );
 	}
 }
