@@ -1,5 +1,29 @@
 # Changelog
 
+## v0.15.0 - 2026-10-26
+
+Previous release: v0.14.0
+
+- 32106bf Merge pull request #98 from Quick-Release/claude/adr-0009-rest-gate
+- 078bf19 fix: let Gravity Forms submissions through the CMS's REST gate
+- 2433a9b Merge pull request #97 from Quick-Release/claude/adr-0009-contactos-form
+- ade1eb4 fix: never cache a page showing a form's submitted values
+- 358e1d8 feat: render the /contactos/ Gravity Forms form headlessly (ADR 0009)
+- 7126cdd chore: upgrade @getquick/site to 0.24.0 (gq-content 0.4.0 pair)
+- 6fe4449 Merge pull request #94 from Quick-Release/fix/remove-automatic-footer-links
+- f1bb952 fix: remove automatic legal links below the CMS footer
+- 1511464 Merge pull request #93 from Quick-Release/feat/gallery-lightbox-controls
+- 5cade1a feat: move gallery captions below images and arrows to screen edges
+- 88d2b9c Merge pull request #92 from Quick-Release/fix/gallery-lightbox-centering
+- 8969481 fix: center gallery lightbox after the CSS reset
+- 8ea54b7 Merge pull request #91 from Quick-Release/feat/gallery-listing
+- 7f4cd4e feat: add gallery listing with lightbox and infinite loading
+- 9fac7b6 Merge pull request #90 from Quick-Release/chore/getquick-theme-0.6.1
+- 528dd5d Merge origin/main; relock getquick-theme 0.5.3 -> 0.6.1
+- 5f4577e Merge pull request #89 from Quick-Release/claude/theme-0-5-3
+- e0104e9 chore: move the CMS to getquick-theme ^0.6.1
+- 4122649 fix(cms): lock getquick-theme 0.5.3 for declared template part areas
+
 ## v0.14.0 - 2026-10-26
 
 Previous release: v0.13.0
