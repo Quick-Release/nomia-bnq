@@ -1,0 +1,99 @@
+---
+/** An Indicador's chart (src/lib/indicador-chart.ts), with its title, period, unit, area and source. */
+import NomiaIndicadorChart from "./NomiaIndicadorChart";
+import { areaLabel, indicadorSeries, periodLabel } from "../../../lib/indicador-chart";
+import type { PublishedIndicador } from "../../../lib/indicadores";
+import { safeHref } from "../../../lib/safe-href";
+
+interface Props { indicador: PublishedIndicador }
+const { indicador } = Astro.props;
+const series = indicadorSeries(indicador.chart);
+const rows = series.rows;
+const period = periodLabel(rows);
+const area = areaLabel(indicador.chart.geographicArea);
+const sourceUrl = safeHref(indicador.chart.sourceUrl);
+const unit = [series.valueLabel, series.valueUnit].filter(Boolean).join(" · ");
+// "Ano vs Toneladas" names the axes; the chips add the unit field and the area.
+const axes = series.categoryLabel && series.valueLabel ? `${series.categoryLabel} vs ${series.valueLabel}` : "";
+const chips = [axes ? series.valueUnit : unit, area].filter(Boolean);
+const headingId = `indicador-${indicador.chart.id}-${crypto.randomUUID().slice(0, 8)}`;
+---
+
+
+{rows.length > 0 && (
+  <section
+    class="bg-neutral-bw-white w-full overflow-x-hidden"
+    aria-labelledby={headingId}
+    data-nomia-header-surface="light"
+    data-indicador={indicador.chart.id}
+  >
+    <div class="mx-auto flex w-full max-w-[1920px] flex-col gap-8 px-4 py-12 md:px-16 md:py-16">
+      <header class="flex max-w-[1488px] flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
+        <h2
+          id={headingId}
+          class="text-h4 text-main-teal-400 font-primary font-medium leading-[var(--typography-line-height-f)] tracking-[var(--tracking-typography-0)]"
+        >
+          {indicador.title}
+        </h2>
+        {period && (
+          <span class="text-body-large text-main-cinza-700 font-additional w-fit rounded-[24px] bg-main-teal-200 px-4 py-1 font-medium leading-[var(--typography-line-height-h)]">
+            {period}
+          </span>
+        )}
+      </header>
+
+      <div class="flex max-w-[1488px] flex-col gap-6">
+        {(axes || chips.length > 0) && (
+          <div class="text-body text-main-cinza-400 font-secondary flex flex-wrap items-center gap-2 font-normal">
+            {axes && <span>{axes}</span>}
+            {chips.map((chip) => (
+              <span class="text-extra text-main-cinza-700 font-additional rounded-[24px] bg-main-cinza-200 px-4 py-1 font-normal leading-[var(--typography-line-height-j)]">
+                {chip}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <div class="w-full min-w-0" aria-hidden="true">
+          <NomiaIndicadorChart
+            client:only="react"
+            rows={rows}
+            orientation={series.orientation}
+            unit={series.valueUnit}
+          />
+        </div>
+
+        <table class="sr-only">
+          <caption>{indicador.title}</caption>
+          <thead>
+            <tr>
+              <th scope="col">{series.categoryLabel || "Categoria"}</th>
+              <th scope="col">{unit || "Valor"}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr>
+                <th scope="row">{row.category}</th>
+                <td>{row.value.toLocaleString("pt-PT", { maximumFractionDigits: 2 })}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {indicador.chart.sourceName && (
+          <p class="text-notes text-main-cinza-400 font-secondary">
+            Fonte:{" "}
+            {sourceUrl ? (
+              <a href={sourceUrl} class="underline" target="_blank" rel="noopener noreferrer">
+                {indicador.chart.sourceName}
+              </a>
+            ) : (
+              indicador.chart.sourceName
+            )}
+          </p>
+        )}
+      </div>
+    </div>
+  </section>
+)}

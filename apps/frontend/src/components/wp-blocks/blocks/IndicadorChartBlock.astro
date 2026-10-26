@@ -1,0 +1,19 @@
+---
+import NomiaIndicadorSection from "../../charts/bar/NomiaIndicadorSection.astro";
+import { readIndicadorId } from "../../../lib/indicador-chart";
+import { publishedIndicador } from "../../../lib/indicadores";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props { block: WpParsedBlock }
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/indicador-chart">;
+
+// Read when the page is visited, from the publication store: the chart shows
+// the Indicador's data as published now. An Indicador that isn't published,
+// has no values, or can't be read renders nothing.
+const id = readIndicadorId(attrs.indicadorId);
+const result = id ? await publishedIndicador(id, Astro.request) : null;
+---
+
+{result?.kind === "found" && <NomiaIndicadorSection indicador={result.indicador} />}

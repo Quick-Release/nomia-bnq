@@ -9,7 +9,7 @@ import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, expect, test, vi } from "vite-plus/test";
-import { nomiaContent, nomiaExtension } from "./lib/nomia-content";
+import { nomiaContent, nomiaExtension, nomiaPage } from "./lib/nomia-content";
 import { openTestD1, type TestD1 } from "./test/sqlite-d1";
 import { data, routes, stubWordPress, type Answer } from "./test/wordpress-stub";
 
@@ -191,13 +191,15 @@ test("only content with Nomia's own blocks is Nomia content; PHP's empty attribu
 
 test("the extension reads Nomia's fields from a page or post, and parses only what it stored", () => {
   const blocks = JSON.stringify([titleWithLabel]);
-  const page = nomiaExtension.read({
-    kind: "page",
-    fields: { wpBlocksJson: blocks, gqBioeconomiaPageBackgroundColor: "#f4efe6" },
-  });
+  const page = nomiaPage(
+    nomiaExtension.read({
+      kind: "page",
+      fields: { wpBlocksJson: blocks, gqBioeconomiaPageBackgroundColor: "#f4efe6" },
+    }),
+  );
   expect(page?.pageBackgroundColor).toBe("#f4efe6");
   expect(page?.blocks[0]!.blockName).toBe(titleWithLabel.blockName);
-  const post = nomiaExtension.read({ kind: "post", fields: { wpBlocksJson: blocks } });
+  const post = nomiaPage(nomiaExtension.read({ kind: "post", fields: { wpBlocksJson: blocks } }));
   expect(post?.pageBackgroundColor).toBeNull();
   expect(nomiaExtension.read({ kind: "page", fields: {} })).toBeUndefined();
   expect(

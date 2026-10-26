@@ -811,6 +811,7 @@ msgstr "Page background"
 
 #: src/Content/Taxonomies.php:126
 #: assets/editor.js:229
+#: blocks/indicador-chart/index.js:89
 msgid "Temática"
 msgstr "Theme"
 
@@ -1654,6 +1655,7 @@ msgstr "nomia_navigation"
 #: blocks/header-contact/block.json
 #: blocks/header-navigation/block.json
 #: blocks/header-search/block.json
+#: blocks/indicador-chart/block.json
 msgctxt "block keyword"
 msgid "nomia"
 msgstr "nomia"
@@ -2210,8 +2212,9 @@ msgstr ""
 
 #: src/Content/PostTypes.php:295
 #: src/Content/PostTypes.php:297
+#: blocks/indicador-chart/index.js:106
 msgid "Indicador"
-msgstr ""
+msgstr "Indicator"
 
 #: src/Content/PostTypes.php:298
 #: src/Content/PostTypes.php:299
@@ -3299,6 +3302,8 @@ msgid "Escolha uma"
 msgstr "Choose one"
 
 #: blocks/content-listing/index.js:91
+#: blocks/indicador-chart/index.js:70
+#: blocks/indicador-chart/index.js:97
 msgid "A carregar…"
 msgstr "Loading…"
 
@@ -3469,3 +3474,61 @@ msgstr "Header search"
 msgctxt "block description"
 msgid "Ícone de pesquisa que abre um formulário para pesquisar numa página de resultados."
 msgstr "Search icon opening a form that submits to a results page."
+
+#: blocks/indicador-chart/index.js:52
+msgid "(sem título)"
+msgstr "(untitled)"
+
+#: blocks/indicador-chart/index.js:69
+msgid "Escolha um indicador"
+msgstr "Choose an indicator"
+
+#: blocks/indicador-chart/index.js:90
+msgid "Filtra a lista de indicadores; não altera o gráfico."
+msgstr "Filters the list of indicators; it doesn't change the chart."
+
+#: blocks/indicador-chart/index.js:96
+msgid "Todas as temáticas"
+msgstr "All themes"
+
+#: blocks/indicador-chart/index.js:115
+msgid "Este indicador não está publicado: o gráfico não aparece no site."
+msgstr "This indicator isn't published: the chart doesn't appear on the site."
+
+#: blocks/indicador-chart/index.js:123
+msgid "Pré-visualização do gráfico"
+msgstr "Chart preview"
+
+#: blocks/indicador-chart/index.js:130
+msgid "Escolha um indicador para ver o gráfico."
+msgstr "Choose an indicator to see the chart."
+
+#: blocks/indicador-chart/block.json
+msgctxt "block title"
+msgid "Gráfico de indicador"
+msgstr "Indicator chart"
+
+#: blocks/indicador-chart/block.json
+msgctxt "block description"
+msgid "Mostra o gráfico de um indicador publicado, com os valores e a fonte atuais."
+msgstr "Shows the chart of a published indicator, with its current values and source."
+
+#: blocks/indicador-chart/block.json
+msgctxt "block keyword"
+msgid "indicador"
+msgstr ""
+
+#: blocks/indicador-chart/block.json
+msgctxt "block keyword"
+msgid "indicadores"
+msgstr ""
+
+#: blocks/indicador-chart/block.json
+msgctxt "block keyword"
+msgid "gráfico"
+msgstr ""
+
+#: blocks/indicador-chart/block.json
+msgctxt "block keyword"
+msgid "chart"
+msgstr ""

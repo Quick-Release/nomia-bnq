@@ -1,0 +1,50 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/indicador-chart",
+	"title": "Gráfico de indicador",
+	"category": "getquick-design",
+	"icon": "chart-bar",
+	"description": "Mostra o gráfico de um indicador publicado, com os valores e a fonte atuais.",
+	"keywords": [
+		"nomia",
+		"indicador",
+		"indicadores",
+		"gráfico",
+		"chart"
+	],
+	"textdomain": "gq-bioeconomia",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "indicador-chart"
+		},
+		"indicadorId": {
+			"type": "number"
+		},
+		"tematica": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"indicadorId": 702
+		}
+	},
+	"editorStyle": "gq-bioeconomia-editor"
+}

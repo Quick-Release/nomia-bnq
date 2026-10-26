@@ -4164,6 +4164,42 @@
       "editorTitle": "Pesquisa do cabeçalho",
       "editorDescription": "Ícone de pesquisa que abre um formulário para pesquisar numa página de resultados.",
       "editorIcon": "search"
+    },
+    {
+      "blockName": "getquick/indicador-chart",
+      "catalogId": "indicador-chart",
+      "schemaVersion": 1,
+      "order": 43,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "indicadorId",
+        "tematica"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "indicador-chart"
+        },
+        "indicadorId": {
+          "type": "number"
+        },
+        "tematica": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "compatibilityReads": {},
+      "editorExperience": "preview",
+      "editorTitle": "Gráfico de indicador",
+      "editorDescription": "Mostra o gráfico de um indicador publicado, com os valores e a fonte atuais.",
+      "editorIcon": "chart-bar"
     }
   ]
 }

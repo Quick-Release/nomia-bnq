@@ -4442,6 +4442,42 @@ final class Contracts {
 					'resultsHref' => '/pesquisa/',
 				],
 			],
+			[
+				'blockName'   => 'getquick/indicador-chart',
+				'catalogId'   => 'indicador-chart',
+				'title'       => 'Gráfico de indicador',
+				'description' => 'Mostra o gráfico de um indicador publicado, com os valores e a fonte atuais.',
+				'icon'        => 'chart-bar',
+				'keywords'    => [
+					'nomia',
+					'indicador',
+					'indicadores',
+					'gráfico',
+					'chart',
+				],
+				'status'      => 'active',
+				'inserter'    => true,
+				'attributes'  => [
+					'schemaVersion' => [
+						'type'    => 'number',
+						'default' => 1,
+					],
+					'blockId'       => [
+						'type'    => 'string',
+						'default' => 'indicador-chart',
+					],
+					'indicadorId'   => [
+						'type' => 'number',
+					],
+					'tematica'      => [
+						'type'    => 'string',
+						'default' => '',
+					],
+				],
+				'example'     => [
+					'indicadorId' => 702,
+				],
+			],
 		];
 	}
 }

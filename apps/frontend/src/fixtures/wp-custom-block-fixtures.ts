@@ -1147,4 +1147,13 @@ export const WP_CUSTOM_BLOCK_FIXTURES: readonly WpCustomBlockFixture[] = [
       },
     ),
   },
+  {
+    label: "Indicador chart",
+    block: block(
+      "getquick/indicador-chart",
+      {
+        indicadorId: 702,
+      },
+    ),
+  },
 ];

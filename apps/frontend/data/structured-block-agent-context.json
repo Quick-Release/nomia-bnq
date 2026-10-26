@@ -6280,6 +6280,60 @@
         "module": "apps/cms/web/app/plugins/gq-bioeconomia/blocks/header-search/index.js"
       },
       "documentation": "docs/gutenberg-blocks/sections/header-search.md"
+    },
+    {
+      "blockName": "getquick/indicador-chart",
+      "catalogId": "indicador-chart",
+      "schemaVersion": 1,
+      "order": 43,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/indicador-chart.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "indicador-chart"
+        },
+        "indicadorId": {
+          "type": "number"
+        },
+        "tematica": {
+          "type": "string",
+          "default": ""
+        }
+      },
+      "compatibilityReads": {},
+      "editing": {
+        "mode": "bespoke",
+        "module": "apps/cms/web/app/plugins/gq-bioeconomia/blocks/indicador-chart/index.js",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": null,
+        "note": "The bespoke editor module owns the visible controls; inspect it before editing."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/IndicadorChartBlock.astro",
+        "previewLabel": "Indicador chart",
+        "previewAttributes": {
+          "indicadorId": 702
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Gráfico de indicador",
+        "description": "Mostra o gráfico de um indicador publicado, com os valores e a fonte atuais.",
+        "icon": "chart-bar",
+        "experience": "preview",
+        "module": "apps/cms/web/app/plugins/gq-bioeconomia/blocks/indicador-chart/index.js"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/indicador-chart.md"
     }
   ]
 }
