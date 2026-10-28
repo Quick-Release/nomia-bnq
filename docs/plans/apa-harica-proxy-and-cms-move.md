@@ -29,22 +29,24 @@ Files:
   (installs APA's certificate and full chain), `reload-nginx.sh` (its reload
   hook) and `check-expiry.sh` (warns at 30 and 14 days)
 
-`VPS_IP` below is server 125218's IPv4 and `OLD_IP` server 102329's
-(`gq ploi server show --server <id>`). Both stay out of this public
-repository: the old one is a Cloudflare-proxied origin.
+`VPS_IP` below is server 125218's IPv4, `2.31.143.228`; its IPv6 is
+`2a01:4f8:c016:e5cd::1` (network `2a01:4f8:c016:e5cd::/64`). Both go into
+APA's public DNS at go-live. `OLD_IP` is server 102329's
+(`gq ploi server show --server 102329`). It stays out of this public
+repository because it's a Cloudflare-proxied origin.
 
 ## Findings
 
 ### The new server (Ploi 125218, "aged-hill")
 
-|                                     |                                                                                      |
-| ----------------------------------- | ------------------------------------------------------------------------------------ |
-| Provider                            | Hetzner, created 2026-10-28 17:16 UTC, status active                                 |
-| IPv4                                | one public address; Ploi reports no internal IP and no IPv6                          |
-| PHP                                 | 8.5.12 only (CLI 8.5). The CMS runs 8.4.27 on 102329; `composer.json` allows `>=8.3` |
-| MySQL                               | 8.4 (same as 102329)                                                                 |
-| Sites, databases, daemons, crontabs | none                                                                                 |
-| State                               | **reboot required**, 6 package updates pending, OPcache **off**                      |
+|                                     |                                                                                                          |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| Provider                            | Hetzner, created 2026-10-28 17:16 UTC, status active                                                     |
+| Addresses                           | IPv4 `2.31.143.228`, IPv6 `2a01:4f8:c016:e5cd::1/64` (on `eth0`; Ploi doesn't report it), no internal IP |
+| PHP                                 | 8.5.12 only (CLI 8.5). The CMS runs 8.4.27 on 102329; `composer.json` allows `>=8.3`                     |
+| MySQL                               | 8.4 (same as 102329)                                                                                     |
+| Sites, databases, daemons, crontabs | none                                                                                                     |
+| State                               | **reboot required**, 6 package updates pending, OPcache **off**                                          |
 
 Since then (rechecked read-only on 2026-10-28, after the reboot):
 
@@ -248,7 +250,8 @@ reaches it with `Host: nomia.bnq.pt`, so `request.url` and `Astro.url` are
 - **`nomia.bnq.pt` stays public**, which duplicates the site under a second
   host. Canonicals point to the public host. Optionally, once live, add a
   Cloudflare redirect from `nomia.bnq.pt` to `https://bioeconomia.apambiente.pt`
-  for requests whose `ip.src` isn't `VPS_IP`.
+  for requests whose `ip.src` isn't the VPS (both addresses, as in the rule
+  below).
 
 ### Cloudflare rules on `bnq.pt`
 
@@ -256,15 +259,41 @@ Plan Pro. Security level `medium`, Browser Integrity Check on, `always_use_https
 off, SSL mode `full` (not strict), minimum TLS 1.0. The Sigillo token can't
 read rulesets, WAF, rate-limit rules or Bot Fight Mode settings
 (authentication error), so they're unchecked. Every proxied visitor arrives
-from `VPS_IP`, so IP-based features see one heavy client. Add one custom rule,
-`http.host eq "nomia.bnq.pt" and ip.src eq VPS_IP`, with action _Skip_:
+from the VPS, so IP-based features see one heavy client. The proxy reaches
+Cloudflare over IPv4 (`resolver … ipv6=off`), but the rule covers the IPv6
+network as well, in case that changes. Add one custom rule:
+
+```
+http.host eq "nomia.bnq.pt" and ip.src in {2.31.143.228 2a01:4f8:c016:e5cd::/64}
+```
+
+with action _Skip_:
 
 - Security Level
 - rate-limiting rules
 - Super Bot Fight Mode (if it's on)
 
 Keep the managed WAF rules: they inspect payloads, not addresses. nginx
-limits per visitor in their place.
+limits per visitor in their place, keyed on the visitor's IPv4 address or
+IPv6 /64 (`$bioeconomia_visitor`). The trusted-proxy fix in gq-content
+should do the same: trust `X-Real-IP` only from either VPS address, and count
+IPv6 visitors per /64.
+
+### IPv6 exposure
+
+Checked from outside on 2026-10-28, from a machine with IPv6 and IPv4. Ports
+22, 80 and 443 connect over both, but MySQL (3306, and X Protocol 33060),
+Redis (6379) and Memcached (11211) time out over both. Ploi's network rules
+allow only 22, 80 and 443, and ufw has `IPV6=yes`. Its rule files are
+root-only, so the `(v6)` rules weren't read directly: the probe is the
+evidence.
+
+On the server, MySQL listens on all addresses (`*:3306`), Redis and
+Memcached on `0.0.0.0` and `[::1]`, and X Protocol on `127.0.0.1` only. That
+makes the firewall the only thing between MySQL and the internet on both
+families (Redis and Memcached on IPv4). **Optional hardening:** bind all
+three to localhost, as in the runbook's firewall check; the CMS connects
+locally. Nothing needs fixing now.
 
 ### HSTS upstream
 
@@ -294,6 +323,13 @@ throwaway self-signed certificate, against the live Worker. Results:
 - HTTPS responses carry `Strict-Transport-Security: max-age=86400`,
   including `/_astro/*` (which adds its own `X-Proxy-Cache`). The port-80
   redirect carries none.
+- **Over IPv6** (`curl -6` to `[::1]`): `/` returns 200 with the same HSTS,
+  and port 80 returns a 301 with none.
+- The per-visitor key `$bioeconomia_visitor`:
+  - `2a01:4f8:c016:e5cd::1` and `2a01:4f8:c016:e5cd:1234:5678:9abc:def0` both
+    map to `2a01:4f8:c016:e5cd::/64`;
+  - `2001:db8::1` (fewer than four groups) and `203.0.113.7` count as
+    themselves.
 - The manual certificate cycle ran against a throwaway CA named like HARICA,
   trusted in the container:
   - `csr.sh` wrote the key and CSR, and `install-manual-cert.sh` installed
@@ -337,8 +373,11 @@ project contact, so there's no second person to escalate to.
 3. Until there's a certificate, serve only the port-80 block. Comment out the
    443 server, then `nginx -t && systemctl reload nginx`.
 4. DNS, APA:
-   - `bioeconomia.apambiente.pt A VPS_IP`, TTL 300.
-   - **No AAAA**: the server has no IPv6.
+   - Both records, TTL 300:
+     ```
+     bioeconomia.apambiente.pt  A     2.31.143.228
+     bioeconomia.apambiente.pt  AAAA  2a01:4f8:c016:e5cd::1
+     ```
    - **Remove what our first email asked for, if they created any of it:**
      TXT `_cf-custom-hostname.bioeconomia`, CNAME
      `_acme-challenge.bioeconomia`, and any CAA on `bioeconomia`. None
@@ -370,6 +409,38 @@ project contact, so there's no second person to escalate to.
    - The map loads tiles from `bioeconomia.apambiente.pt/gq/map/`.
    - A Gravity Forms submission and a consent decision both succeed (not 403).
    - `/_astro/*` shows `X-Proxy-Cache: HIT` on a second request.
+   - **The same over IPv6**, before APA publishes the AAAA, by pinning the
+     address:
+     ```sh
+     curl -6 -sI --resolve 'bioeconomia.apambiente.pt:443:[2a01:4f8:c016:e5cd::1]' https://bioeconomia.apambiente.pt/
+     curl -6 -sI --resolve 'bioeconomia.apambiente.pt:80:[2a01:4f8:c016:e5cd::1]' http://bioeconomia.apambiente.pt/x
+     openssl s_client -connect '[2a01:4f8:c016:e5cd::1]:443' -servername bioeconomia.apambiente.pt </dev/null 2>/dev/null \
+       | openssl x509 -noout -issuer -enddate
+     ```
+     The first returns 200 with the same `Strict-Transport-Security`, the
+     second a 301 with none, and the issuer is HARICA. After the AAAA is live,
+     run `curl -6 -sI https://bioeconomia.apambiente.pt/` once without
+     `--resolve`.
+   - **The firewall covers IPv6 as it does IPv4.**
+     - From a machine with both IPv4 and IPv6 outside the VPS, these must all
+       fail (time out or be refused). Ports 22, 80 and 443 must connect,
+       which proves the probe works:
+       ```sh
+       for p in 3306 6379 11211 33060; do
+         nc -4 -z -w4 2.31.143.228 "$p" && echo "IPv4 $p OPEN"
+         nc -6 -z -w4 2a01:4f8:c016:e5cd::1 "$p" && echo "IPv6 $p OPEN"
+       done
+       ```
+     - On the server as root, `ufw status verbose`. Confirm `IPV6=yes` in
+       `/etc/default/ufw`, and that the `(v6)` rules allow only 22, 80 and 443.
+     - If any database or cache port is open on either family, stop and fix
+       it before the AAAA goes live. Either deny it in Ploi → Network (both
+       families), or bind the service to localhost:
+       - MySQL: `bind-address = 127.0.0.1` and `mysqlx-bind-address = 127.0.0.1`;
+       - Redis: `bind 127.0.0.1 ::1`;
+       - Memcached: `-l 127.0.0.1,::1`.
+
+       Then restart the service and re-run the probe.
 8. Go-live configuration, in order:
    1. The `domains.frontend` change (reworked #99) and a release. Canonicals
       and `Astro.site` move to `bioeconomia.apambiente.pt`.
