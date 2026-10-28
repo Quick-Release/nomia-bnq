@@ -255,9 +255,17 @@ throwaway self-signed certificate, against the live Worker. Results:
 
 ## Runbook: proxy and certificate
 
-APA certificate contact: **`<name, email, phone: to confirm with APA>`**.
-They issue in HARICA from our CSR and return the certificate and full chain
-in PEM.
+**APA certificate contact:** APA's named certificate contact. Their name and
+address are in `AGENTS.local.md` in the main checkout; this repository is
+public, so they aren't recorded here. Reach them by **email only** (there's
+no phone number). They usually reply within an hour, and a CSR is expected to
+be turned around **the same day**. They issue in HARICA from our CSR and
+return the certificate and full chain in PEM.
+
+**Escalation:** our usual APA project contact, **`<APA project contact: to
+fill in AGENTS.local.md>`**.
+
+**Key type:** RSA 2048 (decided 2026-10-28), as `csr.sh` generates.
 
 1. Ploi, server 125218: reboot, apply updates, `nginx -v` (if older than
    1.25.1, use `listen 443 ssl http2;`).
@@ -319,13 +327,18 @@ renewal with a new CSR about **30 days before expiry**:
 
 - `harica-check-expiry` prints nothing until then.
 - At 30 days or fewer it prints `WARN` (exit 1): send APA the new CSR.
-- At 14 days or fewer it prints `URGENT` (exit 2): chase APA.
+- At 14 days or fewer it prints `URGENT` (exit 2). Email the certificate
+  contact again and, since there's no phone number, escalate to the APA
+  project contact in the same message (CC) or straight after.
 
 The script checks both the installed file and the certificate nginx serves.
 Cron mails its output only if the server can send mail. Set
 `HARICA_NOTIFY_URL` (a webhook) in the crontab line as well, and put each
 expiry date in the team calendar. From March 2027 this is a renewal about
 every 2–3 months.
+
+APA turns a CSR around the same day, so the 30-day lead time leaves a wide
+margin. URGENT should only fire if a WARN was missed or APA's contact is away.
 
 ### Raising HSTS
 
@@ -457,8 +470,7 @@ volume low.
 
 ## Open questions
 
-- **APA's certificate contact** (name, email, phone), how long they need to
-  turn a CSR around, and whether they want RSA 2048 (as drafted) or ECDSA.
+- **APA project contact** for escalation: to record in `AGENTS.local.md`.
 - **Sizing.** Is the VPS sized for the CMS and the proxy together? (No
   Hetzner API token was available to check the server type.)
 - **Production restore** (gq-site #31): may an operator import the

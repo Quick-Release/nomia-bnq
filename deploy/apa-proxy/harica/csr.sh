@@ -9,7 +9,7 @@
 #
 # The private key never leaves the server. HARICA takes the organisation
 # details from APA's validated account, not from the CSR, so the subject
-# carries the hostname only.
+# carries the hostname only. Key type: RSA 2048 (decided).
 set -euo pipefail
 
 DOMAIN="bioeconomia.apambiente.pt"
