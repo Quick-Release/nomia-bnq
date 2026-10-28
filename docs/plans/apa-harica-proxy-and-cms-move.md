@@ -1,6 +1,8 @@
 # bioeconomia.apambiente.pt behind a HARICA proxy, and the CMS move
 
-Status: **draft, nothing applied**. Investigated 2026-10-28.
+Status: **in progress**. Investigated 2026-10-28. Applied so far: proxy
+runbook steps 1–3, the two site users, and Sigillo `prod` (see "Applied on
+2026-10-28"). Nothing else.
 
 APA requires a HARICA certificate on `bioeconomia.apambiente.pt`. Cloudflare
 for SaaS on the `bnq.pt` Pro plan can't serve one, so the custom hostname
@@ -53,7 +55,32 @@ Since then (rechecked read-only on 2026-10-28, after the reboot):
 - the server is rebooted and updated;
 - nginx is 1.30.6 and MySQL 8.4.11, both active;
 - OPcache is running in PHP-FPM 8.5, but Ploi's OPcache switch is still off;
-- it has 4 vCPU, 8 GB RAM and 133 GB free disk.
+- it has 4 vCPU, 8 GB RAM and 133 GB free disk: enough for the CMS and the
+  proxy together.
+
+### Applied on 2026-10-28
+
+- **Site users.** Each site runs as its own Ploi system user, without sudo,
+  in its own group only, and neither is `ploi`:
+  - `bioeconomia`, for the proxy site;
+  - `nomiacms`, for the CMS. Its site doesn't exist yet: `gq ploi provision`
+    creates it in the move runbook, and finds the user already there.
+
+  The `ploi` user has no passwordless sudo, so root work on this server goes
+  through a one-off Ploi script run as root (Ploi API `POST /scripts`, then
+  `/scripts/{id}/run`). Delete the script afterwards.
+
+- **Proxy site.** Ploi site 426451, `bioeconomia.apambiente.pt`, runs as
+  `bioeconomia` (Ploi can't change a site's user, so the first one, 426449,
+  was deleted). The proxy runbook's steps 2 and 3 are done: snippet and
+  scripts installed, port-80 redirect only, checked over IPv4 and IPv6.
+- **Sigillo `prod`.** The project's `prod` environment, empty until now,
+  holds a copy of all 23 `staging` secrets (hash-checked, none empty).
+  `staging` is the legacy name of production's secrets, like the database
+  `nomia_bnq_staging`; `prod` takes over at the cutover (step 8), when
+  `gq.ops.json` maps gq's `staging` alias to it. gq always asks for the alias
+  `staging`, so commands don't change. Until then, a secret changed in one
+  environment must be changed in the other.
 
 The CMS **moves to PHP 8.5** (decided 2026-10-28): the latest PHP already on
 the server. PHP 8.4 won't be installed, so the move also upgrades PHP from
@@ -365,7 +392,9 @@ project contact, so there's no second person to escalate to.
 
 1. Ploi, server 125218: reboot, apply updates, `nginx -v` (if older than
    1.25.1, use `listen 443 ssl http2;`).
-2. Ploi: create site `bioeconomia.apambiente.pt` (no repository). Copy
+2. **Done 2026-10-28** (site 426451, user `bioeconomia`). Ploi: create site
+   `bioeconomia.apambiente.pt` (no repository) with its own system user,
+   `bioeconomia`, without sudo. Copy
    `bioeconomia-proxy.conf` to `/etc/nginx/snippets/`. Install the scripts as
    root: `reload-nginx.sh` as `/usr/local/sbin/harica-reload-nginx` and
    `check-expiry.sh` as `/usr/local/sbin/harica-check-expiry`; keep `csr.sh`
@@ -506,11 +535,14 @@ doesn't support (above).
    - Raise PHP 8.5's FPM limits to the old server's: `memory_limit` 256M,
      `upload_max_filesize` and `post_max_size` 50M.
 2. A new-server config beside the real one. `gq.ops.new-server.json` is a
-   copy of `gq.ops.json` with `ploi.serverId: "125218"` and no `ploi.siteId`.
+   copy of `gq.ops.json` with `ploi.serverId: "125218"`,
+   `ploi.systemUser: "nomiacms"`, `sigillo.environments.staging: "prod"` and
+   no `ploi.siteId`.
    Don't commit it. Every `gq` command below gets
    `--config gq.ops.new-server.json`.
 3. `pnpm exec gq sigillo run staging -- gq --config gq.ops.new-server.json ploi provision --dry-run`,
-   then without `--dry-run`. It creates system user `nomiabnq`, site
+   then without `--dry-run`. It finds system user `nomiacms` (created
+   2026-10-28, no sudo) and creates site
    `nomia-cms.bnq.pt` (`/apps/cms/web`), custom deployments, database
    `nomia_bnq_staging` with a new user and password, `.env` and the deploy
    script. It records the new `siteId` in the new-server config. The
@@ -529,11 +561,11 @@ doesn't support (above).
 6. Rehearsal import. This proves the path and leaves the new site running on
    yesterday's data:
    - Safety dump: `pnpm db:backup` (old server, to R2).
-   - Server to server, from a machine with SSH to both as `nomiabnq` (Ploi →
-     SSH keys):
+   - Server to server, from a machine with SSH as `nomiabnq` to the old
+     server and as `nomiacms` to the new one (Ploi → SSH keys):
      ```sh
      ssh nomiabnq@OLD_IP 'cd ~/nomia-cms.bnq.pt/apps/cms && wp db export - --single-transaction' \
-       | ssh nomiabnq@VPS_IP 'mysql --defaults-extra-file=~/.my-nomia.cnf nomia_bnq_staging'
+       | ssh nomiacms@VPS_IP 'mysql --defaults-extra-file=~/.my-nomia.cnf nomia_bnq_staging'
      ```
      `~/.my-nomia.cnf` on the new server (mode 0600) holds the new database
      user and password, so neither appears in argv.
@@ -573,7 +605,7 @@ doesn't support (above).
 
    3. **GraphQL, as the Frontend calls it.** The Frontend's endpoint is
       `https://nomia-cms.bnq.pt/wp/graphql`, reached with the edge identity
-      `GQ_AUTH_GRAPHQL_CLIENT_ID`/`_SECRET` from Sigillo staging. Query the
+      `GQ_AUTH_GRAPHQL_CLIENT_ID`/`_SECRET` from Sigillo. Query the
       same things on both servers and compare:
       - the page count;
       - a page by URI with its blocks;
@@ -581,13 +613,13 @@ doesn't support (above).
       - the GQ Design chrome (header and footer patterns);
       - one item of each collection the Listings use.
 
-      Compare too with `wp post list --post_type=<type> --format=count` as
-      `nomiabnq` on each server.
+      Compare too with `wp post list --post_type=<type> --format=count` on
+      each server (as `nomiabnq` on the old one, `nomiacms` on the new).
 
    4. **Forms.** A Gravity Forms submission straight to the new CMS's REST
       endpoint (what `/gq/forms/` relays). Check the entry, then delete the
       test entry on the new copy only.
-   5. **Events.** As `nomiabnq`:
+   5. **Events.** As `nomiacms`:
       - `wp gq-events delays` (read-only) first.
       - `wp gq-events retry-due` should report `Sent 0 due event(s)`. If
         anything is due, it would go to the production Frontend, so stop and
@@ -639,9 +671,10 @@ doesn't support (above).
    - GQ Email's Test sends
    - a Gravity Forms submission arrives
    - `gq --config gq.ops.new-server.json site check` is Ready
-8. Commit the move. A PR changes `gq.ops.json` `ploi.serverId` to `125218`
-   and `ploi.siteId` to the new site, and `design-nightly.json`'s
-   `ploiSiteId`. Merge it, delete `gq.ops.new-server.json`, re-enable the
+8. Commit the move. A PR changes `gq.ops.json`: `ploi.serverId` to
+   `125218`, `ploi.siteId` to the new site, `ploi.systemUser` to `nomiacms`
+   and `sigillo.environments.staging` to `"prod"`; and `design-nightly.json`'s
+   `ploiSiteId`. Before merging, check `prod` still matches `staging`. Merge it, delete `gq.ops.new-server.json`, re-enable the
    nightly. Releases go to the new server from here.
 9. Lift the freeze.
 10. Backups. In Ploi, add a daily database backup of `nomia_bnq_staging` on
@@ -656,7 +689,8 @@ doesn't support (above).
   old database was frozen, so nothing is lost. Discard the new-server config.
 - **After editors resume on the new server:** the same, but first dump the
   new database back to 102329 (preparation step 6 in reverse), or content written since
-  the cutover is lost. Revert the `gq.ops.json` PR.
+  the cutover is lost. Revert the `gq.ops.json` PR, which maps gq back to
+  Sigillo `staging`; keep `staging` until the 14 days below are over.
 - Keep site 419022 and its database on 102329, untouched, for 14 days, then
   delete the site, database and crontab (Ploi, by hand).
 
@@ -667,8 +701,6 @@ volume low.
 
 ## Open questions
 
-- **Sizing.** Is the VPS sized for the CMS and the proxy together? (No
-  Hetzner API token was available to check the server type.)
 - **Production restore** (gq-site #31): may an operator import the
   production database into a new Ploi server by hand, as above, until the
   blueprint has a restore path?
