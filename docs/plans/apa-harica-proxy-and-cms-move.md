@@ -262,8 +262,8 @@ no phone number). They usually reply within an hour, and a CSR is expected to
 be turned around **the same day**. They issue in HARICA from our CSR and
 return the certificate and full chain in PEM.
 
-**Escalation:** our usual APA project contact, **`<APA project contact: to
-fill in AGENTS.local.md>`**.
+**No escalation contact at APA.** The certificate contact is also our APA
+project contact, so there's no second person to escalate to.
 
 **Key type:** RSA 2048 (decided 2026-10-28), as `csr.sh` generates.
 
@@ -328,8 +328,8 @@ renewal with a new CSR about **30 days before expiry**:
 - `harica-check-expiry` prints nothing until then.
 - At 30 days or fewer it prints `WARN` (exit 1): send APA the new CSR.
 - At 14 days or fewer it prints `URGENT` (exit 2). Email the certificate
-  contact again and, since there's no phone number, escalate to the APA
-  project contact in the same message (CC) or straight after.
+  contact again, marked urgent, and tell our own team. There's no phone
+  number and no second APA contact.
 
 The script checks both the installed file and the certificate nginx serves.
 Cron mails its output only if the server can send mail. Set
@@ -470,7 +470,6 @@ volume low.
 
 ## Open questions
 
-- **APA project contact** for escalation: to record in `AGENTS.local.md`.
 - **Sizing.** Is the VPS sized for the CMS and the proxy together? (No
   Hetzner API token was available to check the server type.)
 - **Production restore** (gq-site #31): may an operator import the

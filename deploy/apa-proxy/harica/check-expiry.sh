@@ -9,8 +9,9 @@
 # (they differ if a reload failed). Prints nothing and exits 0 with more than
 # 30 days left. Otherwise it prints one line and exits 1 (WARN, 30 days or
 # fewer: send APA's certificate contact a CSR now) or 2 (URGENT, 14 days or
-# fewer: email them again and escalate to the APA project contact; there's no
-# phone number). Contacts: the plan's certificate runbook.
+# fewer: email them again, marked urgent, and tell our own team; there's no
+# phone number and no second APA contact). Contacts: the plan's certificate
+# runbook.
 #
 # Root crontab (Ploi → Server 125218 → Cron jobs, user root), daily:
 #   0 8 * * * /usr/local/sbin/harica-check-expiry
