@@ -46,9 +46,69 @@ repository: the old one is a Cloudflare-proxied origin.
 | Sites, databases, daemons, crontabs | none                                                                                 |
 | State                               | **reboot required**, 6 package updates pending, OPcache **off**                      |
 
-Not ready for WordPress yet: reboot, install PHP 8.4 (so the move changes
-servers, not PHP versions), enable OPcache. Everything else the CMS needs is
+Since then (rechecked read-only on 2026-10-28, after the reboot):
+
+- the server is rebooted and updated;
+- nginx is 1.30.6 and MySQL 8.4.11, both active;
+- OPcache is running in PHP-FPM 8.5, but Ploi's OPcache switch is still off;
+- it has 4 vCPU, 8 GB RAM and 133 GB free disk.
+
+The CMS **moves to PHP 8.5** (decided 2026-10-28): the latest PHP already on
+the server. PHP 8.4 won't be installed, so the move also upgrades PHP from
+8.4.27 to 8.5.12 (see "PHP 8.5" below). Everything else the CMS needs is
 created by `gq ploi provision`.
+
+### PHP 8.5
+
+Checked read-only on 2026-10-28. **No blockers found.**
+
+- **Constraints.**
+  - `composer.json` `require.php` is `>=8.3`, with no `config.platform.php`;
+    the lock records `>=8.3`.
+  - The effective floor is **8.4.1**, set by the GETQUICK packages
+    (getquick-theme, gq-config, gq-content, gq-design) and
+    `symfony/filesystem` 8.1.
+  - No locked package caps PHP below 8.5. Every constraint is open-ended
+    (`>=`, `^8.0`) or unset (Gravity Forms and the wp-plugin/ packages
+    declare none).
+  - `gq-bioeconomia` declares `Requires PHP: 8.4`.
+- **WordPress** is 7.1.3 (`roots/wordpress`). The core handbook's
+  compatibility table lists PHP 8.5 as supported from 6.9 on, and it retired
+  the "beta support" label in May 2026.
+- **Lint.** `php8.5 -l` over the 7,160 deployed PHP files (`web/`,
+  `vendor/`, `config/` on 102329, which also has PHP 8.5.12) finds no
+  errors. 8.5 reports the same compile-time deprecations as 8.4: 23
+  "implicitly nullable parameter" notices in WordPress's
+  `sodium_compat` (Core32), WPGraphQL's connection resolver and its bundled
+  graphql-relay-php. These already appear on 8.4 today; deprecations aren't
+  errors. Runtime deprecations (for example 8.5's null array offsets) only
+  show when code runs, so the verification step below covers them. No
+  PHPCompatibility scan was run: lint plus a real run on a copy of production
+  is the stronger check.
+- **CI and tooling build on 8.4 and deploy to 8.5.** None of these blocks
+  the move; report only:
+  - the CI Worker image (`infra/ci/Dockerfile`, managed by gq-site) installs
+    `php8.4-cli`;
+  - DDEV (`apps/cms/.ddev/config.yaml`, managed) runs `php_version: "8.4"`;
+  - `design-nightly.yml` (site-owned) uses `setup-php` 8.4;
+  - `phpcs.xml.dist` (site-owned) tests `8.4-`.
+
+  Production runs `composer install` on the server itself (8.5), with no
+  platform pin, so locked versions are installed as they are. Matching DDEV
+  and CI to 8.5 would be a gq-site change (managed files) and a small
+  site-owned one.
+
+- **gq provisioning** sets no PHP version (the site gets the server default,
+  8.5). `gq-site` has Ploi API entries for changing a site's PHP version, but
+  provision doesn't use them.
+- **Differences on the new server's PHP 8.5** from the old 8.4:
+  - **`imagick` is missing.** WordPress falls back to GD, which is present,
+    but image sizes and conversions may differ slightly.
+  - **FPM limits are Ploi's defaults:** `memory_limit` 128M,
+    `upload_max_filesize` and `post_max_size` 2M. The old server has 256M
+    and 50M, so uploads over 2 MB would fail.
+  - Everything else the CMS uses is present (curl, dom, exif, gd, intl,
+    mbstring, mysqli, sodium, xml, zip). 8.5 adds `lexbor` and `uri`.
 
 ### The current WordPress
 
@@ -369,7 +429,11 @@ doesn't support (above).
 
 ### Preparation (no freeze)
 
-1. Ploi, server 125218: reboot, updates, install PHP 8.4, enable OPcache.
+1. Ploi, server 125218 (PHP 8.5, already installed):
+   - Turn on OPcache (Server → PHP).
+   - Install `php8.5-imagick`.
+   - Raise PHP 8.5's FPM limits to the old server's: `memory_limit` 256M,
+     `upload_max_filesize` and `post_max_size` 50M.
 2. A new-server config beside the real one. `gq.ops.new-server.json` is a
    copy of `gq.ops.json` with `ploi.serverId: "125218"` and no `ploi.siteId`.
    Don't commit it. Every `gq` command below gets
@@ -380,17 +444,18 @@ doesn't support (above).
    `nomia_bnq_staging` with a new user and password, `.env` and the deploy
    script. It records the new `siteId` in the new-server config. The
    certificate stays at "warn" (see the blueprint gaps).
-4. In Ploi, set the new site's PHP to 8.4.
-5. `.env`. In the Ploi dashboard, replace the new site's `.env` with the old
+4. `.env`. In the Ploi dashboard, replace the new site's `.env` with the old
    site's, keeping only the **new** `DB_PASSWORD` (and `DB_HOST` if it
    differs). This keeps salts, so sessions and nonces stay valid. It also
    keeps the event secret, S3 Uploads keys, consent read token and
    `GQ_EMAIL_CLOUDFLARE_API_TOKEN`. Never paste values into chat, issues or
    commits.
-6. `gq --config gq.ops.new-server.json ploi events --dry-run`, then for real:
-   it adds the retry crontab on 125218. Then `ploi media --dry-run`: it should
-   report nothing to change.
-7. Rehearsal import. This proves the path and leaves the new site running on
+5. `gq --config gq.ops.new-server.json ploi events --dry-run`. It should
+   plan only the retry crontab, because the copied `.env` already has the
+   event secret. Don't apply it yet: a second scheduler on a copy of
+   production would send events alongside the old server's. It's applied at
+   cutover. Then `ploi media --dry-run`: it should report nothing to change.
+6. Rehearsal import. This proves the path and leaves the new site running on
    yesterday's data:
    - Safety dump: `pnpm db:backup` (old server, to R2).
    - Server to server, from a machine with SSH to both as `nomiabnq` (Ploi →
@@ -403,24 +468,82 @@ doesn't support (above).
      user and password, so neither appears in argv.
    - Uploads: `ssh nomiabnq@OLD_IP 'du -sh ~/nomia-cms.bnq.pt/apps/cms/web/app/uploads'`.
      If it isn't empty, `rsync -a` it across the same way.
-8. `gq --config gq.ops.new-server.json ploi release` for the current release
+7. `gq --config gq.ops.new-server.json ploi release` for the current release
    tag. Composer install and the deploy script's plugin and locale activation
    run against the imported database.
-9. Test the new server without DNS (`-k` until it has a certificate):
-   ```sh
-   curl -k --resolve nomia-cms.bnq.pt:443:VPS_IP https://nomia-cms.bnq.pt/wp/wp-login.php -o /dev/null -w '%{http_code}\n'
-   ```
-   As `nomiabnq` on the new server: `wp core is-installed`, `wp plugin list`,
-   `wp post list --post_type=page --format=count` (same as on the old server),
-   `wp gq-events retry-due` (nothing due). Log in to wp-admin through a hosts
-   entry for `nomia-cms.bnq.pt` pointing at `VPS_IP`.
-10. Certificate for `nomia-cms.bnq.pt` on the new server. The record is
-    proxied and SSL mode is `full`, so Cloudflare accepts any origin
-    certificate during the switch. Preferred: a **Cloudflare Origin CA**
-    certificate for `nomia-cms.bnq.pt`, installed in Ploi as a custom
-    certificate. It needs no DNS and allows Full (strict) later. Or Let's
-    Encrypt from Ploi after the switch: HTTP-01 reaches the origin through the
-    proxy because Always Use HTTPS is off.
+8. **PHP 8.5 verification on a copy of production. Required before the DNS
+   switch.** The new site now runs PHP 8.5 on yesterday's production
+   database (step 6). Reach it without DNS through a hosts entry for
+   `nomia-cms.bnq.pt` pointing at `VPS_IP`, or with `curl --resolve`; use
+   `-k` until it has a certificate.
+   1. Turn on logging. Production config fixes `WP_DEBUG_LOG` and
+      `WP_DEBUG_DISPLAY` to `false` (`apps/cms/config/application.php`), so
+      the log is PHP's own:
+      - Set `WP_DEBUG=true` in the new site's `.env` for the test, which
+        makes WordPress report `E_ALL`.
+      - Find where PHP-FPM 8.5 writes errors:
+        `php-fpm8.5 -i | grep -E '^(log_errors|error_log) '`, and any
+        `php_admin_value[error_log]` in `/etc/php/8.5/fpm/pool.d/`.
+      - If nothing is set, point `error_log` at a file for the test (Ploi →
+        PHP settings), then reload FPM.
+      - WP-CLI runs print to the terminal.
+   2. **wp-admin.** Log in, then open:
+      - the dashboard and Posts;
+      - one of each gq-bioeconomia type;
+      - Media: upload a file over 2 MB and check it lands in R2;
+      - GQ Design;
+      - GQ Config (Consent and Email tabs; use Email → Test);
+      - Gravity Forms;
+      - Simple History.
+
+      Edit a page in the block editor and **preview** a block, which loads
+      the Frontend iframe. Don't publish from the copy: a publish sends an
+      event to the production Frontend.
+
+   3. **GraphQL, as the Frontend calls it.** The Frontend's endpoint is
+      `https://nomia-cms.bnq.pt/wp/graphql`, reached with the edge identity
+      `GQ_AUTH_GRAPHQL_CLIENT_ID`/`_SECRET` from Sigillo staging. Query the
+      same things on both servers and compare:
+      - the page count;
+      - a page by URI with its blocks;
+      - a menu;
+      - the GQ Design chrome (header and footer patterns);
+      - one item of each collection the Listings use.
+
+      Compare too with `wp post list --post_type=<type> --format=count` as
+      `nomiabnq` on each server.
+
+   4. **Forms.** A Gravity Forms submission straight to the new CMS's REST
+      endpoint (what `/gq/forms/` relays). Check the entry, then delete the
+      test entry on the new copy only.
+   5. **Events.** As `nomiabnq`:
+      - `wp gq-events delays` (read-only) first.
+      - `wp gq-events retry-due` should report `Sent 0 due event(s)`. If
+        anything is due, it would go to the production Frontend, so stop and
+        look first.
+      - `wp gq-events reconcile`: the Frontend compares against the CMS it
+        reads, still the old server, so this is harmless.
+      - Also `wp core is-installed` and `wp plugin list` (every plugin
+        active, none "must-use" missing).
+   6. **Logs.** No PHP `Fatal error` or `Warning` from this Site's code, and
+      no new `Deprecated` beyond the known 8.4-era implicit-nullable notices
+      (see "PHP 8.5"). Any 8.5-only deprecation from a GETQUICK package goes
+      to its repository (gq-content, gq-design, …), and from a third-party
+      plugin to a pinned update or patch. Either is a blocker only if it is
+      a Fatal or Warning on a path editors use.
+   7. Set `WP_DEBUG` back to `false`, and undo any test `error_log`
+      setting.
+
+   If something fails on 8.5, the move waits. Install PHP 8.4 on 125218 as a
+   fallback (a Ploi step), set the site to it, and repeat this step.
+
+9. Certificate for `nomia-cms.bnq.pt` on the new server. The record is
+   proxied and SSL mode is `full`, so Cloudflare accepts any origin
+   certificate during the switch. Preferred: a **Cloudflare Origin CA**
+   certificate for `nomia-cms.bnq.pt`, installed in Ploi as a custom
+   certificate. It needs no DNS and allows Full (strict) later. Or Let's
+   Encrypt from Ploi after the switch: HTTP-01 reaches the origin through the
+   proxy because Always Use HTTPS is off.
 
 ### Cutover (freeze)
 
@@ -431,11 +554,13 @@ doesn't support (above).
    - disable crontab 343982 on 102329 (Ploi → Server → Cron)
 3. Old CMS read-only: `wp maintenance-mode activate` on 102329. The public
    Frontend isn't affected.
-4. Final dump and import: step 7 again, with `pnpm db:backup` first. The
+4. Final dump and import: step 6 again, with `pnpm db:backup` first. The
    database is about 1.2 MB gzipped, so this takes seconds.
-5. Cloudflare DNS, zone `bnq.pt`: change `nomia-cms.bnq.pt A OLD_IP`
+5. `gq --config gq.ops.new-server.json ploi events`. This adds the retry
+   crontab on 125218, now that the old one is paused.
+6. Cloudflare DNS, zone `bnq.pt`: change `nomia-cms.bnq.pt A OLD_IP`
    (proxied) to `VPS_IP` (proxied).
-6. Check:
+7. Check:
    - wp-admin login
    - edit and publish a test change; the event is delivered
      (`gq --config gq.ops.new-server.json frontend events check`)
@@ -443,22 +568,23 @@ doesn't support (above).
    - GQ Email's Test sends
    - a Gravity Forms submission arrives
    - `gq --config gq.ops.new-server.json site check` is Ready
-7. Commit the move. A PR changes `gq.ops.json` `ploi.serverId` to `125218`
+8. Commit the move. A PR changes `gq.ops.json` `ploi.serverId` to `125218`
    and `ploi.siteId` to the new site, and `design-nightly.json`'s
    `ploiSiteId`. Merge it, delete `gq.ops.new-server.json`, re-enable the
    nightly. Releases go to the new server from here.
-8. Lift the freeze.
-9. Backups. In Ploi, add a daily database backup of `nomia_bnq_staging` on
-   125218 to R2 with the existing "Cloudflare backup-sites" Custom S3
-   provider, keeping 30. Run one backup and check it restores locally.
+9. Lift the freeze.
+10. Backups. In Ploi, add a daily database backup of `nomia_bnq_staging` on
+    125218 to R2 with the existing "Cloudflare backup-sites" Custom S3
+    provider, keeping 30. Run one backup and check it restores locally.
 
 ### Rollback
 
-- **Before step 7:** switch the A record back to `OLD_IP`, run
+- **Before cutover step 8:** switch the A record back to `OLD_IP`, delete
+  the retry crontab on 125218, run
   `wp maintenance-mode deactivate` on 102329 and re-enable crontab 343982. The
   old database was frozen, so nothing is lost. Discard the new-server config.
 - **After editors resume on the new server:** the same, but first dump the
-  new database back to 102329 (step 7 in reverse), or content written since
+  new database back to 102329 (preparation step 6 in reverse), or content written since
   the cutover is lost. Revert the `gq.ops.json` PR.
 - Keep site 419022 and its database on 102329, untouched, for 14 days, then
   delete the site, database and crontab (Ploi, by hand).
