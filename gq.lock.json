@@ -1,5 +1,5 @@
 {
-  "gq": "0.24.1",
+  "gq": "0.25.0",
   "schemaVersion": 1,
   "files": {
     ".claude/skills": "sha256:e1ff59d80751d8af17631debcc3bc30ecdbec0b20dccded0bffb745fe5cea79c",
@@ -35,7 +35,7 @@
     "infra/ci/tsconfig.json": "sha256:784493453142b252218ea73bd96ea91ab941c6bd0b65bae15f7b4b6e50920cd5",
     "infra/ci/wrangler.jsonc": "sha256:4c48332bd874ed2a02e692fd8ebcbe546f8d7f623aa38d465893b190b1730aff",
     "infra/consent.ts": "sha256:a30c9fed9788d7693323d198846ac8a42f7b2abe9ede6099e7daf5e8a632d973",
-    "infra/frontend.run.ts": "sha256:bc49a0b7bc1f52d6847f6a190c377d1755f56d92b58c14d2aea6c25351d0c178",
+    "infra/frontend.run.ts": "sha256:8c1a25b5c94ed24d03b10189c7dce9cb6350cd2f3bf98b68e9094459bd24c7bb",
     "infra/package.json": "sha256:915c9c3696469c4a188939cb6afe7d731c16d0cc7e953ba43bbcdc61064615ca",
     "infra/scripts/deploy-frontend.mjs": "sha256:45230e7cbce144b3a052ea456e95f2aed46527ae76097003eda352bee9644ac3",
     "infra/tsconfig.json": "sha256:a70d936717fda5cb6a8ece96c261cd9af404077b8dbb5486616b56af39a0d78e",
