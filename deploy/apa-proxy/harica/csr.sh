@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
-# DRAFT, not run. Fallback when APA can't give us HARICA ACME (EAB)
-# credentials: generate a key and CSR on the VPS, send APA the CSR only, and
-# install the certificate HARICA issues with install-manual-cert.sh.
+# DRAFT, not run. Step 1 of every issuance and renewal (APA doesn't provide
+# HARICA ACME): generate a new key and CSR on the VPS, send APA the CSR only,
+# and install the certificate + full chain they return with
+# install-manual-cert.sh. A renewal is a new key and CSR, about 30 days before
+# expiry (check-expiry.sh warns).
 #
 #   sudo ./csr.sh
 #
@@ -24,6 +26,7 @@ openssl req -new -newkey rsa:2048 -nodes \
 
 openssl req -in "$DIR/$DOMAIN.csr" -noout -verify -text | grep -E "Subject:|DNS:"
 echo
-echo "Send APA this CSR (public; safe to email):"
+echo "Send APA's certificate contact this CSR (public; safe to email), asking"
+echo "for the certificate and full chain in PEM:"
 echo "  $DIR/$DOMAIN.csr"
 echo "Keep $DIR/privkey.pem where it is."

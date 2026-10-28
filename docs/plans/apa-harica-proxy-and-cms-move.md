@@ -12,6 +12,11 @@ visitor ──HTTPS (HARICA)──▶ nginx, APA VPS (Hetzner, Ploi 125218) ─�
 APA DNS: bioeconomia.apambiente.pt  A  <VPS IP>
 ```
 
+APA won't provide HARICA ACME credentials (decided 2026-10-28), so every
+certificate is issued by hand: we generate the key and CSR on the VPS, APA
+issues it in HARICA, and we install it. HSTS is adopted for
+`bioeconomia.apambiente.pt` only, staged from one day to one year.
+
 The Site's WordPress (`nomia-cms.bnq.pt`) moves to the same VPS and keeps a
 normal Let's Encrypt (or Cloudflare Origin CA) certificate.
 
@@ -19,9 +24,10 @@ Files:
 
 - [`deploy/apa-proxy/nginx/bioeconomia.apambiente.pt.conf`](../../deploy/apa-proxy/nginx/bioeconomia.apambiente.pt.conf)
   and its snippet [`bioeconomia-proxy.conf`](../../deploy/apa-proxy/nginx/bioeconomia-proxy.conf)
-- [`deploy/apa-proxy/harica/`](../../deploy/apa-proxy/harica/): certbot with
-  EAB (`issue-certbot.sh`), the nginx reload hook, and the CSR fallback
-  (`csr.sh`, `install-manual-cert.sh`)
+- [`deploy/apa-proxy/harica/`](../../deploy/apa-proxy/harica/): the manual
+  HARICA certificate cycle: `csr.sh` (key and CSR), `install-manual-cert.sh`
+  (installs APA's certificate and full chain), `reload-nginx.sh` (its reload
+  hook) and `check-expiry.sh` (warns at 30 and 14 days)
 
 `VPS_IP` below is server 125218's IPv4 and `OLD_IP` server 102329's
 (`gq ploi server show --server <id>`). Both stay out of this public
@@ -200,6 +206,24 @@ from `VPS_IP`, so IP-based features see one heavy client. Add one custom rule,
 Keep the managed WAF rules: they inspect payloads, not addresses. nginx
 limits per visitor in their place.
 
+### HSTS upstream
+
+Checked read-only on 2026-10-28: the `bnq.pt` zone's HSTS setting
+(`security_header`) is **disabled** and has never been modified (max-age 0,
+no includeSubDomains, no preload), and `https://nomia.bnq.pt/` sends no
+`Strict-Transport-Security`. Nothing upstream sends HSTS today. The proxy
+drops any it might send later anyway (`proxy_hide_header`), so the only HSTS
+APA's visitors get is the proxy's own.
+
+### APA's DNS today
+
+Queried APA's authoritative server (`apadns.apambiente.pt`) on 2026-10-28.
+`bioeconomia.apambiente.pt` has no A, AAAA or CAA records yet. The records
+our first email asked for for Cloudflare for SaaS aren't there either:
+`_cf-custom-hostname.bioeconomia` (TXT) and `_acme-challenge.bioeconomia`
+(CNAME). With no CAA on the hostname, it inherits `apambiente.pt`'s
+`128 issue "harica.gr"`, which allows HARICA.
+
 ### Draft checked locally
 
 On 2026-10-28 the nginx draft ran in `nginx:stable` (1.30.6), with a
@@ -207,6 +231,17 @@ throwaway self-signed certificate, against the live Worker. Results:
 
 - `nginx -t` passes. The only warning is no stapling, which a self-signed
   certificate can't have.
+- HTTPS responses carry `Strict-Transport-Security: max-age=86400`,
+  including `/_astro/*` (which adds its own `X-Proxy-Cache`). The port-80
+  redirect carries none.
+- The manual certificate cycle ran against a throwaway CA named like HARICA,
+  trusted in the container:
+  - `csr.sh` wrote the key and CSR, and `install-manual-cert.sh` installed
+    leaf, intermediate and root as APA would send them. nginx serves leaf and
+    intermediate; the root is dropped.
+  - A certificate that doesn't match the key is refused, and nothing changes.
+  - `check-expiry.sh`: 60 days left prints nothing (exit 0), 19 days prints
+    WARN (exit 1), 10 days prints URGENT (exit 2).
 - `http://…/x` returns 301 to `https://bioeconomia.apambiente.pt/x`.
 - `/` returns 200 through the proxy, with canonical still
   `https://nomia.bnq.pt/` (it changes once `domains.frontend` does).
@@ -220,32 +255,48 @@ throwaway self-signed certificate, against the live Worker. Results:
 
 ## Runbook: proxy and certificate
 
-Before any of this, the APA steps are needed: EAB credentials (or a person
-to issue from a CSR) and the A record.
+APA certificate contact: **`<name, email, phone: to confirm with APA>`**.
+They issue in HARICA from our CSR and return the certificate and full chain
+in PEM.
 
 1. Ploi, server 125218: reboot, apply updates, `nginx -v` (if older than
    1.25.1, use `listen 443 ssl http2;`).
 2. Ploi: create site `bioeconomia.apambiente.pt` (no repository). Copy
-   `bioeconomia-proxy.conf` to `/etc/nginx/snippets/`. Install
-   `issue-certbot.sh` as `/usr/local/sbin/harica-cert`. `apt install certbot`.
+   `bioeconomia-proxy.conf` to `/etc/nginx/snippets/`. Install the scripts as
+   root: `reload-nginx.sh` as `/usr/local/sbin/harica-reload-nginx` and
+   `check-expiry.sh` as `/usr/local/sbin/harica-check-expiry`; keep `csr.sh`
+   and `install-manual-cert.sh` in `/root/harica/`.
 3. Until there's a certificate, serve only the port-80 block. Comment out the
    443 server, then `nginx -t && systemctl reload nginx`.
-4. APA: `bioeconomia.apambiente.pt A VPS_IP`, TTL 300, and no AAAA unless we
-   add IPv6 to the VPS. CAA already allows `harica.gr`. The hostname has no
-   record today, so nobody loses service while it's half set up.
-5. Certificate:
-   - With EAB: write `/root/harica-eab.ini`, then `harica-cert register`,
-     `HARICA_ACME_SERVER=… harica-cert issue`, `harica-cert dry-run`, and
-     add the root crontab from the script.
-   - Without: `csr.sh`, send the CSR to APA, then `install-manual-cert.sh`
-     with what they return, and add the expiry-warning crontab. Since March
-     2026 certificates last at most 200 days, and from March 2027 at most
-     100, so this means a manual renewal every few months.
+4. DNS, APA:
+   - `bioeconomia.apambiente.pt A VPS_IP`, TTL 300.
+   - **No AAAA**: the server has no IPv6.
+   - **Remove what our first email asked for, if they created any of it:**
+     TXT `_cf-custom-hostname.bioeconomia`, CNAME
+     `_acme-challenge.bioeconomia`, and any CAA on `bioeconomia`. None
+     resolved on 2026-10-28, but a CAA added since without `harica.gr` would
+     block HARICA issuance. With no CAA on the hostname, `apambiente.pt`'s
+     `issue "harica.gr"` applies.
+   - The hostname has no record today, so nobody loses service while it's
+     half set up.
+5. Certificate (the same steps for every renewal):
+   1. `sudo /root/harica/csr.sh` writes a new key and CSR to
+      `/etc/harica/manual/<date>/`. The key never leaves the server.
+   2. Email the CSR to APA's certificate contact and ask for the certificate
+      and full chain in PEM.
+   3. Copy what they return to the server, then
+      `sudo /root/harica/install-manual-cert.sh /etc/harica/manual/<date> <fullchain.pem>`.
+      It checks key, hostname, HARICA issuer, chain and validity before
+      changing anything. It keeps the previous files as `*.pem.previous`,
+      and restores them if nginx won't reload.
+   4. Root crontab, daily: `0 8 * * * /usr/local/sbin/harica-check-expiry`.
 6. Enable the 443 server, `nginx -t`, reload.
 7. Check from outside, before announcing:
    - `curl -sI https://bioeconomia.apambiente.pt/`: 200, HARICA issuer
-     (`openssl s_client -connect bioeconomia.apambiente.pt:443 -servername bioeconomia.apambiente.pt`).
-   - `curl -sI http://bioeconomia.apambiente.pt/x`: 301 to https.
+     (`openssl s_client -connect bioeconomia.apambiente.pt:443 -servername bioeconomia.apambiente.pt`),
+     and `Strict-Transport-Security: max-age=86400` with no
+     `includeSubDomains` or `preload`.
+   - `curl -sI http://bioeconomia.apambiente.pt/x`: 301 to https, with no HSTS.
    - A page's `<link rel="canonical">` (correct only after the
      `domains.frontend` change below).
    - The map loads tiles from `bioeconomia.apambiente.pt/gq/map/`.
@@ -258,6 +309,38 @@ to issue from a CSR) and the A record.
       (above).
    3. A publish: the event reaches the Frontend (`pnpm frontend:events:check`)
       and `pnpm site:check` is Ready.
+
+### Renewal cadence
+
+There's no ACME, so nothing renews automatically. A HARICA TLS certificate
+lasts at most **200 days** today and at most **100 days** for certificates
+issued from **15 March 2027** (CA/Browser Forum ballot SC-081). Start each
+renewal with a new CSR about **30 days before expiry**:
+
+- `harica-check-expiry` prints nothing until then.
+- At 30 days or fewer it prints `WARN` (exit 1): send APA the new CSR.
+- At 14 days or fewer it prints `URGENT` (exit 2): chase APA.
+
+The script checks both the installed file and the certificate nginx serves.
+Cron mails its output only if the server can send mail. Set
+`HARICA_NOTIFY_URL` (a webhook) in the crontab line as well, and put each
+expiry date in the team calendar. From March 2027 this is a renewal about
+every 2–3 months.
+
+### Raising HSTS
+
+The max-age lives in one place: the `map` at the top of
+`bioeconomia.apambiente.pt.conf` (`$bioeconomia_hsts_max_age`). It is always
+without `includeSubDomains` and without `preload`.
+
+1. Go-live: `86400` (one day). A broken certificate or proxy then locks
+   browsers out for a day at most.
+2. After a week with no certificate or proxy incident, and with
+   `harica-check-expiry` installed and tested, change it to `31536000`. Then
+   `nginx -t && systemctl reload nginx`, and check with
+   `curl -sI https://bioeconomia.apambiente.pt/ | grep -i strict`.
+3. To back out, set `max-age=0`. Browsers drop the policy on their next
+   HTTPS visit.
 
 ## Runbook: moving the CMS to server 125218
 
@@ -374,14 +457,8 @@ volume low.
 
 ## Open questions
 
-- **HARICA ACME.** Will APA provide EAB credentials (directory URL, Key ID,
-  HMAC)? Is `apambiente.pt` pre-validated in their HARICA account, or does
-  HARICA require HTTP-01 for each order? And what contact email and key type
-  (RSA or ECDSA) do they want?
-- **HSTS** on `bioeconomia.apambiente.pt`: does APA want it, and with what
-  max-age?
-- **IPv6.** Does the VPS have an IPv6 address (Hetzner console), and should
-  APA add AAAA?
+- **APA's certificate contact** (name, email, phone), how long they need to
+  turn a CSR around, and whether they want RSA 2048 (as drafted) or ECDSA.
 - **Sizing.** Is the VPS sized for the CMS and the proxy together? (No
   Hetzner API token was available to check the server type.)
 - **Production restore** (gq-site #31): may an operator import the
@@ -392,3 +469,29 @@ volume low.
   workarounds first?
 - **Cloudflare rulesets** on `bnq.pt` were not readable with the Sigillo token.
   Which custom, rate-limit and bot rules exist?
+
+## Appendix: if APA later provides HARICA ACME
+
+Not the plan (APA declined on 2026-10-28). If that changes, ACME would make
+renewals automatic. certbot with External Account Binding, using separate
+directories so it never touches Ploi's Let's Encrypt certificates:
+
+```sh
+# EAB values in a root-only file, never in argv: server, eab-kid, eab-hmac-key, email
+certbot --config-dir /etc/harica --work-dir /var/lib/harica --logs-dir /var/log/harica \
+  register --config /root/harica-eab.ini --agree-tos --no-eff-email --non-interactive
+certbot --config-dir /etc/harica --work-dir /var/lib/harica --logs-dir /var/log/harica \
+  certonly --server "https://acme-v02.harica.gr/acme/<account id>/directory" \
+  --webroot -w /var/www/harica-acme -d bioeconomia.apambiente.pt \
+  --deploy-hook /usr/local/sbin/harica-reload-nginx
+```
+
+This also needs:
+
+- the port-80 server to serve `/.well-known/acme-challenge/` from
+  `/var/www/harica-acme` again;
+- a daily `certbot renew` with the same directories;
+- `check-expiry.sh` kept as a safety net.
+
+The certbot script that was drafted for this is in commit ca03684
+(`deploy/apa-proxy/harica/issue-certbot.sh`).
