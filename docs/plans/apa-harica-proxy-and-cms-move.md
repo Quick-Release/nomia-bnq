@@ -1,8 +1,9 @@
 # bioeconomia.apambiente.pt behind a HARICA proxy, and the CMS move
 
 Status: **in progress**. Investigated 2026-10-28. Applied so far: proxy
-runbook steps 1–3, the two site users, and Sigillo `prod` (see "Applied on
-2026-10-28"). Nothing else.
+runbook steps 1–3, the two site users, Sigillo `prod` (see "Applied on
+2026-10-28"), the CSR sent to APA, and the CMS move rehearsal (see
+"Rehearsal on 2026-10-29"). Nothing else.
 
 APA requires a HARICA certificate on `bioeconomia.apambiente.pt`. Cloudflare
 for SaaS on the `bnq.pt` Pro plan can't serve one, so the custom hostname
@@ -86,6 +87,83 @@ The CMS **moves to PHP 8.5** (decided 2026-10-28): the latest PHP already on
 the server. PHP 8.4 won't be installed, so the move also upgrades PHP from
 8.4.27 to 8.5.12 (see "PHP 8.5" below). Everything else the CMS needs is
 created by `gq ploi provision`.
+
+### Rehearsal on 2026-10-29
+
+Move preparation steps 2–8, on a copy of production. Production was only
+read: a `wp db export --single-transaction` dump, `.env` and Ploi GETs, and
+GraphQL reads. DNS for `nomia-cms.bnq.pt` is unchanged and there is no
+crontab on 125218.
+
+- **Provision.** Ploi site **426661**, `nomia-cms.bnq.pt` on 125218, runs as
+  `nomiacms`, with custom deployments, database `nomia_bnq_staging` (new
+  user and password) and the deploy script. No certificate: the name still
+  resolves to Cloudflare.
+- **`.env`.** The old site's `.env` (Ploi API), with the new `DB_PASSWORD`.
+  Salts and every other key match the old site. Sigillo `prod` holds none of
+  the salts or database settings; the values it shares with the `.env`
+  (event secret, S3 Uploads keys, consent read token, email token) match.
+  **For the rehearsal only**, `PUBLICATION_EVENT_SECRET` and
+  `GQ_EMAIL_CLOUDFLARE_API_TOKEN` are blank: without the secret gq-content
+  sends no events at all.
+- **No mail, no loopbacks.** The server has `/usr/sbin/sendmail`, so a blank
+  email token isn't enough: WordPress would fall back to `mail()`. A
+  copy-only must-use plugin, `web/app/mu-plugins/zz-rehearsal-no-mail.php`
+  (not in the repository), blocks `wp_mail` and any HTTP request to
+  `nomia-cms.bnq.pt` or `nomia.bnq.pt`, logging each.
+- **Import.** 1.17 MB gzipped, piped server to server (nothing stored
+  locally) into the new database through `~/.my-nomia.cnf` (mode 0600, kept
+  for the cutover import). 25 tables and 1045 posts in 33 type/status
+  groups, the same as production.
+- **Release.** `gq ploi release --ref v0.15.0`, the commit production runs
+  (`a2777ca`). The deploy log has "Reloaded php8.5-fpm to clear PHP
+  opcache.", so `nomiacms` can reload FPM without an extra sudo rule.
+- **Events.** `ploi events --dry-run` plans the secret and the retry
+  crontab; not applied. `ploi media --dry-run`: nothing to change.
+
+Checks on PHP 8.5. The copy is reached with
+`curl --resolve nomia-cms.bnq.pt:80:VPS_IP -H 'X-Forwarded-Proto: https'`.
+WordPress then marks its cookies Secure, which curl drops over plain HTTP, so
+a login needs the Cookie header built by hand.
+
+| Check                                                                                            | Result      |
+| ------------------------------------------------------------------------------------------------ | ----------- |
+| Login page, and login as the admin user                                                          | ✓           |
+| Dashboard, Posts, Pages, the 13 gq-bioeconomia types, Media, block editor                        | ✓ 200       |
+| GQ Design, Elements, Options, Archives, Support; Gravity Forms; GraphQL settings; Simple History | ✓ 200       |
+| GraphQL, the Frontend's queries against the old server's answers (below)                         | ✓ identical |
+| Gravity Forms REST submissions: a test form, and Contacto with mail blocked                      | ✓           |
+| `wp gq-events delays`: nothing due. `retry-due`: "Events are not configured", as intended        | ✓           |
+| `wp core is-installed` (7.1.3), every plugin active, gq-config 0.5.0 loaded                      | ✓           |
+| PHP log with `WP_DEBUG=true`: no Fatal, no Deprecated, one known Warning (below)                 | ✓           |
+
+The GraphQL comparison covered 305 published routes, the home page with its
+blocks, the chrome (menu, header and footer patterns), design tokens,
+archives, and one entry of each of the 12 content types. The test entries
+and the test form were deleted afterwards, and `WP_DEBUG` is back to false.
+
+Findings:
+
+- **Gravity Forms 3.2 sends notifications in the background**, started by a
+  loopback request to the site's own URL. Before the DNS switch that URL is
+  production, so the rehearsal's Contacto submission made one request to
+  production's `admin-ajax.php`. Production doesn't have the copy's batch, so
+  nothing was sent. The batch was deleted from the copy, and the must-use
+  plugin now blocks such requests. After the switch the loopback reaches the
+  new server, as it should.
+- `Undefined array key "width"` (and `"height"`) in
+  `wpgraphql-blocks/plugin.php:149`, on GraphQL reads of `core/image` blocks.
+  The code is the same under 8.4 and warns on any PHP 8, so it isn't an 8.5
+  regression. It's a candidate for the existing wpgraphql-blocks patch.
+- The old server also has `nomia-blocks` and `nomia-cpt`, inactive leftovers
+  from before gq-bioeconomia. The new server doesn't, and nothing needs them.
+- Not run on the copy: a Media upload (it would write to the production R2
+  bucket), GQ Email → Test (mail is blocked) and a block preview (it needs a
+  browser). They're in cutover step 7.
+- `gq sigillo run` always reads `gq.ops.json`, so
+  `--config gq.ops.new-server.json` doesn't switch it to `prod`. The
+  rehearsal ran `sigillo run --env prod` with gq's own re-entry. `staging` holds the same
+  values until the cutover PR maps the alias.
 
 ### PHP 8.5
 
@@ -658,9 +736,14 @@ doesn't support (above).
 3. Old CMS read-only: `wp maintenance-mode activate` on 102329. The public
    Frontend isn't affected.
 4. Final dump and import: step 6 again, with `pnpm db:backup` first. The
-   database is about 1.2 MB gzipped, so this takes seconds.
-5. `gq --config gq.ops.new-server.json ploi events`. This adds the retry
-   crontab on 125218, now that the old one is paused.
+   database is about 1.2 MB gzipped, so this takes seconds. Then undo the
+   rehearsal guards on 125218: delete
+   `web/app/mu-plugins/zz-rehearsal-no-mail.php` and set
+   `GQ_EMAIL_CLOUDFLARE_API_TOKEN` back to the old site's value. The next
+   step restores `PUBLICATION_EVENT_SECRET`.
+5. `gq --config gq.ops.new-server.json ploi events`. This sets
+   `PUBLICATION_EVENT_SECRET` again and adds the retry crontab on 125218, now
+   that the old one is paused.
 6. Cloudflare DNS, zone `bnq.pt`: change `nomia-cms.bnq.pt A OLD_IP`
    (proxied) to `VPS_IP` (proxied).
 7. Check:
