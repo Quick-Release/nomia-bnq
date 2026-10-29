@@ -43,7 +43,9 @@
       "safe-svg",
       "gravityforms",
       "gq-bioeconomia",
-      "gq-email"
+      "gq-email",
+      "two-factor",
+      "two-factor-provider-webauthn"
     ],
     "locale": "pt_PT_ao90"
   },

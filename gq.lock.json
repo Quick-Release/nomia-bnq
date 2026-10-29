@@ -15,7 +15,7 @@
     "apps/frontend/src/pages/gq/forms/[...rest].ts": "sha256:5336581bd6b848763287bc13fadcceb8261d89342a238e85726610fdf01c4eb3",
     "apps/frontend/src/pages/gq/refresh.ts": "sha256:ef547e51e9042aabfd3f5e66afa672f93340f0d8c56690b45a3586217f19088c",
     "apps/frontend/workers/consent-purge.ts": "sha256:28fb360dc23fb4e39669576ad1affb20e3902e2659477da95704e9ea2c044def",
-    "deploy/ploi/admin.sh": "sha256:dda3540d3786ce2fdabfa85df7b0f393a93d1d0a72d9ebab5babcc723659c445",
+    "deploy/ploi/admin.sh": "sha256:c11518c2aae04213dd73384d73e1f89727a343f943fde3300a7f0b988899e175",
     "deploy/ploi/polylang.sh": "sha256:bd520605bef7355495cefbefa554a7c933e0df71df6a39d50c6ae2571e285fa2",
     "docs/adr/README.md": "sha256:7ceb57ced6c1c24592e17265bbebe9e9b8cfc4cc2c527a76972308a6c41950de",
     "docs/agents/README.md": "sha256:2a192cb2025d30c6da279fa2ed9dfeee2b6738af885e42df43dc0596793b6cc0",
