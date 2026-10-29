@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
-# DRAFT, not run. Installs the certificate APA issued in HARICA from csr.sh's
-# CSR at the paths nginx reads, then reloads nginx.
+# Installs the certificate APA issued in HARICA at the paths nginx reads, then
+# reloads nginx. The key directory holds privkey.pem: from csr.sh, or the key
+# APA sent with the certificate (copied there root-only, mode 0600).
 #
-#   sudo ./install-manual-cert.sh /etc/harica/manual/<date> <fullchain.pem>
+#   sudo ./install-manual-cert.sh /etc/harica/manual/<dir> <fullchain.pem>
 #
 # <fullchain.pem>: what APA returns, in PEM: the certificate for
 # bioeconomia.apambiente.pt first, then HARICA's intermediate(s). A root at the
 # end is tolerated and left out of what nginx serves.
 #
-# Nothing changes unless every check passes: the certificate matches the key
-# from the same CSR, names the hostname, chains to a trusted HARICA root, and
+# Nothing changes unless every check passes: the certificate matches the
+# key, names the hostname, chains to a trusted HARICA root, and
 # is valid now. The previous files are kept as *.pem.previous for rollback.
 set -euo pipefail
 
@@ -38,7 +39,9 @@ cert_hash() { openssl x509 -in "$1" -noout -pubkey | openssl sha256; }
   || { echo "The certificate doesn't match $KEY_DIR/privkey.pem (wrong CSR?)." >&2; exit 1; }
 openssl x509 -in "$LEAF" -noout -checkhost "$DOMAIN" | grep -q "does match" \
   || { echo "The certificate isn't for $DOMAIN." >&2; exit 1; }
-openssl x509 -in "$LEAF" -noout -issuer | grep -qi harica \
+# HARICA's issuers name it in full: "Hellenic Academic and Research Institutions
+# CA", e.g. its GEANT TLS ECC 1 intermediate.
+openssl x509 -in "$LEAF" -noout -issuer | grep -qiE 'harica|Hellenic Academic and Research Institutions' \
   || { echo "The certificate isn't issued by HARICA." >&2; exit 1; }
 openssl verify -untrusted "$WORK/chain.pem" "$LEAF" >/dev/null \
   || { echo "The chain doesn't verify against the system trust store." >&2; exit 1; }

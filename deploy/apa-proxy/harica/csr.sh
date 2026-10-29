@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-# DRAFT, not run. Step 1 of every issuance and renewal (APA doesn't provide
-# HARICA ACME): generate a new key and CSR on the VPS, send APA the CSR only,
-# and install the certificate + full chain they return with
-# install-manual-cert.sh. A renewal is a new key and CSR, about 30 days before
-# expiry (check-expiry.sh warns).
+# The preferred start of a renewal (APA doesn't provide HARICA ACME): generate
+# a new key and CSR on the VPS, send APA the CSR only, and install the
+# certificate + full chain they return with install-manual-cert.sh. APA may
+# instead generate the key and send it with the certificate, as it did for the
+# first certificate; install-manual-cert.sh takes either. Renew about 30 days
+# before expiry (check-expiry.sh warns).
 #
 #   sudo ./csr.sh
 #

@@ -1,9 +1,15 @@
 # bioeconomia.apambiente.pt behind a HARICA proxy, and the CMS move
 
-Status: **in progress**. Investigated 2026-10-28. Applied so far: proxy
-runbook steps 1–3, the two site users, Sigillo `prod` (see "Applied on
-2026-10-28"), the CSR sent to APA, and the CMS move rehearsal (see
-"Rehearsal on 2026-10-29"). Nothing else.
+Status: **in progress**. Investigated 2026-10-28. Applied so far:
+
+- **`bioeconomia.apambiente.pt` is live** on APA's HARICA certificate (proxy
+  runbook steps 1–7, 2026-10-29), over IPv4. IPv6 works, but APA hasn't
+  published the AAAA record yet;
+- the two site users and Sigillo `prod` (see "Applied on 2026-10-28");
+- the CMS move rehearsal (see "Rehearsal on 2026-10-29").
+
+Not done yet: the CMS cutover and the go-live configuration (proxy runbook
+step 8).
 
 APA requires a HARICA certificate on `bioeconomia.apambiente.pt`. Cloudflare
 for SaaS on the `bnq.pt` Pro plan can't serve one, so the custom hostname
@@ -16,8 +22,10 @@ APA DNS: bioeconomia.apambiente.pt  A  <VPS IP>
 ```
 
 APA won't provide HARICA ACME credentials (decided 2026-10-28), so every
-certificate is issued by hand: we generate the key and CSR on the VPS, APA
-issues it in HARICA, and we install it. HSTS is adopted for
+certificate is issued by hand. For the first one, APA generated the key and
+the certificate in HARICA and sent us both, and we installed them. For
+renewals we prefer to send a CSR from the VPS (`csr.sh`) so the key never
+leaves the server, but APA may send a key and certificate again. HSTS is adopted for
 `bioeconomia.apambiente.pt` only, staged from one day to one year.
 
 The Site's WordPress (`nomia-cms.bnq.pt`) moves to the same VPS and keeps a
@@ -460,13 +468,19 @@ throwaway self-signed certificate, against the live Worker. Results:
 address are in `AGENTS.local.md` in the main checkout; this repository is
 public, so they aren't recorded here. Reach them by **email only** (there's
 no phone number). They usually reply within an hour, and a CSR is expected to
-be turned around **the same day**. They issue in HARICA from our CSR and
-return the certificate and full chain in PEM.
+be turned around **the same day**.
+
+**Issuance model.** APA issues in HARICA. For the first certificate
+(2026-10-28) they generated the key themselves and sent it together with the
+certificate and bundles; they didn't use the CSR we had sent. A renewal can
+go either way (step 5): we prefer to send a CSR, so the key never leaves the
+server, but a key and certificate from APA install the same way.
 
 **No escalation contact at APA.** The certificate contact is also our APA
 project contact, so there's no second person to escalate to.
 
-**Key type:** RSA 2048 (decided 2026-10-28), as `csr.sh` generates.
+**Key type:** the first certificate is ECDSA P-256, APA's choice. `csr.sh`
+generates RSA 2048 (decided 2026-10-28); either is fine for a renewal.
 
 1. Ploi, server 125218: reboot, apply updates, `nginx -v` (if older than
    1.25.1, use `listen 443 ssl http2;`).
@@ -477,9 +491,11 @@ project contact, so there's no second person to escalate to.
    root: `reload-nginx.sh` as `/usr/local/sbin/harica-reload-nginx` and
    `check-expiry.sh` as `/usr/local/sbin/harica-check-expiry`; keep `csr.sh`
    and `install-manual-cert.sh` in `/root/harica/`.
-3. Until there's a certificate, serve only the port-80 block. Comment out the
-   443 server, then `nginx -t && systemctl reload nginx`.
-4. DNS, APA:
+3. **Done 2026-10-28.** Until there's a certificate, serve only the port-80
+   block. Comment out the 443 server, then `nginx -t && systemctl reload nginx`.
+4. DNS, APA. **A live** (2026-10-29, TTL 3600 rather than 300). **No AAAA
+   yet** at APA's nameservers or at public resolvers; ask APA again. The
+   leftover records are gone and the effective CAA allows `harica.gr`.
    - Both records, TTL 300:
      ```
      bioeconomia.apambiente.pt  A     2.31.143.228
@@ -493,19 +509,72 @@ project contact, so there's no second person to escalate to.
      `issue "harica.gr"` applies.
    - The hostname has no record today, so nobody loses service while it's
      half set up.
-5. Certificate (the same steps for every renewal):
-   1. `sudo /root/harica/csr.sh` writes a new key and CSR to
-      `/etc/harica/manual/<date>/`. The key never leaves the server.
-   2. Email the CSR to APA's certificate contact and ask for the certificate
-      and full chain in PEM.
-   3. Copy what they return to the server, then
-      `sudo /root/harica/install-manual-cert.sh /etc/harica/manual/<date> <fullchain.pem>`.
+5. Certificate (the same steps for every renewal). Root work goes through
+   a one-off Ploi script run as root, deleted afterwards: `ploi` has no
+   passwordless sudo.
+   1. Get a key and certificate, one of two ways:
+      - **Preferred: our CSR.** `/root/harica/csr.sh` writes a new key and
+        CSR to `/etc/harica/manual/<date>/`. Email the CSR to APA's
+        certificate contact and ask for the certificate and full chain in
+        PEM. The key never leaves the server.
+      - **APA sends the key too**, as for the first certificate. Treat the
+        files as untrusted data and never paste the key into chat, a ticket
+        or a Ploi script. Check locally that the key matches the
+        certificate (compare the SHA-256 of both public keys). Copy the key
+        and the bundle by `scp` as `ploi` into a new mode-0700 folder (key
+        mode 0600). Then a root script moves the key to
+        `/etc/harica/manual/apa-<date>/privkey.pem` (root, 0600) and shreds
+        the temporary copy. Delete the local copies afterwards.
+   2. Use the bundle **without** the self-signed root: the leaf, GEANT TLS
+      ECC 1, and the HARICA TLS ECC Root CA 2021 cross-signed by the 2015
+      ECC root (not self-signed, so it's served and helps older clients).
+      `install-manual-cert.sh` drops a self-signed root anyway.
+   3. `/root/harica/install-manual-cert.sh /etc/harica/manual/<dir> <bundle.pem>`.
       It checks key, hostname, HARICA issuer, chain and validity before
       changing anything. It keeps the previous files as `*.pem.previous`,
       and restores them if nginx won't reload.
-   4. Root crontab, daily: `0 8 * * * /usr/local/sbin/harica-check-expiry`.
-6. Enable the 443 server, `nginx -t`, reload.
-7. Check from outside, before announcing:
+   4. Daily expiry check, **done 2026-10-29**: Ploi crontab 352285, root,
+      `0 8 * * * /usr/local/sbin/harica-check-expiry`. Ploi writes it to
+      `/etc/crontab` with its output going to `/root/scheduled-352285.log`,
+      so a WARN reaches nobody by itself: set `HARICA_NOTIFY_URL` on that
+      crontab line, and keep the dates in the team calendar (see "Renewal
+      cadence").
+
+   **First certificate, installed 2026-10-29.** APA sent the key with the
+   certificate. The user unpacked the files locally, the key was copied as
+   above into `/etc/harica/manual/apa-20261028/`, and the installer ran
+   with the cross-signed bundle. The unused key from our CSR
+   (`/etc/harica/manual/20261029/`) was shredded. Because the key was
+   generated and sent by APA, it has existed outside the server: one more
+   reason to renew from a CSR.
+   - Leaf: `CN=bioeconomia.apambiente.pt`, ECDSA P-256, issued by GEANT TLS
+     ECC 1 (HARICA), valid 2026-10-28 to **2027-05-15 13:12 UTC**. Public key
+     SHA-256 `017be83e…e6f1`.
+   - The leaf names **no OCSP responder**, only a CRL and CA Issuers. OCSP
+     stapling is therefore off (`ssl_stapling off`, no
+     `ssl_trusted_certificate`).
+   - Its issuer reads "Hellenic Academic and Research Institutions CA", not
+     "HARICA", so the installer's issuer check accepts both spellings.
+
+6. **Done 2026-10-29.** Enable the 443 server, `nginx -t`, reload.
+7. **Done 2026-10-29**, over IPv4 and IPv6 (pinned with `--resolve`; no
+   AAAA yet):
+   - **Chain:** the leaf, GEANT TLS ECC 1 and HARICA TLS ECC Root CA 2021.
+     Verify return code 0, TLS 1.3.
+   - **Port 80:** a 301 to https, path and query kept, no HSTS.
+   - **`/`:** 200 from the Worker through the proxy, with
+     `Strict-Transport-Security: max-age=86400`. HSTS is also sent on
+     `/_astro/` and on 404s. `nomia.bnq.pt` and `nomia-cms.bnq.pt` send
+     none.
+   - **`/_astro/`:** `X-Proxy-Cache` MISS, then HIT.
+   - **`/gq/map/styles/positron`:** JSON with 4 bioeconomia URLs and no
+     `nomia.bnq.pt`.
+   - **`/gq/consent` and `/gq/forms/1`:** a same-origin POST passes the guard
+     (400 on an empty body); a foreign Origin gets 403. No real submission
+     was sent, so no notification went out.
+   - **Canonical:** still `https://nomia.bnq.pt/`, as expected until step 8.
+
+   The checks to run:
    - `curl -sI https://bioeconomia.apambiente.pt/`: 200, HARICA issuer
      (`openssl s_client -connect bioeconomia.apambiente.pt:443 -servername bioeconomia.apambiente.pt`),
      and `Strict-Transport-Security: max-age=86400` with no
@@ -548,6 +617,7 @@ project contact, so there's no second person to escalate to.
        - Memcached: `-l 127.0.0.1,::1`.
 
        Then restart the service and re-run the probe.
+
 8. Go-live configuration, in order:
    1. The `domains.frontend` change (reworked #99) and a release. Canonicals
       and `Astro.site` move to `bioeconomia.apambiente.pt`.
@@ -560,23 +630,31 @@ project contact, so there's no second person to escalate to.
 
 There's no ACME, so nothing renews automatically. A HARICA TLS certificate
 lasts at most **200 days** today and at most **100 days** for certificates
-issued from **15 March 2027** (CA/Browser Forum ballot SC-081). Start each
-renewal with a new CSR about **30 days before expiry**:
+issued from **15 March 2027** (CA/Browser Forum ballot SC-081).
+
+**The current certificate expires on 15 May 2027, 13:12 UTC.** WARN starts
+on **15 April 2027** (renew then) and URGENT on **1 May 2027**. The renewal
+is issued after 15 March 2027, so it lasts at most 100 days.
+
+Start each renewal about **30 days before expiry**, with a new CSR if APA
+agrees:
 
 - `harica-check-expiry` prints nothing until then.
-- At 30 days or fewer it prints `WARN` (exit 1): send APA the new CSR.
+- At 30 days or fewer it prints `WARN` (exit 1): send APA the new CSR, or
+  ask them for a new key and certificate.
 - At 14 days or fewer it prints `URGENT` (exit 2). Email the certificate
   contact again, marked urgent, and tell our own team. There's no phone
   number and no second APA contact.
 
-The script checks both the installed file and the certificate nginx serves.
-Cron mails its output only if the server can send mail. Set
-`HARICA_NOTIFY_URL` (a webhook) in the crontab line as well, and put each
-expiry date in the team calendar. From March 2027 this is a renewal about
+The script checks both the installed file and the certificate nginx serves
+(both read 2027-05-15 on 2026-10-29). Ploi's crontab sends its output to
+`/root/scheduled-352285.log`, so nothing is mailed. Set `HARICA_NOTIFY_URL`
+(a webhook) in the crontab line, and put each expiry date in the team
+calendar. From March 2027 this is a renewal about
 every 2–3 months.
 
-APA turns a CSR around the same day, so the 30-day lead time leaves a wide
-margin. URGENT should only fire if a WARN was missed or APA's contact is away.
+APA turns a request around the same day, so the 30-day lead time leaves a
+wide margin. URGENT should only fire if a WARN was missed or APA's contact is away.
 
 ### Raising HSTS
 
