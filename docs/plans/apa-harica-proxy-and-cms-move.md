@@ -329,13 +329,11 @@ reaches it with `Host: nomia.bnq.pt`, so `request.url` and `Astro.url` are
   no CORS headers. It now writes root-relative paths (`/gq/map/…`), and the
   map resolves them against the page's own origin, so the same release works
   on `nomia.bnq.pt` and `bioeconomia.apambiente.pt` with no config change.
-  Once a release with the fix is deployed (check that
-  `curl -s https://nomia.bnq.pt/gq/map/styles/positron` shows `"/gq/map/`
-  and no `https://nomia.bnq.pt`), the nginx stopgap can go: drop the
-  `location ^~ /gq/map/` block (its `sub_filter`) from
-  `deploy/apa-proxy/nginx/bioeconomia.apambiente.pt.conf`. `/gq/map/` then
-  falls through to the default `location /`. Keeping the block does no harm
-  meanwhile: there is nothing left for it to rewrite.
+  The fix shipped in v0.15.1 (2026-10-29), and the nginx stopgap, a
+  `location ^~ /gq/map/` block with a `sub_filter` that rewrote
+  `https://nomia.bnq.pt` in the JSON, was then removed from
+  `deploy/apa-proxy/nginx/bioeconomia.apambiente.pt.conf` and from the
+  server. `/gq/map/` now goes through the default `location /`.
 - **Forms and consent posts would get a 403.** `@getquick/content`'s
   `isSameOrigin` accepts the request's own origin, its `Host`, or
   `siteOrigins`. The managed routes `src/pages/gq/forms/[...rest].ts` and
@@ -464,9 +462,7 @@ throwaway self-signed certificate, against the live Worker. Results:
 - `/` returns 200 through the proxy, with canonical still
   `https://nomia.bnq.pt/` (it changes once `domains.frontend` does).
 - `/_astro/*.css` is a MISS, then a HIT (`immutable` upstream).
-- `/gq/map/styles/positron` carries `/gq/map/…` paths, with no host in them
-  (or, before the Site's map fix is deployed, `https://bioeconomia.apambiente.pt/gq/map/…`
-  URLs from the `sub_filter`).
+- `/gq/map/styles/positron` carries `/gq/map/…` paths, with no host in them.
 - `POST /gq/consent` with `Origin: https://bioeconomia.apambiente.pt` gets a
   403 straight from the Worker ("Consent records are accepted from this Site
   only."). Through the proxy, the same post gets past the origin guard (400
