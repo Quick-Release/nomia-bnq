@@ -552,9 +552,12 @@ generates RSA 2048 (decided 2026-10-28); either is fine for a renewal.
    4. Daily expiry check, **done 2026-10-29**: Ploi crontab 352285, root,
       `0 8 * * * /usr/local/sbin/harica-check-expiry`. Ploi writes it to
       `/etc/crontab` with its output going to `/root/scheduled-352285.log`,
-      so a WARN reaches nobody by itself: set `HARICA_NOTIFY_URL` on that
-      crontab line, and keep the dates in the team calendar (see "Renewal
-      cadence").
+      so the alert goes to **Discord** instead (2026-10-29). The webhook URL is
+      a secret: Sigillo `prod` `HARICA_NOTIFY_URL`, and on the server
+      `/etc/harica/notify.env` (root, 0600), which the script reads. It's
+      never on the crontab line or in argv. `harica-check-expiry --test` sends
+      a test alert and prints Discord's status (204). Also keep the dates in
+      the team calendar (see "Renewal cadence").
 
    **First certificate, installed 2026-10-29.** APA sent the key with the
    certificate. The user unpacked the files locally, the key was copied as
@@ -662,9 +665,9 @@ agrees:
 
 The script checks both the installed file and the certificate nginx serves
 (both read 2027-05-15 on 2026-10-29). Ploi's crontab sends its output to
-`/root/scheduled-352285.log`, so nothing is mailed. Set `HARICA_NOTIFY_URL`
-(a webhook) in the crontab line, and put each expiry date in the team
-calendar. From March 2027 this is a renewal about
+`/root/scheduled-352285.log`, so nothing is mailed. WARN and URGENT go to
+the Discord webhook in `/etc/harica/notify.env` (tested 2026-10-29, 204).
+Put each expiry date in the team calendar too. From March 2027 this is a renewal about
 every 2–3 months.
 
 APA turns a request around the same day, so the 30-day lead time leaves a
