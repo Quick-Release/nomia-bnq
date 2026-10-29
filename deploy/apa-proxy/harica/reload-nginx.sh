@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# DRAFT, not installed. /usr/local/sbin/harica-reload-nginx, run by
+# /usr/local/sbin/harica-reload-nginx, run by
 # install-manual-cert.sh after it installs a certificate. Reloads nginx only
 # if its configuration, with the new certificate, is valid; otherwise the
 # running nginx keeps serving the old one and this fails loudly.

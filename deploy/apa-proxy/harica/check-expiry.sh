@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# DRAFT, not installed. Warns before the HARICA certificate for
+# Warns before the HARICA certificate for
 # bioeconomia.apambiente.pt expires. Nothing renews it: APA issues each one by
 # hand from a fresh CSR (csr.sh), so the warning is what starts a renewal.
 #
@@ -8,15 +8,16 @@
 # Checks both the installed file and the certificate nginx actually serves
 # (they differ if a reload failed). Prints nothing and exits 0 with more than
 # 30 days left. Otherwise it prints one line and exits 1 (WARN, 30 days or
-# fewer: send APA's certificate contact a CSR now) or 2 (URGENT, 14 days or
+# fewer: renew now, with a CSR or a key and certificate from APA) or 2 (URGENT, 14 days or
 # fewer: email them again, marked urgent, and tell our own team; there's no
 # phone number and no second APA contact). Contacts: the plan's certificate
 # runbook.
 #
-# Root crontab (Ploi → Server 125218 → Cron jobs, user root), daily:
+# Ploi crontab 352285 on server 125218, user root, daily:
 #   0 8 * * * /usr/local/sbin/harica-check-expiry
-# Cron mails output to MAILTO only if the server can send mail. Set
-# HARICA_NOTIFY_URL to also POST the line to a webhook (e.g. a chat channel).
+# Ploi writes it to /etc/crontab with the output going to
+# /root/scheduled-352285.log, so nothing is mailed. Set HARICA_NOTIFY_URL on
+# the crontab line to POST the line to a webhook (e.g. a chat channel).
 set -uo pipefail
 
 DOMAIN="bioeconomia.apambiente.pt"
@@ -37,7 +38,7 @@ days=$(( file_days < served_days ? file_days : served_days ))
 
 if [ "$days" -gt "$WARN_DAYS" ]; then exit 0; fi
 if [ "$days" -le "$URGENT_DAYS" ]; then level=URGENT; status=2; else level=WARN; status=1; fi
-message="$level: the HARICA certificate for $DOMAIN expires in $days days (file: $file_days, served: $served_days). Renew: csr.sh, send the CSR to APA, install-manual-cert.sh (docs/plans/apa-harica-proxy-and-cms-move.md)."
+message="$level: the HARICA certificate for $DOMAIN expires in $days days (file: $file_days, served: $served_days). Renew: csr.sh and a CSR to APA (or a key and certificate from APA), then install-manual-cert.sh (docs/plans/apa-harica-proxy-and-cms-move.md)."
 echo "$message"
 if [ -n "${HARICA_NOTIFY_URL:-}" ]; then
   curl -fsS -m 10 -H 'Content-Type: application/json' \
