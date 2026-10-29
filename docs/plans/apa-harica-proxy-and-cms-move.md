@@ -160,9 +160,9 @@ Findings:
 - Not run on the copy: a Media upload (it would write to the production R2
   bucket), GQ Email → Test (mail is blocked) and a block preview (it needs a
   browser). They're in cutover step 7.
-- `gq sigillo run` always reads `gq.ops.json`, so `--config
-gq.ops.new-server.json` doesn't switch it to `prod`. The rehearsal ran
-  `sigillo run --env prod` with gq's own re-entry. `staging` holds the same
+- `gq sigillo run` always reads `gq.ops.json`, so
+  `--config gq.ops.new-server.json` doesn't switch it to `prod`. The
+  rehearsal ran `sigillo run --env prod` with gq's own re-entry. `staging` holds the same
   values until the cutover PR maps the alias.
 
 ### PHP 8.5
