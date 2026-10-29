@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.15.1 - 2026-10-29
+
+Previous release: v0.15.0
+
+- a50c47e Merge pull request #102 from Quick-Release/claude/map-tiles-relative-urls
+- 4cf1592 Merge pull request #104 from Quick-Release/claude/bioeconomia-harica-live
+- 3e52196 docs: bioeconomia.apambiente.pt stays IPv4-only, keep its IPv4 forever
+- 6393cd8 docs: bioeconomia.apambiente.pt is live on APA's HARICA certificate
+- 7ead110 Merge pull request #103 from Quick-Release/claude/cms-move-rehearsal
+- 0c8e2b3 docs: keep the code span on one line so the bullet stays indented
+- feb5669 docs: record the CMS move rehearsal on server 125218
+- 903aa73 fix(map): name proxied map resources by path, not the Worker's host
+- 033fd14 Merge pull request #101 from Quick-Release/claude/apa-users-sigillo-prod
+- 3351de9 docs: record site users, proxy site 426451 and Sigillo prod for the move
+- 07c9dd1 Merge pull request #100 from Quick-Release/claude/apa-harica-proxy-plan
+- add7c89 docs: add AAAA for bioeconomia.apambiente.pt and cover IPv6
+- 4d56464 docs: move the CMS to PHP 8.5 and verify it on a copy before cutover
+- 1a03640 docs: no second APA contact; URGENT emails again and tells our team
+- e1442ef docs: record RSA 2048 and the APA certificate contact's renewal path
+- b3945fa docs: make the manual HARICA certificate the plan, stage HSTS
+- ca03684 docs: plan the HARICA proxy for bioeconomia.apambiente.pt and the CMS move
+
 ## v0.15.0 - 2026-10-26
 
 Previous release: v0.14.0
