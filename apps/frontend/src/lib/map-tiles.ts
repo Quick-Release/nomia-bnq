@@ -5,6 +5,8 @@
 // to a third party (CONSENT-1 CN-R3, which prefers proxying map tiles to
 // categorising them) and needs no consent.
 
+import type { SourceSpecification, StyleSpecification } from "maplibre-gl";
+
 /** Where the Site serves the proxied map. */
 export const MAP_PROXY_PATH = "/gq/map/";
 /** The base map's style, as the map-list explorer loads it. */
@@ -23,6 +25,51 @@ const RESOURCES = [
   /^sprites\/[A-Za-z0-9_]+\/[A-Za-z0-9_]+(?:@2x)?\.(?:json|png)$/,
 ];
 
+// The proxied JSON names the Site's resources by path alone, never by host:
+// the Worker's own host (nomia.bnq.pt) is not always the one the visitor
+// sees (bioeconomia.apambiente.pt, through the APA proxy), and a URL on the
+// other would be cross-origin. The map resolves the paths against the page.
+const SITE_MAP_PATH = MAP_PROXY_PATH.slice(0, -1);
+
+/**
+ * A URL of the map's, a root-relative path made absolute on the origin of the
+ * page it is shown on; any other URL is left as it is. Prefixing, not URL
+ * parsing, keeps the {z}, {fontstack} and other placeholders MapLibre fills in.
+ */
+export const resolveMapUrl = (url: string, page: string) =>
+  url.startsWith("/") && !url.startsWith("//") ? `${new URL(page).origin}${url}` : url;
+
+/**
+ * The proxied style with its sprite, glyphs and sources made absolute, as
+ * MapLibre needs them before it requests anything. Tile URLs inside the
+ * TileJSON are resolved per request instead (resolveMapUrl).
+ */
+export function resolveMapStyle(style: StyleSpecification, page: string): StyleSpecification {
+  const resolve = (url: string) => resolveMapUrl(url, page);
+  const { sprite, glyphs, sources } = style;
+  return {
+    ...style,
+    ...(sprite !== undefined && {
+      sprite:
+        typeof sprite === "string"
+          ? resolve(sprite)
+          : sprite.map((entry) => ({ ...entry, url: resolve(entry.url) })),
+    }),
+    ...(glyphs !== undefined && { glyphs: resolve(glyphs) }),
+    sources: Object.fromEntries(
+      Object.entries(sources).map(([id, source]) => [
+        id,
+        {
+          ...source,
+          ...("url" in source && source.url !== undefined && { url: resolve(source.url) }),
+          ...("tiles" in source &&
+            source.tiles !== undefined && { tiles: source.tiles.map(resolve) }),
+        } as SourceSpecification,
+      ]),
+    ),
+  };
+}
+
 type Fetcher = (input: string, init?: RequestInit) => Promise<Response>;
 
 const refuse = (status: number, headers: Record<string, string> = {}) =>
@@ -30,8 +77,9 @@ const refuse = (status: number, headers: Record<string, string> = {}) =>
 
 /**
  * Answers a request under MAP_PROXY_PATH from OpenFreeMap. JSON (the style
- * and the tileset) has OpenFreeMap's URLs made the Site's, so every further
- * request comes back here; tiles, glyphs and sprites pass through as they are.
+ * and the tileset) has OpenFreeMap's URLs made the Site's paths, so every
+ * further request comes back here, on whichever host the page is on; tiles,
+ * glyphs and sprites pass through as they are.
  */
 export async function proxyMapTiles(
   request: Request,
@@ -63,9 +111,6 @@ export async function proxyMapTiles(
   if (!/\bjson\b/.test(contentType) || request.method === "HEAD") {
     return new Response(request.method === "HEAD" ? null : upstream.body, { headers });
   }
-  const json = (await upstream.text()).replaceAll(
-    OPENFREEMAP,
-    `${url.origin}${MAP_PROXY_PATH.slice(0, -1)}`,
-  );
+  const json = (await upstream.text()).replaceAll(OPENFREEMAP, SITE_MAP_PATH);
   return new Response(json, { headers });
 }

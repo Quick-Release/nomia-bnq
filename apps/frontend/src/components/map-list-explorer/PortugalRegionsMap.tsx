@@ -1,7 +1,7 @@
 import maplibregl from "maplibre-gl";
 import { useEffect, useRef } from "react";
 
-import { MAP_STYLE_PATH } from "../../lib/map-tiles";
+import { MAP_STYLE_PATH, resolveMapStyle, resolveMapUrl } from "../../lib/map-tiles";
 import {
   PORTUGAL_FULL_BOUNDS,
   PORTUGAL_REGION_CENTERS,
@@ -53,15 +53,21 @@ export default function PortugalRegionsMap({ selectedRegionId, onSelectRegion }:
     const container = containerRef.current;
     if (!container) return;
 
+    const page = window.location.href;
     const map = new maplibregl.Map({
       container,
-      // OpenFreeMap's style through the Site's own Worker, which proxies every
-      // tile, glyph and sprite it names: the browser never contacts a third
-      // party for the map (docs/adr/0001).
-      style: new URL(MAP_STYLE_PATH, window.location.origin).href,
+      // The proxied style and tileset name the Site's resources by path, so
+      // the map asks the host the page is on, whichever that is.
+      transformRequest: (url) => ({ url: resolveMapUrl(url, page) }),
       bounds: [PORTUGAL_FULL_BOUNDS.southwest, PORTUGAL_FULL_BOUNDS.northeast],
       fitBoundsOptions: { padding: 48, maxZoom: 5.8 },
       interactive: true,
+    });
+    // OpenFreeMap's style through the Site's own Worker, which proxies every
+    // tile, glyph and sprite it names: the browser never contacts a third
+    // party for the map (docs/adr/0001).
+    map.setStyle(MAP_STYLE_PATH, {
+      transformStyle: (_previous, next) => resolveMapStyle(next, page),
     });
 
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
