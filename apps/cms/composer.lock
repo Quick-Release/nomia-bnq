@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fb4cc483bbe51cbfe6bdf32cc7518082",
+    "content-hash": "f8f68af630f73d8f4d4682da0f4782f5",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -417,17 +417,17 @@
         },
         {
             "name": "getquick/gq-content",
-            "version": "0.4.0",
+            "version": "0.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Quick-Release/gq-content.git",
-                "reference": "v0.4.0"
+                "reference": "v0.4.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-content/getquick-gq-content-0.4.0-d0fb33.zip",
-                "reference": "v0.4.0",
-                "shasum": "2de2b20f4230b6e1f51d4ef07abb3ccdaedae755"
+                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-content/getquick-gq-content-0.4.2-0d8fc2.zip",
+                "reference": "v0.4.2",
+                "shasum": "b4b367be811a25abb518e181b6364d993800bdec"
             },
             "require": {
                 "composer/installers": "^2.0",
@@ -438,9 +438,9 @@
                 "GPL-2.0-or-later"
             ],
             "description": "GETQUICK content publication events, delivery and diagnostics",
-            "homepage": "https://github.com/Quick-Release/gq-content/tree/v0.4.0",
+            "homepage": "https://github.com/Quick-Release/gq-content/tree/v0.4.2",
             "support": {
-                "source": "https://github.com/Quick-Release/gq-content/tree/v0.4.0",
+                "source": "https://github.com/Quick-Release/gq-content/tree/v0.4.2",
                 "issues": "https://github.com/Quick-Release/gq-content/issues"
             }
         },
