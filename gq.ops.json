@@ -15,7 +15,11 @@
   },
   "domains": {
     "admin": "nomia-cms.bnq.pt",
-    "frontend": "nomia.bnq.pt"
+    "frontend": "bioeconomia.apambiente.pt",
+    "frontendTarget": "nomia.bnq.pt",
+    "frontendProxy": {
+      "trustedProxies": ["2.31.143.228", "2a01:4f8:c016:e5cd::/64"]
+    }
   },
   "ploi": {
     "serverId": "125218",
