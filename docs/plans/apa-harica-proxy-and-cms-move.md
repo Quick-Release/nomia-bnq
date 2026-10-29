@@ -1,15 +1,15 @@
 # bioeconomia.apambiente.pt behind a HARICA proxy, and the CMS move
 
-Status: **in progress**. Investigated 2026-10-28. Applied so far:
+Status: **done** (go-live 2026-10-29). Investigated 2026-10-28. Applied:
 
 - **`bioeconomia.apambiente.pt` is live** on APA's HARICA certificate (proxy
   runbook steps 1–7, 2026-10-29). It's IPv4-only: APA declined an AAAA
   record (see proxy runbook step 4);
 - the two site users and Sigillo `prod` (see "Applied on 2026-10-28");
 - the CMS move rehearsal (see "Rehearsal on 2026-10-29");
-- **the CMS runs on server 125218** (see "Cutover on 2026-10-29").
-
-Not done yet: the go-live configuration (proxy runbook step 8).
+- **the CMS runs on server 125218** (see "Cutover on 2026-10-29");
+- **go-live:** `bioeconomia.apambiente.pt` is the Site's canonical origin
+  (see "Go-live on 2026-10-29").
 
 APA requires a HARICA certificate on `bioeconomia.apambiente.pt`. Cloudflare
 for SaaS on the `bnq.pt` Pro plan can't serve one, so the custom hostname
@@ -228,6 +228,67 @@ Still open:
 - The new origin is reachable directly by IP; scanners already probe it
   (`/.git/config`, refused by nginx). Optional: allow only Cloudflare's
   ranges on 443 for `nomia-cms.bnq.pt`.
+
+### Go-live on 2026-10-29
+
+`bioeconomia.apambiente.pt` is the Site's public, canonical origin from
+2026-10-29. It uses `@getquick/site` 0.26.0's external-proxy mode (#108,
+which replaced #99):
+
+- `domains.frontend` is `bioeconomia.apambiente.pt`.
+- `frontendTarget` is `nomia.bnq.pt`.
+- `frontendProxy.trustedProxies` lists the VPS's IPv4 and IPv6 /64.
+- The content pair is at 0.4.2.
+
+The Worker keeps its Custom Domain on `nomia.bnq.pt` and has no Cloudflare
+for SaaS route. Production gets `GQ_TRUSTED_PROXIES`. The CMS `.env` has
+`GETQUICK_FRONTEND_URL='https://bioeconomia.apambiente.pt'`, and
+`GRAPHQL_CORS_ORIGINS` lists both origins. Both were deployed through the
+nightly path (runs 40937736089 and 40938275026).
+
+Checks:
+
+- **Canonicals:** pages on both hostnames carry
+  `https://bioeconomia.apambiente.pt/…`.
+- **CMS links:** permalinks and editor previews point at bioeconomia, and
+  previews can be framed (no `X-Frame-Options`).
+- **CORS:** GraphQL allows the bioeconomia origin.
+- **Events:** `wp gq-events check` and `pnpm frontend:events:check` reach
+  `https://bioeconomia.apambiente.pt/gq/events`, and `pnpm site:check` is
+  Ready.
+- **Forms and consent through the proxy:** a same-origin post is accepted
+  (400 on an empty body), and a foreign `Origin` gets 403. No submission was
+  stored.
+- **Spoofed `X-Forwarded-For`:** ignored from an untrusted client. Posts
+  sent straight to `nomia.bnq.pt`, each with a different `X-Forwarded-For`,
+  were all limited as one visitor (`too-many` after 10–15).
+- **Map:** the style, TileJSON, tiles, fonts and sprites load through the
+  proxy. The style uses relative `/gq/map/` paths.
+- **HSTS:** sent only on bioeconomia.
+- **Not served on either hostname, before or after go-live:** a sitemap
+  (404) and `og:url`. `robots.txt` is Cloudflare's managed file and names no
+  host.
+
+Findings:
+
+- **The Worker's form limiter didn't trigger through FRA.** All of
+  bioeconomia's traffic reaches Cloudflare in FRA, from the VPS. There, 60
+  rapid posts as one visitor (a trusted `X-Forwarded-For`, or none) were never
+  limited. The same burst from LIS was limited after 10–15. The keying is
+  right (visitor IP, or /64), so this looks like Cloudflare's rate-limit
+  binding counting per machine in a large location. For bioeconomia, nginx's
+  `limit_req` (30 a minute per visitor or /64, 429) is the limit that holds.
+  Keep it.
+- **nginx's `Origin` rewrite stays.** Sent straight to the Worker, a form post
+  with `Origin: https://bioeconomia.apambiente.pt` is accepted with
+  `Sec-Fetch-Site` and refused by Astro's `checkOrigin` without it (403). The
+  rewrite covers browsers that don't send `Sec-Fetch-Site`, as the 0.26.0
+  guide says.
+- **Leftover:** the Cloudflare for SaaS custom hostname
+  `bioeconomia.apambiente.pt` on the `bnq.pt` zone (created 2026-10-28) is
+  unused. The 0.26.0 docs don't call for deleting it, and the Sigillo token
+  can't read or delete custom hostnames. Delete it in the dashboard (SSL/TLS
+  → Custom Hostnames) when convenient.
 
 ### PHP 8.5
 
@@ -686,9 +747,11 @@ generates RSA 2048 (decided 2026-10-28); either is fine for a renewal.
 
        Then restart the service and re-run the probe.
 
-8. Go-live configuration, in order:
-   1. The `domains.frontend` change (reworked #99) and a release. Canonicals
-      and `Astro.site` move to `bioeconomia.apambiente.pt`.
+8. **Done 2026-10-29** (see "Go-live on 2026-10-29"). Go-live configuration,
+   in order:
+   1. The `domains.frontend` change (#108, external-proxy mode) and a
+      release. Canonicals and `Astro.site` move to
+      `bioeconomia.apambiente.pt`.
    2. The CMS `.env`: `GETQUICK_FRONTEND_URL` and `GRAPHQL_CORS_ORIGINS`
       (above).
    3. A publish: the event reaches the Frontend (`pnpm frontend:events:check`)
