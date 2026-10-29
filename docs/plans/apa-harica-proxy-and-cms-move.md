@@ -6,10 +6,10 @@ Status: **in progress**. Investigated 2026-10-28. Applied so far:
   runbook steps 1–7, 2026-10-29). It's IPv4-only: APA declined an AAAA
   record (see proxy runbook step 4);
 - the two site users and Sigillo `prod` (see "Applied on 2026-10-28");
-- the CMS move rehearsal (see "Rehearsal on 2026-10-29").
+- the CMS move rehearsal (see "Rehearsal on 2026-10-29");
+- **the CMS runs on server 125218** (see "Cutover on 2026-10-29").
 
-Not done yet: the CMS cutover and the go-live configuration (proxy runbook
-step 8).
+Not done yet: the go-live configuration (proxy runbook step 8).
 
 APA requires a HARICA certificate on `bioeconomia.apambiente.pt`. Cloudflare
 for SaaS on the `bnq.pt` Pro plan can't serve one, so the custom hostname
@@ -173,6 +173,61 @@ Findings:
   `--config gq.ops.new-server.json` doesn't switch it to `prod`. The
   rehearsal ran `sigillo run --env prod` with gq's own re-entry. `staging` holds the same
   values until the cutover PR maps the alias.
+
+### Cutover on 2026-10-29
+
+The CMS moved to server 125218 (Ploi site 426661, user `nomiacms`). The
+freeze ran from 14:49:52 to about 15:00 UTC. `gq.ops.json` and
+`design-nightly.json` point at the new site from this change on.
+
+1. **Delivery paused.** `DESIGN_NIGHTLY_ENABLED=false`. In-flight run
+   40894160273 was left to finish (success) before the freeze.
+2. **Before the export,** production's newest content was recorded:
+   `post_modified_gmt` 2026-10-27 18:13:46, 1045 posts, 0 Gravity Forms
+   entries, 6 users.
+3. **Old server stopped writing.** Crontab 343982 was deleted (Ploi's API
+   can't pause a crontab; for a rollback, recreate it: `nomiabnq`, every
+   minute, `wp gq-events retry-due --quiet`), and the old CMS went into
+   `wp maintenance-mode`.
+4. **Final import.** `pnpm db:backup` first
+   (`db/nomia_bnq_staging/2026-10-29T14-49-59Z.sql.gz`), then the dump was
+   piped into the new database. Every count matches production.
+5. **Rehearsal guards undone.** The release of v0.15.1 removed the
+   must-use plugin; `GQ_EMAIL_CLOUDFLARE_API_TOKEN` is the old site's value
+   again. `GRAPHQL_CORS_ORIGINS` gained `https://bioeconomia.apambiente.pt`.
+6. **`ploi events`** set `PUBLICATION_EVENT_SECRET` and the retry crontab
+   (352524).
+7. **TLS before DNS.** Cloudflare's SSL mode is `full`, so the origin needs a
+   certificate before the switch. A 14-day self-signed certificate covered
+   the switch, then Let's Encrypt (`force`, HTTP-01 through the proxy) took
+   over and the self-signed one was deleted. It expires 2027-01-27; Ploi
+   renews it.
+8. **DNS.** `nomia-cms.bnq.pt A` → `2.31.143.228`, still proxied.
+9. **Release again** so the CMS reads the new `.env` (Ploi copies it in on
+   deploy, not on edit).
+10. **Checks:**
+    - `wp gq-events check` and `gq frontend events check`: the Frontend
+      accepts the CMS's events, and the CMS's scheduler reconciles.
+    - Media: a 5.8 MB upload was served from `nomia-media.bnq.pt`, then
+      deleted (404).
+    - `wp_mail` through gq-email returned true.
+    - A Gravity Forms REST submission on a test form, which was then
+      deleted.
+    - `gq site check`: Ready. The first run's upload probe failed once and
+      left an attachment, which was deleted; the second run passed.
+11. **No lost edits.** After the switch, the old database still matched the
+    snapshot from before the export.
+
+Still open:
+
+- `GETQUICK_FRONTEND_URL` stays `https://nomia.bnq.pt` until the
+  `domains.frontend` change (proxy runbook step 8, reworked #99). The
+  runbook puts that change first.
+- Site 419022, its database and the maintenance flag stay on 102329 for 14
+  days, for rollback.
+- The new origin is reachable directly by IP; scanners already probe it
+  (`/.git/config`, refused by nginx). Optional: allow only Cloudflare's
+  ranges on 443 for `nomia-cms.bnq.pt`.
 
 ### PHP 8.5
 
