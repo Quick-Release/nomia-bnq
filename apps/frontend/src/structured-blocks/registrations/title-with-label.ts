@@ -32,6 +32,8 @@ export default defineStructuredBlock({
     status: "active",
     inserter: true,
   },
+  /** An optional `core/buttons` nested block renders as a third column on the right. */
+  container: true,
   attributes: {
     schemaVersion: numberAttribute(1),
     blockId: stringAttribute("title-with-label"),

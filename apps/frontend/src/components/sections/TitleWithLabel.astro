@@ -8,13 +8,19 @@ import {
 } from "../../lib/title-with-label-typography";
 import NomiaEyebrowIconLabel from "../ui/NomiaEyebrowIconLabel.astro";
 
-/** Copy comes only from the block: an empty second line renders nothing. */
+/**
+ * Copy comes only from the block: an empty second line renders nothing. With
+ * `hasActions`, the default slot (the block's nested buttons) is a third
+ * column on the right from xl; narrower screens put it on its own row below
+ * the title, right-aligned from md.
+ */
 interface Props {
 	label: string;
 	titleLine1: string;
 	titleLine2?: string;
 	level?: TitleWithLabelHeadingLevel;
 	typography?: Partial<Record<TitleWithLabelField, TitleWithLabelTypography>>;
+	hasActions?: boolean;
 }
 
 const {
@@ -23,6 +29,7 @@ const {
 	titleLine2,
 	level = TITLE_WITH_LABEL_DEFAULT_HEADING_LEVEL,
 	typography = {},
+	hasActions = false,
 } = Astro.props;
 
 const Heading = `h${level}` as "h2" | "h3" | "h4";
@@ -47,7 +54,11 @@ const titleLine2Style = titleWithLabelFieldStyle(typography.titleLine2);
 	<div class="font-primary w-full px-4 py-12 md:px-16 md:py-14">
 		<div class="mx-auto w-full max-w-[1792px]">
 			<div
-				class="grid grid-cols-1 gap-y-0 md:grid-cols-[auto_minmax(0,1fr)] md:items-center md:gap-x-[30px]"
+				class:list={[
+					"grid grid-cols-1 gap-y-0 md:grid-cols-[auto_minmax(0,1fr)] md:items-center md:gap-x-[30px]",
+					// The label wraps here so the title keeps the wider share beside the buttons.
+					hasActions ? "xl:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_auto]" : null,
+				]}
 				data-node-id="40017244:13022"
 			>
 				<NomiaEyebrowIconLabel
@@ -61,7 +72,7 @@ const titleLine2Style = titleWithLabelFieldStyle(typography.titleLine2);
 				/>
 				<Heading
 					class:list={[
-						"text-h4 text-main-cinza-700 col-start-1 row-start-2 grid min-w-0 grid-cols-subgrid grid-rows-subgrid font-semibold leading-[var(--typography-line-height-f)] tracking-[var(--tracking-typography-0)] md:col-span-2 md:row-start-1 md:items-center",
+						"text-h4 text-main-cinza-700 col-start-1 row-start-2 grid min-w-0 grid-cols-subgrid grid-rows-subgrid font-semibold leading-[var(--typography-line-height-f)] tracking-[var(--tracking-typography-0)] md:col-[1/span_2] md:row-start-1 md:items-center",
 						titleLine2 ? "row-span-2" : "row-span-1",
 					]}
 				>
@@ -81,6 +92,19 @@ const titleLine2Style = titleWithLabelFieldStyle(typography.titleLine2);
 						) : null
 					}
 				</Heading>
+				{
+					hasActions ? (
+						<div
+							class:list={[
+								"col-start-1 min-w-0 pt-12 md:col-[1/-1] md:justify-self-end xl:col-[3] xl:row-start-1 xl:ps-8 xl:pt-0 [&_.wp-block-buttons]:my-0",
+								titleLine2 ? "row-start-4 md:row-start-3 xl:row-span-2" : "row-start-3 md:row-start-2",
+							]}
+							data-title-with-label-actions
+						>
+							<slot />
+						</div>
+					) : null
+				}
 			</div>
 		</div>
 	</div>

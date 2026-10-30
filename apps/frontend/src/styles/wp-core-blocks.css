@@ -44,6 +44,12 @@
     width: fit-content;
   }
 
+  /* Beside a title (Título com etiqueta's buttons column) it keeps its smallest size. */
+  [data-title-with-label-actions] .nomia-bioeconomia-button {
+    font-size: 1.25rem;
+    padding: 1.25rem 2rem;
+  }
+
   .nomia-bioeconomia-button > * {
     color: inherit !important;
   }
