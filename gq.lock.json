@@ -1,5 +1,5 @@
 {
-  "gq": "0.26.0",
+  "gq": "0.27.0",
   "schemaVersion": 1,
   "files": {
     ".claude/skills": "sha256:e1ff59d80751d8af17631debcc3bc30ecdbec0b20dccded0bffb745fe5cea79c",

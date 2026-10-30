@@ -190,8 +190,8 @@ importers:
   .:
     devDependencies:
       '@getquick/site':
-        specifier: 0.26.0
-        version: 0.26.0
+        specifier: 0.27.0
+        version: 0.27.0
       sigillo:
         specifier: 0.13.0
         version: 0.13.0
@@ -1256,8 +1256,8 @@ packages:
     resolution: {integrity: sha512-Phkk8tZ/LinT9HoOT7sreysvLbvYAAU7693Aof7ycgftVymd0wW482TqZHRNBkR15u4JOBWRI237gmO2vzSivQ==}
     engines: {node: '>=22'}
 
-  '@getquick/site@0.26.0':
-    resolution: {integrity: sha512-6R9in3NaQGx4ftrM1Exb3KFyR9OUEetE/8SYFARGjPOwMtxUi9JILibxD2/oSPsHMSVMzWnCEOChHadsNvfm+g==}
+  '@getquick/site@0.27.0':
+    resolution: {integrity: sha512-MloHRITFa/DdsUQumJukhC5XNozaGxnEGh3PweKGMKQvbgF1rxD/UfsKxDc0/D6kW8ddwj/r6HjvQjf/OfIOBg==}
     engines: {node: '>=22.12.0'}
     hasBin: true
 
@@ -6239,7 +6239,7 @@ snapshots:
     dependencies:
       zod: 3.25.76
 
-  '@getquick/site@0.26.0':
+  '@getquick/site@0.27.0':
     dependencies:
       '@clack/prompts': 1.8.1
       '@getquick/content': 0.4.2
