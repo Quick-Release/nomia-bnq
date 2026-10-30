@@ -341,17 +341,17 @@
         },
         {
             "name": "getquick/gq-config",
-            "version": "0.5.0",
+            "version": "0.5.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:Quick-Release/gq-config.git",
-                "reference": "11f2b178ed3e6e4aaff47ea01904dbac1f64b987"
+                "reference": "83a31715c2661044ceb31400182fea4e7f7589fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-config/getquick-gq-config-11f2b178ed3e6e4aaff47ea01904dbac1f64b987-zip-4d0c95.zip",
-                "reference": "11f2b178ed3e6e4aaff47ea01904dbac1f64b987",
-                "shasum": "7f6b7db3249284648ee562d77a8d22679b845605"
+                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-config/getquick-gq-config-83a31715c2661044ceb31400182fea4e7f7589fc-zip-83ff79.zip",
+                "reference": "83a31715c2661044ceb31400182fea4e7f7589fc",
+                "shasum": "888d65eac9cbc3da474d943e7a5a8faa90e4b4ba"
             },
             "require": {
                 "ext-sodium": "*",
@@ -410,10 +410,10 @@
             ],
             "description": "GQ Config WordPress must-use configuration plugin.",
             "support": {
-                "source": "https://github.com/Quick-Release/gq-config/tree/v0.5.0",
+                "source": "https://github.com/Quick-Release/gq-config/tree/v0.5.1",
                 "issues": "https://github.com/Quick-Release/gq-config/issues"
             },
-            "time": "2026-10-26T04:27:29+00:00"
+            "time": "2026-10-30T00:14:00+00:00"
         },
         {
             "name": "getquick/gq-content",
