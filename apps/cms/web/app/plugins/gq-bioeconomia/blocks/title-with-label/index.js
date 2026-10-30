@@ -2,12 +2,14 @@
   const {
     BlockControls,
     HeadingLevelDropdown,
+    InnerBlocks,
     InspectorControls,
     RichText,
     useBlockProps,
     Warning,
   } = window.wp.blockEditor;
   const { Button, PanelBody, SelectControl, ToggleControl } = window.wp.components;
+  const { useSelect } = window.wp.data;
   const { createElement, Fragment } = window.wp.element;
   const { __, sprintf } = window.wp.i18n;
   const {
@@ -173,7 +175,18 @@
       ),
     );
   }
-  function TitleWithLabelEdit({ attributes, setAttributes }) {
+  /**
+   * The optional right-hand column: one `core/buttons` block. The appender
+   * offers it only while the column is empty; a second button goes inside the
+   * same Buttons block.
+   */
+  const ACTION_BLOCKS = ["core/buttons"];
+
+  function TitleWithLabelEdit({ attributes, clientId, setAttributes }) {
+    const hasActions = useSelect(
+      (select) => select("core/block-editor").getBlockCount(clientId) > 0,
+      [clientId],
+    );
     const blockProps = useBlockProps({
       className: "getquick-title-with-label-editor",
     });
@@ -323,6 +336,16 @@
                   setAttributes({
                     titleLine2: next,
                   }),
+              }),
+            ),
+            createElement(
+              "div",
+              {
+                className: "getquick-title-with-label-editor__actions",
+              },
+              createElement(InnerBlocks, {
+                allowedBlocks: ACTION_BLOCKS,
+                renderAppender: hasActions ? false : InnerBlocks.ButtonBlockAppender,
               }),
             ),
           ),

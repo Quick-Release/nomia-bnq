@@ -24,6 +24,8 @@ const level = normalizeTitleWithLabelHeadingLevel(attrs.level);
 const typography = readTitleWithLabelTypographies(attrs);
 // The editor warns about the same two required fields before publishing.
 const canRender = Boolean(label && titleLine1);
+// The nested `core/buttons`, when the editor added one, is the right-hand column.
+const hasActions = (block.innerBlocks?.length ?? 0) > 0;
 ---
 
 {
@@ -34,6 +36,9 @@ const canRender = Boolean(label && titleLine1);
       titleLine2={titleLine2 || undefined}
       level={level}
       typography={typography}
-    />
+      hasActions={hasActions}
+    >
+      <slot />
+    </TitleWithLabel>
   ) : null
 }
