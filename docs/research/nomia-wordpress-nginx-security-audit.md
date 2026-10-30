@@ -11,9 +11,9 @@ claiming these recommendations are still missing or already deployed.
 
 Investigated 2026-10-30. Read-only inspection of the live CMS through SSH and WP-CLI, its Nginx virtual host and includes, repository configuration, and bounded HTTP GET/HEAD requests. No production configuration, accounts or files changed. This is a hardening review, not a vulnerability scan or compromise assessment.
 
-## Verified baseline
+## Verified former-server baseline
 
-The live CMS runs WordPress 7.1.3 under Bedrock, with document root `apps/cms/web`, PHP-FPM running as the site user, and media offloading through S3 Uploads. Live constants confirm production mode, disabled WordPress/GraphQL debug, disabled debug display, enforced HTTPS admin, and disabled dashboard code editing and file modifications. Automatic updates are disabled, so patch delivery depends on releases.
+The former server's CMS runs WordPress 7.1.3 under Bedrock, with document root `apps/cms/web`, PHP-FPM running as the site user, and media offloading through S3 Uploads. Its constants confirm production mode, disabled WordPress/GraphQL debug, disabled debug display, enforced HTTPS admin, and disabled dashboard code editing and file modifications. Automatic updates are disabled, so patch delivery depends on releases.
 
 Origin checks returned 403 for XML-RPC, `.env` and `.git/config`, 200 for login and WordPress readme, and 404 for a nonexistent uploads PHP path. XML-RPC methods are empty, `xmlrpc_enabled` is false, and application passwords report unavailable in the CLI context. That last result does not establish availability for every interactive user.
 
@@ -71,7 +71,7 @@ Before rollout, capture the current effective site config, validate the candidat
 
 Additional primary-source implementation notes: [WordPress/Nginx references](wordpress-nginx-security-sources.md).
 
-## Topic 1 applied to the live site — 2026-10-30
+## Topic 1 applied to the former server — 2026-10-30
 
 At the user's request, a site-specific change was applied through Ploi's root script API to the live Nginx virtual host. An uploads denial precedes the generic PHP handler and returns 403 for PHP (including numbered variants), PHTML and PHAR paths, case-insensitively and with PATH_INFO suffixes. The general PHP handler now uses `try_files $uri =404` and a named 404 handler to avoid the existing server-level WordPress error-page fallback.
 
@@ -83,4 +83,4 @@ This is live site configuration, not a change to the shared provisioning templat
 
 Authentication access logging, dedicated rotation, site-scoped Cloudflare client-IP restoration and a login-POST limiter were installed through Ploi. The limiter remains dry-run only pending normal-traffic review. Burst accounting, independent source-IP buckets, spoofed-header rejection, query omission, rotation/reopen and unaffected origin endpoints were verified. See the [configuration and operating notes](../../deploy/ploi/security/README.md).
 
-The same investigation found that Cloudflare's proxied DNS record names a different address from this repository's configured Ploi server. Public probes were not observed in this server's authentication log. This limits the public-route claims for both applied topics: origin behavior on Ploi is verified, but coverage of the public hostname requires resolving the routing discrepancy. DNS and Cloudflare policy were not changed.
+The initial DNS/Ploi mismatch was traced to this checkout's outdated target. The [committed production configuration](https://github.com/Quick-Release/nomia-bnq/blob/6f8345b/gq.ops.json) targets server `125218`, site `426661`, user `nomiacms`; the [CMS move runbook](../plans/apa-harica-proxy-and-cms-move.md#runbook-moving-the-cms-to-server-125218) records that migration. No DNS fault or required routing change is established. Current-production protection remains unverified by this investigation and needs its own audit. Former-server probes do not establish that production needs the same changes. DNS and Cloudflare policy were not changed.

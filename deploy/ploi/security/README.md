@@ -52,7 +52,7 @@ IPv4/IPv6 lists at implementation time. Direct-origin spoofed headers were
 ignored, and two loopback source IPs received independent buckets. The trust
 list must remain current; arbitrary proxies must never be added to it.
 
-## Verification and remaining routing question
+## Former-server verification and resolved target mismatch
 
 `nginx -t`, reload, logrotate parsing, actual rotation/log reopen, sanitized
 logging, dry-run excess accounting, independent client buckets and exclusion
@@ -61,14 +61,18 @@ expected statuses. Previous uploads PHP denial and missing-script 404 checks
 also passed. No real credentials or accounts were used for burst testing;
 test POST bodies were empty. Nginx and the logrotate timer are active.
 
-Public traffic coverage is **not established by these changes**. Cloudflare's DNS API reports
-`nomia-cms.bnq.pt` as a proxied A record pointing to `2.31.143.228`, whereas
-the configured Ploi server reports `176.9.29.221`. Public-edge probes returned
-200 but did not appear in this Ploi site's authentication log. No Worker
-routes were returned; the available token could not read zone rulesets
-(HTTP 403), so an origin override or another proxy remains unverified.
-Do not change DNS or claim that public authentication is covered until the
-intended route is confirmed. No DNS or Cloudflare policy was changed.
+Public traffic coverage is **not established by these changes**. The initial
+Cloudflare DNS observation pointed to `2.31.143.228`, while the older
+checkout's Ploi target reported `176.9.29.221`. The source of that mismatch
+is now established: [the committed production configuration](https://github.com/Quick-Release/nomia-bnq/blob/6f8345b/gq.ops.json)
+targets server `125218`, site `426661`, user `nomiacms`, rather than the
+former server inspected here. The [CMS move runbook](../../../docs/plans/apa-harica-proxy-and-cms-move.md#runbook-moving-the-cms-to-server-125218)
+documents the migration. No DNS fix or origin override is proposed by this PR.
+
+The remaining work is a separate audit of the current production target,
+not resolution of a suspected DNS fault. Former-server probe results below
+are historical evidence only; they do not prove the presence or absence of
+these protections on current production. No DNS or Cloudflare policy was changed.
 
 ## Rollback
 
