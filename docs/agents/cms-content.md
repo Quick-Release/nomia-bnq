@@ -6,16 +6,20 @@ CMS (`nomia-cms.bnq.pt`). This Site is the first adopter of
 issue [#114](https://github.com/Quick-Release/nomia-bnq/issues/114) records
 the adoption.
 
-The route is REST with the agent's application password. Logging in through
-`wp-login.php` and sending a cookie with a REST nonce no longer works: Cloudflare
-Access gates `wp-login.php` and `wp-admin`, and Two Factor protects the
-accounts. Never use the administrator account for content work.
+The route is `gq content` (REST with the agent's application password, behind
+Cloudflare Access). The package guide,
+`node_modules/@getquick/site/docs/guides/cms-content.md`, describes each
+command in full. This page records what is specific to Nomia. Logging in
+through `wp-login.php` and sending a cookie with a REST nonce no longer works:
+Cloudflare Access gates `wp-login.php` and `wp-admin`, and Two Factor
+protects the accounts. Never use the administrator account for content work.
 
 ## Credentials
 
-Sigillo holds them in the `staging` alias (environment `prod`). Use them only
-through `pnpm exec gq sigillo run staging -- <command>`, and never print them
-or pass them as command arguments.
+Sigillo holds them in the `staging` alias (environment `prod`). This Site has
+no `production` alias: where the package guide says
+`gq sigillo run production`, use `pnpm exec gq sigillo run staging`. Never
+print the values or pass them as command arguments.
 
 | Name                                        | What it is                                                                    |
 | ------------------------------------------- | ----------------------------------------------------------------------------- |
@@ -36,6 +40,7 @@ credentials. Never reuse them elsewhere.
 - The page route belongs to the same application as `wp-admin`, not to a
   separate one. Access issues one token per application, and a separate
   application would reject the block editor's own saves to that route.
+  Editor saves through Access were checked on 2026-10-30.
 - An editor whose eight-hour Access session expires while the editor is open
   can no longer save until the page is reloaded and they sign in again.
 - Any request carrying the agent's credentials (its username in Basic auth,
@@ -44,62 +49,57 @@ credentials. Never reuse them elsewhere.
   `_method` parameter. This applies to `/?rest_route=` and every other path
   too. This is the WAF custom rule
   "Nomia CMS: agent credentials only on page REST with GET/POST".
+- So the agent can change pages only. `gq content --type post` (and custom
+  post types) is blocked at the edge. Widening the rule needs the user's
+  approval.
 - Other `/wp-json` routes are not behind Access. Anonymous requests to them
   get 401 from `content-api.php`.
 
-## Edge credential
-
-Either of these:
-
-- **Interactive.** A person runs
-  `cloudflared access login https://nomia-cms.bnq.pt/wp-json/wp/v2/pages`
-  once per session (the browser opens), and the agent sends
-  `cf-access-token` from
-  `cloudflared access token -app=https://nomia-cms.bnq.pt/wp-json/wp/v2/pages`.
-- **Unattended.** Send `CF-Access-Client-Id` and `CF-Access-Client-Secret`
-  from the service-token pair.
-
-Either way, also send `Authorization: Basic` with the agent username and
-application password. The edge credential only gets the request past Access.
-WordPress authenticates the request with the application password.
+`gq content` uses the service token when Sigillo injects it (it prints
+`Edge: service token.`). A person's `cloudflared access login
+https://nomia-cms.bnq.pt/wp-json/wp/v2/pages` session also works. A redirect
+to `getquick.cloudflareaccess.com` means the edge credential is missing or has
+expired, and a 403 page from Cloudflare means the WAF rule matched.
 
 ## Read
 
-Page 58 is the front page. The unattended read:
+Page 58 is the front page. Keep files outside the repository, under
+`/data/agents/scratch/`.
 
 ```sh
-pnpm exec gq sigillo run staging -- sh -c 'printf "header = \"CF-Access-Client-Id: %s\"\nheader = \"CF-Access-Client-Secret: %s\"\nuser = \"%s:%s\"\n" \
-  "$GQ_CMS_AGENT_ACCESS_CLIENT_ID" "$GQ_CMS_AGENT_ACCESS_CLIENT_SECRET" \
-  "$GQ_CMS_AGENT_USERNAME" "$GQ_CMS_AGENT_APPLICATION_PASSWORD" |
-  curl -sS --fail-with-body --max-redirs 0 -K - \
-    "https://nomia-cms.bnq.pt/wp-json/wp/v2/pages/58?context=edit"' > "$OUT"
+pnpm exec gq sigillo run staging -- pnpm exec gq content get 58 --out "$DIR/page-58.html"
 ```
-
-`$OUT` is a file outside the repository. `content.raw` is the stored markup.
-It is returned only with `context=edit`. For the interactive route, replace
-the two service-token headers with `header = "cf-access-token: …"`. Set the token in an environment variable
-first; never paste it into the command. `printf` is a shell builtin, so the
-values stay out of the process list. A 302 to `getquick.cloudflareaccess.com`
-means the edge credential is missing or has expired, and a 403 page from
-Cloudflare means the WAF rule matched.
 
 ## Write
 
 Production page-content writes need an explicit request from the user.
 
-1. Read the page at `context=edit` and keep the response as the baseline.
-2. Edit the parsed block tree, not the string. Splicing markup skips the
-   block editor, and nothing then checks static blocks against `save()`.
-3. Show the diff of the raw markup.
-4. Validate in DDEV. Run `pnpm db:sync`, apply the new markup to the same
-   page as an Editor, open it in the block editor and confirm that
-   `wp.data.select('core/block-editor').getBlocks()` has no invalid blocks.
-5. Write once: `POST /wp-json/wp/v2/pages/<id>` with a JSON `content` field.
-6. Confirm that `GET /wp-json/wp/v2/pages/<id>/revisions` shows the new
-   revision. It is the rollback.
-7. Publish with `pnpm frontend:refresh --url https://nomia.bnq.pt` (the Worker
-   directly; the APA proxy can time out a full refresh). Then verify the live
-   page on `bioeconomia.apambiente.pt`.
+1. `get` the page, as above. The file is the baseline.
+2. Edit the block tree (a `.json` output file), or change only block
+   attributes or one attribute value in the markup. Never splice blocks in
+   the markup as a string.
+3. Show the user the diff:
+   `pnpm exec gq sigillo run staging -- pnpm exec gq content diff 58 --file "$DIR/page-58.edit.html"`.
+4. Validate in the local CMS:
+   `pnpm exec gq sigillo run staging -- pnpm exec gq content validate 58 --file "$DIR/page-58.edit.html"`.
+   It needs DDEV running with the CMS dependencies installed
+   (`pnpm cms:composer`, then `pnpm cms:dev`), and a database from
+   `pnpm db:sync` that has the page.
+5. Write once:
+   `pnpm exec gq sigillo run staging -- pnpm exec gq content put 58 --file "$DIR/page-58.edit.html" --yes`.
+   It refuses a file that didn't pass `validate` or a page changed since
+   `get`, then names the new revision and the one to roll back to.
+6. Publish with `pnpm frontend:refresh --url https://nomia.bnq.pt`. Don't use
+   the `gq frontend refresh --uri /` that `put` suggests: refresh refuses
+   `/`, and the APA proxy can time out a full refresh, so call the Worker
+   directly. Then check the live page on `bioeconomia.apambiente.pt`.
+
+Links in content point to the canonical host,
+`https://bioeconomia.apambiente.pt/…`, or are relative. Don't link to
+`nomia.bnq.pt`. Since 2026-10-30 no published page does.
+
+Rollback: `get 58 --revision <id> --out <file>`, then `validate` and `put`
+that file. `put` prints the revision to use.
 
 The agent user is an Editor, so it keeps `unfiltered_html` (this is not a
 multisite and `DISALLOW_UNFILTERED_HTML` is unset). KSES then leaves saved
@@ -109,10 +109,26 @@ would change 22 of 270 content items. KSES would rewrite `/>` as ` />` in
 image and separator markup, and strip the `<object>` embed from file blocks.
 Don't move the agent to such a role without a fresh check.
 
+### Local CMS in a worktree
+
+Every worktree of this repository uses the DDEV project name
+`nomia-bnq-admin`. If another worktree's CMS is running, `gq cms start` fails
+with "a project (web container) in running state already exists". Give the
+worktree its own name in `apps/cms/.ddev/config.local.yaml` (git ignores
+it), for example `name: nomia-bnq-<task>`, rather than stopping the other
+worktree's CMS. Stop it with `pnpm cms:stop` when you are done.
+
 ## Break-glass WP-CLI
 
-Use WP-CLI only when REST is unavailable. Run `pnpm db:backup` first. Take the
-host from Ploi (`pnpm exec gq sigillo run staging -- pnpm exec gq ploi server
-show`) and the system user from `gq.ops.json` `ploi.systemUser`, never from a
-hand-written SSH alias. Write through `wp post update <id> <file>`, never raw
-SQL, and confirm the revision afterwards.
+Use WP-CLI only when REST is unavailable, and only through `gq wp`. It finds
+the server from `gq.ops.json` and runs as the site's system user, never
+through a hand-written SSH alias. It allows only listed commands, and it runs
+`gq db backup` before any write:
+
+```sh
+pnpm exec gq sigillo run staging -- pnpm exec gq wp -- post get 58 --field=post_content
+pnpm exec gq sigillo run staging -- pnpm exec gq wp --yes -- post update 58 "$DIR/page-58.edit.html"
+```
+
+Validate the file with `gq content validate` first, since `gq wp` skips the
+block editor. Then confirm the revision and refresh as above.
