@@ -1,5 +1,23 @@
 # Changelog
 
+## v0.16.0 - 2026-10-30
+
+Previous release: v0.15.1
+
+- b1866cf Merge pull request #110 from Quick-Release/claude/two-factor-updates
+- fb68111 chore(cms): adopt gq-config 0.5.1 (strong-password policy)
+- 736cdd5 feat(cms): add Two Factor with WebAuthn and update WordPress 7.1.4 and plugins
+- cb4177c Merge pull request #109 from Quick-Release/claude/go-live-done
+- 74b8606 docs: bioeconomia.apambiente.pt go-live is done
+- 276978d Merge pull request #108 from Quick-Release/claude/bioeconomia-go-live
+- 9e0663b feat: serve the Frontend at bioeconomia.apambiente.pt behind the APA proxy
+- c44aafd Merge pull request #107 from Quick-Release/claude/cms-on-server-125218
+- d7af515 ops: run the CMS on server 125218
+- 07daa6d Merge pull request #106 from Quick-Release/claude/apa-proxy-drop-map-sub-filter
+- 2eb9c44 deploy: drop the /gq/map/ sub_filter from the bioeconomia proxy
+- b4bc700 Merge pull request #105 from Quick-Release/claude/harica-discord-alert
+- 90b5420 deploy: send the HARICA expiry alert to Discord
+
 ## v0.15.1 - 2026-10-29
 
 Previous release: v0.15.0
