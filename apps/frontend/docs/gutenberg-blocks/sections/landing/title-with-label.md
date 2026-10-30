@@ -25,9 +25,9 @@ Section heading with a short eyebrow label and a title split into one or two lin
 - While the label or the first title line is empty, the canvas shows a warning: Astro renders
   nothing for the block until both are filled.
 - Optional buttons: the block nests one core Buttons block (`core/buttons`, any button style
-  including the Bioeconomia variation). From `md` it renders as a third column on the right
-  of the title; on phones it drops below the title. Without it the block keeps its two
-  columns.
+  including the Bioeconomia variation). From `xl` (1280px) it renders as a third column on the
+  right of the title; below that it gets its own row under the title, right-aligned from `md`.
+  Without it the block keeps its two columns.
 
 <!-- BEGIN GENERATED: structured-block-contract -->
 ## Astro contract attributes
