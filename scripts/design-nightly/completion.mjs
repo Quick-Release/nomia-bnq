@@ -51,9 +51,28 @@ export function statusRequest(method, path, body) {
   });
 }
 
-// Only the same deployment's success status is repeatable. This function has
-// no activation/refresh callback and cannot replay either remote operation.
-export async function completeDeployment(record, send = statusRequest) {
+// Only the same deployment's terminal status is repeatable. These functions
+// have no activation/refresh callback and cannot replay either remote operation.
+export function completeDeployment(record, send = statusRequest) {
+  return resolveDeployment(
+    record,
+    { state: "success", environment_url: "https://nomia-cms.bnq.pt", auto_inactive: true },
+    send,
+  );
+}
+
+// Publication refresh runs only after both synchronous deployments returned, so
+// no Ploi or Frontend deployment is in flight: resolve the fence as failed and
+// leave refresh to an operator (`gq frontend refresh`).
+export function failDeployment(record, description, send = statusRequest) {
+  return resolveDeployment(
+    record,
+    { state: "failure", description: description.slice(0, 140), auto_inactive: false },
+    send,
+  );
+}
+
+async function resolveDeployment(record, status, send) {
   if (
     !Number.isSafeInteger(record.deploymentId) ||
     record.deploymentId <= 0 ||
@@ -61,12 +80,7 @@ export async function completeDeployment(record, send = statusRequest) {
   )
     throw new Error("Invalid completion identity");
   const path = `Quick-Release/nomia-bnq/deployments/${record.deploymentId}/statuses`;
-  const desired = {
-    state: "success",
-    log_url: record.runUrl,
-    environment_url: "https://nomia-cms.bnq.pt",
-    auto_inactive: true,
-  };
+  const desired = { ...status, log_url: record.runUrl };
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
       await send("POST", path, desired);
@@ -80,7 +94,7 @@ export async function completeDeployment(record, send = statusRequest) {
       if (
         latest?.state === desired.state &&
         latest.log_url === desired.log_url &&
-        latest.environment_url === desired.environment_url
+        (latest.environment_url ?? "") === (desired.environment_url ?? "")
       )
         return;
       if (latest?.state !== "in_progress" || latest.log_url !== desired.log_url)

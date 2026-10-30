@@ -150,7 +150,11 @@ The snapshot Git bundle and deployment record are uploaded before activation.
 through the existing R2/Ploi path and verifies the reported deployed commit.
 No new gq flags or managed-file changes are needed. The normal CMS deploy
 installs the locked artifact, activates plugins and runs existing deploy steps.
-After both deployments, `gq frontend refresh` refreshes stored publication output.
+After both deployments, `gq frontend refresh --url https://<frontendTarget>`
+refreshes stored publication output. It calls the Frontend Worker directly
+(`gq.ops.json` `domains.frontendTarget`), because a full refresh can outlast the
+APA proxy's gateway timeout in front of the public hostname (HTTP 504 on
+2026-10-30).
 The existing `pnpm run deploy:frontend:raw` command builds and deploys the
 frontend from the same snapshot before refresh. No automated test suite or smoke
 test runs in this nightly workflow.
@@ -309,8 +313,13 @@ allows another identical success POST. Other states, denied access or exhausted
 transport attempts fail closed. Deployment and frontend refresh are never retried
 by this completion handler.
 
-A failed/timed-out/cancelled activation deliberately leaves its GitHub deployment
-`in_progress`. Inspect Ploi's status/log and the served `RELEASE` commit first.
+A failed publication refresh marks its GitHub deployment `failure`: it runs
+only after both synchronous deployments returned, so nothing remote is still
+deploying. Run `pnpm frontend:refresh --url https://<frontendTarget>` and
+verify the live Frontend; the next nightly may activate again.
+
+A failed/timed-out/cancelled CMS or frontend deployment deliberately leaves its
+GitHub deployment `in_progress`. Inspect Ploi's status/log and the served `RELEASE` commit first.
 Do not clear the fence while the remote process could still be running. After
 reconciliation, record a GitHub deployment status (`success` only if deployment
 and refresh completed, otherwise `error` with a diagnostic URL), then rerun or

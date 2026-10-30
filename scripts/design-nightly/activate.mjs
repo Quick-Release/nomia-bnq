@@ -2,13 +2,18 @@ import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 import { activationDecision, compareNightlies, producers } from "./model.mjs";
 import { api, latest, currentActionsJob, deploymentHistory } from "./github.mjs";
-import { completeDeployment } from "./completion.mjs";
+import { completeDeployment, failDeployment } from "./completion.mjs";
 
 const site = process.env.GITHUB_REPOSITORY;
 const environment = "nomia-design-nightly";
 const recordPath = "nightly-result/deployment.json";
 const record = JSON.parse(readFileSync(recordPath, "utf8"));
 const m = record.manifest;
+// Refresh the Frontend Worker directly: a full refresh can outlast the APA
+// proxy's gateway timeout in front of the public hostname.
+const { frontendTarget } = JSON.parse(readFileSync("gq.ops.json", "utf8")).domains;
+if (!/^[a-z0-9.-]+$/.test(frontendTarget ?? ""))
+  throw new Error("Invalid gq.ops.json frontendTarget");
 const save = () => writeFileSync(recordPath, `${JSON.stringify(record, null, 2)}\n`);
 if (site !== "Quick-Release/nomia-bnq" || !/^[a-f0-9]{40}$/.test(record.snapshotSha))
   throw new Error("Invalid Nomia snapshot");
@@ -74,14 +79,37 @@ try {
   execFileSync("pnpm", ["run", "deploy:frontend:raw"], { stdio: "inherit" });
   record.frontendCompletedAt = new Date().toISOString();
   save();
-  execFileSync("pnpm", ["exec", "gq", "frontend", "refresh"], { stdio: "inherit" });
+} catch (error) {
+  // A timeout or runner loss does not prove the remote deployment stopped.
+  // Keep its durable in_progress fence until an operator reconciles it.
+  record.state = "needs-reconciliation";
+  save();
+  throw error;
+}
+try {
+  execFileSync(
+    "pnpm",
+    ["exec", "gq", "frontend", "refresh", "--url", `https://${frontendTarget}`],
+    { stdio: "inherit" },
+  );
+} catch (error) {
+  // Both deployments returned, so nothing remote is still deploying. Resolve
+  // the fence as failed; the published content needs an operator refresh.
+  record.state = "refresh-failed";
+  save();
+  await failDeployment(
+    record,
+    "CMS and frontend deployed; publication refresh failed. Run gq frontend refresh.",
+  );
+  throw error;
+}
+try {
   record.state = "success";
   record.completedAt = new Date().toISOString();
   save();
   await completeDeployment(record);
 } catch (error) {
-  // A timeout or runner loss does not prove the remote deployment stopped.
-  // Keep its durable in_progress fence until an operator reconciles it.
+  // Deployments and refresh finished; only the success status was lost.
   record.state = "needs-reconciliation";
   save();
   throw error;
