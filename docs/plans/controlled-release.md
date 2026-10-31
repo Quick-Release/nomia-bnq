@@ -119,12 +119,19 @@ Each later package update is its own PR:
 With nightly delivery paused, merging such a PR to `main` deploys nothing.
 It ships in the next controlled release.
 
-**gq-support specifically.** No production key and no production update
-until both of these pass:
+**gq-support specifically.** The first signed gq-support release will be
+`0.1.11`. Nomia's existing constraint `^0.1.3` already allows it, so the
+update changes only the lock entry. `composer.json` stays as it is. A 0.2
+line would pull in Design and theme versions that are on hold, and no 0.2
+has been published. Until the approved controlled rollout, Nomia keeps its
+current lock (gq-support `v0.1.10`) and the live nightlies.
+
+No production key and no production update until both of these pass:
 
 - The dashboard tests on Banquinha staging.
-- A WordPress recovery drill (0.2.0, then 0.2.1, then back to 0.2.0) on a
-  real WordPress staging installation, not the dashboard Worker.
+- A WordPress recovery drill on a real WordPress staging installation, not
+  the dashboard Worker: install signed `0.1.11`, update to `0.1.12`, then
+  recover to `0.1.11` using lock snapshots.
 
 A recovery target must be an earlier verified signed release. "Signed"
 means gq-support's authenticated plugin version and file claims. The target
