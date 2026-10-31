@@ -148,6 +148,22 @@ recovery target.
 - Before step 1 lands, the only recovery for the live baseline is the
   run 41145930689 snapshot bundle, using the operator procedure in the
   nightly plan.
+- The older stable lock checked in on `main` (Design 0.9.4, Content 0.4.2)
+  is not a rollback target. Production has never run it together with
+  today's schema and content, and deploying it would be a downgrade.
+
+## Evidence to archive
+
+These prove the live baseline. Workflow artifacts expire on 2027-01-28.
+Archiving them is coordinated outside this repository.
+
+- `design-nightly-snapshot-41145930689-1`: `snapshot.bundle`, which holds
+  snapshot commit `0749f2f5…`, plus `deployment.json`.
+- `design-nightly-result-41145930689-1`: the final `deployment.json`, with
+  state `success` and the CMS and frontend completion times.
+- GitHub deployment 7451160872, with its payload and statuses.
+- The R2 release archive that `gq ploi release` uploaded for that
+  deployment, under `nomia-bnq-releases/admin/`.
 
 ## Remaining controls
 
