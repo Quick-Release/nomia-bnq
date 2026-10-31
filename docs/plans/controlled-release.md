@@ -51,8 +51,18 @@ repository did not read it.
   Building and publishing nightlies is unaffected; only Nomia notification
   stops.
 
-GQ Content's producer pause has not been reported yet. Until it is, Content
-completion events can still arrive. The paused workflow skips them.
+**GQ Content producer pause.** Reported by the Content session; this
+repository did not read it.
+
+- gq-content's `NIGHTLY_DEPLOY_REPOSITORY` was deleted at
+  2026-10-31T10:46:04Z. A GET read back HTTP 404, and there is no
+  organization-level fallback.
+- No runs were in flight. The token is unchanged and publishing is
+  untouched.
+
+Both producers have now stopped dispatching to Nomia. The workflow's
+five-minute schedule and pushes to `main` still start runs. The consumer
+variable must stay `false` so that those runs are skipped.
 
 ## Live baseline (preserve it)
 
@@ -80,9 +90,13 @@ baseline (see "Selection, rollback and recovery" in the nightly plan).
 
 **The downgrade hazard.** `main` still locks stable GQ Design `0.9.4` and
 GQ Content `0.4.2`, and the frontend pins `@getquick/content` `0.4.2`. A
-`v*` tag on today's `main` would deploy those, which downgrades both the
-CMS and the frontend below the live baseline. Don't tag until step 1 below
-is done.
+`v*` tag on today's `main` would deploy those instead of the live builds.
+
+- For Design, that is a downgrade: `0.9.4` lacks `68f280d`.
+- For Content, the version number alone doesn't show a runtime difference
+  (see step 1).
+
+Don't tag until step 1 below is done.
 
 ## Controlled release steps
 
@@ -101,7 +115,21 @@ is done.
      Design source `8f890c4`. The latest stable, `0.9.4`, lacks `68f280d`
      (editor canvas `2xl`). The Design session is preparing a covering
      stable release as a PR with tests, with no tag, publish, merge, deploy
-     or re-enable. Content coverage is not yet assessed.
+     or re-enable.
+   - Content, as reported by the Content session on 2026-10-31: stable
+     `v0.4.2` and the live `v0.4.3-nightly.20261029.14.1` share source
+     commit `043afbebc06ff5d047ca0906e08d1f7208c8827b`. The stable
+     manifest's `sourceCommit` matches it, and it declares
+     `migrations.destructive: false`.
+     - The two differ in version. Whether they differ in what actually runs
+       hasn't been shown yet: neither runtime parity nor byte equivalence is
+       established.
+     - Root has asked for a diff of the package files and build outputs,
+       for both the Composer mu-plugin and the `@getquick/content` npm
+       package, to separate a version-only difference from a runtime one.
+     - Until that diff, normal tests and site acceptance are done, stable
+       `v0.4.2` is a controlled release candidate, not an approved
+       baseline. Nomia's lock doesn't change before then.
    - The Design release policy may require a new nightly, from the commit
      that prepares the stable release, to be tested on Nomia first. That is
      still being verified, and it is not approval to trial on production.
@@ -178,8 +206,10 @@ recovery target.
   run 41145930689 snapshot bundle, using the operator procedure in the
   nightly plan.
 - The older stable lock checked in on `main` (Design 0.9.4, Content 0.4.2)
-  is not a rollback target. Production has never run it together with
-  today's schema and content, and deploying it would be a downgrade.
+  is not a rollback target. Production has never run that combination
+  together with today's schema and content. Its Design is behind the live
+  build. Content 0.4.2 becomes eligible only through step 1's provenance,
+  tests and acceptance, not as a rollback.
 
 ## Evidence to archive
 
