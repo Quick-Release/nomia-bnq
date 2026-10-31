@@ -36,9 +36,23 @@ first. Producer dispatch is configured in other repositories: `Quick-Release/gq-
 (`NIGHTLY_DEPLOY_REPOSITORY`, `NIGHTLY_DISPATCH_TOKEN`) and
 `Quick-Release/gq-content`. Their sessions own it. The consumer pause was
 applied first because it stops every trigger, including dispatch events, and
-nothing was in flight. Producer dispatch can stay configured: events that
-still arrive start skipped runs. Turn it off in those repositories before
-nightlies are re-enabled anywhere.
+nothing was in flight. Turn producer dispatch off in those repositories
+before nightlies are re-enabled anywhere.
+
+**GQ Design producer pause.** Reported by the Design session; this
+repository did not read it.
+
+- On gq-design `main` (`8f890c4`), the `notify-development-site` step
+  dispatches only when `vars.NIGHTLY_DEPLOY_REPOSITORY` equals
+  `Quick-Release/nomia-bnq`.
+- That repository variable was deleted at 2026-10-31T10:46:06Z. A GET read
+  back HTTP 404, and there is no organization-level fallback.
+- No producer runs were queued or running. The dispatch token is unchanged.
+  Building and publishing nightlies is unaffected; only Nomia notification
+  stops.
+
+GQ Content's producer pause has not been reported yet. Until it is, Content
+completion events can still arrive. The paused workflow skips them.
 
 ## Live baseline (preserve it)
 
@@ -83,6 +97,21 @@ is done.
    - If no stable release can cover the nightlies, the user decides whether
      production stays on the snapshot. In that case, no release happens until
      one exists.
+   - Coverage on 2026-10-31: no stable GQ Design release covers the live
+     Design source `8f890c4`. The latest stable, `0.9.4`, lacks `68f280d`
+     (editor canvas `2xl`). The Design session is preparing a covering
+     stable release as a PR with tests, with no tag, publish, merge, deploy
+     or re-enable. Content coverage is not yet assessed.
+   - The Design release policy may require a new nightly, from the commit
+     that prepares the stable release, to be tested on Nomia first. That is
+     still being verified, and it is not approval to trial on production.
+     Any Nomia trial of a candidate needs its own explicit, authoritative
+     approval. It would run under the nightly reservation's exclusion steps,
+     and nightlies stay off until then.
+   - Keep three things separate. A controlled Design/Content trial or
+     release on Nomia is one. The gq-support WordPress recovery drill on a
+     real staging installation is another. The Banquinha dashboard E2E
+     tests are a third. Passing one is no evidence for the others.
 2. **Release validation.** Run the authenticated live editor acceptance
    checks against the release candidate before publishing. See
    [release validation](design-nightly-adoption.md#release-validation).
