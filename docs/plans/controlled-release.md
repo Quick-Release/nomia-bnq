@@ -124,8 +124,10 @@ Don't tag until step 1 below is done.
    - Content, as reported by the Content session on 2026-10-31: stable
      `v0.4.2` and the live `v0.4.3-nightly.20261029.14.1` share source
      commit `043afbebc06ff5d047ca0906e08d1f7208c8827b`. The stable
-     manifest's `sourceCommit` matches it, and it declares
-     `migrations.destructive: false`.
+     manifest's `sourceCommit` matches it. The stable manifest has no
+     `migrations` field (the stable schema has none). Only the nightly
+     manifest declares `migrations.destructive: false`. The evidence of no
+     schema change is the byte-identical migration files below.
      - Artifact comparison, read-only, by the Content session. Both
        releases' full authenticated assets were compared, with manifest
        SHA256 and npm SHA512 verified:
@@ -135,7 +137,8 @@ Don't tag until step 1 below is done.
        - `@getquick/content` npm package: the same 65 files. Only the
          package version, the chunk holding `CONSENT_UI_VERSION`, and the
          import filenames that point at that chunk differ.
-       - Migrations are byte-identical, so no schema change is needed.
+       - Both extracted migration file sets are byte-identical, so no schema
+         change is needed.
      - Neither is byte-equivalent to the other. The comparison shows they
        differ only in version identity. That still isn't proof of runtime
        parity, and site acceptance hasn't been done.
