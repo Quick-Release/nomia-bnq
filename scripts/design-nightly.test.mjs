@@ -781,6 +781,30 @@ test("a paused or production nightly target refuses admission and preparation", 
   assert.equal(nightlyTargetEnabled({ ...target, siteState: "production" }, ops), false);
   assert.equal(nightlyTargetEnabled({ ...target, ploiSiteId: "1" }, ops), false);
   assert.equal(nightlyTargetEnabled(target, { ...ops, offboarded: true }), false);
+  assert.equal(nightlyTargetEnabled(target, { ...ops, offboarded: "yes" }), false);
+  assert.equal(nightlyTargetEnabled(target, { ...ops, offboarded: false }), true);
+  // Identities missing on both sides must not match as undefined === undefined.
+  const bare = { enabled: true, siteState: "development-no-traffic" };
+  assert.equal(nightlyTargetEnabled(bare, {}), false);
+  assert.equal(nightlyTargetEnabled(bare, { domains: {}, ploi: {} }), false);
+  for (const ops of [null, undefined, [], "ops", 1])
+    assert.equal(nightlyTargetEnabled(target, ops), false);
+  for (const config of [null, undefined, [], "config", 1])
+    assert.equal(nightlyTargetEnabled(config, ops), false);
+  const blank = { ...target, adminDomain: "", frontendDomain: "", ploiSiteId: "" };
+  const blankOps = { domains: { admin: "", frontend: "" }, ploi: { siteId: "" } };
+  assert.equal(nightlyTargetEnabled(blank, blankOps), false);
+  const spaces = { ...target, adminDomain: " ", frontendDomain: " ", ploiSiteId: " " };
+  const spaceOps = { domains: { admin: " ", frontend: " " }, ploi: { siteId: " " } };
+  assert.equal(nightlyTargetEnabled(spaces, spaceOps), false);
+  // gq.ops.json keeps the Ploi site ID as a string; a number never matches.
+  assert.equal(typeof ops.ploi.siteId, "string");
+  const numeric = Number(ops.ploi.siteId);
+  assert.equal(
+    nightlyTargetEnabled({ ...target, ploiSiteId: numeric }, { ...ops, ploi: { siteId: numeric } }),
+    false,
+  );
+  assert.equal(nightlyTargetEnabled({ ...target, enabled: "true" }, ops), false);
   // The checked-in config is paused: Nomia is production.
   const checkedIn = JSON.parse(readFileSync("design-nightly.json", "utf8"));
   assert.equal(nightlyTargetEnabled(checkedIn, ops), false);

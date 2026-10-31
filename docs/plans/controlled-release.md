@@ -27,9 +27,14 @@ every trigger: push to `main`, the five-minute schedule,
 variable `false`, each of these runs the workflow, but the job is skipped
 before checkout and before any credentials are used.
 [`design-nightly.json`](../../design-nightly.json) adds a second, source-level
-stop. Its `enabled: false` and `siteState: "production"` make
-`scripts/design-nightly/run.mjs` refuse to prepare a snapshot, even if
-someone re-enables the variable.
+stop for when someone re-enables the variable. Its `enabled: false` and
+`siteState: "production"` fail `nightlyTargetEnabled`
+(`scripts/design-nightly/model.mjs`), at two points:
+
+- Schedule, push and dispatch runs fail at admission, before any GitHub
+  request or install.
+- Manual `workflow_dispatch` runs skip admission. They install tooling and
+  then fail in `run.mjs`, before any download, snapshot or deployment.
 
 **Order of the pause.** The documented order turns producer dispatch off
 first. Producer dispatch is configured in other repositories: `Quick-Release/gq-design`
