@@ -126,15 +126,32 @@ Don't tag until step 1 below is done.
      commit `043afbebc06ff5d047ca0906e08d1f7208c8827b`. The stable
      manifest's `sourceCommit` matches it, and it declares
      `migrations.destructive: false`.
-     - The two differ in version. Whether they differ in what actually runs
-       hasn't been shown yet: neither runtime parity nor byte equivalence is
-       established.
-     - Root has asked for a diff of the package files and build outputs,
-       for both the Composer mu-plugin and the `@getquick/content` npm
-       package, to separate a version-only difference from a runtime one.
-     - Until that diff, normal tests and site acceptance are done, stable
-       `v0.4.2` is a controlled release candidate, not an approved
-       baseline. Nomia's lock doesn't change before then.
+     - Artifact comparison, read-only, by the Content session. Both
+       releases' full authenticated assets were compared, with manifest
+       SHA256 and npm SHA512 verified:
+       - CMS mu-plugin: the same 9 files. 7 are byte-identical. Only
+         `composer.json` (version) and `gq-content.php` (header and version
+         constant) differ.
+       - `@getquick/content` npm package: the same 65 files. Only the
+         package version, the chunk holding `CONSENT_UI_VERSION`, and the
+         import filenames that point at that chunk differ.
+       - Migrations are byte-identical, so no schema change is needed.
+     - Neither is byte-equivalent to the other. The comparison shows they
+       differ only in version identity. That still isn't proof of runtime
+       parity, and site acceptance hasn't been done.
+     - Recorded-data effect: new `consent_records.ui_version` values will
+       read `gq-content@0.4.2` instead of the nightly identity. The consent
+       cookie and re-prompting use `configuration.version` and are
+       unaffected. Record the transition time in the release notes, so
+       nobody sorting consent records by `ui_version` mistakes it for a
+       regression.
+     - `main` already pins Content `0.4.2`: `composer.json` requires it
+       exactly, `composer.lock` locks it, and the frontend `package.json`
+       and `pnpm-lock.yaml` pin it. So Content needs no Nomia lock change.
+       The controlled release itself moves the identity from the nightly to
+       `0.4.2`.
+     - Stable `v0.4.2` remains a controlled release candidate until normal
+       tests and site acceptance pass.
    - The Design release policy may require a new nightly, from the commit
      that prepares the stable release, to be tested on Nomia first. That is
      still being verified, and it is not approval to trial on production.
@@ -157,6 +174,62 @@ Don't tag until step 1 below is done.
    - the Ploi deploy status (`NOMIA_BNQ_DEPLOY_STATUS=success`);
    - the installed plugin versions match the released lock;
    - `gq frontend refresh` against `nomia.bnq.pt` completed.
+
+## Version identity transition
+
+Production moves from nightly identities (Design
+`v0.9.5-nightly.20261026.12.1`, Content `v0.4.3-nightly.20261029.14.1`) to
+stable ones (Design: the covering stable release; Content `0.4.2`). Stable
+`0.4.2` sorts below the `0.4.3` nightly. Where that matters:
+
+- **The nightly path refuses stable releases outright.** `latest()` only
+  lists `-nightly.` prereleases. `validateManifest` requires
+  `channel: "nightly"` and a nightly version, and throws on anything else,
+  including a manual `workflow_dispatch` with `content_tag: v0.4.2`.
+  `compareNightlies` orders by sequence and attempt, not semver. So a
+  stable release is never ordered against a nightly; it just isn't
+  eligible there. That is intended. A stable release ships only through
+  the controlled release path (a `v*` tag, then Cloudflare CI and
+  `gq ploi release`), which reads neither the nightly ledger nor version
+  ordering.
+- **Composer and pnpm don't refuse it.** `composer install` installs the
+  shipped lock exactly, even if the server has a newer-looking nightly
+  installed. The release archive's `composer.json` replaces the snapshot's,
+  and the `./nightly/` path repository goes with it. pnpm installs the
+  frozen lock.
+  - Design's covering stable release must satisfy `^0.9.0`, which both
+    `composer.json` and getquick-theme `0.6.1` require. That is a
+    single-package lock update, under the rules below.
+- **The gap is the deployment ledger.** A controlled release through
+  Cloudflare CI writes no record to the `nomia-design-nightly` GitHub
+  environment. The ledger would go on naming the nightly snapshot
+  (deployment 7451160872) as what is live. If nightlies were ever turned
+  back on:
+  - Admission could deduplicate against that stale record.
+  - Or, because `main` will have moved on, it could activate the newest
+    nightly over the stable release automatically.
+
+**Proposed explicit transition.** This is a proposal, not implemented.
+
+1. After a verified controlled release, record it in the same ledger as a
+   durable deployment. The payload carries a distinct kind (e.g.
+   `nomia-controlled-release`), the site and tag commits, the stable
+   package identities (Content `v0.4.2`, source `043afbeb…`; the Design
+   identity) and the lock digests. Its final status is `success`, so the
+   existing unresolved-fence check still covers it.
+2. In `activationDecision`, when the effective record is a controlled
+   release, return a new decision that refuses automatic admission and
+   requires an explicit manual selection. Every existing check stays as
+   it is: the unresolved fence, the ordering of nightlies against earlier
+   nightlies, and deduplication. Stale-build protection is not relaxed
+   anywhere.
+3. Who writes the record: the CI release step (`scripts/ci-release.mjs`,
+   managed by gq-site) or a site-owned operator step after verification.
+   Either way it is a live write, so it needs its own approval. The CI
+   option is a gq-site interface request.
+
+Nightlies stay off, so none of this is needed for the controlled release
+itself. It is needed only before anyone re-enables them.
 
 ## Single approved package updates (gq-support and others)
 

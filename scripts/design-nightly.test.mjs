@@ -11,6 +11,7 @@ import {
   newest,
   assertUnchangedDependencies,
   nightlyTargetEnabled,
+  producers,
 } from "./design-nightly/model.mjs";
 
 const fixture = () => ({
@@ -808,4 +809,20 @@ test("a paused or production nightly target refuses admission and preparation", 
   // The checked-in config is paused: Nomia is production.
   const checkedIn = JSON.parse(readFileSync("design-nightly.json", "utf8"));
   assert.equal(nightlyTargetEnabled(checkedIn, ops), false);
+});
+
+test("the nightly path refuses a stable release identity", () => {
+  // Stable Content v0.4.2 ships only through a controlled release, never as a nightly.
+  const m = contentFixture();
+  const stable = { ...m, version: "0.4.2", tag: "v0.4.2", channel: "stable" };
+  assert.throws(
+    () => validateManifest(stable, "v0.4.2", m.sourceSha, producers.content),
+    /Invalid nightly identity/,
+  );
+  // Even if labelled nightly, a stable version string is not a nightly identity.
+  assert.throws(
+    () =>
+      validateManifest({ ...stable, channel: "nightly" }, "v0.4.2", m.sourceSha, producers.content),
+    /Invalid nightly identity/,
+  );
 });
