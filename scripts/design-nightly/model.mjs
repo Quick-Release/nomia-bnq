@@ -1,6 +1,20 @@
 import { createHash } from "node:crypto";
 
 export const producer = "Quick-Release/gq-design";
+
+// design-nightly.json must opt in to the Site that gq.ops.json describes.
+// Admission and preparation both check it, so a paused config refuses every
+// trigger before installs, downloads or deployment.
+export function nightlyTargetEnabled(config, ops) {
+  return (
+    config?.enabled === true &&
+    config.siteState === "development-no-traffic" &&
+    !ops?.offboarded &&
+    config.adminDomain === ops?.domains?.admin &&
+    config.frontendDomain === ops?.domains?.frontend &&
+    config.ploiSiteId === ops?.ploi?.siteId
+  );
+}
 export const producers = {
   design: {
     repository: producer,
