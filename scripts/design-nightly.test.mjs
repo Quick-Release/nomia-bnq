@@ -10,6 +10,8 @@ import {
   snapshotComposer,
   newest,
   assertUnchangedDependencies,
+  nightlyTargetEnabled,
+  producers,
 } from "./design-nightly/model.mjs";
 
 const fixture = () => ({
@@ -621,6 +623,16 @@ test("automatic admission skips unchanged snapshots and preserves the unresolved
     env: fixtureEnv,
   }).trim();
   const previousCwd = process.cwd();
+  const ops = JSON.parse(readFileSync("gq.ops.json", "utf8"));
+  const target = {
+    enabled: true,
+    siteState: "development-no-traffic",
+    adminDomain: ops.domains.admin,
+    frontendDomain: ops.domains.frontend,
+    ploiSiteId: ops.ploi.siteId,
+  };
+  writeFileSync(join(root, "gq.ops.json"), JSON.stringify(ops));
+  writeFileSync(join(root, "design-nightly.json"), JSON.stringify(target));
   const manifests = { design: fixture(), content: contentFixture() };
   const values = {
     GITHUB_REPOSITORY: "Quick-Release/nomia-bnq",
@@ -708,6 +720,16 @@ test("automatic admission skips unchanged snapshots and preserves the unresolved
     assert.equal(readFileSync(output, "utf8"), "needed=true\n");
     state = "IN_PROGRESS";
     await assert.rejects(import("./design-nightly/admission.mjs?fenced"), /Unresolved deployment/);
+    // A paused config refuses before any GitHub request or output.
+    state = "SUCCESS";
+    writeFileSync(output, "");
+    writeFileSync(join(root, "design-nightly.json"), JSON.stringify({ ...target, enabled: false }));
+    const fetches = [];
+    const live = globalThis.fetch;
+    globalThis.fetch = async (url, options) => (fetches.push(String(url)), live(url, options));
+    await assert.rejects(import("./design-nightly/admission.mjs?paused"), /not enabled/);
+    assert.deepEqual(fetches, []);
+    assert.equal(readFileSync(output, "utf8"), "");
   } finally {
     process.chdir(previousCwd);
     Object.assign(process.env, inheritedGit);
@@ -744,4 +766,63 @@ test("completed no-op environment records do not obscure the deployed snapshot",
   assert.equal(decide(platform), "superseded");
   assert.equal(decide({ ...platform, githubApp: "unknown" }), "activate");
   assert.throws(() => decide({ ...platform, state: "in_progress" }), /Unresolved/);
+});
+
+test("a paused or production nightly target refuses admission and preparation", () => {
+  const ops = JSON.parse(readFileSync("gq.ops.json", "utf8"));
+  const target = {
+    enabled: true,
+    siteState: "development-no-traffic",
+    adminDomain: ops.domains.admin,
+    frontendDomain: ops.domains.frontend,
+    ploiSiteId: ops.ploi.siteId,
+  };
+  assert.equal(nightlyTargetEnabled(target, ops), true);
+  assert.equal(nightlyTargetEnabled({ ...target, enabled: false }, ops), false);
+  assert.equal(nightlyTargetEnabled({ ...target, siteState: "production" }, ops), false);
+  assert.equal(nightlyTargetEnabled({ ...target, ploiSiteId: "1" }, ops), false);
+  assert.equal(nightlyTargetEnabled(target, { ...ops, offboarded: true }), false);
+  assert.equal(nightlyTargetEnabled(target, { ...ops, offboarded: "yes" }), false);
+  assert.equal(nightlyTargetEnabled(target, { ...ops, offboarded: false }), true);
+  // Identities missing on both sides must not match as undefined === undefined.
+  const bare = { enabled: true, siteState: "development-no-traffic" };
+  assert.equal(nightlyTargetEnabled(bare, {}), false);
+  assert.equal(nightlyTargetEnabled(bare, { domains: {}, ploi: {} }), false);
+  for (const ops of [null, undefined, [], "ops", 1])
+    assert.equal(nightlyTargetEnabled(target, ops), false);
+  for (const config of [null, undefined, [], "config", 1])
+    assert.equal(nightlyTargetEnabled(config, ops), false);
+  const blank = { ...target, adminDomain: "", frontendDomain: "", ploiSiteId: "" };
+  const blankOps = { domains: { admin: "", frontend: "" }, ploi: { siteId: "" } };
+  assert.equal(nightlyTargetEnabled(blank, blankOps), false);
+  const spaces = { ...target, adminDomain: " ", frontendDomain: " ", ploiSiteId: " " };
+  const spaceOps = { domains: { admin: " ", frontend: " " }, ploi: { siteId: " " } };
+  assert.equal(nightlyTargetEnabled(spaces, spaceOps), false);
+  // gq.ops.json keeps the Ploi site ID as a string; a number never matches.
+  assert.equal(typeof ops.ploi.siteId, "string");
+  const numeric = Number(ops.ploi.siteId);
+  assert.equal(
+    nightlyTargetEnabled({ ...target, ploiSiteId: numeric }, { ...ops, ploi: { siteId: numeric } }),
+    false,
+  );
+  assert.equal(nightlyTargetEnabled({ ...target, enabled: "true" }, ops), false);
+  // The checked-in config is paused: Nomia is production.
+  const checkedIn = JSON.parse(readFileSync("design-nightly.json", "utf8"));
+  assert.equal(nightlyTargetEnabled(checkedIn, ops), false);
+});
+
+test("the nightly path refuses a stable release identity", () => {
+  // Stable Content v0.4.2 ships only through a controlled release, never as a nightly.
+  const m = contentFixture();
+  const stable = { ...m, version: "0.4.2", tag: "v0.4.2", channel: "stable" };
+  assert.throws(
+    () => validateManifest(stable, "v0.4.2", m.sourceSha, producers.content),
+    /Invalid nightly identity/,
+  );
+  // Even if labelled nightly, a stable version string is not a nightly identity.
+  assert.throws(
+    () =>
+      validateManifest({ ...stable, channel: "nightly" }, "v0.4.2", m.sourceSha, producers.content),
+    /Invalid nightly identity/,
+  );
 });

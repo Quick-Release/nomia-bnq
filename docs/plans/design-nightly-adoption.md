@@ -1,5 +1,9 @@
 # Nomia development nightlies
 
+**Paused on 2026-10-31.** Nomia is production, and nightly delivery is off. See
+[controlled release](controlled-release.md). The rest of this page describes the
+path while it was enabled.
+
 Nomia is an opted-in development Site with no traffic; breaking changes are
 expected. Merges to this Site's `main` and completed GQ Design nightlies both
 start **Nomia nightly**. Content completion events and a five-minute Actions

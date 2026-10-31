@@ -1,11 +1,14 @@
 // Read-only automatic admission before installs, snapshot downloads or bundles.
 import { execFileSync } from "node:child_process";
-import { appendFileSync } from "node:fs";
-import { producers, activationDecision } from "./model.mjs";
+import { appendFileSync, readFileSync } from "node:fs";
+import { producers, activationDecision, nightlyTargetEnabled } from "./model.mjs";
 import { latest, deploymentHistory, currentActionsJob } from "./github.mjs";
 
 const site = process.env.GITHUB_REPOSITORY;
 if (site !== "Quick-Release/nomia-bnq") throw new Error("Expected Nomia repository");
+const json = (path) => JSON.parse(readFileSync(path, "utf8"));
+if (!nightlyTargetEnabled(json("design-nightly.json"), json("gq.ops.json")))
+  throw new Error("Nightly development target is not enabled or does not match");
 const currentJob = await currentActionsJob({
   site,
   runId: process.env.GITHUB_RUN_ID,

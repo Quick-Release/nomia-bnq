@@ -10,6 +10,7 @@ import {
   assertUnchangedDependencies,
   dependencyGraph,
   verifyPackage,
+  nightlyTargetEnabled,
 } from "./model.mjs";
 
 const root = process.cwd();
@@ -37,14 +38,7 @@ const missing = required.filter((name) => !process.env[name]);
 if (missing.length) throw new Error(`Missing deployment credentials: ${missing.join(", ")}`);
 const ops = json("gq.ops.json");
 const config = json("design-nightly.json");
-if (
-  config.enabled !== true ||
-  config.siteState !== "development-no-traffic" ||
-  ops.offboarded ||
-  config.adminDomain !== ops.domains.admin ||
-  config.frontendDomain !== ops.domains.frontend ||
-  config.ploiSiteId !== ops.ploi.siteId
-)
+if (!nightlyTargetEnabled(config, ops))
   throw new Error("Nightly development target is not enabled or does not match");
 const manual = process.env.GITHUB_EVENT_NAME === "workflow_dispatch";
 const event = json(process.env.GITHUB_EVENT_PATH);
