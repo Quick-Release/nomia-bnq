@@ -1,5 +1,5 @@
 ---
-import { designFontsHead, type DesignTheme, type DesignPostContext, type Alternate, type SiteChrome, type SiteLanguage } from "@getquick/content";
+import { designFontsHead, designTextStyleSheet, type DesignTheme, type DesignPostContext, type Alternate, type SiteChrome, type SiteLanguage } from "@getquick/content";
 import { consentPage } from "@getquick/content/consent/astro";
 import DesignPresentationStyles from "../components/DesignPresentationStyles.astro";
 import DesignPatternRegion from "../components/DesignPatternRegion.astro";
@@ -26,6 +26,15 @@ const runtime = content();
 // The CMS's fonts and text styles (GQ Design 0.10): the presets are read once,
 // for the fonts head and as the theme for older publications that carry none.
 const designPresets = await runtime.designPresets();
+// The font preloads, `@font-face` rules and slot stacks, unlayered as the
+// package renders them. The Heading and Paragraph text styles are rendered
+// apart, in `@layer base` after the layered Preflight (see
+// DesignPresentationStyles): they still override Preflight's heading reset, so
+// plain headings take the text style, while the Site's own heading utilities
+// (`@layer utilities`, e.g. the page hero's `text-h2 font-medium`) and
+// stylesheets keep winning, as they did before text styles existed.
+const fontsHead = designFontsHead(designPresets && { fonts: designPresets.fonts });
+const textStyles = designTextStyleSheet(designPresets?.textStyles);
 const patternContext = {
   post: Astro.props.post,
   colorScheme: Astro.props.colorScheme,
@@ -96,7 +105,8 @@ const consent = consentPage({
     <title>{title === "Nomia" ? title : `${title} — Nomia`}</title>
     <DesignPresentationStyles theme={Astro.props.theme ?? designPresets?.theme} />
     <!-- After the theme's stylesheet: the text styles override its Preflight. -->
-    <Fragment set:html={designFontsHead(designPresets)} />
+    <Fragment set:html={fontsHead} />
+    {textStyles && <style is:inline data-gqd-text-styles set:html={`@layer base {${textStyles}}`} />}
     <Fragment set:html={consent.head} />
   </head>
   <body class="gqd-content">
