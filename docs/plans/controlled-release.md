@@ -103,6 +103,25 @@ GQ Content `0.4.2`, and the frontend pins `@getquick/content` `0.4.2`. A
 
 Don't tag until step 1 below is done.
 
+## Stable adoption (2026-11-01)
+
+Step 1 is met by adopting `@getquick/site` 0.35.0: GQ Design `0.10.2`, GQ
+Content `0.5.1` (CMS and frontend) and getquick-theme `0.6.2`, approved by the
+user for production after the cooldowngaming.com sandbox ran the same stack.
+
+- Coverage: Design `v0.10.2` is 73 commits ahead of the live nightly source
+  `8f890c4` and 0 behind. Content `v0.5.1` contains `043afbe`. 0.5.0 adds no
+  D1 migration.
+- The Composer lock changes only those three packages. gq-support stays
+  `v0.1.10` (the update ran without `--with-all-dependencies`, which would
+  have moved it to `v0.1.11`; see "Single approved package updates").
+- Step 2's authenticated editor acceptance wasn't run: the CMS admin is
+  behind Cloudflare Access and needs a human sign-in. CMS checks were
+  server-side (WP-CLI).
+- No user Global Styles exist on production, so GQ Design delivers its
+  default text styles (sans, 400, 1.5; h1–h6 = `4xl`…`base`). `Layout.astro`
+  renders them in `@layer base` so Nomia's own heading styles keep winning.
+
 ## Controlled release steps
 
 1. **Adopt a stable baseline at or above the live nightlies.** Wait for
