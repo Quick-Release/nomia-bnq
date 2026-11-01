@@ -1,5 +1,5 @@
 {
-  "gq": "0.27.0",
+  "gq": "0.35.0",
   "schemaVersion": 1,
   "files": {
     ".claude/skills": "sha256:e1ff59d80751d8af17631debcc3bc30ecdbec0b20dccded0bffb745fe5cea79c",
@@ -15,7 +15,7 @@
     "apps/frontend/src/pages/gq/forms/[...rest].ts": "sha256:5336581bd6b848763287bc13fadcceb8261d89342a238e85726610fdf01c4eb3",
     "apps/frontend/src/pages/gq/refresh.ts": "sha256:ef547e51e9042aabfd3f5e66afa672f93340f0d8c56690b45a3586217f19088c",
     "apps/frontend/workers/consent-purge.ts": "sha256:28fb360dc23fb4e39669576ad1affb20e3902e2659477da95704e9ea2c044def",
-    "deploy/ploi/admin.sh": "sha256:c11518c2aae04213dd73384d73e1f89727a343f943fde3300a7f0b988899e175",
+    "deploy/ploi/admin.sh": "sha256:82735521b2bc8870b0eeb835486ccff32d4fa871ea6e750c73ceb6deb60ce2a6",
     "deploy/ploi/polylang.sh": "sha256:bd520605bef7355495cefbefa554a7c933e0df71df6a39d50c6ae2571e285fa2",
     "docs/adr/README.md": "sha256:7ceb57ced6c1c24592e17265bbebe9e9b8cfc4cc2c527a76972308a6c41950de",
     "docs/agents/README.md": "sha256:2a192cb2025d30c6da279fa2ed9dfeee2b6738af885e42df43dc0596793b6cc0",
@@ -25,10 +25,10 @@
     "docs/plans/README.md": "sha256:d9de303575af490445fcc63d5bfca191331eed78f6a16f4bb5426ed5215b96ad",
     "docs/research/README.md": "sha256:f2f60713391572d03e30f21e43878090d02b67e4f42b20c2178ddbde22e1f999",
     "infra/ci/Dockerfile": "sha256:7f6d3027ebf32a9fecf2016010a5e341146fa6073f12c0c20e68f3286fa25261",
-    "infra/ci/cloudflare.ci.ts": "sha256:663959470366c1c91ebe12869b69276efc925147f284e237a3827c80293c7721",
-    "infra/ci/env.ts": "sha256:2f0ee8eed89db72457eb4e9090184f676313bb954b9a12bcff56fb5ef88d8aa4",
-    "infra/ci/github.ts": "sha256:0826c4e300a38d4219d1cd34205c79258393b9c3bd6cc2c441828bb1e626a269",
-    "infra/ci/mirror.ts": "sha256:d7a5968f2690a7bb0f06809610550e8142a46839bd19dfb03dc867a30f6433d0",
+    "infra/ci/cloudflare.ci.ts": "sha256:f3f31a229c5ad227ac29a01bab264ff99bf36d4489d7c49369347b34139a052b",
+    "infra/ci/env.ts": "sha256:24c7d49387df46aa48871dcd597fa17c275c41cb26972eab7f9d5a5ae3ab1624",
+    "infra/ci/github.ts": "sha256:d6a96619e43dffd4e207cdc5f787ab6807df5158d5bd034b48eb1f8e02992615",
+    "infra/ci/mirror.ts": "sha256:004e4239fa2e0a547eb7285010e8044743e7fe3a0087c0d15adb915aae067939",
     "infra/ci/package.json": "sha256:a31cd4fef4858cb3fa743f71b8e60427a79af9e08960d777f08734f34df4f808",
     "infra/ci/release.ts": "sha256:2cc54c93772371b9972b94ff47926ba52fe3178003aaddd7ad8cd3843e129fd3",
     "infra/ci/src/index.ts": "sha256:f27458332b26025c64e05a16350ee1dc26ad07c832cdd94ee624f6b6722abe8e",
@@ -36,11 +36,11 @@
     "infra/ci/wrangler.jsonc": "sha256:4c48332bd874ed2a02e692fd8ebcbe546f8d7f623aa38d465893b190b1730aff",
     "infra/consent.ts": "sha256:a30c9fed9788d7693323d198846ac8a42f7b2abe9ede6099e7daf5e8a632d973",
     "infra/frontend.run.ts": "sha256:4ac8d09b65b92fbdd13854a1c2b7dd9123a19d66011e04cf3e7880166a9d0fc5",
-    "infra/package.json": "sha256:915c9c3696469c4a188939cb6afe7d731c16d0cc7e953ba43bbcdc61064615ca",
-    "infra/scripts/deploy-frontend.mjs": "sha256:45230e7cbce144b3a052ea456e95f2aed46527ae76097003eda352bee9644ac3",
+    "infra/package.json": "sha256:1339739472740e5e25c87be9d7f02abb842e1742dc2033de177b599933c375d9",
+    "infra/scripts/deploy-frontend.mjs": "sha256:f8be1c7d33f821b9111e08539b6e3cf07c407687877cc70efdba1d12fc80c0f5",
     "infra/tsconfig.json": "sha256:a70d936717fda5cb6a8ece96c261cd9af404077b8dbb5486616b56af39a0d78e",
     "scripts/ci-release.mjs": "sha256:04c1fa3693b996b59ab321f5015c5319f79c89863cb3983be599005f9a734154",
-    "scripts/ci.test.mjs": "sha256:ace82ff5c967318e3445b5a5696bf4742cb7e4c939ea6cad54324fa2596c9e68",
+    "scripts/ci.test.mjs": "sha256:16f6e82bde91f82877f810c73adadaeb46d619ba2321cb607b6a1f5ff7cafba4",
     "vite.config.ts": "sha256:bd158046aaa5bc0f25198b42dc241aaa1ad63fefa69f59ece5163f597e6d7e8e"
   },
   "sections": {
@@ -49,10 +49,10 @@
   },
   "keys": {
     "apps/cms/composer.json": {
-      "require.getquick/gq-content": "sha256:08d45fb9cc9b65dd7b65667066549a6233e114f41e16dc97e604a20935151221"
+      "require.getquick/gq-content": "sha256:2121b70fe53a231e75b3c743fbc4dafa08854967d5268b01bdbe31630c8b8b9b"
     },
     "apps/frontend/package.json": {
-      "dependencies.@getquick/content": "sha256:08d45fb9cc9b65dd7b65667066549a6233e114f41e16dc97e604a20935151221"
+      "dependencies.@getquick/content": "sha256:2121b70fe53a231e75b3c743fbc4dafa08854967d5268b01bdbe31630c8b8b9b"
     },
     "package.json": {
       "scripts.setup": "sha256:8502c453097e9d772f2749667d163263a92d4bad11168cc7e877d68b706ff691",
@@ -74,7 +74,8 @@
       "scripts.db:backup": "sha256:0b408a0e63a90ec571605accf6f139d04c370df6dda3af748394a7e829f7a457",
       "scripts.deploy:frontend": "sha256:452d35dbf9a4df12e22bebcc7ffaaa33e4a593b32cd87d7f264152ea75fa7e21",
       "scripts.deploy:frontend:raw": "sha256:f85c9f6807ddf75f659f627968c60735ad1c890f6a2de61c403170c213c2600b",
-      "scripts.plan:frontend": "sha256:8ff16e66e00f8246e2ba35793d9cf4c30344ddd9f53aed3bf50d2fd3a2339c10",
+      "scripts.plan:frontend": "sha256:6e73d4f1b854f31cc816439a71c101400333e85deec59f8130a98f5f1f185ec7",
+      "scripts.plan:frontend:raw": "sha256:8ff16e66e00f8246e2ba35793d9cf4c30344ddd9f53aed3bf50d2fd3a2339c10",
       "scripts.infra:check": "sha256:309feacae297c9cf89caa461ad67926fc92e93f4a22845807f59785887294717",
       "scripts.push": "sha256:2f3575479abd609c9ae26a15b806bcb5cf280b3596430e9b0c05564eb3073488",
       "scripts.release": "sha256:e991fad8bcc2cde62da3585d909e0764caa0cd2434fbde206d5edf510c42ab37",
@@ -91,6 +92,7 @@
       "scripts.cf:releases": "sha256:4b86c0256d6fc30e2ebe8adcd96d29394d1d0ad0837f397bf0976a955ae7c100",
       "scripts.cf:media": "sha256:014c40aa8ba99a386489e6a34acabe58cb8e07798e55c4ee217bb8f3fe3a711d",
       "scripts.ploi:media": "sha256:122d09ae88ef8b4518d1cbae3c643b3740f2bd68300d997e3889082f24116e4a",
+      "scripts.ploi:fonts": "sha256:887d6e385d4b72520e0ec0e68a42295ead85eb050c2dfcfbd4e63836fb144018",
       "scripts.ploi:events": "sha256:2dc5d08dad913eeb8f92c61cf0430d0eeca3f514bb86c6aa013088a4b550253a",
       "scripts.media:check": "sha256:8088628595f8bf6873f034f2c295599b2316292b7b5c2a81b66ce9bf661d61fd",
       "scripts.media:check:upload": "sha256:ae7b708816dcc7a03d61886fd4b69e43b343750fe8f63d0d876a68d29790117d",
