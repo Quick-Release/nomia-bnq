@@ -115,6 +115,15 @@ Verify current implementation and release/adoption status before proposing new
 work: an accepted decision or code in another checkout does not establish that
 this Site has adopted it. Follow the Scope rule above for any handoff.
 
+## Production CMS content
+
+To read or change page content on the production CMS, follow
+[CMS content](docs/agents/cms-content.md): `gq content get`, `diff`,
+`validate` and `put`, which use REST with the agent's application password,
+behind Cloudflare Access. Logging in through `wp-login.php` and sending a
+cookie with a REST nonce no longer works. WP-CLI through `gq wp` is
+break-glass only.
+
 ## Release validation
 
 For nightly publication, adoption and post-deploy verification, and for stable

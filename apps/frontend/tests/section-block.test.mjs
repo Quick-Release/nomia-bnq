@@ -75,10 +75,14 @@ test("the section block is the registered container and carries the flag to both
   );
   assert.equal(pluginSection.container, true);
 
-  // Every other block stays attribute-only, so `save()` keeps returning null.
+  // Title with label nests its optional Buttons; every other block stays
+  // attribute-only, so `save()` keeps returning null.
   assert.deepEqual(
-    pluginContracts.filter((contract) => contract.container).map((c) => c.blockName),
-    ["getquick/section"],
+    pluginContracts
+      .filter((contract) => contract.container)
+      .map((c) => c.blockName)
+      .sort(),
+    ["getquick/section", "getquick/title-with-label"],
   );
 });
 

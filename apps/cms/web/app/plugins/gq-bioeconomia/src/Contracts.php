@@ -538,6 +538,7 @@ final class Contracts {
 				],
 				'status'           => 'active',
 				'inserter'         => true,
+				'container'        => true,
 				'editorExperience' => 'inline-fields',
 				'attributes'       => [
 					'schemaVersion' => [

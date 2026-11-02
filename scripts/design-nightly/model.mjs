@@ -1,6 +1,30 @@
 import { createHash } from "node:crypto";
 
 export const producer = "Quick-Release/gq-design";
+
+// design-nightly.json must opt in to the Site that gq.ops.json describes.
+// Each identity must be a non-empty string on both sides. A missing,
+// malformed or offboarded config refuses. Admission checks this before any
+// GitHub request for schedule, push and dispatch runs. Manual
+// workflow_dispatch skips admission, so run.mjs checks again after tooling
+// installs, before any download, snapshot or deployment.
+const isObject = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
+const identity = (value) => typeof value === "string" && value.trim() !== "";
+export function nightlyTargetEnabled(config, ops) {
+  if (!isObject(config) || !isObject(ops)) return false;
+  if (ops.offboarded !== undefined && ops.offboarded !== false) return false;
+  if (!isObject(ops.domains) || !isObject(ops.ploi)) return false;
+  const pairs = [
+    [config.adminDomain, ops.domains.admin],
+    [config.frontendDomain, ops.domains.frontend],
+    [config.ploiSiteId, ops.ploi.siteId],
+  ];
+  return (
+    config.enabled === true &&
+    config.siteState === "development-no-traffic" &&
+    pairs.every(([target, site]) => identity(target) && identity(site) && target === site)
+  );
+}
 export const producers = {
   design: {
     repository: producer,

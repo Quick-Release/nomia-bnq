@@ -12,6 +12,8 @@ WP_LOCALE="pt_PT_ao90"
 # gq.ops.json's wordpress.languages, as locale:slug pairs; empty for a
 # monolingual Site, which leaves Polylang alone.
 WP_LANGUAGES=""
+# gq.ops.json's variant: a commerce Site also updates WooCommerce's database.
+SITE_VARIANT="content"
 SITE_PATH="${PLOI_SITE_PATH:-$PWD}"
 # The site has no git repository (Ploi custom deployments): `pnpm ploi:release`
 # uploads a release archive to R2 and passes a short-lived URL as the deploy
@@ -59,7 +61,10 @@ composer_install() {
   done
   # Verify after restoring shipped plugins too. Runs in full and Composer-only
   # deployments, before PHP reload or any WordPress activation/database work.
-  php scripts/patch-dependencies.php
+  # The patched dependency (wpgraphql-blocks) is content-only.
+  if [ "$SITE_VARIANT" != commerce ]; then
+    php scripts/patch-dependencies.php
+  fi
 }
 
 cleanup() {
@@ -262,7 +267,59 @@ run_deploy_extensions() {
   done <"$tmp_dir/extensions"
 }
 
+# Gives a site with plain permalinks (a fresh install's default) pretty ones,
+# so /wp-json/ reaches the REST API: with plain permalinks WordPress doesn't
+# route it, and GQ Config's headless routing redirects it to the Frontend,
+# which breaks the storefront's Store API and auth upstreams, `gq content`
+# and WPGraphQL at /graphql. A structure already set (by an administrator or
+# a deploy extension) stays. Runs after the extensions, before the flush.
+apply_permalinks() {
+  local structure
+  structure="$(wp option get permalink_structure)"
+  [ -z "$structure" ] || return 0
+  echo "Setting pretty permalinks (/%postname%/); the site had plain permalinks."
+  wp rewrite structure '/%postname%/' --quiet
+}
+
+# Whether version $1's major.minor is at least $2.$3 (a pre-release suffix is
+# ignored).
+version_at_least() {
+  local major minor
+  IFS=. read -r major minor _ <<<"$1"
+  minor="${minor%%[!0-9]*}"
+  [[ "$major" =~ ^[0-9]+$ && "$minor" =~ ^[0-9]+$ ]] || return 1
+  ((major > $2 || (major == $2 && minor >= $3)))
+}
+
+# Updates GQ Design's Google font families (gq-design ADR 0006): every code
+# deploy runs it, once the plugins are active and the site is out of
+# maintenance mode. GQ Design 0.10 added the command; it says nothing when no
+# Google font family is installed, and warns and exits 0 on every failure
+# (without GETQUICK_GOOGLE_FONTS_API_KEY in the .env, updates are off). A
+# failure still never fails the deploy. Without GQ Design 0.10 or later,
+# active, it is skipped.
+update_google_fonts() {
+  local version fonts_status=0
+  version="$(wp plugin get gq-design --field=version 2>/dev/null)" || version=""
+  if [ -z "$version" ]; then
+    echo "Skipping the Google font update: GQ Design (gq-design) isn't installed."
+    return 0
+  fi
+  if ! version_at_least "$version" 0 10 \
+    || ! wp help getquick-design fonts update >/dev/null 2>&1; then
+    echo "Skipping the Google font update: GQ Design $version predates it (0.10) or isn't active."
+    return 0
+  fi
+  wp getquick-design fonts update || fonts_status=$?
+  if [ "$fonts_status" -ne 0 ]; then
+    echo "The Google font update failed (exit $fonts_status); the deploy continues." >&2
+  fi
+  return 0
+}
+
+wordpress_installed=false
 if wp core is-installed; then
+  wordpress_installed=true
   # The GETQUICK theme (or the site's child of it) must stay installed.
   require_installed theme getquick-theme
   # gq.ops.json's wordpress.plugins: Composer installing a plugin doesn't
@@ -278,9 +335,16 @@ if wp core is-installed; then
     exit 1
   fi
   wp core update-db --quiet
+  # WooCommerce's own database update, after its plugin is active. It only
+  # goes forward: a release that changes WooCommerce's database version says
+  # whether the release before it still runs on it (rollback-safe or not).
+  if [ "$SITE_VARIANT" = commerce ]; then
+    wp wc update
+  fi
   apply_locale
   apply_languages
   run_deploy_extensions
+  apply_permalinks
   wp rewrite flush --hard --quiet
 
   # Media on R2: the first deploy with S3 Uploads configured copies the
@@ -295,3 +359,7 @@ fi
 
 wp maintenance-mode deactivate || true
 maintenance_enabled=false
+
+if [ "$wordpress_installed" = true ]; then
+  update_google_fonts
+fi

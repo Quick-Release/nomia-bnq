@@ -522,6 +522,7 @@
       ],
       "status": "active",
       "inserter": true,
+      "container": true,
       "attributes": {
         "schemaVersion": {
           "type": "number",

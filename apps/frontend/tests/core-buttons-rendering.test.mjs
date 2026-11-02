@@ -71,7 +71,10 @@ test("the Bioeconomia variation renders the prototype as a native button", async
   );
 
   const button = document.querySelector(".nomia-bioeconomia-button");
-  assert.ok(document.querySelector(".nomia-bioeconomia-button-wrapper"));
+  const wrapper = document.querySelector(".nomia-bioeconomia-button-wrapper");
+  assert.ok(wrapper);
+  // GQ Design's presentation reset would flatten the variation's own look.
+  assert.equal(wrapper.classList.contains("gqd-presentation"), false);
   assert.equal(button?.tagName, "BUTTON");
   assert.equal(button?.getAttribute("type"), "button");
   assert.equal(button?.textContent, "Explora a Bionomia");

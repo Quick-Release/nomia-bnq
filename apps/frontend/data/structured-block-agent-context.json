@@ -1246,7 +1246,7 @@
       "order": 4,
       "status": "active",
       "inserter": true,
-      "container": false,
+      "container": true,
       "sourceFile": "src/structured-blocks/registrations/title-with-label.ts",
       "attributes": {
         "schemaVersion": {
