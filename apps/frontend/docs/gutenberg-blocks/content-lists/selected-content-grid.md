@@ -24,4 +24,4 @@ The block is available on any page. Add it to the homepage and choose its five i
 
 ## Initial homepage setup
 
-The deploy extension `30-home-content-grid.sh` appends this block to the static homepage once. It selects the latest published post from each of the five groups above, with the normal post as the principal card. Later deploys preserve editorial choices and removals. Missing groups leave an empty slot. The editor’s “Preencher com os mais recentes” action replaces all five selections with current latest items; publication alone does not change which items are selected.
+Append the block to the homepage using `gq content get`, `diff`, `validate` and `put`, following `docs/agents/cms-content.md`. Select the latest published item in each of the five groups, with the normal post as the principal card. Deployments preserve editorial choices and removals. Missing groups leave an empty slot. The editor’s “Preencher com os mais recentes” action replaces all five selections with current latest items; publication alone does not change which items are selected.
