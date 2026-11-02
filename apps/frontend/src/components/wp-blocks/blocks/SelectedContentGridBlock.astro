@@ -1,6 +1,7 @@
 ---
 import type { WpParsedBlock } from "../../../lib/wp-blocks";
 import { content } from "../../../lib/content";
+import { PAGE_FRAME } from "../../../lib/site-gutters";
 import { plainText } from "../normalizers";
 import { safeHref } from "../../../lib/safe-href";
 interface Props { block: WpParsedBlock }
@@ -22,7 +23,7 @@ const cards = await Promise.all(items.map(async (item: { postId?: number; postTy
 const main = cards[0];
 const secondary = cards.slice(1).filter((card) => card !== null);
 ---
-{cards.some(Boolean) && <section class="selected-content-grid">
+{cards.some(Boolean) && <section class:list={[PAGE_FRAME, "selected-content-grid"]}>
   <div class="principal">
     {main && <article>
       <a href={main.href}>
