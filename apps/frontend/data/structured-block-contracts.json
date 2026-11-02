@@ -4213,6 +4213,58 @@
       "editorTitle": "Gráfico de indicador",
       "editorDescription": "Mostra o gráfico de um indicador publicado, com os valores e a fonte atuais.",
       "editorIcon": "chart-bar"
+    },
+    {
+      "blockName": "getquick/selected-content-grid",
+      "catalogId": "selected-content-grid",
+      "schemaVersion": 1,
+      "order": 44,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "items"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "selected-content-grid"
+        },
+        "items": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "postId": {
+                "type": "number"
+              },
+              "postType": {
+                "type": "string",
+                "default": ""
+              },
+              "uri": {
+                "type": "string",
+                "default": ""
+              },
+              "title": {
+                "type": "string",
+                "default": ""
+              }
+            }
+          }
+        }
+      },
+      "compatibilityReads": {},
+      "editorExperience": "preview",
+      "editorTitle": "Grelha de destaques",
+      "editorDescription": "Um destaque principal e quatro conteúdos selecionados.",
+      "editorIcon": "screenoptions"
     }
   ]
 }

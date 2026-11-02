@@ -765,6 +765,18 @@ export const WP_CUSTOM_BLOCK_CONTRACTS = [
     editorTitle: "Gráfico de indicador",
     editorDescription: "Mostra o gráfico de um indicador publicado, com os valores e a fonte atuais.",
   },
+  {
+    blockName: "getquick/selected-content-grid",
+    catalogId: "selected-content-grid",
+    schemaVersion: 1,
+    contentAttributes: [
+      "schemaVersion",
+      "blockId",
+      "items",
+    ],
+    editorTitle: "Grelha de destaques",
+    editorDescription: "Um destaque principal e quatro conteúdos selecionados.",
+  },
 ] as const satisfies readonly WpCustomBlockContract[];
 
 export const WP_CUSTOM_BLOCK_COMPATIBILITY_READS = {

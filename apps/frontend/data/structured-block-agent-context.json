@@ -6345,6 +6345,77 @@
         "module": "apps/cms/web/app/plugins/gq-bioeconomia/blocks/indicador-chart/index.js"
       },
       "documentation": "docs/gutenberg-blocks/sections/indicador-chart.md"
+    },
+    {
+      "blockName": "getquick/selected-content-grid",
+      "catalogId": "selected-content-grid",
+      "schemaVersion": 1,
+      "order": 44,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/selected-content-grid.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "selected-content-grid"
+        },
+        "items": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "postId": {
+                "type": "number"
+              },
+              "postType": {
+                "type": "string",
+                "default": ""
+              },
+              "uri": {
+                "type": "string",
+                "default": ""
+              },
+              "title": {
+                "type": "string",
+                "default": ""
+              }
+            }
+          }
+        }
+      },
+      "compatibilityReads": {},
+      "editing": {
+        "mode": "bespoke",
+        "module": "apps/cms/web/app/plugins/gq-bioeconomia/blocks/selected-content-grid/index.js",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": null,
+        "note": "The bespoke editor module owns the visible controls; inspect it before editing."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/SelectedContentGridBlock.astro",
+        "previewLabel": "Destaques selecionados",
+        "previewAttributes": {
+          "items": []
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Grelha de destaques",
+        "description": "Um destaque principal e quatro conteúdos selecionados.",
+        "icon": "screenoptions",
+        "experience": "preview",
+        "module": "apps/cms/web/app/plugins/gq-bioeconomia/blocks/selected-content-grid/index.js"
+      },
+      "documentation": "docs/gutenberg-blocks/content-lists/selected-content-grid.md"
     }
   ]
 }

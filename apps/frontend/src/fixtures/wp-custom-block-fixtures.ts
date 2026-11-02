@@ -1156,4 +1156,13 @@ export const WP_CUSTOM_BLOCK_FIXTURES: readonly WpCustomBlockFixture[] = [
       },
     ),
   },
+  {
+    label: "Destaques selecionados",
+    block: block(
+      "getquick/selected-content-grid",
+      {
+        items: [],
+      },
+    ),
+  },
 ];

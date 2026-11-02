@@ -4489,6 +4489,52 @@ final class Contracts {
 					'indicadorId' => 702,
 				],
 			],
+			[
+				'blockName'   => 'getquick/selected-content-grid',
+				'catalogId'   => 'selected-content-grid',
+				'title'       => 'Grelha de destaques',
+				'description' => 'Um destaque principal e quatro conteúdos selecionados.',
+				'icon'        => 'screenoptions',
+				'status'      => 'active',
+				'inserter'    => true,
+				'attributes'  => [
+					'schemaVersion' => [
+						'type'    => 'number',
+						'default' => 1,
+					],
+					'blockId'       => [
+						'type'    => 'string',
+						'default' => 'selected-content-grid',
+					],
+					'items'         => [
+						'type'    => 'array',
+						'default' => [],
+						'items'   => [
+							'type'       => 'object',
+							'properties' => [
+								'postId'   => [
+									'type' => 'number',
+								],
+								'postType' => [
+									'type'    => 'string',
+									'default' => '',
+								],
+								'uri'      => [
+									'type'    => 'string',
+									'default' => '',
+								],
+								'title'    => [
+									'type'    => 'string',
+									'default' => '',
+								],
+							],
+						],
+					],
+				],
+				'example'     => [
+					'items' => [],
+				],
+			],
 		];
 	}
 }
