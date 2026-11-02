@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.18.0 - 2026-11-02
+
+Previous release: v0.17.0
+
+- e24bae1 fix: ship English catalogs for the selected content grid
+- 35b442c fix: use validated CMS content workflow for homepage rollout
+- 4c64d3c Merge remote-tracking branch 'origin/main' into feat/selected-content-grid
+- 2fa04fe feat: add curated five-card content grid and seed homepage
+
 ## v0.17.0 - 2026-11-01
 
 Previous release: v0.16.0
