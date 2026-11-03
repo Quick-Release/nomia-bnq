@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.19.0 - 2026-11-03
+
+Previous release: v0.18.0
+
+- c624925 Merge pull request #139 from Quick-Release/claude/adopt-list-markers
+- e280cd3 chore: adopt @getquick/site 0.36.0 (gq-content 0.6.1, GQ Design 0.10.4)
+- 4202f71 Merge pull request #138 from Quick-Release/claude/partilhe-submissions
+- 8e4d310 fix(cms): read Gravity Forms fields as objects, and check the temporary upload copy
+- d7463dd feat(cms): turn Partilhe form entries into pending posts for review
+- 654707d fix: align selected content grid with the site page gutters
+
 ## v0.18.0 - 2026-11-02
 
 Previous release: v0.17.0
