@@ -69,6 +69,8 @@
             <property name="custom_capabilities" type="array">
                 <element value="edit_gq_bioeconomia_galleries" />
                 <element value="edit_gq_bioeconomia_libraries" />
+                <!-- Gravity Forms' own capability, for the submission box's entry link. -->
+                <element value="gravityforms_view_entries" />
             </property>
         </properties>
     </rule>

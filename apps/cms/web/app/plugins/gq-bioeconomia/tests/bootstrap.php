@@ -22,6 +22,7 @@ require_once is_file( __DIR__ . '/../vendor/autoload.php' )
 	? __DIR__ . '/../vendor/autoload.php'
 	: __DIR__ . '/../../../../../vendor/autoload.php';
 require_once __DIR__ . '/Support/WordPressStubs.php';
+require_once __DIR__ . '/Support/SubmissionStubs.php';
 require_once __DIR__ . '/../gq-bioeconomia.php';
 
 gq_bioeconomia_do_action( 'plugins_loaded' );
