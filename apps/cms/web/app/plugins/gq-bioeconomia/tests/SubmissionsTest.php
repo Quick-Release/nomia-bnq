@@ -85,6 +85,10 @@ test( 'the form uses plain field types, a multi-file upload of images and PDFs, 
 	expect( $types )->toBe( [ 'name', 'email', 'select', 'text', 'textarea', 'fileupload', 'consent' ] )
 		->and( $media['multipleFiles'] )->toBeTrue()
 		->and( $media['allowedExtensions'] )->toBe( 'jpg,jpeg,png,webp,gif,pdf' )
+		->and( $media )->toHaveKeys( [ 'maxFiles', 'maxFileSize' ] )
+		->and( $media['maxFiles'] )->toBe( PartilheForm::MAX_FILES )
+		->and( $media['maxFileSize'] )->toBe( PartilheForm::MAX_FILE_SIZE )
+		->and( PartilheForm::MAX_FILES * PartilheForm::MAX_FILE_SIZE * 1048576 )->toBeLessThan( 10 * 1048576 )
 		->and( $form['enableHoneypot'] )->toBeTrue()
 		->and( $form['cssClass'] )->toBe( PartilheForm::CSS_CLASS )
 		->and( array_unique( array_column( $form['fields'], 'id' ) ) )->toHaveCount( 7 );

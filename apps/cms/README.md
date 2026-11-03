@@ -49,7 +49,8 @@ generated from `gq.ops.json`: it activates `wordpress.plugins`, installs and
 activates the language `wordpress.locale` names (the admin can't install
 one: production disallows file modifications), then runs the site's own
 steps in `deploy/ploi/admin.d` (`10-theme.sh` activates
-`getquick-theme`).
+`getquick-theme`; `30-partilhe-form.sh` creates the Partilhe form or keeps
+its content types current).
 
 ## Publication events
 
