@@ -57,6 +57,10 @@ names (`biblioteca`, `eventos`, `tematicas`, …).
 | `src/Blocks/HeaderNavigation.php`                                             | The site's menus for the navigation block, and its GQ Design declaration.                                    |
 | `src/Editor/PageBackground.php`                                               | The page background color meta and its GraphQL field.                                                        |
 | `src/GraphQL/BlocksJson.php`                                                  | `wpBlocksJson` on pages and posts.                                                                           |
+| `src/Submissions/Submissions.php`                                             | Partilhe entries become pending posts; the edit screen's submission box.                                     |
+| `src/Submissions/PartilheForm.php`                                            | The Partilhe form: how it is recognised, and its definition.                                                 |
+| `src/Submissions/Submission.php`                                              | A Partilhe entry, read and sanitised.                                                                        |
+| `src/Submissions/SubmissionMedia.php`                                         | A submission's uploads, checked and copied into the media library.                                           |
 | `assets/editor-lib.js`                                                        | Pure helpers (`window.gqBioeconomiaLib`).                                                                    |
 | `assets/editor.js`                                                            | Fields, the Frontend preview, and the generic contract editor (`window.gqBioeconomiaEditor`).                |
 | `assets/document-settings.js`                                                 | The page background panel and the Bioeconomia button variation.                                              |
