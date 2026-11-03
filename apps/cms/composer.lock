@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6d71adfb4c9f2108a88805505f3e8b7f",
+    "content-hash": "1b4559e8d50dc28d5f3be89bb63addd0",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -417,17 +417,17 @@
         },
         {
             "name": "getquick/gq-content",
-            "version": "0.5.1",
+            "version": "0.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Quick-Release/gq-content.git",
-                "reference": "v0.5.1"
+                "reference": "v0.6.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-content/getquick-gq-content-0.5.1-3e44ab.zip",
-                "reference": "v0.5.1",
-                "shasum": "4cb32225e796c43bbce522521b2f97086531bf22"
+                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-content/getquick-gq-content-0.6.1-3d0cbf.zip",
+                "reference": "v0.6.1",
+                "shasum": "3f327e70b27f45743ef60cffdf0e9a2b7a5b19df"
             },
             "require": {
                 "composer/installers": "^2.0",
@@ -438,25 +438,25 @@
                 "GPL-2.0-or-later"
             ],
             "description": "GETQUICK content publication events, delivery and diagnostics",
-            "homepage": "https://github.com/Quick-Release/gq-content/tree/v0.5.1",
+            "homepage": "https://github.com/Quick-Release/gq-content/tree/v0.6.1",
             "support": {
-                "source": "https://github.com/Quick-Release/gq-content/tree/v0.5.1",
+                "source": "https://github.com/Quick-Release/gq-content/tree/v0.6.1",
                 "issues": "https://github.com/Quick-Release/gq-content/issues"
             }
         },
         {
             "name": "getquick/gq-design",
-            "version": "0.10.2",
+            "version": "0.10.4",
             "source": {
                 "type": "git",
                 "url": "git@github.com:Quick-Release/gq-design.git",
-                "reference": "83618edfb1db8325d73ffa5be3cdd4d3dbfedd2b"
+                "reference": "4d6fea82906858a2e63cea52a9688d3430b6cb41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-design/getquick-gq-design-83618edfb1db8325d73ffa5be3cdd4d3dbfedd2b-zip-9eecae.zip",
-                "reference": "83618edfb1db8325d73ffa5be3cdd4d3dbfedd2b",
-                "shasum": "0921031bc16937640853978079de7c858f458680"
+                "url": "https://proxy.composer.getquick.io/dist/getquick/gq-design/getquick-gq-design-4d6fea82906858a2e63cea52a9688d3430b6cb41-zip-84a3c2.zip",
+                "reference": "4d6fea82906858a2e63cea52a9688d3430b6cb41",
+                "shasum": "a4638fdf1914fdb993c7c2e965e286402f91cff0"
             },
             "require": {
                 "php": ">=8.4.1"
