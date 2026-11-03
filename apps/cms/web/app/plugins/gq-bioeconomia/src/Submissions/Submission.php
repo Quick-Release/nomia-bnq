@@ -105,30 +105,47 @@ final class Submission {
 		$values = [];
 
 		foreach ( $form['fields'] ?? [] as $field ) {
-			$label = (string) ( $field['adminLabel'] ?? '' );
+			$label = (string) self::fieldProperty( $field, 'adminLabel' );
 
 			if ( '' === $label || isset( $values[ $label ] ) ) {
 				continue;
 			}
 
-			$inputs = is_array( $field['inputs'] ?? null ) ? $field['inputs'] : [];
+			$inputs = self::fieldProperty( $field, 'inputs' );
+			$inputs = is_array( $inputs ) ? $inputs : [];
 
-			if ( 'name' === ( $field['type'] ?? '' ) && [] !== $inputs ) {
+			if ( 'name' === self::fieldProperty( $field, 'type' ) && [] !== $inputs ) {
 				$parts = [];
 
 				foreach ( $inputs as $input ) {
-					$parts[] = trim( (string) ( $entry[ (string) $input['id'] ] ?? '' ) );
+					$parts[] = trim( (string) ( $entry[ (string) ( $input['id'] ?? '' ) ] ?? '' ) );
 				}
 
 				$values[ $label ] = implode( ' ', array_filter( $parts, 'strlen' ) );
 				continue;
 			}
 
-			$value            = $entry[ (string) ( $field['id'] ?? '' ) ] ?? '';
+			$value            = $entry[ (string) self::fieldProperty( $field, 'id' ) ] ?? '';
 			$values[ $label ] = is_scalar( $value ) ? (string) $value : '';
 		}
 
 		return $values;
+	}
+
+	/**
+	 * A property of a form field. Gravity Forms passes GF_Field objects, whose
+	 * array access it deprecates; a form definition has plain arrays.
+	 *
+	 * @param mixed  $field    The field.
+	 * @param string $property The property.
+	 * @return mixed Null when the field doesn't have it.
+	 */
+	private static function fieldProperty( $field, string $property ) {
+		if ( is_array( $field ) ) {
+			return $field[ $property ] ?? null;
+		}
+
+		return is_object( $field ) ? ( $field->$property ?? null ) : null;
 	}
 
 	/**

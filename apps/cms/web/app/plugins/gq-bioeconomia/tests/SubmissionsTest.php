@@ -118,6 +118,16 @@ test( 'an entry is read by admin label and sanitised', function () {
 		);
 } );
 
+test( 'an entry is read from field objects as Gravity Forms passes them', function () {
+	$form           = gq_bioeconomia_partilhe_form();
+	$form['fields'] = array_map( static fn( array $field ) => (object) $field, $form['fields'] );
+	$submission     = Submission::fromEntry( gq_bioeconomia_partilhe_entry(), $form );
+
+	expect( $submission->post_type )->toBe( 'recursos_educativos' )
+		->and( $submission->name )->toBe( 'Ana Silva' )
+		->and( $submission->title )->toBe( 'Guia da bioeconomia' );
+} );
+
 test( 'text that looks like markup stays text', function () {
 	$submission = Submission::fromEntry( gq_bioeconomia_partilhe_entry( [ 'content' => 'a < b & c > d' ] ), gq_bioeconomia_partilhe_form() );
 

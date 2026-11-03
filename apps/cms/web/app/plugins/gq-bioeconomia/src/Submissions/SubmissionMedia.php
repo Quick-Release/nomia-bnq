@@ -93,7 +93,13 @@ final class SubmissionMedia {
 
 		// Check a local copy: the uploads may live behind a stream wrapper (S3),
 		// where content sniffing can't read them.
-		if ( '' === $tmp || ! copy( $path, $tmp ) ) {
+		if ( ! is_string( $tmp ) || '' === $tmp ) {
+			return new WP_Error( 'gq_bioeconomia_submission_copy', 'no temporary file could be created' );
+		}
+
+		if ( ! copy( $path, $tmp ) ) {
+			wp_delete_file( $tmp );
+
 			return new WP_Error( 'gq_bioeconomia_submission_copy', 'the file could not be copied' );
 		}
 
