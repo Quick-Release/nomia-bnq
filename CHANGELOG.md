@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.20.0 - 2026-11-03
+
+Previous release: v0.19.0
+
+- 5eecb12 Merge pull request #140 from Quick-Release/claude/partilhe-rollout
+- 5cb9625 fix(cms): never fail the deploy on the Partilhe form step; pin the upload limits in the test
+- dd7fc95 feat(cms): create the Partilhe form on deploy, with uploads within the form route's cap
+
 ## v0.19.0 - 2026-11-03
 
 Previous release: v0.18.0
