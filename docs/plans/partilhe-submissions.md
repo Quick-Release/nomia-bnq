@@ -60,7 +60,11 @@ bin.
 `apps/cms/scripts/partilhe-form.php` creates the form from
 `PartilheForm::definition()`. It is idempotent: when the form exists, the
 script only brings the content types in line with the post types, and keeps
-the rest as edited in the CMS.
+the rest as edited in the CMS. Every CMS deploy runs it
+(`deploy/ploi/admin.d/30-partilhe-form.sh`, as the oldest administrator), so
+production gets the form, and new post types, with the next release. There is
+no other agent route to production: `gq wp` refuses `eval-file`, and the
+agent's REST credentials reach only `/wp/v2/pages`.
 
 ```sh
 # from apps/cms, in DDEV
@@ -87,9 +91,13 @@ To build it by hand, it needs:
   | Tipo de conteúdo | Drop Down          | `content_type`    | Required; one choice per post type, value = slug, label = singular name ("show values" on) |
   | Título           | Single Line Text   | `title`           | Required; max 200 characters                                                               |
   | Conteúdo         | Paragraph Text     | `content`         | Required; no rich text editor                                                              |
-  | Ficheiros        | File Upload        | `media`           | Multiple files, at most 5, 10 MB each; extensions `jpg,jpeg,png,webp,gif,pdf`              |
+  | Ficheiros        | File Upload        | `media`           | Multiple files, at most 3, 3 MB each; extensions `jpg,jpeg,png,webp,gif,pdf`               |
   | Consentimento    | Consent            | `consent`         | Required                                                                                   |
 
+  Together the files stay under the Frontend form route's 10 MiB cap on a
+  post; with more, readiness warns that the largest posts would be refused.
+  The Frontend shows the accepted types, size and count itself, so the field
+  has no description.
   Only plain field types: no Gravity Forms "Post" fields, which the headless
   runtime doesn't support. The 13 content types today are `gq_bio_gallery`,
   `biblioteca`, `glossario`, `recursos_educativos`, `eventos`, `indicadores`,

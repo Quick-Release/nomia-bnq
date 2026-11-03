@@ -33,6 +33,14 @@ final class PartilheForm {
 	public const ALLOWED_EXTENSIONS = 'jpg,jpeg,png,webp,gif,pdf';
 
 	/**
+	 * At most this many files, of at most MAX_FILE_SIZE MB each. Together they
+	 * stay under the Frontend form route's 10 MiB cap on a post, so readiness
+	 * doesn't warn that the largest posts would be refused.
+	 */
+	public const MAX_FILES     = 3;
+	public const MAX_FILE_SIZE = 3;
+
+	/**
 	 * Whether a Gravity Forms form is the Partilhe form.
 	 *
 	 * @param array|object $form The form object.
@@ -152,11 +160,10 @@ final class PartilheForm {
 					'type'              => 'fileupload',
 					'label'             => __( 'Ficheiros', 'gq-bioeconomia' ),
 					'adminLabel'        => self::LABEL_MEDIA,
-					'description'       => __( 'Imagens (JPG, PNG, WebP, GIF) ou PDF, até 10 MB cada.', 'gq-bioeconomia' ),
 					'isRequired'        => false,
 					'multipleFiles'     => true,
-					'maxFiles'          => 5,
-					'maxFileSize'       => 10,
+					'maxFiles'          => self::MAX_FILES,
+					'maxFileSize'       => self::MAX_FILE_SIZE,
 					'allowedExtensions' => self::ALLOWED_EXTENSIONS,
 				],
 				[
