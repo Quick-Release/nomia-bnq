@@ -60,9 +60,14 @@ bin.
 `apps/cms/scripts/partilhe-form.php` creates the form from
 `PartilheForm::definition()`. It is idempotent: when the form exists, the
 script only brings the content types in line with the post types, and keeps
-the rest as edited in the CMS. Every CMS deploy runs it
+the rest as edited in the CMS. The CMS deploy runs it
 (`deploy/ploi/admin.d/30-partilhe-form.sh`, as the oldest administrator), so
-production gets the form, and new post types, with the next release. There is
+production gets the form, and new post types, with the next release. Like
+every `admin.d` step, it runs only on a full deploy of an installed
+WordPress: a Composer-only deploy (`COMPOSER_ONLY=true`) and the first deploy,
+before WordPress is installed, skip it. It never fails the deploy: when
+Gravity Forms or gq-bioeconomia isn't active, there is no administrator, or
+the script fails, it logs a warning and the next deploy tries again. There is
 no other agent route to production: `gq wp` refuses `eval-file`, and the
 agent's REST credentials reach only `/wp/v2/pages`.
 
