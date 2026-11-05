@@ -800,7 +800,28 @@ without `includeSubDomains` and without `preload`.
    `nginx -t && systemctl reload nginx`, and check with
    `curl -sI https://bioeconomia.apambiente.pt/ | grep -i strict`.
 3. To back out, set `max-age=0`. Browsers drop the policy on their next
-   HTTPS visit.
+   HTTPS visit. With a one-year max-age, a broken certificate now locks
+   returning visitors out until it is fixed: renew on the WARN, not later.
+
+**Done 2026-11-05: `31536000`.** Checked first, over the week since go-live
+(2026-10-29 to 2026-11-05):
+
+- **Certificate:** the HARICA chain (leaf, GEANT TLS ECC 1, HARICA TLS ECC
+  Root CA 2021), verify return code 0, expiring 2027-05-15.
+  `harica-check-expiry` was installed and tested on 2026-10-29.
+- **Proxy:** `/` returned 200. The site's access logs held about 12,500
+  requests and 10 5xx responses, with no burst: at most 3 in an hour
+  (2026-10-30 15:00, two of them scanners asking for `/.env`). The rest were
+  single 503s on `POST /gq/events` and one 504 on `POST /gq/refresh`, both
+  answered by the Worker. The error log had only `[warn]` lines (responses
+  buffered to a temporary file) after go-live day. nginx had been up 7 days.
+
+The change ran from a one-off root Ploi script, deleted afterwards: it backed
+up the site configuration to
+`/root/bioeconomia.apambiente.pt.20261105T100220Z.bak`, ran `nginx -t`, and
+reloaded. `curl -sI` from outside then showed `Strict-Transport-Security:
+max-age=31536000` on `/` and on a 404, with no `includeSubDomains` or
+`preload`, and port 80 still answered a 301 with no HSTS.
 
 ## Runbook: moving the CMS to server 125218
 
