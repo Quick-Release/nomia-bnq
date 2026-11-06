@@ -66,6 +66,7 @@ msgstr "Button"
 msgid "Mostrar botão"
 msgstr "Show button"
 
+#: src/Submissions/PartilheForm.php:145
 #: blocks/contact-details-card/index.js:341
 #: blocks/contact-details-card/index.js:344
 #: blocks/page-hero-static/index.js:138
@@ -887,6 +888,7 @@ msgstr "Replace image"
 msgid "Selecionar imagem"
 msgstr "Select image"
 
+#: src/Submissions/PartilheForm.php:153
 #: blocks/page-hero-static/index.js:425
 msgid "Conteúdo"
 msgstr "Content"
@@ -1674,6 +1676,8 @@ msgid "Telefone"
 msgstr ""
 
 #: src/Admin/ContactSettings.php:37
+#: src/Submissions/PartilheForm.php:129
+#: src/Submissions/Submissions.php:174
 msgid "Email"
 msgstr ""
 
@@ -3236,6 +3240,7 @@ msgstr "Item Hover Background"
 msgid "Item Hover Text Color"
 msgstr "Item Hover Text Color"
 
+#: src/Submissions/PartilheForm.php:136
 #: blocks/content-filters/index.js:30
 #: blocks/content-listing/index.js:66
 #: blocks/selected-content-grid/index.js:57
@@ -3543,6 +3548,7 @@ msgstr "Select a year"
 msgid "Publicado por"
 msgstr "Published by"
 
+#: src/Submissions/PartilheForm.php:188
 #: assets/library-details.js:59
 msgid "Descrição"
 msgstr "Description"
@@ -3697,3 +3703,138 @@ msgstr "Featured content grid"
 msgctxt "block description"
 msgid "Um destaque principal e quatro conteúdos selecionados."
 msgstr "One principal card and four selected items."
+
+#: src/Submissions/PartilheForm.php:81
+msgid "Partilhe"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:90
+msgid "Enviar"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:96
+#: src/Submissions/Submissions.php:173
+msgid "Nome"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:103
+msgid "Prefixo"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:108
+msgid "Nome próprio"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:112
+msgid "Segundo nome"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:117
+msgid "Apelido"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:121
+msgid "Sufixo"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:139
+msgid "Escolha um tipo"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:161
+msgid "Ficheiros"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:172
+#: src/Submissions/PartilheForm.php:179
+msgid "Consentimento"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:175
+msgid "Autorizo o tratamento dos meus dados para a análise e eventual publicação deste conteúdo."
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:183
+msgid "Texto"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:197
+msgid "Nova submissão (editores)"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:205
+msgid "Nova submissão em Partilhe: {Título:4}"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:206
+msgid "Foi submetido um conteúdo do tipo {Tipo de conteúdo:3:value}. O conteúdo fica pendente de revisão no CMS."
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:212
+msgid "Confirmação"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:215
+msgid "Obrigado. A sua submissão foi recebida e será revista pela equipa editorial antes de ser publicada."
+msgstr ""
+
+#. translators: %s: a link to edit the created content.
+#: src/Submissions/Submissions.php:124
+#, php-format
+msgid "Conteúdo pendente criado: %s"
+msgstr ""
+
+#: src/Submissions/Submissions.php:154
+#: src/Submissions/Submissions.php:197
+msgid "Submissão de visitante"
+msgstr ""
+
+#: src/Submissions/Submissions.php:180
+msgid "Ver a entrada do formulário"
+msgstr ""
+
+#. translators: %d: the Gravity Forms entry id.
+#: src/Submissions/Submissions.php:185
+#, php-format
+msgid "Entrada do formulário n.º %d"
+msgstr ""
+
+#: blocks/interactive-image/block.json
+msgctxt "block title"
+msgid "Imagem interativa"
+msgstr "Interactive image"
+
+#: blocks/interactive-image/block.json
+msgctxt "block description"
+msgid "Mostra uma imagem interativa: ao passar o rato ou tocar em cada etapa, aparecem os detalhes."
+msgstr "Shows an interactive image: hovering over or tapping each step reveals its details."
+
+#: blocks/interactive-image/block.json
+msgctxt "block keyword"
+msgid "imagem"
+msgstr "image"
+
+#: blocks/interactive-image/block.json
+msgctxt "block keyword"
+msgid "interativa"
+msgstr "interactive"
+
+#: blocks/interactive-image/block.json
+msgctxt "block keyword"
+msgid "infografia"
+msgstr "infographic"
+
+#: blocks/interactive-image/block.json
+msgctxt "block keyword"
+msgid "economia circular"
+msgstr "circular economy"
+
+#: blocks/interactive-image/block.json
+msgctxt "block keyword"
+msgid "interactive"
+msgstr "interactive"
+
+#: blocks/interactive-image/block.json
+msgctxt "block keyword"
+msgid "image"
+msgstr "image"
