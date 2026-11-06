@@ -48,6 +48,7 @@ import HeaderContactBlock from "./blocks/HeaderContactBlock.astro";
 import HeaderSearchBlock from "./blocks/HeaderSearchBlock.astro";
 import IndicadorChartBlock from "./blocks/IndicadorChartBlock.astro";
 import SelectedContentGridBlock from "./blocks/SelectedContentGridBlock.astro";
+import InteractiveImageBlock from "./blocks/InteractiveImageBlock.astro";
 
 /** children carries nested blocks to container renderers; leaf renderers ignore it. */
 type BlockRenderer = (props: {
@@ -101,6 +102,7 @@ const RENDERERS: Record<string, BlockRenderer> = {
   "getquick/header-search": HeaderSearchBlock,
   "getquick/indicador-chart": IndicadorChartBlock,
   "getquick/selected-content-grid": SelectedContentGridBlock,
+  "getquick/interactive-image": InteractiveImageBlock,
 };
 
 interface Props {

@@ -1,0 +1,183 @@
+---
+/*
+ * An interactive infographic: an inline SVG whose steps reveal their related
+ * graphics on hover, focus or tap. No library: CSS shows the active step's
+ * parts (`data-active` on the SVG) and the script below sets it.
+ *
+ * The SVG is generated from the designer's Illustrator file (see
+ * docs/gutenberg-blocks/sections/interactive-image.md). Its IDs carry an
+ * `__ID__` placeholder, replaced per instance so two copies on a page don't
+ * share clip paths, and its icon image an `__ICONS__` placeholder.
+ */
+import type { InteractiveImageKey } from "../../lib/interactive-images";
+import economiaCircularSvg from "./economia-circular.svg?raw";
+import economiaCircularIcons from "./assets/economia-circular-icons.webp?url";
+
+interface Props {
+  image: InteractiveImageKey;
+}
+
+const GRAPHICS: Record<InteractiveImageKey, { svg: string; icons: string }> = {
+  "economia-circular": { svg: economiaCircularSvg, icons: economiaCircularIcons },
+};
+
+const { image } = Astro.props;
+const graphic = GRAPHICS[image];
+const id = `ii-${image}-${Math.random().toString(36).slice(2, 8)}`;
+const svg = graphic.svg.replaceAll("__ID__", id).replaceAll("__ICONS__", graphic.icons);
+---
+
+<figure class="interactive-image" data-interactive-image={image}>
+  <Fragment set:html={svg} />
+</figure>
+
+<style>
+  @font-face {
+    font-family: "II Montserrat";
+    src: url("./assets/montserrat-latin-400-normal.woff2") format("woff2");
+    font-weight: 400;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "II Montserrat";
+    src: url("./assets/montserrat-latin-500-normal.woff2") format("woff2");
+    font-weight: 500;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "II Montserrat";
+    src: url("./assets/montserrat-latin-600-normal.woff2") format("woff2");
+    font-weight: 600;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "II Montserrat";
+    src: url("./assets/montserrat-latin-700-normal.woff2") format("woff2");
+    font-weight: 700;
+    font-display: swap;
+  }
+
+  .interactive-image {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px;
+  }
+  .interactive-image :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+    font-family: "II Montserrat", sans-serif;
+  }
+  .interactive-image :global(.ec-slice),
+  .interactive-image :global(.ec-card) {
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .interactive-image :global(.ec-info) {
+    opacity: 0;
+    transform: translateY(6px);
+    transform-box: fill-box;
+    pointer-events: none;
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease;
+  }
+  .interactive-image :global(.ec-hit) {
+    fill: transparent;
+    cursor: pointer;
+    outline: none;
+  }
+  .interactive-image :global(.ec-hit:focus-visible rect),
+  .interactive-image :global(.ec-hit:focus-visible path) {
+    stroke: #04596b;
+    stroke-width: 2;
+    stroke-dasharray: 4 3;
+  }
+  /* One step active: show its info box and dim the other steps. */
+  .interactive-image :global(svg[data-active] .ec-slice),
+  .interactive-image :global(svg[data-active] .ec-card) {
+    opacity: 0.35;
+  }
+  .interactive-image :global(svg[data-active="1"] .ec-info[data-step="1"]),
+  .interactive-image :global(svg[data-active="2"] .ec-info[data-step="2"]),
+  .interactive-image :global(svg[data-active="3"] .ec-info[data-step="3"]),
+  .interactive-image :global(svg[data-active="4"] .ec-info[data-step="4"]),
+  .interactive-image :global(svg[data-active="5"] .ec-info[data-step="5"]),
+  .interactive-image :global(svg[data-active="6"] .ec-info[data-step="6"]) {
+    opacity: 1;
+    transform: none;
+  }
+  .interactive-image :global(svg[data-active="1"] .ec-card[data-step="1"]),
+  .interactive-image :global(svg[data-active="2"] .ec-card[data-step="2"]),
+  .interactive-image :global(svg[data-active="3"] .ec-card[data-step="3"]),
+  .interactive-image :global(svg[data-active="4"] .ec-card[data-step="4"]),
+  .interactive-image :global(svg[data-active="5"] .ec-card[data-step="5"]),
+  .interactive-image :global(svg[data-active="6"] .ec-card[data-step="6"]) {
+    opacity: 1;
+  }
+  .interactive-image :global(svg[data-active="1"] .ec-slice[data-steps~="1"]),
+  .interactive-image :global(svg[data-active="2"] .ec-slice[data-steps~="2"]),
+  .interactive-image :global(svg[data-active="3"] .ec-slice[data-steps~="3"]),
+  .interactive-image :global(svg[data-active="4"] .ec-slice[data-steps~="4"]),
+  .interactive-image :global(svg[data-active="5"] .ec-slice[data-steps~="5"]),
+  .interactive-image :global(svg[data-active="6"] .ec-slice[data-steps~="6"]) {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .interactive-image :global(*) {
+      transition: none !important;
+    }
+  }
+</style>
+
+<script>
+  // Hover (mouse), focus (keyboard) and tap/click (pins a step) set the active
+  // step; Escape or a tap outside clears it.
+  for (const figure of document.querySelectorAll<HTMLElement>("[data-interactive-image]")) {
+    const svg = figure.querySelector("svg");
+    if (!svg) continue;
+    const hits = [...svg.querySelectorAll<SVGGElement>(".ec-hit")];
+    let pinned: string | null = null;
+    const show = (step: string | null) => {
+      if (step) svg.dataset.active = step;
+      else delete svg.dataset.active;
+      for (const hit of hits) hit.setAttribute("aria-expanded", String(hit.dataset.step === step));
+    };
+    for (const hit of hits) {
+      const step = hit.dataset.step ?? null;
+      const toggle = () => {
+        pinned = pinned === step ? null : step;
+        show(pinned);
+      };
+      hit.addEventListener("pointerenter", (event) => {
+        if (event.pointerType === "mouse") show(step);
+      });
+      hit.addEventListener("pointerleave", (event) => {
+        if (event.pointerType === "mouse") show(pinned);
+      });
+      hit.addEventListener("focus", () => show(step));
+      hit.addEventListener("blur", () => show(pinned));
+      hit.addEventListener("click", toggle);
+      hit.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          toggle();
+        } else if (event.key === "Escape") {
+          pinned = null;
+          show(null);
+          hit.blur();
+        }
+      });
+    }
+    document.addEventListener("pointerdown", (event) => {
+      if (!(event.target instanceof Element) || !figure.contains(event.target) || !event.target.closest(".ec-hit")) {
+        pinned = null;
+        show(pinned);
+      }
+    });
+  }
+</script>

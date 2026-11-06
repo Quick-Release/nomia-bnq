@@ -1,0 +1,51 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "getquick/interactive-image",
+	"title": "Imagem interativa",
+	"category": "getquick-design",
+	"icon": "format-image",
+	"description": "Mostra uma imagem interativa: ao passar o rato ou tocar em cada etapa, aparecem os detalhes.",
+	"keywords": [
+		"imagem",
+		"interativa",
+		"infografia",
+		"economia circular",
+		"interactive",
+		"image"
+	],
+	"textdomain": "gq-bioeconomia",
+	"attributes": {
+		"schemaVersion": {
+			"type": "number",
+			"default": 1
+		},
+		"blockId": {
+			"type": "string",
+			"default": "interactive-image"
+		},
+		"image": {
+			"type": "string",
+			"default": "economia-circular",
+			"enum": [
+				"economia-circular"
+			]
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"customClassName": false,
+		"color": false,
+		"spacing": false,
+		"typography": false,
+		"align": false,
+		"inserter": true
+	},
+	"example": {
+		"attributes": {
+			"image": "economia-circular"
+		}
+	},
+	"editorStyle": "gq-bioeconomia-editor"
+}

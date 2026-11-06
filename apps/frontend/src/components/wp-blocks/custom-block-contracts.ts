@@ -777,6 +777,18 @@ export const WP_CUSTOM_BLOCK_CONTRACTS = [
     editorTitle: "Grelha de destaques",
     editorDescription: "Um destaque principal e quatro conteúdos selecionados.",
   },
+  {
+    blockName: "getquick/interactive-image",
+    catalogId: "interactive-image",
+    schemaVersion: 1,
+    contentAttributes: [
+      "schemaVersion",
+      "blockId",
+      "image",
+    ],
+    editorTitle: "Imagem interativa",
+    editorDescription: "Mostra uma imagem interativa: ao passar o rato ou tocar em cada etapa, aparecem os detalhes.",
+  },
 ] as const satisfies readonly WpCustomBlockContract[];
 
 export const WP_CUSTOM_BLOCK_COMPATIBILITY_READS = {
