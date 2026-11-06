@@ -151,6 +151,20 @@ describe("renderInteractiveSvg", () => {
     expect(out.match(/data-edited/g)).toHaveLength(1);
   });
 
+  it("never rewrites the editor's text or URLs as placeholders", () => {
+    const out = render({
+      texts: {
+        "step-2-info": "__ID__ __ICONS__ __LABEL__ __LABEL_1__",
+        "step-3-title": "a __ID__ b",
+      },
+      icons: { "step-4": "https://cdn.example/__ID__.svg" },
+    });
+    expect(out).toContain(">__ID__ __ICONS__ __LABEL__ __LABEL_1__</div>");
+    expect(out).toContain('aria-label="a __ID__ b"');
+    expect(out).toContain('href="https://cdn.example/__ID__.svg"');
+    expect(out).toContain('id="x1-info-2"');
+  });
+
   it("labels the step buttons with their edited titles", () => {
     const out = render({ texts: { "step-1-title": "Prevenir & evitar", title: "EC" }, icons: {} });
     expect(out).toContain('aria-label="Prevenir &amp; evitar"');

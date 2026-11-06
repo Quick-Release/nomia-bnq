@@ -102,7 +102,8 @@
         previewUrl: src || undefined,
         labelSelect: __("Substituir ícone", "gq-bioeconomia"),
         labelReplace: __("Trocar ícone", "gq-bioeconomia"),
-        onSelect: (media) => onChange({ iconId: media.id, iconSrc: media.url }),
+        // A selection without a URL (cancelled, or an unexpected shape) changes nothing.
+        onSelect: (media) => media?.url && onChange({ iconId: media.id, iconSrc: media.url }),
       }),
       src
         ? createElement(
