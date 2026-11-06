@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.23.0 - 2026-11-06
+
+Previous release: v0.22.0
+
+- 53eb6d3 Merge pull request #146 from Quick-Release/claude/interactive-image-html-title
+- f707dbc feat: leave the Interactive image's title and subtitle to the page's own blocks
+- 09d9126 feat: drop the Interactive image's title and subtitle fields
+- b79e68c feat: render the Interactive image's title and subtitle as an HTML h2 and paragraph
+
 ## v0.22.0 - 2026-11-06
 
 Previous release: v0.21.0
