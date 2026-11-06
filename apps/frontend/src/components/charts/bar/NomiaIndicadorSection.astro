@@ -13,9 +13,9 @@ const period = periodLabel(rows);
 const area = areaLabel(indicador.chart.geographicArea);
 const sourceUrl = safeHref(indicador.chart.sourceUrl);
 const unit = [series.valueLabel, series.valueUnit].filter(Boolean).join(" · ");
-// "Ano vs Toneladas" names the axes; the chips add the unit field and the area.
-const axes = series.categoryLabel && series.valueLabel ? `${series.categoryLabel} vs ${series.valueLabel}` : "";
-const chips = [axes ? series.valueUnit : unit, area].filter(Boolean);
+// The axes ("Ano vs Toneladas") and the unit aren't shown for now; the chips
+// show only the area. The unit still heads the screen-reader table below.
+const chips = [area].filter(Boolean);
 const headingId = `indicador-${indicador.chart.id}-${crypto.randomUUID().slice(0, 8)}`;
 ---
 
@@ -43,9 +43,8 @@ const headingId = `indicador-${indicador.chart.id}-${crypto.randomUUID().slice(0
       </header>
 
       <div class="flex max-w-[1488px] flex-col gap-6">
-        {(axes || chips.length > 0) && (
+        {chips.length > 0 && (
           <div class="text-body text-main-cinza-400 font-secondary flex flex-wrap items-center gap-2 font-normal">
-            {axes && <span>{axes}</span>}
             {chips.map((chip) => (
               <span class="text-extra text-main-cinza-700 font-additional rounded-[24px] bg-main-cinza-200 px-4 py-1 font-normal leading-[var(--typography-line-height-j)]">
                 {chip}
