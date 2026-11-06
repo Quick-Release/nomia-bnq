@@ -136,7 +136,15 @@ const svg = graphic.svg.replaceAll("__ID__", id).replaceAll("__ICONS__", graphic
 
 <script>
   // Hover (mouse), focus (keyboard) and tap/click (pins a step) set the active
-  // step; Escape or a tap outside clears it.
+  // step; Escape or a tap outside clears it. One document listener serves
+  // every figure on the page.
+  const clearOnOutsideTap = new Map<HTMLElement, () => void>();
+  document.addEventListener("pointerdown", (event) => {
+    const target = event.target instanceof Element ? event.target : null;
+    for (const [figure, clear] of clearOnOutsideTap) {
+      if (!target || !figure.contains(target) || !target.closest(".ec-hit")) clear();
+    }
+  });
   for (const figure of document.querySelectorAll<HTMLElement>("[data-interactive-image]")) {
     const svg = figure.querySelector("svg");
     if (!svg) continue;
@@ -173,11 +181,9 @@ const svg = graphic.svg.replaceAll("__ID__", id).replaceAll("__ICONS__", graphic
         }
       });
     }
-    document.addEventListener("pointerdown", (event) => {
-      if (!(event.target instanceof Element) || !figure.contains(event.target) || !event.target.closest(".ec-hit")) {
-        pinned = null;
-        show(pinned);
-      }
+    clearOnOutsideTap.set(figure, () => {
+      pinned = null;
+      show(pinned);
     });
   }
 </script>

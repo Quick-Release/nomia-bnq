@@ -6,7 +6,6 @@ Each path and text run becomes one element with its layer, geometry (SVG
 coordinates, y down), colours and bounding box.
 """
 import pikepdf, re, json, math, sys
-from pikepdf import Operator
 
 pdf = pikepdf.open(sys.argv[1])
 page = pdf.pages[0]
@@ -36,7 +35,8 @@ WINANSI = {0x92: '’', 0x93: '“', 0x94: '”', 0x96: '–', 0x97: '—', 0x85
 def decode(fontkey, raw: bytes):
     f = fonts[fontkey]
     if f['cid']:
-        return ''.join(f['map'].get(int.from_bytes(raw[i:i+2], 'big'), '?') for i in range(0, len(raw), 2))
+        cmap = f['map'] or {}  # a CID font without /ToUnicode: every glyph unmapped
+        return ''.join(cmap.get(int.from_bytes(raw[i:i+2], 'big'), '?') for i in range(0, len(raw), 2))
     return ''.join(WINANSI.get(b, chr(b)) for b in raw)
 
 def mul(a, b):  # PDF matrices [a b c d e f], result = a * b
