@@ -15,7 +15,10 @@ export function readInteractiveImageKey(value: unknown): InteractiveImageKey | n
     : null;
 }
 
-/** Replacements by slot name; a slot that isn't listed keeps the graphic's own. */
+/**
+ * Replacements by slot name; a slot that isn't listed keeps the graphic's own.
+ * `title` and `subtitle` aren't slots: they edit the HTML heading.
+ */
 export interface InteractiveImageContent {
   texts: Record<string, string>;
   icons: Record<string, string>;
@@ -47,6 +50,19 @@ export interface SlotManifest {
   descent: number;
   texts: Record<string, TextSlot>;
   icons: Record<string, IconSlot>;
+  /** The graphic's title and subtitle, shown as HTML above it, not drawn. */
+  heading: { title: string; subtitle: string };
+}
+
+/** The heading above the graphic: the editor's title and subtitle, or the graphic's own. */
+export function readInteractiveImageHeading(
+  manifest: SlotManifest,
+  content: InteractiveImageContent,
+): { title: string; subtitle: string } {
+  return {
+    title: content.texts.title ?? manifest.heading.title,
+    subtitle: content.texts.subtitle ?? manifest.heading.subtitle,
+  };
 }
 
 const text = (value: unknown): string => (typeof value === "string" ? value.trim() : "");
@@ -158,7 +174,8 @@ function iconMarkup(name: string, slot: IconSlot, url: string): string {
 
 /**
  * The graphic's SVG for one instance: per-instance IDs, its icon image, the
- * accessible labels, and the editor's replacements in place of their slots.
+ * step buttons' labels, and the editor's replacements in place of their slots.
+ * The SVG is labelled by the heading the caller renders as `<id>-title`.
  * Slot groups hold only `<text>` (texts) or a clip path and a `<use>` (icons),
  * so each ends at its first `</g>`.
  */
@@ -175,8 +192,7 @@ export function renderInteractiveSvg(
   const base = svg
     .replaceAll("__ID__", options.id)
     .replaceAll("__ICONS__", options.icons)
-    .replace(/__LABEL_(\d+)__/g, (_m, step: string) => escapeHtml(label(`step-${step}-title`)))
-    .replace("__LABEL__", escapeHtml(`${label("title")}: ${label("subtitle")}`));
+    .replace(/__LABEL_(\d+)__/g, (_m, step: string) => escapeHtml(label(`step-${step}-title`)));
   return base
     .replace(/<g data-slot="([^"]+)">[\s\S]*?<\/g>/g, (group, name: string) => {
       const value = content.texts[name];

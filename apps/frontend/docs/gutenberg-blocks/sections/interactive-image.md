@@ -36,7 +36,12 @@ so a block with no replacements looks as it did before the fields existed.
 
 ## Frontend behavior
 
-`InteractiveImage.astro` inlines the graphic's SVG and toggles
+`InteractiveImage.astro` renders the title as an `<h2>` and the subtitle as a
+`<p>` in the figure's caption, above the drawing; they take the page's
+heading and text styles, and the SVG is labelled by the `<h2>`
+(`aria-labelledby`). The generated SVG doesn't draw them: it starts below
+them (`viewBox="0 110 1536 914"`), and their defaults are the manifest's
+`heading`. The component then inlines the graphic's SVG and toggles
 `data-active` on it: CSS shows the active step's `.ec-info` group, keeps its
 `.ec-card` and ring `.ec-slice` at full opacity and dims the rest. A mouse
 shows a step while it hovers; a tap, click, Enter or Space pins it; Escape or

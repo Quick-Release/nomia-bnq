@@ -4,6 +4,7 @@ import { describe, expect, it } from "vite-plus/test";
 import manifestJson from "../components/interactive-images/economia-circular.slots.json";
 import {
   readEconomiaCircularContent,
+  readInteractiveImageHeading,
   readInteractiveImageKey,
   renderInteractiveSvg,
   type SlotManifest,
@@ -122,12 +123,10 @@ describe("renderInteractiveSvg", () => {
     expect(out).not.toContain("foreignObject");
     expect(out).not.toContain("data-edited");
     expect(out).not.toMatch(/__(ID|ICONS|LABEL)/);
-    expect(out).toContain('aria-label="Economia Circular: Do modelo linear ao modelo circular"');
+    expect(out).toContain('aria-labelledby="x1-title"');
     expect(out).toContain('aria-label="Prevenir e repensar"');
     expect(out.replaceAll("x1", "__ID__").replaceAll("/i.webp", "__ICONS__")).toBe(
-      svg
-        .replace("__LABEL__", "Economia Circular: Do modelo linear ao modelo circular")
-        .replace(/__LABEL_(\d)__/g, (_m, s: string) => manifest.texts[`step-${s}-title`]!.default),
+      svg.replace(/__LABEL_(\d)__/g, (_m, s: string) => manifest.texts[`step-${s}-title`]!.default),
     );
   });
 
@@ -166,9 +165,8 @@ describe("renderInteractiveSvg", () => {
   });
 
   it("labels the step buttons with their edited titles", () => {
-    const out = render({ texts: { "step-1-title": "Prevenir & evitar", title: "EC" }, icons: {} });
+    const out = render({ texts: { "step-1-title": "Prevenir & evitar" }, icons: {} });
     expect(out).toContain('aria-label="Prevenir &amp; evitar"');
-    expect(out).toContain('aria-label="EC: Do modelo linear ao modelo circular"');
   });
 
   it("replaces an edited icon with the uploaded image in the icon's box", () => {
@@ -178,6 +176,24 @@ describe("renderInteractiveSvg", () => {
       `<g data-icon="regeneration-2" data-edited=""><image href="https://cdn.example/agua.svg" x="${box.x}" y="${box.y}" width="${box.width}" height="${box.height}" preserveAspectRatio="xMidYMid meet"/></g>`,
     );
     expect(out.match(/<g data-icon="/g)).toHaveLength(Object.keys(manifest.icons).length);
+  });
+});
+
+describe("readInteractiveImageHeading", () => {
+  it("is the graphic's own title and subtitle, which the SVG doesn't draw", () => {
+    expect(readInteractiveImageHeading(manifest, none)).toEqual({
+      title: "Economia Circular",
+      subtitle: "Do modelo linear ao modelo circular",
+    });
+    expect(svg).not.toContain(">Economia Circular<");
+    expect(svg).not.toContain("Do modelo linear ao modelo circular");
+  });
+
+  it("takes the editor's title and subtitle", () => {
+    expect(
+      readInteractiveImageHeading(manifest, { texts: { title: "EC", subtitle: "Sub" }, icons: {} }),
+    ).toEqual({ title: "EC", subtitle: "Sub" });
+    expect(render({ texts: { title: "EC", subtitle: "Sub" }, icons: {} })).toBe(render());
   });
 });
 
@@ -193,8 +209,9 @@ describe("the CMS editor's placeholders", () => {
     const block = editor.match(/const DEFAULTS = \{([\s\S]*?)\n {2}\};/)![1];
     // The object literal from our own editor script, evaluated in an empty context.
     const defaults = runInNewContext(`({${block}})`) as Record<string, string>;
-    expect(defaults).toEqual(
-      Object.fromEntries(Object.entries(manifest.texts).map(([k, v]) => [k, v.default])),
-    );
+    expect(defaults).toEqual({
+      ...manifest.heading,
+      ...Object.fromEntries(Object.entries(manifest.texts).map(([k, v]) => [k, v.default])),
+    });
   });
 });

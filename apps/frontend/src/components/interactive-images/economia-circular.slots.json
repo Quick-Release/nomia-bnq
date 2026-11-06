@@ -146,30 +146,6 @@
       "align": "left",
       "default": "Reciclar materiais de forma segura e eficiente, substituindo matérias-primas virgens."
     },
-    "title": {
-      "x": 267.69,
-      "baseline": 57.37,
-      "width": 1000,
-      "lines": 1,
-      "size": 43.0,
-      "weight": 700,
-      "fill": "#013952",
-      "lineHeight": 53.75,
-      "align": "center",
-      "default": "Economia Circular"
-    },
-    "subtitle": {
-      "x": 267.81,
-      "baseline": 96.07,
-      "width": 1000,
-      "lines": 1,
-      "size": 24.0,
-      "weight": 600,
-      "fill": "#04596b",
-      "lineHeight": 30.0,
-      "align": "center",
-      "default": "Do modelo linear ao modelo circular"
-    },
     "linear-heading": {
       "x": 109.72,
       "baseline": 192.8,
@@ -446,6 +422,10 @@
       "align": "left",
       "default": "Processar o produto descartado em materiais úteis e de elevada qualidade, permitindo substituir matérias-primas virgens."
     }
+  },
+  "heading": {
+    "title": "Economia Circular",
+    "subtitle": "Do modelo linear ao modelo circular"
   },
   "icons": {
     "step-1": {
