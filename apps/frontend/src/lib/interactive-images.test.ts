@@ -123,7 +123,7 @@ describe("renderInteractiveSvg", () => {
     expect(out).not.toContain("foreignObject");
     expect(out).not.toContain("data-edited");
     expect(out).not.toMatch(/__(ID|ICONS|LABEL)/);
-    expect(out).toContain('aria-labelledby="x1-title"');
+    expect(out).toContain('aria-label="Economia Circular: Do modelo linear ao modelo circular"');
     expect(out).toContain('aria-label="Prevenir e repensar"');
     expect(out.replaceAll("x1", "__ID__").replaceAll("/i.webp", "__ICONS__")).toBe(
       svg.replace(/__LABEL_(\d)__/g, (_m, s: string) => manifest.texts[`step-${s}-title`]!.default),
@@ -179,14 +179,11 @@ describe("renderInteractiveSvg", () => {
   });
 });
 
-describe("the heading", () => {
-  it("is the graphic's own title and subtitle, which the SVG doesn't draw", () => {
-    expect(manifest.heading).toEqual({
-      title: "Economia Circular",
-      subtitle: "Do modelo linear ao modelo circular",
-    });
+describe("the title and subtitle", () => {
+  it("aren't drawn: pages put them in their own blocks", () => {
     expect(svg).not.toContain(">Economia Circular<");
-    expect(svg).not.toContain("Do modelo linear ao modelo circular");
+    expect(svg).not.toContain(">Do modelo linear ao modelo circular<");
+    expect(svg).toContain('viewBox="0 110 1536 914"');
   });
 });
 

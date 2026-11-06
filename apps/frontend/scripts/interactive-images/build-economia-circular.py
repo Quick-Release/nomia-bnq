@@ -8,8 +8,8 @@ montserrat-latin-<weight>-normal.woff2 files, used to measure the text.
 
 Writes to <out-dir>:
 - economia-circular.svg: the graphic, with __ID__ and __ICONS__ placeholders
-  filled in by InteractiveImage.astro. It is labelled by the component's HTML
-  heading (`__ID__-title`), which isn't part of the drawing. Every editable text is a
+  filled in by InteractiveImage.astro. The title and subtitle aren't drawn:
+  pages put them in their own blocks above it. Every editable text is a
   `<g data-slot="…">` and every icon a `<g data-icon="…">`.
 - economia-circular.slots.json: each slot's position, size and default, so
   the Frontend can replace an edited slot with the same look.
@@ -60,10 +60,10 @@ CENTRED = {"center-label": 220, "hint": 600,
            **{f"linear-{i}": 190 for i in range(1, 5)},
            **{f"regeneration-{i}": 140 for i in range(1, 6)}}
 
-# The title and subtitle (elements 24 and 25) are not drawn: the Frontend
-# renders them as an HTML heading above the graphic, and the SVG is cropped
-# below them. Their texts are the manifest's `heading` defaults.
-HEADING = {"title": 24, "subtitle": 25}
+# The title and subtitle (elements 24 and 25) are not drawn: the page has
+# them as its own Heading and Paragraph blocks above the Interactive image,
+# and the SVG is cropped below them. They still name the graphic.
+LABEL = "{}: {}"  # title: subtitle, filled in below
 TOP = 110  # the graphic's first shape starts at 118.6
 
 # Non-text parts. Info box of each step: dashed box, notch, "i" badge.
@@ -220,15 +220,14 @@ for s in STEPS:
         f'<path d="{wedge(*WEDGE[s])}"/><rect x="{x0:.0f}" y="{y0:.0f}" width="{x1-x0:.0f}" height="{y1-y0:.0f}" rx="12"/></g>')
 
 svg = (f'<svg class="ec" viewBox="0 {TOP} 1536 {1024 - TOP}" xmlns="http://www.w3.org/2000/svg" '
-       'role="group" aria-labelledby="ec-title">'
+       f'role="group" aria-label="{html.escape(LABEL.format(clean(E[24]["text"]), clean(E[25]["text"])))}">'
        f'<rect y="{TOP}" width="1536" height="{1024 - TOP}" fill="#fff"/>' + "\n".join(parts) + "</svg>")
-svg = svg.replace('aria-labelledby="ec-', 'aria-labelledby="__ID__-').replace('id="ec-', 'id="__ID__-').replace("#ec-", "#__ID__-").replace('aria-controls="ec-', 'aria-controls="__ID__-')
+svg = svg.replace('id="ec-', 'id="__ID__-').replace("#ec-", "#__ID__-").replace('aria-controls="ec-', 'aria-controls="__ID__-')
 svg = re.sub(r"(\d+\.\d)\d+", r"\1", svg)
 (OUT / "economia-circular.svg").write_text(svg)
 
 manifest = dict(
     ascent=ASCENT, descent=DESCENT, texts=slots,
-    heading={k: clean(E[i]["text"]) for k, i in HEADING.items()},
     icons={n: dict(x=round(x, 2), y=round(y, 2), width=w, height=h) for n, (x, y, w, h) in ICON.items()},
 )
 (OUT / "economia-circular.slots.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")

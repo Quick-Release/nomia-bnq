@@ -7,8 +7,8 @@
  * The SVG and its slot manifest are generated from the designer's
  * Illustrator file (see docs/gutenberg-blocks/sections/interactive-image.md).
  * `content` replaces slots the editor filled in; every other slot keeps the
- * graphic's own text or icon. The title and subtitle are HTML (an h2 and a
- * paragraph) above the drawing, which labels the SVG.
+ * graphic's own text or icon. The graphic has no title: pages put its title
+ * and subtitle in their own Heading and Paragraph blocks above the block.
  */
 import {
   renderInteractiveSvg,
@@ -37,14 +37,9 @@ const { image, content } = Astro.props;
 const graphic = GRAPHICS[image];
 const id = `ii-${image}-${Math.random().toString(36).slice(2, 8)}`;
 const svg = renderInteractiveSvg(graphic.svg, graphic.manifest, content, { id, icons: graphic.icons });
-const { heading } = graphic.manifest;
 ---
 
 <figure class="interactive-image" data-interactive-image={image}>
-  <figcaption class="interactive-image__heading">
-    <h2 id={`${id}-title`}>{heading.title}</h2>
-    <p>{heading.subtitle}</p>
-  </figcaption>
   <Fragment set:html={svg} />
 </figure>
 
@@ -78,11 +73,6 @@ const { heading } = graphic.manifest;
     margin: 0 auto;
     width: 100%;
     max-width: 1200px;
-  }
-  /* Takes the page's h2 and paragraph styles; only centred above the drawing. */
-  .interactive-image__heading {
-    margin-bottom: 1rem;
-    text-align: center;
   }
   .interactive-image :global(svg) {
     display: block;

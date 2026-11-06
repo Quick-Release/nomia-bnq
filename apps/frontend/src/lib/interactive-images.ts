@@ -47,8 +47,6 @@ export interface SlotManifest {
   descent: number;
   texts: Record<string, TextSlot>;
   icons: Record<string, IconSlot>;
-  /** The graphic's title and subtitle, shown as HTML above it, not drawn. */
-  heading: { title: string; subtitle: string };
 }
 
 const text = (value: unknown): string => (typeof value === "string" ? value.trim() : "");
@@ -159,7 +157,6 @@ function iconMarkup(name: string, slot: IconSlot, url: string): string {
 /**
  * The graphic's SVG for one instance: per-instance IDs, its icon image, the
  * step buttons' labels, and the editor's replacements in place of their slots.
- * The SVG is labelled by the heading the caller renders as `<id>-title`.
  * Slot groups hold only `<text>` (texts) or a clip path and a `<use>` (icons),
  * so each ends at its first `</g>`.
  */

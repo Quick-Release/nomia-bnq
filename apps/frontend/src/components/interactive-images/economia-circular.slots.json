@@ -423,10 +423,6 @@
       "default": "Processar o produto descartado em materiais úteis e de elevada qualidade, permitindo substituir matérias-primas virgens."
     }
   },
-  "heading": {
-    "title": "Economia Circular",
-    "subtitle": "Do modelo linear ao modelo circular"
-  },
   "icons": {
     "step-1": {
       "x": 582.5,
