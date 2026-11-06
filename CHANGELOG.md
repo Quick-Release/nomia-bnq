@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.21.0 - 2026-11-06
+
+Previous release: v0.20.1
+
+- 25a116e Merge pull request #143 from Quick-Release/claude/interactive-image
+- eea3238 fix(cms): translate the Interactive image block into English
+- fed2899 fix(frontend): one outside-tap listener for all interactive images; guard unmapped CID fonts
+- b5f708b feat: add Interactive image block with the Economia Circular diagram
+
 ## v0.20.1 - 2026-11-06
 
 Previous release: v0.20.0
