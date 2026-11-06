@@ -4,7 +4,6 @@ import { describe, expect, it } from "vite-plus/test";
 import manifestJson from "../components/interactive-images/economia-circular.slots.json";
 import {
   readEconomiaCircularContent,
-  readInteractiveImageHeading,
   readInteractiveImageKey,
   renderInteractiveSvg,
   type SlotManifest,
@@ -80,7 +79,8 @@ describe("economia-circular.svg", () => {
 describe("readEconomiaCircularContent", () => {
   it("maps the block's attributes to slots, rows by position", () => {
     const content = readEconomiaCircularContent({
-      title: "  Título  ",
+      title: "Ignorado",
+      linearHeading: "  Linear  ",
       linearInfo: "Detalhe",
       centerIconSrc: "https://nomia-media.bnq.pt/uploads/logo.svg",
       steps: [{}, { title: "Etapa 2", info: "Info 2", iconSrc: "/icon.svg" }],
@@ -88,7 +88,7 @@ describe("readEconomiaCircularContent", () => {
       regenerationItems: [null, null, null, null, { label: "Compostagem" }, { label: "ignored" }],
     });
     expect(content.texts).toEqual({
-      title: "Título",
+      "linear-heading": "Linear",
       "linear-info": "Detalhe",
       "step-2-title": "Etapa 2",
       "step-2-info": "Info 2",
@@ -103,8 +103,8 @@ describe("readEconomiaCircularContent", () => {
 
   it("leaves out empty values and unsafe icon URLs", () => {
     const content = readEconomiaCircularContent({
-      title: "   ",
-      subtitle: 3,
+      linearHeading: "   ",
+      circularHeading: 3,
       steps: "nope",
       centerIconSrc: "javascript:alert(1)",
       linearSteps: [
@@ -179,21 +179,14 @@ describe("renderInteractiveSvg", () => {
   });
 });
 
-describe("readInteractiveImageHeading", () => {
+describe("the heading", () => {
   it("is the graphic's own title and subtitle, which the SVG doesn't draw", () => {
-    expect(readInteractiveImageHeading(manifest, none)).toEqual({
+    expect(manifest.heading).toEqual({
       title: "Economia Circular",
       subtitle: "Do modelo linear ao modelo circular",
     });
     expect(svg).not.toContain(">Economia Circular<");
     expect(svg).not.toContain("Do modelo linear ao modelo circular");
-  });
-
-  it("takes the editor's title and subtitle", () => {
-    expect(
-      readInteractiveImageHeading(manifest, { texts: { title: "EC", subtitle: "Sub" }, icons: {} }),
-    ).toEqual({ title: "EC", subtitle: "Sub" });
-    expect(render({ texts: { title: "EC", subtitle: "Sub" }, icons: {} })).toBe(render());
   });
 });
 
@@ -209,9 +202,8 @@ describe("the CMS editor's placeholders", () => {
     const block = editor.match(/const DEFAULTS = \{([\s\S]*?)\n {2}\};/)![1];
     // The object literal from our own editor script, evaluated in an empty context.
     const defaults = runInNewContext(`({${block}})`) as Record<string, string>;
-    expect(defaults).toEqual({
-      ...manifest.heading,
-      ...Object.fromEntries(Object.entries(manifest.texts).map(([k, v]) => [k, v.default])),
-    });
+    expect(defaults).toEqual(
+      Object.fromEntries(Object.entries(manifest.texts).map(([k, v]) => [k, v.default])),
+    );
   });
 });

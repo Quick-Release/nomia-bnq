@@ -13,14 +13,14 @@ other steps.
 Add an **Imagem interativa** block and pick the graphic in **Imagem**
 (stored as `image`). The preview shows it as the Frontend draws it.
 
-Every text and icon of the graphic can be replaced in the block's sidebar,
-grouped as the graphic is: Título, Modelo linear, Modelo circular, one panel
+Every text and icon of the drawing can be replaced in the block's sidebar,
+grouped as the graphic is: Modelo linear, Modelo circular, one panel
 per Etapa (title, text, the detail shown on hover, icon) and Regeneração dos
 sistemas naturais. Each field shows the graphic's own text as its placeholder.
 **A field left empty keeps the graphic's own text or icon exactly as drawn**,
 so a block with no replacements looks as it did before the fields existed.
 
-- Texts are stored in `title`, `subtitle`, `linearHeading`, `linearInfo`,
+- Texts are stored in `linearHeading`, `linearInfo`,
   `circularHeading`, `centerLabel`, `regenerationHeading`,
   `regenerationText`, `regenerationInfo` and `hint`, and in the rows of
   `linearSteps` (`label`), `steps` (`title`, `description`, `info`) and
@@ -39,9 +39,9 @@ so a block with no replacements looks as it did before the fields existed.
 `InteractiveImage.astro` renders the title as an `<h2>` and the subtitle as a
 `<p>` in the figure's caption, above the drawing; they take the page's
 heading and text styles, and the SVG is labelled by the `<h2>`
-(`aria-labelledby`). The generated SVG doesn't draw them: it starts below
-them (`viewBox="0 110 1536 914"`), and their defaults are the manifest's
-`heading`. The component then inlines the graphic's SVG and toggles
+(`aria-labelledby`). They aren't editable: their texts are the manifest's
+`heading`. The generated SVG doesn't draw them: it starts below them
+(`viewBox="0 110 1536 914"`). The component then inlines the graphic's SVG and toggles
 `data-active` on it: CSS shows the active step's `.ec-info` group, keeps its
 `.ec-card` and ring `.ec-slice` at full opacity and dims the rest. A mouse
 shows a step while it hovers; a tap, click, Enter or Space pins it; Escape or
@@ -100,8 +100,6 @@ slot's default text changes, update the CMS editor's `DEFAULTS`
 - `schemaVersion`
 - `blockId`
 - `image`
-- `title`
-- `subtitle`
 - `linearHeading`
 - `linearSteps`
 - `linearInfo`

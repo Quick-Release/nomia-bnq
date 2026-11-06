@@ -4571,14 +4571,6 @@ final class Contracts {
 							'kind' => 'select',
 						],
 					],
-					'title'               => [
-						'type'    => 'string',
-						'default' => '',
-					],
-					'subtitle'            => [
-						'type'    => 'string',
-						'default' => '',
-					],
 					'linearHeading'       => [
 						'type'    => 'string',
 						'default' => '',

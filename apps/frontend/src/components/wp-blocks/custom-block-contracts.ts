@@ -785,8 +785,6 @@ export const WP_CUSTOM_BLOCK_CONTRACTS = [
       "schemaVersion",
       "blockId",
       "image",
-      "title",
-      "subtitle",
       "linearHeading",
       "linearSteps",
       "linearInfo",

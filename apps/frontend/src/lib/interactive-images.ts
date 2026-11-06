@@ -15,10 +15,7 @@ export function readInteractiveImageKey(value: unknown): InteractiveImageKey | n
     : null;
 }
 
-/**
- * Replacements by slot name; a slot that isn't listed keeps the graphic's own.
- * `title` and `subtitle` aren't slots: they edit the HTML heading.
- */
+/** Replacements by slot name; a slot that isn't listed keeps the graphic's own. */
 export interface InteractiveImageContent {
   texts: Record<string, string>;
   icons: Record<string, string>;
@@ -54,17 +51,6 @@ export interface SlotManifest {
   heading: { title: string; subtitle: string };
 }
 
-/** The heading above the graphic: the editor's title and subtitle, or the graphic's own. */
-export function readInteractiveImageHeading(
-  manifest: SlotManifest,
-  content: InteractiveImageContent,
-): { title: string; subtitle: string } {
-  return {
-    title: content.texts.title ?? manifest.heading.title,
-    subtitle: content.texts.subtitle ?? manifest.heading.subtitle,
-  };
-}
-
 const text = (value: unknown): string => (typeof value === "string" ? value.trim() : "");
 
 /** An image URL the page may load: https, or a path on the site. */
@@ -96,8 +82,6 @@ export function readEconomiaCircularContent(
     if (v) icons[slot] = v;
   };
 
-  setText("title", attrs.title);
-  setText("subtitle", attrs.subtitle);
   setText("linear-heading", attrs.linearHeading);
   setText("linear-info", attrs.linearInfo);
   setText("circular-heading", attrs.circularHeading);

@@ -16,8 +16,6 @@
    * economia-circular.slots.json (checked by its interactive-images test).
    */
   const DEFAULTS = {
-    title: "Economia Circular",
-    subtitle: "Do modelo linear ao modelo circular",
     "linear-heading": "MODELO LINEAR",
     "linear-1": "Extrair",
     "linear-2": "Produzir",
@@ -212,12 +210,6 @@
               "gq-bioeconomia",
             ),
           ),
-        ),
-        createElement(
-          PanelBody,
-          { title: __("Título", "gq-bioeconomia"), initialOpen: false },
-          field("title", "title", __("Título", "gq-bioeconomia")),
-          field("subtitle", "subtitle", __("Subtítulo", "gq-bioeconomia")),
         ),
         createElement(
           PanelBody,
