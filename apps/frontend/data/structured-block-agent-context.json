@@ -6444,20 +6444,160 @@
           "ui": {
             "kind": "select"
           }
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "subtitle": {
+          "type": "string",
+          "default": ""
+        },
+        "linearHeading": {
+          "type": "string",
+          "default": ""
+        },
+        "linearSteps": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "default": ""
+              },
+              "iconId": {
+                "type": "number"
+              },
+              "iconSrc": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "media"
+                }
+              }
+            }
+          }
+        },
+        "linearInfo": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "textarea"
+          }
+        },
+        "circularHeading": {
+          "type": "string",
+          "default": ""
+        },
+        "centerLabel": {
+          "type": "string",
+          "default": ""
+        },
+        "centerIconId": {
+          "type": "number"
+        },
+        "centerIconSrc": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "media"
+          }
+        },
+        "steps": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "default": ""
+              },
+              "description": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "textarea"
+                }
+              },
+              "info": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "textarea"
+                }
+              },
+              "iconId": {
+                "type": "number"
+              },
+              "iconSrc": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "media"
+                }
+              }
+            }
+          }
+        },
+        "regenerationHeading": {
+          "type": "string",
+          "default": ""
+        },
+        "regenerationText": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "textarea"
+          }
+        },
+        "regenerationItems": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "default": ""
+              },
+              "iconId": {
+                "type": "number"
+              },
+              "iconSrc": {
+                "type": "string",
+                "default": "",
+                "ui": {
+                  "kind": "media"
+                }
+              }
+            }
+          }
+        },
+        "regenerationInfo": {
+          "type": "string",
+          "default": "",
+          "ui": {
+            "kind": "textarea"
+          }
+        },
+        "hint": {
+          "type": "string",
+          "default": ""
         }
       },
       "compatibilityReads": {},
       "editing": {
-        "mode": "generic",
-        "module": "apps/cms/web/app/plugins/gq-bioeconomia/assets/editor.js",
+        "mode": "bespoke",
+        "module": "apps/cms/web/app/plugins/gq-bioeconomia/blocks/interactive-image/index.js",
         "hiddenAttributes": [
           "schemaVersion",
           "blockId"
         ],
-        "editableAttributes": [
-          "image"
-        ],
-        "note": "The shared generic editor renders every non-metadata contract attribute."
+        "editableAttributes": null,
+        "note": "The bespoke editor module owns the visible controls; inspect it before editing."
       },
       "renderer": {
         "module": "src/components/wp-blocks/blocks/InteractiveImageBlock.astro",
@@ -6471,7 +6611,8 @@
         "title": "Imagem interativa",
         "description": "Mostra uma imagem interativa: ao passar o rato ou tocar em cada etapa, aparecem os detalhes.",
         "icon": "format-image",
-        "experience": "preview"
+        "experience": "preview",
+        "module": "apps/cms/web/app/plugins/gq-bioeconomia/blocks/interactive-image/index.js"
       },
       "documentation": "docs/gutenberg-blocks/sections/interactive-image.md"
     }

@@ -4,27 +4,38 @@
  * graphics on hover, focus or tap. No library: CSS shows the active step's
  * parts (`data-active` on the SVG) and the script below sets it.
  *
- * The SVG is generated from the designer's Illustrator file (see
- * docs/gutenberg-blocks/sections/interactive-image.md). Its IDs carry an
- * `__ID__` placeholder, replaced per instance so two copies on a page don't
- * share clip paths, and its icon image an `__ICONS__` placeholder.
+ * The SVG and its slot manifest are generated from the designer's
+ * Illustrator file (see docs/gutenberg-blocks/sections/interactive-image.md).
+ * `content` replaces slots the editor filled in; every other slot keeps the
+ * graphic's own text or icon.
  */
-import type { InteractiveImageKey } from "../../lib/interactive-images";
+import {
+  renderInteractiveSvg,
+  type InteractiveImageContent,
+  type InteractiveImageKey,
+  type SlotManifest,
+} from "../../lib/interactive-images";
 import economiaCircularSvg from "./economia-circular.svg?raw";
+import economiaCircularSlots from "./economia-circular.slots.json";
 import economiaCircularIcons from "./assets/economia-circular-icons.webp?url";
 
 interface Props {
   image: InteractiveImageKey;
+  content: InteractiveImageContent;
 }
 
-const GRAPHICS: Record<InteractiveImageKey, { svg: string; icons: string }> = {
-  "economia-circular": { svg: economiaCircularSvg, icons: economiaCircularIcons },
+const GRAPHICS: Record<InteractiveImageKey, { svg: string; manifest: SlotManifest; icons: string }> = {
+  "economia-circular": {
+    svg: economiaCircularSvg,
+    manifest: economiaCircularSlots as SlotManifest,
+    icons: economiaCircularIcons,
+  },
 };
 
-const { image } = Astro.props;
+const { image, content } = Astro.props;
 const graphic = GRAPHICS[image];
 const id = `ii-${image}-${Math.random().toString(36).slice(2, 8)}`;
-const svg = graphic.svg.replaceAll("__ID__", id).replaceAll("__ICONS__", graphic.icons);
+const svg = renderInteractiveSvg(graphic.svg, graphic.manifest, content, { id, icons: graphic.icons });
 ---
 
 <figure class="interactive-image" data-interactive-image={image}>

@@ -1,6 +1,6 @@
 ---
 import InteractiveImage from "../../interactive-images/InteractiveImage.astro";
-import { readInteractiveImageKey } from "../../../lib/interactive-images";
+import { readEconomiaCircularContent, readInteractiveImageKey } from "../../../lib/interactive-images";
 import type { WpParsedBlock } from "../../../lib/wp-blocks";
 import type { AttrsFor } from "../wp-block-attrs";
 
@@ -8,8 +8,11 @@ interface Props { block: WpParsedBlock }
 const { block } = Astro.props;
 const attrs = block.attrs as AttrsFor<"getquick/interactive-image">;
 
-// The block stores which graphic to show; an unknown key renders nothing.
+// The block stores which graphic to show and the editor's replacements for
+// its texts and icons; an empty field keeps the graphic's own. An unknown key
+// renders nothing.
 const image = readInteractiveImageKey(attrs.image);
+const content = readEconomiaCircularContent(attrs as Record<string, unknown>);
 ---
 
-{image && <InteractiveImage image={image} />}
+{image && <InteractiveImage image={image} content={content} />}

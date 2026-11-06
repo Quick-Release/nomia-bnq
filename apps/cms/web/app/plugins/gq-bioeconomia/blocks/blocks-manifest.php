@@ -4858,20 +4858,135 @@ return [
 		],
 		'textdomain'  => 'gq-bioeconomia',
 		'attributes'  => [
-			'schemaVersion' => [
+			'schemaVersion'       => [
 				'type'    => 'number',
 				'default' => 1,
 			],
-			'blockId'       => [
+			'blockId'             => [
 				'type'    => 'string',
 				'default' => 'interactive-image',
 			],
-			'image'         => [
+			'image'               => [
 				'type'    => 'string',
 				'default' => 'economia-circular',
 				'enum'    => [
 					'economia-circular',
 				],
+			],
+			'title'               => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'subtitle'            => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'linearHeading'       => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'linearSteps'         => [
+				'type'    => 'array',
+				'default' => [],
+				'items'   => [
+					'type'       => 'object',
+					'properties' => [
+						'label'   => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'iconId'  => [
+							'type' => 'number',
+						],
+						'iconSrc' => [
+							'type'    => 'string',
+							'default' => '',
+						],
+					],
+				],
+			],
+			'linearInfo'          => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'circularHeading'     => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'centerLabel'         => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'centerIconId'        => [
+				'type' => 'number',
+			],
+			'centerIconSrc'       => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'steps'               => [
+				'type'    => 'array',
+				'default' => [],
+				'items'   => [
+					'type'       => 'object',
+					'properties' => [
+						'title'       => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'description' => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'info'        => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'iconId'      => [
+							'type' => 'number',
+						],
+						'iconSrc'     => [
+							'type'    => 'string',
+							'default' => '',
+						],
+					],
+				],
+			],
+			'regenerationHeading' => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'regenerationText'    => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'regenerationItems'   => [
+				'type'    => 'array',
+				'default' => [],
+				'items'   => [
+					'type'       => 'object',
+					'properties' => [
+						'label'   => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'iconId'  => [
+							'type' => 'number',
+						],
+						'iconSrc' => [
+							'type'    => 'string',
+							'default' => '',
+						],
+					],
+				],
+			],
+			'regenerationInfo'    => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'hint'                => [
+				'type'    => 'string',
+				'default' => '',
 			],
 		],
 		'supports'    => [
