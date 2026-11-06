@@ -41,6 +41,11 @@ test("an Indicador renders its title, period, area, values and source", async ()
   assert.match(root.querySelector("header").textContent, /2023–2024/);
   // The axes and unit labels are hidden for now.
   assert.doesNotMatch(root.textContent, /Ano vs Euro/);
+  // The screen-reader table still names the axes and the unit.
+  assert.deepEqual(
+    [...root.querySelectorAll("table.sr-only thead th")].map((cell) => cell.textContent.trim()),
+    ["Ano", "Euro"],
+  );
   assert.match(root.textContent, /NUTS 0/);
   assert.deepEqual(
     [...root.querySelectorAll("table tbody tr")].map((row) =>
