@@ -15,7 +15,7 @@ const icon = {
  * An interactive infographic shipped with the Frontend, such as the Economia
  * Circular diagram whose steps reveal their details on hover or tap. The block
  * stores which graphic to show and the editor's replacements for its texts and
- * icons. Every replacement is optional: an empty one keeps the graphic's own
+ * icons; the title and subtitle above the drawing are the graphic's own. Every replacement is optional: an empty one keeps the graphic's own
  * text or icon, exactly as drawn. Rows are read by position (the n-th step row
  * edits step n).
  */
@@ -35,8 +35,6 @@ export default defineStructuredBlock({
       enum: INTERACTIVE_IMAGE_KEYS,
       ui: { kind: "select" },
     }),
-    title: stringAttribute(),
-    subtitle: stringAttribute(),
     linearHeading: stringAttribute(),
     /** The four stages of the linear model (Extrair, Produzir, Utilizar, Eliminar). */
     linearSteps: arrayAttribute({ label: stringAttribute(), ...icon }),

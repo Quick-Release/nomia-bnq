@@ -80,8 +80,6 @@ export function readEconomiaCircularContent(
     if (v) icons[slot] = v;
   };
 
-  setText("title", attrs.title);
-  setText("subtitle", attrs.subtitle);
   setText("linear-heading", attrs.linearHeading);
   setText("linear-info", attrs.linearInfo);
   setText("circular-heading", attrs.circularHeading);
@@ -158,7 +156,7 @@ function iconMarkup(name: string, slot: IconSlot, url: string): string {
 
 /**
  * The graphic's SVG for one instance: per-instance IDs, its icon image, the
- * accessible labels, and the editor's replacements in place of their slots.
+ * step buttons' labels, and the editor's replacements in place of their slots.
  * Slot groups hold only `<text>` (texts) or a clip path and a `<use>` (icons),
  * so each ends at its first `</g>`.
  */
@@ -175,8 +173,7 @@ export function renderInteractiveSvg(
   const base = svg
     .replaceAll("__ID__", options.id)
     .replaceAll("__ICONS__", options.icons)
-    .replace(/__LABEL_(\d+)__/g, (_m, step: string) => escapeHtml(label(`step-${step}-title`)))
-    .replace("__LABEL__", escapeHtml(`${label("title")}: ${label("subtitle")}`));
+    .replace(/__LABEL_(\d+)__/g, (_m, step: string) => escapeHtml(label(`step-${step}-title`)));
   return base
     .replace(/<g data-slot="([^"]+)">[\s\S]*?<\/g>/g, (group, name: string) => {
       const value = content.texts[name];

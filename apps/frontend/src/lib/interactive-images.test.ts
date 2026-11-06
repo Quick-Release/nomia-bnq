@@ -79,7 +79,8 @@ describe("economia-circular.svg", () => {
 describe("readEconomiaCircularContent", () => {
   it("maps the block's attributes to slots, rows by position", () => {
     const content = readEconomiaCircularContent({
-      title: "  Título  ",
+      title: "Ignorado",
+      linearHeading: "  Linear  ",
       linearInfo: "Detalhe",
       centerIconSrc: "https://nomia-media.bnq.pt/uploads/logo.svg",
       steps: [{}, { title: "Etapa 2", info: "Info 2", iconSrc: "/icon.svg" }],
@@ -87,7 +88,7 @@ describe("readEconomiaCircularContent", () => {
       regenerationItems: [null, null, null, null, { label: "Compostagem" }, { label: "ignored" }],
     });
     expect(content.texts).toEqual({
-      title: "Título",
+      "linear-heading": "Linear",
       "linear-info": "Detalhe",
       "step-2-title": "Etapa 2",
       "step-2-info": "Info 2",
@@ -102,8 +103,8 @@ describe("readEconomiaCircularContent", () => {
 
   it("leaves out empty values and unsafe icon URLs", () => {
     const content = readEconomiaCircularContent({
-      title: "   ",
-      subtitle: 3,
+      linearHeading: "   ",
+      circularHeading: 3,
       steps: "nope",
       centerIconSrc: "javascript:alert(1)",
       linearSteps: [
@@ -125,9 +126,7 @@ describe("renderInteractiveSvg", () => {
     expect(out).toContain('aria-label="Economia Circular: Do modelo linear ao modelo circular"');
     expect(out).toContain('aria-label="Prevenir e repensar"');
     expect(out.replaceAll("x1", "__ID__").replaceAll("/i.webp", "__ICONS__")).toBe(
-      svg
-        .replace("__LABEL__", "Economia Circular: Do modelo linear ao modelo circular")
-        .replace(/__LABEL_(\d)__/g, (_m, s: string) => manifest.texts[`step-${s}-title`]!.default),
+      svg.replace(/__LABEL_(\d)__/g, (_m, s: string) => manifest.texts[`step-${s}-title`]!.default),
     );
   });
 
@@ -166,9 +165,8 @@ describe("renderInteractiveSvg", () => {
   });
 
   it("labels the step buttons with their edited titles", () => {
-    const out = render({ texts: { "step-1-title": "Prevenir & evitar", title: "EC" }, icons: {} });
+    const out = render({ texts: { "step-1-title": "Prevenir & evitar" }, icons: {} });
     expect(out).toContain('aria-label="Prevenir &amp; evitar"');
-    expect(out).toContain('aria-label="EC: Do modelo linear ao modelo circular"');
   });
 
   it("replaces an edited icon with the uploaded image in the icon's box", () => {
@@ -178,6 +176,14 @@ describe("renderInteractiveSvg", () => {
       `<g data-icon="regeneration-2" data-edited=""><image href="https://cdn.example/agua.svg" x="${box.x}" y="${box.y}" width="${box.width}" height="${box.height}" preserveAspectRatio="xMidYMid meet"/></g>`,
     );
     expect(out.match(/<g data-icon="/g)).toHaveLength(Object.keys(manifest.icons).length);
+  });
+});
+
+describe("the title and subtitle", () => {
+  it("aren't drawn: pages put them in their own blocks", () => {
+    expect(svg).not.toContain(">Economia Circular<");
+    expect(svg).not.toContain(">Do modelo linear ao modelo circular<");
+    expect(svg).toContain('viewBox="0 110 1536 914"');
   });
 });
 

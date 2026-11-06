@@ -4276,8 +4276,6 @@
         "schemaVersion",
         "blockId",
         "image",
-        "title",
-        "subtitle",
         "linearHeading",
         "linearSteps",
         "linearInfo",
@@ -4312,14 +4310,6 @@
           "ui": {
             "kind": "select"
           }
-        },
-        "title": {
-          "type": "string",
-          "default": ""
-        },
-        "subtitle": {
-          "type": "string",
-          "default": ""
         },
         "linearHeading": {
           "type": "string",

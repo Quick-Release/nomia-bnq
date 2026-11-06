@@ -4873,14 +4873,6 @@ return [
 					'economia-circular',
 				],
 			],
-			'title'               => [
-				'type'    => 'string',
-				'default' => '',
-			],
-			'subtitle'            => [
-				'type'    => 'string',
-				'default' => '',
-			],
 			'linearHeading'       => [
 				'type'    => 'string',
 				'default' => '',

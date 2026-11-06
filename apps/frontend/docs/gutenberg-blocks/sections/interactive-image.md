@@ -13,14 +13,14 @@ other steps.
 Add an **Imagem interativa** block and pick the graphic in **Imagem**
 (stored as `image`). The preview shows it as the Frontend draws it.
 
-Every text and icon of the graphic can be replaced in the block's sidebar,
-grouped as the graphic is: Título, Modelo linear, Modelo circular, one panel
+Every text and icon of the drawing can be replaced in the block's sidebar,
+grouped as the graphic is: Modelo linear, Modelo circular, one panel
 per Etapa (title, text, the detail shown on hover, icon) and Regeneração dos
 sistemas naturais. Each field shows the graphic's own text as its placeholder.
 **A field left empty keeps the graphic's own text or icon exactly as drawn**,
 so a block with no replacements looks as it did before the fields existed.
 
-- Texts are stored in `title`, `subtitle`, `linearHeading`, `linearInfo`,
+- Texts are stored in `linearHeading`, `linearInfo`,
   `circularHeading`, `centerLabel`, `regenerationHeading`,
   `regenerationText`, `regenerationInfo` and `hint`, and in the rows of
   `linearSteps` (`label`), `steps` (`title`, `description`, `info`) and
@@ -36,7 +36,10 @@ so a block with no replacements looks as it did before the fields existed.
 
 ## Frontend behavior
 
-`InteractiveImage.astro` inlines the graphic's SVG and toggles
+The graphic has no title: the page puts "Economia Circular" and "Do modelo
+linear ao modelo circular" in their own Heading (h2) and Paragraph blocks
+above this block. The generated SVG doesn't draw them and starts below where
+they were (`viewBox="0 110 1536 914"`); it keeps them as its `aria-label`. `InteractiveImage.astro` inlines the graphic's SVG and toggles
 `data-active` on it: CSS shows the active step's `.ec-info` group, keeps its
 `.ec-card` and ring `.ec-slice` at full opacity and dims the rest. A mouse
 shows a step while it hovers; a tap, click, Enter or Space pins it; Escape or
@@ -95,8 +98,6 @@ slot's default text changes, update the CMS editor's `DEFAULTS`
 - `schemaVersion`
 - `blockId`
 - `image`
-- `title`
-- `subtitle`
 - `linearHeading`
 - `linearSteps`
 - `linearInfo`
