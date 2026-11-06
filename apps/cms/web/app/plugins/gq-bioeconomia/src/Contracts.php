@@ -4553,15 +4553,15 @@ final class Contracts {
 				'status'      => 'active',
 				'inserter'    => true,
 				'attributes'  => [
-					'schemaVersion' => [
+					'schemaVersion'       => [
 						'type'    => 'number',
 						'default' => 1,
 					],
-					'blockId'       => [
+					'blockId'             => [
 						'type'    => 'string',
 						'default' => 'interactive-image',
 					],
-					'image'         => [
+					'image'               => [
 						'type'    => 'string',
 						'default' => 'economia-circular',
 						'enum'    => [
@@ -4570,6 +4570,148 @@ final class Contracts {
 						'ui'      => [
 							'kind' => 'select',
 						],
+					],
+					'title'               => [
+						'type'    => 'string',
+						'default' => '',
+					],
+					'subtitle'            => [
+						'type'    => 'string',
+						'default' => '',
+					],
+					'linearHeading'       => [
+						'type'    => 'string',
+						'default' => '',
+					],
+					'linearSteps'         => [
+						'type'    => 'array',
+						'default' => [],
+						'items'   => [
+							'type'       => 'object',
+							'properties' => [
+								'label'   => [
+									'type'    => 'string',
+									'default' => '',
+								],
+								'iconId'  => [
+									'type' => 'number',
+								],
+								'iconSrc' => [
+									'type'    => 'string',
+									'default' => '',
+									'ui'      => [
+										'kind' => 'media',
+									],
+								],
+							],
+						],
+					],
+					'linearInfo'          => [
+						'type'    => 'string',
+						'default' => '',
+						'ui'      => [
+							'kind' => 'textarea',
+						],
+					],
+					'circularHeading'     => [
+						'type'    => 'string',
+						'default' => '',
+					],
+					'centerLabel'         => [
+						'type'    => 'string',
+						'default' => '',
+					],
+					'centerIconId'        => [
+						'type' => 'number',
+					],
+					'centerIconSrc'       => [
+						'type'    => 'string',
+						'default' => '',
+						'ui'      => [
+							'kind' => 'media',
+						],
+					],
+					'steps'               => [
+						'type'    => 'array',
+						'default' => [],
+						'items'   => [
+							'type'       => 'object',
+							'properties' => [
+								'title'       => [
+									'type'    => 'string',
+									'default' => '',
+								],
+								'description' => [
+									'type'    => 'string',
+									'default' => '',
+									'ui'      => [
+										'kind' => 'textarea',
+									],
+								],
+								'info'        => [
+									'type'    => 'string',
+									'default' => '',
+									'ui'      => [
+										'kind' => 'textarea',
+									],
+								],
+								'iconId'      => [
+									'type' => 'number',
+								],
+								'iconSrc'     => [
+									'type'    => 'string',
+									'default' => '',
+									'ui'      => [
+										'kind' => 'media',
+									],
+								],
+							],
+						],
+					],
+					'regenerationHeading' => [
+						'type'    => 'string',
+						'default' => '',
+					],
+					'regenerationText'    => [
+						'type'    => 'string',
+						'default' => '',
+						'ui'      => [
+							'kind' => 'textarea',
+						],
+					],
+					'regenerationItems'   => [
+						'type'    => 'array',
+						'default' => [],
+						'items'   => [
+							'type'       => 'object',
+							'properties' => [
+								'label'   => [
+									'type'    => 'string',
+									'default' => '',
+								],
+								'iconId'  => [
+									'type' => 'number',
+								],
+								'iconSrc' => [
+									'type'    => 'string',
+									'default' => '',
+									'ui'      => [
+										'kind' => 'media',
+									],
+								],
+							],
+						],
+					],
+					'regenerationInfo'    => [
+						'type'    => 'string',
+						'default' => '',
+						'ui'      => [
+							'kind' => 'textarea',
+						],
+					],
+					'hint'                => [
+						'type'    => 'string',
+						'default' => '',
 					],
 				],
 				'example'     => [

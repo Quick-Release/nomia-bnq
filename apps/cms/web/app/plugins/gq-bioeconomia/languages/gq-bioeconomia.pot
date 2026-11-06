@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-06T17:37:44+00:00\n"
+"POT-Creation-Date: 2026-11-06T18:23:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: gq-bioeconomia\n"
@@ -1545,6 +1545,7 @@ msgid "Tipo de estratégia"
 msgstr ""
 
 #: src/Details/PostDetails.php:114
+#: blocks/interactive-image/index.js:196
 #: blocks/page-hero-static/index.js:138
 #: blocks/title-with-label/index.js:46
 msgid "Subtítulo"
@@ -1678,6 +1679,12 @@ msgstr ""
 #: src/Submissions/PartilheForm.php:145
 #: blocks/contact-details-card/index.js:341
 #: blocks/contact-details-card/index.js:344
+#: blocks/interactive-image/index.js:152
+#: blocks/interactive-image/index.js:194
+#: blocks/interactive-image/index.js:195
+#: blocks/interactive-image/index.js:201
+#: blocks/interactive-image/index.js:221
+#: blocks/interactive-image/index.js:234
 #: blocks/page-hero-static/index.js:138
 msgid "Título"
 msgstr ""
@@ -1701,6 +1708,8 @@ msgid "Autorizo o tratamento dos meus dados para a análise e eventual publicaç
 msgstr ""
 
 #: src/Submissions/PartilheForm.php:183
+#: blocks/interactive-image/index.js:153
+#: blocks/interactive-image/index.js:235
 msgid "Texto"
 msgstr ""
 
@@ -1926,6 +1935,7 @@ msgid "Editar link do botão"
 msgstr ""
 
 #: blocks/contact-details-card/index.js:183
+#: blocks/interactive-image/index.js:162
 msgid "Ícone"
 msgstr ""
 
@@ -1946,6 +1956,7 @@ msgstr ""
 #: blocks/header-contact/index.js:38
 #: blocks/header-navigation/index.js:126
 #: blocks/header-search/index.js:59
+#: blocks/interactive-image/index.js:89
 msgid "Substituir ícone"
 msgstr ""
 
@@ -2483,6 +2494,105 @@ msgstr ""
 
 #: blocks/indicador-chart/index.js:136
 msgid "Escolha um indicador para ver o gráfico."
+msgstr ""
+
+#: blocks/interactive-image/index.js:90
+msgid "Trocar ícone"
+msgstr ""
+
+#: blocks/interactive-image/index.js:101
+msgid "Repor ícone original"
+msgstr ""
+
+#: blocks/interactive-image/index.js:106
+msgid "A usar o ícone original."
+msgstr ""
+
+#. translators: 1: step number, 2: step title
+#: blocks/interactive-image/index.js:146
+#, js-format
+msgid "Etapa %1$d: %2$s"
+msgstr ""
+
+#: blocks/interactive-image/index.js:159
+msgid "Detalhe (aparece ao passar o rato)"
+msgstr ""
+
+#: blocks/interactive-image/index.js:174
+msgid "Imagem"
+msgstr ""
+
+#: blocks/interactive-image/index.js:178
+msgid "Imagem interativa"
+msgstr ""
+
+#: blocks/interactive-image/index.js:180
+msgid "Economia Circular"
+msgstr ""
+
+#: blocks/interactive-image/index.js:186
+msgid "Deixe um campo vazio para manter o texto ou o ícone original da imagem. O texto alterado ajusta-se à largura original."
+msgstr ""
+
+#: blocks/interactive-image/index.js:200
+msgid "Modelo linear"
+msgstr ""
+
+#. translators: %d: stage number
+#: blocks/interactive-image/index.js:208
+#, js-format
+msgid "Fase %d"
+msgstr ""
+
+#. translators: %d: stage number
+#: blocks/interactive-image/index.js:213
+#, js-format
+msgid "Ícone da fase %d"
+msgstr ""
+
+#: blocks/interactive-image/index.js:216
+#: blocks/interactive-image/index.js:250
+msgid "Detalhe"
+msgstr ""
+
+#: blocks/interactive-image/index.js:220
+msgid "Modelo circular"
+msgstr ""
+
+#: blocks/interactive-image/index.js:222
+msgid "Texto ao centro"
+msgstr ""
+
+#: blocks/interactive-image/index.js:224
+msgid "Logótipo ao centro"
+msgstr ""
+
+#: blocks/interactive-image/index.js:233
+msgid "Regeneração dos sistemas naturais"
+msgstr ""
+
+#. translators: %d: item number
+#: blocks/interactive-image/index.js:242
+#, js-format
+msgid "Sistema %d"
+msgstr ""
+
+#. translators: %d: item number
+#: blocks/interactive-image/index.js:247
+#, js-format
+msgid "Ícone do sistema %d"
+msgstr ""
+
+#: blocks/interactive-image/index.js:254
+msgid "Indicação"
+msgstr ""
+
+#: blocks/interactive-image/index.js:255
+msgid "Texto por baixo da imagem"
+msgstr ""
+
+#: blocks/interactive-image/index.js:266
+msgid "Pré-visualização da imagem interativa"
 msgstr ""
 
 #: blocks/map-list/index.js:189

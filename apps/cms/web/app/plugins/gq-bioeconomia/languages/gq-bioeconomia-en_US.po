@@ -27,6 +27,7 @@ msgid "Editar link do botão"
 msgstr "Edit button link"
 
 #: blocks/contact-details-card/index.js:183
+#: blocks/interactive-image/index.js:162
 msgid "Ícone"
 msgstr "Icon"
 
@@ -47,6 +48,7 @@ msgstr "Upload icon"
 #: blocks/header-contact/index.js:38
 #: blocks/header-navigation/index.js:126
 #: blocks/header-search/index.js:59
+#: blocks/interactive-image/index.js:89
 msgid "Substituir ícone"
 msgstr "Replace icon"
 
@@ -69,6 +71,12 @@ msgstr "Show button"
 #: src/Submissions/PartilheForm.php:145
 #: blocks/contact-details-card/index.js:341
 #: blocks/contact-details-card/index.js:344
+#: blocks/interactive-image/index.js:152
+#: blocks/interactive-image/index.js:194
+#: blocks/interactive-image/index.js:195
+#: blocks/interactive-image/index.js:201
+#: blocks/interactive-image/index.js:221
+#: blocks/interactive-image/index.js:234
 #: blocks/page-hero-static/index.js:138
 msgid "Título"
 msgstr "Title"
@@ -828,6 +836,7 @@ msgid "%1$s e %2$s"
 msgstr "%1$s and %2$s"
 
 #: src/Details/PostDetails.php:114
+#: blocks/interactive-image/index.js:196
 #: blocks/page-hero-static/index.js:138
 #: blocks/title-with-label/index.js:46
 msgid "Subtítulo"
@@ -3755,8 +3764,10 @@ msgid "Autorizo o tratamento dos meus dados para a análise e eventual publicaç
 msgstr ""
 
 #: src/Submissions/PartilheForm.php:183
+#: blocks/interactive-image/index.js:153
+#: blocks/interactive-image/index.js:235
 msgid "Texto"
-msgstr ""
+msgstr "Text"
 
 #: src/Submissions/PartilheForm.php:197
 msgid "Nova submissão (editores)"
@@ -3838,3 +3849,102 @@ msgstr "interactive"
 msgctxt "block keyword"
 msgid "image"
 msgstr "image"
+
+#: blocks/interactive-image/index.js:90
+msgid "Trocar ícone"
+msgstr "Change icon"
+
+#: blocks/interactive-image/index.js:101
+msgid "Repor ícone original"
+msgstr "Restore original icon"
+
+#: blocks/interactive-image/index.js:106
+msgid "A usar o ícone original."
+msgstr "Using the original icon."
+
+#. translators: 1: step number, 2: step title
+#: blocks/interactive-image/index.js:146
+#, js-format
+msgid "Etapa %1$d: %2$s"
+msgstr "Step %1$d: %2$s"
+
+#: blocks/interactive-image/index.js:159
+msgid "Detalhe (aparece ao passar o rato)"
+msgstr "Detail (shown on hover)"
+
+#: blocks/interactive-image/index.js:174
+msgid "Imagem"
+msgstr "Image"
+
+#: blocks/interactive-image/index.js:178
+msgid "Imagem interativa"
+msgstr "Interactive image"
+
+#: blocks/interactive-image/index.js:180
+msgid "Economia Circular"
+msgstr "Circular Economy"
+
+#: blocks/interactive-image/index.js:186
+msgid "Deixe um campo vazio para manter o texto ou o ícone original da imagem. O texto alterado ajusta-se à largura original."
+msgstr "Leave a field empty to keep the image's original text or icon. Edited text wraps to the original width."
+
+#: blocks/interactive-image/index.js:200
+msgid "Modelo linear"
+msgstr "Linear model"
+
+#. translators: %d: stage number
+#: blocks/interactive-image/index.js:208
+#, js-format
+msgid "Fase %d"
+msgstr "Stage %d"
+
+#. translators: %d: stage number
+#: blocks/interactive-image/index.js:213
+#, js-format
+msgid "Ícone da fase %d"
+msgstr "Stage %d icon"
+
+#: blocks/interactive-image/index.js:216
+#: blocks/interactive-image/index.js:250
+msgid "Detalhe"
+msgstr "Detail"
+
+#: blocks/interactive-image/index.js:220
+msgid "Modelo circular"
+msgstr "Circular model"
+
+#: blocks/interactive-image/index.js:222
+msgid "Texto ao centro"
+msgstr "Centre text"
+
+#: blocks/interactive-image/index.js:224
+msgid "Logótipo ao centro"
+msgstr "Centre logo"
+
+#: blocks/interactive-image/index.js:233
+msgid "Regeneração dos sistemas naturais"
+msgstr "Regeneration of natural systems"
+
+#. translators: %d: item number
+#: blocks/interactive-image/index.js:242
+#, js-format
+msgid "Sistema %d"
+msgstr "System %d"
+
+#. translators: %d: item number
+#: blocks/interactive-image/index.js:247
+#, js-format
+msgid "Ícone do sistema %d"
+msgstr "System %d icon"
+
+#: blocks/interactive-image/index.js:254
+msgid "Indicação"
+msgstr "Hint"
+
+#: blocks/interactive-image/index.js:255
+msgid "Texto por baixo da imagem"
+msgstr "Text below the image"
+
+#: blocks/interactive-image/index.js:266
+msgid "Pré-visualização da imagem interativa"
+msgstr "Interactive image preview"
