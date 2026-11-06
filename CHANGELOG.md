@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.22.0 - 2026-11-06
+
+Previous release: v0.21.0
+
+- ec3eb3e Merge pull request #145 from Quick-Release/claude/interactive-image-review-fixes
+- 840e6e7 fix: keep editor texts out of placeholder filling; ignore empty media picks
+- 3626158 Merge pull request #144 from Quick-Release/claude/interactive-image-editable
+- d520136 feat: edit the Interactive image's texts and icons in the block
+
 ## v0.21.0 - 2026-11-06
 
 Previous release: v0.20.1
