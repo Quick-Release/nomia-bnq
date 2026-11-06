@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.20.1 - 2026-11-06
+
+Previous release: v0.20.0
+
+- 883baab Merge pull request #142 from Quick-Release/claude/hide-indicador-axes-label
+- 04d2e81 test(frontend): check the screen-reader table keeps the axes and unit headings
+- 694629e fix(frontend): hide the axes and unit label on Indicador charts
+- 971aa07 Merge pull request #141 from Quick-Release/claude/hsts-raise
+- f74012f deploy: raise bioeconomia.apambiente.pt HSTS to one year
+
 ## v0.20.0 - 2026-11-03
 
 Previous release: v0.19.0
