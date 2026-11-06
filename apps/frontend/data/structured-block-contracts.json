@@ -4266,6 +4266,44 @@
       "editorTitle": "Grelha de destaques",
       "editorDescription": "Um destaque principal e quatro conteúdos selecionados.",
       "editorIcon": "screenoptions"
+    },
+    {
+      "blockName": "getquick/interactive-image",
+      "catalogId": "interactive-image",
+      "schemaVersion": 1,
+      "order": 45,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "image"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "interactive-image"
+        },
+        "image": {
+          "type": "string",
+          "default": "economia-circular",
+          "enum": [
+            "economia-circular"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        }
+      },
+      "compatibilityReads": {},
+      "editorExperience": "preview",
+      "editorTitle": "Imagem interativa",
+      "editorDescription": "Mostra uma imagem interativa: ao passar o rato ou tocar em cada etapa, aparecem os detalhes.",
+      "editorIcon": "format-image"
     }
   ]
 }

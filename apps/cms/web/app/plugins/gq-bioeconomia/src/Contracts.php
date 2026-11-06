@@ -4536,6 +4536,46 @@ final class Contracts {
 					'items' => [],
 				],
 			],
+			[
+				'blockName'   => 'getquick/interactive-image',
+				'catalogId'   => 'interactive-image',
+				'title'       => 'Imagem interativa',
+				'description' => 'Mostra uma imagem interativa: ao passar o rato ou tocar em cada etapa, aparecem os detalhes.',
+				'icon'        => 'format-image',
+				'keywords'    => [
+					'imagem',
+					'interativa',
+					'infografia',
+					'economia circular',
+					'interactive',
+					'image',
+				],
+				'status'      => 'active',
+				'inserter'    => true,
+				'attributes'  => [
+					'schemaVersion' => [
+						'type'    => 'number',
+						'default' => 1,
+					],
+					'blockId'       => [
+						'type'    => 'string',
+						'default' => 'interactive-image',
+					],
+					'image'         => [
+						'type'    => 'string',
+						'default' => 'economia-circular',
+						'enum'    => [
+							'economia-circular',
+						],
+						'ui'      => [
+							'kind' => 'select',
+						],
+					],
+				],
+				'example'     => [
+					'image' => 'economia-circular',
+				],
+			],
 		];
 	}
 }

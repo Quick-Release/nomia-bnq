@@ -1165,4 +1165,13 @@ export const WP_CUSTOM_BLOCK_FIXTURES: readonly WpCustomBlockFixture[] = [
       },
     ),
   },
+  {
+    label: "Interactive image",
+    block: block(
+      "getquick/interactive-image",
+      {
+        image: "economia-circular",
+      },
+    ),
+  },
 ];

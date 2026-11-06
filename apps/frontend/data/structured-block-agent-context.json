@@ -6416,6 +6416,64 @@
         "module": "apps/cms/web/app/plugins/gq-bioeconomia/blocks/selected-content-grid/index.js"
       },
       "documentation": "docs/gutenberg-blocks/content-lists/selected-content-grid.md"
+    },
+    {
+      "blockName": "getquick/interactive-image",
+      "catalogId": "interactive-image",
+      "schemaVersion": 1,
+      "order": 45,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/interactive-image.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "interactive-image"
+        },
+        "image": {
+          "type": "string",
+          "default": "economia-circular",
+          "enum": [
+            "economia-circular"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        }
+      },
+      "compatibilityReads": {},
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/gq-bioeconomia/assets/editor.js",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "image"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/InteractiveImageBlock.astro",
+        "previewLabel": "Interactive image",
+        "previewAttributes": {
+          "image": "economia-circular"
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Imagem interativa",
+        "description": "Mostra uma imagem interativa: ao passar o rato ou tocar em cada etapa, aparecem os detalhes.",
+        "icon": "format-image",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/interactive-image.md"
     }
   ]
 }

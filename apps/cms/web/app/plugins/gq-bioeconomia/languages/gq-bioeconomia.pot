@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the GETQUICK Bio.Eco.Nomia plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: GETQUICK Bio.Eco.Nomia 0.65.1\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/gq-bioeconomia\n"
+"Project-Id-Version: GETQUICK Bio.Eco.Nomia 0.66.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/plugin\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-02T18:29:33+00:00\n"
+"POT-Creation-Date: 2026-11-06T17:37:44+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: gq-bioeconomia\n"
@@ -43,6 +43,8 @@ msgid "Telefone"
 msgstr ""
 
 #: src/Admin/ContactSettings.php:37
+#: src/Submissions/PartilheForm.php:129
+#: src/Submissions/Submissions.php:174
 msgid "Email"
 msgstr ""
 
@@ -1629,6 +1631,125 @@ msgstr ""
 msgid "Blocos Gutenberg analisados a partir de post_content, em JSON, para o renderizador Astro."
 msgstr ""
 
+#: src/Submissions/PartilheForm.php:81
+msgid "Partilhe"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:90
+msgid "Enviar"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:96
+#: src/Submissions/Submissions.php:173
+msgid "Nome"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:103
+msgid "Prefixo"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:108
+msgid "Nome próprio"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:112
+msgid "Segundo nome"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:117
+msgid "Apelido"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:121
+msgid "Sufixo"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:136
+#: blocks/content-filters/index.js:30
+#: blocks/content-listing/index.js:66
+#: blocks/selected-content-grid/index.js:57
+msgid "Tipo de conteúdo"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:139
+msgid "Escolha um tipo"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:145
+#: blocks/contact-details-card/index.js:341
+#: blocks/contact-details-card/index.js:344
+#: blocks/page-hero-static/index.js:138
+msgid "Título"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:153
+#: blocks/page-hero-static/index.js:425
+msgid "Conteúdo"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:161
+msgid "Ficheiros"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:172
+#: src/Submissions/PartilheForm.php:179
+msgid "Consentimento"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:175
+msgid "Autorizo o tratamento dos meus dados para a análise e eventual publicação deste conteúdo."
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:183
+msgid "Texto"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:188
+#: assets/library-details.js:59
+msgid "Descrição"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:197
+msgid "Nova submissão (editores)"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:205
+msgid "Nova submissão em Partilhe: {Título:4}"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:206
+msgid "Foi submetido um conteúdo do tipo {Tipo de conteúdo:3:value}. O conteúdo fica pendente de revisão no CMS."
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:212
+msgid "Confirmação"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:215
+msgid "Obrigado. A sua submissão foi recebida e será revista pela equipa editorial antes de ser publicada."
+msgstr ""
+
+#. translators: %s: a link to edit the created content.
+#: src/Submissions/Submissions.php:124
+#, php-format
+msgid "Conteúdo pendente criado: %s"
+msgstr ""
+
+#: src/Submissions/Submissions.php:154
+#: src/Submissions/Submissions.php:197
+msgid "Submissão de visitante"
+msgstr ""
+
+#: src/Submissions/Submissions.php:180
+msgid "Ver a entrada do formulário"
+msgstr ""
+
+#. translators: %d: the Gravity Forms entry id.
+#: src/Submissions/Submissions.php:185
+#, php-format
+msgid "Entrada do formulário n.º %d"
+msgstr ""
+
 #: assets/details.js:42
 msgid "Sem setor selecionado"
 msgstr ""
@@ -1760,10 +1881,6 @@ msgstr ""
 msgid "Publicado por"
 msgstr ""
 
-#: assets/library-details.js:59
-msgid "Descrição"
-msgstr ""
-
 #: assets/library-details.js:60
 msgid "Resumo apresentado nos cartões da Biblioteca."
 msgstr ""
@@ -1852,12 +1969,6 @@ msgstr ""
 msgid "Este bloco não aparece no site enquanto o título, os detalhes e o botão estiverem vazios."
 msgstr ""
 
-#: blocks/contact-details-card/index.js:341
-#: blocks/contact-details-card/index.js:344
-#: blocks/page-hero-static/index.js:138
-msgid "Título"
-msgstr ""
-
 #: blocks/contact-details-card/index.js:354
 msgid "Detalhes"
 msgstr ""
@@ -1874,12 +1985,6 @@ msgstr ""
 
 #: blocks/contact-details-card/index.js:401
 msgid "Adicionar link — sem link o botão não aparece"
-msgstr ""
-
-#: blocks/content-filters/index.js:30
-#: blocks/content-listing/index.js:66
-#: blocks/selected-content-grid/index.js:57
-msgid "Tipo de conteúdo"
 msgstr ""
 
 #: blocks/content-filters/index.js:31
@@ -2755,10 +2860,6 @@ msgstr ""
 msgid "Substituir imagem"
 msgstr ""
 
-#: blocks/page-hero-static/index.js:425
-msgid "Conteúdo"
-msgstr ""
-
 #: blocks/page-hero-static/index.js:438
 msgid "Mostrar subtítulo"
 msgstr ""
@@ -3446,6 +3547,46 @@ msgstr ""
 #: blocks/indicators-grid/block.json
 msgctxt "block description"
 msgid "Cartões de indicadores com imagem, título e texto em três colunas, com cabeçalho e botão."
+msgstr ""
+
+#: blocks/interactive-image/block.json
+msgctxt "block title"
+msgid "Imagem interativa"
+msgstr ""
+
+#: blocks/interactive-image/block.json
+msgctxt "block description"
+msgid "Mostra uma imagem interativa: ao passar o rato ou tocar em cada etapa, aparecem os detalhes."
+msgstr ""
+
+#: blocks/interactive-image/block.json
+msgctxt "block keyword"
+msgid "imagem"
+msgstr ""
+
+#: blocks/interactive-image/block.json
+msgctxt "block keyword"
+msgid "interativa"
+msgstr ""
+
+#: blocks/interactive-image/block.json
+msgctxt "block keyword"
+msgid "infografia"
+msgstr ""
+
+#: blocks/interactive-image/block.json
+msgctxt "block keyword"
+msgid "economia circular"
+msgstr ""
+
+#: blocks/interactive-image/block.json
+msgctxt "block keyword"
+msgid "interactive"
+msgstr ""
+
+#: blocks/interactive-image/block.json
+msgctxt "block keyword"
+msgid "image"
 msgstr ""
 
 #: blocks/library-grid/block.json
