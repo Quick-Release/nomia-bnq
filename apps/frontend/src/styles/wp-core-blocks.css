@@ -13,6 +13,19 @@
  */
 
 @layer components {
+  /* Text alignment chosen in the editor (headings, paragraphs, quotes…). */
+  .has-text-align-left {
+    text-align: left;
+  }
+
+  .has-text-align-center {
+    text-align: center;
+  }
+
+  .has-text-align-right {
+    text-align: right;
+  }
+
   /* Native `core/button` variation sourced from bio-botao/index.html. */
   .nomia-bioeconomia-button-wrapper {
     margin-inline: auto;

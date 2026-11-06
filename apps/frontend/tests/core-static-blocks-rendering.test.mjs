@@ -86,3 +86,10 @@ test("the core block stylesheet takes its colours from GQ Design's palette", () 
     assert.ok(slugs.has(slug), `${slug} is not in the Nomia palette`);
   }
 });
+
+test("the core block stylesheet applies the editor's text alignment", () => {
+  const css = readFileSync(new URL("../src/styles/wp-core-blocks.css", import.meta.url), "utf8");
+  for (const side of ["left", "center", "right"]) {
+    assert.match(css, new RegExp(`\\.has-text-align-${side} \\{\\s*text-align: ${side};`));
+  }
+});
