@@ -168,21 +168,24 @@ export function renderInteractiveSvg(
   content: InteractiveImageContent,
   options: { id: string; icons: string },
 ): string {
-  let out = svg.replace(/<g data-slot="([^"]+)">[\s\S]*?<\/g>/g, (group, name: string) => {
-    const value = content.texts[name];
-    const slot = manifest.texts[name];
-    return value && slot ? textMarkup(name, slot, value, manifest) : group;
-  });
-  out = out.replace(/<g data-icon="([^"]+)">[\s\S]*?<\/g>/g, (group, name: string) => {
-    const url = content.icons[name];
-    const slot = manifest.icons[name];
-    return url && slot ? iconMarkup(name, slot, url) : group;
-  });
+  // Fill the graphic's own placeholders first, so the editor's texts and URLs
+  // inserted below are never rewritten (a text may contain "__ID__").
   const label = (slot: string) =>
     (content.texts[slot] ?? manifest.texts[slot]?.default ?? "").replace(/\s+/g, " ");
-  return out
-    .replace("__LABEL__", escapeHtml(`${label("title")}: ${label("subtitle")}`))
-    .replace(/__LABEL_(\d+)__/g, (_m, step: string) => escapeHtml(label(`step-${step}-title`)))
+  const base = svg
     .replaceAll("__ID__", options.id)
-    .replaceAll("__ICONS__", options.icons);
+    .replaceAll("__ICONS__", options.icons)
+    .replace(/__LABEL_(\d+)__/g, (_m, step: string) => escapeHtml(label(`step-${step}-title`)))
+    .replace("__LABEL__", escapeHtml(`${label("title")}: ${label("subtitle")}`));
+  return base
+    .replace(/<g data-slot="([^"]+)">[\s\S]*?<\/g>/g, (group, name: string) => {
+      const value = content.texts[name];
+      const slot = manifest.texts[name];
+      return value && slot ? textMarkup(name, slot, value, manifest) : group;
+    })
+    .replace(/<g data-icon="([^"]+)">[\s\S]*?<\/g>/g, (group, name: string) => {
+      const url = content.icons[name];
+      const slot = manifest.icons[name];
+      return url && slot ? iconMarkup(name, slot, url) : group;
+    });
 }
