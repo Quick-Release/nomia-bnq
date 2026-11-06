@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.23.1 - 2026-11-06
+
+Previous release: v0.23.0
+
+- ed1bb61 Merge pull request #147 from Quick-Release/claude/core-text-align
+- bb574b2 test: allow any whitespace in the text-alignment assertion
+- 3893bb3 fix: apply the editor's text alignment to core blocks
+
 ## v0.23.0 - 2026-11-06
 
 Previous release: v0.22.0
