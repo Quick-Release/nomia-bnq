@@ -1156,4 +1156,22 @@ export const WP_CUSTOM_BLOCK_FIXTURES: readonly WpCustomBlockFixture[] = [
       },
     ),
   },
+  {
+    label: "Destaques selecionados",
+    block: block(
+      "getquick/selected-content-grid",
+      {
+        items: [],
+      },
+    ),
+  },
+  {
+    label: "Interactive image",
+    block: block(
+      "getquick/interactive-image",
+      {
+        image: "economia-circular",
+      },
+    ),
+  },
 ];

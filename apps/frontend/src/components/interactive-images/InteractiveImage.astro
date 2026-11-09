@@ -1,0 +1,201 @@
+---
+/*
+ * An interactive infographic: an inline SVG whose steps reveal their related
+ * graphics on hover, focus or tap. No library: CSS shows the active step's
+ * parts (`data-active` on the SVG) and the script below sets it.
+ *
+ * The SVG and its slot manifest are generated from the designer's
+ * Illustrator file (see docs/gutenberg-blocks/sections/interactive-image.md).
+ * `content` replaces slots the editor filled in; every other slot keeps the
+ * graphic's own text or icon. The graphic has no title: pages put its title
+ * and subtitle in their own Heading and Paragraph blocks above the block.
+ */
+import {
+  renderInteractiveSvg,
+  type InteractiveImageContent,
+  type InteractiveImageKey,
+  type SlotManifest,
+} from "../../lib/interactive-images";
+import economiaCircularSvg from "./economia-circular.svg?raw";
+import economiaCircularSlots from "./economia-circular.slots.json";
+import economiaCircularIcons from "./assets/economia-circular-icons.webp?url";
+
+interface Props {
+  image: InteractiveImageKey;
+  content: InteractiveImageContent;
+}
+
+const GRAPHICS: Record<InteractiveImageKey, { svg: string; manifest: SlotManifest; icons: string }> = {
+  "economia-circular": {
+    svg: economiaCircularSvg,
+    manifest: economiaCircularSlots as SlotManifest,
+    icons: economiaCircularIcons,
+  },
+};
+
+const { image, content } = Astro.props;
+const graphic = GRAPHICS[image];
+const id = `ii-${image}-${Math.random().toString(36).slice(2, 8)}`;
+const svg = renderInteractiveSvg(graphic.svg, graphic.manifest, content, { id, icons: graphic.icons });
+---
+
+<figure class="interactive-image" data-interactive-image={image}>
+  <Fragment set:html={svg} />
+</figure>
+
+<style>
+  @font-face {
+    font-family: "II Montserrat";
+    src: url("./assets/montserrat-latin-400-normal.woff2") format("woff2");
+    font-weight: 400;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "II Montserrat";
+    src: url("./assets/montserrat-latin-500-normal.woff2") format("woff2");
+    font-weight: 500;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "II Montserrat";
+    src: url("./assets/montserrat-latin-600-normal.woff2") format("woff2");
+    font-weight: 600;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "II Montserrat";
+    src: url("./assets/montserrat-latin-700-normal.woff2") format("woff2");
+    font-weight: 700;
+    font-display: swap;
+  }
+
+  .interactive-image {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px;
+  }
+  .interactive-image :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+    font-family: "II Montserrat", sans-serif;
+  }
+  .interactive-image :global(.ec-slice),
+  .interactive-image :global(.ec-card) {
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .interactive-image :global(.ec-info) {
+    opacity: 0;
+    transform: translateY(6px);
+    transform-box: fill-box;
+    pointer-events: none;
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease;
+  }
+  .interactive-image :global(.ec-hit) {
+    fill: transparent;
+    cursor: pointer;
+    outline: none;
+  }
+  .interactive-image :global(.ec-hit:focus-visible rect),
+  .interactive-image :global(.ec-hit:focus-visible path) {
+    stroke: #04596b;
+    stroke-width: 2;
+    stroke-dasharray: 4 3;
+  }
+  /* One step active: show its info box and dim the other steps. */
+  .interactive-image :global(svg[data-active] .ec-slice),
+  .interactive-image :global(svg[data-active] .ec-card) {
+    opacity: 0.35;
+  }
+  .interactive-image :global(svg[data-active="1"] .ec-info[data-step="1"]),
+  .interactive-image :global(svg[data-active="2"] .ec-info[data-step="2"]),
+  .interactive-image :global(svg[data-active="3"] .ec-info[data-step="3"]),
+  .interactive-image :global(svg[data-active="4"] .ec-info[data-step="4"]),
+  .interactive-image :global(svg[data-active="5"] .ec-info[data-step="5"]),
+  .interactive-image :global(svg[data-active="6"] .ec-info[data-step="6"]) {
+    opacity: 1;
+    transform: none;
+  }
+  .interactive-image :global(svg[data-active="1"] .ec-card[data-step="1"]),
+  .interactive-image :global(svg[data-active="2"] .ec-card[data-step="2"]),
+  .interactive-image :global(svg[data-active="3"] .ec-card[data-step="3"]),
+  .interactive-image :global(svg[data-active="4"] .ec-card[data-step="4"]),
+  .interactive-image :global(svg[data-active="5"] .ec-card[data-step="5"]),
+  .interactive-image :global(svg[data-active="6"] .ec-card[data-step="6"]) {
+    opacity: 1;
+  }
+  .interactive-image :global(svg[data-active="1"] .ec-slice[data-steps~="1"]),
+  .interactive-image :global(svg[data-active="2"] .ec-slice[data-steps~="2"]),
+  .interactive-image :global(svg[data-active="3"] .ec-slice[data-steps~="3"]),
+  .interactive-image :global(svg[data-active="4"] .ec-slice[data-steps~="4"]),
+  .interactive-image :global(svg[data-active="5"] .ec-slice[data-steps~="5"]),
+  .interactive-image :global(svg[data-active="6"] .ec-slice[data-steps~="6"]) {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .interactive-image :global(*) {
+      transition: none !important;
+    }
+  }
+</style>
+
+<script>
+  // Hover (mouse), focus (keyboard) and tap/click (pins a step) set the active
+  // step; Escape or a tap outside clears it. One document listener serves
+  // every figure on the page.
+  const clearOnOutsideTap = new Map<HTMLElement, () => void>();
+  document.addEventListener("pointerdown", (event) => {
+    const target = event.target instanceof Element ? event.target : null;
+    for (const [figure, clear] of clearOnOutsideTap) {
+      if (!target || !figure.contains(target) || !target.closest(".ec-hit")) clear();
+    }
+  });
+  for (const figure of document.querySelectorAll<HTMLElement>("[data-interactive-image]")) {
+    const svg = figure.querySelector("svg");
+    if (!svg) continue;
+    const hits = [...svg.querySelectorAll<SVGGElement>(".ec-hit")];
+    let pinned: string | null = null;
+    const show = (step: string | null) => {
+      if (step) svg.dataset.active = step;
+      else delete svg.dataset.active;
+      for (const hit of hits) hit.setAttribute("aria-expanded", String(hit.dataset.step === step));
+    };
+    for (const hit of hits) {
+      const step = hit.dataset.step ?? null;
+      const toggle = () => {
+        pinned = pinned === step ? null : step;
+        show(pinned);
+      };
+      hit.addEventListener("pointerenter", (event) => {
+        if (event.pointerType === "mouse") show(step);
+      });
+      hit.addEventListener("pointerleave", (event) => {
+        if (event.pointerType === "mouse") show(pinned);
+      });
+      hit.addEventListener("focus", () => show(step));
+      hit.addEventListener("blur", () => show(pinned));
+      hit.addEventListener("click", toggle);
+      hit.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          toggle();
+        } else if (event.key === "Escape") {
+          pinned = null;
+          show(null);
+          hit.blur();
+        }
+      });
+    }
+    clearOnOutsideTap.set(figure, () => {
+      pinned = null;
+      show(pinned);
+    });
+  }
+</script>

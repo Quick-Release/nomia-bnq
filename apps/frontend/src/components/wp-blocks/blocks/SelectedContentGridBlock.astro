@@ -1,0 +1,60 @@
+---
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { content } from "../../../lib/content";
+import { PAGE_FRAME } from "../../../lib/site-gutters";
+import { plainText } from "../normalizers";
+import { safeHref } from "../../../lib/safe-href";
+interface Props { block: WpParsedBlock }
+const { block } = Astro.props;
+const allowed = new Set(["post", "videos", "podcasts", "infografias", "gq_bio_gallery", "eventos", "oportunidades", "ferramentas", "plataformas", "bases_de_dados"]);
+const items = Array.isArray(block.attrs?.items) ? block.attrs.items.slice(0, 5) : [];
+const runtime = content();
+const seen = new Set<number>();
+const text = plainText;
+const cards = await Promise.all(items.map(async (item: { postId?: number; postType?: string; uri?: string }, index: number) => {
+  if (!item.postId || seen.has(item.postId) || !allowed.has(item.postType || "") || !item.uri?.startsWith("/") || item.uri.startsWith("//")) return null;
+  seen.add(item.postId);
+  let answer = await runtime.publishedEntry(item.uri, Astro.site?.origin);
+  if (answer.kind === "moved") answer = await runtime.publishedEntry(answer.uri, Astro.site?.origin);
+  if (answer.kind !== "found") return null;
+  const entry = answer.content.entry;
+  return { index, title: text(entry.title) || "Sem título", href: safeHref(entry.uri), image: entry.featuredImage, excerpt: text(entry.excerpt || entry.content).split(" ").slice(0, 30).join(" ") };
+}));
+const main = cards[0];
+const secondary = cards.slice(1).filter((card) => card !== null);
+---
+{cards.some(Boolean) && <section class:list={[PAGE_FRAME, "selected-content-grid"]}>
+  <div class="principal">
+    {main && <article>
+      <a href={main.href}>
+        <div class="image">{main.image && <img src={safeHref(main.image.sourceUrl)} alt={main.image.altText || ""} loading="lazy" />}</div>
+        <h2>{main.title}</h2>
+      </a>
+      <p>{main.excerpt}</p>
+    </article>}
+  </div>
+  <div class="secondary">
+    {secondary.map((card) => <article>
+      <a href={card.href}>
+        <div class="image">{card.image && <img src={safeHref(card.image.sourceUrl)} alt={card.image.altText || ""} loading="lazy" />}</div>
+        <h2>{card.title}</h2>
+      </a>
+      <p>{card.excerpt}</p>
+    </article>)}
+  </div>
+</section>}
+<style>
+  .selected-content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; width: 100%; }
+  .secondary { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  article { min-width: 0; }
+  a { color: inherit; text-decoration: none; }
+  a:hover h2 { text-decoration: underline; }
+  a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+  .image { aspect-ratio: 16/10; background: var(--wp--preset--color--cinza-100, #f0f0f0); overflow: hidden; }
+  img { width: 100%; height: 100%; object-fit: cover; }
+  h2 { font-size: 1.25rem; line-height: 1.25; margin: 1rem 0 .5rem; }
+  .principal h2 { font-size: 2rem; }
+  p { margin: 0; line-height: 1.5; }
+  @media (max-width: 900px) { .selected-content-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 540px) { .secondary { grid-template-columns: 1fr; } }
+</style>

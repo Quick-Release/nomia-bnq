@@ -63,7 +63,8 @@
         "children": [],
         "supported": true
       }
-    ]
+    ],
+    "listMarkerDefault": "nestedList list-style-type/position updated by hand to GQ Design 0.10.4's unauthored core/list default (disc, inside; gq-design ADR 0004 amendment 2026-11-02, PR #127). The rest of the capture is unchanged."
   },
   "cases": [
     {
@@ -752,8 +753,8 @@
             "padding-inline-start": "0px",
             "padding-block-start": "0px",
             "border-radius": "0px",
-            "list-style-type": "none",
-            "list-style-position": "outside",
+            "list-style-type": "disc",
+            "list-style-position": "inside",
             "display": "list-item",
             "flex-direction": "row",
             "flex-wrap": "nowrap",
@@ -1585,8 +1586,8 @@
             "padding-inline-start": "0px",
             "padding-block-start": "0px",
             "border-radius": "0px",
-            "list-style-type": "none",
-            "list-style-position": "outside",
+            "list-style-type": "disc",
+            "list-style-position": "inside",
             "display": "list-item",
             "flex-direction": "row",
             "flex-wrap": "nowrap",

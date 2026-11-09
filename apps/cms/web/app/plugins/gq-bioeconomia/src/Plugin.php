@@ -26,6 +26,7 @@ use GetQuick\Bioeconomia\Details\PostDetails;
 use GetQuick\Bioeconomia\Editor\PageBackground;
 use GetQuick\Bioeconomia\GraphQL\BlocksJson;
 use GetQuick\Bioeconomia\Lifecycle\Lifecycle;
+use GetQuick\Bioeconomia\Submissions\Submissions;
 
 /**
  * Wires Nomia's content model and blocks into WordPress.
@@ -64,6 +65,7 @@ final class Plugin {
 		( new HeaderNavigation() )->register();
 		( new HeaderActions() )->register();
 		( new BlocksJson() )->register();
+		( new Submissions() )->register();
 	}
 
 	/**

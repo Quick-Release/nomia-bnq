@@ -121,6 +121,35 @@ test("title with label decodes RichText entities and keeps both lines in one hea
   assert.equal(document.querySelector("section")?.hasAttribute("aria-label"), false);
 });
 
+test("title with label renders nested buttons as a right-hand third column from xl", async () => {
+  const [block] = parse(
+    '<!-- wp:getquick/title-with-label {"label":"Aprender","titleLine1":"Descobre."} -->\n<!-- wp:buttons -->\n<div class="wp-block-buttons"><!-- wp:button {"className":"is-style-bioeconomia"} -->\n<div class="wp-block-button is-style-bioeconomia"><a class="wp-block-button__link wp-element-button" href="/recursos-educativos/">PARA OS MAIS NOVOS!</a></div>\n<!-- /wp:button --></div>\n<!-- /wp:buttons -->\n<!-- /wp:getquick/title-with-label -->',
+  );
+  const { document } = await (await harnessPromise).render(block);
+  const grid = document.querySelector('[data-node-id="40017244:13022"]');
+  const actions = document.querySelector("[data-title-with-label-actions]");
+
+  assert.ok(grid?.classList.contains("xl:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_auto]"));
+  assert.equal(actions?.parentElement, grid);
+  assert.ok(actions.classList.contains("xl:col-[3]"));
+  assert.equal(actions.querySelector("a")?.textContent, "PARA OS MAIS NOVOS!");
+  assert.equal(actions.querySelector("h2"), null);
+});
+
+test("title with label without nested blocks keeps its two columns", async () => {
+  const [block] = parse(
+    '<!-- wp:getquick/title-with-label {"label":"Visão geral","titleLine1":"Um"} /-->',
+  );
+  const { document } = await (await harnessPromise).render(block);
+
+  assert.equal(document.querySelector("[data-title-with-label-actions]"), null);
+  assert.ok(
+    document
+      .querySelector('[data-node-id="40017244:13022"]')
+      ?.classList.contains("md:grid-cols-[auto_minmax(0,1fr)]"),
+  );
+});
+
 test("title with label renders unmigrated pixel typography through the nearest token", async () => {
   const [block] = parse(
     '<!-- wp:getquick/title-with-label {"label":"Visão","titleLine1":"Um","titleLine2":"Dois","titleLine2FontSize":18} /-->',

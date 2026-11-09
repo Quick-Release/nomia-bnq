@@ -36,9 +36,15 @@ const variantClass =
         button.hasBackgroundColor ? null : "bg-main-teal-500",
       ];
 const isBioeconomia = button.variant === "bioeconomia";
+/**
+ * GQ Design's presentation stylesheet resets every `.gqd-presentation` button
+ * link with `!important` (no radius, background or padding unless the block
+ * sets them), which would flatten the Bioeconomia variation's fixed look. That
+ * variation has no presentation controls, so it stays outside that contract.
+ */
 const wrapperClass = isBioeconomia
   ? ["wp-block-button", "nomia-bioeconomia-button-wrapper"]
-  : "wp-block-button";
+  : ["wp-block-button", "gqd-presentation"];
 const linkClass = isBioeconomia
   ? ["nomia-bioeconomia-button", button.width ? "w-full" : null]
   : [baseClass, ...variantClass, button.width ? "w-full" : null];
@@ -49,7 +55,7 @@ const linkClass = isBioeconomia
     <Fragment set:html={presentationHtml("core/button", block.innerHTML, block.attrs.presentation, { attributes: block.attrs })} />
   ) : button.labelHtml ? (
     <div
-      class:list={[wrapperClass, "gqd-presentation"]}
+      class:list={wrapperClass}
       id={button.id}
       style={designPresentationStyle("core/button", block.attrs, wpButtonWidthStyle(button.width))}
       data-button-variant={button.variant}

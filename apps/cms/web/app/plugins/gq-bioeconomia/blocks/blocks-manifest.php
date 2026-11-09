@@ -4780,4 +4780,222 @@ return [
 		],
 		'editorStyle' => 'gq-bioeconomia-editor',
 	],
+	'selected-content-grid'                 => [
+		'$schema'     => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion'  => 3,
+		'name'        => 'getquick/selected-content-grid',
+		'title'       => 'Grelha de destaques',
+		'category'    => 'getquick-design',
+		'icon'        => 'screenoptions',
+		'description' => 'Um destaque principal e quatro conteúdos selecionados.',
+		'textdomain'  => 'gq-bioeconomia',
+		'attributes'  => [
+			'schemaVersion' => [
+				'type'    => 'number',
+				'default' => 1,
+			],
+			'blockId'       => [
+				'type'    => 'string',
+				'default' => 'selected-content-grid',
+			],
+			'items'         => [
+				'type'    => 'array',
+				'default' => [],
+				'items'   => [
+					'type'       => 'object',
+					'properties' => [
+						'postId'   => [
+							'type' => 'number',
+						],
+						'postType' => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'uri'      => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'title'    => [
+							'type'    => 'string',
+							'default' => '',
+						],
+					],
+				],
+			],
+		],
+		'supports'    => [
+			'html'            => false,
+			'className'       => false,
+			'customClassName' => false,
+			'color'           => false,
+			'spacing'         => false,
+			'typography'      => false,
+			'align'           => false,
+			'inserter'        => true,
+		],
+		'example'     => [
+			'attributes' => [
+				'items' => [],
+			],
+		],
+		'editorStyle' => 'gq-bioeconomia-editor',
+	],
+	'interactive-image'                     => [
+		'$schema'     => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion'  => 3,
+		'name'        => 'getquick/interactive-image',
+		'title'       => 'Imagem interativa',
+		'category'    => 'getquick-design',
+		'icon'        => 'format-image',
+		'description' => 'Mostra uma imagem interativa: ao passar o rato ou tocar em cada etapa, aparecem os detalhes.',
+		'keywords'    => [
+			'imagem',
+			'interativa',
+			'infografia',
+			'economia circular',
+			'interactive',
+			'image',
+		],
+		'textdomain'  => 'gq-bioeconomia',
+		'attributes'  => [
+			'schemaVersion'       => [
+				'type'    => 'number',
+				'default' => 1,
+			],
+			'blockId'             => [
+				'type'    => 'string',
+				'default' => 'interactive-image',
+			],
+			'image'               => [
+				'type'    => 'string',
+				'default' => 'economia-circular',
+				'enum'    => [
+					'economia-circular',
+				],
+			],
+			'linearHeading'       => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'linearSteps'         => [
+				'type'    => 'array',
+				'default' => [],
+				'items'   => [
+					'type'       => 'object',
+					'properties' => [
+						'label'   => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'iconId'  => [
+							'type' => 'number',
+						],
+						'iconSrc' => [
+							'type'    => 'string',
+							'default' => '',
+						],
+					],
+				],
+			],
+			'linearInfo'          => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'circularHeading'     => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'centerLabel'         => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'centerIconId'        => [
+				'type' => 'number',
+			],
+			'centerIconSrc'       => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'steps'               => [
+				'type'    => 'array',
+				'default' => [],
+				'items'   => [
+					'type'       => 'object',
+					'properties' => [
+						'title'       => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'description' => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'info'        => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'iconId'      => [
+							'type' => 'number',
+						],
+						'iconSrc'     => [
+							'type'    => 'string',
+							'default' => '',
+						],
+					],
+				],
+			],
+			'regenerationHeading' => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'regenerationText'    => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'regenerationItems'   => [
+				'type'    => 'array',
+				'default' => [],
+				'items'   => [
+					'type'       => 'object',
+					'properties' => [
+						'label'   => [
+							'type'    => 'string',
+							'default' => '',
+						],
+						'iconId'  => [
+							'type' => 'number',
+						],
+						'iconSrc' => [
+							'type'    => 'string',
+							'default' => '',
+						],
+					],
+				],
+			],
+			'regenerationInfo'    => [
+				'type'    => 'string',
+				'default' => '',
+			],
+			'hint'                => [
+				'type'    => 'string',
+				'default' => '',
+			],
+		],
+		'supports'    => [
+			'html'            => false,
+			'className'       => false,
+			'customClassName' => false,
+			'color'           => false,
+			'spacing'         => false,
+			'typography'      => false,
+			'align'           => false,
+			'inserter'        => true,
+		],
+		'example'     => [
+			'attributes' => [
+				'image' => 'economia-circular',
+			],
+		],
+		'editorStyle' => 'gq-bioeconomia-editor',
+	],
 ];

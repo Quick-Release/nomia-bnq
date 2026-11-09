@@ -27,6 +27,7 @@ msgid "Editar link do botão"
 msgstr "Edit button link"
 
 #: blocks/contact-details-card/index.js:183
+#: blocks/interactive-image/index.js:182
 msgid "Ícone"
 msgstr "Icon"
 
@@ -47,6 +48,7 @@ msgstr "Upload icon"
 #: blocks/header-contact/index.js:38
 #: blocks/header-navigation/index.js:126
 #: blocks/header-search/index.js:59
+#: blocks/interactive-image/index.js:101
 msgid "Substituir ícone"
 msgstr "Replace icon"
 
@@ -66,8 +68,13 @@ msgstr "Button"
 msgid "Mostrar botão"
 msgstr "Show button"
 
+#: src/Submissions/PartilheForm.php:145
 #: blocks/contact-details-card/index.js:341
 #: blocks/contact-details-card/index.js:344
+#: blocks/interactive-image/index.js:165
+#: blocks/interactive-image/index.js:217
+#: blocks/interactive-image/index.js:240
+#: blocks/interactive-image/index.js:254
 #: blocks/page-hero-static/index.js:138
 msgid "Título"
 msgstr "Title"
@@ -498,8 +505,8 @@ msgstr ""
 msgid "Column C"
 msgstr ""
 
-#: src/Content/PostTypes.php:395
-#: src/Content/PostTypes.php:397
+#: src/Content/PostTypes.php:399
+#: src/Content/PostTypes.php:401
 #: blocks/page-hero-media-grid/index.js:369
 msgid "Video"
 msgstr ""
@@ -691,7 +698,7 @@ msgstr "Medium"
 
 #: blocks/page-hero-static/index.js:65
 #: blocks/section/index.js:82
-#: blocks/title-with-label/index.js:49
+#: blocks/title-with-label/index.js:51
 msgid "Grande"
 msgstr "Large"
 
@@ -710,7 +717,7 @@ msgstr "Section background"
 
 #: assets/document-settings.js:104
 #: blocks/section/index.js:211
-#: blocks/title-with-label/index.js:171
+#: blocks/title-with-label/index.js:173
 msgid "Repor"
 msgstr "Reset"
 
@@ -738,38 +745,38 @@ msgstr "Bottom"
 msgid "Laterais"
 msgstr "Sides"
 
-#: blocks/title-with-label/index.js:33
-#: blocks/title-with-label/index.js:285
+#: blocks/title-with-label/index.js:35
+#: blocks/title-with-label/index.js:298
 msgid "Etiqueta"
 msgstr "Label"
 
-#: blocks/title-with-label/index.js:34
+#: blocks/title-with-label/index.js:36
 msgid "Título · linha 1"
 msgstr "Title · line 1"
 
-#: blocks/title-with-label/index.js:35
+#: blocks/title-with-label/index.js:37
 msgid "Título · linha 2"
 msgstr "Title · line 2"
 
 #. translators: %s: field name, e.g. "Título · linha 1".
-#: blocks/title-with-label/index.js:120
+#: blocks/title-with-label/index.js:122
 #, js-format
 msgid "Tipografia: %s"
 msgstr "Typography: %s"
 
-#: blocks/title-with-label/index.js:152
+#: blocks/title-with-label/index.js:154
 msgid "Negrito"
 msgstr "Bold"
 
-#: blocks/title-with-label/index.js:158
+#: blocks/title-with-label/index.js:160
 msgid "Itálico"
 msgstr "Italic"
 
-#: blocks/title-with-label/index.js:306
+#: blocks/title-with-label/index.js:319
 msgid "Primeira linha do título"
 msgstr "First line of the title"
 
-#: blocks/title-with-label/index.js:321
+#: blocks/title-with-label/index.js:334
 msgid "Segunda linha do título (opcional)"
 msgstr "Second line of the title (optional)"
 
@@ -828,7 +835,7 @@ msgstr "%1$s and %2$s"
 
 #: src/Details/PostDetails.php:114
 #: blocks/page-hero-static/index.js:138
-#: blocks/title-with-label/index.js:44
+#: blocks/title-with-label/index.js:46
 msgid "Subtítulo"
 msgstr "Subtitle"
 
@@ -887,6 +894,7 @@ msgstr "Replace image"
 msgid "Selecionar imagem"
 msgstr "Select image"
 
+#: src/Submissions/PartilheForm.php:153
 #: blocks/page-hero-static/index.js:425
 msgid "Conteúdo"
 msgstr "Content"
@@ -953,70 +961,70 @@ msgstr "Missing Nomia block contract."
 msgid "Pré-visualização: %s"
 msgstr "Preview: %s"
 
-#: blocks/title-with-label/index.js:40
+#: blocks/title-with-label/index.js:42
 msgid "Extra"
 msgstr "Extra"
 
-#: blocks/title-with-label/index.js:41
+#: blocks/title-with-label/index.js:43
 msgid "Notas"
 msgstr "Notes"
 
-#: blocks/title-with-label/index.js:42
+#: blocks/title-with-label/index.js:44
 msgid "Corpo"
 msgstr "Body"
 
-#: blocks/title-with-label/index.js:43
+#: blocks/title-with-label/index.js:45
 msgid "Corpo grande"
 msgstr "Large body"
 
-#: blocks/title-with-label/index.js:45
+#: blocks/title-with-label/index.js:47
 msgid "Título 4"
 msgstr "Heading 4"
 
-#: blocks/title-with-label/index.js:46
+#: blocks/title-with-label/index.js:48
 msgid "Título 3"
 msgstr "Heading 3"
 
-#: blocks/title-with-label/index.js:47
+#: blocks/title-with-label/index.js:49
 msgid "Título 2"
 msgstr "Heading 2"
 
-#: blocks/title-with-label/index.js:48
+#: blocks/title-with-label/index.js:50
 msgid "Título 1"
 msgstr "Heading 1"
 
-#: blocks/title-with-label/index.js:50
+#: blocks/title-with-label/index.js:52
 msgid "Super"
 msgstr "Super"
 
 #. translators: 1: design-system size name, e.g. "Título 4". 2: pixels.
-#: blocks/title-with-label/index.js:56
+#: blocks/title-with-label/index.js:58
 #, js-format
 msgid "%1$s · %2$spx"
 msgstr "%1$s · %2$spx"
 
 #. translators: %s: pixels.
 #: blocks/page-hero-static/index.js:87
-#: blocks/title-with-label/index.js:64
+#: blocks/title-with-label/index.js:66
 #, js-format
 msgid "%spx"
 msgstr "%spx"
 
 #. translators: %s: the design default, e.g. "Título 4 · 32px".
-#: blocks/title-with-label/index.js:84
+#: blocks/title-with-label/index.js:86
 #, js-format
 msgid "Predefinido (%s)"
 msgstr "Default (%s)"
 
-#: blocks/title-with-label/index.js:133
+#: blocks/title-with-label/index.js:135
 msgid "Tamanho"
 msgstr "Size"
 
-#: blocks/title-with-label/index.js:141
+#: blocks/title-with-label/index.js:143
 msgid "Altura da linha"
 msgstr "Line height"
 
-#: blocks/title-with-label/index.js:235
+#: blocks/title-with-label/index.js:248
 msgid "Este bloco não aparece no site enquanto a etiqueta e a primeira linha do título estiverem vazias."
 msgstr "This block does not appear on the site while the label and the first title line are empty."
 
@@ -1674,6 +1682,8 @@ msgid "Telefone"
 msgstr ""
 
 #: src/Admin/ContactSettings.php:37
+#: src/Submissions/PartilheForm.php:129
+#: src/Submissions/Submissions.php:174
 msgid "Email"
 msgstr ""
 
@@ -1747,38 +1757,38 @@ msgstr ""
 msgid "Logótipo"
 msgstr ""
 
-#: src/Admin/Galleries.php:105
+#: src/Admin/Galleries.php:137
 msgid "Imagens da galeria"
 msgstr ""
 
-#: src/Admin/Galleries.php:126
+#: src/Admin/Galleries.php:158
 msgid "Selecione imagens já existentes na biblioteca multimédia e guarde a ordem pretendida para esta galeria."
 msgstr ""
 
-#: src/Admin/Galleries.php:128
-#: src/Admin/Galleries.php:131
-#: src/Admin/Galleries.php:236
+#: src/Admin/Galleries.php:160
+#: src/Admin/Galleries.php:163
+#: src/Admin/Galleries.php:268
 msgid "Nenhuma imagem selecionada."
 msgstr ""
 
-#: src/Admin/Galleries.php:146
+#: src/Admin/Galleries.php:178
 msgid "Selecionar imagens"
 msgstr ""
 
-#: src/Admin/Galleries.php:148
+#: src/Admin/Galleries.php:180
 msgid "Limpar seleção"
 msgstr ""
 
-#: src/Admin/Galleries.php:150
+#: src/Admin/Galleries.php:182
 msgid "Ao inserir o bloco no conteúdo, basta escolher a galeria criada aqui."
 msgstr ""
 
-#: src/Admin/Galleries.php:256
+#: src/Admin/Galleries.php:288
 msgid "Imagens"
 msgstr ""
 
 #. translators: %d: number of images in the gallery.
-#: src/Admin/Galleries.php:281
+#: src/Admin/Galleries.php:313
 #, php-format
 msgid "%d imagem"
 msgid_plural "%d imagens"
@@ -1853,936 +1863,936 @@ msgstr ""
 msgid "Lista de galerias"
 msgstr ""
 
-#: src/Content/PostTypes.php:84
-#: src/Content/PostTypes.php:86
+#: src/Content/PostTypes.php:88
+#: src/Content/PostTypes.php:90
 msgid "Biblioteca"
 msgstr ""
 
-#: src/Content/PostTypes.php:85
-#: src/Content/PostTypes.php:87
+#: src/Content/PostTypes.php:89
+#: src/Content/PostTypes.php:91
 msgid "Documento"
 msgstr ""
 
-#: src/Content/PostTypes.php:88
-#: src/Content/PostTypes.php:89
+#: src/Content/PostTypes.php:92
+#: src/Content/PostTypes.php:93
 msgid "Adicionar Documento"
 msgstr ""
 
-#: src/Content/PostTypes.php:90
+#: src/Content/PostTypes.php:94
 msgid "Novo Documento"
 msgstr ""
 
-#: src/Content/PostTypes.php:91
+#: src/Content/PostTypes.php:95
 msgid "Editar Documento"
 msgstr ""
 
-#: src/Content/PostTypes.php:92
+#: src/Content/PostTypes.php:96
 msgid "Ver Documento"
 msgstr ""
 
-#: src/Content/PostTypes.php:93
+#: src/Content/PostTypes.php:97
 msgid "Ver Biblioteca"
 msgstr ""
 
-#: src/Content/PostTypes.php:94
+#: src/Content/PostTypes.php:98
 msgid "Todos os Documentos"
 msgstr ""
 
-#: src/Content/PostTypes.php:95
+#: src/Content/PostTypes.php:99
 msgid "Pesquisar Biblioteca"
 msgstr ""
 
-#: src/Content/PostTypes.php:96
+#: src/Content/PostTypes.php:100
 msgid "Documento Superior:"
 msgstr ""
 
-#: src/Content/PostTypes.php:97
+#: src/Content/PostTypes.php:101
 msgid "Nenhum documento encontrado."
 msgstr ""
 
-#: src/Content/PostTypes.php:98
+#: src/Content/PostTypes.php:102
 msgid "Nenhum documento encontrado no lixo."
 msgstr ""
 
-#: src/Content/PostTypes.php:99
-#: src/Content/PostTypes.php:205
-#: src/Content/PostTypes.php:257
-#: src/Content/PostTypes.php:357
-#: src/Content/PostTypes.php:409
-#: src/Content/PostTypes.php:461
-#: src/Content/PostTypes.php:513
-#: src/Content/PostTypes.php:565
-#: src/Content/PostTypes.php:620
-#: src/Content/PostTypes.php:674
+#: src/Content/PostTypes.php:103
+#: src/Content/PostTypes.php:209
+#: src/Content/PostTypes.php:261
+#: src/Content/PostTypes.php:361
+#: src/Content/PostTypes.php:413
+#: src/Content/PostTypes.php:465
+#: src/Content/PostTypes.php:517
+#: src/Content/PostTypes.php:569
+#: src/Content/PostTypes.php:624
+#: src/Content/PostTypes.php:678
 msgid "Imagem destacada"
 msgstr ""
 
-#: src/Content/PostTypes.php:100
-#: src/Content/PostTypes.php:206
-#: src/Content/PostTypes.php:258
-#: src/Content/PostTypes.php:358
-#: src/Content/PostTypes.php:410
-#: src/Content/PostTypes.php:462
-#: src/Content/PostTypes.php:514
-#: src/Content/PostTypes.php:566
-#: src/Content/PostTypes.php:621
-#: src/Content/PostTypes.php:675
+#: src/Content/PostTypes.php:104
+#: src/Content/PostTypes.php:210
+#: src/Content/PostTypes.php:262
+#: src/Content/PostTypes.php:362
+#: src/Content/PostTypes.php:414
+#: src/Content/PostTypes.php:466
+#: src/Content/PostTypes.php:518
+#: src/Content/PostTypes.php:570
+#: src/Content/PostTypes.php:625
+#: src/Content/PostTypes.php:679
 msgid "Definir imagem destacada"
 msgstr ""
 
-#: src/Content/PostTypes.php:101
-#: src/Content/PostTypes.php:207
-#: src/Content/PostTypes.php:259
-#: src/Content/PostTypes.php:359
-#: src/Content/PostTypes.php:411
-#: src/Content/PostTypes.php:463
-#: src/Content/PostTypes.php:515
-#: src/Content/PostTypes.php:567
-#: src/Content/PostTypes.php:622
-#: src/Content/PostTypes.php:676
+#: src/Content/PostTypes.php:105
+#: src/Content/PostTypes.php:211
+#: src/Content/PostTypes.php:263
+#: src/Content/PostTypes.php:363
+#: src/Content/PostTypes.php:415
+#: src/Content/PostTypes.php:467
+#: src/Content/PostTypes.php:519
+#: src/Content/PostTypes.php:571
+#: src/Content/PostTypes.php:626
+#: src/Content/PostTypes.php:680
 msgid "Remover imagem destacada"
 msgstr ""
 
-#: src/Content/PostTypes.php:102
-#: src/Content/PostTypes.php:208
-#: src/Content/PostTypes.php:260
-#: src/Content/PostTypes.php:360
-#: src/Content/PostTypes.php:412
-#: src/Content/PostTypes.php:464
-#: src/Content/PostTypes.php:516
-#: src/Content/PostTypes.php:568
-#: src/Content/PostTypes.php:623
-#: src/Content/PostTypes.php:677
+#: src/Content/PostTypes.php:106
+#: src/Content/PostTypes.php:212
+#: src/Content/PostTypes.php:264
+#: src/Content/PostTypes.php:364
+#: src/Content/PostTypes.php:416
+#: src/Content/PostTypes.php:468
+#: src/Content/PostTypes.php:520
+#: src/Content/PostTypes.php:572
+#: src/Content/PostTypes.php:627
+#: src/Content/PostTypes.php:681
 msgid "Usar como imagem destacada"
 msgstr ""
 
-#: src/Content/PostTypes.php:103
+#: src/Content/PostTypes.php:107
 msgid "Arquivo da Biblioteca"
 msgstr ""
 
-#: src/Content/PostTypes.php:104
+#: src/Content/PostTypes.php:108
 msgid "Inserir no documento"
 msgstr ""
 
-#: src/Content/PostTypes.php:105
+#: src/Content/PostTypes.php:109
 msgid "Enviado para este documento"
 msgstr ""
 
-#: src/Content/PostTypes.php:106
+#: src/Content/PostTypes.php:110
 msgid "Filtrar lista da biblioteca"
 msgstr ""
 
-#: src/Content/PostTypes.php:107
+#: src/Content/PostTypes.php:111
 msgid "Navegação da lista da biblioteca"
 msgstr ""
 
-#: src/Content/PostTypes.php:108
+#: src/Content/PostTypes.php:112
 msgid "Lista da biblioteca"
 msgstr ""
 
-#: src/Content/PostTypes.php:139
-#: src/Content/PostTypes.php:141
+#: src/Content/PostTypes.php:143
+#: src/Content/PostTypes.php:145
 msgid "Glossário"
 msgstr ""
 
-#: src/Content/PostTypes.php:140
-#: src/Content/PostTypes.php:142
+#: src/Content/PostTypes.php:144
+#: src/Content/PostTypes.php:146
 msgid "Termo"
 msgstr ""
 
-#: src/Content/PostTypes.php:143
-#: src/Content/PostTypes.php:144
+#: src/Content/PostTypes.php:147
+#: src/Content/PostTypes.php:148
 msgid "Adicionar Termo"
 msgstr ""
 
-#: src/Content/PostTypes.php:145
+#: src/Content/PostTypes.php:149
 msgid "Novo Termo"
 msgstr ""
 
-#: src/Content/PostTypes.php:146
+#: src/Content/PostTypes.php:150
 msgid "Editar Termo"
 msgstr ""
 
-#: src/Content/PostTypes.php:147
+#: src/Content/PostTypes.php:151
 msgid "Ver Termo"
 msgstr ""
 
-#: src/Content/PostTypes.php:148
+#: src/Content/PostTypes.php:152
 msgid "Ver Glossário"
 msgstr ""
 
-#: src/Content/PostTypes.php:149
+#: src/Content/PostTypes.php:153
 msgid "Todos os Termos"
 msgstr ""
 
-#: src/Content/PostTypes.php:150
+#: src/Content/PostTypes.php:154
 msgid "Pesquisar Glossário"
 msgstr ""
 
-#: src/Content/PostTypes.php:151
+#: src/Content/PostTypes.php:155
 msgid "Termo Superior:"
 msgstr ""
 
-#: src/Content/PostTypes.php:152
+#: src/Content/PostTypes.php:156
 msgid "Nenhum termo encontrado."
 msgstr ""
 
-#: src/Content/PostTypes.php:153
+#: src/Content/PostTypes.php:157
 msgid "Nenhum termo encontrado no lixo."
 msgstr ""
 
-#: src/Content/PostTypes.php:154
+#: src/Content/PostTypes.php:158
 msgid "Arquivo do Glossário"
 msgstr ""
 
-#: src/Content/PostTypes.php:155
+#: src/Content/PostTypes.php:159
 msgid "Inserir no termo"
 msgstr ""
 
-#: src/Content/PostTypes.php:156
+#: src/Content/PostTypes.php:160
 msgid "Enviado para este termo"
 msgstr ""
 
-#: src/Content/PostTypes.php:157
+#: src/Content/PostTypes.php:161
 msgid "Filtrar lista do glossário"
 msgstr ""
 
-#: src/Content/PostTypes.php:158
+#: src/Content/PostTypes.php:162
 msgid "Navegação da lista do glossário"
 msgstr ""
 
-#: src/Content/PostTypes.php:159
+#: src/Content/PostTypes.php:163
 msgid "Lista do glossário"
 msgstr ""
 
-#: src/Content/PostTypes.php:190
-#: src/Content/PostTypes.php:192
+#: src/Content/PostTypes.php:194
+#: src/Content/PostTypes.php:196
 msgid "Recursos Educativos"
 msgstr ""
 
-#: src/Content/PostTypes.php:191
-#: src/Content/PostTypes.php:193
+#: src/Content/PostTypes.php:195
+#: src/Content/PostTypes.php:197
 msgid "Recurso Educativo"
 msgstr ""
 
-#: src/Content/PostTypes.php:194
-#: src/Content/PostTypes.php:195
+#: src/Content/PostTypes.php:198
+#: src/Content/PostTypes.php:199
 msgid "Adicionar Recurso Educativo"
 msgstr ""
 
-#: src/Content/PostTypes.php:196
+#: src/Content/PostTypes.php:200
 msgid "Novo Recurso Educativo"
 msgstr ""
 
-#: src/Content/PostTypes.php:197
+#: src/Content/PostTypes.php:201
 msgid "Editar Recurso Educativo"
 msgstr ""
 
-#: src/Content/PostTypes.php:198
+#: src/Content/PostTypes.php:202
 msgid "Ver Recurso Educativo"
 msgstr ""
 
-#: src/Content/PostTypes.php:199
+#: src/Content/PostTypes.php:203
 msgid "Ver Recursos Educativos"
 msgstr ""
 
-#: src/Content/PostTypes.php:200
+#: src/Content/PostTypes.php:204
 msgid "Todos os Recursos Educativos"
 msgstr ""
 
-#: src/Content/PostTypes.php:201
+#: src/Content/PostTypes.php:205
 msgid "Pesquisar Recursos Educativos"
 msgstr ""
 
-#: src/Content/PostTypes.php:202
+#: src/Content/PostTypes.php:206
 msgid "Recurso Educativo Superior:"
 msgstr ""
 
-#: src/Content/PostTypes.php:203
+#: src/Content/PostTypes.php:207
 msgid "Nenhum recurso educativo encontrado."
 msgstr ""
 
-#: src/Content/PostTypes.php:204
+#: src/Content/PostTypes.php:208
 msgid "Nenhum recurso educativo encontrado no lixo."
 msgstr ""
 
-#: src/Content/PostTypes.php:209
+#: src/Content/PostTypes.php:213
 msgid "Arquivo de Recursos Educativos"
 msgstr ""
 
-#: src/Content/PostTypes.php:210
+#: src/Content/PostTypes.php:214
 msgid "Inserir no recurso educativo"
 msgstr ""
 
-#: src/Content/PostTypes.php:211
+#: src/Content/PostTypes.php:215
 msgid "Enviado para este recurso educativo"
 msgstr ""
 
-#: src/Content/PostTypes.php:212
+#: src/Content/PostTypes.php:216
 msgid "Filtrar lista de recursos educativos"
 msgstr ""
 
-#: src/Content/PostTypes.php:213
+#: src/Content/PostTypes.php:217
 msgid "Navegação da lista de recursos educativos"
 msgstr ""
 
-#: src/Content/PostTypes.php:214
+#: src/Content/PostTypes.php:218
 msgid "Lista de recursos educativos"
 msgstr ""
 
-#: src/Content/PostTypes.php:242
-#: src/Content/PostTypes.php:244
+#: src/Content/PostTypes.php:246
+#: src/Content/PostTypes.php:248
 msgid "Eventos"
 msgstr ""
 
-#: src/Content/PostTypes.php:243
-#: src/Content/PostTypes.php:245
+#: src/Content/PostTypes.php:247
+#: src/Content/PostTypes.php:249
 msgid "Evento"
 msgstr ""
 
-#: src/Content/PostTypes.php:246
-#: src/Content/PostTypes.php:247
+#: src/Content/PostTypes.php:250
+#: src/Content/PostTypes.php:251
 msgid "Adicionar Evento"
 msgstr ""
 
-#: src/Content/PostTypes.php:248
+#: src/Content/PostTypes.php:252
 msgid "Novo Evento"
 msgstr ""
 
-#: src/Content/PostTypes.php:249
+#: src/Content/PostTypes.php:253
 msgid "Editar Evento"
 msgstr ""
 
-#: src/Content/PostTypes.php:250
+#: src/Content/PostTypes.php:254
 msgid "Ver Evento"
 msgstr ""
 
-#: src/Content/PostTypes.php:251
+#: src/Content/PostTypes.php:255
 msgid "Ver Eventos"
 msgstr ""
 
-#: src/Content/PostTypes.php:252
+#: src/Content/PostTypes.php:256
 msgid "Todos os Eventos"
 msgstr ""
 
-#: src/Content/PostTypes.php:253
+#: src/Content/PostTypes.php:257
 msgid "Pesquisar Eventos"
 msgstr ""
 
-#: src/Content/PostTypes.php:254
+#: src/Content/PostTypes.php:258
 msgid "Evento Superior:"
 msgstr ""
 
-#: src/Content/PostTypes.php:255
+#: src/Content/PostTypes.php:259
 msgid "Nenhum evento encontrado."
 msgstr ""
 
-#: src/Content/PostTypes.php:256
+#: src/Content/PostTypes.php:260
 msgid "Nenhum evento encontrado no lixo."
 msgstr ""
 
-#: src/Content/PostTypes.php:261
+#: src/Content/PostTypes.php:265
 msgid "Arquivo de Eventos"
 msgstr ""
 
-#: src/Content/PostTypes.php:262
+#: src/Content/PostTypes.php:266
 msgid "Inserir no evento"
 msgstr ""
 
-#: src/Content/PostTypes.php:263
+#: src/Content/PostTypes.php:267
 msgid "Enviado para este evento"
 msgstr ""
 
-#: src/Content/PostTypes.php:264
+#: src/Content/PostTypes.php:268
 msgid "Filtrar lista de eventos"
 msgstr ""
 
-#: src/Content/PostTypes.php:265
+#: src/Content/PostTypes.php:269
 msgid "Navegação da lista de eventos"
 msgstr ""
 
-#: src/Content/PostTypes.php:266
+#: src/Content/PostTypes.php:270
 msgid "Lista de eventos"
 msgstr ""
 
-#: src/Content/PostTypes.php:294
-#: src/Content/PostTypes.php:296
+#: src/Content/PostTypes.php:298
+#: src/Content/PostTypes.php:300
 msgid "Indicadores"
 msgstr ""
 
-#: src/Content/PostTypes.php:295
-#: src/Content/PostTypes.php:297
+#: src/Content/PostTypes.php:299
+#: src/Content/PostTypes.php:301
 #: blocks/indicador-chart/index.js:109
 msgid "Indicador"
 msgstr "Indicator"
 
-#: src/Content/PostTypes.php:298
-#: src/Content/PostTypes.php:299
+#: src/Content/PostTypes.php:302
+#: src/Content/PostTypes.php:303
 msgid "Adicionar Indicador"
 msgstr ""
 
-#: src/Content/PostTypes.php:300
+#: src/Content/PostTypes.php:304
 msgid "Novo Indicador"
 msgstr ""
 
-#: src/Content/PostTypes.php:301
+#: src/Content/PostTypes.php:305
 msgid "Editar Indicador"
 msgstr ""
 
-#: src/Content/PostTypes.php:302
+#: src/Content/PostTypes.php:306
 msgid "Ver Indicador"
 msgstr ""
 
-#: src/Content/PostTypes.php:303
+#: src/Content/PostTypes.php:307
 msgid "Ver Indicadores"
 msgstr ""
 
-#: src/Content/PostTypes.php:304
+#: src/Content/PostTypes.php:308
 msgid "Todos os Indicadores"
 msgstr ""
 
-#: src/Content/PostTypes.php:305
+#: src/Content/PostTypes.php:309
 msgid "Pesquisar Indicadores"
 msgstr ""
 
-#: src/Content/PostTypes.php:306
+#: src/Content/PostTypes.php:310
 msgid "Indicador Superior:"
 msgstr ""
 
-#: src/Content/PostTypes.php:307
+#: src/Content/PostTypes.php:311
 msgid "Nenhum indicador encontrado."
 msgstr ""
 
-#: src/Content/PostTypes.php:308
+#: src/Content/PostTypes.php:312
 msgid "Nenhum indicador encontrado no lixo."
 msgstr ""
 
-#: src/Content/PostTypes.php:309
+#: src/Content/PostTypes.php:313
 msgid "Arquivo de Indicadores"
 msgstr ""
 
-#: src/Content/PostTypes.php:310
+#: src/Content/PostTypes.php:314
 msgid "Inserir no indicador"
 msgstr ""
 
-#: src/Content/PostTypes.php:311
+#: src/Content/PostTypes.php:315
 msgid "Enviado para este indicador"
 msgstr ""
 
-#: src/Content/PostTypes.php:312
+#: src/Content/PostTypes.php:316
 msgid "Filtrar lista de indicadores"
 msgstr ""
 
-#: src/Content/PostTypes.php:313
+#: src/Content/PostTypes.php:317
 msgid "Navegação da lista de indicadores"
 msgstr ""
 
-#: src/Content/PostTypes.php:314
+#: src/Content/PostTypes.php:318
 msgid "Lista de indicadores"
 msgstr ""
 
-#: src/Content/PostTypes.php:342
-#: src/Content/PostTypes.php:344
-#: src/Content/PostTypes.php:352
+#: src/Content/PostTypes.php:346
+#: src/Content/PostTypes.php:348
+#: src/Content/PostTypes.php:356
 msgid "Podcasts"
 msgstr ""
 
-#: src/Content/PostTypes.php:343
-#: src/Content/PostTypes.php:345
+#: src/Content/PostTypes.php:347
+#: src/Content/PostTypes.php:349
 msgid "Podcast"
 msgstr ""
 
-#: src/Content/PostTypes.php:346
-#: src/Content/PostTypes.php:347
+#: src/Content/PostTypes.php:350
+#: src/Content/PostTypes.php:351
 msgid "Adicionar Podcast"
 msgstr ""
 
-#: src/Content/PostTypes.php:348
+#: src/Content/PostTypes.php:352
 msgid "Novo Podcast"
 msgstr ""
 
-#: src/Content/PostTypes.php:349
+#: src/Content/PostTypes.php:353
 msgid "Editar Podcast"
 msgstr ""
 
-#: src/Content/PostTypes.php:350
+#: src/Content/PostTypes.php:354
 msgid "Ver Podcast"
 msgstr ""
 
-#: src/Content/PostTypes.php:351
+#: src/Content/PostTypes.php:355
 msgid "Ver Podcasts"
 msgstr ""
 
-#: src/Content/PostTypes.php:353
+#: src/Content/PostTypes.php:357
 msgid "Pesquisar Podcasts"
 msgstr ""
 
-#: src/Content/PostTypes.php:354
+#: src/Content/PostTypes.php:358
 msgid "Podcast Superior:"
 msgstr ""
 
-#: src/Content/PostTypes.php:355
+#: src/Content/PostTypes.php:359
 msgid "Nenhum podcast encontrado."
 msgstr ""
 
-#: src/Content/PostTypes.php:356
+#: src/Content/PostTypes.php:360
 msgid "Nenhum podcast encontrado no lixo."
 msgstr ""
 
-#: src/Content/PostTypes.php:361
+#: src/Content/PostTypes.php:365
 msgid "Arquivo de Podcasts"
 msgstr ""
 
-#: src/Content/PostTypes.php:362
+#: src/Content/PostTypes.php:366
 msgid "Inserir no podcast"
 msgstr ""
 
-#: src/Content/PostTypes.php:363
+#: src/Content/PostTypes.php:367
 msgid "Enviado para este podcast"
 msgstr ""
 
-#: src/Content/PostTypes.php:364
+#: src/Content/PostTypes.php:368
 msgid "Filtrar lista de podcasts"
 msgstr ""
 
-#: src/Content/PostTypes.php:365
+#: src/Content/PostTypes.php:369
 msgid "Navegação da lista de podcasts"
 msgstr ""
 
-#: src/Content/PostTypes.php:366
+#: src/Content/PostTypes.php:370
 msgid "Lista de podcasts"
 msgstr ""
 
-#: src/Content/PostTypes.php:394
-#: src/Content/PostTypes.php:396
-#: src/Content/PostTypes.php:404
+#: src/Content/PostTypes.php:398
+#: src/Content/PostTypes.php:400
+#: src/Content/PostTypes.php:408
 msgid "Videos"
 msgstr ""
 
-#: src/Content/PostTypes.php:398
-#: src/Content/PostTypes.php:399
+#: src/Content/PostTypes.php:402
+#: src/Content/PostTypes.php:403
 msgid "Adicionar Video"
 msgstr ""
 
-#: src/Content/PostTypes.php:400
+#: src/Content/PostTypes.php:404
 msgid "Novo Video"
 msgstr ""
 
-#: src/Content/PostTypes.php:401
+#: src/Content/PostTypes.php:405
 msgid "Editar Video"
 msgstr ""
 
-#: src/Content/PostTypes.php:402
+#: src/Content/PostTypes.php:406
 msgid "Ver Video"
 msgstr ""
 
-#: src/Content/PostTypes.php:403
+#: src/Content/PostTypes.php:407
 msgid "Ver Videos"
 msgstr ""
 
-#: src/Content/PostTypes.php:405
+#: src/Content/PostTypes.php:409
 msgid "Pesquisar Videos"
 msgstr ""
 
-#: src/Content/PostTypes.php:406
+#: src/Content/PostTypes.php:410
 msgid "Video Superior:"
 msgstr ""
 
-#: src/Content/PostTypes.php:407
+#: src/Content/PostTypes.php:411
 msgid "Nenhum video encontrado."
 msgstr ""
 
-#: src/Content/PostTypes.php:408
+#: src/Content/PostTypes.php:412
 msgid "Nenhum video encontrado no lixo."
 msgstr ""
 
-#: src/Content/PostTypes.php:413
+#: src/Content/PostTypes.php:417
 msgid "Arquivo de Videos"
 msgstr ""
 
-#: src/Content/PostTypes.php:414
+#: src/Content/PostTypes.php:418
 msgid "Inserir no video"
 msgstr ""
 
-#: src/Content/PostTypes.php:415
+#: src/Content/PostTypes.php:419
 msgid "Enviado para este video"
 msgstr ""
 
-#: src/Content/PostTypes.php:416
+#: src/Content/PostTypes.php:420
 msgid "Filtrar lista de videos"
 msgstr ""
 
-#: src/Content/PostTypes.php:417
+#: src/Content/PostTypes.php:421
 msgid "Navegação da lista de videos"
 msgstr ""
 
-#: src/Content/PostTypes.php:418
+#: src/Content/PostTypes.php:422
 msgid "Lista de videos"
 msgstr ""
 
-#: src/Content/PostTypes.php:446
-#: src/Content/PostTypes.php:448
-#: src/Content/PostTypes.php:456
+#: src/Content/PostTypes.php:450
+#: src/Content/PostTypes.php:452
+#: src/Content/PostTypes.php:460
 msgid "Infografias"
 msgstr ""
 
-#: src/Content/PostTypes.php:447
-#: src/Content/PostTypes.php:449
+#: src/Content/PostTypes.php:451
+#: src/Content/PostTypes.php:453
 msgid "Infografia"
 msgstr ""
 
-#: src/Content/PostTypes.php:450
-#: src/Content/PostTypes.php:451
+#: src/Content/PostTypes.php:454
+#: src/Content/PostTypes.php:455
 msgid "Adicionar Infografia"
 msgstr ""
 
-#: src/Content/PostTypes.php:452
+#: src/Content/PostTypes.php:456
 msgid "Nova Infografia"
 msgstr ""
 
-#: src/Content/PostTypes.php:453
+#: src/Content/PostTypes.php:457
 msgid "Editar Infografia"
 msgstr ""
 
-#: src/Content/PostTypes.php:454
+#: src/Content/PostTypes.php:458
 msgid "Ver Infografia"
 msgstr ""
 
-#: src/Content/PostTypes.php:455
+#: src/Content/PostTypes.php:459
 msgid "Ver Infografias"
 msgstr ""
 
-#: src/Content/PostTypes.php:457
+#: src/Content/PostTypes.php:461
 msgid "Pesquisar Infografias"
 msgstr ""
 
-#: src/Content/PostTypes.php:458
+#: src/Content/PostTypes.php:462
 msgid "Infografia Superior:"
 msgstr ""
 
-#: src/Content/PostTypes.php:459
+#: src/Content/PostTypes.php:463
 msgid "Nenhuma infografia encontrada."
 msgstr ""
 
-#: src/Content/PostTypes.php:460
+#: src/Content/PostTypes.php:464
 msgid "Nenhuma infografia encontrada no lixo."
 msgstr ""
 
-#: src/Content/PostTypes.php:465
+#: src/Content/PostTypes.php:469
 msgid "Arquivo de Infografias"
 msgstr ""
 
-#: src/Content/PostTypes.php:466
+#: src/Content/PostTypes.php:470
 msgid "Inserir na infografia"
 msgstr ""
 
-#: src/Content/PostTypes.php:467
+#: src/Content/PostTypes.php:471
 msgid "Enviado para esta infografia"
 msgstr ""
 
-#: src/Content/PostTypes.php:468
+#: src/Content/PostTypes.php:472
 msgid "Filtrar lista de infografias"
 msgstr ""
 
-#: src/Content/PostTypes.php:469
+#: src/Content/PostTypes.php:473
 msgid "Navegação da lista de infografias"
 msgstr ""
 
-#: src/Content/PostTypes.php:470
+#: src/Content/PostTypes.php:474
 msgid "Lista de infografias"
 msgstr ""
 
-#: src/Content/PostTypes.php:498
-#: src/Content/PostTypes.php:500
+#: src/Content/PostTypes.php:502
+#: src/Content/PostTypes.php:504
 msgid "Oportunidades"
 msgstr ""
 
-#: src/Content/PostTypes.php:499
-#: src/Content/PostTypes.php:501
+#: src/Content/PostTypes.php:503
+#: src/Content/PostTypes.php:505
 msgid "Oportunidade"
 msgstr ""
 
-#: src/Content/PostTypes.php:502
-#: src/Content/PostTypes.php:503
+#: src/Content/PostTypes.php:506
+#: src/Content/PostTypes.php:507
 msgid "Adicionar Oportunidade"
 msgstr ""
 
-#: src/Content/PostTypes.php:504
+#: src/Content/PostTypes.php:508
 msgid "Nova Oportunidade"
 msgstr ""
 
-#: src/Content/PostTypes.php:505
+#: src/Content/PostTypes.php:509
 msgid "Editar Oportunidade"
 msgstr ""
 
-#: src/Content/PostTypes.php:506
+#: src/Content/PostTypes.php:510
 msgid "Ver Oportunidade"
 msgstr ""
 
-#: src/Content/PostTypes.php:507
+#: src/Content/PostTypes.php:511
 msgid "Ver Oportunidades"
 msgstr ""
 
-#: src/Content/PostTypes.php:508
+#: src/Content/PostTypes.php:512
 msgid "Todas as Oportunidades"
 msgstr ""
 
-#: src/Content/PostTypes.php:509
+#: src/Content/PostTypes.php:513
 msgid "Pesquisar Oportunidades"
 msgstr ""
 
-#: src/Content/PostTypes.php:510
+#: src/Content/PostTypes.php:514
 msgid "Oportunidade Superior:"
 msgstr ""
 
-#: src/Content/PostTypes.php:511
+#: src/Content/PostTypes.php:515
 msgid "Nenhuma oportunidade encontrada."
 msgstr ""
 
-#: src/Content/PostTypes.php:512
+#: src/Content/PostTypes.php:516
 msgid "Nenhuma oportunidade encontrada no lixo."
 msgstr ""
 
-#: src/Content/PostTypes.php:517
+#: src/Content/PostTypes.php:521
 msgid "Arquivo de Oportunidades"
 msgstr ""
 
-#: src/Content/PostTypes.php:518
+#: src/Content/PostTypes.php:522
 msgid "Inserir na oportunidade"
 msgstr ""
 
-#: src/Content/PostTypes.php:519
+#: src/Content/PostTypes.php:523
 msgid "Enviado para esta oportunidade"
 msgstr ""
 
-#: src/Content/PostTypes.php:520
+#: src/Content/PostTypes.php:524
 msgid "Filtrar lista de oportunidades"
 msgstr ""
 
-#: src/Content/PostTypes.php:521
+#: src/Content/PostTypes.php:525
 msgid "Navegação da lista de oportunidades"
 msgstr ""
 
-#: src/Content/PostTypes.php:522
+#: src/Content/PostTypes.php:526
 msgid "Lista de oportunidades"
 msgstr ""
 
-#: src/Content/PostTypes.php:550
-#: src/Content/PostTypes.php:552
+#: src/Content/PostTypes.php:554
+#: src/Content/PostTypes.php:556
 msgid "Ferramentas"
 msgstr ""
 
-#: src/Content/PostTypes.php:551
-#: src/Content/PostTypes.php:553
+#: src/Content/PostTypes.php:555
+#: src/Content/PostTypes.php:557
 msgid "Ferramenta"
 msgstr ""
 
-#: src/Content/PostTypes.php:554
-#: src/Content/PostTypes.php:555
+#: src/Content/PostTypes.php:558
+#: src/Content/PostTypes.php:559
 msgid "Adicionar Ferramenta"
 msgstr ""
 
-#: src/Content/PostTypes.php:556
+#: src/Content/PostTypes.php:560
 msgid "Nova Ferramenta"
 msgstr ""
 
-#: src/Content/PostTypes.php:557
+#: src/Content/PostTypes.php:561
 msgid "Editar Ferramenta"
 msgstr ""
 
-#: src/Content/PostTypes.php:558
+#: src/Content/PostTypes.php:562
 msgid "Ver Ferramenta"
 msgstr ""
 
-#: src/Content/PostTypes.php:559
+#: src/Content/PostTypes.php:563
 msgid "Ver Ferramentas"
 msgstr ""
 
-#: src/Content/PostTypes.php:560
+#: src/Content/PostTypes.php:564
 msgid "Todas as Ferramentas"
 msgstr ""
 
-#: src/Content/PostTypes.php:561
+#: src/Content/PostTypes.php:565
 msgid "Pesquisar Ferramentas"
 msgstr ""
 
-#: src/Content/PostTypes.php:562
+#: src/Content/PostTypes.php:566
 msgid "Ferramenta Superior:"
 msgstr ""
 
-#: src/Content/PostTypes.php:563
+#: src/Content/PostTypes.php:567
 msgid "Nenhuma ferramenta encontrada."
 msgstr ""
 
-#: src/Content/PostTypes.php:564
+#: src/Content/PostTypes.php:568
 msgid "Nenhuma ferramenta encontrada no lixo."
 msgstr ""
 
-#: src/Content/PostTypes.php:569
+#: src/Content/PostTypes.php:573
 msgid "Arquivo das Ferramentas"
 msgstr ""
 
-#: src/Content/PostTypes.php:570
+#: src/Content/PostTypes.php:574
 msgid "Inserir na ferramenta"
 msgstr ""
 
-#: src/Content/PostTypes.php:571
+#: src/Content/PostTypes.php:575
 msgid "Enviado para esta ferramenta"
 msgstr ""
 
-#: src/Content/PostTypes.php:572
+#: src/Content/PostTypes.php:576
 msgid "Filtrar lista das ferramentas"
 msgstr ""
 
-#: src/Content/PostTypes.php:573
+#: src/Content/PostTypes.php:577
 msgid "Navegação da lista das ferramentas"
 msgstr ""
 
-#: src/Content/PostTypes.php:574
+#: src/Content/PostTypes.php:578
 msgid "Lista das ferramentas"
 msgstr ""
 
-#: src/Content/PostTypes.php:605
-#: src/Content/PostTypes.php:607
-#: src/Content/PostTypes.php:615
+#: src/Content/PostTypes.php:609
+#: src/Content/PostTypes.php:611
+#: src/Content/PostTypes.php:619
 msgid "Plataformas"
 msgstr ""
 
-#: src/Content/PostTypes.php:606
-#: src/Content/PostTypes.php:608
+#: src/Content/PostTypes.php:610
+#: src/Content/PostTypes.php:612
 msgid "Plataforma"
 msgstr ""
 
-#: src/Content/PostTypes.php:609
-#: src/Content/PostTypes.php:610
+#: src/Content/PostTypes.php:613
+#: src/Content/PostTypes.php:614
 msgid "Adicionar Plataforma"
 msgstr ""
 
-#: src/Content/PostTypes.php:611
+#: src/Content/PostTypes.php:615
 msgid "Nova Plataforma"
 msgstr ""
 
-#: src/Content/PostTypes.php:612
+#: src/Content/PostTypes.php:616
 msgid "Editar Plataforma"
 msgstr ""
 
-#: src/Content/PostTypes.php:613
+#: src/Content/PostTypes.php:617
 msgid "Ver Plataforma"
 msgstr ""
 
-#: src/Content/PostTypes.php:614
+#: src/Content/PostTypes.php:618
 msgid "Ver Plataformas"
 msgstr ""
 
-#: src/Content/PostTypes.php:616
+#: src/Content/PostTypes.php:620
 msgid "Pesquisar Plataformas"
 msgstr ""
 
-#: src/Content/PostTypes.php:617
+#: src/Content/PostTypes.php:621
 msgid "Plataforma Superior:"
 msgstr ""
 
-#: src/Content/PostTypes.php:618
+#: src/Content/PostTypes.php:622
 msgid "Nenhuma plataforma encontrada."
 msgstr ""
 
-#: src/Content/PostTypes.php:619
+#: src/Content/PostTypes.php:623
 msgid "Nenhuma plataforma encontrada no lixo."
 msgstr ""
 
-#: src/Content/PostTypes.php:624
+#: src/Content/PostTypes.php:628
 msgid "Arquivo das Plataformas"
 msgstr ""
 
-#: src/Content/PostTypes.php:625
+#: src/Content/PostTypes.php:629
 msgid "Inserir na plataforma"
 msgstr ""
 
-#: src/Content/PostTypes.php:626
+#: src/Content/PostTypes.php:630
 msgid "Enviado para esta plataforma"
 msgstr ""
 
-#: src/Content/PostTypes.php:627
+#: src/Content/PostTypes.php:631
 msgid "Filtrar lista das plataformas"
 msgstr ""
 
-#: src/Content/PostTypes.php:628
+#: src/Content/PostTypes.php:632
 msgid "Navegação da lista das plataformas"
 msgstr ""
 
-#: src/Content/PostTypes.php:629
+#: src/Content/PostTypes.php:633
 msgid "Lista das plataformas"
 msgstr ""
 
-#: src/Content/PostTypes.php:659
-#: src/Content/PostTypes.php:661
-#: src/Content/PostTypes.php:669
+#: src/Content/PostTypes.php:663
+#: src/Content/PostTypes.php:665
+#: src/Content/PostTypes.php:673
 msgid "Bases de Dados"
 msgstr ""
 
-#: src/Content/PostTypes.php:660
-#: src/Content/PostTypes.php:662
+#: src/Content/PostTypes.php:664
+#: src/Content/PostTypes.php:666
 msgid "Base de Dados"
 msgstr ""
 
-#: src/Content/PostTypes.php:663
-#: src/Content/PostTypes.php:664
+#: src/Content/PostTypes.php:667
+#: src/Content/PostTypes.php:668
 msgid "Adicionar Base de Dados"
 msgstr ""
 
-#: src/Content/PostTypes.php:665
+#: src/Content/PostTypes.php:669
 msgid "Nova Base de Dados"
 msgstr ""
 
-#: src/Content/PostTypes.php:666
+#: src/Content/PostTypes.php:670
 msgid "Editar Base de Dados"
 msgstr ""
 
-#: src/Content/PostTypes.php:667
+#: src/Content/PostTypes.php:671
 msgid "Ver Base de Dados"
 msgstr ""
 
-#: src/Content/PostTypes.php:668
+#: src/Content/PostTypes.php:672
 msgid "Ver Bases de Dados"
 msgstr ""
 
-#: src/Content/PostTypes.php:670
+#: src/Content/PostTypes.php:674
 msgid "Pesquisar Bases de Dados"
 msgstr ""
 
-#: src/Content/PostTypes.php:671
+#: src/Content/PostTypes.php:675
 msgid "Base de Dados Superior:"
 msgstr ""
 
-#: src/Content/PostTypes.php:672
+#: src/Content/PostTypes.php:676
 msgid "Nenhuma base de dados encontrada."
 msgstr ""
 
-#: src/Content/PostTypes.php:673
+#: src/Content/PostTypes.php:677
 msgid "Nenhuma base de dados encontrada no lixo."
 msgstr ""
 
-#: src/Content/PostTypes.php:678
+#: src/Content/PostTypes.php:682
 msgid "Arquivo das Bases de Dados"
 msgstr ""
 
-#: src/Content/PostTypes.php:679
+#: src/Content/PostTypes.php:683
 msgid "Inserir na base de dados"
 msgstr ""
 
-#: src/Content/PostTypes.php:680
+#: src/Content/PostTypes.php:684
 msgid "Enviado para esta base de dados"
 msgstr ""
 
-#: src/Content/PostTypes.php:681
+#: src/Content/PostTypes.php:685
 msgid "Filtrar lista das bases de dados"
 msgstr ""
 
-#: src/Content/PostTypes.php:682
+#: src/Content/PostTypes.php:686
 msgid "Navegação da lista das bases de dados"
 msgstr ""
 
-#: src/Content/PostTypes.php:683
+#: src/Content/PostTypes.php:687
 msgid "Lista das bases de dados"
 msgstr ""
 
@@ -3236,8 +3246,10 @@ msgstr "Item Hover Background"
 msgid "Item Hover Text Color"
 msgstr "Item Hover Text Color"
 
+#: src/Submissions/PartilheForm.php:136
 #: blocks/content-filters/index.js:30
 #: blocks/content-listing/index.js:66
+#: blocks/selected-content-grid/index.js:57
 msgid "Tipo de conteúdo"
 msgstr "Content type"
 
@@ -3271,41 +3283,41 @@ msgstr "Thumbnail grid"
 msgid "Grelha de miniaturas com título por cima"
 msgstr "Thumbnail grid with the title above"
 
-#: blocks/content-listing/index.js:76
+#: blocks/content-listing/index.js:82
 msgid "Mostrar só uma categoria de"
 msgstr "Show only one category of"
 
-#: blocks/content-listing/index.js:79
+#: blocks/content-listing/index.js:85
 msgid "Todos os conteúdos"
 msgstr "All content"
 
-#: blocks/content-listing/index.js:89
+#: blocks/content-listing/index.js:95
 msgid "Categoria"
 msgstr "Category"
 
-#: blocks/content-listing/index.js:95
+#: blocks/content-listing/index.js:101
 msgid "Escolha uma"
 msgstr "Choose one"
 
-#: blocks/content-listing/index.js:96
+#: blocks/content-listing/index.js:102
 #: blocks/indicador-chart/index.js:70
 #: blocks/indicador-chart/index.js:97
 msgid "A carregar…"
 msgstr "Loading…"
 
-#: blocks/content-listing/index.js:104
+#: blocks/content-listing/index.js:110
 msgid "Apresentação"
 msgstr "Display"
 
-#: blocks/content-listing/index.js:117
+#: blocks/content-listing/index.js:130
 msgid "Conteúdos por página"
 msgstr "Items per page"
 
-#: blocks/content-listing/index.js:124
+#: blocks/content-listing/index.js:144
 msgid "Mostrar paginação"
 msgstr "Show pagination"
 
-#: blocks/content-listing/index.js:132
+#: blocks/content-listing/index.js:152
 msgid "Pré-visualização da listagem"
 msgstr "Listing preview"
 
@@ -3542,6 +3554,7 @@ msgstr "Select a year"
 msgid "Publicado por"
 msgstr "Published by"
 
+#: src/Submissions/PartilheForm.php:188
 #: assets/library-details.js:59
 msgid "Descrição"
 msgstr "Description"
@@ -3562,6 +3575,373 @@ msgstr "PDF file"
 msgid "Grelha de documentos"
 msgstr "Document grid"
 
-#: blocks/content-listing/index.js:108
+#: blocks/content-listing/index.js:114
 msgid "A Legislação usa a grelha de documentos com ano, fonte e descrição."
 msgstr "Legislation uses the document grid with year, publisher and description."
+
+#: src/Content/Taxonomies.php:221
+#: src/Content/Taxonomies.php:233
+msgid "Entidades"
+msgstr ""
+
+#: src/Content/Taxonomies.php:222
+msgid "Entidade"
+msgstr ""
+
+#: src/Content/Taxonomies.php:223
+msgid "Pesquisar Entidades"
+msgstr ""
+
+#: src/Content/Taxonomies.php:224
+msgid "Todas as Entidades"
+msgstr ""
+
+#: src/Content/Taxonomies.php:225
+msgid "Editar Entidade"
+msgstr ""
+
+#: src/Content/Taxonomies.php:226
+msgid "Ver Entidade"
+msgstr ""
+
+#: src/Content/Taxonomies.php:227
+msgid "Atualizar Entidade"
+msgstr ""
+
+#: src/Content/Taxonomies.php:228
+msgid "Adicionar Nova Entidade"
+msgstr ""
+
+#: src/Content/Taxonomies.php:229
+msgid "Nome da Nova Entidade"
+msgstr ""
+
+#: src/Content/Taxonomies.php:230
+msgid "Separe as entidades por vírgulas"
+msgstr ""
+
+#: src/Content/Taxonomies.php:231
+msgid "Adicionar ou remover entidades"
+msgstr ""
+
+#: src/Content/Taxonomies.php:232
+msgid "Escolher entre as entidades mais utilizadas"
+msgstr ""
+
+#: src/Content/Taxonomies.php:234
+msgid "Nenhuma entidade encontrada."
+msgstr ""
+
+#: blocks/content-listing/index.js:124
+msgid "Abrir imagens em lightbox"
+msgstr ""
+
+#: blocks/content-listing/index.js:137
+msgid "Carregamento infinito"
+msgstr ""
+
+#: blocks/content-listing/index.js:138
+msgid "Carrega o próximo grupo de conteúdos ao deslocar a página."
+msgstr ""
+
+#: blocks/selected-content-grid/index.js:52
+msgid "Coluna A — destaque principal"
+msgstr "Column A — principal card"
+
+#: blocks/selected-content-grid/index.js:66
+msgid "Pesquisar conteúdos"
+msgstr "Search content"
+
+#: blocks/selected-content-grid/index.js:75
+msgid "Remover seleção"
+msgstr "Remove selection"
+
+#: blocks/selected-content-grid/index.js:82
+msgid "Não foi possível carregar os conteúdos."
+msgstr "Could not load content."
+
+#: blocks/selected-content-grid/index.js:87
+msgid "Nenhum conteúdo encontrado."
+msgstr "No content found."
+
+#: blocks/selected-content-grid/index.js:103
+msgid "Sem título"
+msgstr "Untitled"
+
+#: blocks/selected-content-grid/index.js:168
+msgid "Seleção inicial"
+msgstr "Initial selection"
+
+#: blocks/selected-content-grid/index.js:172
+msgid "Preencher com os mais recentes"
+msgstr "Fill with latest"
+
+#: blocks/selected-content-grid/index.js:177
+msgid "Substitui as cinco seleções pelo conteúdo mais recente de cada grupo."
+msgstr "Replaces all five selections with the latest content from each group."
+
+#: blocks/selected-content-grid/index.js:186
+msgid "Não foi possível preencher a seleção."
+msgstr "Could not fill the selection."
+
+#: blocks/selected-content-grid/index.js:203
+msgid "Grelha de destaques"
+msgstr "Featured content grid"
+
+#: blocks/selected-content-grid/index.js:207
+msgid "Selecione um destaque principal e quatro conteúdos nas definições do bloco."
+msgstr "Select one principal card and four items in the block settings."
+
+#: blocks/selected-content-grid/index.js:216
+msgid "Selecionar conteúdo"
+msgstr "Select content"
+
+#: blocks/selected-content-grid/index.js:220
+msgid "Pré-visualização dos destaques"
+msgstr "Featured content preview"
+
+#: blocks/selected-content-grid/block.json
+msgctxt "block title"
+msgid "Grelha de destaques"
+msgstr "Featured content grid"
+
+#: blocks/selected-content-grid/block.json
+msgctxt "block description"
+msgid "Um destaque principal e quatro conteúdos selecionados."
+msgstr "One principal card and four selected items."
+
+#: src/Submissions/PartilheForm.php:81
+msgid "Partilhe"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:90
+msgid "Enviar"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:96
+#: src/Submissions/Submissions.php:173
+msgid "Nome"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:103
+msgid "Prefixo"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:108
+msgid "Nome próprio"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:112
+msgid "Segundo nome"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:117
+msgid "Apelido"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:121
+msgid "Sufixo"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:139
+msgid "Escolha um tipo"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:161
+msgid "Ficheiros"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:172
+#: src/Submissions/PartilheForm.php:179
+msgid "Consentimento"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:175
+msgid "Autorizo o tratamento dos meus dados para a análise e eventual publicação deste conteúdo."
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:183
+#: blocks/interactive-image/index.js:171
+#: blocks/interactive-image/index.js:255
+msgid "Texto"
+msgstr "Text"
+
+#: src/Submissions/PartilheForm.php:197
+msgid "Nova submissão (editores)"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:205
+msgid "Nova submissão em Partilhe: {Título:4}"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:206
+msgid "Foi submetido um conteúdo do tipo {Tipo de conteúdo:3:value}. O conteúdo fica pendente de revisão no CMS."
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:212
+msgid "Confirmação"
+msgstr ""
+
+#: src/Submissions/PartilheForm.php:215
+msgid "Obrigado. A sua submissão foi recebida e será revista pela equipa editorial antes de ser publicada."
+msgstr ""
+
+#. translators: %s: a link to edit the created content.
+#: src/Submissions/Submissions.php:124
+#, php-format
+msgid "Conteúdo pendente criado: %s"
+msgstr ""
+
+#: src/Submissions/Submissions.php:154
+#: src/Submissions/Submissions.php:197
+msgid "Submissão de visitante"
+msgstr ""
+
+#: src/Submissions/Submissions.php:180
+msgid "Ver a entrada do formulário"
+msgstr ""
+
+#. translators: %d: the Gravity Forms entry id.
+#: src/Submissions/Submissions.php:185
+#, php-format
+msgid "Entrada do formulário n.º %d"
+msgstr ""
+
+#: blocks/interactive-image/block.json
+msgctxt "block title"
+msgid "Imagem interativa"
+msgstr "Interactive image"
+
+#: blocks/interactive-image/block.json
+msgctxt "block description"
+msgid "Mostra uma imagem interativa: ao passar o rato ou tocar em cada etapa, aparecem os detalhes."
+msgstr "Shows an interactive image: hovering over or tapping each step reveals its details."
+
+#: blocks/interactive-image/block.json
+msgctxt "block keyword"
+msgid "imagem"
+msgstr "image"
+
+#: blocks/interactive-image/block.json
+msgctxt "block keyword"
+msgid "interativa"
+msgstr "interactive"
+
+#: blocks/interactive-image/block.json
+msgctxt "block keyword"
+msgid "infografia"
+msgstr "infographic"
+
+#: blocks/interactive-image/block.json
+msgctxt "block keyword"
+msgid "economia circular"
+msgstr "circular economy"
+
+#: blocks/interactive-image/block.json
+msgctxt "block keyword"
+msgid "interactive"
+msgstr "interactive"
+
+#: blocks/interactive-image/block.json
+msgctxt "block keyword"
+msgid "image"
+msgstr "image"
+
+#: blocks/interactive-image/index.js:102
+msgid "Trocar ícone"
+msgstr "Change icon"
+
+#: blocks/interactive-image/index.js:114
+msgid "Repor ícone original"
+msgstr "Restore original icon"
+
+#: blocks/interactive-image/index.js:119
+msgid "A usar o ícone original."
+msgstr "Using the original icon."
+
+#. translators: 1: step number, 2: step title
+#: blocks/interactive-image/index.js:159
+#, js-format
+msgid "Etapa %1$d: %2$s"
+msgstr "Step %1$d: %2$s"
+
+#: blocks/interactive-image/index.js:179
+msgid "Detalhe (aparece ao passar o rato)"
+msgstr "Detail (shown on hover)"
+
+#: blocks/interactive-image/index.js:194
+msgid "Imagem"
+msgstr "Image"
+
+#: blocks/interactive-image/index.js:198
+msgid "Imagem interativa"
+msgstr "Interactive image"
+
+#: blocks/interactive-image/index.js:201
+msgid "Economia Circular"
+msgstr "Circular Economy"
+
+#: blocks/interactive-image/index.js:208
+msgid "Deixe um campo vazio para manter o texto ou o ícone original da imagem. O texto alterado ajusta-se à largura original."
+msgstr "Leave a field empty to keep the image's original text or icon. Edited text wraps to the original width."
+
+#: blocks/interactive-image/index.js:216
+msgid "Modelo linear"
+msgstr "Linear model"
+
+#. translators: %d: stage number
+#: blocks/interactive-image/index.js:224
+#, js-format
+msgid "Fase %d"
+msgstr "Stage %d"
+
+#. translators: %d: stage number
+#: blocks/interactive-image/index.js:230
+#, js-format
+msgid "Ícone da fase %d"
+msgstr "Stage %d icon"
+
+#: blocks/interactive-image/index.js:235
+#: blocks/interactive-image/index.js:273
+msgid "Detalhe"
+msgstr "Detail"
+
+#: blocks/interactive-image/index.js:239
+msgid "Modelo circular"
+msgstr "Circular model"
+
+#: blocks/interactive-image/index.js:241
+msgid "Texto ao centro"
+msgstr "Centre text"
+
+#: blocks/interactive-image/index.js:243
+msgid "Logótipo ao centro"
+msgstr "Centre logo"
+
+#: blocks/interactive-image/index.js:253
+msgid "Regeneração dos sistemas naturais"
+msgstr "Regeneration of natural systems"
+
+#. translators: %d: item number
+#: blocks/interactive-image/index.js:262
+#, js-format
+msgid "Sistema %d"
+msgstr "System %d"
+
+#. translators: %d: item number
+#: blocks/interactive-image/index.js:268
+#, js-format
+msgid "Ícone do sistema %d"
+msgstr "System %d icon"
+
+#: blocks/interactive-image/index.js:277
+msgid "Indicação"
+msgstr "Hint"
+
+#: blocks/interactive-image/index.js:278
+msgid "Texto por baixo da imagem"
+msgstr "Text below the image"
+
+#: blocks/interactive-image/index.js:293
+msgid "Pré-visualização da imagem interativa"
+msgstr "Interactive image preview"

@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { EventEmitter } from "node:events";
 import https from "node:https";
 import test from "node:test";
-import { completeDeployment, statusRequest } from "./design-nightly/completion.mjs";
+import { completeDeployment, failDeployment, statusRequest } from "./design-nightly/completion.mjs";
 
 const record = {
   deploymentId: 7316074723,
@@ -134,4 +134,45 @@ test("malformed success responses never leak response text through parse errors"
         error.message === "Invalid GitHub completion JSON response" && error.cause === undefined,
     );
   }
+});
+
+test("a failed refresh resolves the same deployment as failure, not in_progress", async () => {
+  const calls = [];
+  await failDeployment(record, "publication refresh failed", async (method, path, body) => {
+    calls.push({ method, path, body });
+    return {};
+  });
+  assert.deepEqual(calls, [
+    {
+      method: "POST",
+      path: `Quick-Release/nomia-bnq/deployments/${record.deploymentId}/statuses`,
+      body: {
+        state: "failure",
+        description: "publication refresh failed",
+        auto_inactive: false,
+        log_url: record.runUrl,
+      },
+    },
+  ]);
+});
+
+test("a lost failure response is reconciled, and never overwrites another run", async () => {
+  const failure = { state: "failure", log_url: record.runUrl, environment_url: "" };
+  const calls = [];
+  await failDeployment(record, "x".repeat(200), async (method, _path, body) => {
+    calls.push(method);
+    if (method === "POST") {
+      assert.equal(body.description.length, 140);
+      throw brokenPipe();
+    }
+    return [failure];
+  });
+  assert.deepEqual(calls, ["POST", "GET"]);
+  await assert.rejects(
+    failDeployment(record, "refresh failed", async (method) => {
+      if (method === "GET") return [{ state: "success", log_url: "another run" }];
+      throw brokenPipe();
+    }),
+    /Conflicting/,
+  );
 });

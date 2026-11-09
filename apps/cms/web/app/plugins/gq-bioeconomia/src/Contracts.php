@@ -538,6 +538,7 @@ final class Contracts {
 				],
 				'status'           => 'active',
 				'inserter'         => true,
+				'container'        => true,
 				'editorExperience' => 'inline-fields',
 				'attributes'       => [
 					'schemaVersion' => [
@@ -4487,6 +4488,226 @@ final class Contracts {
 				],
 				'example'     => [
 					'indicadorId' => 702,
+				],
+			],
+			[
+				'blockName'   => 'getquick/selected-content-grid',
+				'catalogId'   => 'selected-content-grid',
+				'title'       => 'Grelha de destaques',
+				'description' => 'Um destaque principal e quatro conteúdos selecionados.',
+				'icon'        => 'screenoptions',
+				'status'      => 'active',
+				'inserter'    => true,
+				'attributes'  => [
+					'schemaVersion' => [
+						'type'    => 'number',
+						'default' => 1,
+					],
+					'blockId'       => [
+						'type'    => 'string',
+						'default' => 'selected-content-grid',
+					],
+					'items'         => [
+						'type'    => 'array',
+						'default' => [],
+						'items'   => [
+							'type'       => 'object',
+							'properties' => [
+								'postId'   => [
+									'type' => 'number',
+								],
+								'postType' => [
+									'type'    => 'string',
+									'default' => '',
+								],
+								'uri'      => [
+									'type'    => 'string',
+									'default' => '',
+								],
+								'title'    => [
+									'type'    => 'string',
+									'default' => '',
+								],
+							],
+						],
+					],
+				],
+				'example'     => [
+					'items' => [],
+				],
+			],
+			[
+				'blockName'   => 'getquick/interactive-image',
+				'catalogId'   => 'interactive-image',
+				'title'       => 'Imagem interativa',
+				'description' => 'Mostra uma imagem interativa: ao passar o rato ou tocar em cada etapa, aparecem os detalhes.',
+				'icon'        => 'format-image',
+				'keywords'    => [
+					'imagem',
+					'interativa',
+					'infografia',
+					'economia circular',
+					'interactive',
+					'image',
+				],
+				'status'      => 'active',
+				'inserter'    => true,
+				'attributes'  => [
+					'schemaVersion'       => [
+						'type'    => 'number',
+						'default' => 1,
+					],
+					'blockId'             => [
+						'type'    => 'string',
+						'default' => 'interactive-image',
+					],
+					'image'               => [
+						'type'    => 'string',
+						'default' => 'economia-circular',
+						'enum'    => [
+							'economia-circular',
+						],
+						'ui'      => [
+							'kind' => 'select',
+						],
+					],
+					'linearHeading'       => [
+						'type'    => 'string',
+						'default' => '',
+					],
+					'linearSteps'         => [
+						'type'    => 'array',
+						'default' => [],
+						'items'   => [
+							'type'       => 'object',
+							'properties' => [
+								'label'   => [
+									'type'    => 'string',
+									'default' => '',
+								],
+								'iconId'  => [
+									'type' => 'number',
+								],
+								'iconSrc' => [
+									'type'    => 'string',
+									'default' => '',
+									'ui'      => [
+										'kind' => 'media',
+									],
+								],
+							],
+						],
+					],
+					'linearInfo'          => [
+						'type'    => 'string',
+						'default' => '',
+						'ui'      => [
+							'kind' => 'textarea',
+						],
+					],
+					'circularHeading'     => [
+						'type'    => 'string',
+						'default' => '',
+					],
+					'centerLabel'         => [
+						'type'    => 'string',
+						'default' => '',
+					],
+					'centerIconId'        => [
+						'type' => 'number',
+					],
+					'centerIconSrc'       => [
+						'type'    => 'string',
+						'default' => '',
+						'ui'      => [
+							'kind' => 'media',
+						],
+					],
+					'steps'               => [
+						'type'    => 'array',
+						'default' => [],
+						'items'   => [
+							'type'       => 'object',
+							'properties' => [
+								'title'       => [
+									'type'    => 'string',
+									'default' => '',
+								],
+								'description' => [
+									'type'    => 'string',
+									'default' => '',
+									'ui'      => [
+										'kind' => 'textarea',
+									],
+								],
+								'info'        => [
+									'type'    => 'string',
+									'default' => '',
+									'ui'      => [
+										'kind' => 'textarea',
+									],
+								],
+								'iconId'      => [
+									'type' => 'number',
+								],
+								'iconSrc'     => [
+									'type'    => 'string',
+									'default' => '',
+									'ui'      => [
+										'kind' => 'media',
+									],
+								],
+							],
+						],
+					],
+					'regenerationHeading' => [
+						'type'    => 'string',
+						'default' => '',
+					],
+					'regenerationText'    => [
+						'type'    => 'string',
+						'default' => '',
+						'ui'      => [
+							'kind' => 'textarea',
+						],
+					],
+					'regenerationItems'   => [
+						'type'    => 'array',
+						'default' => [],
+						'items'   => [
+							'type'       => 'object',
+							'properties' => [
+								'label'   => [
+									'type'    => 'string',
+									'default' => '',
+								],
+								'iconId'  => [
+									'type' => 'number',
+								],
+								'iconSrc' => [
+									'type'    => 'string',
+									'default' => '',
+									'ui'      => [
+										'kind' => 'media',
+									],
+								],
+							],
+						],
+					],
+					'regenerationInfo'    => [
+						'type'    => 'string',
+						'default' => '',
+						'ui'      => [
+							'kind' => 'textarea',
+						],
+					],
+					'hint'                => [
+						'type'    => 'string',
+						'default' => '',
+					],
+				],
+				'example'     => [
+					'image' => 'economia-circular',
 				],
 			],
 		];

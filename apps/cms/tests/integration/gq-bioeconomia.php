@@ -7,12 +7,15 @@
  */
 
 use GetQuick\Bioeconomia\Lifecycle\LegacyRename;
+use GetQuick\Bioeconomia\Submissions\PartilheForm;
+use GetQuick\Bioeconomia\Submissions\Submissions;
 
 if (wp_get_environment_type() !== 'development' && wp_get_environment_type() !== 'local') {
     throw new RuntimeException('These tests require a local/development WordPress database.');
 }
 
 $fixture_ids = [];
+$submission_entry = 0;
 $initial_user = get_current_user_id();
 $check = static function ($actual, $expected, $message) {
     if ($actual !== $expected) {
@@ -81,10 +84,42 @@ try {
     $check(get_post_type($gallery), 'gq_bio_gallery', 'Legacy galleries move to the new post type');
     $check(LegacyRename::run(), false, 'The rename runs once');
     echo "PASS legacy rename\n";
+
+    if (class_exists('GFAPI')) {
+        // A Partilhe entry handled while an administrator is logged in: the post
+        // still has no author, and the submitter stays out of REST and GraphQL.
+        wp_set_current_user($admin->ID);
+        $submission_entry = 2000000000 + random_int(0, 99999999);
+        $form = PartilheForm::definition() + ['id' => 999999];
+        $entry = ['id' => (string) $submission_entry, 'status' => 'active', '1.3' => 'Ana', '1.6' => 'Silva', '2' => 'ana@example.org', '3' => 'eventos', '4' => 'gq-bioeconomia regression fixture', '5' => 'Texto.', '6' => ''];
+        (new Submissions())->handle($entry, $form);
+        $submitted = (int) gform_get_meta($submission_entry, Submissions::ENTRY_META_POST_ID);
+        $fixture_ids[] = $submitted;
+        $check(get_post_status($submitted), 'pending', 'A submission is pending');
+        $check((int) get_post_field('post_author', $submitted), 0, 'A submission has no author');
+        $check(get_post_meta($submitted, Submissions::META_SUBMITTER_EMAIL, true), 'ana@example.org', 'The submitter is kept');
+        $data = rest_do_request(new WP_REST_Request('GET', '/wp/v2/eventos/' . $submitted))->get_data();
+        $check(str_contains((string) wp_json_encode($data), 'ana@example.org'), false, 'REST does not expose the submitter');
+        $response = graphql(['query' => '{ evento(id: "' . $submitted . '", idType: DATABASE_ID) { title } }']);
+        $check(str_contains((string) wp_json_encode($response), 'ana@example.org'), false, 'GraphQL does not expose the submitter');
+        $entry['3'] = 'page';
+        $entry['id'] = (string) ($submission_entry + 1);
+        (new Submissions())->handle($entry, $form);
+        $check(gform_get_meta($submission_entry + 1, Submissions::ENTRY_META_POST_ID), false, 'Another post type creates nothing');
+        echo "PASS Partilhe submissions\n";
+    }
 } finally {
     foreach ($fixture_ids as $fixture_id) {
         wp_delete_post($fixture_id, true);
     }
     delete_option('nomia_cpt_plugin_version');
+    if ($submission_entry && class_exists('GFAPI')) {
+        foreach ([$submission_entry, $submission_entry + 1] as $entry_id) {
+            gform_delete_meta($entry_id);
+            foreach (GFAPI::get_notes(['entry_id' => $entry_id]) ?: [] as $note) {
+                GFAPI::delete_note($note->id);
+            }
+        }
+    }
     wp_set_current_user($initial_user);
 }

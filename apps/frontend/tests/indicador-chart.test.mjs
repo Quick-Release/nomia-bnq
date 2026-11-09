@@ -31,7 +31,7 @@ const indicador = {
   },
 };
 
-test("an Indicador renders its title, period, unit, area, values and source", async () => {
+test("an Indicador renders its title, period, area, values and source", async () => {
   const { document } = await (await harnessPromise).renderComponent(section, { indicador });
   const root = document.querySelector("section[data-indicador='702']");
   assert.ok(root);
@@ -39,7 +39,13 @@ test("an Indicador renders its title, period, unit, area, values and source", as
   assert.equal(heading.textContent.trim(), indicador.title);
   assert.equal(root.getAttribute("aria-labelledby"), heading.id);
   assert.match(root.querySelector("header").textContent, /2023–2024/);
-  assert.match(root.textContent, /Ano vs Euro/);
+  // The axes and unit labels are hidden for now.
+  assert.doesNotMatch(root.textContent, /Ano vs Euro/);
+  // The screen-reader table still names the axes and the unit.
+  assert.deepEqual(
+    [...root.querySelectorAll("table.sr-only thead th")].map((cell) => cell.textContent.trim()),
+    ["Ano", "Euro"],
+  );
   assert.match(root.textContent, /NUTS 0/);
   assert.deepEqual(
     [...root.querySelectorAll("table tbody tr")].map((row) =>

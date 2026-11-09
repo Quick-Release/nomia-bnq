@@ -1,6 +1,6 @@
 {
-  "enabled": true,
-  "siteState": "development-no-traffic",
+  "enabled": false,
+  "siteState": "production",
   "adminDomain": "nomia-cms.bnq.pt",
   "frontendDomain": "bioeconomia.apambiente.pt",
   "ploiSiteId": "426661"

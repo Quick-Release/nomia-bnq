@@ -98,7 +98,8 @@ test("Nomia Layout applies delivered default and overridden themes to saved cont
         await page
           .locator(".wp-block-list")
           .evaluate((node) => getComputedStyle(node).listStyleType),
-        "none",
+        "disc",
+        "an unauthored list takes GQ Design 0.10.4's disc marker",
       );
       assert.ok(
         (await page.getByAltText("Baseline media").boundingBox()).width <= width,

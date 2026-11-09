@@ -1,5 +1,121 @@
 # Changelog
 
+## v0.24.0 - 2026-11-09
+
+Previous release: v0.23.1
+
+- c653f26 Merge pull request #148 from Quick-Release/claude/formacao-single-hero
+- c9901f5 fix: keep the Formação hero's image and drop the date without a hero
+- 8daaa35 feat: show Formação opportunities under the Formação page's hero, without a date
+
+## v0.23.1 - 2026-11-06
+
+Previous release: v0.23.0
+
+- ed1bb61 Merge pull request #147 from Quick-Release/claude/core-text-align
+- bb574b2 test: allow any whitespace in the text-alignment assertion
+- 3893bb3 fix: apply the editor's text alignment to core blocks
+
+## v0.23.0 - 2026-11-06
+
+Previous release: v0.22.0
+
+- 53eb6d3 Merge pull request #146 from Quick-Release/claude/interactive-image-html-title
+- f707dbc feat: leave the Interactive image's title and subtitle to the page's own blocks
+- 09d9126 feat: drop the Interactive image's title and subtitle fields
+- b79e68c feat: render the Interactive image's title and subtitle as an HTML h2 and paragraph
+
+## v0.22.0 - 2026-11-06
+
+Previous release: v0.21.0
+
+- ec3eb3e Merge pull request #145 from Quick-Release/claude/interactive-image-review-fixes
+- 840e6e7 fix: keep editor texts out of placeholder filling; ignore empty media picks
+- 3626158 Merge pull request #144 from Quick-Release/claude/interactive-image-editable
+- d520136 feat: edit the Interactive image's texts and icons in the block
+
+## v0.21.0 - 2026-11-06
+
+Previous release: v0.20.1
+
+- 25a116e Merge pull request #143 from Quick-Release/claude/interactive-image
+- eea3238 fix(cms): translate the Interactive image block into English
+- fed2899 fix(frontend): one outside-tap listener for all interactive images; guard unmapped CID fonts
+- b5f708b feat: add Interactive image block with the Economia Circular diagram
+
+## v0.20.1 - 2026-11-06
+
+Previous release: v0.20.0
+
+- 883baab Merge pull request #142 from Quick-Release/claude/hide-indicador-axes-label
+- 04d2e81 test(frontend): check the screen-reader table keeps the axes and unit headings
+- 694629e fix(frontend): hide the axes and unit label on Indicador charts
+- 971aa07 Merge pull request #141 from Quick-Release/claude/hsts-raise
+- f74012f deploy: raise bioeconomia.apambiente.pt HSTS to one year
+
+## v0.20.0 - 2026-11-03
+
+Previous release: v0.19.0
+
+- 5eecb12 Merge pull request #140 from Quick-Release/claude/partilhe-rollout
+- 5cb9625 fix(cms): never fail the deploy on the Partilhe form step; pin the upload limits in the test
+- dd7fc95 feat(cms): create the Partilhe form on deploy, with uploads within the form route's cap
+
+## v0.19.0 - 2026-11-03
+
+Previous release: v0.18.0
+
+- c624925 Merge pull request #139 from Quick-Release/claude/adopt-list-markers
+- e280cd3 chore: adopt @getquick/site 0.36.0 (gq-content 0.6.1, GQ Design 0.10.4)
+- 4202f71 Merge pull request #138 from Quick-Release/claude/partilhe-submissions
+- 8e4d310 fix(cms): read Gravity Forms fields as objects, and check the temporary upload copy
+- d7463dd feat(cms): turn Partilhe form entries into pending posts for review
+- 654707d fix: align selected content grid with the site page gutters
+
+## v0.18.0 - 2026-11-02
+
+Previous release: v0.17.0
+
+- e24bae1 fix: ship English catalogs for the selected content grid
+- 35b442c fix: use validated CMS content workflow for homepage rollout
+- 4c64d3c Merge remote-tracking branch 'origin/main' into feat/selected-content-grid
+- 2fa04fe feat: add curated five-card content grid and seed homepage
+
+## v0.17.0 - 2026-11-01
+
+Previous release: v0.16.0
+
+- 1d31e1a Merge pull request #136 from Quick-Release/claude/site-0.35-design-0.10
+- c132fee docs(plans): record the stable Design 0.10.2 / Content 0.5.1 adoption
+- d23eb03 fix(frontend): keep Site-designed headings over GQ Design's text styles
+- 0ec1713 chore: upgrade @getquick/site to 0.35.0 (GQ Design 0.10.2, gq-content 0.5.1, getquick-theme 0.6.2)
+- d80fdd7 Merge pull request #119 from Quick-Release/ops/nomia-design-trial-record
+- 0506a30 fix(nightly): verify the whole committed trial snapshot before recording
+- c132655 feat(nightly): add a prepare and record helper for a controlled Design trial
+- 027f678 Merge pull request #118 from Quick-Release/ops/support-readiness-discovery
+- f523901 docs(plans): the stable Content manifest declares no migrations
+- 880515f docs(plans): record the Content artifact comparison and plan the identity transition
+- a9a7f6f fix(nightly): require real target identities in the paused-target guard
+- d302c40 docs(plans): record the Content producer pause and v0.4.2 provenance
+- eca5e26 docs(plans): record the Design producer pause and stable coverage gap
+- f993bd8 docs(plans): list baseline evidence to archive; old stable lock is not rollback
+- 812f2be fix(nightly): refuse a paused target at admission
+- d8fadbe docs(plans): use gq-support 0.1.11 for the first signed release
+- 920ad4d ops: pause Nomia nightlies and plan a controlled release
+- 0876e8a Merge pull request #117 from Quick-Release/claude/cms-content-gq-commands
+- 736048d docs(agents): use gq content for production CMS content
+- 605a06a Merge pull request #116 from Quick-Release/claude/gq-site-0.27.0
+- 5b9d439 chore(deps): pin @getquick/site 0.27.0 and sync
+- 2ec708a Merge pull request #115 from Quick-Release/claude/agent-cms-content-access
+- 150c605 docs(agents): route production CMS content through REST behind Access
+- 488b9e9 fix(nightly): refresh the Frontend Worker directly and fail the deployment on refresh failure
+- 2ddb983 Merge pull request #113 from Quick-Release/claude/home-cta-button
+- 6475757 docs: third Título com etiqueta column starts at xl
+- b7658f6 fix(frontend): rounded Bioeconomia button and optional buttons column in Título com etiqueta
+- 3644fc7 Merge pull request #112 from Quick-Release/docs/nomia-security-audit
+- 07df101 docs: distinguish resolved server migration from pending production audit
+- aa8f4d1 docs: record Nomia security audit and former-server hardening
+
 ## v0.16.0 - 2026-10-30
 
 Previous release: v0.15.1
