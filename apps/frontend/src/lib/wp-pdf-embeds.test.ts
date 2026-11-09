@@ -7,10 +7,10 @@ const fileBlock = (href: string) =>
   `<div data-wp-interactive="core/file" class="wp-block-file"><object data-wp-bind--hidden="!state.hasPdfPreview" hidden class="wp-block-file__embed" data="${href}" type="application/pdf" style="width:100%;height:600px"></object><a id="f" href="${href}">agendas</a><a href="${href}" class="wp-block-file__button wp-element-button" download aria-describedby="f">Descarregar</a></div>`;
 
 describe("embedPdfFileBlocks", () => {
-  it("shows the PDF in an iframe in place of WordPress's hidden object, above its links", () => {
+  it("shows the PDF in an iframe in place of WordPress's hidden object, above Descarregar, its name for screen readers only", () => {
     const html = embedPdfFileBlocks(`<p>Texto</p>${fileBlock(pdf)}`);
     expect(html).toBe(
-      `<p>Texto</p><div data-wp-interactive="core/file" class="wp-block-file"><iframe class="wp-block-file__embed" src="${pdf}" title="PDF: agendas" loading="lazy"></iframe><a id="f" href="${pdf}">agendas</a><a href="${pdf}" class="wp-block-file__button wp-element-button" download aria-describedby="f">Descarregar</a></div>`,
+      `<p>Texto</p><div data-wp-interactive="core/file" class="wp-block-file"><iframe class="wp-block-file__embed" src="${pdf}" title="PDF: agendas" loading="lazy"></iframe><span id="f" class="sr-only">agendas</span><a href="${pdf}" class="wp-block-file__button wp-element-button" download aria-describedby="f">Descarregar</a></div>`,
     );
   });
 
