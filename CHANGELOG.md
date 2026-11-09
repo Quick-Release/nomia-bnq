@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.26.0 - 2026-11-09
+
+Previous release: v0.25.0
+
+- 78be258 Merge pull request #150 from Quick-Release/claude/documento-no-date
+- ca8fc18 feat: show a Biblioteca document's PDF file block in the page
+- 630573c feat: hide the publication date on Biblioteca document pages
+- b82352b Merge pull request #111 from Quick-Release/claude/apa-proxy-security-headers
+- bedd77e Merge remote-tracking branch 'origin/main' into claude/apa-proxy-security-headers
+- bc8ea5f deploy: allow PDF file blocks from nomia-media.bnq.pt in frame-src
+- d43253a deploy: send security headers from the bioeconomia proxy
+
 ## v0.25.0 - 2026-11-09
 
 Previous release: v0.24.0
