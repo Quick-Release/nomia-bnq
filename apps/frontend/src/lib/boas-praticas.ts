@@ -8,7 +8,7 @@ import { nutsCodeOfSlug, nutsMemberships } from "./nuts";
 /*
  * The NUTS map block's seam onto gq-content's `biblioteca` collection: the
  * published Boas práticas (the `boas-praticas` Biblioteca category), with
- * their NUTS regions and target audiences, from the publication store alone.
+ * their NUTS regions, from the publication store alone.
  * Those tagged Internacional are kept apart: the map leaves them out, and the
  * block lists them under Boas Práticas internacionais.
  */
@@ -18,14 +18,8 @@ export const BOAS_PRATICAS_TERM = {
   slug: "boas-praticas",
 } as const;
 export const NUTS_TAXONOMY = "regiao_nuts";
-export const AUDIENCE_TAXONOMY = "publico_alvo";
 /** The `regiao_nuts` term for an entry outside Portugal (gq-bioeconomia's `Nuts::INTERNATIONAL_SLUG`). */
 export const INTERNATIONAL_SLUG = "internacional";
-
-export interface Audience {
-  slug: string;
-  name: string;
-}
 
 export interface BoaPratica {
   href: string;
@@ -35,8 +29,6 @@ export interface BoaPratica {
   imageAlt: string;
   /** The NUTS codes it is tagged with and every region above them. */
   regions: string[];
-  /** Its target audiences' slugs. */
-  audiences: string[];
 }
 
 export function boaPratica(item: CollectionItem<NomiaExtension>): BoaPratica {
@@ -50,19 +42,7 @@ export function boaPratica(item: CollectionItem<NomiaExtension>): BoaPratica {
     imageSrc: item.featuredImage?.sourceUrl || null,
     imageAlt: item.featuredImage?.altText || "",
     regions: nutsMemberships(tagged),
-    audiences: (item.terms[AUDIENCE_TAXONOMY] ?? []).map((term) => term.slug),
   };
-}
-
-/** The audiences the entries have, by name. */
-export function audiencesOf(items: readonly CollectionItem<NomiaExtension>[]): Audience[] {
-  const bySlug = new Map<string, string>();
-  for (const item of items) {
-    for (const term of item.terms[AUDIENCE_TAXONOMY] ?? []) bySlug.set(term.slug, term.name);
-  }
-  return [...bySlug]
-    .map(([slug, name]) => ({ slug, name }))
-    .sort((a, b) => a.name.localeCompare(b.name, "pt"));
 }
 
 export function isInternational(item: CollectionItem<NomiaExtension>): boolean {
@@ -72,8 +52,6 @@ export function isInternational(item: CollectionItem<NomiaExtension>): boolean {
 export interface BoasPraticas {
   /** The entries on the map: every one not tagged Internacional. */
   items: BoaPratica[];
-  /** The map entries' audiences. */
-  audiences: Audience[];
   /** The entries tagged Internacional, as the Listing block's rows. */
   international: LibraryRow[];
 }
@@ -95,7 +73,6 @@ async function readAll(list: typeof listCollection): Promise<BoasPraticas | null
   const national = all.filter((item) => !isInternational(item));
   return {
     items: national.map(boaPratica),
-    audiences: audiencesOf(national),
     international: all.filter(isInternational).map(libraryRow),
   };
 }

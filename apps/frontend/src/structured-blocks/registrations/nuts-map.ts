@@ -4,9 +4,9 @@ import { defineStructuredBlock, numberAttribute, stringAttribute } from "../defi
  * The published Boas práticas on a map of Portugal by NUTS 2024 region:
  * visitors switch between NUTS 0, 1 and 2 (each level in its own colour),
  * pick a region on the map or in the filters to list the entries tagged with
- * it or any region inside it, and filter by target audience. The entries are
+ * it or any region inside it. The entries are
  * the Biblioteca's `boas-praticas` category, read from the publication store
- * on each visit; editors tag them with Regiões NUTS and Públicos-alvo. Those
+ * on each visit; editors tag them with Regiões NUTS. Those
  * tagged Internacional are left off the map and listed after it, under their
  * own heading.
  */
@@ -33,7 +33,7 @@ export default defineStructuredBlock({
   editor: {
     title: "Mapa de boas práticas (NUTS)",
     description:
-      "Mapa de Portugal por regiões NUTS com as boas práticas da Biblioteca de cada região, filtráveis por público-alvo, e a lista das internacionais.",
+      "Mapa de Portugal por regiões NUTS com as boas práticas da Biblioteca de cada região, e a lista das internacionais.",
     icon: "location-alt",
     keywords: ["mapa", "nuts", "regiões", "boas práticas", "map", "region"],
     experience: "preview",

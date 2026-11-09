@@ -6,17 +6,16 @@ Shows the Biblioteca's **Boas práticas** on a map of Portugal by NUTS 2024
 region (design: Nomia — Website 2, node 40017522:49984). Visitors switch the
 map between three levels, each drawn in its own colour:
 
-| Level  | Units                                                      | Colour            |
-| ------ | ---------------------------------------------------------- | ----------------- |
-| NUTS 0 | Portugal                                                   | Botânico 200      |
-| NUTS 1 | Continente, Região Autónoma dos Açores, Região Autónoma da Madeira | Teal 200 |
-| NUTS 2 | the 9 regions (Norte, Centro, Oeste e Vale do Tejo, …)     | Ciano 200         |
+| Level  | Units                                                              | Colour       |
+| ------ | ------------------------------------------------------------------ | ------------ |
+| NUTS 0 | Portugal                                                           | Botânico 200 |
+| NUTS 1 | Continente, Região Autónoma dos Açores, Região Autónoma da Madeira | Teal 200     |
+| NUTS 2 | the 9 regions (Norte, Centro, Oeste e Vale do Tejo, …)             | Ciano 200    |
 
 Clicking (or pressing Enter on) a region, or picking it in the **Região**
 filter, lists only the entries tagged with that region or any region inside
 it: Continente lists Norte's and Douro's entries; Alentejo lists Alentejo
-Central's. Clicking the selected region again lists every entry. The
-**Público-alvo** filter narrows the list to one audience. Each card links to
+Central's. Clicking the selected region again lists every entry. Each card links to
 its entry.
 
 Entries tagged **Internacional** are not on the map. They follow it under
@@ -40,8 +39,6 @@ image, title and excerpt. On each entry, editors tick:
   NUTS 3 included, or **Internacional** for an entry outside Portugal. An entry tagged with Douro (NUTS 3) is listed under Norte
   (NUTS 2), Continente (NUTS 1) and Portugal (NUTS 0). An entry tagged only
   with Portugal is listed when no region is selected, and under Portugal.
-- **Públicos-alvo** (`publico_alvo`): Empresas, Cidadãos, Investigação, or
-  terms editors add.
 
 The Regiões NUTS terms are Portugal's NUTS 2024 units (in force since
 1 January 2024; the Extra-Regio codes are left out) and Internacional

@@ -501,7 +501,6 @@ test('every taxonomy is exposed to WPGraphQL for the archive listings', function
         'categoria_oportunidade' => [ true, 'CategoriaOportunidade', 'CategoriasOportunidade' ],
         'entidades' => [ true, 'Entidade', 'Entidades' ],
         'regiao_nuts' => [ true, 'RegiaoNuts', 'RegioesNuts' ],
-        'publico_alvo' => [ true, 'PublicoAlvo', 'PublicosAlvo' ],
     ]);
 });
 

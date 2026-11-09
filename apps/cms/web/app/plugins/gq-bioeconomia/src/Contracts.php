@@ -4714,7 +4714,7 @@ final class Contracts {
 				'blockName'   => 'getquick/nuts-map',
 				'catalogId'   => 'nuts-map',
 				'title'       => 'Mapa de boas práticas (NUTS)',
-				'description' => 'Mapa de Portugal por regiões NUTS com as boas práticas da Biblioteca de cada região, filtráveis por público-alvo, e a lista das internacionais.',
+				'description' => 'Mapa de Portugal por regiões NUTS com as boas práticas da Biblioteca de cada região, e a lista das internacionais.',
 				'icon'        => 'location-alt',
 				'keywords'    => [
 					'mapa',

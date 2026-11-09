@@ -1,7 +1,7 @@
 ---
 /**
  * NUTS map of Boas práticas: Portugal by NUTS 2024 level (0, 1 or 2, each in
- * its own colour), filters, and the published Boas práticas. Selecting a
+ * its own colour), a region filter, and the published Boas práticas. Selecting a
  * region lists the entries tagged with it or any region inside it.
  *
  * Design: Nomia — Website (2), node 40017522:49984. The shapes are Eurostat
@@ -11,17 +11,16 @@
  */
 import geometry from "./nuts-map-geometry.json";
 import { NUTS_MAP_LEVELS, nutsUnit, nutsUnitsAt, type NutsMapLevel } from "../../lib/nuts";
-import type { Audience, BoaPratica } from "../../lib/boas-praticas";
+import type { BoaPratica } from "../../lib/boas-praticas";
 import { PAGE_FRAME } from "../../lib/site-gutters";
 
 interface Props {
   items: BoaPratica[];
-  audiences: Audience[];
   /** The level shown first. */
   level?: NutsMapLevel;
 }
 
-const { items, audiences, level = 2 } = Astro.props;
+const { items, level = 2 } = Astro.props;
 
 const LEVEL_LABELS: Record<NutsMapLevel, { short: string; long: string }> = {
   0: { short: "NUTS 0", long: "País" },
@@ -120,17 +119,6 @@ const count = (n: number) => (n === 1 ? "1 boa prática" : `${n} boas práticas`
               ))}
             </select>
           </label>
-          {audiences.length > 0 && (
-            <label class="nuts-map__field">
-              <span class="sr-only">Público-alvo</span>
-              <select data-audience-select>
-                <option value="">Todos os públicos</option>
-                {audiences.map((audience) => (
-                  <option value={audience.slug}>{audience.name}</option>
-                ))}
-              </select>
-            </label>
-          )}
         </div>
         <p class="text-notes text-main-cinza-500 font-secondary" data-status aria-live="polite">
           {count(items.length)}
@@ -142,7 +130,6 @@ const count = (n: number) => (n === 1 ? "1 boa prática" : `${n} boas práticas`
           <li
             class="nuts-map__item border-monochrome-light-400 relative flex items-stretch border-b"
             data-regions={item.regions.join(" ")}
-            data-audiences={item.audiences.join(" ")}
           >
             <div class="relative w-[min(240px,32vw)] shrink-0 self-stretch bg-main-cinza-100">
               {item.imageSrc && (
@@ -336,14 +323,12 @@ const count = (n: number) => (n === 1 ? "1 boa prática" : `${n} boas práticas`
     const levelButtons = [...root.querySelectorAll<HTMLButtonElement>("[data-level-button]")];
     const levelGroups = [...root.querySelectorAll<SVGGElement>("[data-level-shapes]")];
     const regionSelect = root.querySelector<HTMLSelectElement>("[data-region-select]");
-    const audienceSelect = root.querySelector<HTMLSelectElement>("[data-audience-select]");
     const items = [...root.querySelectorAll<HTMLLIElement>("[data-regions]")];
     const empty = root.querySelector<HTMLElement>("[data-empty]");
     const status = root.querySelector<HTMLElement>("[data-status]");
 
     let level = root.dataset.level ?? "2";
     let region = "";
-    let audience = "";
 
     const levelOf = (code: string) => (code === "PT" ? "0" : code.length === 3 ? "1" : "2");
     const nameOf = (code: string) =>
@@ -368,8 +353,7 @@ const count = (n: number) => (n === 1 ? "1 boa prática" : `${n} boas práticas`
       let shown = 0;
       for (const item of items) {
         const regions = (item.dataset.regions ?? "").split(" ");
-        const audiences = (item.dataset.audiences ?? "").split(" ");
-        const match = (!region || regions.includes(region)) && (!audience || audiences.includes(audience));
+        const match = !region || regions.includes(region);
         item.hidden = !match;
         if (match) shown++;
       }
@@ -405,10 +389,6 @@ const count = (n: number) => (n === 1 ? "1 boa prática" : `${n} boas práticas`
     regionSelect?.addEventListener("change", () => {
       region = regionSelect.value;
       if (region) level = levelOf(region);
-      render();
-    });
-    audienceSelect?.addEventListener("change", () => {
-      audience = audienceSelect.value;
       render();
     });
 

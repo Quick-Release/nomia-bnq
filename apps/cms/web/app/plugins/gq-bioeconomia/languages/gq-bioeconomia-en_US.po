@@ -3995,55 +3995,6 @@ msgstr "New NUTS region name"
 msgid "Nenhuma região encontrada."
 msgstr "No regions found."
 
-#: src/Content/Taxonomies.php:286
-#: src/Content/Taxonomies.php:297
-msgid "Públicos-alvo"
-msgstr "Target audiences"
-
-#: src/Content/Taxonomies.php:287
-msgid "Público-alvo"
-msgstr "Target audience"
-
-#: src/Content/Taxonomies.php:288
-msgid "Pesquisar Públicos-alvo"
-msgstr "Search target audiences"
-
-#: src/Content/Taxonomies.php:289
-msgid "Todos os Públicos-alvo"
-msgstr "All target audiences"
-
-#: src/Content/Taxonomies.php:290
-msgid "Público-alvo superior"
-msgstr "Parent target audience"
-
-#: src/Content/Taxonomies.php:291
-msgid "Público-alvo superior:"
-msgstr "Parent target audience:"
-
-#: src/Content/Taxonomies.php:292
-msgid "Editar Público-alvo"
-msgstr "Edit target audience"
-
-#: src/Content/Taxonomies.php:293
-msgid "Ver Público-alvo"
-msgstr "View target audience"
-
-#: src/Content/Taxonomies.php:294
-msgid "Atualizar Público-alvo"
-msgstr "Update target audience"
-
-#: src/Content/Taxonomies.php:295
-msgid "Adicionar Novo Público-alvo"
-msgstr "Add new target audience"
-
-#: src/Content/Taxonomies.php:296
-msgid "Nome do Novo Público-alvo"
-msgstr "New target audience name"
-
-#: src/Content/Taxonomies.php:298
-msgid "Nenhum público-alvo encontrado."
-msgstr "No target audiences found."
-
 #: blocks/nuts-map/block.json
 msgctxt "block title"
 msgid "Mapa de boas práticas (NUTS)"
@@ -4085,5 +4036,5 @@ msgstr "International"
 
 #: blocks/nuts-map/block.json
 msgctxt "block description"
-msgid "Mapa de Portugal por regiões NUTS com as boas práticas da Biblioteca de cada região, filtráveis por público-alvo, e a lista das internacionais."
-msgstr "Map of Portugal by NUTS region with each region's good practices from the Library, filterable by target audience, and the list of international ones."
+msgid "Mapa de Portugal por regiões NUTS com as boas práticas da Biblioteca de cada região, e a lista das internacionais."
+msgstr "Map of Portugal by NUTS region with each region's good practices from the Library, and the list of international ones."

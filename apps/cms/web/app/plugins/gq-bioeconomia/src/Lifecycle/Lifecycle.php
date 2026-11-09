@@ -60,7 +60,6 @@ final class Lifecycle {
 		LegacyRename::run();
 		Taxonomies::seedLibraryTerms();
 		Taxonomies::seedOpportunityTerms();
-		Taxonomies::seedAudienceTerms();
 		Nuts::seed();
 		Capabilities::removeObsolete();
 		Capabilities::sync();

@@ -5005,7 +5005,7 @@ return [
 		'title'       => 'Mapa de boas práticas (NUTS)',
 		'category'    => 'getquick-design',
 		'icon'        => 'location-alt',
-		'description' => 'Mapa de Portugal por regiões NUTS com as boas práticas da Biblioteca de cada região, filtráveis por público-alvo, e a lista das internacionais.',
+		'description' => 'Mapa de Portugal por regiões NUTS com as boas práticas da Biblioteca de cada região, e a lista das internacionais.',
 		'keywords'    => [
 			'mapa',
 			'nuts',

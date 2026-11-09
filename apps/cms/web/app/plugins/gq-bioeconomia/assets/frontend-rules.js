@@ -109,7 +109,7 @@ var gqBioeconomiaFrontendRules = (function(exports) {
 				param: "categoria",
 				label: "Categoria"
 			}, ...GLOBAL_TAXONOMIES],
-			storedTaxonomies: ["regiao_nuts", "publico_alvo"]
+			storedTaxonomies: ["regiao_nuts"]
 		},
 		eventos: {
 			label: "Eventos",

@@ -50,8 +50,8 @@ export const CONTENT_COLLECTIONS = {
       { taxonomy: "categoria_biblioteca", param: "categoria", label: "Categoria" },
       ...GLOBAL_TAXONOMIES,
     ],
-    // The NUTS map block's regions and audiences (src/lib/boas-praticas.ts).
-    storedTaxonomies: ["regiao_nuts", "publico_alvo"],
+    // The NUTS map block's regions (src/lib/boas-praticas.ts).
+    storedTaxonomies: ["regiao_nuts"],
   },
   eventos: {
     label: "Eventos",

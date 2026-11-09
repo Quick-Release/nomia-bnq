@@ -18,13 +18,12 @@ const item = (
       { slug: "pt11d", name: "Douro" },
       { slug: "unknown", name: "Outra" },
     ],
-    publico_alvo: [{ slug: "empresas", name: "Empresas" }],
   },
   ...overrides,
 });
 
 describe("boaPratica", () => {
-  it("keeps its link, plain-text excerpt, regions with their parents, and audiences", () => {
+  it("keeps its link, plain-text excerpt, and regions with their parents", () => {
     expect(boaPratica(item())).toEqual({
       href: "/biblioteca/boa-pratica/",
       title: "Boa prática",
@@ -32,7 +31,6 @@ describe("boaPratica", () => {
       imageSrc: null,
       imageAlt: "",
       regions: ["PT", "PT1", "PT11", "PT11D"],
-      audiences: ["empresas"],
     });
   });
 
@@ -48,12 +46,7 @@ describe("publishedBoasPraticas", () => {
       queries.push(query);
       return {
         kind: "found",
-        items: [
-          item({
-            uri: `/p${query.page}/`,
-            terms: { publico_alvo: [{ slug: "cidadaos", name: "Cidadãos" }] },
-          }),
-        ],
+        items: [item({ uri: `/p${query.page}/` })],
         total: 2,
         page: query.page ?? 1,
         pages: 2,
@@ -80,7 +73,6 @@ describe("publishedBoasPraticas", () => {
       },
     ]);
     expect(first?.items.map((entry) => entry.href)).toEqual(["/p1/", "/p2/"]);
-    expect(first?.audiences).toEqual([{ slug: "cidadaos", name: "Cidadãos" }]);
   });
 
   it("keeps the entries tagged Internacional off the map, as listing rows", async () => {
@@ -93,7 +85,6 @@ describe("publishedBoasPraticas", () => {
           title: "Towards circular plastics in Europe",
           terms: {
             regiao_nuts: [{ slug: "internacional", name: "Internacional" }],
-            publico_alvo: [{ slug: "investigacao", name: "Investigação" }],
           },
         }),
       ],
@@ -105,7 +96,6 @@ describe("publishedBoasPraticas", () => {
     const answer = await publishedBoasPraticas(new Request("https://example.test/"), list);
 
     expect(answer?.items.map((entry) => entry.href)).toEqual(["/pt/"]);
-    expect(answer?.audiences.map((audience) => audience.slug)).toEqual(["empresas"]);
     expect(answer?.international).toMatchObject([
       { href: "/eu/", title: "Towards circular plastics in Europe" },
     ]);

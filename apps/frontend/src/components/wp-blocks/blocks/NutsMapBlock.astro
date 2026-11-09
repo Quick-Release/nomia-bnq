@@ -25,7 +25,7 @@ const boasPraticas = await publishedBoasPraticas(Astro.request);
 
 {boasPraticas && (
   <>
-    <NutsMap items={boasPraticas.items} audiences={boasPraticas.audiences} level={level} />
+    <NutsMap items={boasPraticas.items} level={level} />
     {boasPraticas.international.length > 0 && (
       <section aria-labelledby="boas-praticas-internacionais" data-nuts-map-international>
         <h2

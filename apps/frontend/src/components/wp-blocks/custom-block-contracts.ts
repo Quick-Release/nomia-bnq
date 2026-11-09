@@ -813,7 +813,7 @@ export const WP_CUSTOM_BLOCK_CONTRACTS = [
       "internationalTitle",
     ],
     editorTitle: "Mapa de boas práticas (NUTS)",
-    editorDescription: "Mapa de Portugal por regiões NUTS com as boas práticas da Biblioteca de cada região, filtráveis por público-alvo, e a lista das internacionais.",
+    editorDescription: "Mapa de Portugal por regiões NUTS com as boas práticas da Biblioteca de cada região, e a lista das internacionais.",
   },
 ] as const satisfies readonly WpCustomBlockContract[];
 

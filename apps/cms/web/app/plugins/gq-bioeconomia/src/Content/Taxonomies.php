@@ -278,36 +278,6 @@ final class Taxonomies {
 					'rewrite'             => false,
 				],
 			],
-			'publico_alvo'           => [
-				'object_type' => [ 'biblioteca' ],
-				'args'        => [
-					'hierarchical'        => true,
-					'labels'              => [
-						'name'              => __( 'Públicos-alvo', 'gq-bioeconomia' ),
-						'singular_name'     => __( 'Público-alvo', 'gq-bioeconomia' ),
-						'search_items'      => __( 'Pesquisar Públicos-alvo', 'gq-bioeconomia' ),
-						'all_items'         => __( 'Todos os Públicos-alvo', 'gq-bioeconomia' ),
-						'parent_item'       => __( 'Público-alvo superior', 'gq-bioeconomia' ),
-						'parent_item_colon' => __( 'Público-alvo superior:', 'gq-bioeconomia' ),
-						'edit_item'         => __( 'Editar Público-alvo', 'gq-bioeconomia' ),
-						'view_item'         => __( 'Ver Público-alvo', 'gq-bioeconomia' ),
-						'update_item'       => __( 'Atualizar Público-alvo', 'gq-bioeconomia' ),
-						'add_new_item'      => __( 'Adicionar Novo Público-alvo', 'gq-bioeconomia' ),
-						'new_item_name'     => __( 'Nome do Novo Público-alvo', 'gq-bioeconomia' ),
-						'menu_name'         => __( 'Públicos-alvo', 'gq-bioeconomia' ),
-						'not_found'         => __( 'Nenhum público-alvo encontrado.', 'gq-bioeconomia' ),
-					],
-					'show_ui'             => true,
-					'show_admin_column'   => true,
-					'query_var'           => false,
-					'show_in_rest'        => true,
-					'show_in_graphql'     => true,
-					'graphql_single_name' => 'PublicoAlvo',
-					'graphql_plural_name' => 'PublicosAlvo',
-					'capabilities'        => Capabilities::libraryCategories(),
-					'rewrite'             => false,
-				],
-			],
 		];
 	}
 
@@ -344,19 +314,6 @@ final class Taxonomies {
 			'Publicações',
 			'Boas práticas',
 			'Newsletters',
-		];
-	}
-
-	/**
-	 * Devolve a lista de termos padrão para a taxonomia de públicos-alvo.
-	 *
-	 * @return string[]
-	 */
-	public static function defaultAudienceTerms() {
-		return [
-			'Empresas',
-			'Cidadãos',
-			'Investigação',
 		];
 	}
 
@@ -425,14 +382,5 @@ final class Taxonomies {
 	 */
 	public static function seedOpportunityTerms() {
 		return self::seedTerms( 'categoria_oportunidade', self::defaultOpportunityTerms() );
-	}
-
-	/**
-	 * Insere os termos padrão da taxonomia de públicos-alvo se ainda não existirem.
-	 *
-	 * @return bool
-	 */
-	public static function seedAudienceTerms() {
-		return self::seedTerms( 'publico_alvo', self::defaultAudienceTerms() );
 	}
 }
