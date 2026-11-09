@@ -442,7 +442,7 @@ test('content types are registered with rest support and custom capabilities', f
         ->and($opportunities['rewrite']['slug'])->toBe('oportunidades/oportunidade')
         ->and($tools['has_archive'])->toBeFalse()
         ->and($tools['rewrite']['slug'])->toBe('ferramentas/ferramenta')
-        ->and($opportunities['supports'])->toBe([ 'title', 'editor', 'thumbnail', 'revisions', 'custom-fields' ])
+        ->and($opportunities['supports'])->toBe([ 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'custom-fields' ])
         ->and($opportunities['show_in_graphql'])->toBeTrue()
         ->and($opportunities['graphql_single_name'])->toBe('Oportunidade')
         ->and($platforms['show_in_rest'])->toBeTrue()
@@ -450,14 +450,14 @@ test('content types are registered with rest support and custom capabilities', f
         ->and($platforms['labels']['all_items'])->toBe('Plataformas')
         ->and($platforms['has_archive'])->toBe('plataformas')
         ->and($platforms)->not->toHaveKey('template')
-        ->and($platforms['supports'])->toBe([ 'title', 'editor', 'thumbnail', 'revisions', 'custom-fields' ])
+        ->and($platforms['supports'])->toBe([ 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'custom-fields' ])
         ->and($platforms['show_in_graphql'])->toBeTrue()
         ->and($platforms['graphql_single_name'])->toBe('Plataforma')
         ->and($databases['show_in_rest'])->toBeTrue()
         ->and($databases['show_in_menu'])->toBe('edit.php?post_type=ferramentas')
         ->and($databases['labels']['all_items'])->toBe('Bases de Dados')
         ->and($databases['has_archive'])->toBe('bases-de-dados')
-        ->and($databases['supports'])->toBe([ 'title', 'editor', 'thumbnail', 'revisions' ])
+        ->and($databases['supports'])->toBe([ 'title', 'editor', 'excerpt', 'thumbnail', 'revisions' ])
         ->and($databases['show_in_graphql'])->toBeTrue()
         ->and($databases['graphql_single_name'])->toBe('BaseDeDados')
         ->and($taxonomy['args']['hierarchical'])->toBeTrue()
@@ -553,6 +553,20 @@ test('featured image theme support is extended to plataformas and other thumbnai
         ->and($theme_support[0])->toContain('bases_de_dados')
         ->and($theme_support[0])->toContain('recursos_educativos')
         ->and($theme_support[0])->toContain('ferramentas');
+});
+
+test('oportunidades, plataformas and bases de dados show only the excerpt the editor wrote', function () {
+    $GLOBALS['lgm_test_state']['posts'][ 201 ] = [ 'ID' => 201, 'post_type' => 'plataformas', 'post_excerpt' => '' ];
+    $GLOBALS['lgm_test_state']['posts'][ 202 ] = [ 'ID' => 202, 'post_type' => 'bases_de_dados', 'post_excerpt' => 'Resumo escrito.' ];
+    $GLOBALS['lgm_test_state']['posts'][ 203 ] = [ 'ID' => 203, 'post_type' => 'eventos', 'post_excerpt' => '' ];
+
+    (new PostTypes())->register();
+    $generated = 'Texto gerado a partir do conteudo.';
+
+    expect(PostTypes::withAuthoredExcerpts())->toBe([ 'oportunidades', 'plataformas', 'bases_de_dados' ])
+        ->and(apply_filters('get_the_excerpt', $generated, get_post(201)))->toBe('')
+        ->and(apply_filters('get_the_excerpt', 'Resumo escrito.', get_post(202)))->toBe('Resumo escrito.')
+        ->and(apply_filters('get_the_excerpt', $generated, get_post(203)))->toBe($generated);
 });
 
 test('admin ordering defaults to alphabetical titles for plugin content types', function () {

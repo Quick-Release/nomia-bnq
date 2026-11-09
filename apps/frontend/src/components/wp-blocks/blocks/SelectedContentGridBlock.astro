@@ -7,6 +7,9 @@ import { safeHref } from "../../../lib/safe-href";
 interface Props { block: WpParsedBlock }
 const { block } = Astro.props;
 const allowed = new Set(["post", "videos", "podcasts", "infografias", "gq_bio_gallery", "eventos", "oportunidades", "ferramentas", "plataformas", "bases_de_dados"]);
+// The CMS gives these types only the excerpt their editor wrote; their cards show
+// it alone, and never fall back to the body.
+const excerptOnly = new Set(["oportunidades", "plataformas", "bases_de_dados"]);
 const items = Array.isArray(block.attrs?.items) ? block.attrs.items.slice(0, 5) : [];
 const runtime = content();
 const seen = new Set<number>();
@@ -18,7 +21,7 @@ const cards = await Promise.all(items.map(async (item: { postId?: number; postTy
   if (answer.kind === "moved") answer = await runtime.publishedEntry(answer.uri, Astro.site?.origin);
   if (answer.kind !== "found") return null;
   const entry = answer.content.entry;
-  return { index, title: text(entry.title) || "Sem título", href: safeHref(entry.uri), image: entry.featuredImage, excerpt: text(entry.excerpt || entry.content).split(" ").slice(0, 30).join(" ") };
+  return { index, title: text(entry.title) || "Sem título", href: safeHref(entry.uri), image: entry.featuredImage, excerpt: text(excerptOnly.has(item.postType || "") ? entry.excerpt : entry.excerpt || entry.content).split(" ").slice(0, 30).join(" ") };
 }));
 const main = cards[0];
 const secondary = cards.slice(1).filter((card) => card !== null);
