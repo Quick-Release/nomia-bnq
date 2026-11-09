@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.30.0 - 2026-11-09
+
+Previous release: v0.29.2
+
+- d2971ff Merge pull request #156 from Quick-Release/claude/glossario-accordion
+- 21aba2a feat: the Glossário as an accordion of every term; term pages redirect to it
+
 ## v0.29.2 - 2026-11-09
 
 Previous release: v0.29.1
