@@ -357,7 +357,9 @@ describe("entries read live in local development", () => {
     const { status, html } = await render("/about/");
 
     expect(status).toBe(200);
-    expect(html).toContain("September 30, 2026");
+    expect(html).toContain("<p>We make things.</p>");
+    // No page shows an entry's date.
+    expect(html).not.toContain("<time");
     expect(
       new JSDOM(html).window.document.querySelector(
         "img.featured-image, .wp-block-post-featured-image",

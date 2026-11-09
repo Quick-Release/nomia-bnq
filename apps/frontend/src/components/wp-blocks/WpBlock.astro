@@ -16,7 +16,7 @@ import { GRAVITY_FORMS_BLOCK } from "@getquick/content/forms/astro";
 import { WP_PDF_EMBED_PREVIEW } from "../../lib/wp-content-classes";
 import { gravityFormHtml, type PageForms } from "../../lib/forms";
 import type { WpPagePayload } from "../../lib/wp-page-payload";
-import { addDefaultPdfEmbeds } from "../../lib/wp-pdf-embeds";
+import { embedPdfFileBlocks } from "../../lib/wp-pdf-embeds";
 import { wpGroupLayoutClasses, withWpGroupLayoutClasses } from "../../lib/wp-group-layout";
 import type { WpUnsupportedFallbackMode } from "../../lib/wp-block-fallback";
 import CoreButton from "./blocks/CoreButton.astro";
@@ -59,7 +59,7 @@ const pieces = flattenInnerContent(block).map((piece, index) =>
 const hasChildPieces = pieces.some((p) => p.type === "block");
 const leaf = blockIsLeaf(block);
 const isGetquickBlock = block.blockName?.startsWith("getquick/") ?? false;
-const htmlWithPdfEmbeds = addDefaultPdfEmbeds(withPresentation(block.innerHTML));
+const htmlWithPdfEmbeds = embedPdfFileBlocks(withPresentation(block.innerHTML));
 const listTag = block.blockName === "core/list-item" ? "li" : block.attrs?.ordered === true ? "ol" : "ul";
 const listContent =
   (block.blockName === "core/list" || block.blockName === "core/list-item") && !leaf
@@ -105,7 +105,7 @@ const designShellEnd = designShell.lastIndexOf("</div");
     <>
       <Fragment set:html={designShell.slice(0, designShellEnd)} />
       {designContainer.pieces.map((piece) => piece.type === "html" ? (
-        <Fragment set:html={addDefaultPdfEmbeds(piece.html)} />
+        <Fragment set:html={embedPdfFileBlocks(piece.html)} />
       ) : (
         <WpBlock block={piece.block} pageFeaturedImage={pageFeaturedImage} unsupportedFallback={unsupportedFallback} forms={forms} />
       ))}
@@ -121,7 +121,7 @@ const designShellEnd = designShell.lastIndexOf("</div");
       {hasChildPieces
         ? pieces.map((piece) =>
             piece.type === "html" ? (
-              <Fragment set:html={addDefaultPdfEmbeds(piece.html)} />
+              <Fragment set:html={embedPdfFileBlocks(piece.html)} />
             ) : (
               <WpBlock
                 block={piece.block}
@@ -145,7 +145,7 @@ const designShellEnd = designShell.lastIndexOf("</div");
     >
       {quoteContent.pieces.map((piece) =>
         piece.type === "html" ? (
-          <Fragment set:html={addDefaultPdfEmbeds(piece.html)} />
+          <Fragment set:html={embedPdfFileBlocks(piece.html)} />
         ) : (
           <WpBlock
             block={piece.block}
@@ -160,7 +160,7 @@ const designShellEnd = designShell.lastIndexOf("</div");
     <CoreColumns block={block} wrapped={columnsContent.wrapped}>
       {columnsContent.pieces.map((piece) =>
         piece.type === "html" ? (
-          <Fragment set:html={addDefaultPdfEmbeds(piece.html)} />
+          <Fragment set:html={embedPdfFileBlocks(piece.html)} />
         ) : (
           <WpBlock
             block={piece.block}
@@ -197,7 +197,7 @@ const designShellEnd = designShell.lastIndexOf("</div");
     >
       {listContent.pieces.map((piece) =>
         piece.type === "html" ? (
-          <Fragment set:html={addDefaultPdfEmbeds(piece.html)} />
+          <Fragment set:html={embedPdfFileBlocks(piece.html)} />
         ) : (
           <WpBlock
             block={piece.block}
@@ -219,7 +219,7 @@ const designShellEnd = designShell.lastIndexOf("</div");
   ) : hasChildPieces ? (
     pieces.map((piece) =>
       piece.type === "html" ? (
-        <Fragment set:html={addDefaultPdfEmbeds(piece.html)} />
+        <Fragment set:html={embedPdfFileBlocks(piece.html)} />
       ) : (
         <WpBlock
           block={piece.block}
