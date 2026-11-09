@@ -10,6 +10,7 @@ import { pageForms } from "../lib/forms";
 import { categoryHeroBlock, categoryHeroPage } from "../lib/category-hero";
 import { nomiaPage } from "../lib/nomia-content";
 import { embedPdfFileBlocks } from "../lib/wp-pdf-embeds";
+import { GLOSSARY_COLLECTION, glossaryTermHref } from "../lib/glossary";
 
 const runtime = content();
 const route = routeOf(Astro.url.pathname);
@@ -41,6 +42,14 @@ Astro.response.status = placeholder ? 200 : responseStatus(delivery);
 Astro.response.headers.set("Cache-Control", "no-cache");
 const found = !home && delivery.kind === "found" ? delivery.content : null;
 const entry = found && "entry" in found ? found.entry : null;
+// A Glossário term has no page of its own: its address leads to the term on
+// the Glossário page, which opens it (src/lib/glossary.ts).
+if (entry?.collection?.name === GLOSSARY_COLLECTION) {
+  return new Response(null, {
+    status: 301,
+    headers: { Location: encodeURI(glossaryTermHref(entry.uri) ?? "/biblioteca/glossario/"), "Cache-Control": "no-store" },
+  });
+}
 const chrome =
   delivery.kind === "found" ? delivery.content.chrome : delivery.kind === "missing" ? delivery.chrome : null;
 const alternates = found?.alternates ?? [];
