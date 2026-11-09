@@ -17,6 +17,7 @@ import "../styles/nomia-blocks.css";
 
 // A page or post built with Nomia's blocks, rendered from its stored blocks by
 // the Nomia block components (migrated from bioeconomia.pt's Astro renderer).
+// Its default slot follows the blocks, inside the same <main>.
 interface Props {
   nomia: NomiaContent;
   /** GQ Design's presets it was served with, for its blocks' `has-<slug>-*` classes. */
@@ -48,4 +49,5 @@ const surface = background
 <style is:global set:html={thematicColorStyles(nomia.thematicColors)} />
 <main class:list={["nomia-blocks", surface?.class]} style={surface?.style}>
   <WpBlockRenderer blocks={nomia.blocks} bare wrapCoreBlocks pageFeaturedImage={featuredImage} forms={forms} />
+  <slot />
 </main>

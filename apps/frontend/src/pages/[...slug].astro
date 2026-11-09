@@ -7,6 +7,7 @@ import Layout from "../layouts/Layout.astro";
 import { content } from "../lib/content";
 import { copyFor } from "../lib/copy";
 import { pageForms } from "../lib/forms";
+import { categoryHeroBlock, categoryHeroPage } from "../lib/category-hero";
 import { nomiaPage } from "../lib/nomia-content";
 
 const runtime = content();
@@ -47,6 +48,16 @@ const nomia = nomiaPage(entry?.extension);
 const gallery = entry?.extension && "kind" in entry.extension && entry.extension.kind === "gallery" ? entry.extension : null;
 const { vars, colorRules } = blockPresetStyles(entry?.spacingSizes ?? [], entry?.colors ?? []);
 const isPost = Boolean(entry?.date);
+// An Oportunidade in a category with its own page (Formação) is shown under
+// that page's hero, with its own title and without its date. The hero is read
+// from the store, so it follows the page as editors change it.
+const heroPage = entry && !nomia && !gallery && !entry.hasVideoHero ? categoryHeroPage(entry.collection) : null;
+const heroDelivery = heroPage ? await runtime.publishedEntry(heroPage, Astro.site?.origin) : null;
+const heroEntry =
+  heroDelivery?.kind === "found" && "entry" in heroDelivery.content ? heroDelivery.content.entry : null;
+const heroPageNomia = nomiaPage(heroEntry?.extension);
+const categoryHero =
+  entry && heroPageNomia ? categoryHeroBlock(heroPageNomia.blocks, entry.title) : null;
 // Its gravityforms/form blocks' descriptors, and the outcome of a post the
 // visitor was just sent back from, which is shown once.
 const { forms, setCookies } = pageForms({
@@ -80,6 +91,20 @@ const title =
         <style is:global set:html={colorRules} />
         <main class="prose-wp prose-wp--video-hero" style={vars} set:html={entry.content}></main>
       </>
+    ) : categoryHero && heroPageNomia ? (
+      <NomiaBlocks
+        nomia={{ blocks: [categoryHero], pageBackgroundColor: null, thematicColors: heroPageNomia.thematicColors }}
+        design={entry}
+        featuredImage={entry.featuredImage}
+        language={language}
+      >
+        {entry.content.trim() && (
+          <div class="category-hero-body">
+            <style is:global set:html={colorRules} />
+            <div class="prose-wp" style={vars} set:html={entry.content}></div>
+          </div>
+        )}
+      </NomiaBlocks>
     ) : (
       <main>
         <h1>{entry.title}</h1>
