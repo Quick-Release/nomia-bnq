@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.31.0 - 2026-11-09
+
+Previous release: v0.30.1
+
+- 1ccd81d Merge pull request #158 from Quick-Release/claude/cpt-excerpt
+- e340f2a feat: the Listing's document grid can leave out images ("Mostrar imagens")
+- bbd36fc feat: Oportunidades, Plataformas and Bases de Dados get an excerpt, shown alone on the Selected content grid
+
 ## v0.30.1 - 2026-11-09
 
 Previous release: v0.30.0
