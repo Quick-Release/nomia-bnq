@@ -31,6 +31,8 @@ export interface ListingPageLink {
 interface Props {
   infiniteLoading?: boolean;
   lightbox?: boolean;
+  /** Document grid only: false leaves the image area out of every card. */
+  showImages?: boolean;
   display: ListingDisplay;
   rows: ListingRow[];
   /** Why there are no rows: nothing published, nothing matches, or the store didn't answer. */
@@ -41,7 +43,7 @@ interface Props {
   next?: string | null;
 }
 
-const { display, rows, empty, pages = [], previous = null, next = null, infiniteLoading = false, lightbox = false } = Astro.props;
+const { display, rows, empty, pages = [], previous = null, next = null, infiniteLoading = false, lightbox = false, showImages = true } = Astro.props;
 const emptyText = {
   none: "Ainda não há entradas publicadas.",
   "no-match": "Nenhum conteúdo corresponde à pesquisa.",
@@ -67,7 +69,7 @@ const focusRing =
           {display === "document-grid" ? (
             <article class="flex h-full flex-col gap-4">
               <a href={row.href} aria-haspopup={lightbox ? "dialog" : undefined} class:list={["group block rounded-sm", focusRing]}>
-                <span class="bg-main-cinza-200 relative flex aspect-video items-center justify-center overflow-hidden rounded-sm">
+                {showImages && <span class="bg-main-cinza-200 relative flex aspect-video items-center justify-center overflow-hidden rounded-sm">
                   {row.imageSrc ? (
                     <img src={row.imageSrc} alt={row.imageAlt}
                       class="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
@@ -75,8 +77,8 @@ const focusRing =
                   ) : (
                     <span class="px-4 text-center text-sm">image not available</span>
                   )}
-                </span>
-                <h2 class="font-primary mt-4 text-xl leading-snug font-semibold group-hover:underline">
+                </span>}
+                <h2 class:list={["font-primary text-xl leading-snug font-semibold group-hover:underline", showImages && "mt-4"]}>
                   {row.title}
                 </h2>
               </a>

@@ -95,6 +95,7 @@ const pagination =
     display={collection === "gq_bio_gallery" && display === "document-grid" ? "thumbnail-grid" : display}
     infiniteLoading={infiniteLoading}
     lightbox={collection === "gq_bio_gallery" && attrs.lightbox !== false}
+    showImages={attrs.showImages !== false}
     rows={rows}
     empty={empty}
     pages={pagination?.pages}

@@ -4506,6 +4506,10 @@ return [
 				'type'    => 'boolean',
 				'default' => true,
 			],
+			'showImages'      => [
+				'type'    => 'boolean',
+				'default' => true,
+			],
 		],
 		'supports'    => [
 			'html'            => false,

@@ -119,6 +119,17 @@
         options: displayOptions(),
         onChange: (next) => setAttributes({ display: next }),
       }),
+      legislation || attributes.display === "document-grid"
+        ? createElement(ToggleControl, {
+            label: __("Mostrar imagens", "gq-bioeconomia"),
+            help: __(
+              "Desligue para documentos sem imagem: os cartões mostram só o texto.",
+              "gq-bioeconomia",
+            ),
+            checked: attributes.showImages !== false,
+            onChange: (next) => setAttributes({ showImages: next }),
+          })
+        : null,
       collectionKey === "gq_bio_gallery"
         ? createElement(ToggleControl, {
             label: __("Abrir imagens em lightbox", "gq-bioeconomia"),

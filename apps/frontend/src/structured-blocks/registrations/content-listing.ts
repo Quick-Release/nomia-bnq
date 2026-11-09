@@ -43,6 +43,8 @@ export default defineStructuredBlock({
     showPagination: booleanAttribute(true),
     infiniteLoading: booleanAttribute(false),
     lightbox: booleanAttribute(true),
+    /** Document grid only: false drops the cards' image area, for documents without images. */
+    showImages: booleanAttribute(true),
   },
   renderer: {
     module: "ContentListingBlock.astro",
