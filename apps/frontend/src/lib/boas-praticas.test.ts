@@ -28,8 +28,6 @@ describe("boaPratica", () => {
       href: "/biblioteca/boa-pratica/",
       title: "Boa prática",
       excerpt: "Resumo & mais.",
-      imageSrc: null,
-      imageAlt: "",
       regions: ["PT", "PT1", "PT11", "PT11D"],
     });
   });

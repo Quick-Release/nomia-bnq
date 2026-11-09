@@ -12,7 +12,8 @@ NUTS_RG_03M_2024_4326_LEVL_<n>.geojson, saved as L0.geojson … L2.geojson.
 The output is the mainland plus two insets (Açores, Madeira), each projected
 into its own box of one SVG viewBox (north up, an equirectangular projection
 true to scale at the frame's middle latitude), simplified to half a pixel, as one path
-per NUTS unit and level. No dependencies: standard library only.
+per NUTS unit and level. The Açores' island groups are drawn larger than
+true scale (ACORES_ENLARGEMENT). No dependencies: standard library only.
 
 Administrative boundaries: © EuroGeographics.
 """
@@ -61,6 +62,73 @@ def rings(geometry):
             yield from polygon
     else:
         raise ValueError(geometry["type"])
+
+
+# The Açores span 600 km of ocean, so their islands are specks at true
+# scale. Each group of nearby islands (Flores and Corvo; Faial, Pico and
+# São Jorge, Graciosa and Terceira; São Miguel; Santa Maria) is enlarged
+# about its own centre, keeping the groups where they are and apart: the
+# inset is not to scale, by design. Above 1.9 Terceira meets São Miguel.
+ACORES_ENLARGEMENT = 1.9
+ACORES_GROUP_GAP = 0.45  # degrees: the central group (Faial to Terceira) is one
+
+
+def ring_bounds(ring):
+    return bounds(ring)
+
+
+def acores_groups(rings):
+    """Groups of nearby islands, as the bounds of each group."""
+    groups = [list(ring_bounds(ring)) for ring in rings]
+    merged = True
+    while merged:
+        merged = False
+        for i in range(len(groups)):
+            for j in range(i + 1, len(groups)):
+                a, b = groups[i], groups[j]
+                if (
+                    a[0] - ACORES_GROUP_GAP <= b[2]
+                    and b[0] - ACORES_GROUP_GAP <= a[2]
+                    and a[1] - ACORES_GROUP_GAP <= b[3]
+                    and b[1] - ACORES_GROUP_GAP <= a[3]
+                ):
+                    groups[i] = [min(a[0], b[0]), min(a[1], b[1]), max(a[2], b[2]), max(a[3], b[3])]
+                    del groups[j]
+                    merged = True
+                    break
+            if merged:
+                break
+    return groups
+
+
+def enlarge_acores(units):
+    """Enlarges each Açores island group about its centre, at every level."""
+    rings = [
+        ring
+        for unit in units.values()
+        if unit["level"] == 0
+        for ring in unit["rings"]
+        if frame_of(*ring[0]) == "acores"
+    ]
+    groups = acores_groups(rings)
+
+    def group_centre(ring):
+        x0, y0, x1, y1 = ring_bounds(ring)
+        cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
+        for g in groups:
+            if g[0] <= cx <= g[2] and g[1] <= cy <= g[3]:
+                return ((g[0] + g[2]) / 2, (g[1] + g[3]) / 2)
+        return (cx, cy)
+
+    def enlarged(ring):
+        if frame_of(*ring[0]) != "acores":
+            return ring
+        cx, cy = group_centre(ring)
+        k = ACORES_ENLARGEMENT
+        return [(cx + (lon - cx) * k, cy + (lat - cy) * k) for lon, lat in ring]
+
+    for unit in units.values():
+        unit["rings"] = [enlarged(ring) for ring in unit["rings"]]
 
 
 def load(gisco: Path):
@@ -163,6 +231,7 @@ def path(unit, frames):
 def main():
     gisco, output = Path(sys.argv[1]), Path(sys.argv[2])
     units = load(gisco)
+    enlarge_acores(units)
     frames = transforms(units)
     shapes = {
         str(level): [
