@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.29.1 - 2026-11-09
+
+Previous release: v0.29.0
+
+- 2320302 Merge pull request #154 from Quick-Release/claude/nuts-map-azores-no-image
+- aad690b fix: larger Açores islands and no images on the NUTS map's cards
+
 ## v0.29.0 - 2026-11-09
 
 Previous release: v0.28.0
