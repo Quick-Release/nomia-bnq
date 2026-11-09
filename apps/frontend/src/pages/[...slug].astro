@@ -50,7 +50,8 @@ const { vars, colorRules } = blockPresetStyles(entry?.spacingSizes ?? [], entry?
 const isPost = Boolean(entry?.date);
 // An Oportunidade in a category with its own page (Formação) is shown under
 // that page's hero, with its own title and without its date. The hero is read
-// from the store, so it follows the page as editors change it.
+// from the store, so it follows the page as editors change it: a hero without
+// its own image shows that page's featured image, as it does on the page.
 const heroPage = entry && !nomia && !gallery && !entry.hasVideoHero ? categoryHeroPage(entry.collection) : null;
 const heroDelivery = heroPage ? await runtime.publishedEntry(heroPage, Astro.site?.origin) : null;
 const heroEntry =
@@ -95,7 +96,7 @@ const title =
       <NomiaBlocks
         nomia={{ blocks: [categoryHero], pageBackgroundColor: null, thematicColors: heroPageNomia.thematicColors }}
         design={entry}
-        featuredImage={entry.featuredImage}
+        featuredImage={heroEntry?.featuredImage ?? null}
         language={language}
       >
         {entry.content.trim() && (
@@ -108,7 +109,7 @@ const title =
     ) : (
       <main>
         <h1>{entry.title}</h1>
-        {isPost && <time datetime={entry.date}>{formatDate(entry.date, runtime.multilingual ? language.lang : "en")}</time>}
+        {isPost && !heroPage && <time datetime={entry.date}>{formatDate(entry.date, runtime.multilingual ? language.lang : "en")}</time>}
         {entry.featuredImage && (
           <img class="featured-image" src={entry.featuredImage.sourceUrl} alt={entry.featuredImage.altText || ""} />
         )}
