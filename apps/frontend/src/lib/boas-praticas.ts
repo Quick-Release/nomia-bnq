@@ -25,8 +25,6 @@ export interface BoaPratica {
   href: string;
   title: string;
   excerpt: string;
-  imageSrc: string | null;
-  imageAlt: string;
   /** The NUTS codes it is tagged with and every region above them. */
   regions: string[];
 }
@@ -39,8 +37,6 @@ export function boaPratica(item: CollectionItem<NomiaExtension>): BoaPratica {
     href: item.uri,
     title: item.title.trim() || "Sem título",
     excerpt: contactDetailsLines(item.excerpt).join(" "),
-    imageSrc: item.featuredImage?.sourceUrl || null,
-    imageAlt: item.featuredImage?.altText || "",
     regions: nutsMemberships(tagged),
   };
 }

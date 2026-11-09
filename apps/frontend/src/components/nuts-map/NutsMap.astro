@@ -131,20 +131,7 @@ const count = (n: number) => (n === 1 ? "1 boa prática" : `${n} boas práticas`
             class="nuts-map__item border-monochrome-light-400 relative flex items-stretch border-b"
             data-regions={item.regions.join(" ")}
           >
-            <div class="relative w-[min(240px,32vw)] shrink-0 self-stretch bg-main-cinza-100">
-              {item.imageSrc && (
-                <img
-                  src={item.imageSrc}
-                  alt={item.imageAlt}
-                  class="absolute inset-0 size-full object-cover"
-                  loading="lazy"
-                  decoding="async"
-                  width="240"
-                  height="264"
-                />
-              )}
-            </div>
-            <div class="flex min-w-0 flex-1 items-center gap-6 py-6 pl-6">
+            <div class="flex min-w-0 flex-1 items-center gap-6 py-6">
               <div class="flex min-w-0 flex-1 flex-col gap-4">
                 <h3 class="text-h4 font-secondary font-medium">
                   <a href={item.href} class="nuts-map__link">{item.title}</a>

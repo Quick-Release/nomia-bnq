@@ -32,8 +32,8 @@ of the international entries (**internationalTitle**). It is on
 Filters and Listing blocks.
 
 The entries are not chosen on the block. It lists every published Biblioteca
-entry in the **Boas práticas** category, newest first, with its featured
-image, title and excerpt. On each entry, editors tick:
+entry in the **Boas práticas** category, newest first, with its title and
+excerpt (no image). On each entry, editors tick:
 
 - **Regiões NUTS** (`regiao_nuts`): the regions it applies to, at any level,
   NUTS 3 included, or **Internacional** for an entry outside Portugal. An entry tagged with Douro (NUTS 3) is listed under Norte
@@ -74,9 +74,11 @@ The shapes are Eurostat GISCO's NUTS 2024 boundaries at 1:3 million, not the
 design's drawing, so the regions are the real ones. Administrative
 boundaries: © EuroGeographics; the map's caption credits them, as GISCO's
 terms ask. The mainland is drawn on the right and the Açores and Madeira in
-inset boxes on its left, each north-up and true to scale at its own latitude;
-the Selvagens are left out of Madeira's box. Clicking an inset box selects
-its islands, which are small.
+inset boxes on its left, each north-up. The mainland and Madeira are true to
+scale at their own latitude. The Açores are not: each group of nearby islands
+is drawn 1.9 times larger about its own centre, so the islands can be seen;
+above that, Terceira meets São Miguel. The Selvagens are left out of
+Madeira's box. Clicking an inset box selects its islands.
 
 `src/components/nuts-map/nuts-map-geometry.json` is generated:
 
