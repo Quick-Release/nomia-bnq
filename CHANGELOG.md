@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.25.0 - 2026-11-09
+
+Previous release: v0.24.0
+
+- ae7c55e Merge pull request #149 from Quick-Release/claude/oportunidade-file-pdf
+- 099918f feat: hide a PDF file block's name, keeping it for screen readers
+- 0b3015b feat: show a PDF file block in the page instead of a preview button
+- 337f4cd fix: only safe PDF links get a preview button, described by the file's name
+- 7a343fb feat: preview a PDF file block in a new tab, with teal file buttons
+
 ## v0.24.0 - 2026-11-09
 
 Previous release: v0.23.1
