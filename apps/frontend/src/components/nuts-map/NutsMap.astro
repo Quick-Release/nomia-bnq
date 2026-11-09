@@ -300,6 +300,14 @@ const count = (n: number) => (n === 1 ? "1 boa prática" : `${n} boas práticas`
   .nuts-map__item:hover .nuts-map__arrow {
     color: var(--color-main-teal-400, #00a499);
   }
+  /* Botânico 700: the map's selected green, one step darker to read on white. */
+  .nuts-map__link {
+    transition: color 150ms ease;
+  }
+  .nuts-map__item:hover .nuts-map__link,
+  .nuts-map__link:focus-visible {
+    color: var(--color-main-botnico-700, #67863f);
+  }
   @media (max-width: 639px) {
     .nuts-map__arrow { display: none; }
   }
