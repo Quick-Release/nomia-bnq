@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.29.2 - 2026-11-09
+
+Previous release: v0.29.1
+
+- f459f48 Merge pull request #155 from Quick-Release/claude/nuts-map-title-hover
+- e580103 fix: the NUTS map's card titles turn Botânico 700 on hover
+
 ## v0.29.1 - 2026-11-09
 
 Previous release: v0.29.0
