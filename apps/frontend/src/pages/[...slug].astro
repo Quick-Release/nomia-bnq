@@ -1,5 +1,5 @@
 ---
-import { blockPresetStyles, designPostContext, formatDate, responseStatus, routeOf } from "@getquick/content";
+import { blockPresetStyles, designPostContext, responseStatus, routeOf } from "@getquick/content";
 import NomiaContentListing from "../components/content-lists/listing/NomiaContentListing.astro";
 import Home from "../components/Home.astro";
 import NomiaBlocks from "../components/NomiaBlocks.astro";
@@ -8,8 +8,6 @@ import { content } from "../lib/content";
 import { copyFor } from "../lib/copy";
 import { pageForms } from "../lib/forms";
 import { categoryHeroBlock, categoryHeroPage } from "../lib/category-hero";
-import { showsEntryDate } from "../lib/entry-date";
-import { isLibraryDocument } from "../lib/library-document";
 import { nomiaPage } from "../lib/nomia-content";
 import { embedPdfFileBlocks } from "../lib/wp-pdf-embeds";
 
@@ -50,11 +48,8 @@ const alternates = found?.alternates ?? [];
 const nomia = nomiaPage(entry?.extension);
 const gallery = entry?.extension && "kind" in entry.extension && entry.extension.kind === "gallery" ? entry.extension : null;
 const { vars, colorRules } = blockPresetStyles(entry?.spacingSizes ?? [], entry?.colors ?? []);
-const isPost = Boolean(entry?.date);
-// A Biblioteca document shows its PDF in the page.
-const libraryDocument = isLibraryDocument(entry?.collection);
 // An Oportunidade in a category with its own page (Formação) is shown under
-// that page's hero, with its own title and without its date. The hero is read
+// that page's hero, with its own title. The hero is read
 // from the store, so it follows the page as editors change it: a hero without
 // its own image shows that page's featured image, as it does on the page.
 const heroPage = entry && !nomia && !gallery && !entry.hasVideoHero ? categoryHeroPage(entry.collection) : null;
@@ -95,7 +90,7 @@ const title =
     ) : entry.hasVideoHero ? (
       <>
         <style is:global set:html={colorRules} />
-        <main class="prose-wp prose-wp--video-hero" style={vars} set:html={entry.content}></main>
+        <main class="prose-wp prose-wp--video-hero" style={vars} set:html={embedPdfFileBlocks(entry.content)}></main>
       </>
     ) : categoryHero && heroPageNomia ? (
       <NomiaBlocks
@@ -114,12 +109,11 @@ const title =
     ) : (
       <main>
         <h1>{entry.title}</h1>
-        {isPost && !heroPage && showsEntryDate(entry.collection) && <time datetime={entry.date}>{formatDate(entry.date, runtime.multilingual ? language.lang : "en")}</time>}
         {entry.featuredImage && (
           <img class="featured-image" src={entry.featuredImage.sourceUrl} alt={entry.featuredImage.altText || ""} />
         )}
         <style is:global set:html={colorRules} />
-        <div class="prose-wp" style={vars} set:html={libraryDocument ? embedPdfFileBlocks(entry.content) : entry.content}></div>
+        <div class="prose-wp" style={vars} set:html={embedPdfFileBlocks(entry.content)}></div>
       </main>
     )
   ) : delivery.kind === "missing" ? (

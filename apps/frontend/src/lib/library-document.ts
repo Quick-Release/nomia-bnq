@@ -1,4 +1,3 @@
-import type { CollectionMembership } from "@getquick/content";
 import { z } from "astro/zod";
 import { safeHref } from "./safe-href";
 
@@ -31,12 +30,4 @@ export function readLibraryDocument(fields: Readonly<Record<string, unknown>>): 
     fileUrl: safeHref(fields.gqBioeconomiaLibraryFileUrl),
     pageUrl: safeHref(fields.gqBioeconomiaLibraryPageUrl),
   };
-}
-
-/**
- * Whether an entry is a Biblioteca document, whose page shows a PDF file
- * block in the page.
- */
-export function isLibraryDocument(collection: CollectionMembership | undefined): boolean {
-  return collection?.name === "biblioteca";
 }

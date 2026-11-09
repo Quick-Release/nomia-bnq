@@ -1,6 +1,6 @@
 ---
 import type { WpParsedBlock } from "../../../lib/wp-blocks";
-import { addDefaultPdfEmbeds } from "../../../lib/wp-pdf-embeds";
+import { embedPdfFileBlocks } from "../../../lib/wp-pdf-embeds";
 import { presentationHtml } from "@getquick/content";
 
 interface Props {
@@ -16,7 +16,7 @@ const end = shell.lastIndexOf("</");
 ---
 
 {wrapped === undefined ? (
-  <Fragment set:html={addDefaultPdfEmbeds(presentationHtml(block.blockName ?? "core/list", block.innerHTML, block.attrs?.presentation, { attributes: block.attrs ?? {} }))} />
+  <Fragment set:html={embedPdfFileBlocks(presentationHtml(block.blockName ?? "core/list", block.innerHTML, block.attrs?.presentation, { attributes: block.attrs ?? {} }))} />
 ) : wrapped ? (
   <>
     <Fragment set:html={shell.slice(0, end)} />

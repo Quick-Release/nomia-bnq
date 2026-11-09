@@ -1,5 +1,5 @@
 ---
-import { addDefaultPdfEmbeds } from "../../../lib/wp-pdf-embeds";
+import { embedPdfFileBlocks } from "../../../lib/wp-pdf-embeds";
 import { WP_PDF_EMBED_PREVIEW } from "../../../lib/wp-content-classes";
 import type { WpParsedBlock } from "../../../lib/wp-blocks";
 
@@ -8,7 +8,7 @@ interface Props {
 }
 
 const { block } = Astro.props;
-const html = addDefaultPdfEmbeds(block.innerHTML);
+const html = embedPdfFileBlocks(block.innerHTML);
 ---
 
 {
