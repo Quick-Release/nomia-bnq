@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.29.0 - 2026-11-09
+
+Previous release: v0.28.0
+
+- 46be0be Merge pull request #153 from Quick-Release/claude/nuts-map-block
+- f4c88e3 feat: drop the Público-alvo taxonomy and filter from the NUTS map
+- 9450ff0 feat: add the NUTS map of Boas práticas, with international ones listed apart
+
 ## v0.28.0 - 2026-11-09
 
 Previous release: v0.27.0
