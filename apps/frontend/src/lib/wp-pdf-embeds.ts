@@ -1,3 +1,5 @@
+import { safeHref } from "./safe-href";
+
 const WP_FILE_BLOCK_RE =
   /<(?<tag>figure|div)\b(?<attrs>[^>]*)class=(["'])[^"']*\bwp-block-file\b[^"']*\3[^>]*>(?<body>[\s\S]*?)<\/\k<tag>>/gi;
 const PDF_LINK_RE = /<a\b[^>]*\bhref=(["'])(?<href>[^"']+\.pdf(?:[?#][^"']*)?)\1[^>]*>/i;
@@ -58,16 +60,19 @@ export function replacePdfFileBlocksWithButtons(contentHtml: string | null): str
 }
 
 const FILE_BUTTON_RE = /<a\b[^>]*\bclass=(["'])[^"']*\bwp-block-file__button\b[^"']*\1[^>]*>/i;
+const DESCRIBED_BY_RE = /\baria-describedby=(["'])(?<id>[^"']+)\1/i;
 
-function pdfPreviewMarkup(href: string): string {
-  return `<a class="wp-block-file__button wp-block-file__preview wp-element-button" href="${href}" target="_blank" rel="noopener noreferrer">Pré-visualizar</a>`;
+function pdfPreviewMarkup(href: string, describedBy: string | undefined): string {
+  const description = describedBy ? ` aria-describedby="${describedBy}"` : "";
+  return `<a class="wp-block-file__button wp-block-file__preview wp-element-button" href="${href}" target="_blank" rel="noopener noreferrer"${description}>Pré-visualizar</a>`;
 }
 
 /**
  * Gives a PDF's file block a "Pré-visualizar" button that opens the PDF in
  * the browser's own viewer, in a new tab, before its download button. The
  * block's inline embed stays as it was: the proxy's CSP blocks embedded PDFs
- * (object-src 'none'), and phone browsers rarely show them.
+ * (object-src 'none'), and phone browsers rarely show them. A link whose
+ * scheme isn't safe (`javascript:…pdf`) gets no button.
  */
 export function addPdfPreviewButtons(contentHtml: string): string {
   if (!contentHtml.trim()) return contentHtml;
@@ -76,14 +81,16 @@ export function addPdfPreviewButtons(contentHtml: string): string {
     WP_FILE_BLOCK_RE,
     (block, _tag, _attrs, _quote, _body, _offset, _string, groups) => {
       const body = typeof groups?.body === "string" ? groups.body : "";
-      const href = body.match(PDF_LINK_RE)?.groups?.href;
+      const href = safeHref(body.match(PDF_LINK_RE)?.groups?.href);
       if (!href || body.includes("wp-block-file__preview")) return block;
 
       const button = body.match(FILE_BUTTON_RE)?.[0];
+      // The download button names the file's link; the preview does too.
+      const preview = pdfPreviewMarkup(href, button?.match(DESCRIBED_BY_RE)?.groups?.id);
       const withPreview = button
-        ? body.replace(button, `${pdfPreviewMarkup(href)}${button}`)
-        : `${body}${pdfPreviewMarkup(href)}`;
-      return block.replace(body, withPreview);
+        ? body.replace(button, () => `${preview}${button}`)
+        : `${body}${preview}`;
+      return block.replace(body, () => withPreview);
     },
   );
 }
