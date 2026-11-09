@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.27.0 - 2026-11-09
+
+Previous release: v0.26.0
+
+- 21a2e04 Merge pull request #151 from Quick-Release/claude/plataformas-no-date
+- e38d55f feat: hide the date on Plataforma pages
+
 ## v0.26.0 - 2026-11-09
 
 Previous release: v0.25.0
