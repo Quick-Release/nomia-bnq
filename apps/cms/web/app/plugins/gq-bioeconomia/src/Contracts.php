@@ -4268,6 +4268,10 @@ final class Contracts {
 						'type'    => 'boolean',
 						'default' => true,
 					],
+					'showImages'      => [
+						'type'    => 'boolean',
+						'default' => true,
+					],
 				],
 				'example'     => [
 					'collection'     => 'biblioteca',

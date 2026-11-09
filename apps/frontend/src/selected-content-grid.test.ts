@@ -39,6 +39,47 @@ test("renders one principal and four secondary published cards in selection orde
   expect(html.indexOf("Title /item-0/")).toBeLessThan(html.indexOf("Title /item-1/"));
 });
 
+test("oportunidades, plataformas and bases de dados cards show only the authored excerpt", async () => {
+  publishedEntry.mockImplementation(async (uri: string) => ({
+    kind: "found",
+    content: {
+      entry: {
+        title: `Title ${uri}`,
+        uri,
+        excerpt: uri === "/bases-de-dados/escrita/" ? "<p>Resumo escrito</p>" : "",
+        content: "<p>Corpo com https://example.com</p>",
+        featuredImage: null,
+      },
+    },
+  }));
+  const container = await AstroContainer.create();
+  const html = await container.renderToString(Grid, {
+    props: {
+      block: {
+        blockName: "getquick/selected-content-grid",
+        attrs: {
+          items: [
+            { postId: 1, postType: "plataformas", uri: "/plataformas/sem-resumo/" },
+            { postId: 2, postType: "bases_de_dados", uri: "/bases-de-dados/escrita/" },
+            {
+              postId: 3,
+              postType: "oportunidades",
+              uri: "/oportunidades/oportunidade/sem-resumo/",
+            },
+            { postId: 4, postType: "eventos", uri: "/eventos/sem-resumo/" },
+          ],
+        },
+        innerBlocks: [],
+        innerHTML: "",
+        innerContent: [],
+      },
+    },
+  });
+  expect(html.match(/<article/g)).toHaveLength(4);
+  expect(html).toContain("Resumo escrito");
+  expect(html.match(/Corpo com/g)).toHaveLength(1);
+});
+
 test("omits withdrawn, duplicate and disallowed selections", async () => {
   publishedEntry.mockClear();
   publishedEntry.mockResolvedValue({ kind: "missing" });

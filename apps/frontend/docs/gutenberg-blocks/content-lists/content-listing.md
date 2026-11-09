@@ -57,6 +57,7 @@ The store answers the query (`content.list`, gq-content#38): items are newest fi
 - `showPagination`
 - `infiniteLoading`
 - `lightbox`
+- `showImages`
 <!-- END GENERATED: structured-block-contract -->
 
 ## Locked controls

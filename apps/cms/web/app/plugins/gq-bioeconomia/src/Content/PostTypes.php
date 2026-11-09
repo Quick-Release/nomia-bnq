@@ -20,6 +20,7 @@ final class PostTypes {
 	public function register(): void {
 		add_action( 'init', [ self::class, 'registerContentTypes' ] );
 		add_action( 'after_setup_theme', [ $this, 'ensureFeaturedImageSupport' ] );
+		add_filter( 'get_the_excerpt', [ self::class, 'authoredExcerpt' ], 20, 2 );
 	}
 
 	/**
@@ -31,7 +32,10 @@ final class PostTypes {
 	 * seus conteudos num segmento proprio (/biblioteca/documento/<slug>/), para que
 	 * nodeByUri resolva esses caminhos para a Pagina e nao para o tipo de conteudo.
 	 *
-	 * @return array<string, array{labels: array<string, string>, policies?: array{global_taxonomies?: bool}, args: array<string, mixed>}>
+	 * Os tipos com a politica authored_excerpt so mostram o resumo escrito pelo
+	 * editor: sem resumo, o resumo fica vazio em vez de ser gerado do conteudo.
+	 *
+	 * @return array<string, array{labels: array<string, string>, policies?: array{global_taxonomies?: bool, authored_excerpt?: bool}, args: array<string, mixed>}>
 	 */
 	public static function definitions() {
 		return [
@@ -527,6 +531,7 @@ final class PostTypes {
 				],
 				'policies' => [
 					'global_taxonomies' => true,
+					'authored_excerpt'  => true,
 				],
 				'args'     => [
 					'public'              => true,
@@ -546,7 +551,7 @@ final class PostTypes {
 					'hierarchical'        => false,
 					'menu_position'       => 22,
 					'menu_icon'           => 'dashicons-megaphone',
-					'supports'            => [ 'title', 'editor', 'thumbnail', 'revisions', 'custom-fields' ],
+					'supports'            => [ 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'custom-fields' ],
 				],
 			],
 			'ferramentas'         => [
@@ -634,6 +639,7 @@ final class PostTypes {
 				],
 				'policies' => [
 					'global_taxonomies' => true,
+					'authored_excerpt'  => true,
 				],
 				'args'     => [
 					'public'              => true,
@@ -655,7 +661,7 @@ final class PostTypes {
 					'has_archive'         => 'plataformas',
 					'hierarchical'        => false,
 					'menu_icon'           => 'dashicons-screenoptions',
-					'supports'            => [ 'title', 'editor', 'thumbnail', 'revisions', 'custom-fields' ],
+					'supports'            => [ 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'custom-fields' ],
 				],
 			],
 			'bases_de_dados'      => [
@@ -688,6 +694,7 @@ final class PostTypes {
 				],
 				'policies' => [
 					'global_taxonomies' => true,
+					'authored_excerpt'  => true,
 				],
 				'args'     => [
 					'public'              => true,
@@ -709,7 +716,7 @@ final class PostTypes {
 					'has_archive'         => 'bases-de-dados',
 					'hierarchical'        => false,
 					'menu_icon'           => 'dashicons-database',
-					'supports'            => [ 'title', 'editor', 'thumbnail', 'revisions' ],
+					'supports'            => [ 'title', 'editor', 'excerpt', 'thumbnail', 'revisions' ],
 				],
 			],
 		];
@@ -738,6 +745,43 @@ final class PostTypes {
 		foreach ( self::definitions() as $post_type => $definition ) {
 			self::registerDefinition( $post_type, $definition );
 		}
+	}
+
+	/**
+	 * Devolve os tipos de conteudo cujo resumo e apenas o escrito pelo editor.
+	 *
+	 * @return string[]
+	 */
+	public static function withAuthoredExcerpts() {
+		$post_types = [];
+
+		foreach ( self::definitions() as $post_type => $definition ) {
+			if ( true === ( $definition['policies']['authored_excerpt'] ?? false ) ) {
+				$post_types[] = $post_type;
+			}
+		}
+
+		return $post_types;
+	}
+
+	/**
+	 * Nao gera resumos a partir do conteudo para os tipos com resumo escrito.
+	 *
+	 * O WordPress (wp_trim_excerpt) e o WPGraphQL preenchem um resumo vazio com
+	 * o inicio do conteudo; estes tipos mostram so o resumo que o editor escreveu.
+	 *
+	 * @param string            $excerpt Resumo depois dos filtros anteriores.
+	 * @param \WP_Post|int|null $post    Conteudo do resumo.
+	 * @return string
+	 */
+	public static function authoredExcerpt( $excerpt, $post = null ) {
+		$post = get_post( $post );
+
+		if ( ! $post || ! in_array( $post->post_type, self::withAuthoredExcerpts(), true ) ) {
+			return $excerpt;
+		}
+
+		return (string) $post->post_excerpt;
 	}
 
 	/**

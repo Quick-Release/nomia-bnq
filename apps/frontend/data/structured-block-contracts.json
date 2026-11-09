@@ -3917,7 +3917,8 @@
         "perPage",
         "showPagination",
         "infiniteLoading",
-        "lightbox"
+        "lightbox",
+        "showImages"
       ],
       "status": "active",
       "inserter": true,
@@ -3986,6 +3987,10 @@
           "default": false
         },
         "lightbox": {
+          "type": "boolean",
+          "default": true
+        },
+        "showImages": {
           "type": "boolean",
           "default": true
         }

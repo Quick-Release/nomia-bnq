@@ -44,6 +44,24 @@ test("document cards show metadata, independent PDF/page actions, and the exact 
   assert.ok(document.querySelector("ul.lg\\:grid-cols-3"));
 });
 
+test("document cards without images leave the image area out", async () => {
+  const { document } = await (
+    await harnessPromise
+  ).renderComponent("/src/components/content-lists/listing/NomiaContentListing.astro", {
+    display: "document-grid",
+    showImages: false,
+    rows: [row, { ...row, imageSrc: "https://example.org/cover.jpg", imageAlt: "Capa" }],
+    empty: "none",
+  });
+  const cards = [...document.querySelectorAll("article")];
+  assert.equal(cards.length, 2);
+  assert.equal(document.querySelector("img"), null);
+  assert.equal(document.querySelector(".aspect-video"), null);
+  assert.doesNotMatch(document.body.textContent, /image not available/);
+  assert.equal(cards[0].querySelector("h2").textContent.trim(), row.title);
+  assert.match(cards[0].textContent, /Publicado por: Comissão Europeia/);
+});
+
 test("document cards escape descriptions and omit unsafe attachment links", async () => {
   const { document } = await (
     await harnessPromise
