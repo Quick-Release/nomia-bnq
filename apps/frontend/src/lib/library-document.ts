@@ -1,3 +1,4 @@
+import type { CollectionMembership } from "@getquick/content";
 import { z } from "astro/zod";
 import { safeHref } from "./safe-href";
 
@@ -30,4 +31,13 @@ export function readLibraryDocument(fields: Readonly<Record<string, unknown>>): 
     fileUrl: safeHref(fields.gqBioeconomiaLibraryFileUrl),
     pageUrl: safeHref(fields.gqBioeconomiaLibraryPageUrl),
   };
+}
+
+/**
+ * Whether an entry is a Biblioteca document. Its page shows a PDF file block
+ * in the page, and never its WordPress date: that is when the document was
+ * added to the site, not when it was published.
+ */
+export function isLibraryDocument(collection: CollectionMembership | undefined): boolean {
+  return collection?.name === "biblioteca";
 }

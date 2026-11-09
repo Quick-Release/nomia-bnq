@@ -8,6 +8,7 @@ import { content } from "../lib/content";
 import { copyFor } from "../lib/copy";
 import { pageForms } from "../lib/forms";
 import { categoryHeroBlock, categoryHeroPage } from "../lib/category-hero";
+import { isLibraryDocument } from "../lib/library-document";
 import { nomiaPage } from "../lib/nomia-content";
 import { embedPdfFileBlocks } from "../lib/wp-pdf-embeds";
 
@@ -49,6 +50,8 @@ const nomia = nomiaPage(entry?.extension);
 const gallery = entry?.extension && "kind" in entry.extension && entry.extension.kind === "gallery" ? entry.extension : null;
 const { vars, colorRules } = blockPresetStyles(entry?.spacingSizes ?? [], entry?.colors ?? []);
 const isPost = Boolean(entry?.date);
+// A Biblioteca document shows its PDF in the page, and no date.
+const libraryDocument = isLibraryDocument(entry?.collection);
 // An Oportunidade in a category with its own page (Formação) is shown under
 // that page's hero, with its own title and without its date. The hero is read
 // from the store, so it follows the page as editors change it: a hero without
@@ -110,12 +113,12 @@ const title =
     ) : (
       <main>
         <h1>{entry.title}</h1>
-        {isPost && !heroPage && <time datetime={entry.date}>{formatDate(entry.date, runtime.multilingual ? language.lang : "en")}</time>}
+        {isPost && !heroPage && !libraryDocument && <time datetime={entry.date}>{formatDate(entry.date, runtime.multilingual ? language.lang : "en")}</time>}
         {entry.featuredImage && (
           <img class="featured-image" src={entry.featuredImage.sourceUrl} alt={entry.featuredImage.altText || ""} />
         )}
         <style is:global set:html={colorRules} />
-        <div class="prose-wp" style={vars} set:html={entry.content}></div>
+        <div class="prose-wp" style={vars} set:html={libraryDocument ? embedPdfFileBlocks(entry.content) : entry.content}></div>
       </main>
     )
   ) : delivery.kind === "missing" ? (
