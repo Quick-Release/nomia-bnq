@@ -99,6 +99,45 @@
     }
   }
 
+  /* File: a PDF shown in the page (embedPdfFileBlocks), full width above its links. */
+  .wp-block-file iframe.wp-block-file__embed {
+    background: var(--wp--preset--color--branco);
+    border: 1px solid var(--main-cinza-200);
+    display: block;
+    flex: 0 0 100%;
+    height: min(80vh, 900px);
+    width: 100%;
+  }
+
+  /* File: the download button, teal with white text (AA on teal-500). */
+  .wp-block-file {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+    margin: 0 0 1.5rem;
+  }
+
+  .wp-block-file .wp-block-file__button {
+    background: var(--wp--preset--color--teal-500);
+    border-radius: 0.25rem;
+    color: var(--wp--preset--color--branco) !important;
+    display: inline-block;
+    font-weight: 600;
+    line-height: 1.25;
+    padding: 0.625rem 1.25rem;
+    text-decoration: none !important;
+  }
+
+  .wp-block-file .wp-block-file__button:hover {
+    background: var(--wp--preset--color--teal-600);
+  }
+
+  .wp-block-file .wp-block-file__button:focus-visible {
+    outline: 3px solid var(--wp--preset--color--teal-700);
+    outline-offset: 2px;
+  }
+
   .wp-element-caption {
     color: var(--main-cinza-600);
     font-size: 0.875rem;

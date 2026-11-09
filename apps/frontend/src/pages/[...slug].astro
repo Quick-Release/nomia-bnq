@@ -9,6 +9,7 @@ import { copyFor } from "../lib/copy";
 import { pageForms } from "../lib/forms";
 import { categoryHeroBlock, categoryHeroPage } from "../lib/category-hero";
 import { nomiaPage } from "../lib/nomia-content";
+import { embedPdfFileBlocks } from "../lib/wp-pdf-embeds";
 
 const runtime = content();
 const route = routeOf(Astro.url.pathname);
@@ -102,7 +103,7 @@ const title =
         {entry.content.trim() && (
           <div class="category-hero-body">
             <style is:global set:html={colorRules} />
-            <div class="prose-wp" style={vars} set:html={entry.content}></div>
+            <div class="prose-wp" style={vars} set:html={embedPdfFileBlocks(entry.content)}></div>
           </div>
         )}
       </NomiaBlocks>
