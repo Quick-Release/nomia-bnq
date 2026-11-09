@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.30.1 - 2026-11-09
+
+Previous release: v0.30.0
+
+- ea920e8 Merge pull request #157 from Quick-Release/claude/interactive-image-default
+- d40a8bb fix: an Interactive image saved without its image shows the default graphic
+
 ## v0.30.0 - 2026-11-09
 
 Previous release: v0.29.2
