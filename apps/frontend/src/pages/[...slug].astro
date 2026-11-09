@@ -8,6 +8,7 @@ import { content } from "../lib/content";
 import { copyFor } from "../lib/copy";
 import { pageForms } from "../lib/forms";
 import { categoryHeroBlock, categoryHeroPage } from "../lib/category-hero";
+import { showsPublicationDate } from "../lib/entry-date";
 import { nomiaPage } from "../lib/nomia-content";
 import { embedPdfFileBlocks } from "../lib/wp-pdf-embeds";
 
@@ -110,7 +111,7 @@ const title =
     ) : (
       <main>
         <h1>{entry.title}</h1>
-        {isPost && !heroPage && <time datetime={entry.date}>{formatDate(entry.date, runtime.multilingual ? language.lang : "en")}</time>}
+        {isPost && !heroPage && showsPublicationDate(entry.collection) && <time datetime={entry.date}>{formatDate(entry.date, runtime.multilingual ? language.lang : "en")}</time>}
         {entry.featuredImage && (
           <img class="featured-image" src={entry.featuredImage.sourceUrl} alt={entry.featuredImage.altText || ""} />
         )}
