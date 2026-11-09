@@ -59,22 +59,23 @@ export function replacePdfFileBlocksWithButtons(contentHtml: string | null): str
   );
 }
 
-const FILE_BUTTON_RE = /<a\b[^>]*\bclass=(["'])[^"']*\bwp-block-file__button\b[^"']*\1[^>]*>/i;
-const DESCRIBED_BY_RE = /\baria-describedby=(["'])(?<id>[^"']+)\1/i;
+const EMBED_ELEMENT_RE = /<(object|iframe|embed)\b[^>]*>(?:[\s\S]*?<\/\1>)?/gi;
+const FILE_LINK_TEXT_RE = /<a\b(?![^>]*\bwp-block-file__button\b)[^>]*>(?<text>[^<]*)<\/a>/i;
 
-function pdfPreviewMarkup(href: string, describedBy: string | undefined): string {
-  const description = describedBy ? ` aria-describedby="${describedBy}"` : "";
-  return `<a class="wp-block-file__button wp-block-file__preview wp-element-button" href="${href}" target="_blank" rel="noopener noreferrer"${description}>Pré-visualizar</a>`;
+function pdfFrameMarkup(href: string, name: string): string {
+  const title = `PDF: ${name || "documento"}`.replace(/"/g, "&quot;");
+  return `<iframe class="wp-block-file__embed" src="${href}" title="${title}" loading="lazy"></iframe>`;
 }
 
 /**
- * Gives a PDF's file block a "Pré-visualizar" button that opens the PDF in
- * the browser's own viewer, in a new tab, before its download button. The
- * block's inline embed stays as it was: the proxy's CSP blocks embedded PDFs
- * (object-src 'none'), and phone browsers rarely show them. A link whose
- * scheme isn't safe (`javascript:…pdf`) gets no button.
+ * Shows a PDF's file block in the page: the PDF opens in the browser's own
+ * viewer in an iframe, above the file's link and download button, which stay
+ * as the fallback where a browser can't show it (most phones). WordPress's
+ * own embed is an <object> its script unhides; the proxy's CSP allows frames
+ * from the media host and no <object> (object-src 'none'), so it is replaced.
+ * A link whose scheme isn't safe (`javascript:…pdf`) gets no frame.
  */
-export function addPdfPreviewButtons(contentHtml: string): string {
+export function embedPdfFileBlocks(contentHtml: string): string {
   if (!contentHtml.trim()) return contentHtml;
 
   return contentHtml.replace(
@@ -82,15 +83,11 @@ export function addPdfPreviewButtons(contentHtml: string): string {
     (block, _tag, _attrs, _quote, _body, _offset, _string, groups) => {
       const body = typeof groups?.body === "string" ? groups.body : "";
       const href = safeHref(body.match(PDF_LINK_RE)?.groups?.href);
-      if (!href || body.includes("wp-block-file__preview")) return block;
+      if (!href) return block;
 
-      const button = body.match(FILE_BUTTON_RE)?.[0];
-      // The download button names the file's link; the preview does too.
-      const preview = pdfPreviewMarkup(href, button?.match(DESCRIBED_BY_RE)?.groups?.id);
-      const withPreview = button
-        ? body.replace(button, () => `${preview}${button}`)
-        : `${body}${preview}`;
-      return block.replace(body, () => withPreview);
+      const links = body.replace(EMBED_ELEMENT_RE, "");
+      const name = links.match(FILE_LINK_TEXT_RE)?.groups?.text?.trim() ?? "";
+      return block.replace(body, () => `${pdfFrameMarkup(href, name)}${links}`);
     },
   );
 }

@@ -99,7 +99,17 @@
     }
   }
 
-  /* File: the download and preview buttons, teal with white text (AA on teal-500). */
+  /* File: a PDF shown in the page (embedPdfFileBlocks), full width above its links. */
+  .wp-block-file iframe.wp-block-file__embed {
+    background: var(--wp--preset--color--branco);
+    border: 1px solid var(--main-cinza-200);
+    display: block;
+    flex: 0 0 100%;
+    height: min(80vh, 900px);
+    width: 100%;
+  }
+
+  /* File: the download button, teal with white text (AA on teal-500). */
   .wp-block-file {
     align-items: center;
     display: flex;

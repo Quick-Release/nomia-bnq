@@ -1,43 +1,42 @@
 import { describe, expect, it } from "vite-plus/test";
-import { addPdfPreviewButtons } from "./wp-pdf-embeds";
+import { embedPdfFileBlocks } from "./wp-pdf-embeds";
 
 const pdf = "https://nomia-media.bnq.pt/uploads/2026/11/agendas.pdf";
-// As WordPress renders core/file with its inline embed and download button.
-const fileBlock = (href: string, button = true) =>
-  `<div data-wp-interactive="core/file" class="wp-block-file"><object data-wp-bind--hidden="!state.hasPdfPreview" hidden class="wp-block-file__embed" data="${href}" type="application/pdf"></object><a id="f" href="${href}">agendas</a>${
-    button
-      ? `<a href="${href}" class="wp-block-file__button wp-element-button" download aria-describedby="f">Descarregar</a>`
-      : ""
-  }</div>`;
+// As WordPress renders core/file: its hidden inline embed, the file's link and the download button.
+const fileBlock = (href: string) =>
+  `<div data-wp-interactive="core/file" class="wp-block-file"><object data-wp-bind--hidden="!state.hasPdfPreview" hidden class="wp-block-file__embed" data="${href}" type="application/pdf" style="width:100%;height:600px"></object><a id="f" href="${href}">agendas</a><a href="${href}" class="wp-block-file__button wp-element-button" download aria-describedby="f">Descarregar</a></div>`;
 
-describe("addPdfPreviewButtons", () => {
-  it("puts a Pré-visualizar button, opening the PDF in a new tab, before Descarregar", () => {
-    const html = addPdfPreviewButtons(`<p>Texto</p>${fileBlock(pdf)}`);
+describe("embedPdfFileBlocks", () => {
+  it("shows the PDF in an iframe in place of WordPress's hidden object, above its links", () => {
+    const html = embedPdfFileBlocks(`<p>Texto</p>${fileBlock(pdf)}`);
+    expect(html).toBe(
+      `<p>Texto</p><div data-wp-interactive="core/file" class="wp-block-file"><iframe class="wp-block-file__embed" src="${pdf}" title="PDF: agendas" loading="lazy"></iframe><a id="f" href="${pdf}">agendas</a><a href="${pdf}" class="wp-block-file__button wp-element-button" download aria-describedby="f">Descarregar</a></div>`,
+    );
+  });
+
+  it("embeds a PDF whose block had no embed", () => {
+    const html = embedPdfFileBlocks(
+      `<div class="wp-block-file"><a href="${pdf}">agendas</a></div>`,
+    );
     expect(html).toContain(
-      `<a id="f" href="${pdf}">agendas</a><a class="wp-block-file__button wp-block-file__preview wp-element-button" href="${pdf}" target="_blank" rel="noopener noreferrer" aria-describedby="f">Pré-visualizar</a><a href="${pdf}" class="wp-block-file__button`,
-    );
-    expect(html.startsWith("<p>Texto</p>")).toBe(true);
-  });
-
-  it("adds it after the file's link when the block has no download button", () => {
-    expect(addPdfPreviewButtons(fileBlock(pdf, false))).toContain(
-      `agendas</a><a class="wp-block-file__button wp-block-file__preview`,
+      `<iframe class="wp-block-file__embed" src="${pdf}" title="PDF: agendas"`,
     );
   });
 
-  it("leaves other files, other blocks and an already-previewed block alone", () => {
+  it("leaves other files, other blocks and unsafe links alone", () => {
     const docx = fileBlock("https://nomia-media.bnq.pt/uploads/a.docx");
-    expect(addPdfPreviewButtons(docx)).toBe(docx);
-    expect(addPdfPreviewButtons(`<p><a href="${pdf}">PDF</a></p>`)).toBe(
+    expect(embedPdfFileBlocks(docx)).toBe(docx);
+    expect(embedPdfFileBlocks(`<p><a href="${pdf}">PDF</a></p>`)).toBe(
       `<p><a href="${pdf}">PDF</a></p>`,
     );
     const script = fileBlock("javascript:alert(1)//.pdf");
-    expect(addPdfPreviewButtons(script)).toBe(script);
-    const dollars = fileBlock("https://nomia-media.bnq.pt/uploads/$&-$1.pdf");
-    expect(addPdfPreviewButtons(dollars)).toContain(
-      `href="https://nomia-media.bnq.pt/uploads/$&-$1.pdf" target="_blank"`,
-    );
-    const once = addPdfPreviewButtons(fileBlock(pdf));
-    expect(addPdfPreviewButtons(once)).toBe(once);
+    expect(embedPdfFileBlocks(script)).toBe(script);
+  });
+
+  it("keeps a URL with $ sequences as it is, and embeds once", () => {
+    const dollars = "https://nomia-media.bnq.pt/uploads/$&-$1.pdf";
+    expect(embedPdfFileBlocks(fileBlock(dollars))).toContain(`src="${dollars}"`);
+    const once = embedPdfFileBlocks(fileBlock(pdf));
+    expect(embedPdfFileBlocks(once)).toBe(once);
   });
 });
