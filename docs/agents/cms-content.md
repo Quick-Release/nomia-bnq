@@ -32,28 +32,74 @@ credentials. Never reuse them elsewhere.
 
 ## What the edge enforces
 
-- The Access application "Nomia CMS administration" covers
-  `/wp/wp-login.php`, `/wp/wp-admin` and `/wp-json/wp/v2/pages` (with their
-  subpaths). Its people policy admits the named CMS users by email one-time
-  PIN. A Service Auth policy admits the agent's service token and nothing
-  else.
-- The page route belongs to the same application as `wp-admin`, not to a
-  separate one. Access issues one token per application, and a separate
-  application would reject the block editor's own saves to that route.
-  Editor saves through Access were checked on 2026-10-30.
-- An editor whose eight-hour Access session expires while the editor is open
-  can no longer save until the page is reloaded and they sign in again.
-- Any request carrying the agent's credentials (its username in Basic auth,
-  or its service token) is blocked unless it is a `GET` or `POST` to
-  `/wp-json/wp/v2/pages…` with no `X-HTTP-Method-Override` header and no
-  `_method` parameter. This applies to `/?rest_route=` and every other path
-  too. This is the WAF custom rule
-  "Nomia CMS: agent credentials only on page REST with GET/POST".
-- So the agent can change pages only. `gq content --type post` (and custom
-  post types) is blocked at the edge. Widening the rule needs the user's
-  approval.
-- Other `/wp-json` routes are not behind Access. Anonymous requests to them
-  get 401 from `content-api.php`.
+The user approved widening agent access to editorial content on 2026-11-09.
+The live Access application and WAF rule were updated that day; this does not
+by itself add import commands to the pinned `gq` CLI.
+
+- The existing Access application "Nomia CMS administration" covers
+  `/wp/wp-login.php`, `/wp/wp-admin` and `/wp-json/wp/v2` (with their
+  subpaths). It keeps the same audience, named-user people policy, specific
+  agent service-token policy and identity provider. Its current session is
+  72 hours; an expired browser session still requires signing in again.
+- REST remains in the same application as `wp-admin`, so a person's Access
+  cookie works for block-editor saves. No public bypass policy was added.
+- The WAF rule "Nomia CMS: agent editorial REST only with GET/POST" blocks
+  requests carrying the agent's Basic-auth username or service-token client
+  ID unless they match an allowed editorial route below. Only `GET` and
+  `POST` pass. `X-HTTP-Method-Override` and `_method` stay blocked.
+- Routes match an exact collection path or a descendant separated by `/`:
+  `/pages-extra` does not inherit access from `/pages`. The alternate
+  `/?rest_route=` entry point stays blocked for these credentials.
+- All other agent routes remain blocked, including users, settings,
+  plugins, theme configuration, `wp-admin`, GraphQL and PHP execution.
+- WordPress authentication and capabilities still apply after Access and
+  WAF. The agent remains an Editor; widening edge access does not grant
+  administrator capabilities. Service-token-only requests reach WordPress
+  but cannot read or write content without the application password.
+
+All bases below are beneath `/wp-json/wp/v2/` and were discovered from the
+live WordPress type/taxonomy registrations, rather than inferred from labels:
+
+| Route group                                     | Allowed REST bases                                                                                                                                                                                 |
+| ----------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Standard content and media                      | `posts`, `pages`, `media`, `blocks`                                                                                                                                                                |
+| Site content types                              | `gq_bio_gallery`, `biblioteca`, `glossario`, `recursos_educativos`, `eventos`, `indicadores`, `podcasts`, `videos`, `infografias`, `oportunidades`, `ferramentas`, `plataformas`, `bases_de_dados` |
+| Editorial taxonomies                            | `categories`, `tags`, `wp_pattern_category`, `categoria_biblioteca`, `tipo_evento`, `tematicas`, `setor_atividade`, `categoria_oportunidade`, `entidades`, `regiao_nuts`                           |
+| Menu content, subject to WordPress capabilities | `menu-items`, `navigation`, `menus`                                                                                                                                                                |
+| Read-only registration discovery                | `types`, `taxonomies` (GET only)                                                                                                                                                                   |
+
+This permits collection requests for creation/uploads, and descendants for
+individual content, revisions and controller-specific media operations.
+New REST bases require a deliberate WAF update. Theme templates, template
+parts, global styles and font management are not editorial import routes.
+
+Live verification on 2026-11-09 established:
+
+- Edit-context reads succeed for pages, posts, media, reusable blocks, all
+  Site content types and the import's `categoria_biblioteca` taxonomy.
+- `menu-items`, `navigation`, `menus` and `regiao_nuts` edit-context reads
+  receive WordPress `rest_forbidden_context` responses under the unchanged
+  Editor role. Do not elevate the agent to work around these responses.
+- POSTs to deliberately nonexistent library/media/term IDs reach WordPress
+  and return its invalid-ID errors; no content was created by these probes.
+- Users/settings/plugins, DELETE, `wp-admin`, method overrides and the
+  alternate REST entry point are blocked with 403. An anonymous POST is
+  redirected to Access, and a service-token-only POST receives WordPress 401.
+
+Anonymous REST routes outside this Access namespace still receive 401 from
+`content-api.php`. It already accepts authenticated editorial requests, so
+no origin code or WordPress role change was needed.
+
+### Roll back the edge change
+
+Restore the Access application's REST destination from `/wp-json/wp/v2` to
+`/wp-json/wp/v2/pages`, preserving its application ID, policies and other
+settings. Restore the previous agent WAF rule's page-only expression and
+description. Capture the complete application and ruleset immediately before
+any change and restore only the owned application/rule, not unrelated zone
+rules. Keep snapshots outside the repository with restricted permissions;
+policy snapshots can contain personal data. Revoking or rotating the existing
+agent credentials is not part of this rollback.
 
 `gq content` uses the service token when Sigillo injects it (it prints
 `Edge: service token.`). A person's `cloudflared access login
