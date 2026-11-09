@@ -37,6 +37,13 @@ main > h1 {
   line-height: 1.05;
 }
 
+/* An entry's body under a category page's hero (src/lib/category-hero.ts). */
+.category-hero-body {
+  max-width: 75rem;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
 .featured-image {
   width: 100%;
   max-height: 38rem;
