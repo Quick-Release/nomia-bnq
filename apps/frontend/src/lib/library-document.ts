@@ -34,9 +34,8 @@ export function readLibraryDocument(fields: Readonly<Record<string, unknown>>): 
 }
 
 /**
- * Whether an entry is a Biblioteca document. Its page shows a PDF file block
- * in the page, and never its WordPress date: that is when the document was
- * added to the site, not when it was published.
+ * Whether an entry is a Biblioteca document, whose page shows a PDF file
+ * block in the page.
  */
 export function isLibraryDocument(collection: CollectionMembership | undefined): boolean {
   return collection?.name === "biblioteca";
