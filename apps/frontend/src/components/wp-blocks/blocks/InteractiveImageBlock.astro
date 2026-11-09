@@ -9,9 +9,10 @@ const { block } = Astro.props;
 const attrs = block.attrs as AttrsFor<"getquick/interactive-image">;
 
 // The block stores which graphic to show and the editor's replacements for
-// its texts and icons; an empty field keeps the graphic's own. An unknown key
-// renders nothing.
-const image = readInteractiveImageKey(attrs.image);
+// its texts and icons; an empty field keeps the graphic's own. Gutenberg
+// leaves an attribute at its default out of the block comment, so a missing
+// image is the registration's default; an unknown key renders nothing.
+const image = readInteractiveImageKey(attrs.image ?? "economia-circular");
 const content = readEconomiaCircularContent(attrs as Record<string, unknown>);
 ---
 
