@@ -56,3 +56,34 @@ export function replacePdfFileBlocksWithButtons(contentHtml: string | null): str
     },
   );
 }
+
+const FILE_BUTTON_RE = /<a\b[^>]*\bclass=(["'])[^"']*\bwp-block-file__button\b[^"']*\1[^>]*>/i;
+
+function pdfPreviewMarkup(href: string): string {
+  return `<a class="wp-block-file__button wp-block-file__preview wp-element-button" href="${href}" target="_blank" rel="noopener noreferrer">Pré-visualizar</a>`;
+}
+
+/**
+ * Gives a PDF's file block a "Pré-visualizar" button that opens the PDF in
+ * the browser's own viewer, in a new tab, before its download button. The
+ * block's inline embed stays as it was: the proxy's CSP blocks embedded PDFs
+ * (object-src 'none'), and phone browsers rarely show them.
+ */
+export function addPdfPreviewButtons(contentHtml: string): string {
+  if (!contentHtml.trim()) return contentHtml;
+
+  return contentHtml.replace(
+    WP_FILE_BLOCK_RE,
+    (block, _tag, _attrs, _quote, _body, _offset, _string, groups) => {
+      const body = typeof groups?.body === "string" ? groups.body : "";
+      const href = body.match(PDF_LINK_RE)?.groups?.href;
+      if (!href || body.includes("wp-block-file__preview")) return block;
+
+      const button = body.match(FILE_BUTTON_RE)?.[0];
+      const withPreview = button
+        ? body.replace(button, `${pdfPreviewMarkup(href)}${button}`)
+        : `${body}${pdfPreviewMarkup(href)}`;
+      return block.replace(body, withPreview);
+    },
+  );
+}
