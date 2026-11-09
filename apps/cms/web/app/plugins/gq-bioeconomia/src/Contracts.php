@@ -4710,6 +4710,52 @@ final class Contracts {
 					'image' => 'economia-circular',
 				],
 			],
+			[
+				'blockName'   => 'getquick/nuts-map',
+				'catalogId'   => 'nuts-map',
+				'title'       => 'Mapa de boas práticas (NUTS)',
+				'description' => 'Mapa de Portugal por regiões NUTS com as boas práticas da Biblioteca de cada região, filtráveis por público-alvo, e a lista das internacionais.',
+				'icon'        => 'location-alt',
+				'keywords'    => [
+					'mapa',
+					'nuts',
+					'regiões',
+					'boas práticas',
+					'map',
+					'region',
+				],
+				'status'      => 'active',
+				'inserter'    => true,
+				'attributes'  => [
+					'schemaVersion'      => [
+						'type'    => 'number',
+						'default' => 1,
+					],
+					'blockId'            => [
+						'type'    => 'string',
+						'default' => 'nuts-map',
+					],
+					'level'              => [
+						'type'    => 'string',
+						'default' => '2',
+						'enum'    => [
+							'0',
+							'1',
+							'2',
+						],
+						'ui'      => [
+							'kind' => 'select',
+						],
+					],
+					'internationalTitle' => [
+						'type'    => 'string',
+						'default' => 'Boas Práticas internacionais',
+					],
+				],
+				'example'     => [
+					'level' => '2',
+				],
+			],
 		];
 	}
 }

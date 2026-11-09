@@ -1,0 +1,41 @@
+---
+import NutsMap from "../../nuts-map/NutsMap.astro";
+import NomiaContentListing from "../../content-lists/listing/NomiaContentListing.astro";
+import { publishedBoasPraticas } from "../../../lib/boas-praticas";
+import type { NutsMapLevel } from "../../../lib/nuts";
+import { PAGE_FRAME } from "../../../lib/site-gutters";
+import type { WpParsedBlock } from "../../../lib/wp-blocks";
+import { wpText as text } from "../normalizers";
+import type { AttrsFor } from "../wp-block-attrs";
+
+interface Props { block: WpParsedBlock }
+const { block } = Astro.props;
+const attrs = block.attrs as AttrsFor<"getquick/nuts-map">;
+
+// Gutenberg leaves an attribute at its default out of the block comment.
+const level = (["0", "1", "2"].includes(String(attrs.level)) ? Number(attrs.level) : 2) as NutsMapLevel;
+const internationalTitle = text(attrs.internationalTitle) || "Boas Práticas internacionais";
+
+// Read when the page is visited, from the publication store: the map lists
+// the Boas práticas published now, and those tagged Internacional follow it
+// in the Listing block's list. When the store can't be read, the block
+// renders nothing rather than an empty map.
+const boasPraticas = await publishedBoasPraticas(Astro.request);
+---
+
+{boasPraticas && (
+  <>
+    <NutsMap items={boasPraticas.items} audiences={boasPraticas.audiences} level={level} />
+    {boasPraticas.international.length > 0 && (
+      <section aria-labelledby="boas-praticas-internacionais" data-nuts-map-international>
+        <h2
+          id="boas-praticas-internacionais"
+          class={`${PAGE_FRAME} font-primary text-h2 pt-12 font-semibold leading-[var(--typography-line-height-d)] tracking-[var(--tracking-typography-0)] md:pt-16`}
+        >
+          {internationalTitle}
+        </h2>
+        <NomiaContentListing display="list" rows={boasPraticas.international} empty="none" />
+      </section>
+    )}
+  </>
+)}

@@ -22,6 +22,11 @@ export interface ContentCollection {
   graphqlType: string;
   /** In the Filters block's order; the first is the collection's category. */
   taxonomies: readonly CollectionTaxonomy[];
+  /**
+   * Taxonomies also stored with each item, for a block of its own to read,
+   * that the Filters block doesn't offer.
+   */
+  storedTaxonomies?: readonly string[];
 }
 
 const TEMATICAS: CollectionTaxonomy = {
@@ -45,6 +50,8 @@ export const CONTENT_COLLECTIONS = {
       { taxonomy: "categoria_biblioteca", param: "categoria", label: "Categoria" },
       ...GLOBAL_TAXONOMIES,
     ],
+    // The NUTS map block's regions and audiences (src/lib/boas-praticas.ts).
+    storedTaxonomies: ["regiao_nuts", "publico_alvo"],
   },
   eventos: {
     label: "Eventos",
@@ -93,7 +100,10 @@ export const RUNTIME_COLLECTIONS: Record<string, CollectionConfig> = Object.from
     {
       postType,
       graphqlType: collection.graphqlType,
-      taxonomies: collection.taxonomies.map(({ taxonomy }) => taxonomy),
+      taxonomies: [
+        ...collection.taxonomies.map(({ taxonomy }) => taxonomy),
+        ...("storedTaxonomies" in collection ? collection.storedTaxonomies : []),
+      ],
     },
   ]),
 );

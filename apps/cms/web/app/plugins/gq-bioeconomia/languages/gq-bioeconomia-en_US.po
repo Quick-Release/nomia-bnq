@@ -3945,3 +3945,145 @@ msgstr "Text below the image"
 #: blocks/interactive-image/index.js:293
 msgid "Pré-visualização da imagem interativa"
 msgstr "Interactive image preview"
+
+#: src/Content/Taxonomies.php:256
+#: src/Content/Taxonomies.php:267
+msgid "Regiões NUTS"
+msgstr "NUTS regions"
+
+#: src/Content/Taxonomies.php:257
+msgid "Região NUTS"
+msgstr "NUTS region"
+
+#: src/Content/Taxonomies.php:258
+msgid "Pesquisar Regiões NUTS"
+msgstr "Search NUTS regions"
+
+#: src/Content/Taxonomies.php:259
+msgid "Todas as Regiões NUTS"
+msgstr "All NUTS regions"
+
+#: src/Content/Taxonomies.php:260
+msgid "Região NUTS superior"
+msgstr "Parent NUTS region"
+
+#: src/Content/Taxonomies.php:261
+msgid "Região NUTS superior:"
+msgstr "Parent NUTS region:"
+
+#: src/Content/Taxonomies.php:262
+msgid "Editar Região NUTS"
+msgstr "Edit NUTS region"
+
+#: src/Content/Taxonomies.php:263
+msgid "Ver Região NUTS"
+msgstr "View NUTS region"
+
+#: src/Content/Taxonomies.php:264
+msgid "Atualizar Região NUTS"
+msgstr "Update NUTS region"
+
+#: src/Content/Taxonomies.php:265
+msgid "Adicionar Nova Região NUTS"
+msgstr "Add new NUTS region"
+
+#: src/Content/Taxonomies.php:266
+msgid "Nome da Nova Região NUTS"
+msgstr "New NUTS region name"
+
+#: src/Content/Taxonomies.php:268
+msgid "Nenhuma região encontrada."
+msgstr "No regions found."
+
+#: src/Content/Taxonomies.php:286
+#: src/Content/Taxonomies.php:297
+msgid "Públicos-alvo"
+msgstr "Target audiences"
+
+#: src/Content/Taxonomies.php:287
+msgid "Público-alvo"
+msgstr "Target audience"
+
+#: src/Content/Taxonomies.php:288
+msgid "Pesquisar Públicos-alvo"
+msgstr "Search target audiences"
+
+#: src/Content/Taxonomies.php:289
+msgid "Todos os Públicos-alvo"
+msgstr "All target audiences"
+
+#: src/Content/Taxonomies.php:290
+msgid "Público-alvo superior"
+msgstr "Parent target audience"
+
+#: src/Content/Taxonomies.php:291
+msgid "Público-alvo superior:"
+msgstr "Parent target audience:"
+
+#: src/Content/Taxonomies.php:292
+msgid "Editar Público-alvo"
+msgstr "Edit target audience"
+
+#: src/Content/Taxonomies.php:293
+msgid "Ver Público-alvo"
+msgstr "View target audience"
+
+#: src/Content/Taxonomies.php:294
+msgid "Atualizar Público-alvo"
+msgstr "Update target audience"
+
+#: src/Content/Taxonomies.php:295
+msgid "Adicionar Novo Público-alvo"
+msgstr "Add new target audience"
+
+#: src/Content/Taxonomies.php:296
+msgid "Nome do Novo Público-alvo"
+msgstr "New target audience name"
+
+#: src/Content/Taxonomies.php:298
+msgid "Nenhum público-alvo encontrado."
+msgstr "No target audiences found."
+
+#: blocks/nuts-map/block.json
+msgctxt "block title"
+msgid "Mapa de boas práticas (NUTS)"
+msgstr "Good practices map (NUTS)"
+
+#: blocks/nuts-map/block.json
+msgctxt "block keyword"
+msgid "mapa"
+msgstr "map"
+
+#: blocks/nuts-map/block.json
+msgctxt "block keyword"
+msgid "nuts"
+msgstr ""
+
+#: blocks/nuts-map/block.json
+msgctxt "block keyword"
+msgid "regiões"
+msgstr "regions"
+
+#: blocks/nuts-map/block.json
+msgctxt "block keyword"
+msgid "boas práticas"
+msgstr "good practices"
+
+#: blocks/nuts-map/block.json
+msgctxt "block keyword"
+msgid "map"
+msgstr ""
+
+#: blocks/nuts-map/block.json
+msgctxt "block keyword"
+msgid "region"
+msgstr ""
+
+#: src/Content/Nuts.php:146
+msgid "Internacional"
+msgstr "International"
+
+#: blocks/nuts-map/block.json
+msgctxt "block description"
+msgid "Mapa de Portugal por regiões NUTS com as boas práticas da Biblioteca de cada região, filtráveis por público-alvo, e a lista das internacionais."
+msgstr "Map of Portugal by NUTS region with each region's good practices from the Library, filterable by target audience, and the list of international ones."

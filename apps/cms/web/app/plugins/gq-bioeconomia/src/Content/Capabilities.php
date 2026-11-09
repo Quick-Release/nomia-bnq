@@ -16,6 +16,11 @@ namespace GetQuick\Bioeconomia\Content;
 final class Capabilities {
 
 	/**
+	 * WordPress's own capabilities a definition may name; never granted by the plugin.
+	 */
+	private const CORE = [ 'manage_options' ];
+
+	/**
 	 * Constroi um mapa de capabilities de post type a partir do radical singular e plural.
 	 *
 	 * @param string $singular Radical singular.
@@ -92,6 +97,22 @@ final class Capabilities {
 	}
 
 	/**
+	 * The NUTS regions' capabilities: editors assign them as they assign
+	 * Biblioteca categories, and only administrators change the terms, whose
+	 * slugs are the NUTS codes the Frontend reads.
+	 *
+	 * @return array<string, string>
+	 */
+	public static function nutsRegions() {
+		return [
+			'manage_terms' => 'manage_options',
+			'edit_terms'   => 'manage_options',
+			'delete_terms' => 'manage_options',
+			'assign_terms' => 'assign_gq_bioeconomia_library_categories',
+		];
+	}
+
+	/**
 	 * Devolve os perfis a gerir pelo plugin.
 	 *
 	 * @return string[]
@@ -123,6 +144,11 @@ final class Capabilities {
 			}
 
 			foreach ( $declared_capabilities as $capability ) {
+				// WordPress's own capabilities are its roles' to grant, not the plugin's.
+				if ( in_array( $capability, self::CORE, true ) ) {
+					continue;
+				}
+
 				if ( is_string( $capability ) && '' !== $capability ) {
 					$capabilities[] = $capability;
 				}

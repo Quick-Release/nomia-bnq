@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the GETQUICK Bio.Eco.Nomia plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: GETQUICK Bio.Eco.Nomia 0.66.0\n"
+"Project-Id-Version: GETQUICK Bio.Eco.Nomia 0.67.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/plugin\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-06T21:20:02+00:00\n"
+"POT-Creation-Date: 2026-11-09T16:13:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: gq-bioeconomia\n"
@@ -167,6 +167,10 @@ msgid "%d imagem"
 msgid_plural "%d imagens"
 msgstr[0] ""
 msgstr[1] ""
+
+#: src/Content/Nuts.php:146
+msgid "Internacional"
+msgstr ""
 
 #: src/Content/PostTypes.php:40
 #: src/Content/PostTypes.php:42
@@ -1465,6 +1469,104 @@ msgstr ""
 
 #: src/Content/Taxonomies.php:234
 msgid "Nenhuma entidade encontrada."
+msgstr ""
+
+#: src/Content/Taxonomies.php:256
+#: src/Content/Taxonomies.php:267
+msgid "Regiões NUTS"
+msgstr ""
+
+#: src/Content/Taxonomies.php:257
+msgid "Região NUTS"
+msgstr ""
+
+#: src/Content/Taxonomies.php:258
+msgid "Pesquisar Regiões NUTS"
+msgstr ""
+
+#: src/Content/Taxonomies.php:259
+msgid "Todas as Regiões NUTS"
+msgstr ""
+
+#: src/Content/Taxonomies.php:260
+msgid "Região NUTS superior"
+msgstr ""
+
+#: src/Content/Taxonomies.php:261
+msgid "Região NUTS superior:"
+msgstr ""
+
+#: src/Content/Taxonomies.php:262
+msgid "Editar Região NUTS"
+msgstr ""
+
+#: src/Content/Taxonomies.php:263
+msgid "Ver Região NUTS"
+msgstr ""
+
+#: src/Content/Taxonomies.php:264
+msgid "Atualizar Região NUTS"
+msgstr ""
+
+#: src/Content/Taxonomies.php:265
+msgid "Adicionar Nova Região NUTS"
+msgstr ""
+
+#: src/Content/Taxonomies.php:266
+msgid "Nome da Nova Região NUTS"
+msgstr ""
+
+#: src/Content/Taxonomies.php:268
+msgid "Nenhuma região encontrada."
+msgstr ""
+
+#: src/Content/Taxonomies.php:286
+#: src/Content/Taxonomies.php:297
+msgid "Públicos-alvo"
+msgstr ""
+
+#: src/Content/Taxonomies.php:287
+msgid "Público-alvo"
+msgstr ""
+
+#: src/Content/Taxonomies.php:288
+msgid "Pesquisar Públicos-alvo"
+msgstr ""
+
+#: src/Content/Taxonomies.php:289
+msgid "Todos os Públicos-alvo"
+msgstr ""
+
+#: src/Content/Taxonomies.php:290
+msgid "Público-alvo superior"
+msgstr ""
+
+#: src/Content/Taxonomies.php:291
+msgid "Público-alvo superior:"
+msgstr ""
+
+#: src/Content/Taxonomies.php:292
+msgid "Editar Público-alvo"
+msgstr ""
+
+#: src/Content/Taxonomies.php:293
+msgid "Ver Público-alvo"
+msgstr ""
+
+#: src/Content/Taxonomies.php:294
+msgid "Atualizar Público-alvo"
+msgstr ""
+
+#: src/Content/Taxonomies.php:295
+msgid "Adicionar Novo Público-alvo"
+msgstr ""
+
+#: src/Content/Taxonomies.php:296
+msgid "Nome do Novo Público-alvo"
+msgstr ""
+
+#: src/Content/Taxonomies.php:298
+msgid "Nenhum público-alvo encontrado."
 msgstr ""
 
 #: src/Content/ThematicColors.php:102
@@ -3744,6 +3846,46 @@ msgstr ""
 #: blocks/nomia-contact-map/block.json
 msgctxt "block description"
 msgid "Mapa Google para páginas de contacto. Cole um link do Google Maps."
+msgstr ""
+
+#: blocks/nuts-map/block.json
+msgctxt "block title"
+msgid "Mapa de boas práticas (NUTS)"
+msgstr ""
+
+#: blocks/nuts-map/block.json
+msgctxt "block description"
+msgid "Mapa de Portugal por regiões NUTS com as boas práticas da Biblioteca de cada região, filtráveis por público-alvo, e a lista das internacionais."
+msgstr ""
+
+#: blocks/nuts-map/block.json
+msgctxt "block keyword"
+msgid "mapa"
+msgstr ""
+
+#: blocks/nuts-map/block.json
+msgctxt "block keyword"
+msgid "nuts"
+msgstr ""
+
+#: blocks/nuts-map/block.json
+msgctxt "block keyword"
+msgid "regiões"
+msgstr ""
+
+#: blocks/nuts-map/block.json
+msgctxt "block keyword"
+msgid "boas práticas"
+msgstr ""
+
+#: blocks/nuts-map/block.json
+msgctxt "block keyword"
+msgid "map"
+msgstr ""
+
+#: blocks/nuts-map/block.json
+msgctxt "block keyword"
+msgid "region"
 msgstr ""
 
 #: blocks/opportunities-grid/block.json
