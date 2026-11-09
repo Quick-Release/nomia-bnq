@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.28.0 - 2026-11-09
+
+Previous release: v0.27.0
+
+- b83112a Merge pull request #152 from Quick-Release/claude/no-dates-pdf-inline
+- a62d462 feat: no entry dates, and every PDF file block shown in the page
+
 ## v0.27.0 - 2026-11-09
 
 Previous release: v0.26.0
