@@ -1,6 +1,7 @@
 ---
 import { isLegislationListing, libraryRows, libraryPage, LIBRARY_PARAMS } from "../../../lib/library-listing";
 import NomiaContentListing from "../../content-lists/listing/NomiaContentListing.astro";
+import GlossaryAccordion from "../../content-lists/glossary/GlossaryAccordion.astro";
 import {
   isFilteredByVisitor,
   listingPagination,
@@ -10,7 +11,10 @@ import {
   readPerPage,
 } from "../../../lib/content-collections";
 import { galleryListing } from "../../../lib/gallery";
-import { listCollection } from "../../../lib/content-listing";
+import { escapeHtml } from "@getquick/content";
+import { content } from "../../../lib/content";
+import { listAllItems, listCollection } from "../../../lib/content-listing";
+import { GLOSSARY_COLLECTION, glossaryTermId, sortGlossaryTerms } from "../../../lib/glossary";
 import type { WpParsedBlock } from "../../../lib/wp-blocks";
 import { wpText as text } from "../normalizers";
 import type { AttrsFor } from "../wp-block-attrs";
@@ -46,7 +50,27 @@ const allDocuments = documents && query ? await libraryRows(Astro.request, query
 const documentResult = allDocuments && query
   ? libraryPage(allDocuments, query, Astro.url.searchParams) : null;
 const galleryResult = collection === "gq_bio_gallery" && query ? await galleryListing(query) : null;
-const genericResult = !documents && !galleryResult && query ? await listCollection(query) : null;
+// The Glossário has no pages of its own: every term is listed, with its
+// definition, as an accordion (src/lib/glossary.ts).
+const glossary = collection === GLOSSARY_COLLECTION;
+const genericResult = !documents && !galleryResult && query
+  ? await (glossary ? listAllItems(query) : listCollection(query))
+  : null;
+const terms = glossary && genericResult?.kind === "found"
+  ? sortGlossaryTerms(
+      await Promise.all(
+        genericResult.items.map(async (item) => {
+          const answer = await content().publishedEntry(item.uri, Astro.site?.origin);
+          const entry = answer.kind === "found" && "entry" in answer.content ? answer.content.entry : null;
+          return {
+            id: glossaryTermId(item.uri) ?? item.uri,
+            title: item.title.trim() || "Sem título",
+            content: entry?.content.trim() || (item.excerpt ? `<p>${escapeHtml(item.excerpt)}</p>` : ""),
+          };
+        }),
+      ),
+    )
+  : [];
 const result = galleryResult ?? documentResult ?? genericResult ?? ({ kind: "unavailable" } as const);
 const rows = (galleryResult?.kind === "found" ? galleryResult.items : null) ?? documentResult?.items ?? (genericResult?.kind === "found"
   ? genericResult.items.map((item) => ({
@@ -64,7 +88,9 @@ const pagination =
     : null;
 ---
 
-{collection && (
+{collection && terms.length > 0 ? (
+  <GlossaryAccordion terms={terms} />
+) : collection && (
   <NomiaContentListing
     display={collection === "gq_bio_gallery" && display === "document-grid" ? "thumbnail-grid" : display}
     infiniteLoading={infiniteLoading}

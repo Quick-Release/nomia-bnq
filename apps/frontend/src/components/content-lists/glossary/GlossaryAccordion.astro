@@ -1,0 +1,53 @@
+---
+/**
+ * The Glossário: every term, alphabetically, as an accordion. A term opens in
+ * place to show its definition; nothing leads to a page of its own. A term's
+ * address fragment (`#ecodesign`, where its old page redirects) opens it.
+ */
+import type { GlossaryTerm } from "../../../lib/glossary";
+import { PAGE_FRAME } from "../../../lib/site-gutters";
+
+interface Props {
+  terms: GlossaryTerm[];
+}
+
+const { terms } = Astro.props;
+const focusRing =
+  "focus-visible:ring-main-teal-400 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none";
+---
+
+<section class={`${PAGE_FRAME} font-secondary py-10 md:py-12`} data-glossary>
+  <div class="divide-current/20 border-current/20 divide-y border-y">
+    {terms.map((term) => (
+      <details id={term.id} class="glossary-term group scroll-mt-24" data-glossary-term>
+        <summary class:list={["flex cursor-pointer list-none items-center justify-between gap-4 rounded-sm py-5 transition-colors hover:text-main-ciano-500 [&::-webkit-details-marker]:hidden", focusRing]}>
+          <h2 class="font-primary text-lg font-medium">{term.title}</h2>
+          <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="shrink-0 transition-transform group-open:rotate-180">
+            <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </summary>
+        <div class="prose-wp pb-6" set:html={term.content} />
+      </details>
+    ))}
+  </div>
+</section>
+
+<script>
+  // Opens the term the address names (`#ecodesign`), as its old page's
+  // redirect and a search result link to it, and when the fragment changes.
+  function openNamedTerm() {
+    let id = "";
+    try {
+      id = decodeURIComponent(location.hash.slice(1));
+    } catch {
+      return;
+    }
+    const term = id ? document.getElementById(id) : null;
+    if (!(term instanceof HTMLDetailsElement) || !term.matches("[data-glossary-term]")) return;
+    term.open = true;
+    term.scrollIntoView({ block: "start" });
+    term.querySelector("summary")?.focus({ preventScroll: true });
+  }
+  openNamedTerm();
+  addEventListener("hashchange", openNamedTerm);
+</script>

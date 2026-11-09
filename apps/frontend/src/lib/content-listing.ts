@@ -42,3 +42,24 @@ export async function collectionTerms(
     return [];
   }
 }
+
+/**
+ * Every item a query matches, read page by page from the publication store,
+ * for a listing that shows them all on one page. A page the store doesn't
+ * answer makes the whole listing unavailable.
+ */
+export async function listAllItems(
+  query: ListingQuery,
+  list: typeof listCollection = listCollection,
+): Promise<CollectionListing> {
+  const items = [];
+  let total = 0;
+  for (let page = 1, pages = 1; page <= pages; page++) {
+    const result = await list({ ...query, page, perPage: 100 });
+    if (result.kind !== "found") return result;
+    items.push(...result.items);
+    total = result.total;
+    pages = result.pages;
+  }
+  return { kind: "found", items, total, page: 1, pages: 1 };
+}

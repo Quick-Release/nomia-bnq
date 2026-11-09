@@ -261,3 +261,31 @@ test("infinite loading uses the next filtered URL and hides numbered pagination"
   assert.ok(document.querySelector("[data-listing-status][role='status']"));
   assert.equal(document.querySelector("dialog"), null);
 });
+
+test("the Glossário is an accordion of every term, with its definition and no link out", async () => {
+  const { document } = await (
+    await harnessPromise
+  ).renderComponent("/src/components/content-lists/glossary/GlossaryAccordion.astro", {
+    terms: [
+      { id: "biomassa", title: "Biomassa", content: "<p>Matéria orgânica.</p>" },
+      { id: "ecodesign", title: "Ecodesign", content: "<p>Desenvolvimento de produtos.</p>" },
+    ],
+  });
+  const terms = [...document.querySelectorAll("[data-glossary] details")];
+  assert.deepEqual(
+    terms.map((term) => [
+      term.id,
+      term.querySelector("summary h2").textContent.trim(),
+      term.querySelector(".prose-wp").textContent.trim(),
+    ]),
+    [
+      ["biomassa", "Biomassa", "Matéria orgânica."],
+      ["ecodesign", "Ecodesign", "Desenvolvimento de produtos."],
+    ],
+  );
+  assert.equal(
+    terms.some((term) => term.open),
+    false,
+  );
+  assert.equal(document.querySelector("[data-glossary] a"), null);
+});

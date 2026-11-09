@@ -2,6 +2,7 @@
 import type { SearchResult } from "../../lib/site-search";
 import { listingPagination } from "../../lib/content-collections";
 import { safeHref } from "../../lib/safe-href";
+import { glossaryTermHref } from "../../lib/glossary";
 
 interface Props { query: string; result: SearchResult | null; url: URL }
 const { query, result, url } = Astro.props;
@@ -28,7 +29,7 @@ const pagination = found && found.totalPages > 1
           <ul class="nomia-search-items">
             {found.items.map((item) => (
               <li>
-                <h2><a href={safeHref(item.uri)}>{item.title || "Sem título"}</a></h2>
+                <h2><a href={safeHref(glossaryTermHref(item.uri) ?? item.uri)}>{item.title || "Sem título"}</a></h2>
                 {item.excerpt && <p>{item.excerpt}</p>}
               </li>
             ))}
