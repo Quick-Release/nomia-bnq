@@ -108,7 +108,8 @@ var gqBioeconomiaFrontendRules = (function(exports) {
 				taxonomy: "categoria_biblioteca",
 				param: "categoria",
 				label: "Categoria"
-			}, ...GLOBAL_TAXONOMIES]
+			}, ...GLOBAL_TAXONOMIES],
+			storedTaxonomies: ["regiao_nuts"]
 		},
 		eventos: {
 			label: "Eventos",
@@ -183,7 +184,7 @@ var gqBioeconomiaFrontendRules = (function(exports) {
 	var RUNTIME_COLLECTIONS = Object.fromEntries(Object.entries(CONTENT_COLLECTIONS).map(([postType, collection]) => [postType, {
 		postType,
 		graphqlType: collection.graphqlType,
-		taxonomies: collection.taxonomies.map(({ taxonomy }) => taxonomy)
+		taxonomies: [...collection.taxonomies.map(({ taxonomy }) => taxonomy), ..."storedTaxonomies" in collection ? collection.storedTaxonomies : []]
 	}]));
 	var COLLECTION_KEYS = Object.keys(CONTENT_COLLECTIONS);
 	/** The Listing's presentations, ported from bioeconomia.pt's archive shells. */

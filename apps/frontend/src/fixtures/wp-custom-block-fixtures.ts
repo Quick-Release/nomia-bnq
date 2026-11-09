@@ -1174,4 +1174,13 @@ export const WP_CUSTOM_BLOCK_FIXTURES: readonly WpCustomBlockFixture[] = [
       },
     ),
   },
+  {
+    label: "NUTS map",
+    block: block(
+      "getquick/nuts-map",
+      {
+        level: "2",
+      },
+    ),
+  },
 ];

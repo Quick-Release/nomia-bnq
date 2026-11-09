@@ -4451,6 +4451,51 @@
       "editorTitle": "Imagem interativa",
       "editorDescription": "Mostra uma imagem interativa: ao passar o rato ou tocar em cada etapa, aparecem os detalhes.",
       "editorIcon": "format-image"
+    },
+    {
+      "blockName": "getquick/nuts-map",
+      "catalogId": "nuts-map",
+      "schemaVersion": 1,
+      "order": 46,
+      "contentAttributes": [
+        "schemaVersion",
+        "blockId",
+        "level",
+        "internationalTitle"
+      ],
+      "status": "active",
+      "inserter": true,
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "nuts-map"
+        },
+        "level": {
+          "type": "string",
+          "default": "2",
+          "enum": [
+            "0",
+            "1",
+            "2"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        },
+        "internationalTitle": {
+          "type": "string",
+          "default": "Boas Práticas internacionais"
+        }
+      },
+      "compatibilityReads": {},
+      "editorExperience": "preview",
+      "editorTitle": "Mapa de boas práticas (NUTS)",
+      "editorDescription": "Mapa de Portugal por regiões NUTS com as boas práticas da Biblioteca de cada região, e a lista das internacionais.",
+      "editorIcon": "location-alt"
     }
   ]
 }

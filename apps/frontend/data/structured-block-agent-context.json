@@ -6607,6 +6607,71 @@
         "module": "apps/cms/web/app/plugins/gq-bioeconomia/blocks/interactive-image/index.js"
       },
       "documentation": "docs/gutenberg-blocks/sections/interactive-image.md"
+    },
+    {
+      "blockName": "getquick/nuts-map",
+      "catalogId": "nuts-map",
+      "schemaVersion": 1,
+      "order": 46,
+      "status": "active",
+      "inserter": true,
+      "container": false,
+      "sourceFile": "src/structured-blocks/registrations/nuts-map.ts",
+      "attributes": {
+        "schemaVersion": {
+          "type": "number",
+          "default": 1
+        },
+        "blockId": {
+          "type": "string",
+          "default": "nuts-map"
+        },
+        "level": {
+          "type": "string",
+          "default": "2",
+          "enum": [
+            "0",
+            "1",
+            "2"
+          ],
+          "ui": {
+            "kind": "select"
+          }
+        },
+        "internationalTitle": {
+          "type": "string",
+          "default": "Boas Práticas internacionais"
+        }
+      },
+      "compatibilityReads": {},
+      "editing": {
+        "mode": "generic",
+        "module": "apps/cms/web/app/plugins/gq-bioeconomia/assets/editor.js",
+        "hiddenAttributes": [
+          "schemaVersion",
+          "blockId"
+        ],
+        "editableAttributes": [
+          "level",
+          "internationalTitle"
+        ],
+        "note": "The shared generic editor renders every non-metadata contract attribute."
+      },
+      "renderer": {
+        "module": "src/components/wp-blocks/blocks/NutsMapBlock.astro",
+        "previewLabel": "NUTS map",
+        "previewAttributes": {
+          "level": "2"
+        }
+      },
+      "fixture": "src/fixtures/wp-custom-block-fixtures.ts",
+      "editor": {
+        "title": "Mapa de boas práticas (NUTS)",
+        "description": "Mapa de Portugal por regiões NUTS com as boas práticas da Biblioteca de cada região, e a lista das internacionais.",
+        "icon": "location-alt",
+        "experience": "preview"
+      },
+      "documentation": "docs/gutenberg-blocks/sections/nuts-map.md"
     }
   ]
 }

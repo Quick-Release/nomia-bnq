@@ -1,0 +1,397 @@
+---
+/**
+ * NUTS map of Boas práticas: Portugal by NUTS 2024 level (0, 1 or 2, each in
+ * its own colour), a region filter, and the published Boas práticas. Selecting a
+ * region lists the entries tagged with it or any region inside it.
+ *
+ * Design: Nomia — Website (2), node 40017522:49984. The shapes are Eurostat
+ * GISCO's (nuts-map-geometry.json, scripts/nuts-map/build-nuts-map.py), not the
+ * design's drawing. Everything is in the page: without its script the map is
+ * static and every entry is listed.
+ */
+import geometry from "./nuts-map-geometry.json";
+import { NUTS_MAP_LEVELS, nutsUnit, nutsUnitsAt, type NutsMapLevel } from "../../lib/nuts";
+import type { BoaPratica } from "../../lib/boas-praticas";
+import { PAGE_FRAME } from "../../lib/site-gutters";
+
+interface Props {
+  items: BoaPratica[];
+  /** The level shown first. */
+  level?: NutsMapLevel;
+}
+
+const { items, level = 2 } = Astro.props;
+
+const LEVEL_LABELS: Record<NutsMapLevel, { short: string; long: string }> = {
+  0: { short: "NUTS 0", long: "País" },
+  1: { short: "NUTS 1", long: "Continente e regiões autónomas" },
+  2: { short: "NUTS 2", long: "Regiões" },
+};
+
+const shapes = geometry.shapes as Record<string, { code: string; d: string }[]>;
+
+// Each inset box selects its islands' unit at the level shown: the islands
+// are small, so the box is the easier target.
+const insetCode = (label: string, at: NutsMapLevel) =>
+  at === 0 ? "PT" : label === "Açores" ? (at === 1 ? "PT2" : "PT20") : at === 1 ? "PT3" : "PT30";
+
+const uid = `nuts-map-${Math.random().toString(36).slice(2, 8)}`;
+const count = (n: number) => (n === 1 ? "1 boa prática" : `${n} boas práticas`);
+---
+
+<section
+  class="nuts-map bg-neutral-bw-white text-main-cinza-700 w-full"
+  aria-label="Boas práticas por região"
+  data-nuts-map
+  data-level={level}
+  data-nomia-header-surface="light"
+>
+  <div class={`${PAGE_FRAME} flex min-w-0 flex-col lg:flex-row`}>
+    <div class="border-monochrome-light-400 flex min-w-0 flex-col items-center gap-6 border-b py-10 lg:w-1/2 lg:border-r lg:border-b-0 lg:py-16 lg:pr-10">
+      <div class="nuts-map__levels" role="group" aria-label="Nível NUTS">
+        {NUTS_MAP_LEVELS.map((at) => (
+          <button
+            type="button"
+            class="nuts-map__level"
+            data-level-button={at}
+            aria-pressed={at === level ? "true" : "false"}
+            title={LEVEL_LABELS[at].long}
+          >
+            <span class="nuts-map__swatch" data-swatch={at} aria-hidden="true"></span>
+            <span>{LEVEL_LABELS[at].short}</span>
+            <span class="sr-only">: {LEVEL_LABELS[at].long}</span>
+          </button>
+        ))}
+      </div>
+
+      <svg
+        class="nuts-map__svg"
+        viewBox={geometry.viewBox}
+        role="group"
+        aria-label="Mapa de Portugal por regiões NUTS"
+      >
+        {NUTS_MAP_LEVELS.map((at) => (
+          <g data-level-shapes={at} display={at !== level ? "none" : undefined}>
+            {geometry.insets.map((inset) => {
+              const [x, y, w, h] = inset.box;
+              return (
+                <g>
+                  <rect class="nuts-map__inset" data-code={insetCode(inset.label, at)} x={x} y={y} width={w} height={h} aria-hidden="true" />
+                  <text class="nuts-map__inset-label" x={x + 8} y={y + h - 8} aria-hidden="true">{inset.label}</text>
+                </g>
+              );
+            })}
+            {shapes[String(at)].map(({ code, d }) => (
+              <path
+                class="nuts-map__region"
+                data-code={code}
+                d={d}
+                role="button"
+                tabindex={at === level ? "0" : "-1"}
+                aria-pressed="false"
+                aria-label={nutsUnit(code)?.name ?? code}
+              >
+                <title>{nutsUnit(code)?.name ?? code}</title>
+              </path>
+            ))}
+          </g>
+        ))}
+      </svg>
+      <p class="text-notes text-main-cinza-500 font-secondary">
+        Limites administrativos: © EuroGeographics (Eurostat, NUTS 2024)
+      </p>
+    </div>
+
+    <div class="flex min-w-0 flex-col lg:w-1/2">
+      <div class="border-monochrome-light-400 flex flex-col gap-6 border-b py-10 lg:pl-10">
+        <h2 id={`${uid}-filters`} class="text-subtitle font-primary font-semibold">Filtros</h2>
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2" role="group" aria-labelledby={`${uid}-filters`}>
+          <label class="nuts-map__field">
+            <span class="sr-only">Região</span>
+            <select data-region-select>
+              <option value="">Todas as regiões</option>
+              {NUTS_MAP_LEVELS.map((at) => (
+                <optgroup label={`${LEVEL_LABELS[at].short} · ${LEVEL_LABELS[at].long}`}>
+                  {nutsUnitsAt(at).map((unit) => (
+                    <option value={unit.code}>{unit.name}</option>
+                  ))}
+                </optgroup>
+              ))}
+            </select>
+          </label>
+        </div>
+        <p class="text-notes text-main-cinza-500 font-secondary" data-status aria-live="polite">
+          {count(items.length)}
+        </p>
+      </div>
+
+      <ul class="flex flex-col lg:pl-10" data-items>
+        {items.map((item) => (
+          <li
+            class="nuts-map__item border-monochrome-light-400 relative flex items-stretch border-b"
+            data-regions={item.regions.join(" ")}
+          >
+            <div class="relative w-[min(240px,32vw)] shrink-0 self-stretch bg-main-cinza-100">
+              {item.imageSrc && (
+                <img
+                  src={item.imageSrc}
+                  alt={item.imageAlt}
+                  class="absolute inset-0 size-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                  width="240"
+                  height="264"
+                />
+              )}
+            </div>
+            <div class="flex min-w-0 flex-1 items-center gap-6 py-6 pl-6">
+              <div class="flex min-w-0 flex-1 flex-col gap-4">
+                <h3 class="text-h4 font-secondary font-medium">
+                  <a href={item.href} class="nuts-map__link">{item.title}</a>
+                </h3>
+                {item.excerpt && (
+                  <p class="text-body-large font-secondary line-clamp-3">{item.excerpt}</p>
+                )}
+              </div>
+              <span class="nuts-map__arrow" aria-hidden="true">
+                <svg viewBox="0 0 32 32" fill="none" class="size-8">
+                  <path d="M8 16h14M18 11l5 5-5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+            </div>
+          </li>
+        ))}
+        <li class="text-body text-main-cinza-500 font-secondary py-12" data-empty hidden={items.length > 0 ? true : undefined}>
+          Não há boas práticas para os filtros escolhidos.
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Nomia's palette (GQ Design presets), with its values as fallbacks. */
+  .nuts-map {
+    --nuts-0: var(--color-main-botnico-300, #d2ebb1);
+    --nuts-0-hover: var(--color-main-botnico-400, #a4d663);
+    --nuts-1: var(--color-main-teal-200, #c0e9e6);
+    --nuts-1-hover: var(--color-main-teal-300, #80d2cc);
+    --nuts-2: var(--color-main-ciano-200, #caf4f2);
+    --nuts-2-hover: var(--color-main-ciano-300, #95e9e4);
+    --nuts-selected: var(--color-main-botnico-600, #7ba14b);
+    --nuts-ink: var(--color-main-cinza-700, #444);
+    --nuts-muted: var(--color-main-cinza-400, #878787);
+    --nuts-focus: var(--color-main-teal-400, #00a499);
+  }
+  .nuts-map__levels {
+    display: inline-flex;
+    border: 1px solid var(--nuts-ink);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .nuts-map__level {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    font: inherit;
+    cursor: pointer;
+    background: transparent;
+  }
+  .nuts-map__level + .nuts-map__level {
+    border-left: 1px solid var(--nuts-ink);
+  }
+  .nuts-map__level[aria-pressed="true"] {
+    background: var(--nuts-ink);
+    color: var(--color-neutral-bw-white, #fff);
+  }
+  .nuts-map__level:focus-visible {
+    outline: 2px solid var(--nuts-focus);
+    outline-offset: -4px;
+  }
+  /* An outline would box the shape's bounds: the focus ring is its stroke. */
+  .nuts-map__region:focus {
+    outline: none;
+  }
+  .nuts-map__region:focus-visible {
+    stroke: var(--nuts-focus);
+    stroke-width: 2.5;
+    paint-order: stroke;
+  }
+  .nuts-map__swatch {
+    width: 0.875rem;
+    height: 0.875rem;
+    border-radius: 50%;
+    border: 1px solid rgb(0 0 0 / 15%);
+  }
+  .nuts-map__swatch[data-swatch="0"] { background: var(--nuts-0); }
+  .nuts-map__swatch[data-swatch="1"] { background: var(--nuts-1); }
+  .nuts-map__swatch[data-swatch="2"] { background: var(--nuts-2); }
+
+  .nuts-map__svg {
+    width: 100%;
+    max-width: 560px;
+    height: auto;
+  }
+  .nuts-map__region {
+    stroke: #fff;
+    stroke-width: 1;
+    stroke-linejoin: round;
+    cursor: pointer;
+    transition: fill 150ms ease;
+  }
+  [data-level-shapes="0"] .nuts-map__region { fill: var(--nuts-0); }
+  [data-level-shapes="1"] .nuts-map__region { fill: var(--nuts-1); }
+  [data-level-shapes="2"] .nuts-map__region { fill: var(--nuts-2); }
+  [data-level-shapes="0"] .nuts-map__region:hover { fill: var(--nuts-0-hover); }
+  [data-level-shapes="1"] .nuts-map__region:hover { fill: var(--nuts-1-hover); }
+  [data-level-shapes="2"] .nuts-map__region:hover { fill: var(--nuts-2-hover); }
+  .nuts-map .nuts-map__region[aria-pressed="true"] { fill: var(--nuts-selected); }
+
+  .nuts-map__inset {
+    fill: transparent;
+    stroke: var(--nuts-muted);
+    stroke-width: 1;
+    cursor: pointer;
+  }
+  .nuts-map__inset-label {
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    fill: var(--nuts-ink);
+    pointer-events: none;
+  }
+
+  .nuts-map__field {
+    position: relative;
+    display: block;
+    min-width: 0;
+  }
+  .nuts-map__field select {
+    width: 100%;
+    appearance: none;
+    border: 0;
+    border-bottom: 1px solid var(--nuts-ink);
+    background: transparent
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")
+      no-repeat right top / 1.5rem;
+    padding: 0 2rem 0.5rem 0;
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .nuts-map__field select:focus-visible {
+    outline: 2px solid var(--nuts-focus);
+    outline-offset: 2px;
+  }
+
+  /* The title's link covers the whole card. */
+  .nuts-map__link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+  .nuts-map__link:focus-visible {
+    outline: none;
+  }
+  .nuts-map__item:has(.nuts-map__link:focus-visible) {
+    outline: 2px solid var(--nuts-focus);
+    outline-offset: -2px;
+  }
+  .nuts-map__arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-right: 1.5rem;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    transition: color 150ms ease;
+  }
+  .nuts-map__item:hover .nuts-map__arrow {
+    color: var(--color-main-teal-400, #00a499);
+  }
+  @media (max-width: 639px) {
+    .nuts-map__arrow { display: none; }
+  }
+</style>
+
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>("[data-nuts-map]")) {
+    const levelButtons = [...root.querySelectorAll<HTMLButtonElement>("[data-level-button]")];
+    const levelGroups = [...root.querySelectorAll<SVGGElement>("[data-level-shapes]")];
+    const regionSelect = root.querySelector<HTMLSelectElement>("[data-region-select]");
+    const items = [...root.querySelectorAll<HTMLLIElement>("[data-regions]")];
+    const empty = root.querySelector<HTMLElement>("[data-empty]");
+    const status = root.querySelector<HTMLElement>("[data-status]");
+
+    let level = root.dataset.level ?? "2";
+    let region = "";
+
+    const levelOf = (code: string) => (code === "PT" ? "0" : code.length === 3 ? "1" : "2");
+    const nameOf = (code: string) =>
+      regionSelect?.querySelector<HTMLOptionElement>(`option[value="${code}"]`)?.textContent ?? code;
+
+    const render = () => {
+      for (const button of levelButtons) {
+        button.setAttribute("aria-pressed", String(button.dataset.levelButton === level));
+      }
+      for (const group of levelGroups) {
+        const shown = group.dataset.levelShapes === level;
+        if (shown) group.removeAttribute("display");
+        else group.setAttribute("display", "none");
+        for (const path of group.querySelectorAll<SVGPathElement>("[data-code]")) {
+          if (path.tagName.toLowerCase() !== "path") continue;
+          path.setAttribute("tabindex", shown ? "0" : "-1");
+          path.setAttribute("aria-pressed", String(path.dataset.code === region));
+        }
+      }
+      if (regionSelect) regionSelect.value = region;
+
+      let shown = 0;
+      for (const item of items) {
+        const regions = (item.dataset.regions ?? "").split(" ");
+        const match = !region || regions.includes(region);
+        item.hidden = !match;
+        if (match) shown++;
+      }
+      if (empty) empty.hidden = shown > 0;
+      if (status) {
+        const total = shown === 1 ? "1 boa prática" : `${shown} boas práticas`;
+        status.textContent = region ? `${total} em ${nameOf(region)}` : total;
+      }
+    };
+
+    const select = (code: string) => {
+      region = region === code ? "" : code;
+      render();
+    };
+
+    for (const button of levelButtons) {
+      button.addEventListener("click", () => {
+        level = button.dataset.levelButton ?? "2";
+        region = "";
+        render();
+      });
+    }
+    for (const target of root.querySelectorAll<SVGElement>("svg [data-code]")) {
+      const code = target.dataset.code ?? "";
+      target.addEventListener("click", () => select(code));
+      target.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          select(code);
+        }
+      });
+    }
+    regionSelect?.addEventListener("change", () => {
+      region = regionSelect.value;
+      if (region) level = levelOf(region);
+      render();
+    });
+
+    render();
+  }
+</script>

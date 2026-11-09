@@ -4998,4 +4998,61 @@ return [
 		],
 		'editorStyle' => 'gq-bioeconomia-editor',
 	],
+	'nuts-map'                              => [
+		'$schema'     => 'https://schemas.wp.org/trunk/block.json',
+		'apiVersion'  => 3,
+		'name'        => 'getquick/nuts-map',
+		'title'       => 'Mapa de boas práticas (NUTS)',
+		'category'    => 'getquick-design',
+		'icon'        => 'location-alt',
+		'description' => 'Mapa de Portugal por regiões NUTS com as boas práticas da Biblioteca de cada região, e a lista das internacionais.',
+		'keywords'    => [
+			'mapa',
+			'nuts',
+			'regiões',
+			'boas práticas',
+			'map',
+			'region',
+		],
+		'textdomain'  => 'gq-bioeconomia',
+		'attributes'  => [
+			'schemaVersion'      => [
+				'type'    => 'number',
+				'default' => 1,
+			],
+			'blockId'            => [
+				'type'    => 'string',
+				'default' => 'nuts-map',
+			],
+			'level'              => [
+				'type'    => 'string',
+				'default' => '2',
+				'enum'    => [
+					'0',
+					'1',
+					'2',
+				],
+			],
+			'internationalTitle' => [
+				'type'    => 'string',
+				'default' => 'Boas Práticas internacionais',
+			],
+		],
+		'supports'    => [
+			'html'            => false,
+			'className'       => false,
+			'customClassName' => false,
+			'color'           => false,
+			'spacing'         => false,
+			'typography'      => false,
+			'align'           => false,
+			'inserter'        => true,
+		],
+		'example'     => [
+			'attributes' => [
+				'level' => '2',
+			],
+		],
+		'editorStyle' => 'gq-bioeconomia-editor',
+	],
 ];

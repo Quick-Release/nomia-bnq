@@ -246,6 +246,38 @@ final class Taxonomies {
 					],
 				],
 			],
+			// Portugal's NUTS 2024 units (Nuts), for the NUTS map block: only
+			// administrators change the terms, which are seeded with their codes.
+			Nuts::TAXONOMY           => [
+				'object_type' => [ 'biblioteca' ],
+				'args'        => [
+					'hierarchical'        => true,
+					'labels'              => [
+						'name'              => __( 'Regiões NUTS', 'gq-bioeconomia' ),
+						'singular_name'     => __( 'Região NUTS', 'gq-bioeconomia' ),
+						'search_items'      => __( 'Pesquisar Regiões NUTS', 'gq-bioeconomia' ),
+						'all_items'         => __( 'Todas as Regiões NUTS', 'gq-bioeconomia' ),
+						'parent_item'       => __( 'Região NUTS superior', 'gq-bioeconomia' ),
+						'parent_item_colon' => __( 'Região NUTS superior:', 'gq-bioeconomia' ),
+						'edit_item'         => __( 'Editar Região NUTS', 'gq-bioeconomia' ),
+						'view_item'         => __( 'Ver Região NUTS', 'gq-bioeconomia' ),
+						'update_item'       => __( 'Atualizar Região NUTS', 'gq-bioeconomia' ),
+						'add_new_item'      => __( 'Adicionar Nova Região NUTS', 'gq-bioeconomia' ),
+						'new_item_name'     => __( 'Nome da Nova Região NUTS', 'gq-bioeconomia' ),
+						'menu_name'         => __( 'Regiões NUTS', 'gq-bioeconomia' ),
+						'not_found'         => __( 'Nenhuma região encontrada.', 'gq-bioeconomia' ),
+					],
+					'show_ui'             => true,
+					'show_admin_column'   => true,
+					'query_var'           => false,
+					'show_in_rest'        => true,
+					'show_in_graphql'     => true,
+					'graphql_single_name' => 'RegiaoNuts',
+					'graphql_plural_name' => 'RegioesNuts',
+					'capabilities'        => Capabilities::nutsRegions(),
+					'rewrite'             => false,
+				],
+			],
 		];
 	}
 

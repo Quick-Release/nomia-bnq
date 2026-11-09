@@ -802,6 +802,19 @@ export const WP_CUSTOM_BLOCK_CONTRACTS = [
     editorTitle: "Imagem interativa",
     editorDescription: "Mostra uma imagem interativa: ao passar o rato ou tocar em cada etapa, aparecem os detalhes.",
   },
+  {
+    blockName: "getquick/nuts-map",
+    catalogId: "nuts-map",
+    schemaVersion: 1,
+    contentAttributes: [
+      "schemaVersion",
+      "blockId",
+      "level",
+      "internationalTitle",
+    ],
+    editorTitle: "Mapa de boas práticas (NUTS)",
+    editorDescription: "Mapa de Portugal por regiões NUTS com as boas práticas da Biblioteca de cada região, e a lista das internacionais.",
+  },
 ] as const satisfies readonly WpCustomBlockContract[];
 
 export const WP_CUSTOM_BLOCK_COMPATIBILITY_READS = {

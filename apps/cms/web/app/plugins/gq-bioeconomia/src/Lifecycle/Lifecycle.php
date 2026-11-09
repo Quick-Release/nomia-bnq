@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace GetQuick\Bioeconomia\Lifecycle;
 
 use GetQuick\Bioeconomia\Content\Capabilities;
+use GetQuick\Bioeconomia\Content\Nuts;
 use GetQuick\Bioeconomia\Content\PostTypes;
 use GetQuick\Bioeconomia\Content\Taxonomies;
 
@@ -59,6 +60,7 @@ final class Lifecycle {
 		LegacyRename::run();
 		Taxonomies::seedLibraryTerms();
 		Taxonomies::seedOpportunityTerms();
+		Nuts::seed();
 		Capabilities::removeObsolete();
 		Capabilities::sync();
 		update_option( self::VERSION_OPTION, GQ_BIOECONOMIA_VERSION );

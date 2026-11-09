@@ -430,6 +430,28 @@ if ( ! function_exists( 'term_exists' ) ) {
 	}
 }
 
+if ( ! class_exists( 'WP_Term' ) ) {
+	class WP_Term {
+		public $term_id = 0;
+	}
+}
+
+// Every seeded term already exists: its meta is still written.
+if ( ! function_exists( 'get_term_by' ) ) {
+	function get_term_by( $field, $value, $taxonomy = '' ) {
+		$term          = new WP_Term();
+		$term->term_id = crc32( $taxonomy . ':' . $value );
+		return $term;
+	}
+}
+
+if ( ! function_exists( 'update_term_meta' ) ) {
+	function update_term_meta( $term_id, $meta_key, $meta_value ) {
+		$GLOBALS['gq_bioeconomia_test_state']['term_meta'][ $term_id ][ $meta_key ] = $meta_value;
+		return true;
+	}
+}
+
 if ( ! function_exists( 'register_term_meta' ) ) {
 	function register_term_meta( $taxonomy, $meta_key, $args = array() ) {
 		$GLOBALS['gq_bioeconomia_test_state']['registered_term_meta'][ $taxonomy ][ $meta_key ] = $args;

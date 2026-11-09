@@ -8,6 +8,7 @@ use GetQuick\Bioeconomia\Admin\Galleries;
 use GetQuick\Bioeconomia\Content\Capabilities;
 use GetQuick\Bioeconomia\Content\ContentModel;
 use GetQuick\Bioeconomia\Content\PostTypes;
+use GetQuick\Bioeconomia\Content\Nuts;
 use GetQuick\Bioeconomia\Content\Taxonomies;
 use GetQuick\Bioeconomia\Details\LibraryDetails;
 use GetQuick\Bioeconomia\Media\OrderedMedia;
@@ -499,7 +500,32 @@ test('every taxonomy is exposed to WPGraphQL for the archive listings', function
         'setor_atividade' => [ true, 'SetorAtividade', 'SetoresAtividade' ],
         'categoria_oportunidade' => [ true, 'CategoriaOportunidade', 'CategoriasOportunidade' ],
         'entidades' => [ true, 'Entidade', 'Entidades' ],
+        'regiao_nuts' => [ true, 'RegiaoNuts', 'RegioesNuts' ],
     ]);
+});
+
+test('NUTS units nest by code prefix, one level below their parent', function () {
+    $units = [];
+    foreach (Nuts::units() as [ $code, $level, $parent ]) {
+        expect($units)->not->toHaveKey($code);
+        if (null === $parent) {
+            expect($level)->toBe(0);
+        } else {
+            expect($units)->toHaveKey($parent)
+                ->and(str_starts_with($code, $parent))->toBeTrue()
+                ->and($level)->toBe($units[ $parent ] + 1);
+        }
+        $units[ $code ] = $level;
+    }
+
+    expect(array_count_values($units))->toBe([ 0 => 1, 1 => 3, 2 => 9, 3 => 26 ])
+        ->and(Nuts::slug('PT1C2'))->toBe('pt1c2');
+});
+
+test('only administrators change NUTS regions; the plugin grants no core capability', function () {
+    expect(Capabilities::nutsRegions()['edit_terms'])->toBe('manage_options')
+        ->and(Capabilities::nutsRegions()['assign_terms'])->toBe('assign_gq_bioeconomia_library_categories')
+        ->and(Capabilities::all())->not->toContain('manage_options');
 });
 
 test('custom capabilities follow declared model and taxonomy maps', function () {
