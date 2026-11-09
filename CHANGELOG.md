@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.24.0 - 2026-11-09
+
+Previous release: v0.23.1
+
+- c653f26 Merge pull request #148 from Quick-Release/claude/formacao-single-hero
+- c9901f5 fix: keep the Formação hero's image and drop the date without a hero
+- 8daaa35 feat: show Formação opportunities under the Formação page's hero, without a date
+
 ## v0.23.1 - 2026-11-06
 
 Previous release: v0.23.0
