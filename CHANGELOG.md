@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.32.1 - 2026-11-10
+
+Previous release: v0.32.0
+
+- 616cf28 Merge pull request #160 from Quick-Release/feat/enable-noticias-listing
+- 1c3349a docs: distinguish news rollout procedure from readiness record
+- b6c85d5 feat: enable Notícias after publication readiness
+
 ## v0.32.0 - 2026-11-10
 
 Previous release: v0.31.0
