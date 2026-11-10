@@ -1,5 +1,9 @@
 ---
 import { blockPresetStyles, designPostContext, responseStatus, routeOf } from "@getquick/content";
+import { NEWS_LISTING_ENABLED } from "../config/news-listing";
+import NewsListing from "../components/content-lists/news/NewsListing.astro";
+import { NEWS_PATH, readNews, newsPresentation } from "../lib/news-listing";
+import { listingPageHref } from "../lib/content-collections";
 import NomiaContentListing from "../components/content-lists/listing/NomiaContentListing.astro";
 import Home from "../components/Home.astro";
 import NomiaBlocks from "../components/NomiaBlocks.astro";
@@ -55,6 +59,14 @@ const chrome =
 const alternates = found?.alternates ?? [];
 // An Indicador's chart is its extension too, but its page is WordPress's.
 const nomia = nomiaPage(entry?.extension);
+// The CMS owns the Notícias hero; the Site lists published news beneath it.
+const news = NEWS_LISTING_ENABLED && entry?.uri === NEWS_PATH ? await readNews(runtime, Astro.url, language.slug) : null;
+if (news) {
+  Astro.response.status = newsPresentation(news, Astro.url).status;
+  if (news.kind === "found" && news.content.total > 0 && news.content.page > news.content.totalPages) {
+    return Astro.redirect(listingPageHref(Astro.url, news.content.totalPages), 302);
+  }
+}
 const gallery = entry?.extension && "kind" in entry.extension && entry.extension.kind === "gallery" ? entry.extension : null;
 const { vars, colorRules } = blockPresetStyles(entry?.spacingSizes ?? [], entry?.colors ?? []);
 // An Oportunidade in a category with its own page (Formação) is shown under
@@ -95,7 +107,9 @@ const title =
         <NomiaContentListing display="thumbnail-grid" empty="none" lightbox rows={gallery.images.map((image) => ({ href: image.url, title: entry.title, imageSrc: image.url, imageAlt: image.alt || entry.title }))} />
       </main>
     ) : nomia ? (
-      <NomiaBlocks nomia={nomia} design={entry} featuredImage={entry.featuredImage} language={language} forms={forms} />
+      <NomiaBlocks nomia={nomia} design={entry} featuredImage={entry.featuredImage} language={language} forms={forms}>
+        {news && <NewsListing news={news} url={Astro.url} />}
+      </NomiaBlocks>
     ) : entry.hasVideoHero ? (
       <>
         <style is:global set:html={colorRules} />
@@ -123,6 +137,7 @@ const title =
         )}
         <style is:global set:html={colorRules} />
         <div class="prose-wp" style={vars} set:html={embedPdfFileBlocks(entry.content)}></div>
+        {news && <NewsListing news={news} url={Astro.url} />}
       </main>
     )
   ) : delivery.kind === "missing" ? (

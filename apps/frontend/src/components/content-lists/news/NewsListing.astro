@@ -1,0 +1,21 @@
+---
+import NomiaContentListing from "../listing/NomiaContentListing.astro";
+import { newsPresentation, type NewsResult } from "../../../lib/news-listing";
+import { PAGE_FRAME } from "../../../lib/site-gutters";
+
+interface Props {
+  news: NewsResult;
+  url: URL;
+}
+const view = newsPresentation(Astro.props.news, Astro.props.url);
+---
+
+{view.state === "empty" ? (
+  <section class={`${PAGE_FRAME} font-secondary py-10 md:py-12`} data-nomia-news-empty>
+    <p>Brevemente disponível</p>
+  </section>
+) : view.state === "unavailable" ? (
+  <NomiaContentListing display="list" rows={[]} empty="unavailable" />
+) : (
+  <NomiaContentListing display="list" rows={view.rows} empty="no-match" {...view.pagination} />
+)}
