@@ -12,11 +12,13 @@ redirect to the last page. Unavailable data returns HTTP 503 and the listing's
 unavailable message, never a claim that there are no posts. Visits read only
 the publication store.
 
-## Initial adoption
+## Rollout procedure
 
-The feature is enabled in `src/config/news-listing.ts` after its runtime and
-store prerequisites were verified. Blueprint 0.38.0 pins both Content packages to
-0.6.2, the first stable pair with `listPosts`.
+`NEWS_LISTING_ENABLED` in `src/config/news-listing.ts` controls activation.
+For initial adoption, deploy with the flag set to `false`, refresh the store,
+and confirm readiness through `listPosts` before setting it to `true`.
+The completed initial readiness checks are recorded below. Blueprint 0.38.0
+pins both Content packages to 0.6.2, the first stable pair with `listPosts`.
 
 1. Adopt a stable Content pair containing gq-content PR 65 (merged source
    `d5f3b02f151b616c411aa978e862c532c52db5d8`) through the blueprint's managed
