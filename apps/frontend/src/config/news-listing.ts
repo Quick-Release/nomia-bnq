@@ -1,2 +1,2 @@
-/** Enable after the stable runtime pair is deployed and its store is refreshed. */
-export const NEWS_LISTING_ENABLED = false;
+/** The stable Content pair and refreshed publication store are ready. */
+export const NEWS_LISTING_ENABLED = true;
