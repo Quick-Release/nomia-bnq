@@ -23,7 +23,7 @@ test("renders one principal and four secondary published cards in selection orde
       block: {
         blockName: "getquick/selected-content-grid",
         attrs: {
-          items: ["post", "videos", "eventos", "oportunidades", "ferramentas"].map(
+          items: ["post", "videos", "eventos", "oportunidades", "biblioteca"].map(
             (postType, i) => ({ postId: i + 1, postType, uri: `/item-${i}/` }),
           ),
         },

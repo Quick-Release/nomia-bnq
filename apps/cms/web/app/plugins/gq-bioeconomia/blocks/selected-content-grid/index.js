@@ -16,6 +16,7 @@
     "ferramentas",
     "plataformas",
     "bases_de_dados",
+    "biblioteca",
   ];
   function Slot({ item, index, onChange, selected }) {
     const [type, setType] = useState(item?.postType || "post");

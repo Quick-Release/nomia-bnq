@@ -113,3 +113,11 @@ test("fill latest chooses one item per group and the newest multimedia item", as
   assert.equal(editor.calls.length, 10);
   assert.ok(items.every((item) => item.uri.startsWith("/")));
 });
+
+test("each slot can select a Biblioteca document", () => {
+  const { nodes } = boot();
+  const slot = nodes.find((node) => typeof node.type === "function" && node.type.name === "Slot");
+  const panel = slot.type(slot.props);
+  const select = panel.children.find((child) => child?.type === "SelectControl");
+  assert.ok(select.props.options.some((option) => option.value === "biblioteca"));
+});
