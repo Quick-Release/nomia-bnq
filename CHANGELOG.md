@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.33.0 - 2026-11-10
+
+Previous release: v0.32.1
+
+- aeffeff Merge pull request #161 from Quick-Release/claude/destaques-biblioteca
+- f514046 feat: allow Biblioteca documents in Grelha de destaques
+
 ## v0.32.1 - 2026-11-10
 
 Previous release: v0.32.0
