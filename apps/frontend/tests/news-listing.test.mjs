@@ -94,7 +94,9 @@ test("an empty page of a nonempty archive never claims news is coming soon", asy
 test("unavailable and old runtimes return 503 semantics without a zero-news claim", async () => {
   const harness = await harnessPromise;
   const { readNews, newsPresentation } = await harness.loadModule("/src/lib/news-listing.ts");
-  assert.deepEqual(await readNews({}, url, "pt"), { kind: "unavailable" });
+  for (const runtime of [null, undefined, 1, "runtime", {}, { listPosts: 1 }]) {
+    assert.deepEqual(await readNews(runtime, url, "pt"), { kind: "unavailable" });
+  }
   const news = await readNews(
     { listPosts: async () => ({ kind: "unavailable", failure: { reason: "not-ready" } }) },
     url,

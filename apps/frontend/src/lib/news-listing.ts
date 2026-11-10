@@ -14,14 +14,23 @@ interface NewsRuntime {
 
 export const NEWS_PATH = "/noticias/";
 
+function supportsNewsRuntime(runtime: unknown): runtime is NewsRuntime {
+  return (
+    typeof runtime === "object" &&
+    runtime !== null &&
+    "listPosts" in runtime &&
+    typeof runtime.listPosts === "function"
+  );
+}
+
 /** Use only the runtime's public, store-backed standard post listing. */
-export async function readNews(runtime: object, url: URL, language: string): Promise<NewsResult> {
-  if (!("listPosts" in runtime) || typeof runtime.listPosts !== "function") {
+export async function readNews(runtime: unknown, url: URL, language: string): Promise<NewsResult> {
+  if (!supportsNewsRuntime(runtime)) {
     return { kind: "unavailable" };
   }
   const page = Number(url.searchParams.get("pagina"));
   try {
-    return await (runtime as NewsRuntime).listPosts({
+    return await runtime.listPosts({
       page: Number.isSafeInteger(page) && page > 0 ? page : 1,
       perPage: 12,
       language,
