@@ -6,7 +6,7 @@ import { plainText } from "../normalizers";
 import { safeHref } from "../../../lib/safe-href";
 interface Props { block: WpParsedBlock }
 const { block } = Astro.props;
-const allowed = new Set(["post", "videos", "podcasts", "infografias", "gq_bio_gallery", "eventos", "oportunidades", "ferramentas", "plataformas", "bases_de_dados"]);
+const allowed = new Set(["post", "videos", "podcasts", "infografias", "gq_bio_gallery", "eventos", "oportunidades", "ferramentas", "plataformas", "bases_de_dados", "biblioteca"]);
 // The CMS gives these types only the excerpt their editor wrote; their cards show
 // it alone, and never fall back to the body.
 const excerptOnly = new Set(["oportunidades", "plataformas", "bases_de_dados"]);

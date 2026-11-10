@@ -10,7 +10,7 @@
 
 Select five published items: slot 1 is column A; slots 2–5 form a 2×2 grid in column B. On small screens cards stack in selection order. Each card uses the current published title, featured image and excerpt; a missing excerpt falls back to the first 30 words of content. Missing images retain a neutral image area.
 
-The searchable editor supports posts, videos, podcasts, infographics, galleries, events, opportunities and all tools (including platforms and databases). Selection stores references, never copies of content. The frontend resolves these through the existing publication runtime, so withdrawn items disappear and published edits are reflected without resaving the homepage. Empty or missing slots are omitted; the principal slot remains distinct.
+The searchable editor supports posts, videos, podcasts, infographics, galleries, events, opportunities and all tools (including platforms and databases), and library documents (Biblioteca). The “fill latest” action never picks a library document; choose one by hand. Selection stores references, never copies of content. The frontend resolves these through the existing publication runtime, so withdrawn items disappear and published edits are reflected without resaving the homepage. Empty or missing slots are omitted; the principal slot remains distinct.
 
 The block is available on any page. Add it to the homepage and choose its five items in the block settings. No automatic latest-post selection is made.
 
