@@ -14,8 +14,8 @@ the publication store.
 
 ## Initial adoption
 
-The feature is disabled in `src/config/news-listing.ts` until its runtime and
-store prerequisites are ready. Blueprint 0.38.0 pins both Content packages to
+The feature is enabled in `src/config/news-listing.ts` after its runtime and
+store prerequisites were verified. Blueprint 0.38.0 pins both Content packages to
 0.6.2, the first stable pair with `listPosts`.
 
 1. Adopt a stable Content pair containing gq-content PR 65 (merged source
@@ -38,3 +38,16 @@ store prerequisites are ready. Blueprint 0.38.0 pins both Content packages to
 
 Local coverage: `node --experimental-strip-types --test tests/news-listing.test.mjs`
 from `apps/frontend`; `pnpm check` from the repository root.
+
+## Initial readiness verified
+
+On 2026-11-10, Site `v0.32.0` deployed the stable Content 0.6.2 pair with the
+listing disabled. The served CMS release matched
+`6cf68147a9a809eabe4ea34168c08a01c21f5184`, and its Content plugin header
+confirmed 0.6.2. A full publication refresh completed successfully.
+
+The public `listPosts` API then returned `kind: found`, `total: 0`, language
+`pt` against the production publication binding. The operator probe allowed
+only reads and prohibited CMS fetches. Before refresh, the same released API
+had returned `not-ready`, proving that old publications could not be mistaken
+for an empty news archive. This readiness result permits activation.
