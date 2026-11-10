@@ -15,14 +15,15 @@ the publication store.
 ## Initial adoption
 
 The feature is disabled in `src/config/news-listing.ts` until its runtime and
-store prerequisites are ready. The installed 0.6.1 does not have `listPosts`.
+store prerequisites are ready. Blueprint 0.38.0 pins both Content packages to
+0.6.2, the first stable pair with `listPosts`.
 
 1. Adopt a stable Content pair containing gq-content PR 65 (merged source
    `d5f3b02f151b616c411aa978e862c532c52db5d8`) through the blueprint's managed
    pins. Update the blueprint pin and run `gq sync`, then update the locks.
-   Verify the release manifest and installed API. The matching
-   `0.6.2-nightly.20261110.20.1` artifact exists, but is not a production
-   adoption: Nomia's nightly path remains disabled.
+   Verify the release manifest and installed API. Stable 0.6.2 is sourced from
+   `bcf6ce3ab64b696ed8ab6e133bb25748a6ad3d61`; its retained CI run is
+   `42779190404`. Nomia's nightly path remains disabled.
 2. Deploy that runtime with `NEWS_LISTING_ENABLED = false`. Follow the
    repository's controlled-release procedure and current local deploy notes.
 3. Run `pnpm frontend:refresh --url https://nomia.bnq.pt`. Complete the initial
