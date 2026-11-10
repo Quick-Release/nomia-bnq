@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.32.0 - 2026-11-10
+
+Previous release: v0.31.0
+
+- 35cda28 Merge pull request #159 from Quick-Release/feat/noticias-conditional-listing
+- f55f3f0 fix: explicitly narrow the news runtime before use
+- 758f880 chore: adopt stable Content 0.6.2 through blueprint 0.38.0
+- f4a8c3d feat: prepare conditional Notícias listing
+- a5690c5 chore: adopt guarded editorial slug updates
+- 17cc152 chore: adopt editorial content tooling 0.37.1
+- 9913bdd docs: record editorial REST access for CMS agents
+
 ## v0.31.0 - 2026-11-09
 
 Previous release: v0.30.1
