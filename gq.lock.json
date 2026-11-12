@@ -1,5 +1,5 @@
 {
-  "gq": "0.42.0",
+  "gq": "0.43.1",
   "schemaVersion": 1,
   "files": {
     ".claude/skills": "sha256:e1ff59d80751d8af17631debcc3bc30ecdbec0b20dccded0bffb745fe5cea79c",
@@ -34,10 +34,10 @@
     "infra/ci/src/index.ts": "sha256:f27458332b26025c64e05a16350ee1dc26ad07c832cdd94ee624f6b6722abe8e",
     "infra/ci/tsconfig.json": "sha256:784493453142b252218ea73bd96ea91ab941c6bd0b65bae15f7b4b6e50920cd5",
     "infra/ci/wrangler.jsonc": "sha256:4c48332bd874ed2a02e692fd8ebcbe546f8d7f623aa38d465893b190b1730aff",
-    "infra/consent.ts": "sha256:a30c9fed9788d7693323d198846ac8a42f7b2abe9ede6099e7daf5e8a632d973",
-    "infra/frontend.run.ts": "sha256:b3a64227f275724e6c299afb662dc5e3f95893f740234a76c0c8ea623195c06a",
-    "infra/package.json": "sha256:c9abbb78b49fb8f7fd52741532cd37af4831ad036246fdefddc951bf65c73107",
-    "infra/scripts/deploy-frontend.mjs": "sha256:f8be1c7d33f821b9111e08539b6e3cf07c407687877cc70efdba1d12fc80c0f5",
+    "infra/consent.ts": "sha256:014c4c2c1ee8864356f14f4da22ef8d30820b8b388823313462e61f4d42c78bf",
+    "infra/frontend.run.ts": "sha256:6e007f269561f954192ea663fc9d86d55d809db3db6d6f2981ac4e4b1b2174cc",
+    "infra/package.json": "sha256:eb2aa916548ae55b34bef493d32573beeb2dd8becb73dde81a8fe68fc500f583",
+    "infra/scripts/deploy-frontend.mjs": "sha256:dad998ee0ab793eba1001c6fbe09729f8323944284ec8085ce9d6783c70651be",
     "infra/tsconfig.json": "sha256:a70d936717fda5cb6a8ece96c261cd9af404077b8dbb5486616b56af39a0d78e",
     "scripts/ci-release.mjs": "sha256:04c1fa3693b996b59ab321f5015c5319f79c89863cb3983be599005f9a734154",
     "scripts/ci.test.mjs": "sha256:16f6e82bde91f82877f810c73adadaeb46d619ba2321cb607b6a1f5ff7cafba4",
@@ -120,6 +120,15 @@
       "scripts.sigillo:list:staging": "sha256:20ba645395226388c9383375b521fe46e0d7ae01b77fdaa0e50fd47504603a1b",
       "engines.node": "sha256:11644e712bee7d3468ab2fe9224dd58ab724d3a6caa9db6faca5607f68c7235e",
       "packageManager": "sha256:d9e0a487e4acbc1625c5d26fc5c0f54d7837adf951d3c7157da6c3f9f907cf4f"
+    },
+    "pnpm-workspace.yaml": {
+      "catalog[\"@alchemy.run/cloudflare\"]": "sha256:4b7152b9586aaa185293ade48b6fb50e0ba80d89a733cc8da6073043472068f1",
+      "catalog[\"@alchemy.run/frontend-frameworks\"]": "sha256:4b7152b9586aaa185293ade48b6fb50e0ba80d89a733cc8da6073043472068f1",
+      "catalog.@effect/platform-node": "sha256:4977543a0bfbfd9f5a49c8b2806c32132321a8880619b2eb4dc7dc39c1c104da",
+      "catalog.alchemy": "sha256:4b7152b9586aaa185293ade48b6fb50e0ba80d89a733cc8da6073043472068f1",
+      "catalog.effect": "sha256:4977543a0bfbfd9f5a49c8b2806c32132321a8880619b2eb4dc7dc39c1c104da",
+      "overrides.@effect/platform-node-shared": "sha256:4977543a0bfbfd9f5a49c8b2806c32132321a8880619b2eb4dc7dc39c1c104da",
+      "peerDependencyRules.allowedVersions.effect": "sha256:4977543a0bfbfd9f5a49c8b2806c32132321a8880619b2eb4dc7dc39c1c104da"
     }
   },
   "created": [
