@@ -1,5 +1,14 @@
 # Changelog
 
+## v0.34.0 - 2026-11-12
+
+Previous release: v0.33.0
+
+- ce8a798 Merge pull request #162 from Quick-Release/claude/gq-site-0.41.1
+- ec636b0 chore: adopt @getquick/site 0.42.0 (readiness through Cloudflare Access)
+- 95b68e6 fix(cms): declare the Gravity Forms Composer login and register its license on deploy
+- 548514c chore: adopt @getquick/site 0.41.1 (CI on Node 24.21.0, infra on TypeScript 7)
+
 ## v0.33.0 - 2026-11-10
 
 Previous release: v0.32.1
