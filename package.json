@@ -76,7 +76,7 @@
     "ploi:fonts": "gq sigillo run staging -- gq ploi fonts"
   },
   "devDependencies": {
-    "@getquick/site": "0.41.1",
+    "@getquick/site": "0.42.0",
     "sigillo": "0.13.0",
     "vite": "catalog:",
     "vite-plus": "catalog:"
