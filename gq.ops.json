@@ -53,6 +53,14 @@
     "provider": "gravityforms",
     "spam": ["honeypot"]
   },
+  "composer": {
+    "logins": {
+      "composer.gravity.io": {
+        "usernameSecret": "GRAVITY_FORMS_LICENSE_KEY",
+        "password": "https://nomia-cms.bnq.pt"
+      }
+    }
+  },
   "releases": {
     "bucket": "nomia-bnq-releases",
     "prefix": "admin/"
