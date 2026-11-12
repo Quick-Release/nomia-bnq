@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.35.0 - 2026-11-12
+
+Previous release: v0.34.0
+
+- 3b2cc7a Merge pull request #163 from Quick-Release/claude/alchemy-hop-1
+- 949542b chore: adopt @getquick/site 0.43.1 (Alchemy hop 1: @alchemy.run/cloudflare, beta.84, Effect 4.0.7)
+
 ## v0.34.0 - 2026-11-12
 
 Previous release: v0.33.0
