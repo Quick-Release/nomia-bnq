@@ -14,11 +14,12 @@ public WordPress frontend (`web/app/mu-plugins/content-api.php`).
   [WPGraphQL Blocks](https://wp-packages.org/packages/wp-plugin/wpgraphql-blocks),
   S3 Uploads (media on R2), Simple History, Cimo Image Optimizer and Safe SVG,
   from [WP Packages](https://wp-packages.org/)
-- Gravity Forms is paused: its Composer repository stopped serving the pinned
-  3.2.0, which broke every fresh install (CI). The commit "Pause Gravity Forms"
-  removed it from Composer, the activated plugins and the license hook; revert
-  that commit to bring it back. Its license stays in Sigillo
-  (`GRAVITY_FORMS_LICENSE_KEY` in staging).
+- Gravity Forms, from its own Composer registry (`composer.gravity.io`). Its
+  license key is in Sigillo (`GRAVITY_FORMS_LICENSE_KEY`, in `staging` for CI
+  and Ploi releases and in `local` for `pnpm cms:composer`), and `gq.ops.json`
+  `composer.logins` declares the login, so `gq sigillo run` adds it to the
+  fleet's `COMPOSER_AUTH`. The deploy registers the license on the CMS
+  (`deploy/ploi/admin.d/15-gravity-forms.sh`).
 - PHP 8.3+, MariaDB
 
 Composer installs every plugin and theme, so none is committed. A plugin or
@@ -49,7 +50,8 @@ generated from `gq.ops.json`: it activates `wordpress.plugins`, installs and
 activates the language `wordpress.locale` names (the admin can't install
 one: production disallows file modifications), then runs the site's own
 steps in `deploy/ploi/admin.d` (`10-theme.sh` activates
-`getquick-theme`; `30-partilhe-form.sh` creates the Partilhe form or keeps
+`getquick-theme`; `15-gravity-forms.sh` registers the Gravity Forms license
+from `COMPOSER_AUTH`; `30-partilhe-form.sh` creates the Partilhe form or keeps
 its content types current).
 
 ## Publication events
