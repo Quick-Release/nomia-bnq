@@ -17,7 +17,7 @@ deployment zip is equivalent; the plugin is no longer installed through Composer
 Optional preview config in `wp-config.php` or environment-specific config:
 
 ```php
-define('GQ_BIOECONOMIA_FRONTEND_URL', 'https://nomia.getquick.io');
+define('GQ_BIOECONOMIA_FRONTEND_URL', 'https://bioeconomia.apambiente.pt');
 // Only if apps/web sets NOMIA_WP_BLOCK_PREVIEW_TOKEN.
 define('GETQUICK_NOMIA_BLOCK_PREVIEW_TOKEN', 'change-me');
 ```

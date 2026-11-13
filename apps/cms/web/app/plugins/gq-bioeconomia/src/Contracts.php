@@ -355,7 +355,7 @@ final class Contracts {
 					],
 					'shareHref'                  => [
 						'type'    => 'string',
-						'default' => 'https://nomia.getquick.io/partilhar/',
+						'default' => '/partilhe/',
 						'ui'      => [
 							'kind' => 'url',
 						],

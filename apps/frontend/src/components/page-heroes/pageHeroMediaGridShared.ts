@@ -16,7 +16,7 @@ export const PAGE_HERO_MEDIA_GRID_DEFAULTS = {
   secondBorderRadius: "40px",
   textVerticalAlign: "bottom",
   videoBorderRadius: "40px",
-  shareHref: "https://nomia.getquick.io/partilhar/",
+  shareHref: "/partilhe/",
   shareLabel: "Partilhar",
 } as const;
 

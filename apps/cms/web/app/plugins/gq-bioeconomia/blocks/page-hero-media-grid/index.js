@@ -26,7 +26,7 @@
   const DEFAULT_COLUMN_TEXT_COLOR = "#ffffff";
   const DEFAULT_COLUMN_BORDER_RADIUS = 40;
   const DEFAULT_TEXT_VERTICAL_ALIGN = "bottom";
-  const SHARE_HREF = "https://nomia.getquick.io/partilhar/";
+  const SHARE_HREF = "/partilhe/";
   const SHARE_LABEL = "Partilhar";
   const TEXT_VERTICAL_ALIGN_OPTIONS = new Set(["top", "bottom"]);
   function TextTopIcon() {
