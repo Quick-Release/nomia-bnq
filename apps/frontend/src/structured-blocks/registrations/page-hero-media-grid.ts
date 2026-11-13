@@ -43,7 +43,7 @@ export default defineStructuredBlock({
     videoPosterSrc: stringAttribute("", { ui: { kind: "media" } }),
     videoTitle: stringAttribute("Video"),
     videoBorderRadius: stringAttribute("40"),
-    shareHref: stringAttribute("https://nomia.getquick.io/partilhar/", {
+    shareHref: stringAttribute("/partilhe/", {
       ui: { kind: "url" },
     }),
     shareLabel: stringAttribute("Partilhar"),

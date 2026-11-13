@@ -307,7 +307,7 @@ return [
 			],
 			'shareHref'                  => [
 				'type'    => 'string',
-				'default' => 'https://nomia.getquick.io/partilhar/',
+				'default' => '/partilhe/',
 			],
 			'shareLabel'                 => [
 				'type'    => 'string',
