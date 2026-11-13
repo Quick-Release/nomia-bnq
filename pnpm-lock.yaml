@@ -165,26 +165,26 @@ settings:
 catalogs:
   default:
     '@alchemy.run/cloudflare':
-      specifier: 2.0.0-beta.84
-      version: 2.0.0-beta.84
+      specifier: 2.0.0-beta.86
+      version: 2.0.0-beta.86
     '@alchemy.run/frontend-frameworks':
-      specifier: 2.0.0-beta.84
-      version: 2.0.0-beta.84
+      specifier: 2.0.0-beta.86
+      version: 2.0.0-beta.86
     '@effect/platform-node':
-      specifier: 4.0.7
-      version: 4.0.7
+      specifier: 4.1.4
+      version: 4.1.4
     alchemy:
-      specifier: 2.0.0-beta.84
-      version: 2.0.0-beta.84
+      specifier: 2.0.0-beta.86
+      version: 2.0.0-beta.86
     effect:
-      specifier: 4.0.7
-      version: 4.0.7
+      specifier: 4.1.4
+      version: 4.1.4
     vite-plus:
       specifier: 0.3.0
       version: 0.3.0
 
 overrides:
-  '@effect/platform-node-shared': 4.0.7
+  '@effect/platform-node-shared': 4.1.4
   vite: npm:@voidzero-dev/vite-plus-core@0.3.0
   vitest: 4.1.11
 
@@ -193,8 +193,8 @@ importers:
   .:
     devDependencies:
       '@getquick/site':
-        specifier: 0.43.1
-        version: 0.43.1
+        specifier: 0.44.0
+        version: 0.44.0
       sigillo:
         specifier: 0.13.0
         version: 0.13.0
@@ -243,13 +243,13 @@ importers:
     devDependencies:
       '@alchemy.run/frontend-frameworks':
         specifier: 'catalog:'
-        version: 2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(astro@7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.0.7)(hono@4.13.13)(typescript@6.0.3)
+        version: 2.0.0-beta.86(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(astro@7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(hono@4.13.13)(typescript@6.0.3)
       '@astrojs/check':
         specifier: ^0.9.10
         version: 0.9.10(@emnapi/runtime@1.11.3)(prettier@3.9.10)(typescript@6.0.3)
       '@effect/platform-node':
         specifier: 'catalog:'
-        version: 4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1))
+        version: 4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1))
       '@tailwindcss/vite':
         specifier: ^4.3.3
         version: 4.3.3(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))
@@ -267,7 +267,7 @@ importers:
         version: 19.3.0(@types/react@19.3.0)
       effect:
         specifier: 'catalog:'
-        version: 4.0.7
+        version: 4.1.4
       jsdom:
         specifier: 29.1.1
         version: 29.1.1
@@ -288,19 +288,19 @@ importers:
     dependencies:
       '@alchemy.run/cloudflare':
         specifier: 'catalog:'
-        version: 2.0.0-beta.84(41dcadd2e6f6863676ec23e5fb843a3f)
+        version: 2.0.0-beta.86(31fc232187d5766777e19a35c9932ff8)
       '@alchemy.run/frontend-frameworks':
         specifier: 'catalog:'
-        version: 2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(astro@7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1))(effect@4.0.7)(hono@4.12.14)(typescript@7.0.2)
+        version: 2.0.0-beta.86(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(hono@4.12.14)(typescript@7.0.2)
       '@effect/platform-node':
         specifier: 'catalog:'
-        version: 4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1))
+        version: 4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1))
       alchemy:
         specifier: 'catalog:'
-        version: 2.0.0-beta.84(@alchemy.run/frontend-frameworks@2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(astro@7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1))(effect@4.0.7)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.0.7)(ws@8.22.0)
+        version: 2.0.0-beta.86(@alchemy.run/frontend-frameworks@2.0.0-beta.86(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(ws@8.22.0)
       effect:
         specifier: 'catalog:'
-        version: 4.0.7
+        version: 4.1.4
       hono:
         specifier: 4.12.14
         version: 4.12.14
@@ -336,20 +336,20 @@ importers:
 
 packages:
 
-  '@alchemy.run/acme@2.0.0-beta.84':
-    resolution: {integrity: sha512-ma7HaEN5K7hsNlSkK7CEGn+08hKi4xP1puEAoSO7UACXc/j/2gZKljuztADyCOKOdp8nIMJ/zH12Qs7J11E8cQ==}
+  '@alchemy.run/acme@2.0.0-beta.86':
+    resolution: {integrity: sha512-d4+YZ5Ki9LKCk3h1tor9wtkJLAX63U21tpOpGWgaT6KRDAiJPr2AcsVfVq4yqvb23r0fsBLAwJLx6HxWh83/7Q==}
     peerDependencies:
-      alchemy: 2.0.0-beta.84
-      effect: ^4.0.5
+      alchemy: 2.0.0-beta.86
+      effect: ^4.1.4
 
-  '@alchemy.run/cloudflare-runtime@2.0.0-beta.84':
-    resolution: {integrity: sha512-wmlfbJHBEpyKpKosIKi6yte0T6WKofed0rDHR1zk7tZdqwUKNNSRcbR9ejfJ4mty7lkQH0fLKn4vcmfnlX9KDQ==}
+  '@alchemy.run/cloudflare-runtime@2.0.0-beta.86':
+    resolution: {integrity: sha512-jDsJHz+KtcmqkdI3COjLyK1cE9rfVYrKsTlPMEs4Pi9xdjxupsjYYRGfE0u+hBWCy3nZiAKFI5lhuG91/ddHPg==}
     peerDependencies:
-      '@distilled.cloud/cloudflare': 1.0.0-rc.17
-      '@effect/platform-bun': ^4.0.5
-      '@effect/platform-node': ^4.0.5
-      effect: ^4.0.5
-      rolldown: 1.2.13
+      '@distilled.cloud/cloudflare': 1.0.0-rc.19
+      '@effect/platform-bun': ^4.1.4
+      '@effect/platform-node': ^4.1.4
+      effect: ^4.1.4
+      rolldown: 1.2.16
       vite: ^7.0.0 || ^8.0.0
     peerDependenciesMeta:
       '@effect/platform-bun':
@@ -361,19 +361,16 @@ packages:
       vite:
         optional: true
 
-  '@alchemy.run/cloudflare@2.0.0-beta.84':
-    resolution: {integrity: sha512-8AEp0664arL1BLPIxQJ/lgIUPRvsk0SxC/6fW6S3Gt2SOauUF2YpUsgRr94m4pTX453gacMXwJ/kw8lgOv+TMw==}
+  '@alchemy.run/cloudflare@2.0.0-beta.86':
+    resolution: {integrity: sha512-ssXUmkj47aqPqXpDDvk6/FpBDuUuOpF0taBxhDSF8KX9LYj4qOILxrAgCrVI1E0yG5ksU0O6T7ZM0IYmUZkJOg==}
     peerDependencies:
-      '@alchemy.run/domain': 2.0.0-beta.84
-      '@alchemy.run/frontend-frameworks': 2.0.0-beta.84
-      '@effect/platform-bun': ^4.0.5
-      '@effect/platform-node': ^4.0.5
-      alchemy: 2.0.0-beta.84
-      effect: ^4.0.5
-      vite: ^8.0.7
+      '@alchemy.run/frontend-frameworks': 2.0.0-beta.86
+      '@effect/platform-bun': ^4.1.4
+      '@effect/platform-node': ^4.1.4
+      alchemy: 2.0.0-beta.86
+      effect: ^4.1.4
+      vite: ^7.0.0 || ^8.0.0
     peerDependenciesMeta:
-      '@alchemy.run/domain':
-        optional: true
       '@alchemy.run/frontend-frameworks':
         optional: true
       '@effect/platform-bun':
@@ -383,33 +380,33 @@ packages:
       vite:
         optional: true
 
-  '@alchemy.run/docker@2.0.0-beta.84':
-    resolution: {integrity: sha512-VaUNlldyPcCrrGDCfFUJD+pvNt3Rpbly+0lzZ4S8AfkpxMD4rZy7GdXcfPzeA26tcDzfsDVax7BGlArzupEc0g==}
+  '@alchemy.run/docker@2.0.0-beta.86':
+    resolution: {integrity: sha512-/9O5BMjDVn86MzXtII1sAj73nNjd6hRjXtHyN3YSXjfSsu3G+WKlErN/HWTMLY26ttnbygzWcVe58XNm5IX1qQ==}
     peerDependencies:
-      '@effect/platform-bun': ^4.0.5
-      alchemy: 2.0.0-beta.84
-      effect: ^4.0.5
+      '@effect/platform-bun': ^4.1.4
+      alchemy: 2.0.0-beta.86
+      effect: ^4.1.4
     peerDependenciesMeta:
       '@effect/platform-bun':
         optional: true
 
-  '@alchemy.run/frontend-frameworks@2.0.0-beta.84':
-    resolution: {integrity: sha512-WTwfylsYH59+qQ/ycC1LQ3IyuTeLIVv0TZ2IigF90yxtwCCc/h7ykHTH8r7OpMleHM5xeFqaGaDwNlCdkuGtmg==}
+  '@alchemy.run/frontend-frameworks@2.0.0-beta.86':
+    resolution: {integrity: sha512-a68S8tjz15gHTdE6/2W1xzjWj5ee8790ay4Uogzjm4iOeUn2mVw/cGSLFRaXhAlEGZ/nByjzUn7CWc/kjh4teA==}
     peerDependencies:
-      '@effect/platform-bun': ^4.0.5
-      '@effect/platform-node': ^4.0.5
-      '@octanejs/vite-plugin': '>=0.1.22'
-      '@opennextjs/cloudflare': 1.20.1
+      '@effect/platform-bun': ^4.1.4
+      '@effect/platform-node': ^4.1.4
+      '@octanejs/vite-plugin': '>=0.5.0'
+      '@opennextjs/cloudflare': 1.20.13
       '@sveltejs/kit': '>=3.0.0'
-      '@vitejs/plugin-react': ^6.0.2
-      astro: ^7.0.0
-      effect: ^4.0.5
+      '@vitejs/plugin-react': ^6.1.2
+      astro: ^7.4.0
+      effect: ^4.1.4
       hono: ^4.12.14
       nuxt: '>=4.5.0'
-      vinext: ^1.0.1
+      vinext: ^1.3.1
       vite: ^7.0.0 || ^8.0.0
-      vocs: 2.8.2
-      waku: 1.0.0-beta.7
+      vocs: 2.11.1
+      waku: 1.0.0-rc.4
     peerDependenciesMeta:
       '@effect/platform-bun':
         optional: true
@@ -438,11 +435,16 @@ packages:
       waku:
         optional: true
 
-  '@alchemy.run/node-utils@2.0.0-beta.84':
-    resolution: {integrity: sha512-UdvCtwEeLmRNN89gVjkMIQTqzkE+xPQb26dPsQM6JzDdHUyqaTyg64U4RmfUjUul0sWQbbVIeAO475GQYbGELw==}
+  '@alchemy.run/node-utils@2.0.0-beta.86':
+    resolution: {integrity: sha512-fVo6F4FN42kroWh3Lxk85Od1+izcZxCHscSDkM2Nx57YzKlth3yhTuQO5/vvB2dMw0752h9pffhht1RGNC5pyA==}
 
-  '@alchemy.run/sigil@0.1.0-alpha.1':
-    resolution: {integrity: sha512-RtHELG2w+GluVewRsuKm66idtPzC+4STptMr/61X1Vy5uBkDzcCzjzV8G6jUa4iBv6Il0hHV7UL6wvv//9nD/Q==}
+  '@alchemy.run/redis@2.0.0-beta.86':
+    resolution: {integrity: sha512-9yxTeFh5aePb1t71Y+33CmR94DGkVYKUoJyKMwlg+HQXg2WybzxL5KmpzjgoxCGVHp1T5enNd1QtsP1lBdsr4w==}
+    peerDependencies:
+      effect: ^4.1.4
+
+  '@alchemy.run/sigil@0.1.0-alpha.3':
+    resolution: {integrity: sha512-NBhQRjbeFp4jPYDGqlXSoUlT45QyNc/6DGQWmkXUnS9nHKjHa5eIRZChdnCDYHYvmgFJWNaRfPFGwxrCWmlLzw==}
     engines: {node: '>=22'}
     peerDependencies:
       '@types/react': '>=19.2.0'
@@ -453,14 +455,14 @@ packages:
       react-devtools-core:
         optional: true
 
-  '@alchemy.run/sql@2.0.0-beta.84':
-    resolution: {integrity: sha512-GdP9zDnm6b25p8DZfeg8HbPk66pfIuTA+IHFSC/I8iKbjUE49WoqBmdSUSJtL4ZmTvndTDCYZ7Y9PehBjNTL+w==}
+  '@alchemy.run/sql@2.0.0-beta.86':
+    resolution: {integrity: sha512-fkYV4hnrj+XgS63Tr8TFWYkEC1vHPrKL1J3S3c0jQAeqQsNBPSpp7rAWjj7g9msnAtTRwBn2YaSfbSMoPZFSIw==}
     peerDependencies:
-      '@effect/sql-libsql': ^4.0.5
-      '@effect/sql-mysql2': ^4.0.5
-      '@effect/sql-pg': ^4.0.5
-      alchemy: 2.0.0-beta.84
-      effect: ^4.0.5
+      '@effect/sql-libsql': ^4.1.4
+      '@effect/sql-mysql2': ^4.1.4
+      '@effect/sql-pg': ^4.1.4
+      alchemy: 2.0.0-beta.86
+      effect: ^4.1.4
       mysql2: ^3.24.2
       pg: ^8.22.0
     peerDependenciesMeta:
@@ -809,8 +811,8 @@ packages:
     cpu: [x64]
     os: [darwin]
 
-  '@cloudflare/workerd-darwin-64@1.20261012.1':
-    resolution: {integrity: sha512-dkTL9aY3V4D40b+jBpGPCistWUPFQ/M61wlWi6i1o8MvHFFgEw7EQkcaYEv6Yd3bkPDD/3TFT4hRsMb2xVZSwQ==}
+  '@cloudflare/workerd-darwin-64@1.20261026.1':
+    resolution: {integrity: sha512-5IGoYEBQdJeHUn3mOalHQOtt2NXBKvvsqiK2cwIl9OZB6DtpmEmGDzbeFmOgsEQcGrK9f4KnLbr0SQUglnibIQ==}
     engines: {node: '>=16'}
     cpu: [x64]
     os: [darwin]
@@ -821,8 +823,8 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
-  '@cloudflare/workerd-darwin-arm64@1.20261012.1':
-    resolution: {integrity: sha512-2/nVGcKXjNNI+DhxKSepTKvFng9H7aN2WXv6Zu67iqgI6JrxypNt5kTPv4ZHosxrcfyKMci/2RfN7GIrN0BitQ==}
+  '@cloudflare/workerd-darwin-arm64@1.20261026.1':
+    resolution: {integrity: sha512-ewhmUr/1S8/ik7MjPcQqq7Kx91I6AVLSlTTblbU8OkZ4CiPy92N3WBNMZ06BUkJaFS+XThbXyN/4FDF6xIFo5w==}
     engines: {node: '>=16'}
     cpu: [arm64]
     os: [darwin]
@@ -833,8 +835,8 @@ packages:
     cpu: [x64]
     os: [linux]
 
-  '@cloudflare/workerd-linux-64@1.20261012.1':
-    resolution: {integrity: sha512-uMe7ONHnLxStD1Ye0YFHBO36uj4cStv5P53rW+5GVWXFT8BRjqVixlH0IqCAHe1Pmcwyd1+7fVoGde89MZSCJg==}
+  '@cloudflare/workerd-linux-64@1.20261026.1':
+    resolution: {integrity: sha512-S65mog+1LKp5KT3u+Q3bWg7VQhqqfLL8aM2o2gfchbXwKOX13ZKWuCq4ZxTAxFhG7M31LfEL1iV6K+myFpjhaA==}
     engines: {node: '>=16'}
     cpu: [x64]
     os: [linux]
@@ -845,8 +847,8 @@ packages:
     cpu: [arm64]
     os: [linux]
 
-  '@cloudflare/workerd-linux-arm64@1.20261012.1':
-    resolution: {integrity: sha512-I0VMdcXk7ygG5vYDce0ePTBFdnBXC0i9WiBY5mWiv0iTinbfea6/rHqSQ7B1UMpjgrYVs9E0m4bZ9ufsk5GCFA==}
+  '@cloudflare/workerd-linux-arm64@1.20261026.1':
+    resolution: {integrity: sha512-sM+rsagLWdSGb8GP5Qz40nmufbx8EawRD+jw+ySzdiv3owLOLlP0Z1Nzl4s5gtZ6OPCHSVsQxdWNCDfnJLbiVA==}
     engines: {node: '>=16'}
     cpu: [arm64]
     os: [linux]
@@ -857,8 +859,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@cloudflare/workerd-windows-64@1.20261012.1':
-    resolution: {integrity: sha512-c5hQvNx574UEoknaCFvMa/NdLrrYiALNbe6sx1okW8uOiRYWxrFuA8WpXFnBJ5XJypm0TEAHYaUTGv3rRLpY7Q==}
+  '@cloudflare/workerd-windows-64@1.20261026.1':
+    resolution: {integrity: sha512-7T6udxUWajK0NIpLkmX5FU7i7MnoFYWA3CXmywvO1SmWdabuNCqcB4Wc+88QBIbYhbmAbW+7yfIe7No2nmdoSA==}
     engines: {node: '>=16'}
     cpu: [x64]
     os: [win32]
@@ -934,48 +936,53 @@ packages:
     resolution: {integrity: sha512-OoKoR0f76dCY666JlcbhmVTs2drYj1GUXZTYTcbUgJjh9Nv41aFfZ21bPQTERm5+L5cBDo466NltB2lplS5GBw==}
     engines: {node: '>=20.19.0'}
 
-  '@distilled.cloud/acme@1.0.0-rc.17':
-    resolution: {integrity: sha512-s6qWikqh+kdcl0dKOXvYS+++das2f073hkQtHZ9Htt7Oi0hcAFIk7i4is0h4GBjsJX/8bCx0D6EtUVeXUuQI9g==}
+  '@distilled.cloud/acme@1.0.0-rc.19':
+    resolution: {integrity: sha512-XaLnd8EnBzAphJfwN9L7a5+1eUaEAaHwDLzTZUTWZvrn7cUia8Yxm1Cc6lG24ITm1RC31cdCdcueswpCzfswSQ==}
     peerDependencies:
-      effect: ^4.0.5
+      effect: ^4.1.2
 
-  '@distilled.cloud/aws4signer@1.0.0-rc.17':
-    resolution: {integrity: sha512-4wOoFuiadiKOEfDcL0VwGwg4XmZ3vmMxrNJAnTKf87k2WN2Shs7KeUp4GS1TzGGO3NrrpvVw8RFK+dOomDMj5w==}
+  '@distilled.cloud/aws4signer@1.0.0-rc.19':
+    resolution: {integrity: sha512-QZ4qOOGp1i8JQeDw+wGl2ha6oIM8aU8V9XSFR0cDoMOD+G7be6lqm2zWlEOYlA08k3eGN9Z/83OGpwukmgCgcg==}
     peerDependencies:
-      effect: ^4.0.5
+      effect: ^4.1.2
 
-  '@distilled.cloud/aws@1.0.0-rc.17':
-    resolution: {integrity: sha512-LRR1QFVT6i0LP4sqSuLqoXQV0L+EjS9OBecQDOEcxObcGxbfVrLMToWe72bda+Z60Wwt3eY0gNio5vM1eRld9w==}
+  '@distilled.cloud/aws@1.0.0-rc.19':
+    resolution: {integrity: sha512-GWt6jSv63/IT1BtxN9ndjQ54mV1mKf5BwDEJAvkBtus9eXWxnx0/1PawBGPo3ENTd1FlvRXzMsH9/YWmLCx8Yg==}
     peerDependencies:
-      effect: ^4.0.5
+      effect: ^4.1.2
 
-  '@distilled.cloud/cloudflare@1.0.0-rc.17':
-    resolution: {integrity: sha512-xT7EFAAUUd9AZetUjXsiwMkpGatdxGNuMZrhuX5cG4MicmJizn9gn5xdqNsojkj4qzv08qIVL9j1XGV20IoYuA==}
+  '@distilled.cloud/cloudflare@1.0.0-rc.19':
+    resolution: {integrity: sha512-J/pidhpALhW3t9L4FSQt4yt5cbIu3fEAQ/3z+a6ae6Zf8DAXSmMW8aNYX/NHKJ5KP1Qy4/Bq0gLbHILSY8EV7A==}
     peerDependencies:
-      effect: ^4.0.5
+      effect: ^4.1.2
 
-  '@distilled.cloud/core@1.0.0-rc.17':
-    resolution: {integrity: sha512-BHcVEtqIbyyqU3S3o8DjUtqoAJ4FLnsb4BX3nTK2+mcDARS2Puc+Qak6sn+b+W5CRKOOWyrhltbc+kaYDUwxeQ==}
+  '@distilled.cloud/core@1.0.0-rc.19':
+    resolution: {integrity: sha512-BO/Q8Q/9Zsv30RyLj8ZddDRBimlsQOGE6SZSVxJJxT0XARErZp/+Hr0xZTqvvhYHO0thSxUas5DteyEs5Z36rQ==}
     peerDependencies:
-      effect: ^4.0.5
+      effect: ^4.1.2
 
-  '@distilled.cloud/iceberg@1.0.0-rc.17':
-    resolution: {integrity: sha512-hO9Kqc91dq7SLBCagxlr2RDSTbp7/urqjfxNitSNaaOyKIsUr85llsADT/rS6H85ezOsGf2vSP5y1Qk0kQWLCg==}
+  '@distilled.cloud/iceberg@1.0.0-rc.19':
+    resolution: {integrity: sha512-vqnwGhofJqpZe/JWwCWXje6kZqK4dp7As90MeCZI5xLs5z05xxiQLn0MXCokvFk0k+7OWAVAAU4NQjv5w8tAxQ==}
     peerDependencies:
-      effect: ^4.0.5
+      effect: ^4.1.2
 
-  '@effect/platform-node-shared@4.0.7':
-    resolution: {integrity: sha512-uCeBJ00hliKQsb7gMfvyEXUL1XmUKQcRzKi1X8ISG0UxTDMAdPRigOyKDnKxUTxE5PoT4kxLHQvOxo6U405FGg==}
-    engines: {node: '>=18.0.0'}
+  '@distilled.cloud/s3@1.0.0-rc.19':
+    resolution: {integrity: sha512-p5nk+8jMKvsD/yg69E+qyTTdrlf45YfACWdrjK4A6DsGBcYHL2SlfdPdizdxuIji3EiL9bbqEW/m471CIFvrvQ==}
     peerDependencies:
-      effect: ^4.0.7
+      effect: ^4.1.2
 
-  '@effect/platform-node@4.0.7':
-    resolution: {integrity: sha512-YXUh0A4ZjuPAONt/yXb5zBM7zPR6eUPYUBtyj1374zq0P5SUpdcz8Lf54JSavXb8mdrc1glsXWHFVINpJyrlWA==}
-    engines: {node: '>=18.0.0'}
+  '@effect/platform-node-shared@4.1.4':
+    resolution: {integrity: sha512-DWdfphHGOFJNj/mYadgpT3jIm8aRXDcPrQiGXFBH4p2H4XmA7iYMrPsI8NxVgZ7kNX0q1+FGJZJama0tINHRAg==}
+    engines: {node: '>=22.19.0'}
     peerDependencies:
-      effect: ^4.0.7
-      redis: '>=5.0.0 <7.0.0'
+      effect: ^4.1.4
+
+  '@effect/platform-node@4.1.4':
+    resolution: {integrity: sha512-h7QExTPq/RfYtHP/8tMlgfBvqYsuJKhxfkU6w0+NaF/ihqQ8Y3GH9t28ltupQjoqMM7P6W5gy8rOji7F0qVrmg==}
+    engines: {node: '>=22.19.0'}
+    peerDependencies:
+      effect: ^4.1.4
+      redis: '>=5.1.0 <7.0.0'
 
   '@effect/sql-d1@4.1.4':
     resolution: {integrity: sha512-x7UtDPNCgcAz6lvGbrf0INHxztV0qV8i4qleqPb31ADeilz7MnGYJ5Qhprqod+ySBUNPdsvXNRE9vm36TznIdg==}
@@ -1190,8 +1197,8 @@ packages:
     resolution: {integrity: sha512-heaImDT6lcM4DihQGDeHKyVcRVDXsXl6/FDT4QIWAWUaqkKuIJieEaVF7ifmmmTo+eY0ff3JT+WZ1JlL6T0x/g==}
     engines: {node: '>=22'}
 
-  '@getquick/site@0.43.1':
-    resolution: {integrity: sha512-Iv+gUZIjgJF6C66HMRD7wH1oE2YcO2C+nepd3Jk2ku9jzn2JULk+yLoArtnj0ch0GrUu02AWn5dxBj0lxULVRw==}
+  '@getquick/site@0.44.0':
+    resolution: {integrity: sha512-JvUIumejH/XdHi5YfghjIphFbwoMAvZt6qIFj3Iq/xt2/SZw9MrrcIz81N2Y2Iq6Soma8paaa2u0tKHPEaU90w==}
     engines: {node: '>=22.12.0'}
     hasBin: true
 
@@ -1448,6 +1455,9 @@ packages:
 
   '@oxc-project/types@0.153.0':
     resolution: {integrity: sha512-jSNrRIyvPVLL5E1z/tS5zLAprosGz/FuI1PWwEOz59j3E4TTTzSpqKb/RDGqJhhW0QHYISGXxq582wGx6T11Tw==}
+
+  '@oxc-project/types@0.156.0':
+    resolution: {integrity: sha512-1Duyg48TdJNdyhEB8Xn1L36bT9Pv6GUtlKjHxOys8xkaF/rQq3XJE+bAurSK/AgIz5mGFsb77cn9Pb20+WCScw==}
 
   '@oxfmt/binding-android-arm-eabi@0.64.0':
     resolution: {integrity: sha512-o6uzh/jTOQeAY5TdkAeXdqv7MBRcPxiRA08zrcBtkKj5cSu/FMu0Hl7Q6Fi1KCKyCWZ6lJVjBzdsJvsKltUsGQ==}
@@ -2131,8 +2141,20 @@ packages:
     cpu: [arm]
     os: [android]
 
+  '@rolldown/binding-android-arm-eabi@1.2.16':
+    resolution: {integrity: sha512-ia3DwAs0OsMGS7+IConptSiyk9pEXkOx/AbJ2n/lAGxH3QkWQus1t8d7gnAT38FCU2sQu8lUbeR6AiZFv4JxaA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm]
+    os: [android]
+
   '@rolldown/binding-android-arm64@1.2.13':
     resolution: {integrity: sha512-6LEoIrGy5vvCd2boNnv2soPSUZj/PRvhp8R/t9KlX+mIZxThIE/ZqxrGXxmuNX0FuvQFvLdZr7S4HrYpYBVhEQ==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [android]
+
+  '@rolldown/binding-android-arm64@1.2.16':
+    resolution: {integrity: sha512-kx5wBiMB6E7TEvpl2B9gjLU004BkvEm2Dr941BFjx/SontPwSzNuQUIoVKxHHoSjpFIfHMmcguyLOtyn0hObRg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [android]
@@ -2143,8 +2165,20 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
+  '@rolldown/binding-darwin-arm64@1.2.16':
+    resolution: {integrity: sha512-qslZrXnKJU4cUpjoAmtAo/KQM9e2IRMlmpig6Zpwj+8KWxW8v+nkAf9216Bsek9lOC1jvg2yCjygCFo2f83msQ==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [darwin]
+
   '@rolldown/binding-darwin-x64@1.2.13':
     resolution: {integrity: sha512-e4r340I5hxSzJkD3YJBxgzq/rJ3wwxwdLLb2FPt1Zpyem20nrQPT11DDEEkazwxaHumH8wpglsp/Ozgj/wT6mw==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [x64]
+    os: [darwin]
+
+  '@rolldown/binding-darwin-x64@1.2.16':
+    resolution: {integrity: sha512-FdF+y48ND13eAyM2mQn+85kvAqNlvRWROy2rhgA463X/0Gv4vGtazZtfaF1mRBLscYvtOlh4QnLjOWiFzX69OQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [darwin]
@@ -2155,14 +2189,33 @@ packages:
     cpu: [x64]
     os: [freebsd]
 
+  '@rolldown/binding-freebsd-x64@1.2.16':
+    resolution: {integrity: sha512-ddjqFM5e95AgLbUPtKIS7V1KTVlA0RUgCVr5mn+/IEhsdy3pr+Vuj/HZ7nlMN2FyxIwUktOH1LEPIQXO1v9y1Q==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [x64]
+    os: [freebsd]
+
   '@rolldown/binding-linux-arm-gnueabihf@1.2.13':
     resolution: {integrity: sha512-oF9fZu3vTWnTiVAkDFxU9PJLt1nh20K9RRpuHsR7ZnE2L7XookBbDBVLojCVSLGbvtSlxeUNnjAj6DbNsKyzbg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm]
     os: [linux]
 
+  '@rolldown/binding-linux-arm-gnueabihf@1.2.16':
+    resolution: {integrity: sha512-tHdKWbFkFBI687iim3LIyIvyL7j66VvQYkDPss5Stn/qyE2tWkR1YD0dXmXPFKKqT/o5ZEJVsaRsWS2meQwGOA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm]
+    os: [linux]
+
   '@rolldown/binding-linux-arm64-gnu@1.2.13':
     resolution: {integrity: sha512-DTpb/+jMiqWMPgphn4ksW1zW+XLJ6dJJ9FMvnIk9I291LhCctMPhMYJrP5t9p6C9qa3KXadDdUEZHBaPh3kNxQ==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [linux]
+    libc: [glibc]
+
+  '@rolldown/binding-linux-arm64-gnu@1.2.16':
+    resolution: {integrity: sha512-FJiLGAblPBMlBEdbOqw6kW6QcXDWAf/oJu7gYs9ZJZwmg+K+/zjFLxPTIY9izJUzxzc24FHvmseyA0IvJSl17w==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [linux]
@@ -2175,8 +2228,22 @@ packages:
     os: [linux]
     libc: [musl]
 
+  '@rolldown/binding-linux-arm64-musl@1.2.16':
+    resolution: {integrity: sha512-hrJpblMsrQ58U9veWpbXzkhV5zStunds6HWLprqq1qauvgBr1E6P+24kLj6lSLI9vjRn/RYpjprhkHQPKGWpNg==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [linux]
+    libc: [musl]
+
   '@rolldown/binding-linux-ppc64-gnu@1.2.13':
     resolution: {integrity: sha512-XMk/hnhh25oQ756Lclb1Q11h4ll0xC0Esa5w4Vzp+mAE2S3AGJgeM0SonrIgY8fHhjarb6hcoTuwoFG0VVP2ig==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [ppc64]
+    os: [linux]
+    libc: [glibc]
+
+  '@rolldown/binding-linux-ppc64-gnu@1.2.16':
+    resolution: {integrity: sha512-qJd/dC6j6CwLG9/s/RP2nb1RZ0GIgj7Ioj7x/SYa3RzjVrlzrmH0fhIOpfvqQDeIsdP0loi+kHaMhJzY1PBIaA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [ppc64]
     os: [linux]
@@ -2189,8 +2256,22 @@ packages:
     os: [linux]
     libc: [glibc]
 
+  '@rolldown/binding-linux-s390x-gnu@1.2.16':
+    resolution: {integrity: sha512-Vx7Xg5uUJuNcujJjI70OICaH0EYj80BtOLZTSN7uOYg8QOLlyKnaG0IW7Fn/J0IpJsaKzmDKMhOQv1JBM9m9vg==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [s390x]
+    os: [linux]
+    libc: [glibc]
+
   '@rolldown/binding-linux-x64-gnu@1.2.13':
     resolution: {integrity: sha512-J4cm80Pc6wEwV5AZ42o62sIQgDk+Y7R2s646jIwuvO+4V46QB58N4vVuMPWCBaNgursXLpmUWJV//WQAkPvHBQ==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [x64]
+    os: [linux]
+    libc: [glibc]
+
+  '@rolldown/binding-linux-x64-gnu@1.2.16':
+    resolution: {integrity: sha512-TNKhgE3uJTsTzatUSSYt0Kgo+Oa2uSlSjz4r1aEIea7HX6ULBym4fAlYUhG1i6pjNf2njfCUAfKwr6C3E9Xg1w==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [linux]
@@ -2203,8 +2284,21 @@ packages:
     os: [linux]
     libc: [musl]
 
+  '@rolldown/binding-linux-x64-musl@1.2.16':
+    resolution: {integrity: sha512-7chXdpjXZ8qG0+mIxECN3cT9kvhZ3/oZhMX6Pp876P7CDrIy8nJswva6Mq357JR7eYXfuskwZxMeV1SzoZdHrA==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [x64]
+    os: [linux]
+    libc: [musl]
+
   '@rolldown/binding-openharmony-arm64@1.2.13':
     resolution: {integrity: sha512-do/AF/4n9MRshia3a5aXoy8xM2c6mgfT6D7H/dY6my5z+hfCIR4ab7mk4IRj++nsEQpKy39kd0DQnDq+r692tw==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [openharmony]
+
+  '@rolldown/binding-openharmony-arm64@1.2.16':
+    resolution: {integrity: sha512-Kwjt+7uNTJK5/MDkGWGVO2KQPnj8yAV75dMpfwyHZrJSXWHrniOB0aUEWlVYf3H1hOqFLIStLdM5QXq6bnKmOQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [openharmony]
@@ -2215,8 +2309,20 @@ packages:
     cpu: [arm64]
     os: [win32]
 
+  '@rolldown/binding-win32-arm64-msvc@1.2.16':
+    resolution: {integrity: sha512-/LH6WfjDRXXJz/p5xl4TmU+jpcnwcxbKEQBW/GZE0JHfN0lGIyTtsUEGaQ/q/GikkGJ2yLKe6pwm7AnEWO8pdw==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [arm64]
+    os: [win32]
+
   '@rolldown/binding-win32-x64-msvc@1.2.13':
     resolution: {integrity: sha512-UKhFaZTeTcbKrb3iU82m17jVcPEAoqDkCN5MBqgPyZSwp/cQmib21crTS0DdH7T1B7wZRWEI89YQAOJMet5yhg==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [x64]
+    os: [win32]
+
+  '@rolldown/binding-win32-x64-msvc@1.2.16':
+    resolution: {integrity: sha512-1lv1KvX0Z871zfk7vw+dnXMMnHNyDwMzWG8Kv3HxDXMOhzCX4SHc7HK319fInP0i+0p9D8brkfzL7pJOaGl+tw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [win32]
@@ -2994,16 +3100,15 @@ packages:
   ajv@8.20.0:
     resolution: {integrity: sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA==}
 
-  alchemy@2.0.0-beta.84:
-    resolution: {integrity: sha512-GAcfT/fvolC5C4t6yKx2P3e4rYmaM3aXhtnwK2FnGDFUCdv5zIQatiVXtoNuABzFgMn6UIj9jxrCWWweXoWgmA==}
+  alchemy@2.0.0-beta.86:
+    resolution: {integrity: sha512-HxS/84x8IL3FVmIvRr6iE/n7+YY9VE4vSLjRYINM06rUcDvOeXcOCMUCHhPpM70x5tMglM1wYhZLYdH50qzu2g==}
     hasBin: true
     peerDependencies:
-      '@alchemy.run/frontend-frameworks': 2.0.0-beta.84
-      '@effect/platform-bun': ^4.0.5
-      '@effect/platform-node': ^4.0.5
-      '@effect/vitest': ^4.0.5
-      effect: ^4.0.5
-      vite: ^8.0.7
+      '@alchemy.run/frontend-frameworks': 2.0.0-beta.86
+      '@effect/platform-bun': ^4.1.4
+      '@effect/platform-node': ^4.1.4
+      effect: ^4.1.4
+      vite: ^7.0.0 || ^8.0.0
       ws: ^8.21.0
     peerDependenciesMeta:
       '@alchemy.run/frontend-frameworks':
@@ -3011,8 +3116,6 @@ packages:
       '@effect/platform-bun':
         optional: true
       '@effect/platform-node':
-        optional: true
-      '@effect/vitest':
         optional: true
       vite:
         optional: true
@@ -3321,8 +3424,8 @@ packages:
   earcut@3.2.4:
     resolution: {integrity: sha512-FHc6yNpnTORB0tM5kmZ03iD2mDuNakDE2lvf4Hw1XkfxtEHIGVi01B/GqUSwx+NcC1WGjidAfpTXzeALtPtfpg==}
 
-  effect@4.0.7:
-    resolution: {integrity: sha512-47CiUzNAmeLr40pDT9vKMxxtB8o3bdpZEKU4IUM3fVxsK2GYzPsV7fQoZP0I41A308BZd71nMxqJ0KRh3s9u2g==}
+  effect@4.1.4:
+    resolution: {integrity: sha512-Tgrv/9FN+TZYyOn8XSli+fVqAfwDrDAkiX5Uu9vztINb675VTQdhD0gWI5Kzvhlh9QqzjZvw72iugqw5pwoghQ==}
 
   electron-to-chromium@1.5.455:
     resolution: {integrity: sha512-EDKY1GvJLJC0UQpk+zWxnXp315azNHIns3arXVNUQUOLaon6GtIzBBXWvNno7bVoDXRPnEAV2uwgMCb+RvG5hQ==}
@@ -4152,6 +4255,11 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
 
+  rolldown@1.2.16:
+    resolution: {integrity: sha512-bWvlMpFKiTfDKfnK7FC2MPgPeWCf/Kpwsq49ApdW+FQaBZb6O6dZ4MAPbPUjp7hYQrw/RobqCzn64BRrQecGHw==}
+    engines: {node: ^20.19.0 || >=22.12.0}
+    hasBin: true
+
   rrweb-cssom@0.8.0:
     resolution: {integrity: sha512-guoltQEx+9aMf2gDZ0s62EcV8lsXR+0w8915TC3ITdn2YueuNjdAYh/levpU9nFaoChh9RUS5ZdQMrKfVEN9tw==}
 
@@ -4232,8 +4340,8 @@ packages:
   space-separated-tokens@2.0.2:
     resolution: {integrity: sha512-PEGlAwrG8yXGXRjW32fGbg66JAlOAwbObuqVoJpv/mRgoWDQfgH1wDPvtzWyUSNAXBGSk8h755YDbbcEy3SH2Q==}
 
-  srvx@1.0.5:
-    resolution: {integrity: sha512-KvSKRpgPG/oaq3cyT614OQ2bAa7DynuGamivCZeoZzIUULOdbQz6wUtnnVuC4+DCx2Zglzo8v5gBYmWIWYhDxA==}
+  srvx@1.0.7:
+    resolution: {integrity: sha512-8h30Qy2cpYkcXgByHNpV4+jp609bU3ic7MqnfyLQ2Fpa8BgjIaI2zfsDKAIbwm8DcYDrCLqm5izF5KeL2nxdvg==}
     engines: {node: '>=20.16.0'}
     hasBin: true
 
@@ -4747,8 +4855,8 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
 
-  workerd@1.20261012.1:
-    resolution: {integrity: sha512-tEHoMPsMga0seVjxfsR8Pd3f8IRqYwkq++dTUKI5Gdgj6zuSDluYwisydq+dn90SsIACwBquJUQ1nBpcOqaWTA==}
+  workerd@1.20261026.1:
+    resolution: {integrity: sha512-zMkGDn4DHj7AEDrD0FT3VuaVf9QKWbE3Xg6j8oGt1vE+UtDY5gubW5jcyEYXULy5ojCYwVbmEyDkiukWY7gtVg==}
     engines: {node: '>=16'}
     hasBin: true
 
@@ -4780,6 +4888,18 @@ packages:
 
   ws@8.22.0:
     resolution: {integrity: sha512-Ydggc987+RO0AnWtZ/7Wq9FtNvcrL1b/RO0ud9mWjUPgDrsAAwQSF51sm2hm1XofbU/4jkpGEsLFsZZxU+1DOg==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+
+  ws@8.22.2:
+    resolution: {integrity: sha512-/rEZ2ejown2N5gxVTHUu9bVVC7ttu0/Tgzf5hbTOixR3Fs7mbbXgn2DbdbcKgJOmpQMtrIUWivtYuVMnp/W/yA==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -4860,77 +4980,79 @@ packages:
 
 snapshots:
 
-  '@alchemy.run/acme@2.0.0-beta.84(alchemy@2.0.0-beta.84(@alchemy.run/frontend-frameworks@2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(astro@7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1))(effect@4.0.7)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.0.7)(ws@8.22.0))(effect@4.0.7)':
+  '@alchemy.run/acme@2.0.0-beta.86(alchemy@2.0.0-beta.86(@alchemy.run/frontend-frameworks@2.0.0-beta.86(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(ws@8.22.0))(effect@4.1.4)':
     dependencies:
-      '@distilled.cloud/acme': 1.0.0-rc.17(effect@4.0.7)
-      alchemy: 2.0.0-beta.84(@alchemy.run/frontend-frameworks@2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(astro@7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1))(effect@4.0.7)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.0.7)(ws@8.22.0)
-      effect: 4.0.7
+      '@distilled.cloud/acme': 1.0.0-rc.19(effect@4.1.4)
+      alchemy: 2.0.0-beta.86(@alchemy.run/frontend-frameworks@2.0.0-beta.86(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(ws@8.22.0)
+      effect: 4.1.4
 
-  '@alchemy.run/cloudflare-runtime@2.0.0-beta.84(@distilled.cloud/cloudflare@1.0.0-rc.17(effect@4.0.7))(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.0.7)(rolldown@1.2.13)(typescript@6.0.3)':
+  '@alchemy.run/cloudflare-runtime@2.0.0-beta.86(@distilled.cloud/cloudflare@1.0.0-rc.19(effect@4.1.4))(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(rolldown@1.2.16)(typescript@6.0.3)':
     dependencies:
-      '@alchemy.run/node-utils': 2.0.0-beta.84
-      '@cloudflare/unenv-preset': 2.16.2(unenv@2.0.0-rc.24)(workerd@1.20261012.1)
-      '@distilled.cloud/cloudflare': 1.0.0-rc.17(effect@4.0.7)
+      '@alchemy.run/node-utils': 2.0.0-beta.86
+      '@cloudflare/unenv-preset': 2.16.2(unenv@2.0.0-rc.24)(workerd@1.20261026.1)
+      '@distilled.cloud/cloudflare': 1.0.0-rc.19(effect@4.1.4)
       '@puppeteer/browsers': 3.2.4(yauzl@3.4.0)
       capnp-es: 0.0.16(typescript@6.0.3)
-      effect: 4.0.7
+      effect: 4.1.4
       magic-string: 0.30.21
       mime: 4.1.1
       sharp: 0.35.5(@types/node@24.19.2)
       unenv: 2.0.0-rc.24
-      workerd: 1.20261012.1
+      workerd: 1.20261026.1
       yauzl: 3.4.0
     optionalDependencies:
-      '@effect/platform-node': 4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1))
-      rolldown: 1.2.13
+      '@effect/platform-node': 4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1))
+      rolldown: 1.2.16
       vite: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1)'
     transitivePeerDependencies:
       - '@types/node'
       - proxy-agent
       - typescript
 
-  '@alchemy.run/cloudflare-runtime@2.0.0-beta.84(@distilled.cloud/cloudflare@1.0.0-rc.17(effect@4.0.7))(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.0.7)(rolldown@1.2.13)(typescript@7.0.2)':
+  '@alchemy.run/cloudflare-runtime@2.0.0-beta.86(@distilled.cloud/cloudflare@1.0.0-rc.19(effect@4.1.4))(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(rolldown@1.2.16)(typescript@7.0.2)':
     dependencies:
-      '@alchemy.run/node-utils': 2.0.0-beta.84
-      '@cloudflare/unenv-preset': 2.16.2(unenv@2.0.0-rc.24)(workerd@1.20261012.1)
-      '@distilled.cloud/cloudflare': 1.0.0-rc.17(effect@4.0.7)
+      '@alchemy.run/node-utils': 2.0.0-beta.86
+      '@cloudflare/unenv-preset': 2.16.2(unenv@2.0.0-rc.24)(workerd@1.20261026.1)
+      '@distilled.cloud/cloudflare': 1.0.0-rc.19(effect@4.1.4)
       '@puppeteer/browsers': 3.2.4(yauzl@3.4.0)
       capnp-es: 0.0.16(typescript@7.0.2)
-      effect: 4.0.7
+      effect: 4.1.4
       magic-string: 0.30.21
       mime: 4.1.1
       sharp: 0.35.5(@types/node@24.19.2)
       unenv: 2.0.0-rc.24
-      workerd: 1.20261012.1
+      workerd: 1.20261026.1
       yauzl: 3.4.0
     optionalDependencies:
-      '@effect/platform-node': 4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1))
-      rolldown: 1.2.13
+      '@effect/platform-node': 4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1))
+      rolldown: 1.2.16
       vite: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1)'
     transitivePeerDependencies:
       - '@types/node'
       - proxy-agent
       - typescript
 
-  '@alchemy.run/cloudflare@2.0.0-beta.84(41dcadd2e6f6863676ec23e5fb843a3f)':
+  '@alchemy.run/cloudflare@2.0.0-beta.86(31fc232187d5766777e19a35c9932ff8)':
     dependencies:
-      '@alchemy.run/acme': 2.0.0-beta.84(alchemy@2.0.0-beta.84(@alchemy.run/frontend-frameworks@2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(astro@7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1))(effect@4.0.7)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.0.7)(ws@8.22.0))(effect@4.0.7)
-      '@alchemy.run/cloudflare-runtime': 2.0.0-beta.84(@distilled.cloud/cloudflare@1.0.0-rc.17(effect@4.0.7))(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.0.7)(rolldown@1.2.13)(typescript@7.0.2)
-      '@alchemy.run/docker': 2.0.0-beta.84(alchemy@2.0.0-beta.84(@alchemy.run/frontend-frameworks@2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(astro@7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1))(effect@4.0.7)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.0.7)(ws@8.22.0))(effect@4.0.7)
-      '@alchemy.run/sql': 2.0.0-beta.84(alchemy@2.0.0-beta.84(@alchemy.run/frontend-frameworks@2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(astro@7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1))(effect@4.0.7)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.0.7)(ws@8.22.0))(effect@4.0.7)
-      '@distilled.cloud/aws4signer': 1.0.0-rc.17(effect@4.0.7)
-      '@distilled.cloud/cloudflare': 1.0.0-rc.17(effect@4.0.7)
-      '@distilled.cloud/core': 1.0.0-rc.17(effect@4.0.7)
-      '@distilled.cloud/iceberg': 1.0.0-rc.17(effect@4.0.7)
-      '@effect/sql-d1': 4.1.4(effect@4.0.7)
-      alchemy: 2.0.0-beta.84(@alchemy.run/frontend-frameworks@2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(astro@7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1))(effect@4.0.7)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.0.7)(ws@8.22.0)
-      effect: 4.0.7
+      '@alchemy.run/acme': 2.0.0-beta.86(alchemy@2.0.0-beta.86(@alchemy.run/frontend-frameworks@2.0.0-beta.86(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(ws@8.22.0))(effect@4.1.4)
+      '@alchemy.run/cloudflare-runtime': 2.0.0-beta.86(@distilled.cloud/cloudflare@1.0.0-rc.19(effect@4.1.4))(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(rolldown@1.2.16)(typescript@7.0.2)
+      '@alchemy.run/docker': 2.0.0-beta.86(alchemy@2.0.0-beta.86(@alchemy.run/frontend-frameworks@2.0.0-beta.86(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(ws@8.22.0))(effect@4.1.4)
+      '@alchemy.run/sql': 2.0.0-beta.86(alchemy@2.0.0-beta.86(@alchemy.run/frontend-frameworks@2.0.0-beta.86(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(ws@8.22.0))(effect@4.1.4)
+      '@distilled.cloud/aws': 1.0.0-rc.19(effect@4.1.4)
+      '@distilled.cloud/aws4signer': 1.0.0-rc.19(effect@4.1.4)
+      '@distilled.cloud/cloudflare': 1.0.0-rc.19(effect@4.1.4)
+      '@distilled.cloud/core': 1.0.0-rc.19(effect@4.1.4)
+      '@distilled.cloud/iceberg': 1.0.0-rc.19(effect@4.1.4)
+      '@effect/sql-d1': 4.1.4(effect@4.1.4)
+      alchemy: 2.0.0-beta.86(@alchemy.run/frontend-frameworks@2.0.0-beta.86(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(ws@8.22.0)
+      effect: 4.1.4
       pathe: 2.0.3
-      rolldown: 1.2.13
+      picomatch: 4.0.7
+      rolldown: 1.2.16
       tinyglobby: 0.2.17
     optionalDependencies:
-      '@alchemy.run/frontend-frameworks': 2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(astro@7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1))(effect@4.0.7)(hono@4.12.14)(typescript@7.0.2)
-      '@effect/platform-node': 4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1))
+      '@alchemy.run/frontend-frameworks': 2.0.0-beta.86(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(hono@4.12.14)(typescript@7.0.2)
+      '@effect/platform-node': 4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1))
       vite: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1)'
     transitivePeerDependencies:
       - '@effect/sql-libsql'
@@ -4942,24 +5064,25 @@ snapshots:
       - proxy-agent
       - typescript
 
-  '@alchemy.run/docker@2.0.0-beta.84(alchemy@2.0.0-beta.84(@alchemy.run/frontend-frameworks@2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(astro@7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1))(effect@4.0.7)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.0.7)(ws@8.22.0))(effect@4.0.7)':
+  '@alchemy.run/docker@2.0.0-beta.86(alchemy@2.0.0-beta.86(@alchemy.run/frontend-frameworks@2.0.0-beta.86(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(ws@8.22.0))(effect@4.1.4)':
     dependencies:
-      alchemy: 2.0.0-beta.84(@alchemy.run/frontend-frameworks@2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(astro@7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1))(effect@4.0.7)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.0.7)(ws@8.22.0)
-      effect: 4.0.7
-      rolldown: 1.2.13
+      alchemy: 2.0.0-beta.86(@alchemy.run/frontend-frameworks@2.0.0-beta.86(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(ws@8.22.0)
+      effect: 4.1.4
+      rolldown: 1.2.16
 
-  '@alchemy.run/frontend-frameworks@2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(astro@7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.0.7)(hono@4.13.13)(typescript@6.0.3)':
+  '@alchemy.run/frontend-frameworks@2.0.0-beta.86(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(astro@7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(hono@4.13.13)(typescript@6.0.3)':
     dependencies:
-      '@alchemy.run/cloudflare-runtime': 2.0.0-beta.84(@distilled.cloud/cloudflare@1.0.0-rc.17(effect@4.0.7))(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.0.7)(rolldown@1.2.13)(typescript@6.0.3)
-      '@distilled.cloud/aws': 1.0.0-rc.17(effect@4.0.7)
-      '@distilled.cloud/cloudflare': 1.0.0-rc.17(effect@4.0.7)
-      effect: 4.0.7
+      '@alchemy.run/cloudflare-runtime': 2.0.0-beta.86(@distilled.cloud/cloudflare@1.0.0-rc.19(effect@4.1.4))(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(rolldown@1.2.16)(typescript@6.0.3)
+      '@alchemy.run/redis': 2.0.0-beta.86(effect@4.1.4)
+      '@distilled.cloud/aws': 1.0.0-rc.19(effect@4.1.4)
+      '@distilled.cloud/cloudflare': 1.0.0-rc.19(effect@4.1.4)
+      effect: 4.1.4
       esbuild: 0.28.2
-      rolldown: 1.2.13
-      srvx: 1.0.5
+      rolldown: 1.2.16
+      srvx: 1.0.7
       tinyglobby: 0.2.17
     optionalDependencies:
-      '@effect/platform-node': 4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1))
+      '@effect/platform-node': 4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1))
       astro: 7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1)
       hono: 4.13.13
       vite: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1)'
@@ -4968,19 +5091,19 @@ snapshots:
       - proxy-agent
       - typescript
 
-  '@alchemy.run/frontend-frameworks@2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(astro@7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1))(effect@4.0.7)(hono@4.12.14)(typescript@7.0.2)':
+  '@alchemy.run/frontend-frameworks@2.0.0-beta.86(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(hono@4.12.14)(typescript@7.0.2)':
     dependencies:
-      '@alchemy.run/cloudflare-runtime': 2.0.0-beta.84(@distilled.cloud/cloudflare@1.0.0-rc.17(effect@4.0.7))(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.0.7)(rolldown@1.2.13)(typescript@7.0.2)
-      '@distilled.cloud/aws': 1.0.0-rc.17(effect@4.0.7)
-      '@distilled.cloud/cloudflare': 1.0.0-rc.17(effect@4.0.7)
-      effect: 4.0.7
+      '@alchemy.run/cloudflare-runtime': 2.0.0-beta.86(@distilled.cloud/cloudflare@1.0.0-rc.19(effect@4.1.4))(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(rolldown@1.2.16)(typescript@7.0.2)
+      '@alchemy.run/redis': 2.0.0-beta.86(effect@4.1.4)
+      '@distilled.cloud/aws': 1.0.0-rc.19(effect@4.1.4)
+      '@distilled.cloud/cloudflare': 1.0.0-rc.19(effect@4.1.4)
+      effect: 4.1.4
       esbuild: 0.28.2
-      rolldown: 1.2.13
-      srvx: 1.0.5
+      rolldown: 1.2.16
+      srvx: 1.0.7
       tinyglobby: 0.2.17
     optionalDependencies:
-      '@effect/platform-node': 4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1))
-      astro: 7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1)
+      '@effect/platform-node': 4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1))
       hono: 4.12.14
       vite: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1)'
     transitivePeerDependencies:
@@ -4988,19 +5111,23 @@ snapshots:
       - proxy-agent
       - typescript
 
-  '@alchemy.run/node-utils@2.0.0-beta.84':
+  '@alchemy.run/node-utils@2.0.0-beta.86':
     dependencies:
       chokidar: 5.0.0
-      rolldown: 1.2.13
+      rolldown: 1.2.16
 
-  '@alchemy.run/sigil@0.1.0-alpha.1(@types/react@19.3.0)':
+  '@alchemy.run/redis@2.0.0-beta.86(effect@4.1.4)':
+    dependencies:
+      effect: 4.1.4
+
+  '@alchemy.run/sigil@0.1.0-alpha.3(@types/react@19.3.0)':
     optionalDependencies:
       '@types/react': 19.3.0
 
-  '@alchemy.run/sql@2.0.0-beta.84(alchemy@2.0.0-beta.84(@alchemy.run/frontend-frameworks@2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(astro@7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1))(effect@4.0.7)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.0.7)(ws@8.22.0))(effect@4.0.7)':
+  '@alchemy.run/sql@2.0.0-beta.86(alchemy@2.0.0-beta.86(@alchemy.run/frontend-frameworks@2.0.0-beta.86(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(ws@8.22.0))(effect@4.1.4)':
     dependencies:
-      alchemy: 2.0.0-beta.84(@alchemy.run/frontend-frameworks@2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(astro@7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1))(effect@4.0.7)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.0.7)(ws@8.22.0)
-      effect: 4.0.7
+      alchemy: 2.0.0-beta.86(@alchemy.run/frontend-frameworks@2.0.0-beta.86(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(ws@8.22.0)
+      effect: 4.1.4
 
   '@asamuzakjp/css-color@3.2.0':
     dependencies:
@@ -5394,40 +5521,40 @@ snapshots:
     optionalDependencies:
       workerd: 1.20261006.1
 
-  '@cloudflare/unenv-preset@2.16.2(unenv@2.0.0-rc.24)(workerd@1.20261012.1)':
+  '@cloudflare/unenv-preset@2.16.2(unenv@2.0.0-rc.24)(workerd@1.20261026.1)':
     dependencies:
       unenv: 2.0.0-rc.24
     optionalDependencies:
-      workerd: 1.20261012.1
+      workerd: 1.20261026.1
 
   '@cloudflare/workerd-darwin-64@1.20261006.1':
     optional: true
 
-  '@cloudflare/workerd-darwin-64@1.20261012.1':
+  '@cloudflare/workerd-darwin-64@1.20261026.1':
     optional: true
 
   '@cloudflare/workerd-darwin-arm64@1.20261006.1':
     optional: true
 
-  '@cloudflare/workerd-darwin-arm64@1.20261012.1':
+  '@cloudflare/workerd-darwin-arm64@1.20261026.1':
     optional: true
 
   '@cloudflare/workerd-linux-64@1.20261006.1':
     optional: true
 
-  '@cloudflare/workerd-linux-64@1.20261012.1':
+  '@cloudflare/workerd-linux-64@1.20261026.1':
     optional: true
 
   '@cloudflare/workerd-linux-arm64@1.20261006.1':
     optional: true
 
-  '@cloudflare/workerd-linux-arm64@1.20261012.1':
+  '@cloudflare/workerd-linux-arm64@1.20261026.1':
     optional: true
 
   '@cloudflare/workerd-windows-64@1.20261006.1':
     optional: true
 
-  '@cloudflare/workerd-windows-64@1.20261012.1':
+  '@cloudflare/workerd-windows-64@1.20261026.1':
     optional: true
 
   '@cloudflare/workers-types@5.20261110.1': {}
@@ -5485,59 +5612,66 @@ snapshots:
 
   '@csstools/css-tokenizer@4.0.2': {}
 
-  '@distilled.cloud/acme@1.0.0-rc.17(effect@4.0.7)':
+  '@distilled.cloud/acme@1.0.0-rc.19(effect@4.1.4)':
     dependencies:
-      '@distilled.cloud/core': 1.0.0-rc.17(effect@4.0.7)
-      effect: 4.0.7
+      '@distilled.cloud/core': 1.0.0-rc.19(effect@4.1.4)
+      effect: 4.1.4
 
-  '@distilled.cloud/aws4signer@1.0.0-rc.17(effect@4.0.7)':
+  '@distilled.cloud/aws4signer@1.0.0-rc.19(effect@4.1.4)':
     dependencies:
-      '@distilled.cloud/core': 1.0.0-rc.17(effect@4.0.7)
-      effect: 4.0.7
+      '@distilled.cloud/core': 1.0.0-rc.19(effect@4.1.4)
+      effect: 4.1.4
 
-  '@distilled.cloud/aws@1.0.0-rc.17(effect@4.0.7)':
+  '@distilled.cloud/aws@1.0.0-rc.19(effect@4.1.4)':
     dependencies:
-      '@distilled.cloud/aws4signer': 1.0.0-rc.17(effect@4.0.7)
-      '@distilled.cloud/core': 1.0.0-rc.17(effect@4.0.7)
-      effect: 4.0.7
+      '@distilled.cloud/core': 1.0.0-rc.19(effect@4.1.4)
+      '@distilled.cloud/s3': 1.0.0-rc.19(effect@4.1.4)
+      effect: 4.1.4
 
-  '@distilled.cloud/cloudflare@1.0.0-rc.17(effect@4.0.7)':
+  '@distilled.cloud/cloudflare@1.0.0-rc.19(effect@4.1.4)':
     dependencies:
-      '@distilled.cloud/core': 1.0.0-rc.17(effect@4.0.7)
-      effect: 4.0.7
+      '@distilled.cloud/core': 1.0.0-rc.19(effect@4.1.4)
+      '@distilled.cloud/s3': 1.0.0-rc.19(effect@4.1.4)
+      effect: 4.1.4
 
-  '@distilled.cloud/core@1.0.0-rc.17(effect@4.0.7)':
+  '@distilled.cloud/core@1.0.0-rc.19(effect@4.1.4)':
     dependencies:
-      effect: 4.0.7
+      effect: 4.1.4
 
-  '@distilled.cloud/iceberg@1.0.0-rc.17(effect@4.0.7)':
+  '@distilled.cloud/iceberg@1.0.0-rc.19(effect@4.1.4)':
     dependencies:
-      '@distilled.cloud/core': 1.0.0-rc.17(effect@4.0.7)
-      effect: 4.0.7
+      '@distilled.cloud/core': 1.0.0-rc.19(effect@4.1.4)
+      effect: 4.1.4
 
-  '@effect/platform-node-shared@4.0.7(effect@4.0.7)':
+  '@distilled.cloud/s3@1.0.0-rc.19(effect@4.1.4)':
+    dependencies:
+      '@distilled.cloud/aws4signer': 1.0.0-rc.19(effect@4.1.4)
+      '@distilled.cloud/core': 1.0.0-rc.19(effect@4.1.4)
+      effect: 4.1.4
+
+  '@effect/platform-node-shared@4.1.4(effect@4.1.4)':
     dependencies:
       '@types/ws': 8.18.2
-      effect: 4.0.7
-      ws: 8.22.0
+      effect: 4.1.4
+      ws: 8.22.2
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  '@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1))':
+  '@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1))':
     dependencies:
-      '@effect/platform-node-shared': 4.0.7(effect@4.0.7)
-      effect: 4.0.7
+      '@effect/platform-node-shared': 4.1.4(effect@4.1.4)
+      effect: 4.1.4
       redis: 6.3.0(@opentelemetry/api@1.9.1)
       undici: 8.12.4
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  '@effect/sql-d1@4.1.4(effect@4.0.7)':
+  '@effect/sql-d1@4.1.4(effect@4.1.4)':
     dependencies:
       '@cloudflare/workers-types': 5.20261110.1
-      effect: 4.0.7
+      effect: 4.1.4
 
   '@emmetio/abbreviation@2.3.3':
     dependencies:
@@ -5675,7 +5809,7 @@ snapshots:
     dependencies:
       zod: 3.25.76
 
-  '@getquick/site@0.43.1':
+  '@getquick/site@0.44.0':
     dependencies:
       '@clack/prompts': 1.8.1
       '@getquick/content': 0.6.2
@@ -5892,6 +6026,8 @@ snapshots:
   '@oxc-project/types@0.150.0': {}
 
   '@oxc-project/types@0.153.0': {}
+
+  '@oxc-project/types@0.156.0': {}
 
   '@oxfmt/binding-android-arm-eabi@0.64.0':
     optional: true
@@ -6254,46 +6390,91 @@ snapshots:
   '@rolldown/binding-android-arm-eabi@1.2.13':
     optional: true
 
+  '@rolldown/binding-android-arm-eabi@1.2.16':
+    optional: true
+
   '@rolldown/binding-android-arm64@1.2.13':
+    optional: true
+
+  '@rolldown/binding-android-arm64@1.2.16':
     optional: true
 
   '@rolldown/binding-darwin-arm64@1.2.13':
     optional: true
 
+  '@rolldown/binding-darwin-arm64@1.2.16':
+    optional: true
+
   '@rolldown/binding-darwin-x64@1.2.13':
+    optional: true
+
+  '@rolldown/binding-darwin-x64@1.2.16':
     optional: true
 
   '@rolldown/binding-freebsd-x64@1.2.13':
     optional: true
 
+  '@rolldown/binding-freebsd-x64@1.2.16':
+    optional: true
+
   '@rolldown/binding-linux-arm-gnueabihf@1.2.13':
+    optional: true
+
+  '@rolldown/binding-linux-arm-gnueabihf@1.2.16':
     optional: true
 
   '@rolldown/binding-linux-arm64-gnu@1.2.13':
     optional: true
 
+  '@rolldown/binding-linux-arm64-gnu@1.2.16':
+    optional: true
+
   '@rolldown/binding-linux-arm64-musl@1.2.13':
+    optional: true
+
+  '@rolldown/binding-linux-arm64-musl@1.2.16':
     optional: true
 
   '@rolldown/binding-linux-ppc64-gnu@1.2.13':
     optional: true
 
+  '@rolldown/binding-linux-ppc64-gnu@1.2.16':
+    optional: true
+
   '@rolldown/binding-linux-s390x-gnu@1.2.13':
+    optional: true
+
+  '@rolldown/binding-linux-s390x-gnu@1.2.16':
     optional: true
 
   '@rolldown/binding-linux-x64-gnu@1.2.13':
     optional: true
 
+  '@rolldown/binding-linux-x64-gnu@1.2.16':
+    optional: true
+
   '@rolldown/binding-linux-x64-musl@1.2.13':
+    optional: true
+
+  '@rolldown/binding-linux-x64-musl@1.2.16':
     optional: true
 
   '@rolldown/binding-openharmony-arm64@1.2.13':
     optional: true
 
+  '@rolldown/binding-openharmony-arm64@1.2.16':
+    optional: true
+
   '@rolldown/binding-win32-arm64-msvc@1.2.13':
     optional: true
 
+  '@rolldown/binding-win32-arm64-msvc@1.2.16':
+    optional: true
+
   '@rolldown/binding-win32-x64-msvc@1.2.13':
+    optional: true
+
+  '@rolldown/binding-win32-x64-msvc@1.2.16':
     optional: true
 
   '@rolldown/pluginutils@1.0.0-rc.3': {}
@@ -6708,33 +6889,6 @@ snapshots:
       typescript: 6.0.3
       yaml: 2.9.1
 
-  '@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1)':
-    dependencies:
-      '@oxc-project/runtime': 0.146.0
-      '@oxc-project/types': 0.146.0
-      lightningcss: 1.33.0
-      postcss: 8.5.30
-      yuku-codegen: 0.5.48
-      yuku-parser: 0.5.48
-    optionalDependencies:
-      '@types/node': 24.19.2
-      '@voidzero-dev/vite-plus-darwin-arm64': 0.3.0
-      '@voidzero-dev/vite-plus-darwin-x64': 0.3.0
-      '@voidzero-dev/vite-plus-linux-arm64-gnu': 0.3.0
-      '@voidzero-dev/vite-plus-linux-arm64-musl': 0.3.0
-      '@voidzero-dev/vite-plus-linux-x64-gnu': 0.3.0
-      '@voidzero-dev/vite-plus-linux-x64-musl': 0.3.0
-      '@voidzero-dev/vite-plus-win32-arm64-msvc': 0.3.0
-      '@voidzero-dev/vite-plus-win32-x64-msvc': 0.3.0
-      esbuild: 0.28.2
-      fsevents: 2.3.3
-      jiti: 2.7.0
-      sass: 1.105.1
-      terser: 5.51.2
-      typescript: 7.0.2
-      yaml: 2.9.1
-    optional: true
-
   '@voidzero-dev/vite-plus-darwin-arm64@0.3.0':
     optional: true
 
@@ -6930,21 +7084,21 @@ snapshots:
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
 
-  alchemy@2.0.0-beta.84(@alchemy.run/frontend-frameworks@2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(astro@7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1))(effect@4.0.7)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.0.7)(ws@8.22.0):
+  alchemy@2.0.0-beta.86(@alchemy.run/frontend-frameworks@2.0.0-beta.86(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(hono@4.12.14)(typescript@7.0.2))(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/react@19.3.0)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(ws@8.22.0):
     dependencies:
-      '@alchemy.run/node-utils': 2.0.0-beta.84
-      '@alchemy.run/sigil': 0.1.0-alpha.1(@types/react@19.3.0)
+      '@alchemy.run/node-utils': 2.0.0-beta.86
+      '@alchemy.run/sigil': 0.1.0-alpha.3(@types/react@19.3.0)
       capnweb: 0.12.0
-      effect: 4.0.7
+      effect: 4.1.4
       fflate: 0.8.3
       pathe: 2.0.3
       picomatch: 4.0.7
-      rolldown: 1.2.13
+      rolldown: 1.2.16
       tinyglobby: 0.2.17
       yaml: 2.9.1
     optionalDependencies:
-      '@alchemy.run/frontend-frameworks': 2.0.0-beta.84(@effect/platform-node@4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(astro@7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1))(effect@4.0.7)(hono@4.12.14)(typescript@7.0.2)
-      '@effect/platform-node': 4.0.7(effect@4.0.7)(redis@6.3.0(@opentelemetry/api@1.9.1))
+      '@alchemy.run/frontend-frameworks': 2.0.0-beta.86(@effect/platform-node@4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1)))(@types/node@24.19.2)(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))(effect@4.1.4)(hono@4.12.14)(typescript@7.0.2)
+      '@effect/platform-node': 4.1.4(effect@4.1.4)(redis@6.3.0(@opentelemetry/api@1.9.1))
       vite: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1)'
       ws: 8.22.0
     transitivePeerDependencies:
@@ -7071,101 +7225,6 @@ snapshots:
       - unrun
       - uploadthing
       - yaml
-
-  astro@7.3.8(@types/node@24.19.2)(aws4fetch@1.0.20)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1):
-    dependencies:
-      '@astrojs/compiler-rs': 0.5.1
-      '@astrojs/internal-helpers': 0.12.0
-      '@astrojs/markdown-satteri': 0.4.3
-      '@astrojs/telemetry': 3.3.3
-      '@capsizecss/unpack': 4.0.1
-      '@clack/prompts': 1.8.1
-      '@oslojs/encoding': 1.1.0
-      am-i-vibing: 0.5.0
-      aria-query: 5.3.2
-      axobject-query: 4.1.0
-      ci-info: 4.4.0
-      clsx: 2.1.1
-      common-ancestor-path: 2.0.0
-      cookie: 2.0.1
-      devalue: 5.9.4
-      diff: 9.0.0
-      dset: 3.1.4
-      es-module-lexer: 3.0.3
-      find-proc: 0.2.0
-      flattie: 1.1.1
-      fontace: 0.4.1
-      get-tsconfig: 5.0.0-beta.6
-      github-slugger: 2.0.0
-      html-escaper: 3.0.3
-      http-cache-semantics: 4.3.0
-      jsonc-parser: 3.3.1
-      magic-string: 1.4.3
-      magicast: 0.5.5
-      mrmime: 2.0.1
-      neotraverse: 1.0.1
-      obug: 3.0.0
-      p-limit: 7.3.3
-      p-queue: 9.3.5
-      package-manager-detector: 1.9.0
-      piccolore: 0.1.3
-      picomatch: 4.0.7
-      rolldown: 1.2.13
-      shiki: 4.5.0
-      smol-toml: 1.9.1
-      svgo: 4.1.0
-      tinyclip: 1.0.3
-      tinyexec: 1.3.1
-      tinyglobby: 0.2.17
-      ultrahtml: 1.7.0
-      unifont: 0.7.5
-      unstorage: 1.17.5(aws4fetch@1.0.20)
-      verkit: 0.5.0
-      vite: '@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@7.0.2)(yaml@2.9.1)'
-      vitefu: 1.1.3(@voidzero-dev/vite-plus-core@0.3.0(@types/node@24.19.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.1)(terser@5.51.2)(typescript@6.0.3)(yaml@2.9.1))
-      xxhash-wasm: 1.1.0
-      yargs-parser: 22.0.0
-      zod: 4.6.7
-    optionalDependencies:
-      sharp: 0.35.5(@types/node@24.19.2)
-    transitivePeerDependencies:
-      - '@arethetypeswrong/core'
-      - '@azure/app-configuration'
-      - '@azure/cosmos'
-      - '@azure/data-tables'
-      - '@azure/identity'
-      - '@azure/keyvault-secrets'
-      - '@azure/storage-blob'
-      - '@capacitor/preferences'
-      - '@deno/kv'
-      - '@netlify/blobs'
-      - '@planetscale/database'
-      - '@types/node'
-      - '@upstash/redis'
-      - '@vercel/blob'
-      - '@vercel/functions'
-      - '@vercel/kv'
-      - '@vitejs/devtools'
-      - aws4fetch
-      - db0
-      - esbuild
-      - idb-keyval
-      - ioredis
-      - jiti
-      - less
-      - publint
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - terser
-      - tsx
-      - typescript
-      - unplugin-unused
-      - unrun
-      - uploadthing
-      - yaml
-    optional: true
 
   aws4fetch@1.0.20: {}
 
@@ -7388,7 +7447,7 @@ snapshots:
 
   earcut@3.2.4: {}
 
-  effect@4.0.7: {}
+  effect@4.1.4: {}
 
   electron-to-chromium@1.5.455: {}
 
@@ -8254,6 +8313,27 @@ snapshots:
       '@rolldown/binding-win32-arm64-msvc': 1.2.13
       '@rolldown/binding-win32-x64-msvc': 1.2.13
 
+  rolldown@1.2.16:
+    dependencies:
+      '@oxc-project/types': 0.156.0
+      '@rolldown/pluginutils': 1.0.1
+    optionalDependencies:
+      '@rolldown/binding-android-arm-eabi': 1.2.16
+      '@rolldown/binding-android-arm64': 1.2.16
+      '@rolldown/binding-darwin-arm64': 1.2.16
+      '@rolldown/binding-darwin-x64': 1.2.16
+      '@rolldown/binding-freebsd-x64': 1.2.16
+      '@rolldown/binding-linux-arm-gnueabihf': 1.2.16
+      '@rolldown/binding-linux-arm64-gnu': 1.2.16
+      '@rolldown/binding-linux-arm64-musl': 1.2.16
+      '@rolldown/binding-linux-ppc64-gnu': 1.2.16
+      '@rolldown/binding-linux-s390x-gnu': 1.2.16
+      '@rolldown/binding-linux-x64-gnu': 1.2.16
+      '@rolldown/binding-linux-x64-musl': 1.2.16
+      '@rolldown/binding-openharmony-arm64': 1.2.16
+      '@rolldown/binding-win32-arm64-msvc': 1.2.16
+      '@rolldown/binding-win32-x64-msvc': 1.2.16
+
   rrweb-cssom@0.8.0:
     optional: true
 
@@ -8373,7 +8453,7 @@ snapshots:
 
   space-separated-tokens@2.0.2: {}
 
-  srvx@1.0.5: {}
+  srvx@1.0.7: {}
 
   stackback@0.0.2: {}
 
@@ -8967,13 +9047,13 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20261006.1
       '@cloudflare/workerd-windows-64': 1.20261006.1
 
-  workerd@1.20261012.1:
+  workerd@1.20261026.1:
     optionalDependencies:
-      '@cloudflare/workerd-darwin-64': 1.20261012.1
-      '@cloudflare/workerd-darwin-arm64': 1.20261012.1
-      '@cloudflare/workerd-linux-64': 1.20261012.1
-      '@cloudflare/workerd-linux-arm64': 1.20261012.1
-      '@cloudflare/workerd-windows-64': 1.20261012.1
+      '@cloudflare/workerd-darwin-64': 1.20261026.1
+      '@cloudflare/workerd-darwin-arm64': 1.20261026.1
+      '@cloudflare/workerd-linux-64': 1.20261026.1
+      '@cloudflare/workerd-linux-arm64': 1.20261026.1
+      '@cloudflare/workerd-windows-64': 1.20261026.1
 
   wrangler@4.150.0(@cloudflare/workers-types@5.20261110.1)(@types/node@24.19.2):
     dependencies:
@@ -9002,6 +9082,8 @@ snapshots:
   ws@8.21.0: {}
 
   ws@8.22.0: {}
+
+  ws@8.22.2: {}
 
   xml-name-validator@5.0.0: {}
 
