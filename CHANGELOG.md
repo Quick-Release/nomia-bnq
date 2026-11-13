@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.36.0 - 2026-11-13
+
+Previous release: v0.35.0
+
+- 9944f0f Merge pull request #165 from Quick-Release/t3/alchemy-hop2-site-upgrade
+- 5adb233 chore(frontend): update astro to ^7.4.0 (7.4.11) for @alchemy.run/frontend-frameworks beta.86
+- a39432b chore: adopt @getquick/site 0.44.0 (Alchemy hop 2: beta.86, Effect 4.1.4)
+
 ## v0.35.0 - 2026-11-12
 
 Previous release: v0.34.0
